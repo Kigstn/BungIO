@@ -1,0 +1,160 @@
+import datetime
+from typing import Callable, Coroutine, Optional
+
+from bungio.http.route import Route
+from bungio.models.auth import AuthData
+
+
+class ContentRequests:
+    request: Callable[..., Coroutine]
+
+    async def get_content_type(self, type: str, auth: Optional[AuthData] = None) -> dict:
+        """
+        Gets an object describing a particular variant of content.
+
+        Args:
+            type: Not specified.
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The json response
+        """
+
+        return await self.request(Route(path=f"/Content/GetContentType/{type}/", method="GET", auth=auth))
+
+    async def get_content_by_id(
+        self, id: int, locale: str, head: Optional[bool] = None, auth: Optional[AuthData] = None
+    ) -> dict:
+        """
+        Returns a content item referenced by id
+
+        Args:
+            id: Not specified.
+            locale: Not specified.
+            head: false
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The json response
+        """
+
+        return await self.request(
+            Route(path=f"/Content/GetContentById/{id}/{locale}/", method="GET", head=head, auth=auth)
+        )
+
+    async def get_content_by_tag_and_type(
+        self, locale: str, tag: str, type: str, head: Optional[bool] = None, auth: Optional[AuthData] = None
+    ) -> dict:
+        """
+        Returns the newest item that matches a given tag and Content Type.
+
+        Args:
+            locale: Not specified.
+            tag: Not specified.
+            type: Not specified.
+            head: Not used.
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The json response
+        """
+
+        return await self.request(
+            Route(path=f"/Content/GetContentByTagAndType/{tag}/{type}/{locale}/", method="GET", head=head, auth=auth)
+        )
+
+    async def search_content_with_text(
+        self,
+        locale: str,
+        ctype: Optional[str] = None,
+        currentpage: Optional[int] = None,
+        head: Optional[bool] = None,
+        searchtext: Optional[str] = None,
+        source: Optional[str] = None,
+        tag: Optional[str] = None,
+        auth: Optional[AuthData] = None,
+    ) -> dict:
+        """
+        Gets content based on querystring information passed in. Provides basic search and text search capabilities.
+
+        Args:
+            locale: Not specified.
+            ctype: Content type tag: Help, News, etc. Supply multiple ctypes separated by space.
+            currentpage: Page number for the search results, starting with page 1.
+            head: Not used.
+            searchtext: Word or phrase for the search.
+            source: For analytics, hint at the part of the app that triggered the search. Optional.
+            tag: Tag used on the content to be searched.
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The json response
+        """
+
+        return await self.request(
+            Route(
+                path=f"/Content/Search/{locale}/",
+                method="GET",
+                ctype=ctype,
+                currentpage=currentpage,
+                head=head,
+                searchtext=searchtext,
+                source=source,
+                tag=tag,
+                auth=auth,
+            )
+        )
+
+    async def search_content_by_tag_and_type(
+        self,
+        locale: str,
+        tag: str,
+        type: str,
+        currentpage: Optional[int] = None,
+        head: Optional[bool] = None,
+        itemsperpage: Optional[int] = None,
+        auth: Optional[AuthData] = None,
+    ) -> dict:
+        """
+        Searches for Content Items that match the given Tag and Content Type.
+
+        Args:
+            locale: Not specified.
+            tag: Not specified.
+            type: Not specified.
+            currentpage: Page number for the search results starting with page 1.
+            head: Not used.
+            itemsperpage: Not used.
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The json response
+        """
+
+        return await self.request(
+            Route(
+                path=f"/Content/SearchContentByTagAndType/{tag}/{type}/{locale}/",
+                method="GET",
+                currentpage=currentpage,
+                head=head,
+                itemsperpage=itemsperpage,
+                auth=auth,
+            )
+        )
+
+    async def search_help_articles(self, searchtext: str, size: str, auth: Optional[AuthData] = None) -> dict:
+        """
+        Search for Help Articles.
+
+        Args:
+            searchtext: Not specified.
+            size: Not specified.
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The json response
+        """
+
+        return await self.request(
+            Route(path=f"/Content/SearchHelpArticles/{searchtext}/{size}/", method="GET", auth=auth)
+        )

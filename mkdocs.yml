@@ -1,0 +1,22 @@
+site_name: BungIO
+site_description: Documentation for BungIO, a python bungie.net api wrapper
+repo_url: https://github.com/Kigstn/BungIO
+repo_name: BungIO
+copyright: Copyright &copy; 2022 - Present Kigstn
+docs_dir: docs/src
+edit_uri: edit/master/docs/src
+
+theme:
+  name: material
+  locale: en
+
+extra_css:
+  - css/extra.css
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          selection:
+            docstring_style: google
