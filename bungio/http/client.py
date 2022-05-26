@@ -161,7 +161,7 @@ class HttpClient(AllRequests, AuthRequests, metaclass=SingletonMetaclass):
                             else {}
                         )
 
-                        if not self._handle_response(
+                        if not await self._handle_response(
                             route_with_params=route_with_params, response=response, content=content
                         ):
                             continue
@@ -191,7 +191,7 @@ class HttpClient(AllRequests, AuthRequests, metaclass=SingletonMetaclass):
         self._client.logger.exception(f"{route_with_params}- Aborting. Failed {self._max_attempts} times")
         raise TimeoutException
 
-    def _handle_response(self, route_with_params: str, response: ClientResponse, content: dict) -> bool:
+    async def _handle_response(self, route_with_params: str, response: ClientResponse, content: dict) -> bool:
         """
         Handle the response returned by bungie
 

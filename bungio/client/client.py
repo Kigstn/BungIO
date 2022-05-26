@@ -47,9 +47,9 @@ class Client:
         token: The bungie.net token
     """
 
-    client_id: str
-    client_secret: str
-    token: str
+    client_id: str = attr.field()
+    client_secret: str = attr.field()
+    token: str = attr.field()
 
     logger: logging.Logger = attr.field(default=default_logger)
 

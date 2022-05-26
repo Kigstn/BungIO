@@ -7,11 +7,11 @@ from bungio.definitions import ROOT_DIR
 
 
 def main():
-    base_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "bungio/http/routes")
-
     resp = requests.get(url="https://raw.githubusercontent.com/Bungie-net/api/master/openapi.json")
     api_schema = resp.json()
 
+    # paths
+    base_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "bungio/http/routes")
     topics = {}
     for path, data in api_schema["paths"].items():
         topic = path.split("/")[1]
