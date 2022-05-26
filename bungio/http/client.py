@@ -1,29 +1,43 @@
-from base64 import b64encode
-from typing import TYPE_CHECKING, Callable, Optional
+import asyncio
+import datetime
+from asyncio import Lock, Semaphore
+from copy import copy
+from typing import TYPE_CHECKING, Optional
+from urllib.parse import urlencode
 
+from aiohttp import (
+    ClientConnectorCertificateError,
+    ClientOSError,
+    ClientResponse,
+    ClientSession,
+    ServerDisconnectedError,
+)
+
+from bungio import BungieDead, InvalidAuthentication
+from bungio.error import (
+    AuthenticationTooSlow,
+    BadRequest,
+    BungieException,
+    NotFound,
+    TimeoutException,
+    _InvalidAuthentication,
+    _RouteError,
+)
 from bungio.http.auth import AuthRequests
+from bungio.http.ratelimiting import RateLimiter
 from bungio.http.route import Route
 from bungio.http.routes import AllRequests
+from bungio.models.auth import AuthData
 from bungio.singleton import SingletonMetaclass
+from bungio.utils import get_now_with_tz
 
 if TYPE_CHECKING:
     from bungio.client import Client
 
 __all__ = ("HttpClient",)
 
-# define json loading technique
-try:
-    import orjson
 
-    def json_dumps(x):
-        orjson.dumps(x).decode()
-
-    json_loads = orjson.loads
-except ModuleNotFoundError:
-    import json
-
-    json_dumps = json.dumps
-    json_loads = json.loads
+token_update_lock: dict[int, Lock] = {}
 
 
 class HttpClient(AllRequests, AuthRequests, metaclass=SingletonMetaclass):
@@ -31,13 +45,17 @@ class HttpClient(AllRequests, AuthRequests, metaclass=SingletonMetaclass):
     The singleton http client doing all communication with bungie
     """
 
+    ratelimiter: RateLimiter = RateLimiter()
+    semaphore: Semaphore = Semaphore(100)
+
     _client: "Client"
 
     _bungie_headers: dict[str, str]
     _bungie_auth_headers: dict[str, str]
 
-    _json_dumps: Callable = json_dumps
-    _json_loads: Callable = json_loads
+    _max_attempts: int = 5
+
+    __session: ClientSession
 
     async def request(self, route: Route) -> dict:
         """
@@ -45,6 +63,15 @@ class HttpClient(AllRequests, AuthRequests, metaclass=SingletonMetaclass):
 
         Args:
             route: The route / method / params the request should have
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -54,9 +81,346 @@ class HttpClient(AllRequests, AuthRequests, metaclass=SingletonMetaclass):
         if not hasattr(self, "_client"):
             raise ValueError("You have to instantiate the `bungio.Client` before using this")
 
-        ...
+        headers = self._bungie_headers if not route.auth else await self._get_auth_headers(auth=route.auth)
+
+        async with self.semaphore:
+            return await self._request(
+                route=route.path,
+                method=route.method,
+                headers=headers,
+                params=route.params,
+                data=route.data,
+                auth=route.auth,
+                use_ratelimiter=True,
+            )
 
     async def _request(
-        self, route: str, method: str, headers: dict, params: Optional[dict] = None, form_data: Optional[dict] = None
+        self,
+        route: str,
+        method: str,
+        headers: dict,
+        params: Optional[dict] = None,
+        data: Optional[dict] = None,
+        form_data: Optional[dict] = None,
+        auth: Optional[AuthData] = None,
+        use_ratelimiter: bool = True,
     ) -> dict:
-        ...
+        """
+        Internal request function. Use HttpClient.request() instead!
+
+        Args:
+            route: The route
+            method: The method
+            headers: The headers
+            params: The query params
+            data: The body data
+            form_data: The form data
+            use_ratelimiter: If the ratelimiter should be used
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+            _RouteError: Getting redirected to a different url
+
+        Returns:
+            The json response.
+        """
+
+        route_with_params = f"{route}?{urlencode(params or {})}"
+
+        for attempt in range(self._max_attempts):
+            # wait for a token
+            if use_ratelimiter:
+                await self.ratelimiter.wait_for_token()
+
+                try:
+                    async with self.__session.request(
+                        method=method,
+                        url=route,
+                        headers=headers,
+                        params=params,
+                        json=data,
+                        data=form_data,
+                    ) as response:
+                        self._client.logger.debug(f"[{response.status}] - {route_with_params}")
+
+                        # cached responses do not have the content type field
+                        content_type = getattr(response, "content_type", None) or response.headers.get(
+                            "Content-Type", "NOT SET"
+                        )
+
+                        # get the json
+                        content = (
+                            await response.json(loads=self._client.json_loads)
+                            if "application/json" in content_type
+                            else {}
+                        )
+
+                        if not self._handle_response(
+                            route_with_params=route_with_params, response=response, content=content
+                        ):
+                            continue
+
+                        return content
+
+                except _RouteError as e:
+                    route = e.route
+
+                except _InvalidAuthentication:
+                    self._invalidate_token(auth=auth)
+                    raise InvalidAuthentication(auth=auth)
+
+                except (
+                    asyncio.exceptions.TimeoutError,
+                    ConnectionResetError,
+                    ServerDisconnectedError,
+                    ClientConnectorCertificateError,
+                    ClientOSError,
+                ):
+                    self._client.logger.debug(
+                        f"Retrying... - Timeout error for `{route}?{urlencode({} if params is None else params)}`"
+                    )
+                    await asyncio.sleep(2 + attempt * 3)
+                    continue
+
+        self._client.logger.exception(f"{route_with_params}- Aborting. Failed {self._max_attempts} times")
+        raise TimeoutException
+
+    def _handle_response(self, route_with_params: str, response: ClientResponse, content: dict) -> bool:
+        """
+        Handle the response returned by bungie
+
+        Args:
+            route_with_params: The full route for logging’s sake
+            response: The response
+            content: The json content returned or an empty dict
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+            _InvalidAuthentication: If authentication is invalid
+            _RouteError: Getting redirected to a different url
+
+        Returns:
+            If the response was OK
+        """
+        # get the bungie errors from the json
+        error = content.get("ErrorStatus", "MISSING")
+        error_code = content.get("ErrorCode", -1)
+        error_message = content.get("Message", "MISSING")
+        error_data = content.get("MessageData", {})
+
+        match (response.status, error):
+            case (_, "SystemDisabled"):
+                raise BungieDead
+
+            case (200, _):
+                # make sure we got a json
+                if not content:
+                    self._client.logger.debug(f"Wrong content type returned text: '{await response.text()}'")
+                    await asyncio.sleep(3)
+                    return False
+                return True
+
+            case (301, _):
+                # this is issued with a 301 when bungie is of the opinion that resource this moved
+                # just retrying fixes it with the new url fixes it
+                new_route = response.headers.get("Location")
+                self._client.logger.debug(
+                    f"Wrong location, retrying with the correct one: `{response.url}` -> `{new_route}`"
+                )
+                raise _RouteError(route=new_route)
+
+            case (401, _) | (_, "invalid_grant" | "AuthorizationCodeInvalid"):
+                # unauthorized
+                self._client.logger.debug(
+                    f"`{response.status} - {error} | {error_code}`: Unauthorized (too slow, user fault) request for `{route_with_params}`"
+                )
+                raise AuthenticationTooSlow
+
+            case (502, _):
+                # bad gateway
+                self._client.logger.debug(
+                    f"Retrying... - `{response.status}` Bad gateway error for `{route_with_params}`"
+                )
+                await asyncio.sleep(5)
+
+            case (524, _):
+                # cloudflare error, retry
+                self._client.logger.debug(
+                    f"Retrying... - `{response.status}` Cloudflare error for `{route_with_params}`"
+                )
+                await asyncio.sleep(2)
+
+            case (429, _) | (_, "PerEndpointRequestThrottleExceeded" | "DestinyDirectBabelClientTimeout"):
+                # we are getting throttled (should never be called in theory)
+                self._client.logger.debug(
+                    f"`{response.status} - {error} | {error_code}`: Retrying... - Getting throttled for `{route_with_params}`\n{content}"
+                )
+
+                throttle_seconds = content["ThrottleSeconds"]
+
+                # reset the ratelimit giver
+                self.ratelimiter.tokens = 0
+                await asyncio.sleep(max(throttle_seconds, 2))
+
+            case (_, "DestinyDirectBabelClientTimeout"):
+                # timeout
+                self._client.logger.debug(
+                    f"`{response.status} - {error} | {error_code}`: Retrying... - Getting timeouts for `{route_with_params}`\n{content}"
+                )
+                await asyncio.sleep(60)
+
+            case (_, "DestinyServiceFailure" | "DestinyInternalError"):
+                # timeout
+                self._client.logger.debug(
+                    f"`{response.status} - {error} | {error_code}`: Retrying... - Bungie is having problems `{route_with_params}`\n{content}"
+                )
+                await asyncio.sleep(60)
+
+            case (_, "AuthorizationRecordRevoked" | "AuthorizationRecordExpired"):
+                # users tokens are no longer valid
+                raise _InvalidAuthentication()
+
+            case (404, _):
+                # not found
+                self._client.logger.debug(
+                    f"`{response.status} - {error} | {error_code}`: Not found for `{route_with_params}`\n{content}"
+                )
+
+                if error is not "MISSING":
+                    raise BungieException(error=error, message=error_message, code=error_code, data=error_data)
+                else:
+                    raise NotFound
+
+            case (400, _):
+                # generic bad request, such as wrong format
+                self._client.logger.debug(
+                    f"`{response.status} - {error} | {error_code}`: Generic bad request for `{route_with_params}`\n{content}"
+                )
+
+                if error is not "MISSING":
+                    raise BungieException(error=error, message=error_message, code=error_code, data=error_data)
+                else:
+                    raise BadRequest
+
+            case (503, _):
+                self._client.logger.debug(
+                    f"`{response.status} - {error} | {error_code}`: Retrying... - Server is overloaded for `{route_with_params}`\n{content}"
+                )
+                await asyncio.sleep(10)
+
+            case (status, _):
+                # retry if we didn't get an error message
+                retry = error is not "Success"
+
+                # catch the rest
+                self._client.logger.debug(
+                    f"`{status} - {error} | {error_code}` - Request failed for `{route_with_params}` - `{error_message}`"
+                )
+
+                if retry:
+                    await asyncio.sleep(2)
+                else:
+                    raise BungieException(error=error, message=error_message, code=error_code, data=error_data)
+
+        return False
+
+    async def _get_auth_headers(self, auth: AuthData) -> dict:
+        """
+        Update the auth headers to include a working token. Raise an error if that doesn't exist
+
+        Args:
+            auth: The potentially old authentication info.
+
+        Raises:
+            InvalidAuthentication: If authentication is invalid
+
+        Returns:
+            User specific headers
+        """
+
+        headers = self._bungie_headers.copy()
+
+        # get a working token or abort
+        await self.get_working_auth(auth=auth)
+
+        headers.update(
+            {
+                "Authorization": f"Bearer {auth.token}",
+            }
+        )
+
+        return headers
+
+    async def get_working_auth(self, auth: AuthData) -> AuthData:
+        """
+        Check if tokens need to be refreshed and then do that.
+
+        Tip: Staying up to date
+            This dispatches the Client.on_token_update()
+
+        Args:
+            auth: The potentially old authentication info.
+
+        Raises:
+            InvalidAuthentication: If authentication is invalid
+
+        Returns:
+            The working authentication info.
+        """
+
+        # locked this on a per-user basis
+        if auth.destiny_membership_id not in token_update_lock:
+            token_update_lock.update({auth.destiny_membership_id: asyncio.Lock()})
+        async with token_update_lock[auth.destiny_membership_id]:
+
+            # check that token exists
+            if auth.token is None:
+                raise InvalidAuthentication(auth)
+
+            # check if token is expired
+            now = get_now_with_tz()
+            if auth.token_expiry < (now - datetime.timedelta(minutes=5)):
+                return auth
+
+            # check the refresh token expiry
+            if auth.refresh_token_expiry > (now - datetime.timedelta(minutes=5)):
+                self._invalidate_token(auth=auth)
+                raise InvalidAuthentication(auth)
+
+            old_auth = copy(auth)
+
+            # refresh the data
+            data = await self.refresh_access_token(auth=auth)
+            auth.token = data["access_token"]
+            auth.refresh_token = data["refresh_token"]
+            auth.token_expiry = now + datetime.timedelta(seconds=data["expires_in"])
+            auth.refresh_expires_in = now + datetime.timedelta(seconds=data["refresh_expires_in"])
+
+            # dispatch the update event
+            asyncio.create_task(self._client.on_token_update(before=old_auth, after=auth))
+
+        return auth
+
+    def _invalidate_token(self, auth: AuthData) -> None:
+        """
+        Invalidate a token
+
+        Args:
+            auth: The data to invalidate
+        """
+
+        old_auth = copy(auth)
+        auth.token = None
+
+        # dispatch the update event
+        asyncio.create_task(self._client.on_token_update(before=old_auth, after=auth))

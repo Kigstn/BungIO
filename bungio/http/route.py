@@ -1,7 +1,7 @@
-from typing import Any, Optional
+from typing import Optional
 
+from bungio.definitions import BASE_ROUTE
 from bungio.models.auth import AuthData
-from definitions import BASE_ROUTE
 
 
 class Route:
@@ -12,11 +12,13 @@ class Route:
         path: The bungie path addition
         method: The http method
         auth: Authentication information
+        data: Body data to send
         **params: All query parameters
     """
 
-    def __init__(self, path: str, method: str, auth: Optional[AuthData] = None, **params):
+    def __init__(self, path: str, method: str, data: Optional[dict] = None, auth: Optional[AuthData] = None, **params):
         self.params = params or {}
+        self.data = data
         self.auth = auth
         self.method = method
         self.path = BASE_ROUTE + path

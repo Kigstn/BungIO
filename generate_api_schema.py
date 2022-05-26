@@ -3,7 +3,7 @@ import re
 
 import requests
 
-from definitions import ROOT_DIR
+from bungio.definitions import ROOT_DIR
 
 
 def main():

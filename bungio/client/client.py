@@ -1,10 +1,14 @@
+import logging
 from base64 import b64encode
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Callable, Optional
 
 import attr
+from aiohttp import ClientSession, DummyCookieJar
 from sqlalchemy.orm import sessionmaker
 
+from bungio.definitions import LOGGER_NAME
 from bungio.http.client import HttpClient
+from bungio.models.auth import AuthData
 from bungio.models.enums import BungieLanguage
 
 if TYPE_CHECKING:
@@ -12,6 +16,24 @@ if TYPE_CHECKING:
     from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
 __all__ = ("Client",)
+
+# define json loading technique
+try:
+    import orjson
+
+    def json_dumps(x):
+        orjson.dumps(x).decode()
+
+    json_loads = orjson.loads
+except ModuleNotFoundError:
+    import json
+
+    json_dumps = json.dumps
+    json_loads = json.loads
+
+
+default_logger = logging.getLogger(LOGGER_NAME)
+default_logger.setLevel(logging.ERROR)
 
 
 @attr.s()
@@ -29,10 +51,15 @@ class Client:
     client_secret: str
     token: str
 
+    logger: logging.Logger = attr.field(default=default_logger)
+
     language: BungieLanguage = attr.field(default=BungieLanguage.ENGLISH)
 
     cache: Optional["CacheBackend"] = attr.field(default=None)
     use_manifest: bool | sessionmaker = attr.field(default=False)
+
+    json_dumps: Callable = attr.field(init=False, default=json_dumps)
+    json_loads: Callable = attr.field(init=False, default=json_loads)
 
     _http: HttpClient = attr.field(init=False)
 
@@ -56,11 +83,24 @@ class Client:
         self._http = HttpClient()
         self._http._client = self
         self._http._bungie_auth_headers = {
-            "content-type": "application/x-www-form-urlencoded",
-            "authorization": f"""Basic {b64encode(f"{self.client_id}:{self.client_secret}".encode()).decode()}""",
-            "accept": "application/json",
+            "User-Agent": "BungIO",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Authorization": f"""Basic {b64encode(f"{self.client_id}:{self.client_secret}".encode()).decode()}""",
+            "Accept": "application/json",
         }
-        self._http._bungie_headers = {"X-API-Key": self.token, "accept": "application/json"}
+        self._http._bungie_headers = {
+            "User-Agent": "BungIO",
+            "X-API-Key": self.token,
+            "Accept": "application/json",
+        }
+        try:
+            from aiohttp_client_cache import CachedSession
+
+            self._http.__session = CachedSession(
+                json_serialize=self.json_dumps, cookie_jar=DummyCookieJar(), cache=self.cache
+            )
+        except ModuleNotFoundError:
+            self._http.__session = ClientSession(json_serialize=self.json_dumps, cookie_jar=DummyCookieJar())
 
     def get_auth_url(self, state: str) -> str:
         """
@@ -77,4 +117,18 @@ class Client:
             The auth url
         """
 
-        return f"https://www.bungie.net/en/oauth/authorize?client_id={self._client_id}&response_type=code&state={state}"
+        return f"https://www.bungie.net/en/oauth/authorize?client_id={self.client_id}&response_type=code&state={state}"
+
+    async def on_token_update(self, before: AuthData, after: AuthData) -> None:
+        """
+        Dispatched whenever a token is updated
+
+        Tip: Subclassing
+            It is highly recommended to subclass the Client and overwrite this function to suite your own needs
+
+        Args:
+            before: The old auth info
+            after: The new auth info
+        """
+
+        self.logger.info(f"Updated token for {before.destiny_membership_id=}: {before.token=} -> {after.token=}")

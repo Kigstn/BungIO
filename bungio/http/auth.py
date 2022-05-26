@@ -36,6 +36,7 @@ class AuthRequests:
             method="POST",
             form_data=data,
             headers=self._bungie_auth_headers,
+            use_ratelimiter=False,
         )
 
     async def refresh_access_token(
@@ -62,4 +63,5 @@ class AuthRequests:
             method="POST",
             form_data=data,
             headers=self._bungie_auth_headers,
+            use_ratelimiter=False,
         )
