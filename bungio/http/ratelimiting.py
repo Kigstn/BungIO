@@ -4,7 +4,7 @@ import time
 import attr
 
 
-@attr.s
+@attr.define
 class RateLimiter:
     """
     Gives out x tokens for network operations every y seconds

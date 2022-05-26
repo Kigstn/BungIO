@@ -36,7 +36,7 @@ default_logger = logging.getLogger(LOGGER_NAME)
 default_logger.setLevel(logging.ERROR)
 
 
-@attr.s()
+@attr.define
 class Client:
     """
     The api client

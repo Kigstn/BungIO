@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from bungio.client import Client
 
 
-@attr.s(kw_only=True)
+@attr.define(kw_only=True)
 class BaseModel:
     _client: "Client" = attr.field(init=False)
 

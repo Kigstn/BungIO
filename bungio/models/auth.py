@@ -6,7 +6,7 @@ import attr
 from bungio.models.base import BaseModel
 
 
-@attr.s
+@attr.define
 class AuthData(BaseModel):
     """
     Bungie User Authentication Information

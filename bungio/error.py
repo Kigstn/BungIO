@@ -6,17 +6,17 @@ if TYPE_CHECKING:
     from bungio.models.auth import AuthData
 
 
-@attr.s
+@attr.define
 class BungIOException(Exception):
     pass
 
 
-@attr.s
+@attr.define
 class HttpException(BungIOException):
     pass
 
 
-@attr.s
+@attr.define
 class BungieException(HttpException):
     error: str
     message: str
@@ -24,41 +24,41 @@ class BungieException(HttpException):
     data: dict
 
 
-@attr.s
+@attr.define
 class _InvalidAuthentication(HttpException):
     pass
 
 
-@attr.s
+@attr.define
 class InvalidAuthentication(HttpException):
     auth: "AuthData"
 
 
-@attr.s
+@attr.define
 class NotFound(HttpException):
     pass
 
 
-@attr.s
+@attr.define
 class BadRequest(HttpException):
     pass
 
 
-@attr.s
+@attr.define
 class AuthenticationTooSlow(HttpException):
     pass
 
 
-@attr.s
+@attr.define
 class BungieDead(HttpException):
     pass
 
 
-@attr.s
+@attr.define
 class _RouteError(HttpException):
     route: str
 
 
-@attr.s
+@attr.define
 class TimeoutException(HttpException):
     pass
