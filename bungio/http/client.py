@@ -21,7 +21,7 @@ except ModuleNotFoundError:
 
 class HttpClient(AllRequests, metaclass=SingletonMetaclass):
     """
-    The http client doing all communication with bungie
+    The singleton http client doing all communication with bungie
     """
 
     json_dumps = json_dumps

@@ -15,8 +15,14 @@ extra_css:
 
 plugins:
   - search
+  - awesome-pages
+  - autorefs
   - mkdocstrings:
       handlers:
         python:
           selection:
             docstring_style: google
+
+markdown_extensions:
+  - tables
+  - admonition
