@@ -1,6 +1,13 @@
+from base64 import b64encode
+from typing import TYPE_CHECKING, Callable, Optional
+
+from bungio.http.auth import AuthRequests
 from bungio.http.route import Route
 from bungio.http.routes import AllRequests
 from bungio.singleton import SingletonMetaclass
+
+if TYPE_CHECKING:
+    from bungio.client import Client
 
 __all__ = ("HttpClient",)
 
@@ -19,13 +26,18 @@ except ModuleNotFoundError:
     json_loads = json.loads
 
 
-class HttpClient(AllRequests, metaclass=SingletonMetaclass):
+class HttpClient(AllRequests, AuthRequests, metaclass=SingletonMetaclass):
     """
     The singleton http client doing all communication with bungie
     """
 
-    json_dumps = json_dumps
-    json_loads = json_loads
+    _client: "Client"
+
+    _bungie_headers: dict[str, str]
+    _bungie_auth_headers: dict[str, str]
+
+    _json_dumps: Callable = json_dumps
+    _json_loads: Callable = json_loads
 
     async def request(self, route: Route) -> dict:
         """
@@ -38,4 +50,13 @@ class HttpClient(AllRequests, metaclass=SingletonMetaclass):
             The json response
         """
 
+        # make sure all is set up
+        if not hasattr(self, "_client"):
+            raise ValueError("You have to instantiate the `bungio.Client` before using this")
+
+        ...
+
+    async def _request(
+        self, route: str, method: str, headers: dict, params: Optional[dict] = None, form_data: Optional[dict] = None
+    ) -> dict:
         ...

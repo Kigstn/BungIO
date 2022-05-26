@@ -8,9 +8,6 @@ from definitions import ROOT_DIR
 
 def main():
     base_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "bungio/http/routes")
-    for file in os.listdir(base_path):
-        if not file.startswith("__pycache__"):
-            os.remove(os.path.join(base_path, file))
 
     resp = requests.get(url="https://raw.githubusercontent.com/Bungie-net/api/master/openapi.json")
     api_schema = resp.json()
