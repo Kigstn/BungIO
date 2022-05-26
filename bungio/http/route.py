@@ -16,7 +16,9 @@ class Route:
         **params: All query parameters
     """
 
-    def __init__(self, path: str, method: str, data: Optional[dict] = None, auth: Optional[AuthData] = None, **params):
+    def __init__(
+        self, path: str, method: str, data: Optional[dict | list] = None, auth: Optional[AuthData] = None, **params
+    ):
         self.params = params or {}
         self.data = data
         self.auth = auth

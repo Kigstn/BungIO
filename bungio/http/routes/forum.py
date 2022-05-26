@@ -1,5 +1,5 @@
 import datetime
-from typing import Callable, Coroutine, Optional
+from typing import Any, Callable, Coroutine, Optional
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -34,6 +34,15 @@ class ForumRequests:
             tagstring: The tags to search, if any.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -67,6 +76,15 @@ class ForumRequests:
             sort: The sort mode.
             locales: Comma seperated list of locales posts must match to return in the result list. Default 'en'
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -107,6 +125,15 @@ class ForumRequests:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -144,6 +171,15 @@ class ForumRequests:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -168,6 +204,15 @@ class ForumRequests:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -186,6 +231,15 @@ class ForumRequests:
             child_post_id: Not specified.
             showbanned: If this value is not null or empty, banned posts are requested to be returned
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -208,6 +262,15 @@ class ForumRequests:
             content_id: Not specified.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -223,6 +286,15 @@ class ForumRequests:
         Args:
             partialtag: The partial tag input to generate suggestions from.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -240,21 +312,42 @@ class ForumRequests:
             topic_id: The post id of the topic that has the poll.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
 
         return await self.request(Route(path=f"/Forum/Poll/{topic_id}/", method="GET", auth=auth))
 
-    async def get_recruitment_thread_summaries(self, auth: Optional[AuthData] = None) -> dict:
+    async def get_recruitment_thread_summaries(self, body_data: list[int], auth: Optional[AuthData] = None) -> dict:
         """
         Allows the caller to get a list of to 25 recruitment thread summary information objects.
 
         Args:
+            body_data: Not specified.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/Forum/Recruit/Summaries/", method="POST", auth=auth))
+        data = body_data
+
+        return await self.request(Route(path=f"/Forum/Recruit/Summaries/", method="POST", data=data, auth=auth))

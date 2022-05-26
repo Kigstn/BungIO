@@ -22,7 +22,7 @@ def main():
     names = {}
     for topic, routes in topics.items():
         text = f"""import datetime
-from typing import Callable, Coroutine, Optional
+from typing import Callable, Coroutine, Optional, Any
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -33,7 +33,7 @@ class {topic}Requests:
     """
 
         for path, data in routes.items():
-            text += generate_function(path, data)
+            text += generate_function(path, data, api_schema)
         file_path = os.path.join(base_path, f"{capital_case_to_snake_case(topic)}.py")
         with open(file_path, "w") as file:
             file.write(text)
@@ -67,7 +67,7 @@ class AllRequests({", ".join(list(names))}):
     os.system(f"""black "{base_path}\"""")
 
 
-def generate_function(path: str, data: dict) -> str:
+def generate_function(path: str, data: dict, full_data: dict) -> str:
     text = f"""
     async def {capital_case_to_snake_case(data["summary"].split(".")[1])}(self"""
 
@@ -77,6 +77,37 @@ def generate_function(path: str, data: dict) -> str:
     if "security" in data[method]:
         security = f"""Required oauth2 scopes: {", ".join(data[method]["security"][0]["oauth2"])}"""
 
+    # json body info
+    body = []
+    if "requestBody" in data[method]:
+        schema_data = data[method]["requestBody"]["content"]["application/json"]["schema"]
+        if "$ref" in schema_data:
+            schema_name = schema_data["$ref"]
+            schema_name = schema_name.split("/")[-1]
+            schema_data = full_data["components"]["schemas"][schema_name]["properties"]
+
+            for name, value in schema_data.items():
+                arg_type = convert_to_typing(value)
+                body.append(
+                    {
+                        "name": capital_case_to_snake_case(name),
+                        "og_name": name,
+                        "description": value.get("description", "Not specified."),
+                        "type": arg_type,
+                    }
+                )
+
+        else:
+            arg_type = convert_to_typing(schema_data)
+            body.append(
+                {
+                    "name": "body_data",
+                    "description": schema_data.get("description", "Not specified."),
+                    "type": arg_type,
+                }
+            )
+
+    # path / query params
     params = []
     for param in data[method]["parameters"]:
         new_name = capital_case_to_snake_case(param["name"])
@@ -89,24 +120,7 @@ def generate_function(path: str, data: dict) -> str:
             "in": param["in"],
         }
 
-        if "format" not in param["schema"]:
-            arg_format = param["schema"]["type"]
-        else:
-            arg_format = param["schema"]["format"]
-
-        match arg_format:
-            case "int32" | "int64" | "byte" | "uint32":
-                arg_type = "int"
-            case "string":
-                arg_type = "str"
-            case "boolean":
-                arg_type = "bool"
-            case "date-time":
-                arg_type = "datetime.datetime"
-            case "array":
-                arg_type = "list[int]"
-            case _:
-                raise ValueError(arg_format)
+        arg_type = convert_to_typing(param["schema"])
 
         if info["in"] == "query":
             arg_type = f"Optional[{arg_type}] = None"
@@ -131,8 +145,8 @@ def generate_function(path: str, data: dict) -> str:
 
     params = sorted(params, key=lambda x: x["in"])
 
-    for param in params:
-        text += f""", {param["name"]}: {param["type"]}"""
+    for item in body + params:  # noqa
+        text += f""", {item["name"]}: {item["type"]}"""
 
     text += f""") -> dict:
         \"\"\"
@@ -148,19 +162,47 @@ def generate_function(path: str, data: dict) -> str:
     text += """
         Args:"""
 
-    for param in params:
+    for item in body + params:  # noqa
         text += f"""
-            {param["name"]}: {param["description"]}"""
-
-    # todo what errors do they raise
+            {item["name"]}: {item["description"]}"""
 
     text += f"""
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         \"\"\"
 
+        """
+
+    if body:
+        if len(body) == 1 and "og_name" not in body[0]:
+            text += f"""data = {body[0]["name"]}
+            """
+
+        else:
+            text += "data = {"
+            for item in body:
+                text += f"""
+                \"{item["og_name"]}": {item["name"]},"""
+
+            text += """
+            }
+            """
+
+    text += f"""
         return await self.request(Route(path=f"{path}", method="{method.upper()}\""""
+
+    if body:
+        text += ", data=data"
 
     for param in params:
         if param["in"] != "path":
@@ -171,6 +213,34 @@ def generate_function(path: str, data: dict) -> str:
     """
 
     return text
+
+
+def convert_to_typing(data: dict) -> str:
+    if "$ref" in data:
+        return "Any"
+
+    if "format" not in data:
+        arg_format = data["type"]
+    else:
+        arg_format = data["format"]
+
+    match arg_format:
+        case "int16" | "int32" | "int64" | "byte" | "uint32":
+            arg_type = "int"
+        case "string":
+            arg_type = "str"
+        case "boolean":
+            arg_type = "bool"
+        case "date-time":
+            arg_type = "datetime.datetime"
+        case "array":
+            arg_type = f"""list[{convert_to_typing(data["items"])}]"""
+        case "object":
+            arg_type = "Any"
+        case _:
+            raise ValueError(arg_format)
+
+    return arg_type
 
 
 def capital_case_to_snake_case(string: str) -> str:

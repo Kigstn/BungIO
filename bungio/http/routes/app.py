@@ -1,5 +1,5 @@
 import datetime
-from typing import Callable, Coroutine, Optional
+from typing import Any, Callable, Coroutine, Optional
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -27,6 +27,15 @@ class AppRequests:
             end: End time for query. Goes to now if not specified.
             start: Start time for query. Goes to 24 hours ago if not specified.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -41,6 +50,15 @@ class AppRequests:
 
         Args:
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response

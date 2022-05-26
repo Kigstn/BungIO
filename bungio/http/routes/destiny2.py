@@ -1,5 +1,5 @@
 import datetime
-from typing import Callable, Coroutine, Optional
+from typing import Any, Callable, Coroutine, Optional
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -14,6 +14,15 @@ class Destiny2Requests:
 
         Args:
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -32,6 +41,15 @@ class Destiny2Requests:
             hash_identifier: The hash identifier for the specific Entity you want returned.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -40,20 +58,43 @@ class Destiny2Requests:
             Route(path=f"/Destiny2/Manifest/{entity_type}/{hash_identifier}/", method="GET", auth=auth)
         )
 
-    async def search_destiny_player_by_bungie_name(self, membership_type: int, auth: Optional[AuthData] = None) -> dict:
+    async def search_destiny_player_by_bungie_name(
+        self, display_name: str, display_name_code: int, membership_type: int, auth: Optional[AuthData] = None
+    ) -> dict:
         """
         Returns a list of Destiny memberships given a global Bungie Display Name. This method will hide overridden memberships due to cross save.
 
         Args:
+            display_name: Not specified.
+            display_name_code: Not specified.
             membership_type: A valid non-BungieNet membership type, or All. Indicates which memberships to return. You probably want this set to All.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
+        data = {
+            "displayName": display_name,
+            "displayNameCode": display_name_code,
+        }
+
         return await self.request(
-            Route(path=f"/Destiny2/SearchDestinyPlayerByBungieName/{membership_type}/", method="POST", auth=auth)
+            Route(
+                path=f"/Destiny2/SearchDestinyPlayerByBungieName/{membership_type}/",
+                method="POST",
+                data=data,
+                auth=auth,
+            )
         )
 
     async def get_linked_profiles(
@@ -71,6 +112,15 @@ class Destiny2Requests:
             membership_type: The type for the membership whose linked Destiny accounts you want returned.
             get_all_memberships: (optional) if set to 'true', all memberships regardless of whether they're obscured by overrides will be returned. Normal privacy restrictions on account linking will still apply no matter what.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -100,6 +150,15 @@ class Destiny2Requests:
             membership_type: A valid non-BungieNet membership type.
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -132,6 +191,15 @@ class Destiny2Requests:
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -153,6 +221,15 @@ class Destiny2Requests:
             group_id: A valid group id of clan.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -165,6 +242,15 @@ class Destiny2Requests:
 
         Args:
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -189,6 +275,15 @@ class Destiny2Requests:
             membership_type: A valid non-BungieNet membership type.
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -222,6 +317,15 @@ class Destiny2Requests:
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
             filter: The filter of what vendors and items to return, if any.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -257,6 +361,15 @@ class Destiny2Requests:
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -277,6 +390,15 @@ class Destiny2Requests:
         Args:
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -304,6 +426,15 @@ class Destiny2Requests:
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -317,7 +448,16 @@ class Destiny2Requests:
             )
         )
 
-    async def transfer_item(self, auth: AuthData) -> dict:
+    async def transfer_item(
+        self,
+        item_reference_hash: int,
+        stack_size: int,
+        transfer_to_vault: bool,
+        item_id: int,
+        character_id: int,
+        membership_type: int,
+        auth: AuthData,
+    ) -> dict:
         """
         Transfer an item to/from your vault. You must have a valid Destiny account. You must also pass BOTH a reference AND an instance ID if it's an instanced item. itshappening.gif
 
@@ -325,15 +465,49 @@ class Destiny2Requests:
             Required oauth2 scopes: MoveEquipDestinyItems
 
         Args:
+            item_reference_hash: Not specified.
+            stack_size: Not specified.
+            transfer_to_vault: Not specified.
+            item_id: The instance ID of the item for this action request.
+            character_id: Not specified.
+            membership_type: Not specified.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/Destiny2/Actions/Items/TransferItem/", method="POST", auth=auth))
+        data = {
+            "itemReferenceHash": item_reference_hash,
+            "stackSize": stack_size,
+            "transferToVault": transfer_to_vault,
+            "itemId": item_id,
+            "characterId": character_id,
+            "membershipType": membership_type,
+        }
 
-    async def pull_from_postmaster(self, auth: AuthData) -> dict:
+        return await self.request(
+            Route(path=f"/Destiny2/Actions/Items/TransferItem/", method="POST", data=data, auth=auth)
+        )
+
+    async def pull_from_postmaster(
+        self,
+        item_reference_hash: int,
+        stack_size: int,
+        item_id: int,
+        character_id: int,
+        membership_type: int,
+        auth: AuthData,
+    ) -> dict:
         """
         Extract an item from the Postmaster, with whatever implications that may entail. You must have a valid Destiny account. You must also pass BOTH a reference AND an instance ID if it's an instanced item.
 
@@ -341,15 +515,39 @@ class Destiny2Requests:
             Required oauth2 scopes: MoveEquipDestinyItems
 
         Args:
+            item_reference_hash: Not specified.
+            stack_size: Not specified.
+            item_id: The instance ID of the item for this action request.
+            character_id: Not specified.
+            membership_type: Not specified.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/Destiny2/Actions/Items/PullFromPostmaster/", method="POST", auth=auth))
+        data = {
+            "itemReferenceHash": item_reference_hash,
+            "stackSize": stack_size,
+            "itemId": item_id,
+            "characterId": character_id,
+            "membershipType": membership_type,
+        }
 
-    async def equip_item(self, auth: AuthData) -> dict:
+        return await self.request(
+            Route(path=f"/Destiny2/Actions/Items/PullFromPostmaster/", method="POST", data=data, auth=auth)
+        )
+
+    async def equip_item(self, item_id: int, character_id: int, membership_type: int, auth: AuthData) -> dict:
         """
         Equip an item. You must have a valid Destiny Account, and either be in a social space, in orbit, or offline.
 
@@ -357,15 +555,35 @@ class Destiny2Requests:
             Required oauth2 scopes: MoveEquipDestinyItems
 
         Args:
+            item_id: The instance ID of the item for this action request.
+            character_id: Not specified.
+            membership_type: Not specified.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/Destiny2/Actions/Items/EquipItem/", method="POST", auth=auth))
+        data = {
+            "itemId": item_id,
+            "characterId": character_id,
+            "membershipType": membership_type,
+        }
 
-    async def equip_items(self, auth: AuthData) -> dict:
+        return await self.request(
+            Route(path=f"/Destiny2/Actions/Items/EquipItem/", method="POST", data=data, auth=auth)
+        )
+
+    async def equip_items(self, item_ids: list[int], character_id: int, membership_type: int, auth: AuthData) -> dict:
         """
         Equip a list of items by itemInstanceIds. You must have a valid Destiny Account, and either be in a social space, in orbit, or offline. Any items not found on your character will be ignored.
 
@@ -373,15 +591,37 @@ class Destiny2Requests:
             Required oauth2 scopes: MoveEquipDestinyItems
 
         Args:
+            item_ids: Not specified.
+            character_id: Not specified.
+            membership_type: Not specified.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/Destiny2/Actions/Items/EquipItems/", method="POST", auth=auth))
+        data = {
+            "itemIds": item_ids,
+            "characterId": character_id,
+            "membershipType": membership_type,
+        }
 
-    async def set_item_lock_state(self, auth: AuthData) -> dict:
+        return await self.request(
+            Route(path=f"/Destiny2/Actions/Items/EquipItems/", method="POST", data=data, auth=auth)
+        )
+
+    async def set_item_lock_state(
+        self, state: bool, item_id: int, character_id: int, membership_type: int, auth: AuthData
+    ) -> dict:
         """
         Set the Lock State for an instanced item. You must have a valid Destiny Account.
 
@@ -389,15 +629,39 @@ class Destiny2Requests:
             Required oauth2 scopes: MoveEquipDestinyItems
 
         Args:
+            state: Not specified.
+            item_id: The instance ID of the item for this action request.
+            character_id: Not specified.
+            membership_type: Not specified.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/Destiny2/Actions/Items/SetLockState/", method="POST", auth=auth))
+        data = {
+            "state": state,
+            "itemId": item_id,
+            "characterId": character_id,
+            "membershipType": membership_type,
+        }
 
-    async def set_quest_tracked_state(self, auth: AuthData) -> dict:
+        return await self.request(
+            Route(path=f"/Destiny2/Actions/Items/SetLockState/", method="POST", data=data, auth=auth)
+        )
+
+    async def set_quest_tracked_state(
+        self, state: bool, item_id: int, character_id: int, membership_type: int, auth: AuthData
+    ) -> dict:
         """
         Set the Tracking State for an instanced item, if that item is a Quest or Bounty. You must have a valid Destiny Account. Yeah, it's an item.
 
@@ -405,15 +669,45 @@ class Destiny2Requests:
             Required oauth2 scopes: MoveEquipDestinyItems
 
         Args:
+            state: Not specified.
+            item_id: The instance ID of the item for this action request.
+            character_id: Not specified.
+            membership_type: Not specified.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/Destiny2/Actions/Items/SetTrackedState/", method="POST", auth=auth))
+        data = {
+            "state": state,
+            "itemId": item_id,
+            "characterId": character_id,
+            "membershipType": membership_type,
+        }
 
-    async def insert_socket_plug(self, auth: AuthData) -> dict:
+        return await self.request(
+            Route(path=f"/Destiny2/Actions/Items/SetTrackedState/", method="POST", data=data, auth=auth)
+        )
+
+    async def insert_socket_plug(
+        self,
+        action_token: str,
+        item_instance_id: int,
+        plug: Any,
+        character_id: int,
+        membership_type: int,
+        auth: AuthData,
+    ) -> dict:
         """
         Insert a plug into a socketed item. I know how it sounds, but I assure you it's much more G-rated than you might be guessing. We haven't decided yet whether this will be able to insert plugs that have side effects, but if we do it will require special scope permission for an application attempting to do so. You must have a valid Destiny Account, and either be in a social space, in orbit, or offline. Request must include proof of permission for 'InsertPlugs' from the account owner.
 
@@ -421,15 +715,41 @@ class Destiny2Requests:
             Required oauth2 scopes: AdvancedWriteActions
 
         Args:
+            action_token: Action token provided by the AwaGetActionToken API call.
+            item_instance_id: The instance ID of the item having a plug inserted. Only instanced items can have sockets.
+            plug: The plugs being inserted.
+            character_id: Not specified.
+            membership_type: Not specified.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/Destiny2/Actions/Items/InsertSocketPlug/", method="POST", auth=auth))
+        data = {
+            "actionToken": action_token,
+            "itemInstanceId": item_instance_id,
+            "plug": plug,
+            "characterId": character_id,
+            "membershipType": membership_type,
+        }
 
-    async def insert_socket_plug_free(self, auth: AuthData) -> dict:
+        return await self.request(
+            Route(path=f"/Destiny2/Actions/Items/InsertSocketPlug/", method="POST", data=data, auth=auth)
+        )
+
+    async def insert_socket_plug_free(
+        self, plug: Any, item_id: int, character_id: int, membership_type: int, auth: AuthData
+    ) -> dict:
         """
         Insert a 'free' plug into an item's socket. This does not require 'Advanced Write Action' authorization and is available to 3rd-party apps, but will only work on 'free and reversible' socket actions (Perks, Armor Mods, Shaders, Ornaments, etc.). You must have a valid Destiny Account, and the character must either be in a social space, in orbit, or offline.
 
@@ -437,14 +757,34 @@ class Destiny2Requests:
             Required oauth2 scopes: MoveEquipDestinyItems
 
         Args:
+            plug: The plugs being inserted.
+            item_id: The instance ID of the item for this action request.
+            character_id: Not specified.
+            membership_type: Not specified.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
+        data = {
+            "plug": plug,
+            "itemId": item_id,
+            "characterId": character_id,
+            "membershipType": membership_type,
+        }
+
         return await self.request(
-            Route(path=f"/Destiny2/Actions/Items/InsertSocketPlugFree/", method="POST", auth=auth)
+            Route(path=f"/Destiny2/Actions/Items/InsertSocketPlugFree/", method="POST", data=data, auth=auth)
         )
 
     async def get_post_game_carnage_report(self, activity_id: int, auth: Optional[AuthData] = None) -> dict:
@@ -455,6 +795,15 @@ class Destiny2Requests:
             activity_id: The ID of the activity whose PGCR is requested.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -463,7 +812,14 @@ class Destiny2Requests:
             Route(path=f"/Destiny2/Stats/PostGameCarnageReport/{activity_id}/", method="GET", auth=auth)
         )
 
-    async def report_offensive_post_game_carnage_report_player(self, activity_id: int, auth: AuthData) -> dict:
+    async def report_offensive_post_game_carnage_report_player(
+        self,
+        reason_category_hashes: list[int],
+        reason_hashes: list[int],
+        offending_character_id: int,
+        activity_id: int,
+        auth: AuthData,
+    ) -> dict:
         """
         Report a player that you met in an activity that was engaging in ToS-violating activities. Both you and the offending player must have played in the activityId passed in. Please use this judiciously and only when you have strong suspicions of violation, pretty please.
 
@@ -471,15 +827,35 @@ class Destiny2Requests:
             Required oauth2 scopes: BnetWrite
 
         Args:
+            reason_category_hashes: So you've decided to report someone instead of cursing them and their descendants. Well, okay then. This is the category or categorie(s) of infractions for which you are reporting the user. These are hash identifiers that map to DestinyReportReasonCategoryDefinition entries.
+            reason_hashes: If applicable, provide a more specific reason(s) within the general category of problems provided by the reasonHash. This is also an identifier for a reason. All reasonHashes provided must be children of at least one the reasonCategoryHashes provided.
+            offending_character_id: Within the PGCR provided when calling the Reporting endpoint, this should be the character ID of the user that you thought was violating terms of use. They must exist in the PGCR provided.
             activity_id: The ID of the activity where you ran into the brigand that you're reporting.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
+        data = {
+            "reasonCategoryHashes": reason_category_hashes,
+            "reasonHashes": reason_hashes,
+            "offendingCharacterId": offending_character_id,
+        }
+
         return await self.request(
-            Route(path=f"/Destiny2/Stats/PostGameCarnageReport/{activity_id}/Report/", method="POST", auth=auth)
+            Route(
+                path=f"/Destiny2/Stats/PostGameCarnageReport/{activity_id}/Report/", method="POST", data=data, auth=auth
+            )
         )
 
     async def get_historical_stats_definition(self, auth: Optional[AuthData] = None) -> dict:
@@ -488,6 +864,15 @@ class Destiny2Requests:
 
         Args:
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -512,6 +897,15 @@ class Destiny2Requests:
             modes: List of game modes for which to get leaderboards. See the documentation for DestinyActivityModeType for valid values, and pass in string representation, comma delimited.
             statid: ID of stat to return rather than returning all Leaderboard stats.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -538,6 +932,15 @@ class Destiny2Requests:
             group_id: Group ID of the clan whose leaderboards you wish to fetch.
             modes: List of game modes for which to get leaderboards. See the documentation for DestinyActivityModeType for valid values, and pass in string representation, comma delimited.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -566,6 +969,15 @@ class Destiny2Requests:
             modes: List of game modes for which to get leaderboards. See the documentation for DestinyActivityModeType for valid values, and pass in string representation, comma delimited.
             statid: ID of stat to return rather than returning all Leaderboard stats.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -604,6 +1016,15 @@ class Destiny2Requests:
             statid: ID of stat to return rather than returning all Leaderboard stats.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -630,6 +1051,15 @@ class Destiny2Requests:
             type: The type of entity for whom you would like results. These correspond to the entity's definition contract name. For instance, if you are looking for items, this property should be 'DestinyInventoryItemDefinition'.
             page: Page number to return, starting with 0.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -665,6 +1095,15 @@ class Destiny2Requests:
             period_type: Indicates a specific period type to return. Optional. May be: Daily, AllTime, or Activity
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -697,6 +1136,15 @@ class Destiny2Requests:
             membership_type: A valid non-BungieNet membership type.
             groups: Groups of stats to include, otherwise only general stats are returned. Comma separated list is allowed. Values: General, Weapons, Medals.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -733,6 +1181,15 @@ class Destiny2Requests:
             page: Page number to return, starting with 0.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -760,6 +1217,15 @@ class Destiny2Requests:
             membership_type: A valid non-BungieNet membership type.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -784,6 +1250,15 @@ class Destiny2Requests:
             membership_type: A valid non-BungieNet membership type.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -804,6 +1279,15 @@ class Destiny2Requests:
             milestone_hash: The identifier for the milestone to be returned.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -819,13 +1303,24 @@ class Destiny2Requests:
         Args:
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
 
         return await self.request(Route(path=f"/Destiny2/Milestones/", method="GET", auth=auth))
 
-    async def awa_initialize_request(self, auth: AuthData) -> dict:
+    async def awa_initialize_request(
+        self, type: int, affected_item_id: int, membership_type: int, character_id: int, auth: AuthData
+    ) -> dict:
         """
         Initialize a request to perform an advanced write action.
 
@@ -833,26 +1328,68 @@ class Destiny2Requests:
             Required oauth2 scopes: AdvancedWriteActions
 
         Args:
+            type: Type of advanced write action.
+            affected_item_id: Item instance ID the action shall be applied to. This is optional for all but a new AwaType values. Rule of thumb is to provide the item instance ID if one is available.
+            membership_type: Destiny membership type of the account to modify.
+            character_id: Destiny character ID, if applicable, that will be affected by the action.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/Destiny2/Awa/Initialize/", method="POST", auth=auth))
+        data = {
+            "type": type,
+            "affectedItemId": affected_item_id,
+            "membershipType": membership_type,
+            "characterId": character_id,
+        }
 
-    async def awa_provide_authorization_result(self, auth: Optional[AuthData] = None) -> dict:
+        return await self.request(Route(path=f"/Destiny2/Awa/Initialize/", method="POST", data=data, auth=auth))
+
+    async def awa_provide_authorization_result(
+        self, selection: int, correlation_id: str, nonce: list[int], auth: Optional[AuthData] = None
+    ) -> dict:
         """
         Provide the result of the user interaction. Called by the Bungie Destiny App to approve or reject a request.
 
         Args:
+            selection: Indication of the selection the user has made (Approving or rejecting the action)
+            correlation_id: Correlation ID of the request
+            nonce: Secret nonce received via the PUSH notification.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/Destiny2/Awa/AwaProvideAuthorizationResult/", method="POST", auth=auth))
+        data = {
+            "selection": selection,
+            "correlationId": correlation_id,
+            "nonce": nonce,
+        }
+
+        return await self.request(
+            Route(path=f"/Destiny2/Awa/AwaProvideAuthorizationResult/", method="POST", data=data, auth=auth)
+        )
 
     async def awa_get_action_token(self, correlation_id: str, auth: AuthData) -> dict:
         """
@@ -864,6 +1401,15 @@ class Destiny2Requests:
         Args:
             correlation_id: The identifier for the advanced write action request.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response

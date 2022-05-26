@@ -1,5 +1,5 @@
 import datetime
-from typing import Callable, Coroutine, Optional
+from typing import Any, Callable, Coroutine, Optional
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -18,6 +18,15 @@ class FireteamRequests:
         Args:
             group_id: The group id of the clan.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -53,6 +62,15 @@ class FireteamRequests:
             slot_filter: Filters based on available slots
             auth: Authentication information.
             lang_filter: An optional language filter.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -92,6 +110,15 @@ class FireteamRequests:
             auth: Authentication information.
             lang_filter: An optional language filter.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -130,6 +157,15 @@ class FireteamRequests:
             group_filter: If true, filter by clan. Otherwise, ignore the clan and show all of the user's fireteams.
             lang_filter: An optional language filter.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -155,6 +191,15 @@ class FireteamRequests:
             fireteam_id: The unique id of the fireteam.
             group_id: The group id of the clan.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response

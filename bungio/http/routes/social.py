@@ -1,5 +1,5 @@
 import datetime
-from typing import Callable, Coroutine, Optional
+from typing import Any, Callable, Coroutine, Optional
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -18,6 +18,15 @@ class SocialRequests:
         Args:
             auth: Authentication information.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -33,6 +42,15 @@ class SocialRequests:
 
         Args:
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -51,6 +69,15 @@ class SocialRequests:
             membership_id: The membership id of the user you wish to add.
             auth: Authentication information.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -67,6 +94,15 @@ class SocialRequests:
         Args:
             membership_id: The membership id of the user you wish to accept.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -87,6 +123,15 @@ class SocialRequests:
             membership_id: The membership id of the user you wish to decline.
             auth: Authentication information.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -106,6 +151,15 @@ class SocialRequests:
             membership_id: The membership id of the user you wish to remove.
             auth: Authentication information.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -123,6 +177,15 @@ class SocialRequests:
             membership_id: The membership id of the user you wish to remove.
             auth: Authentication information.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -139,6 +202,15 @@ class SocialRequests:
             friend_platform: The platform friend type.
             page: The zero based page to return. Page size is 100.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response

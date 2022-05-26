@@ -1,5 +1,5 @@
 import datetime
-from typing import Callable, Coroutine, Optional
+from typing import Any, Callable, Coroutine, Optional
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -16,6 +16,15 @@ class UserRequests:
             id: The requested Bungie.net membership id.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -29,6 +38,15 @@ class UserRequests:
         Args:
             membership_id: The requested membership id to load.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -48,6 +66,15 @@ class UserRequests:
             membership_id: The user's membership id
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -62,6 +89,15 @@ class UserRequests:
 
         Args:
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -79,6 +115,15 @@ class UserRequests:
             membership_id: The membership ID of the target user.
             membership_type: Type of the supplied membership ID.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -98,6 +143,15 @@ class UserRequests:
         Args:
             auth: Authentication information.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -114,6 +168,15 @@ class UserRequests:
             credential: The credential to look up. Must be a valid SteamID64.
             cr_type: The credential type. 'SteamId' is the only valid value at present.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -134,6 +197,15 @@ class UserRequests:
             page: The zero-based page of results you desire.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -142,16 +214,32 @@ class UserRequests:
             Route(path=f"/User/Search/Prefix/{display_name_prefix}/{page}/", method="GET", auth=auth)
         )
 
-    async def search_by_global_name_post(self, page: int, auth: Optional[AuthData] = None) -> dict:
+    async def search_by_global_name_post(
+        self, display_name_prefix: str, page: int, auth: Optional[AuthData] = None
+    ) -> dict:
         """
         Given the prefix of a global display name, returns all users who share that name.
 
         Args:
+            display_name_prefix: Not specified.
             page: The zero-based page of results you desire.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/User/Search/GlobalName/{page}/", method="POST", auth=auth))
+        data = {
+            "displayNamePrefix": display_name_prefix,
+        }
+
+        return await self.request(Route(path=f"/User/Search/GlobalName/{page}/", method="POST", data=data, auth=auth))

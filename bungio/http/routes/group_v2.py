@@ -1,5 +1,5 @@
 import datetime
-from typing import Callable, Coroutine, Optional
+from typing import Any, Callable, Coroutine, Optional
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -15,6 +15,15 @@ class GroupV2Requests:
         Args:
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -27,6 +36,15 @@ class GroupV2Requests:
 
         Args:
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -44,6 +62,15 @@ class GroupV2Requests:
         Args:
             m_type: The Destiny membership type of the account we wish to access settings.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -63,6 +90,15 @@ class GroupV2Requests:
             group_type: Type of groups requested
             auth: Authentication information.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -71,18 +107,63 @@ class GroupV2Requests:
             Route(path=f"/GroupV2/Recommended/{group_type}/{create_date_range}/", method="POST", auth=auth)
         )
 
-    async def group_search(self, auth: Optional[AuthData] = None) -> dict:
+    async def group_search(
+        self,
+        name: str,
+        group_type: int,
+        creation_date: int,
+        sort_by: int,
+        group_member_count_filter: int,
+        locale_filter: str,
+        tag_text: str,
+        items_per_page: int,
+        current_page: int,
+        request_continuation_token: str,
+        auth: Optional[AuthData] = None,
+    ) -> dict:
         """
         Search for Groups.
 
         Args:
+            name: Not specified.
+            group_type: Not specified.
+            creation_date: Not specified.
+            sort_by: Not specified.
+            group_member_count_filter: Not specified.
+            locale_filter: Not specified.
+            tag_text: Not specified.
+            items_per_page: Not specified.
+            current_page: Not specified.
+            request_continuation_token: Not specified.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/GroupV2/Search/", method="POST", auth=auth))
+        data = {
+            "name": name,
+            "groupType": group_type,
+            "creationDate": creation_date,
+            "sortBy": sort_by,
+            "groupMemberCountFilter": group_member_count_filter,
+            "localeFilter": locale_filter,
+            "tagText": tag_text,
+            "itemsPerPage": items_per_page,
+            "currentPage": current_page,
+            "requestContinuationToken": request_continuation_token,
+        }
+
+        return await self.request(Route(path=f"/GroupV2/Search/", method="POST", data=data, auth=auth))
 
     async def get_group(self, group_id: int, auth: Optional[AuthData] = None) -> dict:
         """
@@ -91,6 +172,15 @@ class GroupV2Requests:
         Args:
             group_id: Requested group's id.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -107,24 +197,49 @@ class GroupV2Requests:
             group_type: Type of group to find.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
 
         return await self.request(Route(path=f"/GroupV2/Name/{group_name}/{group_type}/", method="GET", auth=auth))
 
-    async def get_group_by_name_v2(self, auth: Optional[AuthData] = None) -> dict:
+    async def get_group_by_name_v2(self, group_name: str, group_type: int, auth: Optional[AuthData] = None) -> dict:
         """
         Get information about a specific group with the given name and type. The POST version.
 
         Args:
+            group_name: Not specified.
+            group_type: Not specified.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/GroupV2/NameV2/", method="POST", auth=auth))
+        data = {
+            "groupName": group_name,
+            "groupType": group_type,
+        }
+
+        return await self.request(Route(path=f"/GroupV2/NameV2/", method="POST", data=data, auth=auth))
 
     async def get_group_optional_conversations(self, group_id: int, auth: Optional[AuthData] = None) -> dict:
         """
@@ -134,13 +249,42 @@ class GroupV2Requests:
             group_id: Requested group's id.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
 
         return await self.request(Route(path=f"/GroupV2/{group_id}/OptionalConversations/", method="GET", auth=auth))
 
-    async def edit_group(self, group_id: int, auth: AuthData) -> dict:
+    async def edit_group(
+        self,
+        name: str,
+        about: str,
+        motto: str,
+        theme: str,
+        avatar_image_index: int,
+        tags: str,
+        is_public: bool,
+        membership_option: int,
+        is_public_topic_admin_only: bool,
+        allow_chat: bool,
+        chat_security: int,
+        callsign: str,
+        locale: str,
+        homepage: int,
+        enable_invitation_messaging_for_admins: bool,
+        default_publicity: int,
+        group_id: int,
+        auth: AuthData,
+    ) -> dict:
         """
         Edit an existing group. You must have suitable permissions in the group to perform this operation. This latest revision will only edit the fields you pass in - pass null for properties you want to leave unaltered.
 
@@ -148,16 +292,71 @@ class GroupV2Requests:
             Required oauth2 scopes: AdminGroups
 
         Args:
+            name: Not specified.
+            about: Not specified.
+            motto: Not specified.
+            theme: Not specified.
+            avatar_image_index: Not specified.
+            tags: Not specified.
+            is_public: Not specified.
+            membership_option: Not specified.
+            is_public_topic_admin_only: Not specified.
+            allow_chat: Not specified.
+            chat_security: Not specified.
+            callsign: Not specified.
+            locale: Not specified.
+            homepage: Not specified.
+            enable_invitation_messaging_for_admins: Not specified.
+            default_publicity: Not specified.
             group_id: Group ID of the group to edit.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/GroupV2/{group_id}/Edit/", method="POST", auth=auth))
+        data = {
+            "name": name,
+            "about": about,
+            "motto": motto,
+            "theme": theme,
+            "avatarImageIndex": avatar_image_index,
+            "tags": tags,
+            "isPublic": is_public,
+            "membershipOption": membership_option,
+            "isPublicTopicAdminOnly": is_public_topic_admin_only,
+            "allowChat": allow_chat,
+            "chatSecurity": chat_security,
+            "callsign": callsign,
+            "locale": locale,
+            "homepage": homepage,
+            "enableInvitationMessagingForAdmins": enable_invitation_messaging_for_admins,
+            "defaultPublicity": default_publicity,
+        }
 
-    async def edit_clan_banner(self, group_id: int, auth: AuthData) -> dict:
+        return await self.request(Route(path=f"/GroupV2/{group_id}/Edit/", method="POST", data=data, auth=auth))
+
+    async def edit_clan_banner(
+        self,
+        decal_id: int,
+        decal_color_id: int,
+        decal_background_color_id: int,
+        gonfalon_id: int,
+        gonfalon_color_id: int,
+        gonfalon_detail_id: int,
+        gonfalon_detail_color_id: int,
+        group_id: int,
+        auth: AuthData,
+    ) -> dict:
         """
         Edit an existing group's clan banner. You must have suitable permissions in the group to perform this operation. All fields are required.
 
@@ -165,33 +364,122 @@ class GroupV2Requests:
             Required oauth2 scopes: AdminGroups
 
         Args:
+            decal_id: Not specified.
+            decal_color_id: Not specified.
+            decal_background_color_id: Not specified.
+            gonfalon_id: Not specified.
+            gonfalon_color_id: Not specified.
+            gonfalon_detail_id: Not specified.
+            gonfalon_detail_color_id: Not specified.
             group_id: Group ID of the group to edit.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/GroupV2/{group_id}/EditClanBanner/", method="POST", auth=auth))
+        data = {
+            "decalId": decal_id,
+            "decalColorId": decal_color_id,
+            "decalBackgroundColorId": decal_background_color_id,
+            "gonfalonId": gonfalon_id,
+            "gonfalonColorId": gonfalon_color_id,
+            "gonfalonDetailId": gonfalon_detail_id,
+            "gonfalonDetailColorId": gonfalon_detail_color_id,
+        }
 
-    async def edit_founder_options(self, group_id: int, auth: AuthData) -> dict:
+        return await self.request(
+            Route(path=f"/GroupV2/{group_id}/EditClanBanner/", method="POST", data=data, auth=auth)
+        )
+
+    async def edit_founder_options(
+        self,
+        invite_permission_override: bool,
+        update_culture_permission_override: bool,
+        host_guided_game_permission_override: int,
+        update_banner_permission_override: bool,
+        join_level: int,
+        group_id: int,
+        auth: AuthData,
+    ) -> dict:
         """
-        Edit group options only available to a founder. You must have suitable permissions in the group to perform this operation.
+                Edit group options only available to a founder. You must have suitable permissions in the group to perform this operation.
 
-        Warning: Requires Authentication.
-            Required oauth2 scopes: AdminGroups
+                Warning: Requires Authentication.
+                    Required oauth2 scopes: AdminGroups
 
-        Args:
-            group_id: Group ID of the group to edit.
-            auth: Authentication information.
+                Args:
+                    invite_permission_override: Minimum Member Level allowed to invite new members to group
 
-        Returns:
-            The json response
+        Always Allowed: Founder, Acting Founder
+
+        True means admins have this power, false means they don't
+
+        Default is false for clans, true for groups.
+                    update_culture_permission_override: Minimum Member Level allowed to update group culture
+
+        Always Allowed: Founder, Acting Founder
+
+        True means admins have this power, false means they don't
+
+        Default is false for clans, true for groups.
+                    host_guided_game_permission_override: Minimum Member Level allowed to host guided games
+
+        Always Allowed: Founder, Acting Founder, Admin
+
+        Allowed Overrides: None, Member, Beginner
+
+        Default is Member for clans, None for groups, although this means nothing for groups.
+                    update_banner_permission_override: Minimum Member Level allowed to update banner
+
+        Always Allowed: Founder, Acting Founder
+
+        True means admins have this power, false means they don't
+
+        Default is false for clans, true for groups.
+                    join_level: Level to join a member at when accepting an invite, application, or joining an open clan
+
+        Default is Beginner.
+                    group_id: Group ID of the group to edit.
+                    auth: Authentication information.
+
+                Raises:
+                    NotFound: 404 request
+                    BadRequest: 400 request
+                    InvalidAuthentication: If authentication is invalid
+                    TimeoutException: If no connection could be made
+                    BungieDead: Servers are down
+                    AuthenticationTooSlow: The authentication key has expired
+                    BungieException: Relaying the bungie error
+
+                Returns:
+                    The json response
         """
 
-        return await self.request(Route(path=f"/GroupV2/{group_id}/EditFounderOptions/", method="POST", auth=auth))
+        data = {
+            "InvitePermissionOverride": invite_permission_override,
+            "UpdateCulturePermissionOverride": update_culture_permission_override,
+            "HostGuidedGamePermissionOverride": host_guided_game_permission_override,
+            "UpdateBannerPermissionOverride": update_banner_permission_override,
+            "JoinLevel": join_level,
+        }
 
-    async def add_optional_conversation(self, group_id: int, auth: AuthData) -> dict:
+        return await self.request(
+            Route(path=f"/GroupV2/{group_id}/EditFounderOptions/", method="POST", data=data, auth=auth)
+        )
+
+    async def add_optional_conversation(
+        self, chat_name: str, chat_security: int, group_id: int, auth: AuthData
+    ) -> dict:
         """
         Add a new optional conversation/chat channel. Requires admin permissions to the group.
 
@@ -199,18 +487,42 @@ class GroupV2Requests:
             Required oauth2 scopes: AdminGroups
 
         Args:
+            chat_name: Not specified.
+            chat_security: Not specified.
             group_id: Group ID of the group to edit.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
+        data = {
+            "chatName": chat_name,
+            "chatSecurity": chat_security,
+        }
+
         return await self.request(
-            Route(path=f"/GroupV2/{group_id}/OptionalConversations/Add/", method="POST", auth=auth)
+            Route(path=f"/GroupV2/{group_id}/OptionalConversations/Add/", method="POST", data=data, auth=auth)
         )
 
-    async def edit_optional_conversation(self, conversation_id: int, group_id: int, auth: AuthData) -> dict:
+    async def edit_optional_conversation(
+        self,
+        chat_enabled: bool,
+        chat_name: str,
+        chat_security: int,
+        conversation_id: int,
+        group_id: int,
+        auth: AuthData,
+    ) -> dict:
         """
         Edit the settings of an optional conversation/chat channel. Requires admin permissions to the group.
 
@@ -218,16 +530,39 @@ class GroupV2Requests:
             Required oauth2 scopes: AdminGroups
 
         Args:
+            chat_enabled: Not specified.
+            chat_name: Not specified.
+            chat_security: Not specified.
             conversation_id: Conversation Id of the channel being edited.
             group_id: Group ID of the group to edit.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
+        data = {
+            "chatEnabled": chat_enabled,
+            "chatName": chat_name,
+            "chatSecurity": chat_security,
+        }
+
         return await self.request(
-            Route(path=f"/GroupV2/{group_id}/OptionalConversations/Edit/{conversation_id}/", method="POST", auth=auth)
+            Route(
+                path=f"/GroupV2/{group_id}/OptionalConversations/Edit/{conversation_id}/",
+                method="POST",
+                data=data,
+                auth=auth,
+            )
         )
 
     async def get_members_of_group(
@@ -247,6 +582,15 @@ class GroupV2Requests:
             member_type: Filter out other member types. Use None for all members.
             name_search: The name fragment upon which a search should be executed for members with matching display or unique names.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -273,6 +617,15 @@ class GroupV2Requests:
             group_id: The ID of the group.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -294,6 +647,15 @@ class GroupV2Requests:
             membership_type: Membership type of the provide membership ID.
             member_type: New membertype for the specified member.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -320,6 +682,15 @@ class GroupV2Requests:
             membership_type: Membership type of the provided membership ID.
             auth: Authentication information.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -328,7 +699,9 @@ class GroupV2Requests:
             Route(path=f"/GroupV2/{group_id}/Members/{membership_type}/{membership_id}/Kick/", method="POST", auth=auth)
         )
 
-    async def ban_member(self, group_id: int, membership_id: int, membership_type: int, auth: AuthData) -> dict:
+    async def ban_member(
+        self, comment: str, length: int, group_id: int, membership_id: int, membership_type: int, auth: AuthData
+    ) -> dict:
         """
         Bans the requested member from the requested group for the specified period of time.
 
@@ -336,17 +709,38 @@ class GroupV2Requests:
             Required oauth2 scopes: AdminGroups
 
         Args:
+            comment: Not specified.
+            length: Not specified.
             group_id: Group ID that has the member to ban.
             membership_id: Membership ID of the member to ban from the group.
             membership_type: Membership type of the provided membership ID.
             auth: Authentication information.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
 
+        data = {
+            "comment": comment,
+            "length": length,
+        }
+
         return await self.request(
-            Route(path=f"/GroupV2/{group_id}/Members/{membership_type}/{membership_id}/Ban/", method="POST", auth=auth)
+            Route(
+                path=f"/GroupV2/{group_id}/Members/{membership_type}/{membership_id}/Ban/",
+                method="POST",
+                data=data,
+                auth=auth,
+            )
         )
 
     async def unban_member(self, group_id: int, membership_id: int, membership_type: int, auth: AuthData) -> dict:
@@ -361,6 +755,15 @@ class GroupV2Requests:
             membership_id: Membership ID of the member to unban from the group
             membership_type: Membership type of the provided membership ID.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -384,6 +787,15 @@ class GroupV2Requests:
             group_id: Group ID whose banned members you are fetching
             auth: Authentication information.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -401,6 +813,15 @@ class GroupV2Requests:
             group_id: The target group id.
             membership_type: Membership type of the provided founderIdNew.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -426,6 +847,15 @@ class GroupV2Requests:
             group_id: ID of the group.
             auth: Authentication information.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -444,6 +874,15 @@ class GroupV2Requests:
             group_id: ID of the group.
             auth: Authentication information.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -452,7 +891,7 @@ class GroupV2Requests:
             Route(path=f"/GroupV2/{group_id}/Members/InvitedIndividuals/", method="GET", auth=auth)
         )
 
-    async def approve_all_pending(self, group_id: int, auth: AuthData) -> dict:
+    async def approve_all_pending(self, message: str, group_id: int, auth: AuthData) -> dict:
         """
         Approve all of the pending users for the given group.
 
@@ -460,16 +899,32 @@ class GroupV2Requests:
             Required oauth2 scopes: AdminGroups
 
         Args:
+            message: Not specified.
             group_id: ID of the group.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/GroupV2/{group_id}/Members/ApproveAll/", method="POST", auth=auth))
+        data = {
+            "message": message,
+        }
 
-    async def deny_all_pending(self, group_id: int, auth: AuthData) -> dict:
+        return await self.request(
+            Route(path=f"/GroupV2/{group_id}/Members/ApproveAll/", method="POST", data=data, auth=auth)
+        )
+
+    async def deny_all_pending(self, message: str, group_id: int, auth: AuthData) -> dict:
         """
         Deny all of the pending users for the given group.
 
@@ -477,16 +932,34 @@ class GroupV2Requests:
             Required oauth2 scopes: AdminGroups
 
         Args:
+            message: Not specified.
             group_id: ID of the group.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/GroupV2/{group_id}/Members/DenyAll/", method="POST", auth=auth))
+        data = {
+            "message": message,
+        }
 
-    async def approve_pending_for_list(self, group_id: int, auth: AuthData) -> dict:
+        return await self.request(
+            Route(path=f"/GroupV2/{group_id}/Members/DenyAll/", method="POST", data=data, auth=auth)
+        )
+
+    async def approve_pending_for_list(
+        self, memberships: list[Any], message: str, group_id: int, auth: AuthData
+    ) -> dict:
         """
         Approve all of the pending users for the given group.
 
@@ -494,16 +967,36 @@ class GroupV2Requests:
             Required oauth2 scopes: AdminGroups
 
         Args:
+            memberships: Not specified.
+            message: Not specified.
             group_id: ID of the group.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/GroupV2/{group_id}/Members/ApproveList/", method="POST", auth=auth))
+        data = {
+            "memberships": memberships,
+            "message": message,
+        }
 
-    async def approve_pending(self, group_id: int, membership_id: int, membership_type: int, auth: AuthData) -> dict:
+        return await self.request(
+            Route(path=f"/GroupV2/{group_id}/Members/ApproveList/", method="POST", data=data, auth=auth)
+        )
+
+    async def approve_pending(
+        self, message: str, group_id: int, membership_id: int, membership_type: int, auth: AuthData
+    ) -> dict:
         """
         Approve the given membershipId to join the group/clan as long as they have applied.
 
@@ -511,22 +1004,39 @@ class GroupV2Requests:
             Required oauth2 scopes: AdminGroups
 
         Args:
+            message: Not specified.
             group_id: ID of the group.
             membership_id: The membership id being approved.
             membership_type: Membership type of the supplied membership ID.
             auth: Authentication information.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
 
+        data = {
+            "message": message,
+        }
+
         return await self.request(
             Route(
-                path=f"/GroupV2/{group_id}/Members/Approve/{membership_type}/{membership_id}/", method="POST", auth=auth
+                path=f"/GroupV2/{group_id}/Members/Approve/{membership_type}/{membership_id}/",
+                method="POST",
+                data=data,
+                auth=auth,
             )
         )
 
-    async def deny_pending_for_list(self, group_id: int, auth: AuthData) -> dict:
+    async def deny_pending_for_list(self, memberships: list[Any], message: str, group_id: int, auth: AuthData) -> dict:
         """
         Deny all of the pending users for the given group that match the passed-in .
 
@@ -534,14 +1044,32 @@ class GroupV2Requests:
             Required oauth2 scopes: AdminGroups
 
         Args:
+            memberships: Not specified.
+            message: Not specified.
             group_id: ID of the group.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
         """
 
-        return await self.request(Route(path=f"/GroupV2/{group_id}/Members/DenyList/", method="POST", auth=auth))
+        data = {
+            "memberships": memberships,
+            "message": message,
+        }
+
+        return await self.request(
+            Route(path=f"/GroupV2/{group_id}/Members/DenyList/", method="POST", data=data, auth=auth)
+        )
 
     async def get_groups_for_member(
         self, filter: int, group_type: int, membership_id: int, membership_type: int, auth: Optional[AuthData] = None
@@ -555,6 +1083,15 @@ class GroupV2Requests:
             membership_id: Membership ID to for which to find founded groups.
             membership_type: Membership type of the supplied membership ID.
             auth: Authentication information. Required when users with a private profile are queried.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response
@@ -578,6 +1115,15 @@ class GroupV2Requests:
             membership_type: Membership type of the supplied membership ID.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -599,6 +1145,15 @@ class GroupV2Requests:
             membership_type: Membership type of the supplied membership ID.
             auth: Authentication information. Required when users with a private profile are queried.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
@@ -612,7 +1167,7 @@ class GroupV2Requests:
         )
 
     async def individual_group_invite(
-        self, group_id: int, membership_id: int, membership_type: int, auth: AuthData
+        self, message: str, group_id: int, membership_id: int, membership_type: int, auth: AuthData
     ) -> dict:
         """
         Invite a user to join this group.
@@ -621,19 +1176,34 @@ class GroupV2Requests:
             Required oauth2 scopes: AdminGroups
 
         Args:
+            message: Not specified.
             group_id: ID of the group you would like to join.
             membership_id: Membership id of the account being invited.
             membership_type: MembershipType of the account being invited.
             auth: Authentication information.
 
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
         Returns:
             The json response
         """
+
+        data = {
+            "message": message,
+        }
 
         return await self.request(
             Route(
                 path=f"/GroupV2/{group_id}/Members/IndividualInvite/{membership_type}/{membership_id}/",
                 method="POST",
+                data=data,
                 auth=auth,
             )
         )
@@ -652,6 +1222,15 @@ class GroupV2Requests:
             membership_id: Membership id of the account being cancelled.
             membership_type: MembershipType of the account being cancelled.
             auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
         Returns:
             The json response

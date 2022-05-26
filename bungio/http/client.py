@@ -100,7 +100,7 @@ class HttpClient(AllRequests, AuthRequests, metaclass=SingletonMetaclass):
         method: str,
         headers: dict,
         params: Optional[dict] = None,
-        data: Optional[dict] = None,
+        data: Optional[dict | list] = None,
         form_data: Optional[dict] = None,
         auth: Optional[AuthData] = None,
         use_ratelimiter: bool = True,
