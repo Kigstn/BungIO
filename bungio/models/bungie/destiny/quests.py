@@ -1,0 +1,62 @@
+import datetime
+from typing import TYPE_CHECKING, Any, Optional
+
+import attr
+
+from bungio.models.base import BaseEnum, BaseModel
+
+
+@attr.define
+class DestinyObjectiveProgress(BaseModel):
+    """
+        Returns data about a character's status with a given Objective. Combine with DestinyObjectiveDefinition static data for display purposes.
+
+        Attributes:
+            objective_hash: The unique identifier of the Objective being referred to. Use to look up the DestinyObjectiveDefinition in static data.
+            destination_hash: If the Objective has a Destination associated with it, this is the unique identifier of the Destination being referred to. Use to look up the DestinyDestinationDefinition in static data. This will give localized data about *where* in the universe the objective should be achieved.
+            activity_hash: If the Objective has an Activity associated with it, this is the unique identifier of the Activity being referred to. Use to look up the DestinyActivityDefinition in static data. This will give localized data about *what* you should be playing for the objective to be achieved.
+            progress: If progress has been made, and the progress can be measured numerically, this will be the value of that progress. You can compare it to the DestinyObjectiveDefinition.completionValue property for current vs. upper bounds, and use DestinyObjectiveDefinition.inProgressValueStyle or completedValueStyle to determine how this should be rendered. Note that progress, in Destiny 2, need not be a literal numeric progression. It could be one of a number of possible values, even a Timestamp. Always examine DestinyObjectiveDefinition.inProgressValueStyle or completedValueStyle before rendering progress.
+            completion_value: As of Forsaken, objectives' completion value is determined dynamically at runtime.
+
+    This value represents the threshold of progress you need to surpass in order for this objective to be considered "complete".
+
+    If you were using objective data, switch from using the DestinyObjectiveDefinition's "completionValue" to this value.
+            complete: Whether or not the Objective is completed.
+            visible: If this is true, the objective is visible in-game. Otherwise, it's not yet visible to the player. Up to you if you want to honor this property.
+    """
+
+    objective_hash: int = attr.field()
+    destination_hash: int = attr.field()
+    activity_hash: int = attr.field()
+    progress: int = attr.field()
+    completion_value: int = attr.field()
+    complete: bool = attr.field()
+    visible: bool = attr.field()
+
+
+@attr.define
+class DestinyQuestStatus(BaseModel):
+    """
+    Data regarding the progress of a Quest for a specific character. Quests are composed of multiple steps, each with potentially multiple objectives: this QuestStatus will return Objective data for the *currently active* step in this quest.
+
+    Attributes:
+        quest_hash: The hash identifier for the Quest Item. (Note: Quests are defined as Items, and thus you would use this to look up the quest's DestinyInventoryItemDefinition). For information on all steps in the quest, you can then examine its DestinyInventoryItemDefinition.setData property for Quest Steps (which are *also* items). You can use the Item Definition to display human readable data about the overall quest.
+        step_hash: The hash identifier of the current Quest Step, which is also a DestinyInventoryItemDefinition. You can use this to get human readable data about the current step and what to do in that step.
+        step_objectives: A step can have multiple objectives. This will give you the progress for each objective in the current step, in the order in which they are rendered in-game.
+        tracked: Whether or not the quest is tracked
+        item_instance_id: The current Quest Step will be an instanced item in the player's inventory. If you care about that, this is the instance ID of that item.
+        completed: Whether or not the whole quest has been completed, regardless of whether or not you have redeemed the rewards for the quest.
+        redeemed: Whether or not you have redeemed rewards for this quest.
+        started: Whether or not you have started this quest.
+        vendor_hash: If the quest has a related Vendor that you should talk to in order to initiate the quest/earn rewards/continue the quest, this will be the hash identifier of that Vendor. Look it up its DestinyVendorDefinition.
+    """
+
+    quest_hash: int = attr.field()
+    step_hash: int = attr.field()
+    step_objectives: list["DestinyObjectiveProgress"] = attr.field()
+    tracked: bool = attr.field()
+    item_instance_id: int = attr.field()
+    completed: bool = attr.field()
+    redeemed: bool = attr.field()
+    started: bool = attr.field()
+    vendor_hash: int = attr.field()

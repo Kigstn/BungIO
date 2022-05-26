@@ -1,11 +1,18 @@
 from __future__ import annotations
 
+from enum import Enum
 from typing import TYPE_CHECKING
 
 import attr
 
 if TYPE_CHECKING:
     from bungio.client import Client
+
+
+# todo base enum
+@attr.define(kw_only=True)
+class BaseEnum(Enum):
+    pass
 
 
 @attr.define(kw_only=True)

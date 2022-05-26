@@ -1,0 +1,26 @@
+import datetime
+from typing import TYPE_CHECKING, Any, Optional
+
+import attr
+
+from bungio.models.base import BaseEnum, BaseModel
+
+
+@attr.define
+class DestinyEnvironmentLocationMapping(BaseModel):
+    """
+    Not specified.
+
+    Attributes:
+        location_hash: The location that is revealed on the director by this mapping.
+        activation_source: A hint that the UI uses to figure out how this location is activated by the player.
+        item_hash: If this is populated, it is the item that you must possess for this location to be active because of this mapping. (theoretically, a location can have multiple mappings, and some might require an item while others don't)
+        objective_hash: If this is populated, this is an objective related to the location.
+        activity_hash: If this is populated, this is the activity you have to be playing in order to see this location appear because of this mapping. (theoretically, a location can have multiple mappings, and some might require you to be in a specific activity when others don't)
+    """
+
+    location_hash: int = attr.field()
+    activation_source: str = attr.field()
+    item_hash: int = attr.field()
+    objective_hash: int = attr.field()
+    activity_hash: int = attr.field()

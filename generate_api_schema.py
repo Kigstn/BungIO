@@ -1,5 +1,6 @@
 import os
 import re
+from typing import Optional
 
 import requests
 
@@ -9,6 +10,9 @@ from bungio.definitions import ROOT_DIR
 def main():
     resp = requests.get(url="https://raw.githubusercontent.com/Bungie-net/api/master/openapi.json")
     api_schema = resp.json()
+
+    generate_models(api_schema)
+    generate_manifest_info(api_schema)
 
     # paths
     base_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "bungio/http/routes")
@@ -35,7 +39,7 @@ class {topic}Requests:
         for path, data in routes.items():
             text += generate_function(path, data, api_schema)
         file_path = os.path.join(base_path, f"{capital_case_to_snake_case(topic)}.py")
-        with open(file_path, "w") as file:
+        with open(file_path, "w", encoding="utf-8") as file:
             file.write(text)
 
         relative_path = os.path.relpath(file_path, ROOT_DIR).replace(".py", "").replace(os.sep, ".")
@@ -44,7 +48,7 @@ class {topic}Requests:
         docs_path = os.path.join(
             ROOT_DIR, f"docs/src/API Reference/HTTP/Bungie Routes/{capital_case_to_snake_case(topic)}.md"
         )
-        with open(docs_path, "w") as file:
+        with open(docs_path, "w", encoding="utf-8") as file:
             file.write(
                 f"""# {topic} Routes
 
@@ -61,13 +65,14 @@ class {topic}Requests:
 class AllRequests({", ".join(list(names))}):
     pass
 """
-    with open(os.path.join(base_path, "__init__.py"), "w") as file:
+    with open(os.path.join(base_path, "__init__.py"), "w", encoding="utf-8") as file:
         file.write(init_text)
 
     os.system(f"""black "{base_path}\"""")
 
 
 def generate_function(path: str, data: dict, full_data: dict) -> str:
+    # make the class text
     text = f"""
     async def {capital_case_to_snake_case(data["summary"].split(".")[1])}(self"""
 
@@ -215,9 +220,17 @@ def generate_function(path: str, data: dict, full_data: dict) -> str:
     return text
 
 
-def convert_to_typing(data: dict) -> str:
+def convert_to_typing(
+    data: dict, return_class_names: bool = False, path: Optional[str] = None, file_imports: Optional[set] = None
+) -> str:
     if "$ref" in data:
-        return "Any"
+        if return_class_names:
+            import_path, import_name = get_import_name_from_ref(data["$ref"])
+            if file_imports and path and import_path != path:
+                file_imports.add(f"    from bungio.models.bungie.{path} import {import_name}")
+            return f'"{import_name}"'
+        else:
+            return "Any"
 
     if "format" not in data:
         arg_format = data["type"]
@@ -227,6 +240,8 @@ def convert_to_typing(data: dict) -> str:
     match arg_format:
         case "int16" | "int32" | "int64" | "byte" | "uint32":
             arg_type = "int"
+        case "double" | "float":
+            arg_type = "float"
         case "string":
             arg_type = "str"
         case "boolean":
@@ -234,7 +249,7 @@ def convert_to_typing(data: dict) -> str:
         case "date-time":
             arg_type = "datetime.datetime"
         case "array":
-            arg_type = f"""list[{convert_to_typing(data["items"])}]"""
+            arg_type = f"""list[{convert_to_typing(data["items"], return_class_names=return_class_names, file_imports=file_imports, path=path)}]"""
         case "object":
             arg_type = "Any"
         case _:
@@ -246,6 +261,142 @@ def convert_to_typing(data: dict) -> str:
 def capital_case_to_snake_case(string: str) -> str:
     string = f"{string[0].upper()}{string[1:]}"
     return "_".join(re.findall("[A-Z][^A-Z]*", string)).lower()
+
+
+def get_import_name_from_ref(string: str) -> tuple[str, str]:
+    """Like #/components/responses/User.GeneralUser"""
+    strings = string.split("/")[-1].split(".")
+
+    path = ".".join([s.lower() for s in strings[:-1]])
+    import_name = strings[-1]
+
+    return path, import_name
+
+
+def generate_manifest_info(api_schema: dict):
+    pass
+    # todo
+    # base_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "bungio/models/manifest")
+    #
+    # resp = requests.get(url="https://www.bungie.net/Platform/Destiny2/Manifest")
+    # manifest = list(resp.json()["Response"]["jsonWorldComponentContentPaths"]["en"])
+    #
+    #
+    # print(1)
+    #
+    # # todo docs
+
+
+def generate_models(api_schema: dict):
+    base_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "bungio/models/bungie")
+    docs_path = os.path.join(
+        os.path.dirname(os.path.realpath(__file__)), "docs/src/API Reference/Models/Bungie API Models"
+    )
+
+    by_path: dict[str, list[dict]] = {}
+    for name, schema in api_schema["components"]["schemas"].items():
+        path, import_name = get_import_name_from_ref(name)
+        if path == "":
+            path = "misc"
+        if path not in by_path:
+            by_path[path] = []
+        by_path[path].append({"name": import_name, **schema})
+
+    for path, models in by_path.items():
+        text = """import attr
+import datetime
+
+from typing import Optional, Any, TYPE_CHECKING
+
+from bungio.models.base import BaseModel, BaseEnum
+
+{imports}"""
+
+        file_imports = set()
+        for model in models:
+            model_text = generate_model(api_schema, model, path, file_imports)
+            text += f"""
+{model_text}
+            """
+
+        formatted_imports = "\n".join(list(file_imports))
+        if file_imports:
+            formatted_imports = f"""
+if TYPE_CHECKING:
+    {formatted_imports}"""
+        text = text.format(imports=formatted_imports)
+        file_path = os.path.join(base_path, f"""{path.replace(".", "/")}.py""")
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        with open(file_path, "w", encoding="utf-8") as file:
+            file.write(text)
+
+        # todo write the init files
+
+        file_path = os.path.join(docs_path, f"""{path.replace(".", "/")}.md""")
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        with open(file_path, "w", encoding="utf-8") as file:
+            file.write(
+                f"""# {path.split(".")[-1].capitalize()} API Models
+
+::: bungio.models.bungie.{path}
+"""
+            )
+    os.system(f"""black "{base_path}\"""")
+
+
+def generate_model(api_schema: dict, model: dict, path: str, file_imports: set) -> str:
+    """
+    Returns:
+        text, list of required imports
+    """
+    text = ""
+
+    # enums
+    if data := model.get("x-enum-values", None):
+        text = f"""
+class {model["name"]}(BaseEnum):
+    \"\"\"
+    {model.get("description", "Not specified.")}
+    \"\"\"
+"""
+        for item in data:
+            text += f"""
+    {capital_case_to_snake_case(item["identifier"]).upper()} = {item["numericValue"]}
+    \"\"\"{item.get("description", "Not specified.")} \"\"\""""
+
+    # classes
+    elif model["type"] == "object":
+        if "properties" not in model:
+            return ""
+
+        text = f"""
+@attr.define
+class {model["name"]}(BaseModel):
+    \"\"\"
+    {model.get("description", "Not specified.")}
+
+    Attributes:"""
+
+        for name, data in model["properties"].items():
+            text += f"""
+        {capital_case_to_snake_case(name)}: {data.get("description", "Not specified.")}"""
+
+        text += """
+    \"\"\"
+"""
+
+        for name, data in model["properties"].items():
+            text += f"""
+    {capital_case_to_snake_case(name)}: {convert_to_typing(data, return_class_names=True, file_imports=file_imports, path=path)} = attr.field()"""
+
+    # arrays
+    elif model["type"] == "array":
+        return ""
+
+    else:
+        raise ValueError(model)
+
+    return text
 
 
 main()
