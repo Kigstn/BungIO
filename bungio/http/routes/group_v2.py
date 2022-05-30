@@ -5,7 +5,7 @@ from bungio.http.route import Route
 from bungio.models.auth import AuthData
 
 
-class GroupV2Requests:
+class GroupV2RouteHttpRequests:
     request: Callable[..., Coroutine]
 
     async def get_available_avatars(self, auth: Optional[AuthData] = None) -> dict:

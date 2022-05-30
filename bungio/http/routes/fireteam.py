@@ -5,7 +5,7 @@ from bungio.http.route import Route
 from bungio.models.auth import AuthData
 
 
-class FireteamRequests:
+class FireteamRouteHttpRequests:
     request: Callable[..., Coroutine]
 
     async def get_active_private_clan_fireteam_count(self, group_id: int, auth: AuthData) -> dict:

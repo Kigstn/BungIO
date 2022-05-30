@@ -5,7 +5,7 @@ from bungio.http.route import Route
 from bungio.models.auth import AuthData
 
 
-class Destiny2Requests:
+class Destiny2RouteHttpRequests:
     request: Callable[..., Coroutine]
 
     async def get_destiny_manifest(self, auth: Optional[AuthData] = None) -> dict:

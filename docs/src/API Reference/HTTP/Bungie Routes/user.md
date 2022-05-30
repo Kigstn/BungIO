@@ -1,3 +1,3 @@
-# User Routes
+# User HTTP Routes
 
 ::: bungio.http.routes.user

@@ -5,7 +5,7 @@ from bungio.http.route import Route
 from bungio.models.auth import AuthData
 
 
-class TokensRequests:
+class TokensRouteHttpRequests:
     request: Callable[..., Coroutine]
 
     async def claim_partner_offer(

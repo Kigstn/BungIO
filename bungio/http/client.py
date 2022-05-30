@@ -23,10 +23,10 @@ from bungio.error import (
     _InvalidAuthentication,
     _RouteError,
 )
-from bungio.http.auth import AuthRequests
+from bungio.http.auth import AuthHttpRequests
 from bungio.http.ratelimiting import RateLimiter
 from bungio.http.route import Route
-from bungio.http.routes import AllRequests
+from bungio.http.routes import AllRouteHttpRequests
 from bungio.models.auth import AuthData
 from bungio.singleton import SingletonMetaclass
 from bungio.utils import get_now_with_tz
@@ -40,7 +40,7 @@ __all__ = ("HttpClient",)
 token_update_lock: dict[int, Lock] = {}
 
 
-class HttpClient(AllRequests, AuthRequests, metaclass=SingletonMetaclass):
+class HttpClient(AllHttpRequests, AuthHttpRequests, metaclass=SingletonMetaclass):
     """
     The singleton http client doing all communication with bungie
     """

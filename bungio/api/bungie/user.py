@@ -1,0 +1,189 @@
+import datetime
+from typing import Any, Optional
+
+import attr
+
+from bungio.models.auth import AuthData
+from bungio.models.base import BaseModel
+from bungio.models.bungie.config import UserTheme
+from bungio.models.bungie.user import (
+    GeneralUser,
+    HardLinkedUserMembership,
+    UserMembershipData,
+    UserSearchPrefixRequest,
+    UserSearchResponse,
+)
+from bungio.models.bungie.user.models import GetCredentialTypesForAccountResponse
+
+
+@attr.define
+class UserRouteInterface(BaseModel):
+    async def get_bungie_net_user_by_id(self, id: int, auth: Optional[AuthData] = None) -> GeneralUser:
+        """
+        Loads a bungienet user by membership id.
+
+        Args:
+            id: The requested Bungie.net membership id.
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/user/#bungio.models.bungie.user.GeneralUser) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_bungie_net_user_by_id(id=id, auth=auth)
+        return GeneralUser.from_dict(data=response, client=self._client)
+
+    async def get_sanitized_platform_display_names(self, membership_id: int, auth: Optional[AuthData] = None) -> Any:
+        """
+        Gets a list of all display names linked to this membership id but sanitized (profanity filtered). Obeys all visibility rules of calling user and is heavily cached.
+
+        Args:
+            membership_id: The requested membership id to load.
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models//#.Any) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_sanitized_platform_display_names(membership_id=membership_id, auth=auth)
+        return response["Result"]
+
+    async def get_credential_types_for_target_account(
+        self, membership_id: int, auth: Optional[AuthData] = None
+    ) -> list[GetCredentialTypesForAccountResponse]:
+        """
+        Returns a list of credential types attached to the requested account
+
+        Args:
+            membership_id: The user's membership id
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/user.models/#bungio.models.bungie.user.models.GetCredentialTypesForAccountResponse) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_credential_types_for_target_account(
+            membership_id=membership_id, auth=auth
+        )
+        return [
+            GetCredentialTypesForAccountResponse.from_dict(data=entry, client=self._client)
+            for entry in response["Result"]
+        ]
+
+    async def get_available_themes(self, auth: Optional[AuthData] = None) -> list[UserTheme]:
+        """
+        Returns a list of all available user themes.
+
+        Args:
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/config/#bungio.models.bungie.config.UserTheme) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_available_themes(auth=auth)
+        return [UserTheme.from_dict(data=entry, client=self._client) for entry in response["Result"]]
+
+    async def get_membership_data_by_id(
+        self, membership_id: int, membership_type: int, auth: Optional[AuthData] = None
+    ) -> UserMembershipData:
+        """
+        Returns a list of accounts associated with the supplied membership ID and membership type. This will include all linked accounts (even when hidden) if supplied credentials permit it.
+
+        Args:
+            membership_id: The membership ID of the target user.
+            membership_type: Type of the supplied membership ID.
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/user/#bungio.models.bungie.user.UserMembershipData) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_membership_data_by_id(
+            membership_id=membership_id, membership_type=membership_type, auth=auth
+        )
+        return UserMembershipData.from_dict(data=response, client=self._client)
+
+    async def get_membership_data_for_current_user(self, auth: AuthData) -> UserMembershipData:
+        """
+        Returns a list of accounts associated with signed in user. This is useful for OAuth implementations that do not give you access to the token response.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: ReadBasicUserProfile
+
+        Args:
+            auth: Authentication information.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/user/#bungio.models.bungie.user.UserMembershipData) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_membership_data_for_current_user(auth=auth)
+        return UserMembershipData.from_dict(data=response, client=self._client)
+
+    async def get_membership_from_hard_linked_credential(
+        self, credential: str, cr_type: int, auth: Optional[AuthData] = None
+    ) -> HardLinkedUserMembership:
+        """
+        Gets any hard linked membership given a credential. Only works for credentials that are public (just SteamID64 right now). Cross Save aware.
+
+        Args:
+            credential: The credential to look up. Must be a valid SteamID64.
+            cr_type: The credential type. 'SteamId' is the only valid value at present.
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/user/#bungio.models.bungie.user.HardLinkedUserMembership) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_membership_from_hard_linked_credential(
+            credential=credential, cr_type=cr_type, auth=auth
+        )
+        return HardLinkedUserMembership.from_dict(data=response, client=self._client)
+
+    async def search_by_global_name_prefix(
+        self, display_name_prefix: str, page: int, auth: Optional[AuthData] = None
+    ) -> UserSearchResponse:
+        """
+        [OBSOLETE] Do not use this to search users, use SearchByGlobalNamePost instead.
+
+        Args:
+            display_name_prefix: The display name prefix you're looking for.
+            page: The zero-based page of results you desire.
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/user/#bungio.models.bungie.user.UserSearchResponse) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.search_by_global_name_prefix(
+            display_name_prefix=display_name_prefix, page=page, auth=auth
+        )
+        return UserSearchResponse.from_dict(data=response, client=self._client)
+
+    async def search_by_global_name_post(
+        self, data: UserSearchPrefixRequest, page: int, auth: Optional[AuthData] = None
+    ) -> UserSearchResponse:
+        """
+        Given the prefix of a global display name, returns all users who share that name.
+
+        Args:
+            data: The required data for this request.
+            page: The zero-based page of results you desire.
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/user/#bungio.models.bungie.user.UserSearchResponse) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.search_by_global_name_post(page=page, auth=auth, **data.to_dict())
+        return UserSearchResponse.from_dict(data=response, client=self._client)

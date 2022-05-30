@@ -5,7 +5,7 @@ from bungio.http.route import Route
 from bungio.models.auth import AuthData
 
 
-class SocialRequests:
+class SocialRouteHttpRequests:
     request: Callable[..., Coroutine]
 
     async def get_friend_list(self, auth: AuthData) -> dict:

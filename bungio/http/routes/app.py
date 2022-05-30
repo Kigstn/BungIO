@@ -5,7 +5,7 @@ from bungio.http.route import Route
 from bungio.models.auth import AuthData
 
 
-class AppRequests:
+class AppRouteHttpRequests:
     request: Callable[..., Coroutine]
 
     async def get_application_api_usage(

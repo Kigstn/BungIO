@@ -1,0 +1,121 @@
+import datetime
+from typing import Any, Optional
+
+import attr
+
+from bungio.models.auth import AuthData
+from bungio.models.base import BaseModel
+from bungio.models.bungie.tokens import (
+    PartnerOfferClaimRequest,
+    PartnerOfferSkuHistoryResponse,
+)
+
+
+@attr.define
+class TokensRouteInterface(BaseModel):
+    async def claim_partner_offer(self, data: PartnerOfferClaimRequest, auth: AuthData) -> bool:
+        """
+        Claim a partner offer as the authenticated user.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: PartnerOfferGrant
+
+        Args:
+            data: The required data for this request.
+            auth: Authentication information.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models//#.bool) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.claim_partner_offer(auth=auth, **data.to_dict())
+        return response["Result"]
+
+    async def apply_missing_partner_offers_without_claim(
+        self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData
+    ) -> bool:
+        """
+        Apply a partner offer to the targeted user. This endpoint does not claim a new offer, but any already claimed offers will be applied to the game if not already.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: PartnerOfferGrant
+
+        Args:
+            partner_application_id: The partner application identifier.
+            target_bnet_membership_id: The bungie.net user to apply missing offers to. If not self, elevated permissions are required.
+            auth: Authentication information.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models//#.bool) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.apply_missing_partner_offers_without_claim(
+            partner_application_id=partner_application_id,
+            target_bnet_membership_id=target_bnet_membership_id,
+            auth=auth,
+        )
+        return response["Result"]
+
+    async def get_partner_offer_sku_history(
+        self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData
+    ) -> list[PartnerOfferSkuHistoryResponse]:
+        """
+        Returns the partner sku and offer history of the targeted user. Elevated permissions are required to see users that are not yourself.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: PartnerOfferGrant
+
+        Args:
+            partner_application_id: The partner application identifier.
+            target_bnet_membership_id: The bungie.net user to apply missing offers to. If not self, elevated permissions are required.
+            auth: Authentication information.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/tokens/#bungio.models.bungie.tokens.PartnerOfferSkuHistoryResponse) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_partner_offer_sku_history(
+            partner_application_id=partner_application_id,
+            target_bnet_membership_id=target_bnet_membership_id,
+            auth=auth,
+        )
+        return [
+            PartnerOfferSkuHistoryResponse.from_dict(data=entry, client=self._client) for entry in response["Result"]
+        ]
+
+    async def get_bungie_rewards_for_user(self, membership_id: int, auth: AuthData) -> Any:
+        """
+        Returns the bungie rewards for the targeted user.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: ReadAndApplyTokens
+
+        Args:
+            membership_id: bungie.net user membershipId for requested user rewards. If not self, elevated permissions are required.
+            auth: Authentication information.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models//#.Any) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_bungie_rewards_for_user(membership_id=membership_id, auth=auth)
+        return response["Result"]
+
+    async def get_bungie_rewards_list(self, auth: Optional[AuthData] = None) -> Any:
+        """
+        Returns a list of the current bungie rewards
+
+        Args:
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models//#.Any) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_bungie_rewards_list(auth=auth)
+        return response["Result"]

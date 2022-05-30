@@ -1,0 +1,179 @@
+import datetime
+from typing import Any, Optional
+
+import attr
+
+from bungio.models.auth import AuthData
+from bungio.models.base import BaseModel
+from bungio.models.bungie.fireteam import FireteamResponse
+
+
+@attr.define
+class FireteamRouteInterface(BaseModel):
+    async def get_active_private_clan_fireteam_count(self, group_id: int, auth: AuthData) -> int:
+        """
+        Gets a count of all active non-public fireteams for the specified clan. Maximum value returned is 25.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: ReadGroups
+
+        Args:
+            group_id: The group id of the clan.
+            auth: Authentication information.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models//#.int) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_active_private_clan_fireteam_count(group_id=group_id, auth=auth)
+        return response["Result"]
+
+    async def get_available_clan_fireteams(
+        self,
+        activity_type: int,
+        date_range: int,
+        group_id: int,
+        page: int,
+        platform: int,
+        public_only: int,
+        slot_filter: int,
+        auth: AuthData,
+        lang_filter: Optional[str] = None,
+    ) -> dict:
+        """
+        Gets a listing of all of this clan's fireteams that are have available slots. Caller is not checked for join criteria so caching is maximized.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: ReadGroups
+
+        Args:
+            activity_type: The activity type to filter by.
+            date_range: The date range to grab available fireteams.
+            group_id: The group id of the clan.
+            page: Zero based page
+            platform: The platform filter.
+            public_only: Determines public/private filtering.
+            slot_filter: Filters based on available slots
+            auth: Authentication information.
+            lang_filter: An optional language filter.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models//#.dict) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_available_clan_fireteams(
+            activity_type=activity_type,
+            date_range=date_range,
+            group_id=group_id,
+            page=page,
+            platform=platform,
+            public_only=public_only,
+            slot_filter=slot_filter,
+            auth=auth,
+            lang_filter=lang_filter,
+        )
+        return response["Result"]
+
+    async def search_public_available_clan_fireteams(
+        self,
+        activity_type: int,
+        date_range: int,
+        page: int,
+        platform: int,
+        slot_filter: int,
+        auth: AuthData,
+        lang_filter: Optional[str] = None,
+    ) -> dict:
+        """
+        Gets a listing of all public fireteams starting now with open slots. Caller is not checked for join criteria so caching is maximized.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: ReadGroups
+
+        Args:
+            activity_type: The activity type to filter by.
+            date_range: The date range to grab available fireteams.
+            page: Zero based page
+            platform: The platform filter.
+            slot_filter: Filters based on available slots
+            auth: Authentication information.
+            lang_filter: An optional language filter.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models//#.dict) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.search_public_available_clan_fireteams(
+            activity_type=activity_type,
+            date_range=date_range,
+            page=page,
+            platform=platform,
+            slot_filter=slot_filter,
+            auth=auth,
+            lang_filter=lang_filter,
+        )
+        return response["Result"]
+
+    async def get_my_clan_fireteams(
+        self,
+        group_id: int,
+        include_closed: bool,
+        page: int,
+        platform: int,
+        auth: AuthData,
+        group_filter: Optional[bool] = None,
+        lang_filter: Optional[str] = None,
+    ) -> dict:
+        """
+        Gets a listing of all fireteams that caller is an applicant, a member, or an alternate of.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: ReadGroups
+
+        Args:
+            group_id: The group id of the clan. (This parameter is ignored unless the optional query parameter groupFilter is true).
+            include_closed: If true, return fireteams that have been closed.
+            page: Deprecated parameter, ignored.
+            platform: The platform filter.
+            auth: Authentication information.
+            group_filter: If true, filter by clan. Otherwise, ignore the clan and show all of the user's fireteams.
+            lang_filter: An optional language filter.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models//#.dict) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_my_clan_fireteams(
+            group_id=group_id,
+            include_closed=include_closed,
+            page=page,
+            platform=platform,
+            auth=auth,
+            group_filter=group_filter,
+            lang_filter=lang_filter,
+        )
+        return response["Result"]
+
+    async def get_clan_fireteam(self, fireteam_id: int, group_id: int, auth: AuthData) -> FireteamResponse:
+        """
+        Gets a specific fireteam.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: ReadGroups
+
+        Args:
+            fireteam_id: The unique id of the fireteam.
+            group_id: The group id of the clan.
+            auth: Authentication information.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/fireteam/#bungio.models.bungie.fireteam.FireteamResponse) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_clan_fireteam(fireteam_id=fireteam_id, group_id=group_id, auth=auth)
+        return FireteamResponse.from_dict(data=response, client=self._client)

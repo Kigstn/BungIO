@@ -5,7 +5,7 @@ from bungio.http.route import Route
 from bungio.models.auth import AuthData
 
 
-class UserRequests:
+class UserRouteHttpRequests:
     request: Callable[..., Coroutine]
 
     async def get_bungie_net_user_by_id(self, id: int, auth: Optional[AuthData] = None) -> dict:

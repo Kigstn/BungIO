@@ -5,7 +5,7 @@ from bungio.http.route import Route
 from bungio.models.auth import AuthData
 
 
-class CommunityContentRequests:
+class CommunityContentRouteHttpRequests:
     request: Callable[..., Coroutine]
 
     async def get_community_content(

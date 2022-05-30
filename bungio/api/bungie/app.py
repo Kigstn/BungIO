@@ -1,0 +1,55 @@
+import datetime
+from typing import Any, Optional
+
+import attr
+
+from bungio.models.auth import AuthData
+from bungio.models.base import BaseModel
+from bungio.models.bungie.applications import ApiUsage, Application
+
+
+@attr.define
+class AppRouteInterface(BaseModel):
+    async def get_application_api_usage(
+        self,
+        application_id: int,
+        auth: AuthData,
+        end: Optional[datetime.datetime] = None,
+        start: Optional[datetime.datetime] = None,
+    ) -> ApiUsage:
+        """
+        Get API usage by application for time frame specified. You can go as far back as 30 days ago, and can ask for up to a 48 hour window of time in a single request. You must be authenticated with at least the ReadUserData permission to access this endpoint.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: ReadUserData
+
+        Args:
+            application_id: ID of the application to get usage statistics.
+            auth: Authentication information.
+            end: End time for query. Goes to now if not specified.
+            start: Start time for query. Goes to 24 hours ago if not specified.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/applications/#bungio.models.bungie.applications.ApiUsage) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_application_api_usage(
+            application_id=application_id, auth=auth, end=end, start=start
+        )
+        return ApiUsage.from_dict(data=response, client=self._client)
+
+    async def get_bungie_applications(self, auth: Optional[AuthData] = None) -> list[Application]:
+        """
+        Get list of applications created by Bungie.
+
+        Args:
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/applications/#bungio.models.bungie.applications.Application) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_bungie_applications(auth=auth)
+        return [Application.from_dict(data=entry, client=self._client) for entry in response["Result"]]

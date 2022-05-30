@@ -5,7 +5,7 @@ from bungio.http.route import Route
 from bungio.models.auth import AuthData
 
 
-class TrendingRequests:
+class TrendingRouteHttpRequests:
     request: Callable[..., Coroutine]
 
     async def get_trending_categories(self, auth: Optional[AuthData] = None) -> dict:

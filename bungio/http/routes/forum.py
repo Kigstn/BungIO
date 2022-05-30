@@ -5,7 +5,7 @@ from bungio.http.route import Route
 from bungio.models.auth import AuthData
 
 
-class ForumRequests:
+class ForumRouteHttpRequests:
     request: Callable[..., Coroutine]
 
     async def get_topics_paged(

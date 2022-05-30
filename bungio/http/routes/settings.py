@@ -5,7 +5,7 @@ from bungio.http.route import Route
 from bungio.models.auth import AuthData
 
 
-class SettingsRequests:
+class SettingsRouteHttpRequests:
     request: Callable[..., Coroutine]
 
     async def get_common_settings(self, auth: Optional[AuthData] = None) -> dict:

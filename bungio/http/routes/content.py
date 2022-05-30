@@ -5,7 +5,7 @@ from bungio.http.route import Route
 from bungio.models.auth import AuthData
 
 
-class ContentRequests:
+class ContentRouteHttpRequests:
     request: Callable[..., Coroutine]
 
     async def get_content_type(self, type: str, auth: Optional[AuthData] = None) -> dict:

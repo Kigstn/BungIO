@@ -10,7 +10,6 @@ if TYPE_CHECKING:
 
 
 # todo base enum
-@attr.define(kw_only=True)
 class BaseEnum(Enum):
     pass
 
@@ -49,6 +48,9 @@ class BaseModel:
         if isinstance(data, cls):
             return data
 
+        if "Response" in data:
+            data = data["Response"]
+
         data = cls.process_dict(data=data, client=client)
 
         prepared = {}
@@ -73,6 +75,10 @@ class BaseModel:
                 # set the attr
                 prepared[name] = value
 
-        res = cls(**prepared)
+        res = cls(**prepared)  # noqa
         res._client = client
         return res
+
+    def to_dict(self) -> dict:
+        # todo
+        ...

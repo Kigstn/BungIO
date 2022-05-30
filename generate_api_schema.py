@@ -1,3 +1,5 @@
+# do not touch, very clunky black magic
+import importlib
 import os
 import re
 from typing import Optional
@@ -12,10 +14,25 @@ def main():
     api_schema = resp.json()
 
     generate_models(api_schema)
-    generate_manifest_info(api_schema)
 
+    generate_functions(
+        api_schema,
+        folder_path="bungio/http/routes",
+        docs_path="docs/src/API Reference/HTTP/Bungie Routes",
+        create_raw_http=True,
+    )
+
+    generate_functions(
+        api_schema,
+        folder_path="bungio/api/bungie",
+        docs_path="docs/src/API Reference/Bungie Interface",
+        create_raw_http=False,
+    )
+
+
+def generate_functions(api_schema: dict, folder_path: str, docs_path: str, create_raw_http: bool = True):
     # paths
-    base_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "bungio/http/routes")
+    base_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), folder_path)
     topics = {}
     for path, data in api_schema["paths"].items():
         topic = path.split("/")[1]
@@ -25,56 +42,131 @@ def main():
 
     names = {}
     for topic, routes in topics.items():
-        text = f"""import datetime
+        file_imports = set()
+
+        if create_raw_http:
+            name = f"{topic}RouteHttpRequests"
+            text = f"""import datetime
 from typing import Callable, Coroutine, Optional, Any
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
 
 
-class {topic}Requests:
+class {name}:
     request: Callable[..., Coroutine]
     """
 
+        else:
+            name = f"{topic}RouteInterface"
+            text = f"""import datetime
+import attr
+from typing import Optional, Any
+
+from bungio.models.base import BaseModel
+from bungio.models.auth import AuthData
+
+%imports%
+
+@attr.define
+class {name}(BaseModel):
+    """
+
         for path, data in routes.items():
-            text += generate_function(path, data, api_schema)
+            text += generate_function(
+                path, data, api_schema, create_raw_http=create_raw_http, file_imports=file_imports
+            )
+
+        if not create_raw_http:
+            text = text.replace("%imports%", "\n".join(file_imports))
+
         file_path = os.path.join(base_path, f"{capital_case_to_snake_case(topic)}.py")
         with open(file_path, "w", encoding="utf-8") as file:
             file.write(text)
 
         relative_path = os.path.relpath(file_path, ROOT_DIR).replace(".py", "").replace(os.sep, ".")
-        names[f"{topic}Requests"] = relative_path
+        names[name] = relative_path
 
-        docs_path = os.path.join(
-            ROOT_DIR, f"docs/src/API Reference/HTTP/Bungie Routes/{capital_case_to_snake_case(topic)}.md"
-        )
-        with open(docs_path, "w", encoding="utf-8") as file:
+        actual_docs_path = os.path.join(ROOT_DIR, f"{docs_path}/{capital_case_to_snake_case(topic)}.md")
+        if create_raw_http:
+            docs_name = f"{topic} HTTP Routes"
+        else:
+            docs_name = f"{topic} Routes Interface"
+
+            # is there an overwrite?
+            overwrite_path = os.path.join(
+                os.path.join(os.path.dirname(os.path.realpath(__file__)), folder_path).replace("bungie", "overwrites"),
+                f"{capital_case_to_snake_case(topic)}.py",
+            )
+            if os.path.exists(overwrite_path):
+                relative_path = os.path.relpath(overwrite_path, ROOT_DIR).replace(".py", "").replace(os.sep, ".")
+
+        with open(actual_docs_path, "w", encoding="utf-8") as file:
             file.write(
-                f"""# {topic} Routes
+                f"""# {docs_name}
 
-::: bungio.http.routes.{capital_case_to_snake_case(topic)}
+::: {relative_path}
 """
             )
 
-    init_text = ""
-    for name, path in names.items():
-        init_text += f"from {path} import {name}\n"
+    if create_raw_http:
+        init_text = ""
+        for name, path in names.items():
+            init_text += f"from {path} import {name}\n"
 
-    init_text += f"""
+        init_text += f"""
 
-class AllRequests({", ".join(list(names))}):
+class AllRouteHttpRequests({", ".join(list(names))}):
     pass
-"""
-    with open(os.path.join(base_path, "__init__.py"), "w", encoding="utf-8") as file:
-        file.write(init_text)
+        """
+        with open(os.path.join(base_path, "__init__.py"), "w", encoding="utf-8") as file:
+            file.write(init_text)
 
+    else:
+        init_text = ""
+        overwrite_init_text = ""
+
+        init_name = []
+        overwrite_names = []
+        for name, path in names.items():
+            # overwrite exists?
+            try:
+                overwrite_import_path = path.replace("bungie", "overwrites")
+                overwrite_name = f"{name}Overwrite"
+                importlib.import_module(overwrite_import_path, overwrite_name)  # todo test
+                overwrite_init_text += f"from {overwrite_import_path} import {overwrite_name}\n"
+                overwrite_names.append(overwrite_name)
+            except ModuleNotFoundError:
+                init_text += f"from {path} import {name}\n"
+                init_name.append(name)
+
+        init_text += f"""
+
+class AllRouteInterfaces({", ".join(init_name)}):
+    pass
+        """
+        with open(os.path.join(base_path, "__init__.py"), "w", encoding="utf-8") as file:
+            file.write(init_text)
+
+            overwrite_init_text += f"""
+
+class AllRouteInterfacesOverwrites({", ".join(overwrite_names)}):
+    pass
+        """
+        overwrite_path = os.path.join(base_path.removesuffix("bungie"), "overwrites/__init__.py")
+        with open(overwrite_path, "w", encoding="utf-8") as file:
+            file.write(overwrite_init_text)
+
+    os.system(f"""autoflake --remove-all-unused-imports -r "{base_path}\"""")
     os.system(f"""black "{base_path}\"""")
+    os.system(f"""git add "{base_path}\"""")
 
 
-def generate_function(path: str, data: dict, full_data: dict) -> str:
+def generate_function(path: str, data: dict, full_data: dict, file_imports: set, create_raw_http: bool) -> str:
     # make the class text
+    func_name = capital_case_to_snake_case(data["summary"].split(".")[1])
     text = f"""
-    async def {capital_case_to_snake_case(data["summary"].split(".")[1])}(self"""
+    async def {func_name}(self"""
 
     method = "get" if "get" in data else "post"
 
@@ -86,31 +178,45 @@ def generate_function(path: str, data: dict, full_data: dict) -> str:
     body = []
     if "requestBody" in data[method]:
         schema_data = data[method]["requestBody"]["content"]["application/json"]["schema"]
-        if "$ref" in schema_data:
-            schema_name = schema_data["$ref"]
-            schema_name = schema_name.split("/")[-1]
-            schema_data = full_data["components"]["schemas"][schema_name]["properties"]
 
-            for name, value in schema_data.items():
-                arg_type = convert_to_typing(value)
+        if create_raw_http:
+            if "$ref" in schema_data:
+                schema_name = schema_data["$ref"]
+                schema_name = schema_name.split("/")[-1]
+                schema_data = full_data["components"]["schemas"][schema_name]["properties"]
+
+                for name, value in schema_data.items():
+                    arg_type = convert_to_typing(value)
+                    body.append(
+                        {
+                            "name": capital_case_to_snake_case(name),
+                            "og_name": name,
+                            "description": value.get("description", "Not specified."),
+                            "type": arg_type,
+                        }
+                    )
+
+            else:
+                arg_type = convert_to_typing(schema_data)
                 body.append(
                     {
-                        "name": capital_case_to_snake_case(name),
-                        "og_name": name,
-                        "description": value.get("description", "Not specified."),
+                        "name": "body_data",
+                        "description": schema_data.get("description", "Not specified."),
                         "type": arg_type,
                     }
                 )
-
         else:
-            arg_type = convert_to_typing(schema_data)
-            body.append(
-                {
-                    "name": "body_data",
-                    "description": schema_data.get("description", "Not specified."),
-                    "type": arg_type,
-                }
-            )
+            if "$ref" in schema_data:
+                import_path, actual_import_path, arg_type, clean_model_name = add_to_import_paths(
+                    file_imports=file_imports,
+                    schema_dict=schema_data,
+                    overwrite_path="bungio.models.overwrites",
+                    regular_path="bungio.models.bungie",
+                )
+            else:
+                arg_type = convert_to_typing(schema_data)
+
+            body.append({"name": "data", "description": "The required data for this request.", "type": arg_type})
 
     # path / query params
     params = []
@@ -139,7 +245,7 @@ def generate_function(path: str, data: dict, full_data: dict) -> str:
     if security:
         security_info["description"] = "Authentication information."
         security_info["type"] = "AuthData"
-        security_info["in"] = "pb"
+        security_info["in"] = "pb"  # we sort by alphabet, so this is after "page" and before "query"
     else:
         security_info[
             "description"
@@ -153,7 +259,23 @@ def generate_function(path: str, data: dict, full_data: dict) -> str:
     for item in body + params:  # noqa
         text += f""", {item["name"]}: {item["type"]}"""
 
-    text += f""") -> dict:
+    if create_raw_http:
+        return_model = "dict"
+    else:
+        return_schema = data[method]["responses"]["200"]["$ref"]
+        return_info = full_data["components"]["responses"][return_schema.split("/")[-1]]["content"]["application/json"][
+            "schema"
+        ]["properties"]["Response"]
+
+        # try to get the overwrite path if that exists and add that to the imports
+        return_import_path, actual_return_import_path, return_model, clean_return_model = add_to_import_paths(
+            file_imports=file_imports,
+            schema_dict=return_info,
+            overwrite_path="bungio.models.overwrites",
+            regular_path="bungio.models.bungie",
+        )
+
+    text += f""") -> {return_model}:
         \"\"\"
         {data["description"]}
         """
@@ -171,7 +293,8 @@ def generate_function(path: str, data: dict, full_data: dict) -> str:
         text += f"""
             {item["name"]}: {item["description"]}"""
 
-    text += f"""
+    if create_raw_http:
+        text += """
 
         Raises:
             NotFound: 404 request
@@ -187,35 +310,76 @@ def generate_function(path: str, data: dict, full_data: dict) -> str:
         \"\"\"
 
         """
+    else:
+        docs_path = "/API Reference/Models/"
+        if "overwrites" in actual_return_import_path:  # noqa
+            docs_path += "Custom Overwrites/"
+        else:
+            docs_path += "Bungie API Models/"
+        docs_path += f"{return_import_path}/#{actual_return_import_path}.{clean_return_model}"  # noqa
 
-    if body:
-        if len(body) == 1 and "og_name" not in body[0]:
-            text += f"""data = {body[0]["name"]}
+        text += f"""
+
+        Returns:
+            The [model]({docs_path}) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        \"\"\"
+
+        """
+
+    if create_raw_http:
+        if body:
+            if len(body) == 1 and "og_name" not in body[0]:
+                text += f"""data = {body[0]["name"]}
             """
 
-        else:
-            text += "data = {"
-            for item in body:
-                text += f"""
+            else:
+                text += "data = {"
+                for item in body:
+                    text += f"""
                 \"{item["og_name"]}": {item["name"]},"""
 
-            text += """
+                text += """
             }
             """
 
-    text += f"""
+        text += f"""
         return await self.request(Route(path=f"{path}", method="{method.upper()}\""""
 
-    if body:
-        text += ", data=data"
+        if body:
+            text += ", data=data"
 
-    for param in params:
-        if param["in"] != "path":
-            text += f""", {param["name"]}={param["name"]}"""
+        for param in params:
+            if param["in"] != "path":
+                text += f""", {param["name"]}={param["name"]}"""
 
-    text += """))
+        text += """))
 
-    """
+        """
+
+    else:
+        request_params = []
+        for param in params:
+            request_params.append(f"""{param["name"]}={param["name"]}""")
+        if body:
+            request_params.append("**data.to_dict()")
+
+        text += f"""
+        response = await self._client.http.{func_name}({", ".join(request_params)})
+        """
+        if actual_return_import_path:
+            if "list" not in return_model:
+                text += f"""return {return_model}.from_dict(data=response, client=self._client)
+
+                """
+            else:
+                text += f"""return [{clean_return_model}.from_dict(data=entry, client=self._client) for entry in response["Result"]]
+
+                """
+        else:
+            text += f"""return response["Result"]
+
+            """
 
     return text
 
@@ -267,24 +431,10 @@ def get_import_name_from_ref(string: str) -> tuple[str, str]:
     """Like #/components/responses/User.GeneralUser"""
     strings = string.split("/")[-1].split(".")
 
-    path = ".".join([s.lower() for s in strings[:-1]])
+    import_path = ".".join([s.lower() for s in strings[:-1]])
     import_name = strings[-1]
 
-    return path, import_name
-
-
-def generate_manifest_info(api_schema: dict):
-    pass
-    # todo
-    # base_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "bungio/models/manifest")
-    #
-    # resp = requests.get(url="https://www.bungie.net/Platform/Destiny2/Manifest")
-    # manifest = list(resp.json()["Response"]["jsonWorldComponentContentPaths"]["en"])
-    #
-    #
-    # print(1)
-    #
-    # # todo docs
+    return import_path, import_name
 
 
 def generate_models(api_schema: dict):
@@ -301,6 +451,9 @@ def generate_models(api_schema: dict):
         if path not in by_path:
             by_path[path] = []
         by_path[path].append({"name": import_name, **schema})
+
+    # do folders first, because some files are also folders -> they need to go in the init
+    by_path = {k: v for k, v in sorted(by_path.items(), key=lambda x: x[0].count("."), reverse=True)}
 
     for path, models in by_path.items():
         text = """import attr
@@ -325,12 +478,17 @@ from bungio.models.base import BaseModel, BaseEnum
 if TYPE_CHECKING:
     {formatted_imports}"""
         text = text.format(imports=formatted_imports)
-        file_path = os.path.join(base_path, f"""{path.replace(".", "/")}.py""")
+        file_path = os.path.join(base_path, path.replace(".", "/"))
+
+        # put files that are also folders in init file
+        if os.path.isdir(file_path):
+            file_path = os.path.join(file_path, "__init__.py")
+        else:
+            file_path = f"{file_path}.py"
+
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         with open(file_path, "w", encoding="utf-8") as file:
             file.write(text)
-
-        # todo write the init files
 
         file_path = os.path.join(docs_path, f"""{path.replace(".", "/")}.md""")
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
@@ -341,7 +499,51 @@ if TYPE_CHECKING:
 ::: bungio.models.bungie.{path}
 """
             )
+    # todo docs need to not be divided as much -> one folder for both models and overwrites
+
+    # write init files
+    init_text = ""
+    overwrite_init_text = ""
+
+    for path, items in by_path.items():
+        for data in items:
+            init_path = f"bungio.models.bungie.{path}"
+            name = data["name"]
+
+            if "[]" in name:
+                continue
+
+            if "ClanBannerSource" in name:
+                print(1)
+
+            # overwrite exists?
+            try:
+                overwrite_import_path = init_path.replace("bungie", "overwrites")
+                overwrite_name = f"{name}Overwrite"
+                imp = importlib.import_module(overwrite_import_path)
+                if not hasattr(imp, overwrite_name):
+                    raise ModuleNotFoundError
+                overwrite_init_text += f"from {overwrite_import_path} import {overwrite_name}\n"
+            except ModuleNotFoundError:
+                try:
+                    imp = importlib.import_module(init_path)
+                    if not hasattr(imp, name):
+                        raise ModuleNotFoundError
+                    init_text += f"from {init_path} import {name}\n"
+                except ModuleNotFoundError:
+                    pass
+
+    init_path = os.path.join(base_path, "__init__.py")
+    with open(init_path, "w", encoding="utf-8") as file:
+        file.write(init_text)
+
+    overwrite_path = os.path.join(base_path.removesuffix("bungie"), "overwrites/__init__.py")
+    with open(overwrite_path, "w", encoding="utf-8") as file:
+        file.write(overwrite_init_text)
+
+    os.system(f"""autoflake --remove-all-unused-imports -r "{base_path}\"""")
     os.system(f"""black "{base_path}\"""")
+    os.system(f"""git add "{base_path}\"""")
 
 
 def generate_model(api_schema: dict, model: dict, path: str, file_imports: set) -> str:
@@ -388,7 +590,7 @@ class {model["name"]}(BaseModel):
         for name, data in model["properties"].items():
             text += f"""
     {capital_case_to_snake_case(name)}: {convert_to_typing(data, return_class_names=True, file_imports=file_imports, path=path)} = attr.field()"""
-
+            # todo the above doesnt work. see DestinyProfileResponse -> Any instead of actual schema
     # arrays
     elif model["type"] == "array":
         return ""
@@ -397,6 +599,57 @@ class {model["name"]}(BaseModel):
         raise ValueError(model)
 
     return text
+
+
+def add_to_import_paths(
+    file_imports: set, schema_dict: dict, overwrite_path: str, regular_path: str
+) -> tuple[str, str, str, str]:
+    if "$ref" not in schema_dict:
+        schema_type = schema_dict.get("type", None)
+        if schema_type == "array":
+            import_path, actual_import_path, model_name, clean_model_name = add_to_import_paths(
+                file_imports=file_imports,
+                schema_dict=schema_dict["items"],
+                overwrite_path=overwrite_path,
+                regular_path=regular_path,
+            )
+            model_name = f"list[{model_name}]"
+        else:
+            import_path, actual_import_path, = (
+                "",
+                "",
+            )
+            model_name = clean_model_name = convert_to_typing(schema_dict, return_class_names=True)
+
+    else:
+        import_path, model_name = get_import_name_from_ref(schema_dict["$ref"])
+        clean_model_name = model_name
+
+        import_path = import_path.removesuffix(".")
+
+        # try the overwrite
+        try:
+            actual_import_path = f"{overwrite_path}.{import_path}"
+            overwrite_name = f"{model_name}Overwrite"
+            imp = importlib.import_module(actual_import_path)
+            if not hasattr(imp, overwrite_name):
+                raise ModuleNotFoundError
+            model_name = overwrite_name
+        except ModuleNotFoundError:
+            actual_import_path = f"{regular_path}.{import_path}"
+
+        # does the normal model exists?
+        try:
+            imp = importlib.import_module(actual_import_path)
+            if not hasattr(imp, model_name):
+                raise ModuleNotFoundError
+            file_imports.add(f"from {actual_import_path} import {model_name}")
+
+        # there are some models without any definition, like ClanBannerSource
+        except ModuleNotFoundError:
+            import_path, actual_import_path, model_name, clean_model_name = "", "", "dict", "dict"
+
+    return import_path, actual_import_path, model_name, clean_model_name
 
 
 main()

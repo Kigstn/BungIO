@@ -5,7 +5,7 @@ from bungio.http.route import Route
 from bungio.models.auth import AuthData
 
 
-class UserSystemOverridesRequests:
+class UserSystemOverridesRouteHttpRequests:
     request: Callable[..., Coroutine]
 
     async def get_user_system_overrides(self, auth: Optional[AuthData] = None) -> dict:

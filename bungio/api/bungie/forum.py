@@ -1,0 +1,281 @@
+import datetime
+from typing import Any, Optional
+
+import attr
+
+from bungio.models.auth import AuthData
+from bungio.models.base import BaseModel
+from bungio.models.bungie.forum import ForumRecruitmentDetail, PostSearchResponse
+from bungio.models.bungie.tags.models.contracts import TagResponse
+
+
+@attr.define
+class ForumRouteInterface(BaseModel):
+    async def get_topics_paged(
+        self,
+        category_filter: int,
+        group: int,
+        page: int,
+        page_size: int,
+        quick_date: int,
+        sort: int,
+        locales: Optional[str] = None,
+        tagstring: Optional[str] = None,
+        auth: Optional[AuthData] = None,
+    ) -> PostSearchResponse:
+        """
+        Get topics from any forum.
+
+        Args:
+            category_filter: A category filter
+            group: The group, if any.
+            page: Zero paged page number
+            page_size: Unused
+            quick_date: A date filter.
+            sort: The sort mode.
+            locales: Comma seperated list of locales posts must match to return in the result list. Default 'en'
+            tagstring: The tags to search, if any.
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/forum/#bungio.models.bungie.forum.PostSearchResponse) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_topics_paged(
+            category_filter=category_filter,
+            group=group,
+            page=page,
+            page_size=page_size,
+            quick_date=quick_date,
+            sort=sort,
+            locales=locales,
+            tagstring=tagstring,
+            auth=auth,
+        )
+        return PostSearchResponse.from_dict(data=response, client=self._client)
+
+    async def get_core_topics_paged(
+        self,
+        category_filter: int,
+        page: int,
+        quick_date: int,
+        sort: int,
+        locales: Optional[str] = None,
+        auth: Optional[AuthData] = None,
+    ) -> PostSearchResponse:
+        """
+        Gets a listing of all topics marked as part of the core group.
+
+        Args:
+            category_filter: The category filter.
+            page: Zero base page
+            quick_date: The date filter.
+            sort: The sort mode.
+            locales: Comma seperated list of locales posts must match to return in the result list. Default 'en'
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/forum/#bungio.models.bungie.forum.PostSearchResponse) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_core_topics_paged(
+            category_filter=category_filter, page=page, quick_date=quick_date, sort=sort, locales=locales, auth=auth
+        )
+        return PostSearchResponse.from_dict(data=response, client=self._client)
+
+    async def get_posts_threaded_paged(
+        self,
+        get_parent_post: bool,
+        page: int,
+        page_size: int,
+        parent_post_id: int,
+        reply_size: int,
+        root_thread_mode: bool,
+        sort_mode: int,
+        showbanned: Optional[str] = None,
+        auth: Optional[AuthData] = None,
+    ) -> PostSearchResponse:
+        """
+        Returns a thread of posts at the given parent, optionally returning replies to those posts as well as the original parent.
+
+        Args:
+            get_parent_post: Not specified.
+            page: Not specified.
+            page_size: Not specified.
+            parent_post_id: Not specified.
+            reply_size: Not specified.
+            root_thread_mode: Not specified.
+            sort_mode: Not specified.
+            showbanned: If this value is not null or empty, banned posts are requested to be returned
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/forum/#bungio.models.bungie.forum.PostSearchResponse) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_posts_threaded_paged(
+            get_parent_post=get_parent_post,
+            page=page,
+            page_size=page_size,
+            parent_post_id=parent_post_id,
+            reply_size=reply_size,
+            root_thread_mode=root_thread_mode,
+            sort_mode=sort_mode,
+            showbanned=showbanned,
+            auth=auth,
+        )
+        return PostSearchResponse.from_dict(data=response, client=self._client)
+
+    async def get_posts_threaded_paged_from_child(
+        self,
+        child_post_id: int,
+        page: int,
+        page_size: int,
+        reply_size: int,
+        root_thread_mode: bool,
+        sort_mode: int,
+        showbanned: Optional[str] = None,
+        auth: Optional[AuthData] = None,
+    ) -> PostSearchResponse:
+        """
+        Returns a thread of posts starting at the topicId of the input childPostId, optionally returning replies to those posts as well as the original parent.
+
+        Args:
+            child_post_id: Not specified.
+            page: Not specified.
+            page_size: Not specified.
+            reply_size: Not specified.
+            root_thread_mode: Not specified.
+            sort_mode: Not specified.
+            showbanned: If this value is not null or empty, banned posts are requested to be returned
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/forum/#bungio.models.bungie.forum.PostSearchResponse) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_posts_threaded_paged_from_child(
+            child_post_id=child_post_id,
+            page=page,
+            page_size=page_size,
+            reply_size=reply_size,
+            root_thread_mode=root_thread_mode,
+            sort_mode=sort_mode,
+            showbanned=showbanned,
+            auth=auth,
+        )
+        return PostSearchResponse.from_dict(data=response, client=self._client)
+
+    async def get_post_and_parent(
+        self, child_post_id: int, showbanned: Optional[str] = None, auth: Optional[AuthData] = None
+    ) -> PostSearchResponse:
+        """
+        Returns the post specified and its immediate parent.
+
+        Args:
+            child_post_id: Not specified.
+            showbanned: If this value is not null or empty, banned posts are requested to be returned
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/forum/#bungio.models.bungie.forum.PostSearchResponse) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_post_and_parent(
+            child_post_id=child_post_id, showbanned=showbanned, auth=auth
+        )
+        return PostSearchResponse.from_dict(data=response, client=self._client)
+
+    async def get_post_and_parent_awaiting_approval(
+        self, child_post_id: int, showbanned: Optional[str] = None, auth: Optional[AuthData] = None
+    ) -> PostSearchResponse:
+        """
+        Returns the post specified and its immediate parent of posts that are awaiting approval.
+
+        Args:
+            child_post_id: Not specified.
+            showbanned: If this value is not null or empty, banned posts are requested to be returned
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/forum/#bungio.models.bungie.forum.PostSearchResponse) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_post_and_parent_awaiting_approval(
+            child_post_id=child_post_id, showbanned=showbanned, auth=auth
+        )
+        return PostSearchResponse.from_dict(data=response, client=self._client)
+
+    async def get_topic_for_content(self, content_id: int, auth: Optional[AuthData] = None) -> int:
+        """
+        Gets the post Id for the given content item's comments, if it exists.
+
+        Args:
+            content_id: Not specified.
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models//#.int) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_topic_for_content(content_id=content_id, auth=auth)
+        return response["Result"]
+
+    async def get_forum_tag_suggestions(
+        self, partialtag: Optional[str] = None, auth: Optional[AuthData] = None
+    ) -> list[TagResponse]:
+        """
+        Gets tag suggestions based on partial text entry, matching them with other tags previously used in the forums.
+
+        Args:
+            partialtag: The partial tag input to generate suggestions from.
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/tags.models.contracts/#bungio.models.bungie.tags.models.contracts.TagResponse) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_forum_tag_suggestions(partialtag=partialtag, auth=auth)
+        return [TagResponse.from_dict(data=entry, client=self._client) for entry in response["Result"]]
+
+    async def get_poll(self, topic_id: int, auth: Optional[AuthData] = None) -> PostSearchResponse:
+        """
+        Gets the specified forum poll.
+
+        Args:
+            topic_id: The post id of the topic that has the poll.
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/forum/#bungio.models.bungie.forum.PostSearchResponse) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_poll(topic_id=topic_id, auth=auth)
+        return PostSearchResponse.from_dict(data=response, client=self._client)
+
+    async def get_recruitment_thread_summaries(
+        self, data: list[int], auth: Optional[AuthData] = None
+    ) -> list[ForumRecruitmentDetail]:
+        """
+        Allows the caller to get a list of to 25 recruitment thread summary information objects.
+
+        Args:
+            data: The required data for this request.
+            auth: Authentication information. Required when users with a private profile are queried.
+
+        Returns:
+            The [model](/API Reference/Models/Bungie API Models/forum/#bungio.models.bungie.forum.ForumRecruitmentDetail) which is returned by bungie.
+            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+        """
+
+        response = await self._client.http.get_recruitment_thread_summaries(auth=auth, **data.to_dict())
+        return [ForumRecruitmentDetail.from_dict(data=entry, client=self._client) for entry in response["Result"]]
