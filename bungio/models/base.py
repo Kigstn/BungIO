@@ -11,11 +11,19 @@ if TYPE_CHECKING:
 
 # todo base enum
 class BaseEnum(Enum):
+    """
+    Base methods which help to acquire this model from json and export it to json.
+    """
+
     pass
 
 
 @attr.define(kw_only=True)
 class BaseModel:
+    """
+    Base methods which help to acquire this model from json and export it to json.
+    """
+
     _client: "Client" = attr.field(init=False)
 
     @staticmethod
