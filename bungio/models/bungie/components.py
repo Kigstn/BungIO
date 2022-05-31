@@ -9,7 +9,7 @@ class ComponentResponse(BaseModel):
     The base class for any component-returning object that may need to indicate information about the state of the component being returned.
 
     Attributes:
-        privacy: _No description given_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -23,8 +23,8 @@ class ComponentPrivacySetting(BaseEnum):
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     PUBLIC = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     PRIVATE = 2
-    """_No description given_ """
+    """_No description given by bungie_ """

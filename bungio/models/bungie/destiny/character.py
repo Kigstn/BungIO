@@ -14,18 +14,18 @@ class DestinyCharacterCustomization(BaseModel):
     Raw data about the customization options chosen for a character's face and appearance. You can look up the relevant class/race/gender combo in DestinyCharacterCustomizationOptionDefinition for the character, and then look up these values within the CustomizationOptions found to pull some data about their choices. Warning: not all of that data is meaningful. Some data has useful icons. Others have nothing, and are only meant for 3D rendering purposes (which we sadly do not expose yet)
 
     Attributes:
-        personality: _No description given_
-        face: _No description given_
-        skin_color: _No description given_
-        lip_color: _No description given_
-        eye_color: _No description given_
-        hair_colors: _No description given_
-        feature_colors: _No description given_
-        decal_color: _No description given_
-        wear_helmet: _No description given_
-        hair_index: _No description given_
-        feature_index: _No description given_
-        decal_index: _No description given_
+        personality: _No description given by bungie_
+        face: _No description given by bungie_
+        skin_color: _No description given by bungie_
+        lip_color: _No description given by bungie_
+        eye_color: _No description given by bungie_
+        hair_colors: _No description given by bungie_
+        feature_colors: _No description given by bungie_
+        decal_color: _No description given by bungie_
+        wear_helmet: _No description given by bungie_
+        hair_index: _No description given by bungie_
+        feature_index: _No description given by bungie_
+        decal_index: _No description given by bungie_
     """
 
     personality: int = attr.field()
@@ -48,7 +48,7 @@ class DestinyCharacterPeerView(BaseModel):
     A minimal view of a character's equipped items, for the purpose of rendering a summary screen or showing the character in 3D.
 
     Attributes:
-        equipment: _No description given_
+        equipment: _No description given by bungie_
     """
 
     equipment: list["DestinyItemPeerView"] = attr.field()

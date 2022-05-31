@@ -18,11 +18,11 @@ class DestinyArtifactProfileScoped(BaseModel):
     Represents a Seasonal Artifact and all data related to it for the requested Account. It can be combined with Character-scoped data for a full picture of what a character has available/has chosen, or just these settings can be used for overview information.
 
     Attributes:
-        artifact_hash: _No description given_
-        point_progression: _No description given_
-        points_acquired: _No description given_
-        power_bonus_progression: _No description given_
-        power_bonus: _No description given_
+        artifact_hash: _No description given by bungie_
+        point_progression: _No description given by bungie_
+        points_acquired: _No description given by bungie_
+        power_bonus_progression: _No description given by bungie_
+        power_bonus: _No description given by bungie_
     """
 
     artifact_hash: int = attr.field()
@@ -35,13 +35,13 @@ class DestinyArtifactProfileScoped(BaseModel):
 @attr.define
 class DestinyArtifactCharacterScoped(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        artifact_hash: _No description given_
-        points_used: _No description given_
-        reset_count: _No description given_
-        tiers: _No description given_
+        artifact_hash: _No description given by bungie_
+        points_used: _No description given by bungie_
+        reset_count: _No description given by bungie_
+        tiers: _No description given by bungie_
     """
 
     artifact_hash: int = attr.field()
@@ -53,13 +53,13 @@ class DestinyArtifactCharacterScoped(BaseModel):
 @attr.define
 class DestinyArtifactTier(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        tier_hash: _No description given_
-        is_unlocked: _No description given_
-        points_to_unlock: _No description given_
-        items: _No description given_
+        tier_hash: _No description given by bungie_
+        is_unlocked: _No description given by bungie_
+        points_to_unlock: _No description given by bungie_
+        items: _No description given by bungie_
     """
 
     tier_hash: int = attr.field()
@@ -71,11 +71,11 @@ class DestinyArtifactTier(BaseModel):
 @attr.define
 class DestinyArtifactTierItem(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        item_hash: _No description given_
-        is_active: _No description given_
+        item_hash: _No description given by bungie_
+        is_active: _No description given by bungie_
     """
 
     item_hash: int = attr.field()

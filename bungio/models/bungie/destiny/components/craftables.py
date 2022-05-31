@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 @attr.define
 class DestinyCraftablesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         craftables: A map of craftable item hashes to craftable item state components.
@@ -28,10 +28,10 @@ class DestinyCraftablesComponent(BaseModel):
 @attr.define
 class DestinyCraftableComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        visible: _No description given_
+        visible: _No description given by bungie_
         failed_requirement_indexes: If the requirements are not met for crafting this item, these will index into the list of failure strings.
         sockets: Plug item state for the crafting sockets.
     """
@@ -44,10 +44,10 @@ class DestinyCraftableComponent(BaseModel):
 @attr.define
 class DestinyCraftableSocketComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        plug_set_hash: _No description given_
+        plug_set_hash: _No description given by bungie_
         plugs: Unlock state for plugs in the socket plug set definition
     """
 
@@ -58,10 +58,10 @@ class DestinyCraftableSocketComponent(BaseModel):
 @attr.define
 class DestinyCraftableSocketPlugComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        plug_item_hash: _No description given_
+        plug_item_hash: _No description given by bungie_
         failed_requirement_indexes: Index into the unlock requirements to display failure descriptions
     """
 

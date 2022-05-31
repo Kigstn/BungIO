@@ -26,10 +26,10 @@ if TYPE_CHECKING:
 @attr.define
 class TrendingCategories(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        categories: _No description given_
+        categories: _No description given by bungie_
     """
 
     categories: list["TrendingCategory"] = attr.field()
@@ -38,12 +38,12 @@ class TrendingCategories(BaseModel):
 @attr.define
 class TrendingCategory(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        category_name: _No description given_
-        entries: _No description given_
-        category_id: _No description given_
+        category_name: _No description given by bungie_
+        entries: _No description given by bungie_
+        category_id: _No description given by bungie_
     """
 
     category_name: str = attr.field()
@@ -58,15 +58,15 @@ class TrendingEntry(BaseModel):
 
     Attributes:
         weight: The weighted score of this trending item.
-        is_featured: _No description given_
+        is_featured: _No description given by bungie_
         identifier: We don't know whether the identifier will be a string, a uint, or a long... so we're going to cast it all to a string. But either way, we need any trending item created to have a single unique identifier for its type.
         entity_type: An enum - unfortunately - dictating all of the possible kinds of trending items that you might get in your result set, in case you want to do custom rendering or call to get the details of the item.
         display_name: The localized "display name/article title/'primary localized identifier'" of the entity.
         tagline: If the entity has a localized tagline/subtitle/motto/whatever, that is found here.
-        image: _No description given_
-        start_date: _No description given_
-        end_date: _No description given_
-        link: _No description given_
+        image: _No description given by bungie_
+        start_date: _No description given by bungie_
+        end_date: _No description given by bungie_
+        link: _No description given by bungie_
         webm_video: If this is populated, the entry has a related WebM video to show. I am 100% certain I am going to regret putting this directly on TrendingEntry, but it will work so yolo
         mp4_video: If this is populated, the entry has a related MP4 video to show. I am 100% certain I am going to regret putting this directly on TrendingEntry, but it will work so yolo
         feature_image: If isFeatured, this image will be populated with whatever the featured image is. Note that this will likely be a very large image, so don't use it all the time.
@@ -97,45 +97,45 @@ class TrendingEntryType(BaseEnum):
     """
 
     NEWS = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     DESTINY_ITEM = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     DESTINY_ACTIVITY = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     DESTINY_RITUAL = 3
-    """_No description given_ """
+    """_No description given by bungie_ """
     SUPPORT_ARTICLE = 4
-    """_No description given_ """
+    """_No description given by bungie_ """
     CREATION = 5
-    """_No description given_ """
+    """_No description given by bungie_ """
     STREAM = 6
-    """_No description given_ """
+    """_No description given by bungie_ """
     UPDATE = 7
-    """_No description given_ """
+    """_No description given by bungie_ """
     LINK = 8
-    """_No description given_ """
+    """_No description given by bungie_ """
     FORUM_TAG = 9
-    """_No description given_ """
+    """_No description given by bungie_ """
     CONTAINER = 10
-    """_No description given_ """
+    """_No description given by bungie_ """
     RELEASE = 11
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 @attr.define
 class TrendingDetail(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        identifier: _No description given_
-        entity_type: _No description given_
-        news: _No description given_
-        support: _No description given_
-        destiny_item: _No description given_
-        destiny_activity: _No description given_
-        destiny_ritual: _No description given_
-        creation: _No description given_
+        identifier: _No description given by bungie_
+        entity_type: _No description given by bungie_
+        news: _No description given by bungie_
+        support: _No description given by bungie_
+        destiny_item: _No description given by bungie_
+        destiny_activity: _No description given by bungie_
+        destiny_ritual: _No description given by bungie_
+        creation: _No description given by bungie_
     """
 
     identifier: str = attr.field()
@@ -151,10 +151,10 @@ class TrendingDetail(BaseModel):
 @attr.define
 class TrendingEntryNews(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        article: _No description given_
+        article: _No description given by bungie_
     """
 
     article: "ContentItemPublicContract" = attr.field()
@@ -163,10 +163,10 @@ class TrendingEntryNews(BaseModel):
 @attr.define
 class TrendingEntrySupportArticle(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        article: _No description given_
+        article: _No description given by bungie_
     """
 
     article: "ContentItemPublicContract" = attr.field()
@@ -175,10 +175,10 @@ class TrendingEntrySupportArticle(BaseModel):
 @attr.define
 class TrendingEntryDestinyItem(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        item_hash: _No description given_
+        item_hash: _No description given by bungie_
     """
 
     item_hash: int = attr.field()
@@ -187,11 +187,11 @@ class TrendingEntryDestinyItem(BaseModel):
 @attr.define
 class TrendingEntryDestinyActivity(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        activity_hash: _No description given_
-        status: _No description given_
+        activity_hash: _No description given by bungie_
+        status: _No description given by bungie_
     """
 
     activity_hash: int = attr.field()
@@ -201,15 +201,15 @@ class TrendingEntryDestinyActivity(BaseModel):
 @attr.define
 class TrendingEntryDestinyRitual(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        image: _No description given_
-        icon: _No description given_
-        title: _No description given_
-        subtitle: _No description given_
-        date_start: _No description given_
-        date_end: _No description given_
+        image: _No description given by bungie_
+        icon: _No description given by bungie_
+        title: _No description given by bungie_
+        subtitle: _No description given by bungie_
+        date_start: _No description given by bungie_
+        date_end: _No description given by bungie_
         milestone_details: A destiny event does not necessarily have a related Milestone, but if it does the details will be returned here.
         event_content: A destiny event will not necessarily have milestone "custom content", but if it does the details will be here.
     """
@@ -227,16 +227,16 @@ class TrendingEntryDestinyRitual(BaseModel):
 @attr.define
 class TrendingEntryCommunityCreation(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        media: _No description given_
-        title: _No description given_
-        author: _No description given_
-        author_membership_id: _No description given_
-        post_id: _No description given_
-        body: _No description given_
-        upvotes: _No description given_
+        media: _No description given by bungie_
+        title: _No description given by bungie_
+        author: _No description given by bungie_
+        author_membership_id: _No description given by bungie_
+        post_id: _No description given by bungie_
+        body: _No description given by bungie_
+        upvotes: _No description given by bungie_
     """
 
     media: str = attr.field()

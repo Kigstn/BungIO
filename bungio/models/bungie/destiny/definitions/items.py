@@ -22,7 +22,7 @@ class DestinyItemTierTypeDefinition(BaseModel):
     Defines the tier type of an item. Mostly this provides human readable properties for types like Common, Rare, etc... It also provides some base data for infusion that could be useful.
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         infusion_process: If this tier defines infusion properties, they will be contained here.
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
@@ -39,7 +39,7 @@ class DestinyItemTierTypeDefinition(BaseModel):
 @attr.define
 class DestinyItemTierTypeInfusionBlock(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         base_quality_transfer_ratio: The default portion of quality that will transfer from the infuser to the infusee item. (InfuserQuality - InfuseeQuality) * baseQualityTransferRatio = base quality transferred.
@@ -101,7 +101,7 @@ class DestinyItemPlugDefinition(BaseModel):
         enabled_material_requirement_hash: It's not enough for the plug to be inserted. It has to be enabled as well. For it to be enabled, it may require materials. This is the hash identifier for the DestinyMaterialRequirementSetDefinition for those requirements, if there is one.
         enabled_rules: The rules around whether the plug, once inserted, is enabled and providing its benefits. The live data DestinyItemPlugComponent.enableFailIndexes will be an index into this array, so you can pull out the failure strings appropriate for the user.
         ui_plug_label: Plugs can have arbitrary, UI-defined identifiers that the UI designers use to determine the style applied to plugs. Unfortunately, we have neither a definitive list of these labels nor advance warning of when new labels might be applied or how that relates to how they get rendered. If you want to, you can refer to known labels to change your own styles: but know that new ones can be created arbitrarily, and we have no way of associating the labels with any specific UI style guidance... you'll have to piece that together on your end. Or do what we do, and just show plugs more generically, without specialized styles.
-        plug_style: _No description given_
+        plug_style: _No description given by bungie_
         plug_availability: Indicates the rules about when this plug can be used. See the PlugAvailabilityMode enumeration for more information!
         alternate_ui_plug_label: If the plug meets certain state requirements, it may have an alternative label applied to it. This is the alternative label that will be applied in such a situation.
         alternate_plug_style: The alternate plug of the plug: only applies when the item is in states that only the server can know about and control, unfortunately. See AlternateUiPlugLabel for the related label info.
@@ -145,11 +145,11 @@ class DestinyPlugRuleDefinition(BaseModel):
 @attr.define
 class DestinyParentItemOverride(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        additional_equip_requirements_display_strings: _No description given_
-        pip_icon: _No description given_
+        additional_equip_requirements_display_strings: _No description given by bungie_
+        pip_icon: _No description given by bungie_
     """
 
     additional_equip_requirements_display_strings: list[str] = attr.field()

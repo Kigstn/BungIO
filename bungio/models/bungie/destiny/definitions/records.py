@@ -23,27 +23,27 @@ if TYPE_CHECKING:
 @attr.define
 class DestinyRecordDefinition(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         scope: Indicates whether this Record's state is determined on a per-character or on an account-wide basis.
-        presentation_info: _No description given_
-        lore_hash: _No description given_
-        objective_hashes: _No description given_
-        record_value_style: _No description given_
-        for_title_gilding: _No description given_
+        presentation_info: _No description given by bungie_
+        lore_hash: _No description given by bungie_
+        objective_hashes: _No description given by bungie_
+        record_value_style: _No description given by bungie_
+        for_title_gilding: _No description given by bungie_
         should_show_large_icons: A hint to show a large icon for a reward
-        title_info: _No description given_
-        completion_info: _No description given_
-        state_info: _No description given_
-        requirements: _No description given_
-        expiration_info: _No description given_
+        title_info: _No description given by bungie_
+        completion_info: _No description given by bungie_
+        state_info: _No description given by bungie_
+        requirements: _No description given by bungie_
+        expiration_info: _No description given by bungie_
         interval_info: Some records have multiple 'interval' objectives, and the record may be claimed at each completed interval
         reward_items: If there is any publicly available information about rewards earned for achieving this record, this is the list of those items.  However, note that some records intentionally have "hidden" rewards. These will not be returned in this list.
-        presentation_node_type: _No description given_
-        trait_ids: _No description given_
-        trait_hashes: _No description given_
+        presentation_node_type: _No description given by bungie_
+        trait_ids: _No description given by bungie_
+        trait_hashes: _No description given by bungie_
         parent_node_hashes: A quick reference to presentation nodes that have this node as a child. Presentation nodes can be parented under multiple parents.
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
@@ -77,13 +77,13 @@ class DestinyRecordDefinition(BaseModel):
 @attr.define
 class DestinyRecordTitleBlock(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        has_title: _No description given_
-        titles_by_gender: _No description given_
+        has_title: _No description given by bungie_
+        titles_by_gender: _No description given by bungie_
         titles_by_gender_hash: For those who prefer to use the definitions.
-        gilding_tracking_record_hash: _No description given_
+        gilding_tracking_record_hash: _No description given by bungie_
     """
 
     has_title: bool = attr.field()
@@ -95,13 +95,13 @@ class DestinyRecordTitleBlock(BaseModel):
 @attr.define
 class DestinyRecordCompletionBlock(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         partial_completion_objective_count_threshold: The number of objectives that must be completed before the objective is considered "complete"
-        score_value: _No description given_
-        should_fire_toast: _No description given_
-        toast_style: _No description given_
+        score_value: _No description given by bungie_
+        should_fire_toast: _No description given by bungie_
+        toast_style: _No description given by bungie_
     """
 
     partial_completion_objective_count_threshold: int = attr.field()
@@ -113,11 +113,11 @@ class DestinyRecordCompletionBlock(BaseModel):
 @attr.define
 class SchemaRecordStateBlock(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        featured_priority: _No description given_
-        obscured_string: _No description given_
+        featured_priority: _No description given by bungie_
+        obscured_string: _No description given by bungie_
     """
 
     featured_priority: int = attr.field()
@@ -130,9 +130,9 @@ class DestinyRecordExpirationBlock(BaseModel):
     If this record has an expiration after which it cannot be earned, this is some information about that expiration.
 
     Attributes:
-        has_expiration: _No description given_
-        description: _No description given_
-        icon: _No description given_
+        has_expiration: _No description given by bungie_
+        description: _No description given by bungie_
+        icon: _No description given by bungie_
     """
 
     has_expiration: bool = attr.field()
@@ -143,12 +143,12 @@ class DestinyRecordExpirationBlock(BaseModel):
 @attr.define
 class DestinyRecordIntervalBlock(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        interval_objectives: _No description given_
-        interval_rewards: _No description given_
-        original_objective_array_insertion_index: _No description given_
+        interval_objectives: _No description given by bungie_
+        interval_rewards: _No description given by bungie_
+        original_objective_array_insertion_index: _No description given by bungie_
     """
 
     interval_objectives: list["DestinyRecordIntervalObjective"] = attr.field()
@@ -159,11 +159,11 @@ class DestinyRecordIntervalBlock(BaseModel):
 @attr.define
 class DestinyRecordIntervalObjective(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        interval_objective_hash: _No description given_
-        interval_score_value: _No description given_
+        interval_objective_hash: _No description given by bungie_
+        interval_score_value: _No description given by bungie_
     """
 
     interval_objective_hash: int = attr.field()
@@ -173,10 +173,10 @@ class DestinyRecordIntervalObjective(BaseModel):
 @attr.define
 class DestinyRecordIntervalRewards(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        interval_reward_items: _No description given_
+        interval_reward_items: _No description given by bungie_
     """
 
     interval_reward_items: list["DestinyItemQuantity"] = attr.field()

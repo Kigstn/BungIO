@@ -12,24 +12,24 @@ if TYPE_CHECKING:
 @attr.define
 class ContentItemPublicContract(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        content_id: _No description given_
-        c_type: _No description given_
-        cms_path: _No description given_
-        creation_date: _No description given_
-        modify_date: _No description given_
-        allow_comments: _No description given_
-        has_age_gate: _No description given_
-        minimum_age: _No description given_
-        rating_image_path: _No description given_
-        author: _No description given_
-        auto_english_property_fallback: _No description given_
+        content_id: _No description given by bungie_
+        c_type: _No description given by bungie_
+        cms_path: _No description given by bungie_
+        creation_date: _No description given by bungie_
+        modify_date: _No description given by bungie_
+        allow_comments: _No description given by bungie_
+        has_age_gate: _No description given by bungie_
+        minimum_age: _No description given by bungie_
+        rating_image_path: _No description given by bungie_
+        author: _No description given by bungie_
+        auto_english_property_fallback: _No description given by bungie_
         properties: Firehose content is really a collection of metadata and "properties", which are the potentially-but-not-strictly localizable data that comprises the meat of whatever content is being shown. As Cole Porter would have crooned, "Anything Goes" with Firehose properties. They are most often strings, but they can theoretically be anything. They are JSON encoded, and could be JSON structures, simple strings, numbers etc... The Content Type of the item (cType) will describe the properties, and thus how they ought to be deserialized.
-        representations: _No description given_
+        representations: _No description given by bungie_
         tags: NOTE: Tags will always be lower case.
-        comment_summary: _No description given_
+        comment_summary: _No description given by bungie_
     """
 
     content_id: int = attr.field()
@@ -52,12 +52,12 @@ class ContentItemPublicContract(BaseModel):
 @attr.define
 class ContentRepresentation(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        name: _No description given_
-        path: _No description given_
-        validation_string: _No description given_
+        name: _No description given by bungie_
+        path: _No description given by bungie_
+        validation_string: _No description given by bungie_
     """
 
     name: str = attr.field()
@@ -68,11 +68,11 @@ class ContentRepresentation(BaseModel):
 @attr.define
 class CommentSummary(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        topic_id: _No description given_
-        comment_count: _No description given_
+        topic_id: _No description given by bungie_
+        comment_count: _No description given by bungie_
     """
 
     topic_id: int = attr.field()

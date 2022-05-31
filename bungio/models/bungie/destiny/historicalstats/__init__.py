@@ -28,7 +28,7 @@ if TYPE_CHECKING:
 @attr.define
 class DestinyPostGameCarnageReportData(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         period: Date and time for the activity.
@@ -74,7 +74,7 @@ class DestinyHistoricalStatsActivity(BaseModel):
 @attr.define
 class DestinyPostGameCarnageReportEntry(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         standing: Standing of the player
@@ -96,7 +96,7 @@ class DestinyPostGameCarnageReportEntry(BaseModel):
 @attr.define
 class DestinyHistoricalStatsValue(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         stat_id: Unique ID for this stat
@@ -116,7 +116,7 @@ class DestinyHistoricalStatsValue(BaseModel):
 @attr.define
 class DestinyHistoricalStatsValuePair(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         value: Raw value of the statistic
@@ -130,14 +130,14 @@ class DestinyHistoricalStatsValuePair(BaseModel):
 @attr.define
 class DestinyPlayer(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         destiny_user_info: Details about the player as they are known in game (platform display name, Destiny emblem)
         character_class: Class of the character if applicable and available.
-        class_hash: _No description given_
-        race_hash: _No description given_
-        gender_hash: _No description given_
+        class_hash: _No description given by bungie_
+        race_hash: _No description given by bungie_
+        gender_hash: _No description given by bungie_
         character_level: Level of the character if available. Zero if it is not available.
         light_level: Light Level of the character if available. Zero if it is not available.
         bungie_net_user_info: Details about the player as they are known on BungieNet. This will be undefined if the player has marked their credential private, or does not have a BungieNet account.
@@ -162,7 +162,7 @@ class DestinyPlayer(BaseModel):
 @attr.define
 class DestinyPostGameCarnageReportExtendedData(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         weapons: List of weapons and their perspective values.
@@ -176,7 +176,7 @@ class DestinyPostGameCarnageReportExtendedData(BaseModel):
 @attr.define
 class DestinyHistoricalWeaponStats(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         reference_id: The hash ID of the item definition that describes the weapon.
@@ -190,7 +190,7 @@ class DestinyHistoricalWeaponStats(BaseModel):
 @attr.define
 class DestinyPostGameCarnageReportTeamEntry(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         team_id: Integer ID for the team.
@@ -208,11 +208,11 @@ class DestinyPostGameCarnageReportTeamEntry(BaseModel):
 @attr.define
 class DestinyLeaderboard(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        stat_id: _No description given_
-        entries: _No description given_
+        stat_id: _No description given by bungie_
+        entries: _No description given by bungie_
     """
 
     stat_id: str = attr.field()
@@ -222,7 +222,7 @@ class DestinyLeaderboard(BaseModel):
 @attr.define
 class DestinyLeaderboardEntry(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         rank: Where this player ranks on the leaderboard. A value of 1 is the top rank.
@@ -240,7 +240,7 @@ class DestinyLeaderboardEntry(BaseModel):
 @attr.define
 class DestinyLeaderboardResults(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         focus_membership_id: Indicate the membership ID of the account that is the focal point of the provided leaderboards.
@@ -254,7 +254,7 @@ class DestinyLeaderboardResults(BaseModel):
 @attr.define
 class DestinyClanAggregateStat(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         mode: The id of the mode of stats (allPvp, allPvE, etc)
@@ -270,15 +270,15 @@ class DestinyClanAggregateStat(BaseModel):
 @attr.define
 class DestinyHistoricalStatsByPeriod(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        all_time: _No description given_
-        all_time_tier1: _No description given_
-        all_time_tier2: _No description given_
-        all_time_tier3: _No description given_
-        daily: _No description given_
-        monthly: _No description given_
+        all_time: _No description given by bungie_
+        all_time_tier1: _No description given by bungie_
+        all_time_tier2: _No description given by bungie_
+        all_time_tier3: _No description given by bungie_
+        daily: _No description given by bungie_
+        monthly: _No description given by bungie_
     """
 
     all_time: Any = attr.field()
@@ -292,7 +292,7 @@ class DestinyHistoricalStatsByPeriod(BaseModel):
 @attr.define
 class DestinyHistoricalStatsPeriodGroup(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         period: Period for the group. If the stat periodType is day, then this will have a specific day. If the type is monthly, then this value will be the first day of the applicable month. This value is not set when the periodType is 'all time'.
@@ -308,12 +308,12 @@ class DestinyHistoricalStatsPeriodGroup(BaseModel):
 @attr.define
 class DestinyHistoricalStatsAccountResult(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        merged_deleted_characters: _No description given_
-        merged_all_characters: _No description given_
-        characters: _No description given_
+        merged_deleted_characters: _No description given by bungie_
+        merged_all_characters: _No description given by bungie_
+        characters: _No description given by bungie_
     """
 
     merged_deleted_characters: "DestinyHistoricalStatsWithMerged" = attr.field()
@@ -324,11 +324,11 @@ class DestinyHistoricalStatsAccountResult(BaseModel):
 @attr.define
 class DestinyHistoricalStatsWithMerged(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        results: _No description given_
-        merged: _No description given_
+        results: _No description given by bungie_
+        merged: _No description given by bungie_
     """
 
     results: Any = attr.field()
@@ -338,13 +338,13 @@ class DestinyHistoricalStatsWithMerged(BaseModel):
 @attr.define
 class DestinyHistoricalStatsPerCharacter(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        character_id: _No description given_
-        deleted: _No description given_
-        results: _No description given_
-        merged: _No description given_
+        character_id: _No description given by bungie_
+        deleted: _No description given by bungie_
+        results: _No description given by bungie_
+        merged: _No description given by bungie_
     """
 
     character_id: int = attr.field()
@@ -356,7 +356,7 @@ class DestinyHistoricalStatsPerCharacter(BaseModel):
 @attr.define
 class DestinyActivityHistoryResults(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         activities: List of activities, the most recent activity first.
@@ -368,7 +368,7 @@ class DestinyActivityHistoryResults(BaseModel):
 @attr.define
 class DestinyHistoricalWeaponStatsData(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         weapons: List of weapons and their perspective values.
@@ -380,7 +380,7 @@ class DestinyHistoricalWeaponStatsData(BaseModel):
 @attr.define
 class DestinyAggregateActivityResults(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         activities: List of all activities the player has participated in.
@@ -392,7 +392,7 @@ class DestinyAggregateActivityResults(BaseModel):
 @attr.define
 class DestinyAggregateActivityStats(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         activity_hash: Hash ID that can be looked up in the DestinyActivityTable.

@@ -21,89 +21,89 @@ if TYPE_CHECKING:
 
 class ForumTopicsCategoryFiltersEnum(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     LINKS = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     QUESTIONS = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     ANSWERED_QUESTIONS = 4
-    """_No description given_ """
+    """_No description given by bungie_ """
     MEDIA = 8
-    """_No description given_ """
+    """_No description given by bungie_ """
     TEXT_ONLY = 16
-    """_No description given_ """
+    """_No description given by bungie_ """
     ANNOUNCEMENT = 32
-    """_No description given_ """
+    """_No description given by bungie_ """
     BUNGIE_OFFICIAL = 64
-    """_No description given_ """
+    """_No description given by bungie_ """
     POLLS = 128
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class ForumTopicsQuickDateEnum(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     ALL = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     LAST_YEAR = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     LAST_MONTH = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     LAST_WEEK = 3
-    """_No description given_ """
+    """_No description given by bungie_ """
     LAST_DAY = 4
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class ForumTopicsSortEnum(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     DEFAULT = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     LAST_REPLIED = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     MOST_REPLIED = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     POPULARITY = 3
-    """_No description given_ """
+    """_No description given by bungie_ """
     CONTROVERSIALITY = 4
-    """_No description given_ """
+    """_No description given by bungie_ """
     LIKED = 5
-    """_No description given_ """
+    """_No description given by bungie_ """
     HIGHEST_RATED = 6
-    """_No description given_ """
+    """_No description given by bungie_ """
     MOST_UPVOTED = 7
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 @attr.define
 class PostResponse(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        last_reply_timestamp: _No description given_
-        is_pinned: _No description given_
-        url_media_type: _No description given_
-        thumbnail: _No description given_
-        popularity: _No description given_
-        is_active: _No description given_
-        is_announcement: _No description given_
-        user_rating: _No description given_
-        user_has_rated: _No description given_
-        user_has_muted_post: _No description given_
-        latest_reply_post_id: _No description given_
-        latest_reply_author_id: _No description given_
-        ignore_status: _No description given_
-        locale: _No description given_
+        last_reply_timestamp: _No description given by bungie_
+        is_pinned: _No description given by bungie_
+        url_media_type: _No description given by bungie_
+        thumbnail: _No description given by bungie_
+        popularity: _No description given by bungie_
+        is_active: _No description given by bungie_
+        is_announcement: _No description given by bungie_
+        user_rating: _No description given by bungie_
+        user_has_rated: _No description given by bungie_
+        user_has_muted_post: _No description given by bungie_
+        latest_reply_post_id: _No description given by bungie_
+        latest_reply_author_id: _No description given by bungie_
+        ignore_status: _No description given by bungie_
+        locale: _No description given by bungie_
     """
 
     last_reply_timestamp: datetime.datetime = attr.field()
@@ -124,56 +124,56 @@ class PostResponse(BaseModel):
 
 class ForumMediaType(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     IMAGE = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     VIDEO = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     YOUTUBE = 3
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class ForumPostPopularity(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     EMPTY = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     DEFAULT = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     DISCUSSED = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     COOL_STORY = 3
-    """_No description given_ """
+    """_No description given by bungie_ """
     HEATING_UP = 4
-    """_No description given_ """
+    """_No description given by bungie_ """
     HOT = 5
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 @attr.define
 class PostSearchResponse(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        related_posts: _No description given_
-        authors: _No description given_
-        groups: _No description given_
-        searched_tags: _No description given_
-        polls: _No description given_
-        recruitment_details: _No description given_
-        available_pages: _No description given_
-        results: _No description given_
-        total_results: _No description given_
-        has_more: _No description given_
-        query: _No description given_
-        replacement_continuation_token: _No description given_
+        related_posts: _No description given by bungie_
+        authors: _No description given by bungie_
+        groups: _No description given by bungie_
+        searched_tags: _No description given by bungie_
+        polls: _No description given by bungie_
+        recruitment_details: _No description given by bungie_
+        available_pages: _No description given by bungie_
+        results: _No description given by bungie_
+        total_results: _No description given by bungie_
+        has_more: _No description given by bungie_
+        query: _No description given by bungie_
+        replacement_continuation_token: _No description given by bungie_
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
@@ -195,12 +195,12 @@ class PostSearchResponse(BaseModel):
 @attr.define
 class PollResponse(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        topic_id: _No description given_
-        results: _No description given_
-        total_votes: _No description given_
+        topic_id: _No description given by bungie_
+        results: _No description given by bungie_
+        total_votes: _No description given by bungie_
     """
 
     topic_id: int = attr.field()
@@ -211,14 +211,14 @@ class PollResponse(BaseModel):
 @attr.define
 class PollResult(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        answer_text: _No description given_
-        answer_slot: _No description given_
-        last_vote_date: _No description given_
-        votes: _No description given_
-        requesting_user_voted: _No description given_
+        answer_text: _No description given by bungie_
+        answer_slot: _No description given by bungie_
+        last_vote_date: _No description given by bungie_
+        votes: _No description given by bungie_
+        requesting_user_voted: _No description given by bungie_
     """
 
     answer_text: str = attr.field()
@@ -231,19 +231,19 @@ class PollResult(BaseModel):
 @attr.define
 class ForumRecruitmentDetail(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        topic_id: _No description given_
-        microphone_required: _No description given_
-        intensity: _No description given_
-        tone: _No description given_
-        approved: _No description given_
-        conversation_id: _No description given_
-        player_slots_total: _No description given_
-        player_slots_remaining: _No description given_
-        fireteam: _No description given_
-        kicked_player_ids: _No description given_
+        topic_id: _No description given by bungie_
+        microphone_required: _No description given by bungie_
+        intensity: _No description given by bungie_
+        tone: _No description given by bungie_
+        approved: _No description given by bungie_
+        conversation_id: _No description given by bungie_
+        player_slots_total: _No description given by bungie_
+        player_slots_remaining: _No description given by bungie_
+        fireteam: _No description given by bungie_
+        kicked_player_ids: _No description given by bungie_
     """
 
     topic_id: int = attr.field()
@@ -260,49 +260,49 @@ class ForumRecruitmentDetail(BaseModel):
 
 class ForumRecruitmentIntensityLabel(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     CASUAL = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     PROFESSIONAL = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class ForumRecruitmentToneLabel(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     FAMILY_FRIENDLY = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     ROWDY = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class ForumPostSortEnum(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     DEFAULT = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     OLDEST_FIRST = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class CommunityContentSortMode(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     TRENDING = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     LATEST = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     HIGHEST_RATED = 2
-    """_No description given_ """
+    """_No description given by bungie_ """

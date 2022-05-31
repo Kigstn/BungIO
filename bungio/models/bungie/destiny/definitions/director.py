@@ -104,7 +104,7 @@ class DestinyActivityGraphNodeStateEntry(BaseModel):
     Represents a single state that a graph node might end up in. Depending on what's going on in the game, graph nodes could be shown in different ways or even excluded from view entirely.
 
     Attributes:
-        state: _No description given_
+        state: _No description given by bungie_
     """
 
     state: int = attr.field()
@@ -128,8 +128,8 @@ class DestinyActivityGraphConnectionDefinition(BaseModel):
     Nodes on a graph can be visually connected: this appears to be the information about which nodes to link. It appears to lack more detailed information, such as the path for that linking.
 
     Attributes:
-        source_node_hash: _No description given_
-        dest_node_hash: _No description given_
+        source_node_hash: _No description given by bungie_
+        dest_node_hash: _No description given by bungie_
     """
 
     source_node_hash: int = attr.field()
@@ -156,8 +156,8 @@ class DestinyActivityGraphDisplayProgressionDefinition(BaseModel):
     When a Graph needs to show active Progressions, this defines those objectives as well as an identifier.
 
     Attributes:
-        id: _No description given_
-        progression_hash: _No description given_
+        id: _No description given by bungie_
+        progression_hash: _No description given by bungie_
     """
 
     id: int = attr.field()
@@ -170,12 +170,12 @@ class DestinyLinkedGraphDefinition(BaseModel):
     This describes links between the current graph and others, as well as when that link is relevant.
 
     Attributes:
-        description: _No description given_
-        name: _No description given_
-        unlock_expression: _No description given_
-        linked_graph_id: _No description given_
-        linked_graphs: _No description given_
-        overview: _No description given_
+        description: _No description given by bungie_
+        name: _No description given by bungie_
+        unlock_expression: _No description given by bungie_
+        linked_graph_id: _No description given by bungie_
+        linked_graphs: _No description given by bungie_
+        overview: _No description given by bungie_
     """
 
     description: str = attr.field()
@@ -189,10 +189,10 @@ class DestinyLinkedGraphDefinition(BaseModel):
 @attr.define
 class DestinyLinkedGraphEntryDefinition(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        activity_graph_hash: _No description given_
+        activity_graph_hash: _No description given by bungie_
     """
 
     activity_graph_hash: int = attr.field()

@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 class ApplicationScopes(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     READ_BASIC_USER_PROFILE = 1
@@ -49,7 +49,7 @@ class ApplicationScopes(BaseEnum):
 @attr.define
 class ApiUsage(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         api_calls: Counts for on API calls made for the time range.
@@ -63,7 +63,7 @@ class ApiUsage(BaseModel):
 @attr.define
 class Series(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         datapoints: Collection of samples with time and value.
@@ -77,7 +77,7 @@ class Series(BaseModel):
 @attr.define
 class Datapoint(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         time: Timestamp for the related count.
@@ -91,7 +91,7 @@ class Datapoint(BaseModel):
 @attr.define
 class Application(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         application_id: Unique ID assigned to the application
@@ -124,7 +124,7 @@ class Application(BaseModel):
 
 class ApplicationStatus(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
@@ -142,12 +142,12 @@ class ApplicationStatus(BaseEnum):
 @attr.define
 class ApplicationDeveloper(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        role: _No description given_
-        api_eula_version: _No description given_
-        user: _No description given_
+        role: _No description given by bungie_
+        api_eula_version: _No description given by bungie_
+        user: _No description given by bungie_
     """
 
     role: int = attr.field()
@@ -157,12 +157,12 @@ class ApplicationDeveloper(BaseModel):
 
 class DeveloperRole(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     OWNER = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     TEAM_MEMBER = 2
-    """_No description given_ """
+    """_No description given by bungie_ """

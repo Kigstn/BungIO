@@ -145,11 +145,11 @@ class DestinyMilestoneActivityPhase(BaseModel):
 @attr.define
 class DestinyMilestoneChallengeActivity(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        activity_hash: _No description given_
-        challenges: _No description given_
+        activity_hash: _No description given by bungie_
+        challenges: _No description given by bungie_
         modifier_hashes: If the activity has modifiers, this will be the list of modifiers that all variants have in common. Perform lookups against DestinyActivityModifierDefinition which defines the modifier being applied to get at the modifier data. Note that, in the DestiyActivityDefinition, you will see many more modifiers than this being referred to: those are all *possible* modifiers for the activity, not the active ones. Use only the active ones to match what's really live.
         boolean_activity_options: The set of activity options for this activity, keyed by an identifier that's unique for this activity (not guaranteed to be unique between or across all activities, though should be unique for every *variant* of a given *conceptual* activity: for instance, the original D2 Raid has many variant DestinyActivityDefinitions. While other activities could potentially have the same option hashes, for any given D2 base Raid variant the hash will be unique). As a concrete example of this data, the hashes you get for Raids will correspond to the currently active "Challenge Mode". We don't have any human readable information for these, but saavy 3rd party app users could manually associate the key (a hash identifier for the "option" that is enabled/disabled) and the value (whether it's enabled or disabled presently) On our side, we don't necessarily even know what these are used for (the game designers know, but we don't), and we have no human readable data for them. In order to use them, you will have to do some experimentation.
         loadout_requirement_index: If returned, this is the index into the DestinyActivityDefinition's "loadouts" property, indicating the currently active loadout requirements.
@@ -232,8 +232,8 @@ class DestinyMilestoneContentItemCategory(BaseModel):
     Part of our dynamic, localized Milestone content is arbitrary categories of items. These are built in our content management system, and thus aren't the same as programmatically generated rewards.
 
     Attributes:
-        title: _No description given_
-        item_hashes: _No description given_
+        title: _No description given by bungie_
+        item_hashes: _No description given by bungie_
     """
 
     title: str = attr.field()
@@ -248,7 +248,7 @@ class DestinyPublicMilestone(BaseModel):
     Attributes:
         milestone_hash: The hash identifier for the milestone. Use it to look up the DestinyMilestoneDefinition for static data about the Milestone.
         available_quests: A milestone not need have even a single quest, but if there are active quests they will be returned here.
-        activities: _No description given_
+        activities: _No description given by bungie_
         vendor_hashes: Sometimes milestones - or activities active in milestones - will have relevant vendors. These are the vendors that are currently relevant. Deprecated, already, for the sake of the new "vendors" property that has more data. What was I thinking.
         vendors: This is why we can't have nice things. This is the ordered list of vendors to be shown that relate to this milestone, potentially along with other interesting data.
         start_date: If known, this is the date when the Milestone started/became active.
@@ -269,7 +269,7 @@ class DestinyPublicMilestone(BaseModel):
 @attr.define
 class DestinyPublicMilestoneQuest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         quest_item_hash: Quests are defined as Items in content. As such, this is the hash identifier of the DestinyInventoryItemDefinition that represents this quest. It will have pointers to all of the steps in the quest, and display information for the quest (title, description, icon etc) Individual steps will be referred to in the Quest item's DestinyInventoryItemDefinition.setData property, and themselves are Items with their own renderable data.
@@ -335,11 +335,11 @@ class DestinyPublicMilestoneChallenge(BaseModel):
 @attr.define
 class DestinyPublicMilestoneChallengeActivity(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        activity_hash: _No description given_
-        challenge_objective_hashes: _No description given_
+        activity_hash: _No description given by bungie_
+        challenge_objective_hashes: _No description given by bungie_
         modifier_hashes: If the activity has modifiers, this will be the list of modifiers that all variants have in common. Perform lookups against DestinyActivityModifierDefinition which defines the modifier being applied to get at the modifier data. Note that, in the DestiyActivityDefinition, you will see many more modifiers than this being referred to: those are all *possible* modifiers for the activity, not the active ones. Use only the active ones to match what's really live.
         loadout_requirement_index: If returned, this is the index into the DestinyActivityDefinition's "loadouts" property, indicating the currently active loadout requirements.
         phase_hashes: The ordered list of phases for this activity, if any. Note that we have no human readable info for phases, nor any entities to relate them to: relating these hashes to something human readable is up to you unfortunately.
@@ -357,7 +357,7 @@ class DestinyPublicMilestoneChallengeActivity(BaseModel):
 @attr.define
 class DestinyPublicMilestoneVendor(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         vendor_hash: The hash identifier of the Vendor related to this Milestone. You can show useful things from this, such as thier Faction icon or whatever you might care about.

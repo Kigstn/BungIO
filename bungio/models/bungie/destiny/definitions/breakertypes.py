@@ -11,10 +11,10 @@ if TYPE_CHECKING:
 @attr.define
 class DestinyBreakerTypeDefinition(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         enum_value: We have an enumeration for Breaker types for quick reference. This is the current definition's breaker type enum value.
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.

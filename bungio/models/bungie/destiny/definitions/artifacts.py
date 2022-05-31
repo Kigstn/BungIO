@@ -38,7 +38,7 @@ class DestinyArtifactDefinition(BaseModel):
 @attr.define
 class DestinyArtifactTierDefinition(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         tier_hash: An identifier, unique within the Artifact, for this specific tier.
@@ -58,7 +58,7 @@ class DestinyArtifactTierDefinition(BaseModel):
 @attr.define
 class DestinyArtifactTierItemDefinition(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         item_hash: The identifier of the Plug Item unlocked by activating this item in the Artifact.

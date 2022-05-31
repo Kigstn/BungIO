@@ -21,12 +21,12 @@ if TYPE_CHECKING:
 @attr.define
 class PartnerOfferClaimRequest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        partner_offer_id: _No description given_
-        bungie_net_membership_id: _No description given_
-        transaction_id: _No description given_
+        partner_offer_id: _No description given by bungie_
+        bungie_net_membership_id: _No description given by bungie_
+        transaction_id: _No description given by bungie_
     """
 
     partner_offer_id: str = attr.field()
@@ -37,16 +37,16 @@ class PartnerOfferClaimRequest(BaseModel):
 @attr.define
 class PartnerOfferSkuHistoryResponse(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        sku_identifier: _No description given_
-        localized_name: _No description given_
-        localized_description: _No description given_
-        claim_date: _No description given_
-        all_offers_applied: _No description given_
-        transaction_id: _No description given_
-        sku_offers: _No description given_
+        sku_identifier: _No description given by bungie_
+        localized_name: _No description given by bungie_
+        localized_description: _No description given by bungie_
+        claim_date: _No description given by bungie_
+        all_offers_applied: _No description given by bungie_
+        transaction_id: _No description given by bungie_
+        sku_offers: _No description given by bungie_
     """
 
     sku_identifier: str = attr.field()
@@ -61,17 +61,17 @@ class PartnerOfferSkuHistoryResponse(BaseModel):
 @attr.define
 class PartnerOfferHistoryResponse(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        partner_offer_key: _No description given_
-        membership_id: _No description given_
-        membership_type: _No description given_
-        localized_name: _No description given_
-        localized_description: _No description given_
-        is_consumable: _No description given_
-        quantity_applied: _No description given_
-        apply_date: _No description given_
+        partner_offer_key: _No description given by bungie_
+        membership_id: _No description given by bungie_
+        membership_type: _No description given by bungie_
+        localized_name: _No description given by bungie_
+        localized_description: _No description given by bungie_
+        is_consumable: _No description given by bungie_
+        quantity_applied: _No description given by bungie_
+        apply_date: _No description given by bungie_
     """
 
     partner_offer_key: str = attr.field()
@@ -87,12 +87,12 @@ class PartnerOfferHistoryResponse(BaseModel):
 @attr.define
 class BungieRewardDisplay(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        user_reward_availability_model: _No description given_
-        objective_display_properties: _No description given_
-        reward_display_properties: _No description given_
+        user_reward_availability_model: _No description given by bungie_
+        objective_display_properties: _No description given by bungie_
+        reward_display_properties: _No description given by bungie_
     """
 
     user_reward_availability_model: "UserRewardAvailabilityModel" = attr.field()
@@ -103,12 +103,12 @@ class BungieRewardDisplay(BaseModel):
 @attr.define
 class UserRewardAvailabilityModel(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        availability_model: _No description given_
-        is_available_for_user: _No description given_
-        is_unlocked_for_user: _No description given_
+        availability_model: _No description given by bungie_
+        is_available_for_user: _No description given by bungie_
+        is_unlocked_for_user: _No description given by bungie_
     """
 
     availability_model: "RewardAvailabilityModel" = attr.field()
@@ -119,20 +119,20 @@ class UserRewardAvailabilityModel(BaseModel):
 @attr.define
 class RewardAvailabilityModel(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        has_existing_code: _No description given_
-        record_definitions: _No description given_
-        collectible_definitions: _No description given_
-        is_offer: _No description given_
-        has_offer: _No description given_
-        offer_applied: _No description given_
-        decrypted_token: _No description given_
-        is_loyalty_reward: _No description given_
-        shopify_end_date: _No description given_
-        game_earn_by_date: _No description given_
-        redemption_end_date: _No description given_
+        has_existing_code: _No description given by bungie_
+        record_definitions: _No description given by bungie_
+        collectible_definitions: _No description given by bungie_
+        is_offer: _No description given by bungie_
+        has_offer: _No description given by bungie_
+        offer_applied: _No description given by bungie_
+        decrypted_token: _No description given by bungie_
+        is_loyalty_reward: _No description given by bungie_
+        shopify_end_date: _No description given by bungie_
+        game_earn_by_date: _No description given by bungie_
+        redemption_end_date: _No description given by bungie_
     """
 
     has_existing_code: bool = attr.field()
@@ -151,11 +151,11 @@ class RewardAvailabilityModel(BaseModel):
 @attr.define
 class CollectibleDefinitions(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        collectible_definition: _No description given_
-        destiny_inventory_item_definition: _No description given_
+        collectible_definition: _No description given by bungie_
+        destiny_inventory_item_definition: _No description given by bungie_
     """
 
     collectible_definition: "DestinyCollectibleDefinition" = attr.field()
@@ -165,12 +165,12 @@ class CollectibleDefinitions(BaseModel):
 @attr.define
 class RewardDisplayProperties(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        name: _No description given_
-        description: _No description given_
-        image_path: _No description given_
+        name: _No description given by bungie_
+        description: _No description given by bungie_
+        image_path: _No description given by bungie_
     """
 
     name: str = attr.field()

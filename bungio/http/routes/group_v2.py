@@ -124,16 +124,16 @@ class GroupV2RouteHttpRequests:
         Search for Groups.
 
         Args:
-            name: _No description given_
-            group_type: _No description given_
-            creation_date: _No description given_
-            sort_by: _No description given_
-            group_member_count_filter: _No description given_
-            locale_filter: _No description given_
-            tag_text: _No description given_
-            items_per_page: _No description given_
-            current_page: _No description given_
-            request_continuation_token: _No description given_
+            name: _No description given by bungie_
+            group_type: _No description given by bungie_
+            creation_date: _No description given by bungie_
+            sort_by: _No description given by bungie_
+            group_member_count_filter: _No description given by bungie_
+            locale_filter: _No description given by bungie_
+            tag_text: _No description given by bungie_
+            items_per_page: _No description given by bungie_
+            current_page: _No description given by bungie_
+            request_continuation_token: _No description given by bungie_
             auth: Authentication information. Required when users with a private profile are queried.
 
         Raises:
@@ -216,8 +216,8 @@ class GroupV2RouteHttpRequests:
         Get information about a specific group with the given name and type. The POST version.
 
         Args:
-            group_name: _No description given_
-            group_type: _No description given_
+            group_name: _No description given by bungie_
+            group_type: _No description given by bungie_
             auth: Authentication information. Required when users with a private profile are queried.
 
         Raises:
@@ -291,22 +291,22 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            name: _No description given_
-            about: _No description given_
-            motto: _No description given_
-            theme: _No description given_
-            avatar_image_index: _No description given_
-            tags: _No description given_
-            is_public: _No description given_
-            membership_option: _No description given_
-            is_public_topic_admin_only: _No description given_
-            allow_chat: _No description given_
-            chat_security: _No description given_
-            callsign: _No description given_
-            locale: _No description given_
-            homepage: _No description given_
-            enable_invitation_messaging_for_admins: _No description given_
-            default_publicity: _No description given_
+            name: _No description given by bungie_
+            about: _No description given by bungie_
+            motto: _No description given by bungie_
+            theme: _No description given by bungie_
+            avatar_image_index: _No description given by bungie_
+            tags: _No description given by bungie_
+            is_public: _No description given by bungie_
+            membership_option: _No description given by bungie_
+            is_public_topic_admin_only: _No description given by bungie_
+            allow_chat: _No description given by bungie_
+            chat_security: _No description given by bungie_
+            callsign: _No description given by bungie_
+            locale: _No description given by bungie_
+            homepage: _No description given by bungie_
+            enable_invitation_messaging_for_admins: _No description given by bungie_
+            default_publicity: _No description given by bungie_
             group_id: Group ID of the group to edit.
             auth: Authentication information.
 
@@ -363,13 +363,13 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            decal_id: _No description given_
-            decal_color_id: _No description given_
-            decal_background_color_id: _No description given_
-            gonfalon_id: _No description given_
-            gonfalon_color_id: _No description given_
-            gonfalon_detail_id: _No description given_
-            gonfalon_detail_color_id: _No description given_
+            decal_id: _No description given by bungie_
+            decal_color_id: _No description given by bungie_
+            decal_background_color_id: _No description given by bungie_
+            gonfalon_id: _No description given by bungie_
+            gonfalon_color_id: _No description given by bungie_
+            gonfalon_detail_id: _No description given by bungie_
+            gonfalon_detail_color_id: _No description given by bungie_
             group_id: Group ID of the group to edit.
             auth: Authentication information.
 
@@ -460,8 +460,8 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            chat_name: _No description given_
-            chat_security: _No description given_
+            chat_name: _No description given by bungie_
+            chat_security: _No description given by bungie_
             group_id: Group ID of the group to edit.
             auth: Authentication information.
 
@@ -503,9 +503,9 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            chat_enabled: _No description given_
-            chat_name: _No description given_
-            chat_security: _No description given_
+            chat_enabled: _No description given by bungie_
+            chat_name: _No description given by bungie_
+            chat_security: _No description given by bungie_
             conversation_id: Conversation Id of the channel being edited.
             group_id: Group ID of the group to edit.
             auth: Authentication information.
@@ -682,8 +682,8 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            comment: _No description given_
-            length: _No description given_
+            comment: _No description given by bungie_
+            length: _No description given by bungie_
             group_id: Group ID that has the member to ban.
             membership_id: Membership ID of the member to ban from the group.
             membership_type: Membership type of the provided membership ID.
@@ -872,7 +872,7 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            message: _No description given_
+            message: _No description given by bungie_
             group_id: ID of the group.
             auth: Authentication information.
 
@@ -905,7 +905,7 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            message: _No description given_
+            message: _No description given by bungie_
             group_id: ID of the group.
             auth: Authentication information.
 
@@ -940,8 +940,8 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            memberships: _No description given_
-            message: _No description given_
+            memberships: _No description given by bungie_
+            message: _No description given by bungie_
             group_id: ID of the group.
             auth: Authentication information.
 
@@ -977,7 +977,7 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            message: _No description given_
+            message: _No description given by bungie_
             group_id: ID of the group.
             membership_id: The membership id being approved.
             membership_type: Membership type of the supplied membership ID.
@@ -1017,8 +1017,8 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            memberships: _No description given_
-            message: _No description given_
+            memberships: _No description given by bungie_
+            message: _No description given by bungie_
             group_id: ID of the group.
             auth: Authentication information.
 
@@ -1149,7 +1149,7 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            message: _No description given_
+            message: _No description given by bungie_
             group_id: ID of the group you would like to join.
             membership_id: Membership id of the account being invited.
             membership_type: MembershipType of the account being invited.

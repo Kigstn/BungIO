@@ -91,21 +91,21 @@ class BungieMembershipType(BaseEnum):
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     TIGER_XBOX = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     TIGER_PSN = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     TIGER_STEAM = 3
-    """_No description given_ """
+    """_No description given by bungie_ """
     TIGER_BLIZZARD = 4
-    """_No description given_ """
+    """_No description given by bungie_ """
     TIGER_STADIA = 5
-    """_No description given_ """
+    """_No description given by bungie_ """
     TIGER_DEMON = 10
-    """_No description given_ """
+    """_No description given by bungie_ """
     BUNGIE_NEXT = 254
-    """_No description given_ """
+    """_No description given by bungie_ """
     ALL = -1
     """"All" is only valid for searching capabilities: you need to pass the actual matching BungieMembershipType for any query where you pass a known membershipId. """
 
@@ -116,44 +116,44 @@ class BungieCredentialType(BaseEnum):
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     XUID = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     PSNID = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     WLID = 3
-    """_No description given_ """
+    """_No description given by bungie_ """
     FAKE = 4
-    """_No description given_ """
+    """_No description given by bungie_ """
     FACEBOOK = 5
-    """_No description given_ """
+    """_No description given by bungie_ """
     GOOGLE = 8
-    """_No description given_ """
+    """_No description given by bungie_ """
     WINDOWS = 9
-    """_No description given_ """
+    """_No description given by bungie_ """
     DEMON_ID = 10
-    """_No description given_ """
+    """_No description given by bungie_ """
     STEAM_ID = 12
-    """_No description given_ """
+    """_No description given by bungie_ """
     BATTLE_NET_ID = 14
-    """_No description given_ """
+    """_No description given by bungie_ """
     STADIA_ID = 16
-    """_No description given_ """
+    """_No description given by bungie_ """
     TWITCH_ID = 18
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 @attr.define
 class SearchResultOfContentItemPublicContract(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        results: _No description given_
-        total_results: _No description given_
-        has_more: _No description given_
-        query: _No description given_
-        replacement_continuation_token: _No description given_
+        results: _No description given by bungie_
+        total_results: _No description given by bungie_
+        has_more: _No description given by bungie_
+        query: _No description given by bungie_
+        replacement_continuation_token: _No description given by bungie_
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
@@ -168,14 +168,14 @@ class SearchResultOfContentItemPublicContract(BaseModel):
 @attr.define
 class SearchResultOfPostResponse(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        results: _No description given_
-        total_results: _No description given_
-        has_more: _No description given_
-        query: _No description given_
-        replacement_continuation_token: _No description given_
+        results: _No description given by bungie_
+        total_results: _No description given by bungie_
+        has_more: _No description given by bungie_
+        query: _No description given by bungie_
+        replacement_continuation_token: _No description given by bungie_
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
@@ -190,14 +190,14 @@ class SearchResultOfPostResponse(BaseModel):
 @attr.define
 class SearchResultOfGroupV2Card(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        results: _No description given_
-        total_results: _No description given_
-        has_more: _No description given_
-        query: _No description given_
-        replacement_continuation_token: _No description given_
+        results: _No description given by bungie_
+        total_results: _No description given by bungie_
+        has_more: _No description given by bungie_
+        query: _No description given by bungie_
+        replacement_continuation_token: _No description given by bungie_
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
@@ -212,14 +212,14 @@ class SearchResultOfGroupV2Card(BaseModel):
 @attr.define
 class SearchResultOfGroupMember(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        results: _No description given_
-        total_results: _No description given_
-        has_more: _No description given_
-        query: _No description given_
-        replacement_continuation_token: _No description given_
+        results: _No description given by bungie_
+        total_results: _No description given by bungie_
+        has_more: _No description given by bungie_
+        query: _No description given by bungie_
+        replacement_continuation_token: _No description given by bungie_
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
@@ -234,14 +234,14 @@ class SearchResultOfGroupMember(BaseModel):
 @attr.define
 class SearchResultOfGroupBan(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        results: _No description given_
-        total_results: _No description given_
-        has_more: _No description given_
-        query: _No description given_
-        replacement_continuation_token: _No description given_
+        results: _No description given by bungie_
+        total_results: _No description given by bungie_
+        has_more: _No description given by bungie_
+        query: _No description given by bungie_
+        replacement_continuation_token: _No description given by bungie_
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
@@ -256,14 +256,14 @@ class SearchResultOfGroupBan(BaseModel):
 @attr.define
 class SearchResultOfGroupMemberApplication(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        results: _No description given_
-        total_results: _No description given_
-        has_more: _No description given_
-        query: _No description given_
-        replacement_continuation_token: _No description given_
+        results: _No description given by bungie_
+        total_results: _No description given by bungie_
+        has_more: _No description given by bungie_
+        query: _No description given by bungie_
+        replacement_continuation_token: _No description given by bungie_
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
@@ -278,14 +278,14 @@ class SearchResultOfGroupMemberApplication(BaseModel):
 @attr.define
 class SearchResultOfGroupMembership(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        results: _No description given_
-        total_results: _No description given_
-        has_more: _No description given_
-        query: _No description given_
-        replacement_continuation_token: _No description given_
+        results: _No description given by bungie_
+        total_results: _No description given by bungie_
+        has_more: _No description given by bungie_
+        query: _No description given by bungie_
+        replacement_continuation_token: _No description given by bungie_
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
@@ -300,14 +300,14 @@ class SearchResultOfGroupMembership(BaseModel):
 @attr.define
 class SearchResultOfGroupPotentialMembership(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        results: _No description given_
-        total_results: _No description given_
-        has_more: _No description given_
-        query: _No description given_
-        replacement_continuation_token: _No description given_
+        results: _No description given by bungie_
+        total_results: _No description given by bungie_
+        has_more: _No description given by bungie_
+        query: _No description given by bungie_
+        replacement_continuation_token: _No description given by bungie_
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
@@ -322,11 +322,11 @@ class SearchResultOfGroupPotentialMembership(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyVendorReceiptsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -338,11 +338,11 @@ class SingleComponentResponseOfDestinyVendorReceiptsComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyInventoryComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -354,11 +354,11 @@ class SingleComponentResponseOfDestinyInventoryComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyProfileComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -370,11 +370,11 @@ class SingleComponentResponseOfDestinyProfileComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyPlatformSilverComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -386,11 +386,11 @@ class SingleComponentResponseOfDestinyPlatformSilverComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyKiosksComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -402,11 +402,11 @@ class SingleComponentResponseOfDestinyKiosksComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyPlugSetsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -418,11 +418,11 @@ class SingleComponentResponseOfDestinyPlugSetsComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyProfileProgressionComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -434,11 +434,11 @@ class SingleComponentResponseOfDestinyProfileProgressionComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyPresentationNodesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -450,11 +450,11 @@ class SingleComponentResponseOfDestinyPresentationNodesComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyProfileRecordsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -466,11 +466,11 @@ class SingleComponentResponseOfDestinyProfileRecordsComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyProfileCollectiblesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -482,11 +482,11 @@ class SingleComponentResponseOfDestinyProfileCollectiblesComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyProfileTransitoryComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -498,11 +498,11 @@ class SingleComponentResponseOfDestinyProfileTransitoryComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyMetricsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -514,11 +514,11 @@ class SingleComponentResponseOfDestinyMetricsComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyStringVariablesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -530,11 +530,11 @@ class SingleComponentResponseOfDestinyStringVariablesComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyCharacterComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -546,11 +546,11 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyInventoryComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -562,11 +562,11 @@ class DictionaryComponentResponseOfint64AndDestinyInventoryComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -578,11 +578,11 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent(
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyCharacterRenderComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -594,11 +594,11 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterRenderComponent(BaseM
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -610,11 +610,11 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent(B
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyKiosksComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -626,11 +626,11 @@ class DictionaryComponentResponseOfint64AndDestinyKiosksComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyPlugSetsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -642,11 +642,11 @@ class DictionaryComponentResponseOfint64AndDestinyPlugSetsComponent(BaseModel):
 @attr.define
 class DestinyBaseItemComponentSetOfuint32(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        objectives: _No description given_
-        perks: _No description given_
+        objectives: _No description given by bungie_
+        perks: _No description given by bungie_
     """
 
     objectives: "DictionaryComponentResponseOfuint32AndDestinyItemObjectivesComponent" = attr.field()
@@ -656,11 +656,11 @@ class DestinyBaseItemComponentSetOfuint32(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemObjectivesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -672,11 +672,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemObjectivesComponent(BaseM
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemPerksComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -688,11 +688,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemPerksComponent(BaseModel)
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyPresentationNodesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -704,11 +704,11 @@ class DictionaryComponentResponseOfint64AndDestinyPresentationNodesComponent(Bas
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyCharacterRecordsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -720,11 +720,11 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterRecordsComponent(Base
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyCollectiblesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -736,11 +736,11 @@ class DictionaryComponentResponseOfint64AndDestinyCollectiblesComponent(BaseMode
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyStringVariablesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -752,11 +752,11 @@ class DictionaryComponentResponseOfint64AndDestinyStringVariablesComponent(BaseM
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyCraftablesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -768,11 +768,11 @@ class DictionaryComponentResponseOfint64AndDestinyCraftablesComponent(BaseModel)
 @attr.define
 class DestinyBaseItemComponentSetOfint64(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        objectives: _No description given_
-        perks: _No description given_
+        objectives: _No description given by bungie_
+        perks: _No description given by bungie_
     """
 
     objectives: "DictionaryComponentResponseOfint64AndDestinyItemObjectivesComponent" = attr.field()
@@ -782,11 +782,11 @@ class DestinyBaseItemComponentSetOfint64(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemObjectivesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -798,11 +798,11 @@ class DictionaryComponentResponseOfint64AndDestinyItemObjectivesComponent(BaseMo
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemPerksComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -814,19 +814,19 @@ class DictionaryComponentResponseOfint64AndDestinyItemPerksComponent(BaseModel):
 @attr.define
 class DestinyItemComponentSetOfint64(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        instances: _No description given_
-        render_data: _No description given_
-        stats: _No description given_
-        sockets: _No description given_
-        reusable_plugs: _No description given_
-        plug_objectives: _No description given_
-        talent_grids: _No description given_
-        plug_states: _No description given_
-        objectives: _No description given_
-        perks: _No description given_
+        instances: _No description given by bungie_
+        render_data: _No description given by bungie_
+        stats: _No description given by bungie_
+        sockets: _No description given by bungie_
+        reusable_plugs: _No description given by bungie_
+        plug_objectives: _No description given by bungie_
+        talent_grids: _No description given by bungie_
+        plug_states: _No description given by bungie_
+        objectives: _No description given by bungie_
+        perks: _No description given by bungie_
     """
 
     instances: "DictionaryComponentResponseOfint64AndDestinyItemInstanceComponent" = attr.field()
@@ -844,11 +844,11 @@ class DestinyItemComponentSetOfint64(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemInstanceComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -860,11 +860,11 @@ class DictionaryComponentResponseOfint64AndDestinyItemInstanceComponent(BaseMode
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemRenderComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -876,11 +876,11 @@ class DictionaryComponentResponseOfint64AndDestinyItemRenderComponent(BaseModel)
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemStatsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -892,11 +892,11 @@ class DictionaryComponentResponseOfint64AndDestinyItemStatsComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemSocketsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -908,11 +908,11 @@ class DictionaryComponentResponseOfint64AndDestinyItemSocketsComponent(BaseModel
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemReusablePlugsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -924,11 +924,11 @@ class DictionaryComponentResponseOfint64AndDestinyItemReusablePlugsComponent(Bas
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemPlugObjectivesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -940,11 +940,11 @@ class DictionaryComponentResponseOfint64AndDestinyItemPlugObjectivesComponent(Ba
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemTalentGridComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -956,11 +956,11 @@ class DictionaryComponentResponseOfint64AndDestinyItemTalentGridComponent(BaseMo
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemPlugComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -972,11 +972,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemPlugComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyCurrenciesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -988,11 +988,11 @@ class DictionaryComponentResponseOfint64AndDestinyCurrenciesComponent(BaseModel)
 @attr.define
 class SingleComponentResponseOfDestinyCharacterComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1004,11 +1004,11 @@ class SingleComponentResponseOfDestinyCharacterComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyCharacterProgressionComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1020,11 +1020,11 @@ class SingleComponentResponseOfDestinyCharacterProgressionComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyCharacterRenderComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1036,11 +1036,11 @@ class SingleComponentResponseOfDestinyCharacterRenderComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyCharacterActivitiesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1052,11 +1052,11 @@ class SingleComponentResponseOfDestinyCharacterActivitiesComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyCharacterRecordsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1068,11 +1068,11 @@ class SingleComponentResponseOfDestinyCharacterRecordsComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyCollectiblesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1084,11 +1084,11 @@ class SingleComponentResponseOfDestinyCollectiblesComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyCurrenciesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1100,11 +1100,11 @@ class SingleComponentResponseOfDestinyCurrenciesComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1116,11 +1116,11 @@ class SingleComponentResponseOfDestinyItemComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemInstanceComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1132,11 +1132,11 @@ class SingleComponentResponseOfDestinyItemInstanceComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemObjectivesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1148,11 +1148,11 @@ class SingleComponentResponseOfDestinyItemObjectivesComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemPerksComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1164,11 +1164,11 @@ class SingleComponentResponseOfDestinyItemPerksComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemRenderComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1180,11 +1180,11 @@ class SingleComponentResponseOfDestinyItemRenderComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemStatsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1196,11 +1196,11 @@ class SingleComponentResponseOfDestinyItemStatsComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemTalentGridComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1212,11 +1212,11 @@ class SingleComponentResponseOfDestinyItemTalentGridComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemSocketsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1228,11 +1228,11 @@ class SingleComponentResponseOfDestinyItemSocketsComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemReusablePlugsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1244,11 +1244,11 @@ class SingleComponentResponseOfDestinyItemReusablePlugsComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemPlugObjectivesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1260,11 +1260,11 @@ class SingleComponentResponseOfDestinyItemPlugObjectivesComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyVendorGroupComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1276,11 +1276,11 @@ class SingleComponentResponseOfDestinyVendorGroupComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyVendorComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1292,11 +1292,11 @@ class DictionaryComponentResponseOfuint32AndDestinyVendorComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1308,10 +1308,10 @@ class DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent(Bas
 @attr.define
 class DestinyVendorSaleItemSetComponentOfDestinyVendorSaleItemComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        sale_items: _No description given_
+        sale_items: _No description given by bungie_
     """
 
     sale_items: Any = attr.field()
@@ -1320,11 +1320,11 @@ class DestinyVendorSaleItemSetComponentOfDestinyVendorSaleItemComponent(BaseMode
 @attr.define
 class DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1336,11 +1336,11 @@ class DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComp
 @attr.define
 class DestinyBaseItemComponentSetOfint32(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        objectives: _No description given_
-        perks: _No description given_
+        objectives: _No description given by bungie_
+        perks: _No description given by bungie_
     """
 
     objectives: "DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent" = attr.field()
@@ -1350,11 +1350,11 @@ class DestinyBaseItemComponentSetOfint32(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1366,11 +1366,11 @@ class DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent(BaseMo
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemPerksComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1382,19 +1382,19 @@ class DictionaryComponentResponseOfint32AndDestinyItemPerksComponent(BaseModel):
 @attr.define
 class DestinyItemComponentSetOfint32(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        instances: _No description given_
-        render_data: _No description given_
-        stats: _No description given_
-        sockets: _No description given_
-        reusable_plugs: _No description given_
-        plug_objectives: _No description given_
-        talent_grids: _No description given_
-        plug_states: _No description given_
-        objectives: _No description given_
-        perks: _No description given_
+        instances: _No description given by bungie_
+        render_data: _No description given by bungie_
+        stats: _No description given by bungie_
+        sockets: _No description given by bungie_
+        reusable_plugs: _No description given by bungie_
+        plug_objectives: _No description given by bungie_
+        talent_grids: _No description given by bungie_
+        plug_states: _No description given by bungie_
+        objectives: _No description given by bungie_
+        perks: _No description given by bungie_
     """
 
     instances: "DictionaryComponentResponseOfint32AndDestinyItemInstanceComponent" = attr.field()
@@ -1412,11 +1412,11 @@ class DestinyItemComponentSetOfint32(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemInstanceComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1428,11 +1428,11 @@ class DictionaryComponentResponseOfint32AndDestinyItemInstanceComponent(BaseMode
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemRenderComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1444,11 +1444,11 @@ class DictionaryComponentResponseOfint32AndDestinyItemRenderComponent(BaseModel)
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemStatsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1460,11 +1460,11 @@ class DictionaryComponentResponseOfint32AndDestinyItemStatsComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemSocketsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1476,11 +1476,11 @@ class DictionaryComponentResponseOfint32AndDestinyItemSocketsComponent(BaseModel
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemReusablePlugsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1492,11 +1492,11 @@ class DictionaryComponentResponseOfint32AndDestinyItemReusablePlugsComponent(Bas
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemPlugObjectivesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1508,11 +1508,11 @@ class DictionaryComponentResponseOfint32AndDestinyItemPlugObjectivesComponent(Ba
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemTalentGridComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1524,11 +1524,11 @@ class DictionaryComponentResponseOfint32AndDestinyItemTalentGridComponent(BaseMo
 @attr.define
 class SingleComponentResponseOfDestinyVendorComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1540,11 +1540,11 @@ class SingleComponentResponseOfDestinyVendorComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyVendorCategoriesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1556,11 +1556,11 @@ class SingleComponentResponseOfDestinyVendorCategoriesComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1572,11 +1572,11 @@ class DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent(BaseMo
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyPublicVendorComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1588,10 +1588,10 @@ class DictionaryComponentResponseOfuint32AndDestinyPublicVendorComponent(BaseMod
 @attr.define
 class DestinyVendorSaleItemSetComponentOfDestinyPublicVendorSaleItemComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        sale_items: _No description given_
+        sale_items: _No description given by bungie_
     """
 
     sale_items: Any = attr.field()
@@ -1600,11 +1600,11 @@ class DestinyVendorSaleItemSetComponentOfDestinyPublicVendorSaleItemComponent(Ba
 @attr.define
 class DictionaryComponentResponseOfuint32AndPublicDestinyVendorSaleItemSetComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1616,19 +1616,19 @@ class DictionaryComponentResponseOfuint32AndPublicDestinyVendorSaleItemSetCompon
 @attr.define
 class DestinyItemComponentSetOfuint32(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        instances: _No description given_
-        render_data: _No description given_
-        stats: _No description given_
-        sockets: _No description given_
-        reusable_plugs: _No description given_
-        plug_objectives: _No description given_
-        talent_grids: _No description given_
-        plug_states: _No description given_
-        objectives: _No description given_
-        perks: _No description given_
+        instances: _No description given by bungie_
+        render_data: _No description given by bungie_
+        stats: _No description given by bungie_
+        sockets: _No description given by bungie_
+        reusable_plugs: _No description given by bungie_
+        plug_objectives: _No description given by bungie_
+        talent_grids: _No description given by bungie_
+        plug_states: _No description given by bungie_
+        objectives: _No description given by bungie_
+        perks: _No description given by bungie_
     """
 
     instances: "DictionaryComponentResponseOfuint32AndDestinyItemInstanceComponent" = attr.field()
@@ -1646,11 +1646,11 @@ class DestinyItemComponentSetOfuint32(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemInstanceComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1662,11 +1662,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemInstanceComponent(BaseMod
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemRenderComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1678,11 +1678,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemRenderComponent(BaseModel
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemStatsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1694,11 +1694,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemStatsComponent(BaseModel)
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemSocketsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1710,11 +1710,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemSocketsComponent(BaseMode
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemReusablePlugsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1726,11 +1726,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemReusablePlugsComponent(Ba
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemPlugObjectivesComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1742,11 +1742,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemPlugObjectivesComponent(B
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemTalentGridComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        data: _No description given_
-        privacy: _No description given_
+        data: _No description given by bungie_
+        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
     """
 
@@ -1758,14 +1758,14 @@ class DictionaryComponentResponseOfuint32AndDestinyItemTalentGridComponent(BaseM
 @attr.define
 class SearchResultOfDestinyEntitySearchResultItem(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        results: _No description given_
-        total_results: _No description given_
-        has_more: _No description given_
-        query: _No description given_
-        replacement_continuation_token: _No description given_
+        results: _No description given by bungie_
+        total_results: _No description given by bungie_
+        has_more: _No description given by bungie_
+        query: _No description given by bungie_
+        replacement_continuation_token: _No description given by bungie_
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
@@ -1780,14 +1780,14 @@ class SearchResultOfDestinyEntitySearchResultItem(BaseModel):
 @attr.define
 class SearchResultOfTrendingEntry(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        results: _No description given_
-        total_results: _No description given_
-        has_more: _No description given_
-        query: _No description given_
-        replacement_continuation_token: _No description given_
+        results: _No description given by bungie_
+        total_results: _No description given by bungie_
+        has_more: _No description given by bungie_
+        query: _No description given by bungie_
+        replacement_continuation_token: _No description given by bungie_
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
@@ -1802,14 +1802,14 @@ class SearchResultOfTrendingEntry(BaseModel):
 @attr.define
 class SearchResultOfFireteamSummary(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        results: _No description given_
-        total_results: _No description given_
-        has_more: _No description given_
-        query: _No description given_
-        replacement_continuation_token: _No description given_
+        results: _No description given by bungie_
+        total_results: _No description given by bungie_
+        has_more: _No description given by bungie_
+        query: _No description given by bungie_
+        replacement_continuation_token: _No description given by bungie_
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
@@ -1824,14 +1824,14 @@ class SearchResultOfFireteamSummary(BaseModel):
 @attr.define
 class SearchResultOfFireteamResponse(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        results: _No description given_
-        total_results: _No description given_
-        has_more: _No description given_
-        query: _No description given_
-        replacement_continuation_token: _No description given_
+        results: _No description given by bungie_
+        total_results: _No description given by bungie_
+        has_more: _No description given by bungie_
+        query: _No description given by bungie_
+        replacement_continuation_token: _No description given by bungie_
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
@@ -1846,16 +1846,16 @@ class SearchResultOfFireteamResponse(BaseModel):
 @attr.define
 class GlobalAlert(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        alert_key: _No description given_
-        alert_html: _No description given_
-        alert_timestamp: _No description given_
-        alert_link: _No description given_
-        alert_level: _No description given_
-        alert_type: _No description given_
-        stream_info: _No description given_
+        alert_key: _No description given by bungie_
+        alert_html: _No description given by bungie_
+        alert_timestamp: _No description given by bungie_
+        alert_link: _No description given by bungie_
+        alert_level: _No description given by bungie_
+        alert_type: _No description given by bungie_
+        stream_info: _No description given by bungie_
     """
 
     alert_key: str = attr.field()
@@ -1869,37 +1869,37 @@ class GlobalAlert(BaseModel):
 
 class GlobalAlertLevel(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     UNKNOWN = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     BLUE = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     YELLOW = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     RED = 3
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class GlobalAlertType(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     GLOBAL_ALERT = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     STREAMING_ALERT = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 @attr.define
 class StreamInfo(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        channel_name: _No description given_
+        channel_name: _No description given by bungie_
     """
 
     channel_name: str = attr.field()

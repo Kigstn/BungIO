@@ -132,7 +132,7 @@ class DestinyProgressionDefinition(BaseModel):
     A "Progression" in Destiny is best explained by an example. A Character's "Level" is a progression: it has Experience that can be earned, levels that can be gained, and is evaluated and displayed at various points in the game. A Character's "Faction Reputation" is also a progression for much the same reason. Progression is used by a variety of systems, and the definition of a Progression will generally only be useful if combining with live data (such as a character's DestinyCharacterProgressionComponent.progressions property, which holds that character's live Progression states). Fundamentally, a Progression measures your "Level" by evaluating the thresholds in its Steps (one step per level, except for the last step which can be repeated indefinitely for "Levels" that have no ceiling) against the total earned "progression points"/experience. (for simplicity purposes, we will henceforth refer to earned progression points as experience, though it need not be a mechanic that in any way resembles Experience in a traditional sense). Earned experience is calculated in a variety of ways, determined by the Progression's scope. These go from looking up a stored value to performing exceedingly obtuse calculations. This is why we provide live data in DestinyCharacterProgressionComponent.progressions, so you don't have to worry about those.
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         scope: The "Scope" of the progression indicates the source of the progression's live data. See the DestinyProgressionScope enum for more info: but essentially, a Progression can either be backed by a stored value, or it can be a calculated derivative of other values.
         repeat_last_step: If this is True, then the progression doesn't have a maximum level.
         source: If there's a description of how to earn this progression in the local config, this will be that localized description.
@@ -141,7 +141,7 @@ class DestinyProgressionDefinition(BaseModel):
         faction_hash: If the value exists, this is the hash identifier for the Faction that owns this Progression. This is purely for convenience, if you're looking at a progression and want to know if and who it's related to in terms of Faction Reputation.
         color: The #RGB string value for the color related to this progression, if there is one.
         rank_icon: For progressions that have it, this is the rank icon we use in the Companion, displayed above the progressions' rank value.
-        reward_items: _No description given_
+        reward_items: _No description given by bungie_
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
@@ -165,16 +165,16 @@ class DestinyProgressionDefinition(BaseModel):
 @attr.define
 class DestinyProgressionDisplayPropertiesDefinition(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         display_units_name: When progressions show your "experience" gained, that bar has units (i.e. "Experience", "Bad Dudes Snuffed Out", whatever). This is the localized string for that unit of measurement.
-        description: _No description given_
-        name: _No description given_
+        description: _No description given by bungie_
+        name: _No description given by bungie_
         icon: Note that "icon" is sometimes misleading, and should be interpreted in the context of the entity. For instance, in Destiny 1 the DestinyRecordBookDefinition's icon was a big picture of a book. But usually, it will be a small square image that you can use as... well, an icon. They are currently represented as 96px x 96px images.
-        icon_sequences: _No description given_
+        icon_sequences: _No description given by bungie_
         high_res_icon: If this item has a high-res icon (at least for now, many things won't), then the path to that icon will be here.
-        has_icon: _No description given_
+        has_icon: _No description given by bungie_
     """
 
     display_units_name: str = attr.field()
@@ -212,7 +212,7 @@ class DestinyInventoryItemDefinition(BaseModel):
     So much of what you see in Destiny is actually an Item used in a new and creative way. This is the definition for Items in Destiny, which started off as just entities that could exist in your Inventory but ended up being the backing data for so much more: quests, reward previews, slots, and subclasses. In practice, you will want to associate this data with "live" item data from a Bungie.Net Platform call: these definitions describe the item in generic, non-instanced terms: but an actual instance of an item can vary widely from these generic definitions.
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         tooltip_notifications: Tooltips that only come up conditionally for the item. Check the live data DestinyItemComponent.tooltipNotificationIndexes property for which of these should be shown at runtime.
         collectible_hash: If this item has a collectible related to it, this is the hash identifier of that collectible entry.
         icon_watermark: If available, this is the original 'active' release watermark overlay for the icon. If the item has different versions, this can be overridden by the 'display version watermark icon' from the 'quality' block. Alternatively, if there is no watermark for the version, and the item version has a power cap below the current season power cap, this can be overridden by the iconWatermarkShelved property.
@@ -223,7 +223,7 @@ class DestinyInventoryItemDefinition(BaseModel):
         background_color: Sometimes, an item will have a background color. Most notably this occurs with Emblems, who use the Background Color for small character nameplates such as the "friends" view you see in-game. There are almost certainly other items that have background color as well, though I have not bothered to investigate what items have it nor what purposes they serve: use it as you will.
         screenshot: If we were able to acquire an in-game screenshot for the item, the path to that screenshot will be returned here. Note that not all items have screenshots: particularly not any non-equippable items.
         item_type_display_name: The localized title/name of the item's type. This can be whatever the designers want, and has no guarantee of consistency between items.
-        flavor_text: _No description given_
+        flavor_text: _No description given by bungie_
         ui_item_display_style: A string identifier that the game's UI uses to determine how the item should be rendered in inventory screens and the like. This could really be anything - at the moment, we don't have the time to really breakdown and maintain all the possible strings this could be, partly because new ones could be added ad hoc. But if you want to use it to dictate your own UI, or look for items with a certain display style, go for it!
         item_type_and_tier_display_name: It became a common enough pattern in our UI to show Item Type and Tier combined into a single localized string that I'm just going to go ahead and start pre-creating these for items.
         display_source: In theory, it is a localized string telling you about how you can find the item. I really wish this was more consistent. Many times, it has nothing. Sometimes, it's instead a more narrative-forward description of the item. Which is cool, and I wish all properties had that data, but it should really be its own property.
@@ -347,11 +347,11 @@ class DestinyInventoryItemDefinition(BaseModel):
 @attr.define
 class DestinyItemTooltipNotification(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        display_string: _No description given_
-        display_style: _No description given_
+        display_string: _No description given by bungie_
+        display_style: _No description given by bungie_
     """
 
     display_string: str = attr.field()
@@ -456,7 +456,7 @@ class DestinyItemCraftingBlockDefinition(BaseModel):
     Attributes:
         output_item_hash: A reference to the item definition that is created when crafting with this 'recipe' item.
         required_socket_type_hashes: A list of socket type hashes that describes which sockets are required for crafting with this recipe.
-        failed_requirement_strings: _No description given_
+        failed_requirement_strings: _No description given by bungie_
         base_material_requirements: A reference to the base material requirements for crafting with this recipe.
         bonus_plugs: A list of 'bonus' socket plugs that may be available if certain requirements are met.
     """
@@ -471,11 +471,11 @@ class DestinyItemCraftingBlockDefinition(BaseModel):
 @attr.define
 class DestinyItemCraftingBlockBonusPlugDefinition(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        socket_type_hash: _No description given_
-        plug_item_hash: _No description given_
+        socket_type_hash: _No description given by bungie_
+        plug_item_hash: _No description given by bungie_
     """
 
     socket_type_hash: int = attr.field()
@@ -537,7 +537,7 @@ class DestinyItemInventoryBlockDefinition(BaseModel):
         expiration_tooltip: The tooltip message to show, if any, when the item expires.
         expired_in_activity_message: If the item expires while playing in an activity, we show a different message.
         expired_in_orbit_message: If the item expires in orbit, we show a... more different message. ("Consummate V's, consummate!")
-        suppress_expiration_when_objectives_complete: _No description given_
+        suppress_expiration_when_objectives_complete: _No description given by bungie_
         recipe_item_hash: A reference to the associated crafting 'recipe' item definition, if this item can be crafted.
     """
 
@@ -562,7 +562,7 @@ class DestinyInventoryBucketDefinition(BaseModel):
     An Inventory (be it Character or Profile level) is comprised of many Buckets. An example of a bucket is "Primary Weapons", where all of the primary weapons on a character are gathered together into a single visual element in the UI: a subset of the inventory that has a limited number of slots, and in this case also has an associated Equipment Slot for equipping an item in the bucket. Item definitions declare what their "default" bucket is (DestinyInventoryItemDefinition.inventory.bucketTypeHash), and Item instances will tell you which bucket they are currently residing in (DestinyItemComponent.bucketHash). You can use this information along with the DestinyInventoryBucketDefinition to show these items grouped by bucket. You cannot transfer an item to a bucket that is not its Default without going through a Vendor's "accepted items" (DestinyVendorDefinition.acceptedItems). This is how transfer functionality like the Vault is implemented, as a feature of a Vendor. See the vendor's acceptedItems property for more details.
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         scope: Where the bucket is found. 0 = Character, 1 = Account
         category: An enum value for what items can be found in the bucket. See the BucketCategory enum for more details.
         bucket_order: Use this property to provide a quick-and-dirty recommended ordering for buckets in the UI. Most UIs will likely want to forsake this for something more custom and manual.
@@ -674,7 +674,7 @@ class DestinyStatDefinition(BaseModel):
     This represents a stat that's applied to a character or an item (such as a weapon, piece of armor, or a vehicle). An example of a stat might be Attack Power on a weapon. Stats go through a complex set of transformations before they end up being shown to the user as a number or a progress bar, and those transformations are fundamentally intertwined with the concept of a "Stat Group" (DestinyStatGroupDefinition). Items have both Stats and a reference to a Stat Group, and it is the Stat Group that takes the raw stat information and gives it both rendering metadata (such as whether to show it as a number or a progress bar) and the final transformation data (interpolation tables to turn the raw investment stat into a display stat). Please see DestinyStatGroupDefinition for more information on that transformational process. Stats are segregated from Stat Groups because different items and types of items can refer to the same stat, but have different "scales" for the stat while still having the same underlying value. For example, both a Shotgun and an Auto Rifle may have a "raw" impact stat of 50, but the Auto Rifle's Stat Group will scale that 50 down so that, when it is displayed, it is a smaller value relative to the shotgun. (this is a totally made up example, don't assume shotguns have naturally higher impact than auto rifles because of this) A final caveat is that some stats, even after this "final" transformation, go through yet another set of transformations directly in the game as a result of dynamic, stateful scripts that get run. BNet has no access to these scripts, nor any way to know which scripts get executed. As a result, the stats for an item that you see in-game - particularly for stats that are often impacted by Perks, like Magazine Size - can change dramatically from what we return on Bungie.Net. This is a known issue with no fix coming down the pipeline. Take these stats with a grain of salt. Stats actually go through four transformations, for those interested: 1) "Sandbox" stat, the "most raw" form. These are pretty much useless without transformations applied, and thus are not currently returned in the API. If you really want these, we can provide them. Maybe someone could do something cool with it? 2) "Investment" stat (the stat's value after DestinyStatDefinition's interpolation tables and aggregation logic is applied to the "Sandbox" stat value) 3) "Display" stat (the stat's base UI-visible value after DestinyStatGroupDefinition's interpolation tables are applied to the Investment Stat value. For most stats, this is what is displayed.) 4) Underlying in-game stat (the stat's actual value according to the game, after the game runs dynamic scripts based on the game and character's state. This is the final transformation that BNet does not have access to. For most stats, this is not actually displayed to the user, with the exception of Magazine Size which is then piped back to the UI for display in-game, but not to BNet.)
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         aggregation_type: Stats can exist on a character or an item, and they may potentially be aggregated in different ways. The DestinyStatAggregationType enum value indicates the way that this stat is being aggregated.
         has_computed_block: True if the stat is computed rather than being delivered as a raw value on items. For instance, the Light stat in Destiny 1 was a computed stat.
         stat_category: The category of the stat, according to the game.
@@ -778,7 +778,7 @@ class DestinyEquipmentSlotDefinition(BaseModel):
     Characters can not only have Inventory buckets (containers of items that are generally matched by their type or functionality), they can also have Equipment Slots. The Equipment Slot is an indicator that the related bucket can have instanced items equipped on the character. For instance, the Primary Weapon bucket has an Equipment Slot that determines whether you can equip primary weapons, and holds the association between its slot and the inventory bucket from which it can have items equipped. An Equipment Slot must have a related Inventory Bucket, but not all inventory buckets must have Equipment Slots.
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         equipment_category_hash: These technically point to "Equipment Category Definitions". But don't get excited. There's nothing of significant value in those definitions, so I didn't bother to expose them. You can use the hash here to group equipment slots by common functionality, which serves the same purpose as if we had the Equipment Category definitions exposed.
         bucket_type_hash: The inventory bucket that owns this equipment slot.
         apply_custom_art_dyes: If True, equipped items should have their custom art dyes applied when rendering the item. Otherwise, custom art dyes on an item should be ignored if the item is equipped in this slot.
@@ -801,10 +801,10 @@ class DestinyEquipmentSlotDefinition(BaseModel):
 @attr.define
 class DestinyArtDyeReference(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        art_dye_channel_hash: _No description given_
+        art_dye_channel_hash: _No description given by bungie_
     """
 
     art_dye_channel_hash: int = attr.field()
@@ -816,13 +816,13 @@ class DestinyItemTranslationBlockDefinition(BaseModel):
     This Block defines the rendering data associated with the item, if any.
 
     Attributes:
-        weapon_pattern_identifier: _No description given_
-        weapon_pattern_hash: _No description given_
-        default_dyes: _No description given_
-        locked_dyes: _No description given_
-        custom_dyes: _No description given_
-        arrangements: _No description given_
-        has_geometry: _No description given_
+        weapon_pattern_identifier: _No description given by bungie_
+        weapon_pattern_hash: _No description given by bungie_
+        default_dyes: _No description given by bungie_
+        locked_dyes: _No description given by bungie_
+        custom_dyes: _No description given by bungie_
+        arrangements: _No description given by bungie_
+        has_geometry: _No description given by bungie_
     """
 
     weapon_pattern_identifier: str = attr.field()
@@ -837,11 +837,11 @@ class DestinyItemTranslationBlockDefinition(BaseModel):
 @attr.define
 class DestinyGearArtArrangementReference(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        class_hash: _No description given_
-        art_arrangement_hash: _No description given_
+        class_hash: _No description given by bungie_
+        art_arrangement_hash: _No description given by bungie_
     """
 
     class_hash: int = attr.field()
@@ -855,9 +855,9 @@ class DestinyClassDefinition(BaseModel):
 
     Attributes:
         class_type: In Destiny 1, we added a convenience Enumeration for referring to classes. We've kept it, though mostly for posterity. This is the enum value for this definition's class.
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         gendered_class_names: A localized string referring to the singular form of the Class's name when referred to in gendered form. Keyed by the DestinyGender.
-        gendered_class_names_by_gender_hash: _No description given_
+        gendered_class_names_by_gender_hash: _No description given by bungie_
         mentor_vendor_hash: Mentors don't really mean anything anymore. Don't expect this to be populated.
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
@@ -881,7 +881,7 @@ class DestinyGenderDefinition(BaseModel):
 
     Attributes:
         gender_type: This is a quick reference enumeration for all of the currently defined Genders. We use the enumeration for quicker lookups in related data, like DestinyClassDefinition.genderedClassNames.
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
@@ -900,7 +900,7 @@ class DestinyVendorDefinition(BaseModel):
     These are the definitions for Vendors. In Destiny, a Vendor can be a lot of things - some things that you wouldn't expect, and some things that you don't even see directly in the game. Vendors are the Dolly Levi of the Destiny universe. - Traditional Vendors as you see in game: people who you come up to and who give you quests, rewards, or who you can buy things from. - Kiosks/Collections, which are really just Vendors that don't charge currency (or charge some pittance of a currency) and whose gating for purchases revolves more around your character's state. - Previews for rewards or the contents of sacks. These are implemented as Vendors, where you can't actually purchase from them but the items that they have for sale and the categories of sale items reflect the rewards or contents of the sack. This is so that the game could reuse the existing Vendor display UI for rewards and save a bunch of wheel reinvention. - Item Transfer capabilities, like the Vault and Postmaster. Vendors can have "acceptedItem" buckets that determine the source and destination buckets for transfers. When you interact with such a vendor, these buckets are what gets shown in the UI instead of any items that the Vendor would have for sale. Yep, the Vault is a vendor. It is pretty much guaranteed that they'll be used for even more features in the future. They have come to be seen more as generic categorized containers for items than "vendors" in a traditional sense, for better or worse. Where possible and time allows, we'll attempt to split those out into their own more digestible derived "Definitions": but often time does not allow that, as you can see from the above ways that vendors are used which we never split off from Vendor Definitions externally. Since Vendors are so many things to so many parts of the game, the definition is understandably complex. You will want to combine this data with live Vendor information from the API when it is available.
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         vendor_progression_type: The type of reward progression that this vendor has. Default - The original rank progression from token redemption. Ritual - Progression from ranks in ritual content. For example: Crucible (Shaxx), Gambit (Drifter), and Battlegrounds (War Table).
         buy_string: If the vendor has a custom localized string describing the "buy" action, that is returned here.
         sell_string: Ditto for selling. Not that you can sell items to a vendor anymore. Will it come back? Who knows. The string's still there.
@@ -977,22 +977,22 @@ class DestinyVendorDefinition(BaseModel):
 @attr.define
 class DestinyVendorDisplayPropertiesDefinition(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         large_icon: I regret calling this a "large icon". It's more like a medium-sized image with a picture of the vendor's mug on it, trying their best to look cool. Not what one would call an icon.
-        subtitle: _No description given_
+        subtitle: _No description given by bungie_
         original_icon: If we replaced the icon with something more glitzy, this is the original icon that the vendor had according to the game's content. It may be more lame and/or have less razzle-dazzle. But who am I to tell you which icon to use.
         requirements_display: Vendors, in addition to expected display property data, may also show some "common requirements" as statically defined definition data. This might be when a vendor accepts a single type of currency, or when the currency is unique to the vendor and the designers wanted to show that currency when you interact with the vendor.
         small_transparent_icon: This is the icon used in parts of the game UI such as the vendor's waypoint.
         map_icon: This is the icon used in the map overview, when the vendor is located on the map.
         large_transparent_icon: This is apparently the "Watermark". I am not certain offhand where this is actually used in the Game UI, but some people may find it useful.
-        description: _No description given_
-        name: _No description given_
+        description: _No description given by bungie_
+        name: _No description given by bungie_
         icon: Note that "icon" is sometimes misleading, and should be interpreted in the context of the entity. For instance, in Destiny 1 the DestinyRecordBookDefinition's icon was a big picture of a book. But usually, it will be a small square image that you can use as... well, an icon. They are currently represented as 96px x 96px images.
-        icon_sequences: _No description given_
+        icon_sequences: _No description given by bungie_
         high_res_icon: If this item has a high-res icon (at least for now, many things won't), then the path to that icon will be here.
-        has_icon: _No description given_
+        has_icon: _No description given by bungie_
     """
 
     large_icon: str = attr.field()
@@ -1016,10 +1016,10 @@ class DestinyVendorRequirementDisplayEntryDefinition(BaseModel):
     The localized properties of the requirementsDisplay, allowing information about the requirement or item being featured to be seen.
 
     Attributes:
-        icon: _No description given_
-        name: _No description given_
-        source: _No description given_
-        type: _No description given_
+        icon: _No description given by bungie_
+        name: _No description given by bungie_
+        source: _No description given by bungie_
+        type: _No description given by bungie_
     """
 
     icon: str = attr.field()
@@ -1034,15 +1034,15 @@ class DestinyVendorActionDefinition(BaseModel):
     If a vendor can ever end up performing actions, these are the properties that will be related to those actions. I'm not going to bother documenting this yet, as it is unused and unclear if it will ever be used... but in case it is ever populated and someone finds it useful, it is defined here.
 
     Attributes:
-        description: _No description given_
-        execute_seconds: _No description given_
-        icon: _No description given_
-        name: _No description given_
-        verb: _No description given_
-        is_positive: _No description given_
-        action_id: _No description given_
-        action_hash: _No description given_
-        auto_perform_action: _No description given_
+        description: _No description given by bungie_
+        execute_seconds: _No description given by bungie_
+        icon: _No description given by bungie_
+        name: _No description given by bungie_
+        verb: _No description given by bungie_
+        is_positive: _No description given by bungie_
+        action_id: _No description given by bungie_
+        action_hash: _No description given by bungie_
+        auto_perform_action: _No description given by bungie_
     """
 
     description: str = attr.field()
@@ -1076,8 +1076,8 @@ class DestinyVendorCategoryEntryDefinition(BaseModel):
         vendor_item_indexes: A shortcut for the vendor item indexes sold under this category. Saves us from some expensive reorganization at runtime.
         is_preview: Sometimes a category isn't actually used to sell items, but rather to preview them. This implies different UI (and manual placement of the category in the UI) in the game, and special treatment.
         is_display_only: If true, this category only displays items: you can't purchase anything in them.
-        reset_interval_minutes_override: _No description given_
-        reset_offset_minutes_override: _No description given_
+        reset_interval_minutes_override: _No description given by bungie_
+        reset_offset_minutes_override: _No description given by bungie_
     """
 
     category_index: int = attr.field()
@@ -1104,10 +1104,10 @@ class DestinyVendorCategoryOverlayDefinition(BaseModel):
     The details of an overlay prompt to show to a user. They are all fairly self-explanatory localized strings that can be shown.
 
     Attributes:
-        choice_description: _No description given_
-        description: _No description given_
-        icon: _No description given_
-        title: _No description given_
+        choice_description: _No description given by bungie_
+        description: _No description given by bungie_
+        icon: _No description given by bungie_
+        title: _No description given by bungie_
         currency_item_hash: If this overlay has a currency item that it features, this is said featured item.
     """
 
@@ -1124,10 +1124,10 @@ class DestinyDisplayCategoryDefinition(BaseModel):
     Display Categories are different from "categories" in that these are specifically for visual grouping and display of categories in Vendor UI. The "categories" structure is for validation of the contained items, and can be categorized entirely separately from "Display Categories", there need be and often will be no meaningful relationship between the two.
 
     Attributes:
-        index: _No description given_
+        index: _No description given by bungie_
         identifier: A string identifier for the display category.
-        display_category_hash: _No description given_
-        display_properties: _No description given_
+        display_category_hash: _No description given by bungie_
+        display_properties: _No description given by bungie_
         display_in_banner: If true, this category should be displayed in the "Banner" section of the vendor's UI.
         progression_hash: If it exists, this is the hash identifier of a DestinyProgressionDefinition that represents the progression to show on this display category. Specific categories can now have thier own distinct progression, apparently. So that's cool.
         sort_order: If this category sorts items in a nonstandard way, this will be the way we sort.
@@ -1204,7 +1204,7 @@ class DestinyVendorInteractionSackEntryDefinition(BaseModel):
     Compare this sackType to the sack identifier in the DestinyInventoryItemDefinition.vendorSackType property of items. If they match, show this sack with this interaction.
 
     Attributes:
-        sack_type: _No description given_
+        sack_type: _No description given by bungie_
     """
 
     sack_type: int = attr.field()
@@ -1278,7 +1278,7 @@ class DestinyVendorItemDefinition(BaseModel):
         sort_value: *if* the category this item is in supports non-default sorting, this value should represent the sorting value to use, pre-processed and ready to go.
         expiration_tooltip: If this item can expire, this is the tooltip message to show with its expiration info.
         redirect_to_sale_indexes: If this is populated, the purchase of this item should redirect to purchasing these other items instead.
-        socket_overrides: _No description given_
+        socket_overrides: _No description given by bungie_
         unpurchasable: If true, this item is some sort of dummy sale item that cannot actually be purchased. It may be a display only item, or some fluff left by a content designer for testing purposes, or something that got disabled because it was a terrible idea. You get the picture. We won't know *why* it can't be purchased, only that it can't be. Sorry. This is also only whether it's unpurchasable as a static property according to game content. There are other reasons why an item may or may not be purchasable at runtime, so even if this isn't set to True you should trust the runtime value for this sale item over the static definition if this is unset.
     """
 
@@ -1334,7 +1334,7 @@ class DestinyItemCreationEntryLevelDefinition(BaseModel):
     An overly complicated wrapper for the item level at which the item should spawn.
 
     Attributes:
-        level: _No description given_
+        level: _No description given by bungie_
     """
 
     level: int = attr.field()
@@ -1346,8 +1346,8 @@ class DestinyVendorSaleItemActionBlockDefinition(BaseModel):
     Not terribly useful, some basic cooldown interaction info.
 
     Attributes:
-        execute_seconds: _No description given_
-        is_positive: _No description given_
+        execute_seconds: _No description given by bungie_
+        is_positive: _No description given by bungie_
     """
 
     execute_seconds: float = attr.field()
@@ -1402,7 +1402,7 @@ class DestinyDestinationDefinition(BaseModel):
     On to one of the more confusing subjects of the API. What is a Destination, and what is the relationship between it, Activities, Locations, and Places? A "Destination" is a specific region/city/area of a larger "Place". For instance, a Place might be Earth where a Destination might be Bellevue, Washington. (Please, pick a more interesting destination if you come to visit Earth).
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         place_hash: The place that "owns" this Destination. Use this hash to look up the DestinyPlaceDefinition.
         default_freeroam_activity_hash: If this Destination has a default Free-Roam activity, this is the hash for that Activity. Use it to look up the DestinyActivityDefintion.
         activity_graph_entries: If the Destination has default Activity Graphs (i.e. "Map") that should be shown in the director, this is the list of those Graphs. At most, only one should be active at any given time for a Destination: these would represent, for example, different variants on a Map if the Destination is changing on a macro level based on game state.
@@ -1648,11 +1648,11 @@ class DestinyTalentNodeStepGroups(BaseModel):
     These properties are an attempt to categorize talent node steps by certain common properties. See the related enumerations for the type of properties being categorized.
 
     Attributes:
-        weapon_performance: _No description given_
-        impact_effects: _No description given_
-        guardian_attributes: _No description given_
-        light_abilities: _No description given_
-        damage_types: _No description given_
+        weapon_performance: _No description given by bungie_
+        impact_effects: _No description given by bungie_
+        guardian_attributes: _No description given by bungie_
+        light_abilities: _No description given by bungie_
+        damage_types: _No description given by bungie_
     """
 
     weapon_performance: int = attr.field()
@@ -1664,131 +1664,131 @@ class DestinyTalentNodeStepGroups(BaseModel):
 
 class DestinyTalentNodeStepWeaponPerformances(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     RATE_OF_FIRE = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     DAMAGE = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     ACCURACY = 4
-    """_No description given_ """
+    """_No description given by bungie_ """
     RANGE = 8
-    """_No description given_ """
+    """_No description given by bungie_ """
     ZOOM = 16
-    """_No description given_ """
+    """_No description given by bungie_ """
     RECOIL = 32
-    """_No description given_ """
+    """_No description given by bungie_ """
     READY = 64
-    """_No description given_ """
+    """_No description given by bungie_ """
     RELOAD = 128
-    """_No description given_ """
+    """_No description given by bungie_ """
     HAIR_TRIGGER = 256
-    """_No description given_ """
+    """_No description given by bungie_ """
     AMMO_AND_MAGAZINE = 512
-    """_No description given_ """
+    """_No description given by bungie_ """
     TRACKING_AND_DETONATION = 1024
-    """_No description given_ """
+    """_No description given by bungie_ """
     SHOTGUN_SPREAD = 2048
-    """_No description given_ """
+    """_No description given by bungie_ """
     CHARGE_TIME = 4096
-    """_No description given_ """
+    """_No description given by bungie_ """
     ALL = 8191
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class DestinyTalentNodeStepImpactEffects(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     ARMOR_PIERCING = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     RICOCHET = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     FLINCH = 4
-    """_No description given_ """
+    """_No description given by bungie_ """
     COLLATERAL_DAMAGE = 8
-    """_No description given_ """
+    """_No description given by bungie_ """
     DISORIENT = 16
-    """_No description given_ """
+    """_No description given by bungie_ """
     HIGHLIGHT_TARGET = 32
-    """_No description given_ """
+    """_No description given by bungie_ """
     ALL = 63
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class DestinyTalentNodeStepGuardianAttributes(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     STATS = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     SHIELDS = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     HEALTH = 4
-    """_No description given_ """
+    """_No description given by bungie_ """
     REVIVE = 8
-    """_No description given_ """
+    """_No description given by bungie_ """
     AIM_UNDER_FIRE = 16
-    """_No description given_ """
+    """_No description given by bungie_ """
     RADAR = 32
-    """_No description given_ """
+    """_No description given by bungie_ """
     INVISIBILITY = 64
-    """_No description given_ """
+    """_No description given by bungie_ """
     REPUTATIONS = 128
-    """_No description given_ """
+    """_No description given by bungie_ """
     ALL = 255
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class DestinyTalentNodeStepLightAbilities(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     GRENADES = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     MELEE = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     MOVEMENT_MODES = 4
-    """_No description given_ """
+    """_No description given by bungie_ """
     ORBS = 8
-    """_No description given_ """
+    """_No description given by bungie_ """
     SUPER_ENERGY = 16
-    """_No description given_ """
+    """_No description given by bungie_ """
     SUPER_MODS = 32
-    """_No description given_ """
+    """_No description given by bungie_ """
     ALL = 63
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class DestinyTalentNodeStepDamageTypes(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     KINETIC = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     ARC = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     SOLAR = 4
-    """_No description given_ """
+    """_No description given by bungie_ """
     VOID = 8
-    """_No description given_ """
+    """_No description given by bungie_ """
     ALL = 15
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 @attr.define
@@ -1872,9 +1872,9 @@ class DestinyLocationReleaseDefinition(BaseModel):
 
     Attributes:
         display_properties: Sadly, these don't appear to be populated anymore (ever?)
-        small_transparent_icon: _No description given_
-        map_icon: _No description given_
-        large_transparent_icon: _No description given_
+        small_transparent_icon: _No description given by bungie_
+        map_icon: _No description given by bungie_
+        large_transparent_icon: _No description given by bungie_
         spawn_point: If we had map information, this spawnPoint would be interesting. But sadly, we don't have that info.
         destination_hash: The Destination being pointed to by this location.
         activity_hash: The Activity being pointed to by this location.
@@ -1941,7 +1941,7 @@ class DestinyActivityModeDefinition(BaseModel):
     This definition represents an "Activity Mode" as it exists in the Historical Stats endpoints. An individual Activity Mode represents a collection of activities that are played in a certain way. For example, Nightfall Strikes are part of a "Nightfall" activity mode, and any activities played as the PVP mode "Clash" are part of the "Clash activity mode. Activity modes are nested under each other in a hierarchy, so that if you ask for - for example - "AllPvP", you will get any PVP activities that the user has played, regardless of what specific PVP mode was being played.
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         pgcr_image: If this activity mode has a related PGCR image, this will be the path to said image.
         mode_type: The Enumeration value for this Activity Mode. Pass this identifier into Stats endpoints to get aggregate stats for this mode.
         activity_mode_category: The type of play being performed in broad terms (PVP, PVE)
@@ -2012,7 +2012,7 @@ class DestinyActivityGuidedBlockDefinition(BaseModel):
 @attr.define
 class DestinyActivityLoadoutRequirementSet(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         requirements: The set of requirements that will be applied on the activity if this requirement set is active.
@@ -2024,12 +2024,12 @@ class DestinyActivityLoadoutRequirementSet(BaseModel):
 @attr.define
 class DestinyActivityLoadoutRequirement(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        equipment_slot_hash: _No description given_
-        allowed_equipped_item_hashes: _No description given_
-        allowed_weapon_sub_types: _No description given_
+        equipment_slot_hash: _No description given by bungie_
+        allowed_equipped_item_hashes: _No description given by bungie_
+        allowed_weapon_sub_types: _No description given by bungie_
     """
 
     equipment_slot_hash: int = attr.field()
@@ -2055,7 +2055,7 @@ class DestinyPlaceDefinition(BaseModel):
     Okay, so Activities (DestinyActivityDefinition) take place in Destinations (DestinyDestinationDefinition). Destinations are part of larger locations known as Places (you're reading its documentation right now). Places are more on the planetary scale, like "Earth" and "Your Mom."
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
@@ -2073,7 +2073,7 @@ class DestinyActivityTypeDefinition(BaseModel):
     The definition for an Activity Type. In Destiny 2, an Activity Type represents a conceptual categorization of Activities. These are most commonly used in the game for the subtitle under Activities, but BNet uses them extensively to identify and group activities by their common properties. Unfortunately, there has been a movement away from providing the richer data in Destiny 2 that we used to get in Destiny 1 for Activity Types. For instance, Nightfalls are grouped under the same Activity Type as regular Strikes.  For this reason, BNet will eventually migrate toward Activity Modes as a better indicator of activity category. But for the time being, it is still referred to in many places across our codebase.
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
@@ -2103,7 +2103,7 @@ class DestinyDestinationBubbleSettingDefinition(BaseModel):
     Human readable data about the bubble. Combine with DestinyBubbleDefinition - see DestinyDestinationDefinition.bubbleSettings for more information. DEPRECATED - Just use bubbles.
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
@@ -2126,7 +2126,7 @@ class DestinyBubbleDefinition(BaseModel):
 @attr.define
 class DestinyVendorGroupReference(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         vendor_group_hash: The DestinyVendorGroupDefinition to which this Vendor can belong.
@@ -2161,7 +2161,7 @@ class DestinyFactionDefinition(BaseModel):
     These definitions represent Factions in the game. Factions have ended up unilaterally being related to Vendors that represent them, but that need not necessarily be the case. A Faction is really just an entity that has a related progression for which a character can gain experience. In Destiny 1, Dead Orbit was an example of a Faction: there happens to be a Vendor that represents Dead Orbit (and indeed, DestinyVendorDefinition.factionHash defines to this relationship), but Dead Orbit could theoretically exist without the Vendor that provides rewards.
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         progression_hash: The hash identifier for the DestinyProgressionDefinition that indicates the character's relationship with this faction in terms of experience and levels.
         token_values: The faction token item hashes, and their respective progression values.
         reward_item_hash: The faction reward item hash, usually an engram.
@@ -2202,16 +2202,16 @@ class DestinyFactionVendorDefinition(BaseModel):
 @attr.define
 class DestinySandboxPatternDefinition(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        pattern_hash: _No description given_
-        pattern_global_tag_id_hash: _No description given_
-        weapon_content_group_hash: _No description given_
-        weapon_translation_group_hash: _No description given_
-        weapon_type_hash: _No description given_
-        weapon_type: _No description given_
-        filters: _No description given_
+        pattern_hash: _No description given by bungie_
+        pattern_global_tag_id_hash: _No description given by bungie_
+        weapon_content_group_hash: _No description given by bungie_
+        weapon_translation_group_hash: _No description given by bungie_
+        weapon_type_hash: _No description given by bungie_
+        weapon_type: _No description given by bungie_
+        filters: _No description given by bungie_
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
@@ -2232,13 +2232,13 @@ class DestinySandboxPatternDefinition(BaseModel):
 @attr.define
 class DestinyArrangementRegionFilterDefinition(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        art_arrangement_region_hash: _No description given_
-        art_arrangement_region_index: _No description given_
-        stat_hash: _No description given_
-        arrangement_index_by_stat_value: _No description given_
+        art_arrangement_region_hash: _No description given by bungie_
+        art_arrangement_region_index: _No description given by bungie_
+        stat_hash: _No description given by bungie_
+        arrangement_index_by_stat_value: _No description given by bungie_
     """
 
     art_arrangement_region_hash: int = attr.field()
@@ -2345,7 +2345,7 @@ class DestinyRewardSourceDefinition(BaseModel):
     Represents a heuristically-determined "item source" according to Bungie.net. These item sources are non-canonical: we apply a combination of special configuration and often-fragile heuristics to attempt to discern whether an item should be part of a given "source," but we have known cases of false positives and negatives due to our imperfect heuristics. Still, they provide a decent approximation for people trying to figure out how an item can be obtained. DestinyInventoryItemDefinition refers to sources in the sourceDatas.sourceHashes property for all sources we determined the item could spawn from. An example in Destiny 1 of a Source would be "Nightfall". If an item has the "Nightfall" source associated with it, it's extremely likely that you can earn that item while playing Nightfall, either during play or as an after-completion reward.
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         category: Sources are grouped into categories: common ways that items are provided. I hope to see this expand in Destiny 2 once we have time to generate accurate reward source data.
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
@@ -2403,7 +2403,7 @@ class DestinyItemObjectiveBlockDefinition(BaseModel):
         quest_type_identifier: The identifier for the type of quest being performed, if any. Not associated with any fixed definition, yet.
         quest_type_hash: A hashed value for the questTypeIdentifier, because apparently I like to be redundant.
         per_objective_display_properties: One entry per Objective on the item, it will have related display information.
-        display_as_stat_tracker: _No description given_
+        display_as_stat_tracker: _No description given by bungie_
     """
 
     objective_hashes: list[int] = attr.field()
@@ -2421,7 +2421,7 @@ class DestinyItemObjectiveBlockDefinition(BaseModel):
 @attr.define
 class DestinyObjectiveDisplayProperties(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         activity_hash: The activity associated with this objective in the context of this item, if any.
@@ -2482,9 +2482,9 @@ class DestinyItemSackBlockDefinition(BaseModel):
     Attributes:
         detail_action: A description of what will happen when you open the sack. As far as I can tell, this is blank currently. Unknown whether it will eventually be populated with useful info.
         open_action: The localized name of the action being performed when you open the sack.
-        select_item_count: _No description given_
-        vendor_sack_type: _No description given_
-        open_on_acquire: _No description given_
+        select_item_count: _No description given by bungie_
+        vendor_sack_type: _No description given by bungie_
+        open_on_acquire: _No description given by bungie_
     """
 
     detail_action: str = attr.field()
@@ -2555,10 +2555,10 @@ class DestinyItemSocketEntryPlugItemDefinition(BaseModel):
 @attr.define
 class DestinyItemSocketEntryPlugItemRandomizedDefinition(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        crafting_requirements: _No description given_
+        crafting_requirements: _No description given by bungie_
         currently_can_roll: Indicates if the plug can be rolled on the current version of the item. For example, older versions of weapons may have plug rolls that are no longer possible on the current versions.
         plug_item_hash: The hash identifier of a DestinyInventoryItemDefinition representing the plug that can be inserted.
     """
@@ -2571,12 +2571,12 @@ class DestinyItemSocketEntryPlugItemRandomizedDefinition(BaseModel):
 @attr.define
 class DestinyPlugItemCraftingRequirements(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        unlock_requirements: _No description given_
+        unlock_requirements: _No description given by bungie_
         required_level: If the plug has a known level requirement, it'll be available here.
-        material_requirement_hashes: _No description given_
+        material_requirement_hashes: _No description given by bungie_
     """
 
     unlock_requirements: list["DestinyPlugItemCraftingUnlockRequirement"] = attr.field()
@@ -2587,10 +2587,10 @@ class DestinyPlugItemCraftingRequirements(BaseModel):
 @attr.define
 class DestinyPlugItemCraftingUnlockRequirement(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        failure_description: _No description given_
+        failure_description: _No description given by bungie_
     """
 
     failure_description: str = attr.field()
@@ -2882,7 +2882,7 @@ class DestinyItemCategoryDefinition(BaseModel):
     In an attempt to categorize items by type, usage, and other interesting properties, we created DestinyItemCategoryDefinition: information about types that is assembled using a set of heuristics that examine the properties of an item such as what inventory bucket it's in, its item type name, and whether it has or is missing certain blocks of data. This heuristic is imperfect, however. If you find an item miscategorized, let us know on the Bungie API forums! We then populate all of the categories that we think an item belongs to in its DestinyInventoryItemDefinition.itemCategoryHashes property. You can use that to provide your own custom item filtering, sorting, aggregating... go nuts on it! And let us know if you see more categories that you wish would be added!
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         visible: If True, this category should be visible in UI. Sometimes we make categories that we don't think are interesting externally. It's up to you if you want to skip on showing them.
         deprecated: If True, this category has been deprecated: it may have no items left, or there may be only legacy items that remain in it which are no longer relevant to the game.
         short_title: A shortened version of the title. The reason why we have this is because the Armory in German had titles that were too long to display in our UI, so these were localized abbreviated versions of those categories. The property still exists today, even though the Armory doesn't exist for D2... yet.
@@ -2927,13 +2927,13 @@ class DestinyItemCategoryDefinition(BaseModel):
 @attr.define
 class DestinyProgressionRewardItemQuantity(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        rewarded_at_progression_level: _No description given_
-        acquisition_behavior: _No description given_
-        ui_display_style: _No description given_
-        claim_unlock_display_strings: _No description given_
+        rewarded_at_progression_level: _No description given by bungie_
+        acquisition_behavior: _No description given by bungie_
+        ui_display_style: _No description given by bungie_
+        claim_unlock_display_strings: _No description given by bungie_
         item_hash: The hash identifier for the item in question. Use it to look up the item's DestinyInventoryItemDefinition.
         item_instance_id: If this quantity is referring to a specific instance of an item, this will have the item's instance ID. Normally, this will be null.
         quantity: The amount of the item needed/available depending on the context of where DestinyItemQuantity is being used.
@@ -2956,10 +2956,10 @@ class DestinyRaceDefinition(BaseModel):
     In Destiny, "Races" are really more like "Species". Sort of. I mean, are the Awoken a separate species from humans? I'm not sure. But either way, they're defined here. You'll see Exo, Awoken, and Human as examples of these Species. Players will choose one for their character.
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         race_type: An enumeration defining the existing, known Races/Species for player characters. This value will be the enum value matching this definition.
         gendered_race_names: A localized string referring to the singular form of the Race's name when referred to in gendered form. Keyed by the DestinyGender.
-        gendered_race_names_by_gender_hash: _No description given_
+        gendered_race_names_by_gender_hash: _No description given by bungie_
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!

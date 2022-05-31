@@ -18,30 +18,30 @@ if TYPE_CHECKING:
 @attr.define
 class ContentTypeDescription(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        c_type: _No description given_
-        name: _No description given_
-        content_description: _No description given_
-        preview_image: _No description given_
-        priority: _No description given_
-        reminder: _No description given_
-        properties: _No description given_
-        tag_metadata: _No description given_
-        tag_metadata_items: _No description given_
-        usage_examples: _No description given_
-        show_in_content_editor: _No description given_
-        type_of: _No description given_
-        bind_identifier_to_property: _No description given_
-        bound_regex: _No description given_
-        force_identifier_binding: _No description given_
-        allow_comments: _No description given_
-        auto_english_property_fallback: _No description given_
-        bulk_uploadable: _No description given_
-        previews: _No description given_
-        suppress_cms_path: _No description given_
-        property_sections: _No description given_
+        c_type: _No description given by bungie_
+        name: _No description given by bungie_
+        content_description: _No description given by bungie_
+        preview_image: _No description given by bungie_
+        priority: _No description given by bungie_
+        reminder: _No description given by bungie_
+        properties: _No description given by bungie_
+        tag_metadata: _No description given by bungie_
+        tag_metadata_items: _No description given by bungie_
+        usage_examples: _No description given by bungie_
+        show_in_content_editor: _No description given by bungie_
+        type_of: _No description given by bungie_
+        bind_identifier_to_property: _No description given by bungie_
+        bound_regex: _No description given by bungie_
+        force_identifier_binding: _No description given by bungie_
+        allow_comments: _No description given by bungie_
+        auto_english_property_fallback: _No description given by bungie_
+        bulk_uploadable: _No description given by bungie_
+        previews: _No description given by bungie_
+        suppress_cms_path: _No description given by bungie_
+        property_sections: _No description given by bungie_
     """
 
     c_type: str = attr.field()
@@ -70,51 +70,51 @@ class ContentTypeDescription(BaseModel):
 @attr.define
 class ContentTypeProperty(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        name: _No description given_
-        root_property_name: _No description given_
-        readable_name: _No description given_
-        value: _No description given_
-        property_description: _No description given_
-        localizable: _No description given_
-        fallback: _No description given_
-        enabled: _No description given_
-        order: _No description given_
-        visible: _No description given_
-        is_title: _No description given_
-        required: _No description given_
-        max_length: _No description given_
-        max_byte_length: _No description given_
-        max_file_size: _No description given_
-        regexp: _No description given_
-        validate_as: _No description given_
-        rss_attribute: _No description given_
-        visible_dependency: _No description given_
-        visible_on: _No description given_
-        datatype: _No description given_
-        attributes: _No description given_
-        child_properties: _No description given_
-        content_type_allowed: _No description given_
-        bind_to_property: _No description given_
-        bound_regex: _No description given_
-        representation_selection: _No description given_
-        default_values: _No description given_
-        is_external_allowed: _No description given_
-        property_section: _No description given_
-        weight: _No description given_
-        entitytype: _No description given_
-        is_combo: _No description given_
-        suppress_property: _No description given_
-        legal_content_types: _No description given_
-        representation_validation_string: _No description given_
-        min_width: _No description given_
-        max_width: _No description given_
-        min_height: _No description given_
-        max_height: _No description given_
-        is_video: _No description given_
-        is_image: _No description given_
+        name: _No description given by bungie_
+        root_property_name: _No description given by bungie_
+        readable_name: _No description given by bungie_
+        value: _No description given by bungie_
+        property_description: _No description given by bungie_
+        localizable: _No description given by bungie_
+        fallback: _No description given by bungie_
+        enabled: _No description given by bungie_
+        order: _No description given by bungie_
+        visible: _No description given by bungie_
+        is_title: _No description given by bungie_
+        required: _No description given by bungie_
+        max_length: _No description given by bungie_
+        max_byte_length: _No description given by bungie_
+        max_file_size: _No description given by bungie_
+        regexp: _No description given by bungie_
+        validate_as: _No description given by bungie_
+        rss_attribute: _No description given by bungie_
+        visible_dependency: _No description given by bungie_
+        visible_on: _No description given by bungie_
+        datatype: _No description given by bungie_
+        attributes: _No description given by bungie_
+        child_properties: _No description given by bungie_
+        content_type_allowed: _No description given by bungie_
+        bind_to_property: _No description given by bungie_
+        bound_regex: _No description given by bungie_
+        representation_selection: _No description given by bungie_
+        default_values: _No description given by bungie_
+        is_external_allowed: _No description given by bungie_
+        property_section: _No description given by bungie_
+        weight: _No description given by bungie_
+        entitytype: _No description given by bungie_
+        is_combo: _No description given by bungie_
+        suppress_property: _No description given by bungie_
+        legal_content_types: _No description given by bungie_
+        representation_validation_string: _No description given by bungie_
+        min_width: _No description given by bungie_
+        max_width: _No description given by bungie_
+        min_height: _No description given by bungie_
+        max_height: _No description given by bungie_
+        is_video: _No description given by bungie_
+        is_image: _No description given by bungie_
     """
 
     name: str = attr.field()
@@ -163,50 +163,50 @@ class ContentTypeProperty(BaseModel):
 
 class ContentPropertyDataTypeEnum(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     PLAINTEXT = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     HTML = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     DROPDOWN = 3
-    """_No description given_ """
+    """_No description given by bungie_ """
     LIST = 4
-    """_No description given_ """
+    """_No description given by bungie_ """
     JSON = 5
-    """_No description given_ """
+    """_No description given by bungie_ """
     CONTENT = 6
-    """_No description given_ """
+    """_No description given by bungie_ """
     REPRESENTATION = 7
-    """_No description given_ """
+    """_No description given by bungie_ """
     SET = 8
-    """_No description given_ """
+    """_No description given by bungie_ """
     FILE = 9
-    """_No description given_ """
+    """_No description given by bungie_ """
     FOLDER_SET = 10
-    """_No description given_ """
+    """_No description given by bungie_ """
     DATE = 11
-    """_No description given_ """
+    """_No description given by bungie_ """
     MULTILINE_PLAINTEXT = 12
-    """_No description given_ """
+    """_No description given by bungie_ """
     DESTINY_CONTENT = 13
-    """_No description given_ """
+    """_No description given by bungie_ """
     COLOR = 14
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 @attr.define
 class ContentTypeDefaultValue(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        when_clause: _No description given_
-        when_value: _No description given_
-        default_value: _No description given_
+        when_clause: _No description given by bungie_
+        when_value: _No description given by bungie_
+        default_value: _No description given by bungie_
     """
 
     when_clause: str = attr.field()
@@ -217,15 +217,15 @@ class ContentTypeDefaultValue(BaseModel):
 @attr.define
 class TagMetadataDefinition(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        description: _No description given_
-        order: _No description given_
-        items: _No description given_
-        datatype: _No description given_
-        name: _No description given_
-        is_required: _No description given_
+        description: _No description given by bungie_
+        order: _No description given by bungie_
+        items: _No description given by bungie_
+        datatype: _No description given by bungie_
+        name: _No description given by bungie_
+        is_required: _No description given by bungie_
     """
 
     description: str = attr.field()
@@ -239,14 +239,14 @@ class TagMetadataDefinition(BaseModel):
 @attr.define
 class TagMetadataItem(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        description: _No description given_
-        tag_text: _No description given_
-        groups: _No description given_
-        is_default: _No description given_
-        name: _No description given_
+        description: _No description given by bungie_
+        tag_text: _No description given by bungie_
+        groups: _No description given by bungie_
+        is_default: _No description given by bungie_
+        name: _No description given by bungie_
     """
 
     description: str = attr.field()
@@ -259,15 +259,15 @@ class TagMetadataItem(BaseModel):
 @attr.define
 class ContentPreview(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        name: _No description given_
-        path: _No description given_
-        item_in_set: _No description given_
-        set_tag: _No description given_
-        set_nesting: _No description given_
-        use_set_id: _No description given_
+        name: _No description given by bungie_
+        path: _No description given by bungie_
+        item_in_set: _No description given by bungie_
+        set_tag: _No description given by bungie_
+        set_nesting: _No description given by bungie_
+        use_set_id: _No description given by bungie_
     """
 
     name: str = attr.field()
@@ -281,12 +281,12 @@ class ContentPreview(BaseModel):
 @attr.define
 class ContentTypePropertySection(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        name: _No description given_
-        readable_name: _No description given_
-        collapsed: _No description given_
+        name: _No description given by bungie_
+        readable_name: _No description given by bungie_
+        collapsed: _No description given by bungie_
     """
 
     name: str = attr.field()

@@ -6,7 +6,7 @@ from bungio.models.base import BaseModel
 @attr.define
 class DestinyEnvironmentLocationMapping(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         location_hash: The location that is revealed on the director by this mapping.

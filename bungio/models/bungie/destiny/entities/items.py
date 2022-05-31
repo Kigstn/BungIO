@@ -128,7 +128,7 @@ class DestinyItemInstanceComponent(BaseModel):
 @attr.define
 class DestinyItemInstanceEnergy(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         energy_type_hash: The type of energy for this item. Plugs that require Energy can only be inserted if they have the "Any" Energy Type or the matching energy type of this item. This is a reference to the DestinyEnergyTypeDefinition for the energy type, where you can find extended info about it.

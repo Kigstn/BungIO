@@ -11,11 +11,11 @@ if TYPE_CHECKING:
 @attr.define
 class DestinyMetricsComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        metrics: _No description given_
-        metrics_root_node_hash: _No description given_
+        metrics: _No description given by bungie_
+        metrics_root_node_hash: _No description given by bungie_
     """
 
     metrics: Any = attr.field()
@@ -25,11 +25,11 @@ class DestinyMetricsComponent(BaseModel):
 @attr.define
 class DestinyMetricComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        invisible: _No description given_
-        objective_progress: _No description given_
+        invisible: _No description given by bungie_
+        objective_progress: _No description given by bungie_
     """
 
     invisible: bool = attr.field()

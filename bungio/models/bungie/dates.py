@@ -8,11 +8,11 @@ from bungio.models.base import BaseModel
 @attr.define
 class DateRange(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        start: _No description given_
-        end: _No description given_
+        start: _No description given by bungie_
+        end: _No description given by bungie_
     """
 
     start: datetime.datetime = attr.field()

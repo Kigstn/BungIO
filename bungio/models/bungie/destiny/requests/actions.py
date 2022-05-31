@@ -11,10 +11,10 @@ if TYPE_CHECKING:
 @attr.define
 class DestinyActionRequest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        membership_type: _No description given_
+        membership_type: _No description given by bungie_
     """
 
     membership_type: int = attr.field()
@@ -23,11 +23,11 @@ class DestinyActionRequest(BaseModel):
 @attr.define
 class DestinyCharacterActionRequest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        character_id: _No description given_
-        membership_type: _No description given_
+        character_id: _No description given by bungie_
+        membership_type: _No description given by bungie_
     """
 
     character_id: int = attr.field()
@@ -37,12 +37,12 @@ class DestinyCharacterActionRequest(BaseModel):
 @attr.define
 class DestinyItemActionRequest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         item_id: The instance ID of the item for this action request.
-        character_id: _No description given_
-        membership_type: _No description given_
+        character_id: _No description given by bungie_
+        membership_type: _No description given by bungie_
     """
 
     item_id: int = attr.field()
@@ -53,14 +53,14 @@ class DestinyItemActionRequest(BaseModel):
 @attr.define
 class DestinyPostmasterTransferRequest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        item_reference_hash: _No description given_
-        stack_size: _No description given_
+        item_reference_hash: _No description given by bungie_
+        stack_size: _No description given by bungie_
         item_id: The instance ID of the item for this action request.
-        character_id: _No description given_
-        membership_type: _No description given_
+        character_id: _No description given by bungie_
+        membership_type: _No description given by bungie_
     """
 
     item_reference_hash: int = attr.field()
@@ -73,12 +73,12 @@ class DestinyPostmasterTransferRequest(BaseModel):
 @attr.define
 class DestinyItemSetActionRequest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        item_ids: _No description given_
-        character_id: _No description given_
-        membership_type: _No description given_
+        item_ids: _No description given by bungie_
+        character_id: _No description given by bungie_
+        membership_type: _No description given by bungie_
     """
 
     item_ids: list[int] = attr.field()
@@ -89,13 +89,13 @@ class DestinyItemSetActionRequest(BaseModel):
 @attr.define
 class DestinyItemStateRequest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        state: _No description given_
+        state: _No description given by bungie_
         item_id: The instance ID of the item for this action request.
-        character_id: _No description given_
-        membership_type: _No description given_
+        character_id: _No description given by bungie_
+        membership_type: _No description given by bungie_
     """
 
     state: bool = attr.field()
@@ -107,14 +107,14 @@ class DestinyItemStateRequest(BaseModel):
 @attr.define
 class DestinyInsertPlugsActionRequest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         action_token: Action token provided by the AwaGetActionToken API call.
         item_instance_id: The instance ID of the item having a plug inserted. Only instanced items can have sockets.
         plug: The plugs being inserted.
-        character_id: _No description given_
-        membership_type: _No description given_
+        character_id: _No description given by bungie_
+        membership_type: _No description given by bungie_
     """
 
     action_token: str = attr.field()
@@ -146,21 +146,21 @@ class DestinySocketArrayType(BaseEnum):
     """
 
     DEFAULT = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     INTRINSIC = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 @attr.define
 class DestinyInsertPlugsFreeActionRequest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         plug: The plugs being inserted.
         item_id: The instance ID of the item for this action request.
-        character_id: _No description given_
-        membership_type: _No description given_
+        character_id: _No description given by bungie_
+        membership_type: _No description given by bungie_
     """
 
     plug: "DestinyInsertPlugsRequestEntry" = attr.field()

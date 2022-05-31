@@ -91,10 +91,10 @@ class DestinyLinkedProfilesResponse(BaseModel):
 @attr.define
 class DestinyProfileUserInfoCard(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        date_last_played: _No description given_
+        date_last_played: _No description given by bungie_
         is_overridden: If this profile is being overridden/obscured by Cross Save, this will be set to true. We will still return the profile for display purposes where users need to know the info: it is up to any given area of the app/site to determine if this profile should still be shown.
         is_cross_save_primary: If true, this account is hooked up as the "Primary" cross save account for one or more platforms.
         platform_silver: This is the silver available on this Profile across any platforms on which they have purchased silver.  This is only available if you are requesting yourself.
@@ -311,10 +311,10 @@ class DestinyVendorsResponse(BaseModel):
 @attr.define
 class PersonalDestinyVendorSaleItemSetComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        sale_items: _No description given_
+        sale_items: _No description given by bungie_
     """
 
     sale_items: Any = attr.field()
@@ -365,10 +365,10 @@ class DestinyPublicVendorsResponse(BaseModel):
 @attr.define
 class PublicDestinyVendorSaleItemSetComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        sale_items: _No description given_
+        sale_items: _No description given by bungie_
     """
 
     sale_items: Any = attr.field()
@@ -405,10 +405,10 @@ class InventoryChangedResponse(BaseModel):
 @attr.define
 class DestinyItemChangeResponse(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        item: _No description given_
+        item: _No description given by bungie_
         added_inventory_items: Items that appeared in the inventory possibly as a result of an action.
         removed_inventory_items: Items that disappeared from the inventory possibly as a result of an action.
     """

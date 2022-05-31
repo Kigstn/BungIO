@@ -23,7 +23,7 @@ class DestinyKiosksComponent(BaseModel):
 @attr.define
 class DestinyKioskItem(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         index: The index of the item in the related DestinyVendorDefintion's itemList property, representing the sale.

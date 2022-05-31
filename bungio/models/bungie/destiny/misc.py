@@ -9,10 +9,10 @@ class DestinyColor(BaseModel):
     Represents a color whose RGBA values are all represented as values between 0 and 255.
 
     Attributes:
-        red: _No description given_
-        green: _No description given_
-        blue: _No description given_
-        alpha: _No description given_
+        red: _No description given by bungie_
+        green: _No description given by bungie_
+        blue: _No description given by bungie_
+        alpha: _No description given by bungie_
     """
 
     red: int = attr.field()

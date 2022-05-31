@@ -24,7 +24,7 @@ class DestinyMilestoneDefinition(BaseModel):
     Milestones are an in-game concept where they're attempting to tell you what you can do next in-game. If that sounds a lot like Advisors in Destiny 1, it is! So we threw out Advisors in the Destiny 2 API and tacked all of the data we would have put on Advisors onto Milestones instead. Each Milestone represents something going on in the game right now: - A "ritual activity" you can perform, like nightfall - A "special event" that may have activities related to it, like Taco Tuesday (there's no Taco Tuesday in Destiny 2) - A checklist you can fulfill, like helping your Clan complete all of its weekly objectives - A tutorial quest you can play through, like the introduction to the Crucible. Most of these milestones appear in game as well. Some of them are BNet only, because we're so extra. You're welcome. There are some important caveats to understand about how we currently render Milestones and their deficiencies. The game currently doesn't have any content that actually tells you oughtright *what* the Milestone is: that is to say, what you'll be doing. The best we get is either a description of the overall Milestone, or of the Quest that the Milestone is having you partake in: which is usually something that assumes you already know what it's talking about, like "Complete 5 Challenges". 5 Challenges for what? What's a challenge? These are not questions that the Milestone data will answer for you unfortunately. This isn't great, and in the future I'd like to add some custom text to give you more contextual information to pass on to your users. But for now, you can do what we do to render what little display info we do have: Start by looking at the currently active quest (ideally, you've fetched DestinyMilestone or DestinyPublicMilestone data from the API, so you know the currently active quest for the Milestone in question). Look up the Quests property in the Milestone Definition, and check if it has display properties. If it does, show that as the description of the Milestone. If it doesn't, fall back on the Milestone's description. This approach will let you avoid, whenever possible, the even less useful (and sometimes nonexistant) milestone-level names and descriptions.
 
     Attributes:
-        display_properties: _No description given_
+        display_properties: _No description given by bungie_
         display_preference: A hint to the UI to indicate what to show as the display properties for this Milestone when showing "Live" milestone data. Feel free to show more than this if desired: this hint is meant to simplify our own UI, but it may prove useful to you as well.
         image: A custom image someone made just for the milestone. Isn't that special?
         milestone_type: An enumeration listing one of the possible types of milestones. Check out the DestinyMilestoneType enum for more info!
@@ -41,7 +41,7 @@ class DestinyMilestoneDefinition(BaseModel):
         values: Sometimes, milestones will have arbitrary values associated with them that are of interest to us or to third party developers. This is the collection of those values' definitions, keyed by the identifier of the value and providing useful definition information such as localizable names and descriptions for the value.
         is_in_game_milestone: Some milestones are explicit objectives that you can see and interact with in the game. Some milestones are more conceptual, built by BNet to help advise you on activities and events that happen in-game but that aren't explicitly shown in game as Milestones. If this is TRUE, you can see this as a milestone in the game. If this is FALSE, it's an event or activity you can participate in, but you won't see it as a Milestone in the game's UI.
         activities: A Milestone can now be represented by one or more activities directly (without a backing Quest), and that activity can have many challenges, modifiers, and related to it.
-        default_order: _No description given_
+        default_order: _No description given by bungie_
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
@@ -89,7 +89,7 @@ class DestinyMilestoneType(BaseEnum):
     """
 
     UNKNOWN = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     TUTORIAL = 1
     """One-time milestones that are specifically oriented toward teaching players about new mechanics and gameplay modes. """
     ONE_TIME = 2
@@ -246,8 +246,8 @@ class DestinyMilestoneValueDefinition(BaseModel):
     The definition for information related to a key/value pair that is relevant for a particular Milestone or component within the Milestone.  This lets us more flexibly pass up information that's useful to someone, even if it's not necessarily us.
 
     Attributes:
-        key: _No description given_
-        display_properties: _No description given_
+        key: _No description given by bungie_
+        display_properties: _No description given by bungie_
     """
 
     key: str = attr.field()
@@ -257,11 +257,11 @@ class DestinyMilestoneValueDefinition(BaseModel):
 @attr.define
 class DestinyMilestoneChallengeActivityDefinition(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         activity_hash: The activity for which this challenge is active.
-        challenges: _No description given_
+        challenges: _No description given by bungie_
         activity_graph_nodes: If the activity and its challenge is visible on any of these nodes, it will be returned.
         phases: Phases related to this activity, if there are any. These will be listed in the order in which they will appear in the actual activity.
     """
@@ -275,7 +275,7 @@ class DestinyMilestoneChallengeActivityDefinition(BaseModel):
 @attr.define
 class DestinyMilestoneChallengeDefinition(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         challenge_objective_hash: The challenge related to this milestone.
@@ -287,11 +287,11 @@ class DestinyMilestoneChallengeDefinition(BaseModel):
 @attr.define
 class DestinyMilestoneChallengeActivityGraphNodeEntry(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        activity_graph_hash: _No description given_
-        activity_graph_node_hash: _No description given_
+        activity_graph_hash: _No description given by bungie_
+        activity_graph_node_hash: _No description given by bungie_
     """
 
     activity_graph_hash: int = attr.field()
@@ -301,7 +301,7 @@ class DestinyMilestoneChallengeActivityGraphNodeEntry(BaseModel):
 @attr.define
 class DestinyMilestoneChallengeActivityPhase(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         phase_hash: The hash identifier of the activity's phase.

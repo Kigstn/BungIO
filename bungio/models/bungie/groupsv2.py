@@ -27,7 +27,7 @@ if TYPE_CHECKING:
 @attr.define
 class GroupUserInfoCard(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         last_seen_display_name: This will be the display name the clan server last saw the user as. If the account is an active cross save override, this will be the display name to use. Otherwise, this will match the displayName property.
@@ -61,15 +61,15 @@ class GroupUserInfoCard(BaseModel):
 @attr.define
 class GroupResponse(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        detail: _No description given_
-        founder: _No description given_
-        allied_ids: _No description given_
-        parent_group: _No description given_
-        alliance_status: _No description given_
-        group_join_invite_count: _No description given_
+        detail: _No description given by bungie_
+        founder: _No description given by bungie_
+        allied_ids: _No description given by bungie_
+        parent_group: _No description given by bungie_
+        alliance_status: _No description given by bungie_
+        group_join_invite_count: _No description given by bungie_
         current_user_memberships_inactive_for_destiny: A convenience property that indicates if every membership you (the current user) have that is a part of this group are part of an account that is considered inactive - for example, overridden accounts in Cross Save.
         current_user_member_map: This property will be populated if the authenticated user is a member of the group. Note that because of account linking, a user can sometimes be part of a clan more than once. As such, this returns the highest member type available.
         current_user_potential_member_map: This property will be populated if the authenticated user is an applicant or has an outstanding invitation to join. Note that because of account linking, a user can sometimes be part of a clan more than once.
@@ -89,37 +89,37 @@ class GroupResponse(BaseModel):
 @attr.define
 class GroupV2(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        group_id: _No description given_
-        name: _No description given_
-        group_type: _No description given_
-        membership_id_created: _No description given_
-        creation_date: _No description given_
-        modification_date: _No description given_
-        about: _No description given_
-        tags: _No description given_
-        member_count: _No description given_
-        is_public: _No description given_
-        is_public_topic_admin_only: _No description given_
-        motto: _No description given_
-        allow_chat: _No description given_
-        is_default_post_public: _No description given_
-        chat_security: _No description given_
-        locale: _No description given_
-        avatar_image_index: _No description given_
-        homepage: _No description given_
-        membership_option: _No description given_
-        default_publicity: _No description given_
-        theme: _No description given_
-        banner_path: _No description given_
-        avatar_path: _No description given_
-        conversation_id: _No description given_
-        enable_invitation_messaging_for_admins: _No description given_
-        ban_expire_date: _No description given_
-        features: _No description given_
-        clan_info: _No description given_
+        group_id: _No description given by bungie_
+        name: _No description given by bungie_
+        group_type: _No description given by bungie_
+        membership_id_created: _No description given by bungie_
+        creation_date: _No description given by bungie_
+        modification_date: _No description given by bungie_
+        about: _No description given by bungie_
+        tags: _No description given by bungie_
+        member_count: _No description given by bungie_
+        is_public: _No description given by bungie_
+        is_public_topic_admin_only: _No description given by bungie_
+        motto: _No description given by bungie_
+        allow_chat: _No description given by bungie_
+        is_default_post_public: _No description given by bungie_
+        chat_security: _No description given by bungie_
+        locale: _No description given by bungie_
+        avatar_image_index: _No description given by bungie_
+        homepage: _No description given by bungie_
+        membership_option: _No description given by bungie_
+        default_publicity: _No description given by bungie_
+        theme: _No description given by bungie_
+        banner_path: _No description given by bungie_
+        avatar_path: _No description given by bungie_
+        conversation_id: _No description given by bungie_
+        enable_invitation_messaging_for_admins: _No description given by bungie_
+        ban_expire_date: _No description given by bungie_
+        features: _No description given by bungie_
+        clan_info: _No description given by bungie_
     """
 
     group_id: int = attr.field()
@@ -154,75 +154,75 @@ class GroupV2(BaseModel):
 
 class GroupType(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     GENERAL = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     CLAN = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class ChatSecuritySetting(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     GROUP = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     ADMINS = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class GroupHomepage(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     WALL = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     FORUM = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     ALLIANCE_FORUM = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class MembershipOption(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     REVIEWED = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     OPEN = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     CLOSED = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class GroupPostPublicity(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     PUBLIC = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     ALLIANCE = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     PRIVATE = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 @attr.define
 class GroupFeatures(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        maximum_members: _No description given_
+        maximum_members: _No description given by bungie_
         maximum_memberships_of_group_type: Maximum number of groups of this type a typical membership may join. For example, a user may join about 50 General groups with their Bungie.net account. They may join one clan per Destiny membership.
-        capabilities: _No description given_
-        membership_types: _No description given_
+        capabilities: _No description given by bungie_
+        membership_types: _No description given by bungie_
         invite_permission_override: Minimum Member Level allowed to invite new members to group Always Allowed: Founder, Acting Founder True means admins have this power, false means they don't Default is false for clans, true for groups.
         update_culture_permission_override: Minimum Member Level allowed to update group culture Always Allowed: Founder, Acting Founder True means admins have this power, false means they don't Default is false for clans, true for groups.
         host_guided_game_permission_override: Minimum Member Level allowed to host guided games Always Allowed: Founder, Acting Founder, Admin Allowed Overrides: None, Member, Beginner Default is Member for clans, None for groups, although this means nothing for groups.
@@ -243,25 +243,25 @@ class GroupFeatures(BaseModel):
 
 class Capabilities(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     LEADERBOARDS = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     CALLSIGN = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     OPTIONAL_CONVERSATIONS = 4
-    """_No description given_ """
+    """_No description given by bungie_ """
     CLAN_BANNER = 8
-    """_No description given_ """
+    """_No description given by bungie_ """
     D2_INVESTMENT_DATA = 16
-    """_No description given_ """
+    """_No description given by bungie_ """
     TAGS = 32
-    """_No description given_ """
+    """_No description given by bungie_ """
     ALLIANCES = 64
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class HostGuidedGamesPermissionLevel(BaseEnum):
@@ -270,11 +270,11 @@ class HostGuidedGamesPermissionLevel(BaseEnum):
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     BEGINNER = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     MEMBER = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class RuntimeGroupMemberType(BaseEnum):
@@ -283,17 +283,17 @@ class RuntimeGroupMemberType(BaseEnum):
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     BEGINNER = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     MEMBER = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     ADMIN = 3
-    """_No description given_ """
+    """_No description given by bungie_ """
     ACTING_FOUNDER = 4
-    """_No description given_ """
+    """_No description given by bungie_ """
     FOUNDER = 5
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 @attr.define
@@ -302,8 +302,8 @@ class GroupV2ClanInfo(BaseModel):
     This contract contains clan-specific group information. It does not include any investment data.
 
     Attributes:
-        clan_callsign: _No description given_
-        clan_banner_data: _No description given_
+        clan_callsign: _No description given by bungie_
+        clan_banner_data: _No description given by bungie_
     """
 
     clan_callsign: str = attr.field()
@@ -313,16 +313,16 @@ class GroupV2ClanInfo(BaseModel):
 @attr.define
 class ClanBanner(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        decal_id: _No description given_
-        decal_color_id: _No description given_
-        decal_background_color_id: _No description given_
-        gonfalon_id: _No description given_
-        gonfalon_color_id: _No description given_
-        gonfalon_detail_id: _No description given_
-        gonfalon_detail_color_id: _No description given_
+        decal_id: _No description given by bungie_
+        decal_color_id: _No description given by bungie_
+        decal_background_color_id: _No description given by bungie_
+        gonfalon_id: _No description given by bungie_
+        gonfalon_color_id: _No description given by bungie_
+        gonfalon_detail_id: _No description given by bungie_
+        gonfalon_detail_color_id: _No description given by bungie_
     """
 
     decal_id: int = attr.field()
@@ -340,9 +340,9 @@ class GroupV2ClanInfoAndInvestment(BaseModel):
     The same as GroupV2ClanInfo, but includes any investment data.
 
     Attributes:
-        d2_clan_progressions: _No description given_
-        clan_callsign: _No description given_
-        clan_banner_data: _No description given_
+        d2_clan_progressions: _No description given by bungie_
+        clan_callsign: _No description given by bungie_
+        clan_banner_data: _No description given by bungie_
     """
 
     d2_clan_progressions: Any = attr.field()
@@ -353,13 +353,13 @@ class GroupV2ClanInfoAndInvestment(BaseModel):
 @attr.define
 class GroupUserBase(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        group_id: _No description given_
-        destiny_user_info: _No description given_
-        bungie_net_user_info: _No description given_
-        join_date: _No description given_
+        group_id: _No description given by bungie_
+        destiny_user_info: _No description given by bungie_
+        bungie_net_user_info: _No description given by bungie_
+        join_date: _No description given by bungie_
     """
 
     group_id: int = attr.field()
@@ -371,16 +371,16 @@ class GroupUserBase(BaseModel):
 @attr.define
 class GroupMember(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        member_type: _No description given_
-        is_online: _No description given_
-        last_online_status_change: _No description given_
-        group_id: _No description given_
-        destiny_user_info: _No description given_
-        bungie_net_user_info: _No description given_
-        join_date: _No description given_
+        member_type: _No description given by bungie_
+        is_online: _No description given by bungie_
+        last_online_status_change: _No description given by bungie_
+        group_id: _No description given by bungie_
+        destiny_user_info: _No description given by bungie_
+        bungie_net_user_info: _No description given by bungie_
+        join_date: _No description given by bungie_
     """
 
     member_type: int = attr.field()
@@ -394,28 +394,28 @@ class GroupMember(BaseModel):
 
 class GroupAllianceStatus(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     UNALLIED = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     PARENT = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     CHILD = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 @attr.define
 class GroupPotentialMember(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        potential_status: _No description given_
-        group_id: _No description given_
-        destiny_user_info: _No description given_
-        bungie_net_user_info: _No description given_
-        join_date: _No description given_
+        potential_status: _No description given by bungie_
+        group_id: _No description given by bungie_
+        destiny_user_info: _No description given by bungie_
+        bungie_net_user_info: _No description given by bungie_
+        join_date: _No description given by bungie_
     """
 
     potential_status: int = attr.field()
@@ -427,32 +427,32 @@ class GroupPotentialMember(BaseModel):
 
 class GroupPotentialMemberStatus(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     APPLICANT = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     INVITEE = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class GroupDateRange(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     ALL = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     PAST_DAY = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     PAST_WEEK = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     PAST_MONTH = 3
-    """_No description given_ """
+    """_No description given by bungie_ """
     PAST_YEAR = 4
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 @attr.define
@@ -461,19 +461,19 @@ class GroupV2Card(BaseModel):
     A small infocard of group information, usually used for when a list of groups are returned
 
     Attributes:
-        group_id: _No description given_
-        name: _No description given_
-        group_type: _No description given_
-        creation_date: _No description given_
-        about: _No description given_
-        motto: _No description given_
-        member_count: _No description given_
-        locale: _No description given_
-        membership_option: _No description given_
-        capabilities: _No description given_
-        clan_info: _No description given_
-        avatar_path: _No description given_
-        theme: _No description given_
+        group_id: _No description given by bungie_
+        name: _No description given by bungie_
+        group_type: _No description given by bungie_
+        creation_date: _No description given by bungie_
+        about: _No description given by bungie_
+        motto: _No description given by bungie_
+        member_count: _No description given by bungie_
+        locale: _No description given by bungie_
+        membership_option: _No description given by bungie_
+        capabilities: _No description given by bungie_
+        clan_info: _No description given by bungie_
+        avatar_path: _No description given by bungie_
+        theme: _No description given by bungie_
     """
 
     group_id: int = attr.field()
@@ -494,14 +494,14 @@ class GroupV2Card(BaseModel):
 @attr.define
 class GroupSearchResponse(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        results: _No description given_
-        total_results: _No description given_
-        has_more: _No description given_
-        query: _No description given_
-        replacement_continuation_token: _No description given_
+        results: _No description given by bungie_
+        total_results: _No description given by bungie_
+        has_more: _No description given by bungie_
+        query: _No description given by bungie_
+        replacement_continuation_token: _No description given by bungie_
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
@@ -519,16 +519,16 @@ class GroupQuery(BaseModel):
     NOTE: GroupQuery, as of Destiny 2, has essentially two totally different and incompatible "modes". If you are querying for a group, you can pass any of the properties below. If you are querying for a Clan, you MUST NOT pass any of the following properties (they must be null or undefined in your request, not just empty string/default values): - groupMemberCountFilter - localeFilter - tagText If you pass these, you will get a useless InvalidParameters error.
 
     Attributes:
-        name: _No description given_
-        group_type: _No description given_
-        creation_date: _No description given_
-        sort_by: _No description given_
-        group_member_count_filter: _No description given_
-        locale_filter: _No description given_
-        tag_text: _No description given_
-        items_per_page: _No description given_
-        current_page: _No description given_
-        request_continuation_token: _No description given_
+        name: _No description given by bungie_
+        group_type: _No description given by bungie_
+        creation_date: _No description given by bungie_
+        sort_by: _No description given by bungie_
+        group_member_count_filter: _No description given by bungie_
+        locale_filter: _No description given by bungie_
+        tag_text: _No description given by bungie_
+        items_per_page: _No description given by bungie_
+        current_page: _No description given by bungie_
+        request_continuation_token: _No description given by bungie_
     """
 
     name: str = attr.field()
@@ -545,42 +545,42 @@ class GroupQuery(BaseModel):
 
 class GroupSortBy(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NAME = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     DATE = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     POPULARITY = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     ID = 3
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 class GroupMemberCountFilter(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     ALL = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     ONE_TO_TEN = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     ELEVEN_TO_ONE_HUNDRED = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     GREATER_THAN_ONE_HUNDRED = 3
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 @attr.define
 class GroupNameSearchRequest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        group_name: _No description given_
-        group_type: _No description given_
+        group_name: _No description given by bungie_
+        group_type: _No description given by bungie_
     """
 
     group_name: str = attr.field()
@@ -590,14 +590,14 @@ class GroupNameSearchRequest(BaseModel):
 @attr.define
 class GroupOptionalConversation(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        group_id: _No description given_
-        conversation_id: _No description given_
-        chat_enabled: _No description given_
-        chat_name: _No description given_
-        chat_security: _No description given_
+        group_id: _No description given by bungie_
+        conversation_id: _No description given by bungie_
+        chat_enabled: _No description given by bungie_
+        chat_name: _No description given by bungie_
+        chat_security: _No description given by bungie_
     """
 
     group_id: int = attr.field()
@@ -610,25 +610,25 @@ class GroupOptionalConversation(BaseModel):
 @attr.define
 class GroupEditAction(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        name: _No description given_
-        about: _No description given_
-        motto: _No description given_
-        theme: _No description given_
-        avatar_image_index: _No description given_
-        tags: _No description given_
-        is_public: _No description given_
-        membership_option: _No description given_
-        is_public_topic_admin_only: _No description given_
-        allow_chat: _No description given_
-        chat_security: _No description given_
-        callsign: _No description given_
-        locale: _No description given_
-        homepage: _No description given_
-        enable_invitation_messaging_for_admins: _No description given_
-        default_publicity: _No description given_
+        name: _No description given by bungie_
+        about: _No description given by bungie_
+        motto: _No description given by bungie_
+        theme: _No description given by bungie_
+        avatar_image_index: _No description given by bungie_
+        tags: _No description given by bungie_
+        is_public: _No description given by bungie_
+        membership_option: _No description given by bungie_
+        is_public_topic_admin_only: _No description given by bungie_
+        allow_chat: _No description given by bungie_
+        chat_security: _No description given by bungie_
+        callsign: _No description given by bungie_
+        locale: _No description given by bungie_
+        homepage: _No description given by bungie_
+        enable_invitation_messaging_for_admins: _No description given by bungie_
+        default_publicity: _No description given by bungie_
     """
 
     name: str = attr.field()
@@ -652,7 +652,7 @@ class GroupEditAction(BaseModel):
 @attr.define
 class GroupOptionsEditAction(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         invite_permission_override: Minimum Member Level allowed to invite new members to group Always Allowed: Founder, Acting Founder True means admins have this power, false means they don't Default is false for clans, true for groups.
@@ -672,11 +672,11 @@ class GroupOptionsEditAction(BaseModel):
 @attr.define
 class GroupOptionalConversationAddRequest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        chat_name: _No description given_
-        chat_security: _No description given_
+        chat_name: _No description given by bungie_
+        chat_security: _No description given by bungie_
     """
 
     chat_name: str = attr.field()
@@ -686,12 +686,12 @@ class GroupOptionalConversationAddRequest(BaseModel):
 @attr.define
 class GroupOptionalConversationEditRequest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        chat_enabled: _No description given_
-        chat_name: _No description given_
-        chat_security: _No description given_
+        chat_enabled: _No description given by bungie_
+        chat_name: _No description given by bungie_
+        chat_security: _No description given by bungie_
     """
 
     chat_enabled: bool = attr.field()
@@ -702,11 +702,11 @@ class GroupOptionalConversationEditRequest(BaseModel):
 @attr.define
 class GroupMemberLeaveResult(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        group: _No description given_
-        group_deleted: _No description given_
+        group: _No description given by bungie_
+        group_deleted: _No description given by bungie_
     """
 
     group: "GroupV2" = attr.field()
@@ -716,11 +716,11 @@ class GroupMemberLeaveResult(BaseModel):
 @attr.define
 class GroupBanRequest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        comment: _No description given_
-        length: _No description given_
+        comment: _No description given by bungie_
+        length: _No description given by bungie_
     """
 
     comment: str = attr.field()
@@ -730,17 +730,17 @@ class GroupBanRequest(BaseModel):
 @attr.define
 class GroupBan(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        group_id: _No description given_
-        last_modified_by: _No description given_
-        created_by: _No description given_
-        date_banned: _No description given_
-        date_expires: _No description given_
-        comment: _No description given_
-        bungie_net_user_info: _No description given_
-        destiny_user_info: _No description given_
+        group_id: _No description given by bungie_
+        last_modified_by: _No description given by bungie_
+        created_by: _No description given by bungie_
+        date_banned: _No description given by bungie_
+        date_expires: _No description given by bungie_
+        comment: _No description given by bungie_
+        bungie_net_user_info: _No description given by bungie_
+        destiny_user_info: _No description given by bungie_
     """
 
     group_id: int = attr.field()
@@ -756,18 +756,18 @@ class GroupBan(BaseModel):
 @attr.define
 class GroupMemberApplication(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        group_id: _No description given_
-        creation_date: _No description given_
-        resolve_state: _No description given_
-        resolve_date: _No description given_
-        resolved_by_membership_id: _No description given_
-        request_message: _No description given_
-        resolve_message: _No description given_
-        destiny_user_info: _No description given_
-        bungie_net_user_info: _No description given_
+        group_id: _No description given by bungie_
+        creation_date: _No description given by bungie_
+        resolve_state: _No description given by bungie_
+        resolve_date: _No description given by bungie_
+        resolved_by_membership_id: _No description given by bungie_
+        request_message: _No description given by bungie_
+        resolve_message: _No description given by bungie_
+        destiny_user_info: _No description given by bungie_
+        bungie_net_user_info: _No description given by bungie_
     """
 
     group_id: int = attr.field()
@@ -783,26 +783,26 @@ class GroupMemberApplication(BaseModel):
 
 class GroupApplicationResolveState(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     UNRESOLVED = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     ACCEPTED = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     DENIED = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     RESCINDED = 3
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 @attr.define
 class GroupApplicationRequest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        message: _No description given_
+        message: _No description given by bungie_
     """
 
     message: str = attr.field()
@@ -811,11 +811,11 @@ class GroupApplicationRequest(BaseModel):
 @attr.define
 class GroupApplicationListRequest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        memberships: _No description given_
-        message: _No description given_
+        memberships: _No description given by bungie_
+        message: _No description given by bungie_
     """
 
     memberships: list["UserMembership"] = attr.field()
@@ -824,24 +824,24 @@ class GroupApplicationListRequest(BaseModel):
 
 class GroupsForMemberFilter(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     ALL = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     FOUNDED = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     NON_FOUNDED = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 @attr.define
 class GroupMembershipBase(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        group: _No description given_
+        group: _No description given by bungie_
     """
 
     group: "GroupV2" = attr.field()
@@ -850,11 +850,11 @@ class GroupMembershipBase(BaseModel):
 @attr.define
 class GroupMembership(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        member: _No description given_
-        group: _No description given_
+        member: _No description given by bungie_
+        group: _No description given by bungie_
     """
 
     member: "GroupMember" = attr.field()
@@ -864,14 +864,14 @@ class GroupMembership(BaseModel):
 @attr.define
 class GroupMembershipSearchResponse(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        results: _No description given_
-        total_results: _No description given_
-        has_more: _No description given_
-        query: _No description given_
-        replacement_continuation_token: _No description given_
+        results: _No description given by bungie_
+        total_results: _No description given by bungie_
+        has_more: _No description given by bungie_
+        query: _No description given by bungie_
+        replacement_continuation_token: _No description given by bungie_
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
@@ -886,15 +886,15 @@ class GroupMembershipSearchResponse(BaseModel):
 @attr.define
 class GetGroupsForMemberResponse(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         are_all_memberships_inactive: A convenience property that indicates if every membership this user has that is a part of this group are part of an account that is considered inactive - for example, overridden accounts in Cross Save.  The key is the Group ID for the group being checked, and the value is true if the users' memberships for that group are all inactive.
-        results: _No description given_
-        total_results: _No description given_
-        has_more: _No description given_
-        query: _No description given_
-        replacement_continuation_token: _No description given_
+        results: _No description given by bungie_
+        total_results: _No description given by bungie_
+        has_more: _No description given by bungie_
+        query: _No description given by bungie_
+        replacement_continuation_token: _No description given by bungie_
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
@@ -910,11 +910,11 @@ class GetGroupsForMemberResponse(BaseModel):
 @attr.define
 class GroupPotentialMembership(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        member: _No description given_
-        group: _No description given_
+        member: _No description given by bungie_
+        group: _No description given by bungie_
     """
 
     member: "GroupPotentialMember" = attr.field()
@@ -924,14 +924,14 @@ class GroupPotentialMembership(BaseModel):
 @attr.define
 class GroupPotentialMembershipSearchResponse(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        results: _No description given_
-        total_results: _No description given_
-        has_more: _No description given_
-        query: _No description given_
-        replacement_continuation_token: _No description given_
+        results: _No description given by bungie_
+        total_results: _No description given by bungie_
+        has_more: _No description given by bungie_
+        query: _No description given by bungie_
+        replacement_continuation_token: _No description given by bungie_
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
@@ -946,10 +946,10 @@ class GroupPotentialMembershipSearchResponse(BaseModel):
 @attr.define
 class GroupApplicationResponse(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        resolution: _No description given_
+        resolution: _No description given by bungie_
     """
 
     resolution: int = attr.field()

@@ -6,11 +6,11 @@ from bungio.models.base import BaseModel
 @attr.define
 class InterpolationPoint(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        value: _No description given_
-        weight: _No description given_
+        value: _No description given by bungie_
+        weight: _No description given by bungie_
     """
 
     value: int = attr.field()
@@ -20,11 +20,11 @@ class InterpolationPoint(BaseModel):
 @attr.define
 class InterpolationPointFloat(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        value: _No description given_
-        weight: _No description given_
+        value: _No description given by bungie_
+        weight: _No description given by bungie_
     """
 
     value: float = attr.field()

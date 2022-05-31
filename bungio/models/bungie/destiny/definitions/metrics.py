@@ -11,15 +11,15 @@ if TYPE_CHECKING:
 @attr.define
 class DestinyMetricDefinition(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        display_properties: _No description given_
-        tracking_objective_hash: _No description given_
-        lower_value_is_better: _No description given_
-        presentation_node_type: _No description given_
-        trait_ids: _No description given_
-        trait_hashes: _No description given_
+        display_properties: _No description given by bungie_
+        tracking_objective_hash: _No description given by bungie_
+        lower_value_is_better: _No description given by bungie_
+        presentation_node_type: _No description given by bungie_
+        trait_ids: _No description given by bungie_
+        trait_hashes: _No description given by bungie_
         parent_node_hashes: A quick reference to presentation nodes that have this node as a child. Presentation nodes can be parented under multiple parents.
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.

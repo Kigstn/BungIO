@@ -8,7 +8,7 @@ from bungio.models.base import BaseEnum, BaseModel
 @attr.define
 class AwaInitializeResponse(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         correlation_id: ID used to get the token. Present this ID to the user as it will identify this specific request on their device.
@@ -22,7 +22,7 @@ class AwaInitializeResponse(BaseModel):
 @attr.define
 class AwaPermissionRequested(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         type: Type of advanced write action.
@@ -39,11 +39,11 @@ class AwaPermissionRequested(BaseModel):
 
 class AwaType(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     INSERT_PLUGS = 1
     """Insert plugs into sockets. """
 
@@ -51,7 +51,7 @@ class AwaType(BaseEnum):
 @attr.define
 class AwaUserResponse(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         selection: Indication of the selection the user has made (Approving or rejecting the action)
@@ -66,25 +66,25 @@ class AwaUserResponse(BaseModel):
 
 class AwaUserSelection(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     REJECTED = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     APPROVED = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 @attr.define
 class AwaAuthorizationResult(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         user_selection: Indication of how the user responded to the request. If the value is "Approved" the actionToken will contain the token that can be presented when performing the advanced write action.
-        response_reason: _No description given_
+        response_reason: _No description given by bungie_
         developer_note: Message to the app developer to help understand the response.
         action_token: Credential used to prove the user authorized an advanced write action.
         maximum_number_of_uses: This token may be used to perform the requested action this number of times, at a maximum. If this value is 0, then there is no limit.
@@ -105,11 +105,11 @@ class AwaAuthorizationResult(BaseModel):
 
 class AwaResponseReason(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     ANSWERED = 1
     """User provided an answer """
     TIMED_OUT = 2

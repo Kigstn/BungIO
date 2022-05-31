@@ -97,44 +97,44 @@ class UserInfoCard(BaseModel):
 @attr.define
 class GeneralUser(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        membership_id: _No description given_
-        unique_name: _No description given_
-        normalized_name: _No description given_
-        display_name: _No description given_
-        profile_picture: _No description given_
-        profile_theme: _No description given_
-        user_title: _No description given_
-        success_message_flags: _No description given_
-        is_deleted: _No description given_
-        about: _No description given_
-        first_access: _No description given_
-        last_update: _No description given_
-        legacy_portal_u_i_d: _No description given_
-        context: _No description given_
-        psn_display_name: _No description given_
-        xbox_display_name: _No description given_
-        fb_display_name: _No description given_
-        show_activity: _No description given_
-        locale: _No description given_
-        locale_inherit_default: _No description given_
-        last_ban_report_id: _No description given_
-        show_group_messaging: _No description given_
-        profile_picture_path: _No description given_
-        profile_picture_wide_path: _No description given_
-        profile_theme_name: _No description given_
-        user_title_display: _No description given_
-        status_text: _No description given_
-        status_date: _No description given_
-        profile_ban_expire: _No description given_
-        blizzard_display_name: _No description given_
-        steam_display_name: _No description given_
-        stadia_display_name: _No description given_
-        twitch_display_name: _No description given_
-        cached_bungie_global_display_name: _No description given_
-        cached_bungie_global_display_name_code: _No description given_
+        membership_id: _No description given by bungie_
+        unique_name: _No description given by bungie_
+        normalized_name: _No description given by bungie_
+        display_name: _No description given by bungie_
+        profile_picture: _No description given by bungie_
+        profile_theme: _No description given by bungie_
+        user_title: _No description given by bungie_
+        success_message_flags: _No description given by bungie_
+        is_deleted: _No description given by bungie_
+        about: _No description given by bungie_
+        first_access: _No description given by bungie_
+        last_update: _No description given by bungie_
+        legacy_portal_u_i_d: _No description given by bungie_
+        context: _No description given by bungie_
+        psn_display_name: _No description given by bungie_
+        xbox_display_name: _No description given by bungie_
+        fb_display_name: _No description given by bungie_
+        show_activity: _No description given by bungie_
+        locale: _No description given by bungie_
+        locale_inherit_default: _No description given by bungie_
+        last_ban_report_id: _No description given by bungie_
+        show_group_messaging: _No description given by bungie_
+        profile_picture_path: _No description given by bungie_
+        profile_picture_wide_path: _No description given by bungie_
+        profile_theme_name: _No description given by bungie_
+        user_title_display: _No description given by bungie_
+        status_text: _No description given by bungie_
+        status_date: _No description given by bungie_
+        profile_ban_expire: _No description given by bungie_
+        blizzard_display_name: _No description given by bungie_
+        steam_display_name: _No description given by bungie_
+        stadia_display_name: _No description given by bungie_
+        twitch_display_name: _No description given by bungie_
+        cached_bungie_global_display_name: _No description given by bungie_
+        cached_bungie_global_display_name_code: _No description given by bungie_
     """
 
     membership_id: int = attr.field()
@@ -177,12 +177,12 @@ class GeneralUser(BaseModel):
 @attr.define
 class UserToUserContext(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        is_following: _No description given_
-        ignore_status: _No description given_
-        global_ignore_end_date: _No description given_
+        is_following: _No description given by bungie_
+        ignore_status: _No description given by bungie_
+        global_ignore_end_date: _No description given by bungie_
     """
 
     is_following: bool = attr.field()
@@ -193,12 +193,12 @@ class UserToUserContext(BaseModel):
 @attr.define
 class UserMembershipData(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         destiny_memberships: this allows you to see destiny memberships that are visible and linked to this account (regardless of whether or not they have characters on the world server)
         primary_membership_id: If this property is populated, it will have the membership ID of the account considered to be "primary" in this user's cross save relationship.  If null, this user has no cross save relationship, nor primary account.
-        bungie_net_user: _No description given_
+        bungie_net_user: _No description given by bungie_
     """
 
     destiny_memberships: list["GroupUserInfoCard"] = attr.field()
@@ -209,13 +209,13 @@ class UserMembershipData(BaseModel):
 @attr.define
 class HardLinkedUserMembership(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        membership_type: _No description given_
-        membership_id: _No description given_
-        cross_save_overridden_type: _No description given_
-        cross_save_overridden_membership_id: _No description given_
+        membership_type: _No description given by bungie_
+        membership_id: _No description given by bungie_
+        cross_save_overridden_type: _No description given by bungie_
+        cross_save_overridden_membership_id: _No description given by bungie_
     """
 
     membership_type: int = attr.field()
@@ -227,12 +227,12 @@ class HardLinkedUserMembership(BaseModel):
 @attr.define
 class UserSearchResponse(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        search_results: _No description given_
-        page: _No description given_
-        has_more: _No description given_
+        search_results: _No description given by bungie_
+        page: _No description given by bungie_
+        has_more: _No description given by bungie_
     """
 
     search_results: list["UserSearchResponseDetail"] = attr.field()
@@ -243,13 +243,13 @@ class UserSearchResponse(BaseModel):
 @attr.define
 class UserSearchResponseDetail(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        bungie_global_display_name: _No description given_
-        bungie_global_display_name_code: _No description given_
-        bungie_net_membership_id: _No description given_
-        destiny_memberships: _No description given_
+        bungie_global_display_name: _No description given by bungie_
+        bungie_global_display_name_code: _No description given by bungie_
+        bungie_net_membership_id: _No description given by bungie_
+        destiny_memberships: _No description given by bungie_
     """
 
     bungie_global_display_name: str = attr.field()
@@ -261,10 +261,10 @@ class UserSearchResponseDetail(BaseModel):
 @attr.define
 class UserSearchPrefixRequest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        display_name_prefix: _No description given_
+        display_name_prefix: _No description given by bungie_
     """
 
     display_name_prefix: str = attr.field()
@@ -273,11 +273,11 @@ class UserSearchPrefixRequest(BaseModel):
 @attr.define
 class ExactSearchRequest(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
-        display_name: _No description given_
-        display_name_code: _No description given_
+        display_name: _No description given by bungie_
+        display_name_code: _No description given by bungie_
     """
 
     display_name: str = attr.field()
@@ -320,29 +320,29 @@ class EmailOptInDefinition(BaseModel):
 
 class OptInFlags(BaseEnum):
     """
-    _No description given_
+    _No description given by bungie_
     """
 
     NONE = 0
-    """_No description given_ """
+    """_No description given by bungie_ """
     NEWSLETTER = 1
-    """_No description given_ """
+    """_No description given by bungie_ """
     SYSTEM = 2
-    """_No description given_ """
+    """_No description given by bungie_ """
     MARKETING = 4
-    """_No description given_ """
+    """_No description given by bungie_ """
     USER_RESEARCH = 8
-    """_No description given_ """
+    """_No description given by bungie_ """
     CUSTOMER_SERVICE = 16
-    """_No description given_ """
+    """_No description given by bungie_ """
     SOCIAL = 32
-    """_No description given_ """
+    """_No description given by bungie_ """
     PLAY_TESTS = 64
-    """_No description given_ """
+    """_No description given by bungie_ """
     PLAY_TESTS_LOCAL = 128
-    """_No description given_ """
+    """_No description given by bungie_ """
     CAREERS = 256
-    """_No description given_ """
+    """_No description given by bungie_ """
 
 
 @attr.define
@@ -367,8 +367,8 @@ class EMailSettingLocalization(BaseModel):
     Localized text relevant to a given EMail setting in a given localization.
 
     Attributes:
-        title: _No description given_
-        description: _No description given_
+        title: _No description given by bungie_
+        description: _No description given by bungie_
     """
 
     title: str = attr.field()
@@ -381,13 +381,13 @@ class EMailSettingSubscriptionLocalization(BaseModel):
     Localized text relevant to a given EMail setting in a given localization. Extra settings specifically for subscriptions.
 
     Attributes:
-        unknown_user_description: _No description given_
-        registered_user_description: _No description given_
-        unregistered_user_description: _No description given_
-        unknown_user_action_text: _No description given_
-        known_user_action_text: _No description given_
-        title: _No description given_
-        description: _No description given_
+        unknown_user_description: _No description given by bungie_
+        registered_user_description: _No description given by bungie_
+        unregistered_user_description: _No description given by bungie_
+        unknown_user_action_text: _No description given by bungie_
+        known_user_action_text: _No description given by bungie_
+        title: _No description given by bungie_
+        description: _No description given by bungie_
     """
 
     unknown_user_description: str = attr.field()
@@ -416,7 +416,7 @@ class EmailViewDefinition(BaseModel):
 @attr.define
 class EmailViewDefinitionSetting(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         name: The identifier for this UI Setting, which can be used to relate it to custom strings or other data as desired.

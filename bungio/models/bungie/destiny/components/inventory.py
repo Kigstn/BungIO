@@ -8,7 +8,7 @@ from bungio.models.base import BaseModel
 @attr.define
 class DestinyPlatformSilverComponent(BaseModel):
     """
-    _No description given_
+    _No description given by bungie_
 
     Attributes:
         platform_silver: If a Profile is played on multiple platforms, this is the silver they have for each platform, keyed by Membership Type.

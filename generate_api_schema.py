@@ -429,10 +429,13 @@ def get_import_name_from_ref(string: str) -> tuple[str, str]:
     """Like #/components/responses/User.GeneralUser"""
     strings = string.split("/")[-1].split(".")
 
-    import_path = ".".join([s.lower() for s in strings[:-1]])
+    import_path = ".".join([s.lower() for s in strings[:-1]]).removesuffix(".")
     import_name = strings[-1]
 
-    return import_path.removesuffix("."), import_name
+    if import_path == "":
+        import_path = "misc"
+
+    return import_path, import_name
 
 
 def generate_models(api_schema: dict):
@@ -444,8 +447,6 @@ def generate_models(api_schema: dict):
     by_path: dict[str, list[dict]] = {}
     for name, schema in api_schema["components"]["schemas"].items():
         path, import_name = get_import_name_from_ref(name)
-        if path == "":
-            path = "misc"
         if path not in by_path:
             by_path[path] = []
         by_path[path].append({"name": import_name, **schema})
@@ -490,10 +491,23 @@ if TYPE_CHECKING:
         with open(file_path, "w", encoding="utf-8") as file:
             file.write(text)
 
-    # todo docs for __init__
     # generate the docs
     for path, models in by_path.items():
-        file_path = os.path.join(docs_path, f"""{path.replace(".", "/")}.md""")
+        os_path = path.replace(".", "/")
+
+        # is this in a folder as well, aka is the info in an __init__.py file
+        import_name = f"bungio.models.overwrites.{path}"
+        to_import = []
+        if not os.path.isdir(os.path.join(base_path, os_path)):
+            file_path = os.path.join(docs_path, f"{os_path}.md")
+        else:
+            file_path = os.path.join(docs_path, f"""{os_path}/{path.split(".")[-1]}.md""")
+            import_name = f"{import_name}.__init__"
+
+            # set the import names
+            for model in models:
+                to_import.append(model["name"])
+
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
         doc_text = f"""# {path.split(".")[-1].capitalize()} API Models
@@ -501,16 +515,30 @@ if TYPE_CHECKING:
 """
 
         # do the overwrites exist
-        import_name = f"bungio.models.overwrites.{path}"
         try:
             importlib.import_module(import_name)
-            doc_text += f"""::: {import_name}
-options:
-    show_if_no_docstring: true
-"""
+            doc_text += f"""::: {import_name.removesuffix(".__init__")}
+    options:
+        show_if_no_docstring: true"""
+            if to_import:
+                doc_text += """
+        members:"""
+                for name in to_import:
+                    doc_text += f"""
+            - {name}"""
+
         except ModuleNotFoundError:
             pass
-        doc_text += f"""::: {import_name.replace("overwrites", "bungie")}
+        doc_text += f"""
+::: {import_name.replace("overwrites", "bungie").removesuffix(".__init__")}"""
+        if to_import:
+            doc_text += """
+    options:
+        members:"""
+            for name in to_import:
+                doc_text += f"""
+            - {name}"""
+        doc_text += """
 """
 
         with open(file_path, "w", encoding="utf-8") as file:
@@ -663,7 +691,7 @@ def add_to_import_paths(
 
 
 def clean_desc(data: dict) -> str:
-    text = data.get("description", "_No description given_")
+    text = data.get("description", "_No description given by bungie_")
     return text.replace("\n", " ").replace("\r", "")
 
 
@@ -671,3 +699,5 @@ main()
 
 # todo inherited overwrite classes do not display as docs correctly -> https://mkdocstrings.github.io/handlers/overview/#selection-options (inherited members)
 # todo docs for BaseType and BaseEnum
+# todo options: members: [] does not work -> config/config.md
+# todo interface funcs that need enums should actually import them -> BungieMembershipType

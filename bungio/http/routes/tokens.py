@@ -17,9 +17,9 @@ class TokensRouteHttpRequests:
             Required oauth2 scopes: PartnerOfferGrant
 
         Args:
-            partner_offer_id: _No description given_
-            bungie_net_membership_id: _No description given_
-            transaction_id: _No description given_
+            partner_offer_id: _No description given by bungie_
+            bungie_net_membership_id: _No description given by bungie_
+            transaction_id: _No description given by bungie_
             auth: Authentication information.
 
         Raises:
