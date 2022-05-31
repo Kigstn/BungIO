@@ -1,6 +1,3 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
-
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
@@ -12,177 +9,177 @@ class DestinyActivityModeType(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     STORY = 2
-    """Not specified. """
+    """_No description given_ """
     STRIKE = 3
-    """Not specified. """
+    """_No description given_ """
     RAID = 4
-    """Not specified. """
+    """_No description given_ """
     ALL_PV_P = 5
-    """Not specified. """
+    """_No description given_ """
     PATROL = 6
-    """Not specified. """
+    """_No description given_ """
     ALL_PV_E = 7
-    """Not specified. """
+    """_No description given_ """
     RESERVED9 = 9
-    """Not specified. """
+    """_No description given_ """
     CONTROL = 10
-    """Not specified. """
+    """_No description given_ """
     RESERVED11 = 11
-    """Not specified. """
+    """_No description given_ """
     CLASH = 12
     """Clash -> Destiny's name for Team Deathmatch. 4v4 combat, the team with the highest kills at the end of time wins. """
     RESERVED13 = 13
-    """Not specified. """
+    """_No description given_ """
     CRIMSON_DOUBLES = 15
-    """Not specified. """
+    """_No description given_ """
     NIGHTFALL = 16
-    """Not specified. """
+    """_No description given_ """
     HEROIC_NIGHTFALL = 17
-    """Not specified. """
+    """_No description given_ """
     ALL_STRIKES = 18
-    """Not specified. """
+    """_No description given_ """
     IRON_BANNER = 19
-    """Not specified. """
+    """_No description given_ """
     RESERVED20 = 20
-    """Not specified. """
+    """_No description given_ """
     RESERVED21 = 21
-    """Not specified. """
+    """_No description given_ """
     RESERVED22 = 22
-    """Not specified. """
+    """_No description given_ """
     RESERVED24 = 24
-    """Not specified. """
+    """_No description given_ """
     ALL_MAYHEM = 25
-    """Not specified. """
+    """_No description given_ """
     RESERVED26 = 26
-    """Not specified. """
+    """_No description given_ """
     RESERVED27 = 27
-    """Not specified. """
+    """_No description given_ """
     RESERVED28 = 28
-    """Not specified. """
+    """_No description given_ """
     RESERVED29 = 29
-    """Not specified. """
+    """_No description given_ """
     RESERVED30 = 30
-    """Not specified. """
+    """_No description given_ """
     SUPREMACY = 31
-    """Not specified. """
+    """_No description given_ """
     PRIVATE_MATCHES_ALL = 32
-    """Not specified. """
+    """_No description given_ """
     SURVIVAL = 37
-    """Not specified. """
+    """_No description given_ """
     COUNTDOWN = 38
-    """Not specified. """
+    """_No description given_ """
     TRIALS_OF_THE_NINE = 39
-    """Not specified. """
+    """_No description given_ """
     SOCIAL = 40
-    """Not specified. """
+    """_No description given_ """
     TRIALS_COUNTDOWN = 41
-    """Not specified. """
+    """_No description given_ """
     TRIALS_SURVIVAL = 42
-    """Not specified. """
+    """_No description given_ """
     IRON_BANNER_CONTROL = 43
-    """Not specified. """
+    """_No description given_ """
     IRON_BANNER_CLASH = 44
-    """Not specified. """
+    """_No description given_ """
     IRON_BANNER_SUPREMACY = 45
-    """Not specified. """
+    """_No description given_ """
     SCORED_NIGHTFALL = 46
-    """Not specified. """
+    """_No description given_ """
     SCORED_HEROIC_NIGHTFALL = 47
-    """Not specified. """
+    """_No description given_ """
     RUMBLE = 48
-    """Not specified. """
+    """_No description given_ """
     ALL_DOUBLES = 49
-    """Not specified. """
+    """_No description given_ """
     DOUBLES = 50
-    """Not specified. """
+    """_No description given_ """
     PRIVATE_MATCHES_CLASH = 51
-    """Not specified. """
+    """_No description given_ """
     PRIVATE_MATCHES_CONTROL = 52
-    """Not specified. """
+    """_No description given_ """
     PRIVATE_MATCHES_SUPREMACY = 53
-    """Not specified. """
+    """_No description given_ """
     PRIVATE_MATCHES_COUNTDOWN = 54
-    """Not specified. """
+    """_No description given_ """
     PRIVATE_MATCHES_SURVIVAL = 55
-    """Not specified. """
+    """_No description given_ """
     PRIVATE_MATCHES_MAYHEM = 56
-    """Not specified. """
+    """_No description given_ """
     PRIVATE_MATCHES_RUMBLE = 57
-    """Not specified. """
+    """_No description given_ """
     HEROIC_ADVENTURE = 58
-    """Not specified. """
+    """_No description given_ """
     SHOWDOWN = 59
-    """Not specified. """
+    """_No description given_ """
     LOCKDOWN = 60
-    """Not specified. """
+    """_No description given_ """
     SCORCHED = 61
-    """Not specified. """
+    """_No description given_ """
     SCORCHED_TEAM = 62
-    """Not specified. """
+    """_No description given_ """
     GAMBIT = 63
-    """Not specified. """
+    """_No description given_ """
     ALL_PV_E_COMPETITIVE = 64
-    """Not specified. """
+    """_No description given_ """
     BREAKTHROUGH = 65
-    """Not specified. """
+    """_No description given_ """
     BLACK_ARMORY_RUN = 66
-    """Not specified. """
+    """_No description given_ """
     SALVAGE = 67
-    """Not specified. """
+    """_No description given_ """
     IRON_BANNER_SALVAGE = 68
-    """Not specified. """
+    """_No description given_ """
     PV_P_COMPETITIVE = 69
-    """Not specified. """
+    """_No description given_ """
     PV_P_QUICKPLAY = 70
-    """Not specified. """
+    """_No description given_ """
     CLASH_QUICKPLAY = 71
-    """Not specified. """
+    """_No description given_ """
     CLASH_COMPETITIVE = 72
-    """Not specified. """
+    """_No description given_ """
     CONTROL_QUICKPLAY = 73
-    """Not specified. """
+    """_No description given_ """
     CONTROL_COMPETITIVE = 74
-    """Not specified. """
+    """_No description given_ """
     GAMBIT_PRIME = 75
-    """Not specified. """
+    """_No description given_ """
     RECKONING = 76
-    """Not specified. """
+    """_No description given_ """
     MENAGERIE = 77
-    """Not specified. """
+    """_No description given_ """
     VEX_OFFENSIVE = 78
-    """Not specified. """
+    """_No description given_ """
     NIGHTMARE_HUNT = 79
-    """Not specified. """
+    """_No description given_ """
     ELIMINATION = 80
-    """Not specified. """
+    """_No description given_ """
     MOMENTUM = 81
-    """Not specified. """
+    """_No description given_ """
     DUNGEON = 82
-    """Not specified. """
+    """_No description given_ """
     SUNDIAL = 83
-    """Not specified. """
+    """_No description given_ """
     TRIALS_OF_OSIRIS = 84
-    """Not specified. """
+    """_No description given_ """
     DARES = 85
-    """Not specified. """
+    """_No description given_ """
     OFFENSIVE = 86
-    """Not specified. """
+    """_No description given_ """
     LOST_SECTOR = 87
-    """Not specified. """
+    """_No description given_ """
     RIFT = 88
-    """Not specified. """
+    """_No description given_ """
     ZONE_CONTROL = 89
-    """Not specified. """
+    """_No description given_ """
     IRON_BANNER_RIFT = 90
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class DestinyHistoricalStatsDefinition(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         stat_id: Unique programmer friendly ID for this stat
@@ -223,13 +220,13 @@ class DestinyStatsGroupType(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     GENERAL = 1
-    """Not specified. """
+    """_No description given_ """
     WEAPONS = 2
-    """Not specified. """
+    """_No description given_ """
     MEDALS = 3
-    """Not specified. """
+    """_No description given_ """
     RESERVED_GROUPS = 100
     """This is purely to serve as the dividing line between filterable and un-filterable groups. Below this number is a group you can pass as a filter. Above it are groups used in very specific circumstances and not relevant for filtering. """
     LEADERBOARD = 101
@@ -239,55 +236,55 @@ class DestinyStatsGroupType(BaseEnum):
     UNIQUE_WEAPON = 103
     """These are only consumed and returned by GetUniqueWeaponHistory """
     INTERNAL = 104
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyStatsCategoryType(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     KILLS = 1
-    """Not specified. """
+    """_No description given_ """
     ASSISTS = 2
-    """Not specified. """
+    """_No description given_ """
     DEATHS = 3
-    """Not specified. """
+    """_No description given_ """
     CRITICALS = 4
-    """Not specified. """
+    """_No description given_ """
     K_DA = 5
-    """Not specified. """
+    """_No description given_ """
     K_D = 6
-    """Not specified. """
+    """_No description given_ """
     SCORE = 7
-    """Not specified. """
+    """_No description given_ """
     ENTERED = 8
-    """Not specified. """
+    """_No description given_ """
     TIME_PLAYED = 9
-    """Not specified. """
+    """_No description given_ """
     MEDAL_WINS = 10
-    """Not specified. """
+    """_No description given_ """
     MEDAL_GAME = 11
-    """Not specified. """
+    """_No description given_ """
     MEDAL_SPECIAL_KILLS = 12
-    """Not specified. """
+    """_No description given_ """
     MEDAL_SPREES = 13
-    """Not specified. """
+    """_No description given_ """
     MEDAL_MULTI_KILLS = 14
-    """Not specified. """
+    """_No description given_ """
     MEDAL_ABILITIES = 15
-    """Not specified. """
+    """_No description given_ """
 
 
 class UnitType(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     COUNT = 1
     """Indicates the statistic is a simple count of something. """
     PER_GAME = 2
@@ -318,7 +315,7 @@ class UnitType(BaseEnum):
 
 class DestinyStatsMergeMethod(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     ADD = 0
@@ -331,14 +328,14 @@ class DestinyStatsMergeMethod(BaseEnum):
 
 class PeriodType(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     DAILY = 1
-    """Not specified. """
+    """_No description given_ """
     ALL_TIME = 2
-    """Not specified. """
+    """_No description given_ """
     ACTIVITY = 3
-    """Not specified. """
+    """_No description given_ """

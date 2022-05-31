@@ -1,31 +1,49 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import (
+        DestinyChallengeStatus,
+        DestinyMilestoneActivity,
+        DestinyMilestoneActivityCompletionStatus,
+        DestinyMilestoneActivityPhase,
+        DestinyMilestoneActivityVariant,
+        DestinyMilestoneChallengeActivity,
+        DestinyMilestoneContentItemCategory,
+        DestinyMilestoneQuest,
+        DestinyMilestoneRewardCategory,
+        DestinyMilestoneRewardEntry,
+        DestinyMilestoneVendor,
+        DestinyPublicMilestoneActivity,
+        DestinyPublicMilestoneActivityVariant,
+        DestinyPublicMilestoneChallenge,
+        DestinyPublicMilestoneChallengeActivity,
+        DestinyPublicMilestoneQuest,
+        DestinyPublicMilestoneVendor,
+        DestinyQuestStatus,
+    )
 
 
 @attr.define
 class DestinyMilestone(BaseModel):
     """
-        Represents a runtime instance of a user's milestone status. Live Milestone data should be combined with DestinyMilestoneDefinition data to show the user a picture of what is available for them to do in the game, and their status in regards to said "things to do." Consider it a big, wonky to-do list, or Advisors 3.0 for those who remember the Destiny 1 API.
+    Represents a runtime instance of a user's milestone status. Live Milestone data should be combined with DestinyMilestoneDefinition data to show the user a picture of what is available for them to do in the game, and their status in regards to said "things to do." Consider it a big, wonky to-do list, or Advisors 3.0 for those who remember the Destiny 1 API.
 
-        Attributes:
-            milestone_hash: The unique identifier for the Milestone. Use it to look up the DestinyMilestoneDefinition, so you can combine the other data in this contract with static definition data.
-            available_quests: Indicates what quests are available for this Milestone. Usually this will be only a single Quest, but some quests have multiple available that you can choose from at any given time. All possible quests for a milestone can be found in the DestinyMilestoneDefinition, but they must be combined with this Live data to determine which one(s) are actually active right now. It is possible for Milestones to not have any quests.
-            activities: The currently active Activities in this milestone, when the Milestone is driven by Challenges.
-
-    Not all Milestones have Challenges, but when they do this will indicate the Activities and Challenges under those Activities related to this Milestone.
-            values: Milestones may have arbitrary key/value pairs associated with them, for data that users will want to know about but that doesn't fit neatly into any of the common components such as Quests. A good example of this would be - if this existed in Destiny 1 - the number of wins you currently have on your Trials of Osiris ticket. Looking in the DestinyMilestoneDefinition, you can use the string identifier of this dictionary to look up more info about the value, including localized string content for displaying the value. The value in the dictionary is the floating point number. The definition will tell you how to format this number.
-            vendor_hashes: A milestone may have one or more active vendors that are "related" to it (that provide rewards, or that are the initiators of the Milestone). I already regret this, even as I'm typing it. [I told you I'd regret this] You see, sometimes a milestone may be directly correlated with a set of vendors that provide varying tiers of rewards. The player may not be able to interact with one or more of those vendors. This will return the hashes of the Vendors that the player *can* interact with, allowing you to show their current inventory as rewards or related items to the Milestone or its activities.
-
-    Before we even use it, it's already deprecated! How much of a bummer is that? We need more data.
-            vendors: Replaces vendorHashes, which I knew was going to be trouble the day it walked in the door. This will return not only what Vendors are active and relevant to the activity (in an implied order that you can choose to ignore), but also other data - for example, if the Vendor is featuring a specific item relevant to this event that you should show with them.
-            rewards: If the entity to which this component is attached has known active Rewards for the player, this will detail information about those rewards, keyed by the RewardEntry Hash. (See DestinyMilestoneDefinition for more information about Reward Entries) Note that these rewards are not for the Quests related to the Milestone. Think of these as "overview/checklist" rewards that may be provided for Milestones that may provide rewards for performing a variety of tasks that aren't under a specific Quest.
-            start_date: If known, this is the date when the event last began or refreshed. It will only be populated for events with fixed and repeating start and end dates.
-            end_date: If known, this is the date when the event will next end or repeat. It will only be populated for events with fixed and repeating start and end dates.
-            order: Used for ordering milestones in a display to match how we order them in BNet. May pull from static data, or possibly in the future from dynamic information.
+    Attributes:
+        milestone_hash: The unique identifier for the Milestone. Use it to look up the DestinyMilestoneDefinition, so you can combine the other data in this contract with static definition data.
+        available_quests: Indicates what quests are available for this Milestone. Usually this will be only a single Quest, but some quests have multiple available that you can choose from at any given time. All possible quests for a milestone can be found in the DestinyMilestoneDefinition, but they must be combined with this Live data to determine which one(s) are actually active right now. It is possible for Milestones to not have any quests.
+        activities: The currently active Activities in this milestone, when the Milestone is driven by Challenges. Not all Milestones have Challenges, but when they do this will indicate the Activities and Challenges under those Activities related to this Milestone.
+        values: Milestones may have arbitrary key/value pairs associated with them, for data that users will want to know about but that doesn't fit neatly into any of the common components such as Quests. A good example of this would be - if this existed in Destiny 1 - the number of wins you currently have on your Trials of Osiris ticket. Looking in the DestinyMilestoneDefinition, you can use the string identifier of this dictionary to look up more info about the value, including localized string content for displaying the value. The value in the dictionary is the floating point number. The definition will tell you how to format this number.
+        vendor_hashes: A milestone may have one or more active vendors that are "related" to it (that provide rewards, or that are the initiators of the Milestone). I already regret this, even as I'm typing it. [I told you I'd regret this] You see, sometimes a milestone may be directly correlated with a set of vendors that provide varying tiers of rewards. The player may not be able to interact with one or more of those vendors. This will return the hashes of the Vendors that the player *can* interact with, allowing you to show their current inventory as rewards or related items to the Milestone or its activities. Before we even use it, it's already deprecated! How much of a bummer is that? We need more data.
+        vendors: Replaces vendorHashes, which I knew was going to be trouble the day it walked in the door. This will return not only what Vendors are active and relevant to the activity (in an implied order that you can choose to ignore), but also other data - for example, if the Vendor is featuring a specific item relevant to this event that you should show with them.
+        rewards: If the entity to which this component is attached has known active Rewards for the player, this will detail information about those rewards, keyed by the RewardEntry Hash. (See DestinyMilestoneDefinition for more information about Reward Entries) Note that these rewards are not for the Quests related to the Milestone. Think of these as "overview/checklist" rewards that may be provided for Milestones that may provide rewards for performing a variety of tasks that aren't under a specific Quest.
+        start_date: If known, this is the date when the event last began or refreshed. It will only be populated for events with fixed and repeating start and end dates.
+        end_date: If known, this is the date when the event will next end or repeat. It will only be populated for events with fixed and repeating start and end dates.
+        order: Used for ordering milestones in a display to match how we order them in BNet. May pull from static data, or possibly in the future from dynamic information.
     """
 
     milestone_hash: int = attr.field()
@@ -53,8 +71,8 @@ class DestinyMilestoneQuest(BaseModel):
     """
 
     quest_item_hash: int = attr.field()
-    status: Any = attr.field()
-    activity: Any = attr.field()
+    status: "DestinyQuestStatus" = attr.field()
+    activity: "DestinyMilestoneActivity" = attr.field()
     challenges: list["DestinyChallengeStatus"] = attr.field()
 
 
@@ -91,7 +109,7 @@ class DestinyMilestoneActivityVariant(BaseModel):
     """
 
     activity_hash: int = attr.field()
-    completion_status: Any = attr.field()
+    completion_status: "DestinyMilestoneActivityCompletionStatus" = attr.field()
     activity_mode_hash: int = attr.field()
     activity_mode_type: int = attr.field()
 
@@ -127,23 +145,15 @@ class DestinyMilestoneActivityPhase(BaseModel):
 @attr.define
 class DestinyMilestoneChallengeActivity(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            activity_hash: Not specified.
-            challenges: Not specified.
-            modifier_hashes: If the activity has modifiers, this will be the list of modifiers that all variants have in common. Perform lookups against DestinyActivityModifierDefinition which defines the modifier being applied to get at the modifier data.
-
-    Note that, in the DestiyActivityDefinition, you will see many more modifiers than this being referred to: those are all *possible* modifiers for the activity, not the active ones. Use only the active ones to match what's really live.
-            boolean_activity_options: The set of activity options for this activity, keyed by an identifier that's unique for this activity (not guaranteed to be unique between or across all activities, though should be unique for every *variant* of a given *conceptual* activity: for instance, the original D2 Raid has many variant DestinyActivityDefinitions. While other activities could potentially have the same option hashes, for any given D2 base Raid variant the hash will be unique).
-
-    As a concrete example of this data, the hashes you get for Raids will correspond to the currently active "Challenge Mode".
-
-    We don't have any human readable information for these, but saavy 3rd party app users could manually associate the key (a hash identifier for the "option" that is enabled/disabled) and the value (whether it's enabled or disabled presently)
-
-    On our side, we don't necessarily even know what these are used for (the game designers know, but we don't), and we have no human readable data for them. In order to use them, you will have to do some experimentation.
-            loadout_requirement_index: If returned, this is the index into the DestinyActivityDefinition's "loadouts" property, indicating the currently active loadout requirements.
-            phases: If the Activity has discrete "phases" that we can track, that info will be here. Otherwise, this value will be NULL. Note that this is a list and not a dictionary: the order implies the ascending order of phases or progression in this activity.
+    Attributes:
+        activity_hash: _No description given_
+        challenges: _No description given_
+        modifier_hashes: If the activity has modifiers, this will be the list of modifiers that all variants have in common. Perform lookups against DestinyActivityModifierDefinition which defines the modifier being applied to get at the modifier data. Note that, in the DestiyActivityDefinition, you will see many more modifiers than this being referred to: those are all *possible* modifiers for the activity, not the active ones. Use only the active ones to match what's really live.
+        boolean_activity_options: The set of activity options for this activity, keyed by an identifier that's unique for this activity (not guaranteed to be unique between or across all activities, though should be unique for every *variant* of a given *conceptual* activity: for instance, the original D2 Raid has many variant DestinyActivityDefinitions. While other activities could potentially have the same option hashes, for any given D2 base Raid variant the hash will be unique). As a concrete example of this data, the hashes you get for Raids will correspond to the currently active "Challenge Mode". We don't have any human readable information for these, but saavy 3rd party app users could manually associate the key (a hash identifier for the "option" that is enabled/disabled) and the value (whether it's enabled or disabled presently) On our side, we don't necessarily even know what these are used for (the game designers know, but we don't), and we have no human readable data for them. In order to use them, you will have to do some experimentation.
+        loadout_requirement_index: If returned, this is the index into the DestinyActivityDefinition's "loadouts" property, indicating the currently active loadout requirements.
+        phases: If the Activity has discrete "phases" that we can track, that info will be here. Otherwise, this value will be NULL. Note that this is a list and not a dictionary: the order implies the ascending order of phases or progression in this activity.
     """
 
     activity_hash: int = attr.field()
@@ -222,8 +232,8 @@ class DestinyMilestoneContentItemCategory(BaseModel):
     Part of our dynamic, localized Milestone content is arbitrary categories of items. These are built in our content management system, and thus aren't the same as programmatically generated rewards.
 
     Attributes:
-        title: Not specified.
-        item_hashes: Not specified.
+        title: _No description given_
+        item_hashes: _No description given_
     """
 
     title: str = attr.field()
@@ -233,19 +243,17 @@ class DestinyMilestoneContentItemCategory(BaseModel):
 @attr.define
 class DestinyPublicMilestone(BaseModel):
     """
-        Information about milestones, presented in a character state-agnostic manner. Combine this data with DestinyMilestoneDefinition to get a full picture of the milestone, which is basically a checklist of things to do in the game. Think of this as GetPublicAdvisors 3.0, for those who used the Destiny 1 API.
+    Information about milestones, presented in a character state-agnostic manner. Combine this data with DestinyMilestoneDefinition to get a full picture of the milestone, which is basically a checklist of things to do in the game. Think of this as GetPublicAdvisors 3.0, for those who used the Destiny 1 API.
 
-        Attributes:
-            milestone_hash: The hash identifier for the milestone. Use it to look up the DestinyMilestoneDefinition for static data about the Milestone.
-            available_quests: A milestone not need have even a single quest, but if there are active quests they will be returned here.
-            activities: Not specified.
-            vendor_hashes: Sometimes milestones - or activities active in milestones - will have relevant vendors. These are the vendors that are currently relevant.
-
-    Deprecated, already, for the sake of the new "vendors" property that has more data. What was I thinking.
-            vendors: This is why we can't have nice things. This is the ordered list of vendors to be shown that relate to this milestone, potentially along with other interesting data.
-            start_date: If known, this is the date when the Milestone started/became active.
-            end_date: If known, this is the date when the Milestone will expire/recycle/end.
-            order: Used for ordering milestones in a display to match how we order them in BNet. May pull from static data, or possibly in the future from dynamic information.
+    Attributes:
+        milestone_hash: The hash identifier for the milestone. Use it to look up the DestinyMilestoneDefinition for static data about the Milestone.
+        available_quests: A milestone not need have even a single quest, but if there are active quests they will be returned here.
+        activities: _No description given_
+        vendor_hashes: Sometimes milestones - or activities active in milestones - will have relevant vendors. These are the vendors that are currently relevant. Deprecated, already, for the sake of the new "vendors" property that has more data. What was I thinking.
+        vendors: This is why we can't have nice things. This is the ordered list of vendors to be shown that relate to this milestone, potentially along with other interesting data.
+        start_date: If known, this is the date when the Milestone started/became active.
+        end_date: If known, this is the date when the Milestone will expire/recycle/end.
+        order: Used for ordering milestones in a display to match how we order them in BNet. May pull from static data, or possibly in the future from dynamic information.
     """
 
     milestone_hash: int = attr.field()
@@ -261,7 +269,7 @@ class DestinyPublicMilestone(BaseModel):
 @attr.define
 class DestinyPublicMilestoneQuest(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         quest_item_hash: Quests are defined as Items in content. As such, this is the hash identifier of the DestinyInventoryItemDefinition that represents this quest. It will have pointers to all of the steps in the quest, and display information for the quest (title, description, icon etc) Individual steps will be referred to in the Quest item's DestinyInventoryItemDefinition.setData property, and themselves are Items with their own renderable data.
@@ -270,7 +278,7 @@ class DestinyPublicMilestoneQuest(BaseModel):
     """
 
     quest_item_hash: int = attr.field()
-    activity: Any = attr.field()
+    activity: "DestinyPublicMilestoneActivity" = attr.field()
     challenges: list["DestinyPublicMilestoneChallenge"] = attr.field()
 
 
@@ -327,21 +335,15 @@ class DestinyPublicMilestoneChallenge(BaseModel):
 @attr.define
 class DestinyPublicMilestoneChallengeActivity(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            activity_hash: Not specified.
-            challenge_objective_hashes: Not specified.
-            modifier_hashes: If the activity has modifiers, this will be the list of modifiers that all variants have in common. Perform lookups against DestinyActivityModifierDefinition which defines the modifier being applied to get at the modifier data.
-
-    Note that, in the DestiyActivityDefinition, you will see many more modifiers than this being referred to: those are all *possible* modifiers for the activity, not the active ones. Use only the active ones to match what's really live.
-            loadout_requirement_index: If returned, this is the index into the DestinyActivityDefinition's "loadouts" property, indicating the currently active loadout requirements.
-            phase_hashes: The ordered list of phases for this activity, if any. Note that we have no human readable info for phases, nor any entities to relate them to: relating these hashes to something human readable is up to you unfortunately.
-            boolean_activity_options: The set of activity options for this activity, keyed by an identifier that's unique for this activity (not guaranteed to be unique between or across all activities, though should be unique for every *variant* of a given *conceptual* activity: for instance, the original D2 Raid has many variant DestinyActivityDefinitions. While other activities could potentially have the same option hashes, for any given D2 base Raid variant the hash will be unique).
-
-    As a concrete example of this data, the hashes you get for Raids will correspond to the currently active "Challenge Mode".
-
-    We have no human readable information for this data, so it's up to you if you want to associate it with such info to show it.
+    Attributes:
+        activity_hash: _No description given_
+        challenge_objective_hashes: _No description given_
+        modifier_hashes: If the activity has modifiers, this will be the list of modifiers that all variants have in common. Perform lookups against DestinyActivityModifierDefinition which defines the modifier being applied to get at the modifier data. Note that, in the DestiyActivityDefinition, you will see many more modifiers than this being referred to: those are all *possible* modifiers for the activity, not the active ones. Use only the active ones to match what's really live.
+        loadout_requirement_index: If returned, this is the index into the DestinyActivityDefinition's "loadouts" property, indicating the currently active loadout requirements.
+        phase_hashes: The ordered list of phases for this activity, if any. Note that we have no human readable info for phases, nor any entities to relate them to: relating these hashes to something human readable is up to you unfortunately.
+        boolean_activity_options: The set of activity options for this activity, keyed by an identifier that's unique for this activity (not guaranteed to be unique between or across all activities, though should be unique for every *variant* of a given *conceptual* activity: for instance, the original D2 Raid has many variant DestinyActivityDefinitions. While other activities could potentially have the same option hashes, for any given D2 base Raid variant the hash will be unique). As a concrete example of this data, the hashes you get for Raids will correspond to the currently active "Challenge Mode". We have no human readable information for this data, so it's up to you if you want to associate it with such info to show it.
     """
 
     activity_hash: int = attr.field()
@@ -355,7 +357,7 @@ class DestinyPublicMilestoneChallengeActivity(BaseModel):
 @attr.define
 class DestinyPublicMilestoneVendor(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         vendor_hash: The hash identifier of the Vendor related to this Milestone. You can show useful things from this, such as thier Faction icon or whatever you might care about.

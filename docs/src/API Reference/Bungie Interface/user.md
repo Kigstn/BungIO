@@ -1,3 +1,3 @@
-# User Routes Interface
+# User Routes
 
 ::: bungio.api.bungie.user

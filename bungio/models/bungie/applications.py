@@ -1,14 +1,17 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
 
+if TYPE_CHECKING:
+    from bungio.models import ApplicationDeveloper, Datapoint, Series, UserInfoCard
+
 
 class ApplicationScopes(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     READ_BASIC_USER_PROFILE = 1
@@ -46,7 +49,7 @@ class ApplicationScopes(BaseEnum):
 @attr.define
 class ApiUsage(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         api_calls: Counts for on API calls made for the time range.
@@ -60,7 +63,7 @@ class ApiUsage(BaseModel):
 @attr.define
 class Series(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         datapoints: Collection of samples with time and value.
@@ -74,7 +77,7 @@ class Series(BaseModel):
 @attr.define
 class Datapoint(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         time: Timestamp for the related count.
@@ -88,7 +91,7 @@ class Datapoint(BaseModel):
 @attr.define
 class Application(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         application_id: Unique ID assigned to the application
@@ -121,7 +124,7 @@ class Application(BaseModel):
 
 class ApplicationStatus(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
@@ -139,12 +142,12 @@ class ApplicationStatus(BaseEnum):
 @attr.define
 class ApplicationDeveloper(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        role: Not specified.
-        api_eula_version: Not specified.
-        user: Not specified.
+        role: _No description given_
+        api_eula_version: _No description given_
+        user: _No description given_
     """
 
     role: int = attr.field()
@@ -154,12 +157,12 @@ class ApplicationDeveloper(BaseModel):
 
 class DeveloperRole(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     OWNER = 1
-    """Not specified. """
+    """_No description given_ """
     TEAM_MEMBER = 2
-    """Not specified. """
+    """_No description given_ """

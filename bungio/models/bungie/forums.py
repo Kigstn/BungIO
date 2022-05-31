@@ -1,62 +1,57 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
-
-import attr
-
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseEnum
 
 
 class ForumPostCategoryEnums(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     TEXT_ONLY = 1
-    """Not specified. """
+    """_No description given_ """
     MEDIA = 2
-    """Not specified. """
+    """_No description given_ """
     LINK = 4
-    """Not specified. """
+    """_No description given_ """
     POLL = 8
-    """Not specified. """
+    """_No description given_ """
     QUESTION = 16
-    """Not specified. """
+    """_No description given_ """
     ANSWERED = 32
-    """Not specified. """
+    """_No description given_ """
     ANNOUNCEMENT = 64
-    """Not specified. """
+    """_No description given_ """
     CONTENT_COMMENT = 128
-    """Not specified. """
+    """_No description given_ """
     BUNGIE_OFFICIAL = 256
-    """Not specified. """
+    """_No description given_ """
     NINJA_OFFICIAL = 512
-    """Not specified. """
+    """_No description given_ """
     RECRUITMENT = 1024
-    """Not specified. """
+    """_No description given_ """
 
 
 class ForumFlagsEnum(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     BUNGIE_STAFF_POST = 1
-    """Not specified. """
+    """_No description given_ """
     FORUM_NINJA_POST = 2
-    """Not specified. """
+    """_No description given_ """
     FORUM_MENTOR_POST = 4
-    """Not specified. """
+    """_No description given_ """
     TOPIC_BUNGIE_STAFF_POSTED = 8
-    """Not specified. """
+    """_No description given_ """
     TOPIC_BUNGIE_VOLUNTEER_POSTED = 16
-    """Not specified. """
+    """_No description given_ """
     QUESTION_ANSWERED_BY_BUNGIE = 32
-    """Not specified. """
+    """_No description given_ """
     QUESTION_ANSWERED_BY_NINJA = 64
-    """Not specified. """
+    """_No description given_ """
     COMMUNITY_CONTENT = 128
-    """Not specified. """
+    """_No description given_ """

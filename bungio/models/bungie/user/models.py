@@ -1,21 +1,18 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
-
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
 
 
 @attr.define
 class GetCredentialTypesForAccountResponse(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        credential_type: Not specified.
-        credential_display_name: Not specified.
-        is_public: Not specified.
-        credential_as_string: Not specified.
+        credential_type: _No description given_
+        credential_display_name: _No description given_
+        is_public: _No description given_
+        credential_as_string: _No description given_
     """
 
     credential_type: int = attr.field()

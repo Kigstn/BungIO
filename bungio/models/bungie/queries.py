@@ -1,28 +1,24 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import PagedQuery
 
 
 @attr.define
 class SearchResult(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     total_results: int = attr.field()
@@ -35,12 +31,12 @@ class SearchResult(BaseModel):
 @attr.define
 class PagedQuery(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        items_per_page: Not specified.
-        current_page: Not specified.
-        request_continuation_token: Not specified.
+        items_per_page: _No description given_
+        current_page: _No description given_
+        request_continuation_token: _No description given_
     """
 
     items_per_page: int = attr.field()

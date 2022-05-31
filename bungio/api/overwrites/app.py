@@ -1,8 +1,8 @@
 import attr
 
-from bungio.api.bungie.app import AppRouteInterface
+from bungio.api.bungie import app
 
 
 @attr.define
-class AppRouteInterfaceOverwrite(AppRouteInterface):
+class AppRouteInterface(app.AppRouteInterface):
     pass

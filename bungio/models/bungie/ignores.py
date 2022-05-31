@@ -1,6 +1,3 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
-
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
@@ -9,11 +6,11 @@ from bungio.models.base import BaseEnum, BaseModel
 @attr.define
 class IgnoreResponse(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        is_ignored: Not specified.
-        ignore_flags: Not specified.
+        is_ignored: _No description given_
+        ignore_flags: _No description given_
     """
 
     is_ignored: bool = attr.field()
@@ -22,51 +19,51 @@ class IgnoreResponse(BaseModel):
 
 class IgnoreStatus(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NOT_IGNORED = 0
-    """Not specified. """
+    """_No description given_ """
     IGNORED_USER = 1
-    """Not specified. """
+    """_No description given_ """
     IGNORED_GROUP = 2
-    """Not specified. """
+    """_No description given_ """
     IGNORED_BY_GROUP = 4
-    """Not specified. """
+    """_No description given_ """
     IGNORED_POST = 8
-    """Not specified. """
+    """_No description given_ """
     IGNORED_TAG = 16
-    """Not specified. """
+    """_No description given_ """
     IGNORED_GLOBAL = 32
-    """Not specified. """
+    """_No description given_ """
 
 
 class IgnoreLength(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     WEEK = 1
-    """Not specified. """
+    """_No description given_ """
     TWO_WEEKS = 2
-    """Not specified. """
+    """_No description given_ """
     THREE_WEEKS = 3
-    """Not specified. """
+    """_No description given_ """
     MONTH = 4
-    """Not specified. """
+    """_No description given_ """
     THREE_MONTHS = 5
-    """Not specified. """
+    """_No description given_ """
     SIX_MONTHS = 6
-    """Not specified. """
+    """_No description given_ """
     YEAR = 7
-    """Not specified. """
+    """_No description given_ """
     FOREVER = 8
-    """Not specified. """
+    """_No description given_ """
     THREE_MINUTES = 9
-    """Not specified. """
+    """_No description given_ """
     HOUR = 10
-    """Not specified. """
+    """_No description given_ """
     THIRTY_DAYS = 11
-    """Not specified. """
+    """_No description given_ """

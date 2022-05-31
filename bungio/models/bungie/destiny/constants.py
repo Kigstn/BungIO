@@ -1,15 +1,12 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
-
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
 
 
 @attr.define
 class DestinyEnvironmentLocationMapping(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         location_hash: The location that is revealed on the director by this mapping.

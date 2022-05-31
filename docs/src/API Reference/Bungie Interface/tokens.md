@@ -1,3 +1,3 @@
-# Tokens Routes Interface
+# Tokens Routes
 
 ::: bungio.api.bungie.tokens

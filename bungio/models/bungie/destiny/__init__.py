@@ -5,6 +5,16 @@ import attr
 
 from bungio.models.base import BaseEnum, BaseModel
 
+if TYPE_CHECKING:
+    from bungio.models import (
+        DestinyChallengeStatus,
+        DestinyEquipItemResult,
+        DestinyMaterialRequirement,
+        DestinyProgressionResetEntry,
+        DestinyStat,
+        DestinyTalentNodeStatBlock,
+    )
+
 
 @attr.define
 class DestinyProgression(BaseModel):
@@ -47,13 +57,11 @@ class DestinyProgression(BaseModel):
 @attr.define
 class DestinyProgressionResetEntry(BaseModel):
     """
-       Represents a season and the number of resets you had in that season.
+    Represents a season and the number of resets you had in that season.  We do not necessarily - even for progressions with resets - track it over all seasons. So be careful and check the season numbers being returned.
 
-    We do not necessarily - even for progressions with resets - track it over all seasons. So be careful and check the season numbers being returned.
-
-       Attributes:
-           season: Not specified.
-           resets: Not specified.
+    Attributes:
+        season: _No description given_
+        resets: _No description given_
     """
 
     season: int = attr.field()
@@ -66,7 +74,7 @@ class DestinyProgressionRewardItemState(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     INVISIBLE = 1
     """If this is set, the reward should be hidden. """
     EARNED = 2
@@ -83,23 +91,23 @@ class DestinyProgressionScope(BaseEnum):
     """
 
     ACCOUNT = 0
-    """Not specified. """
+    """_No description given_ """
     CHARACTER = 1
-    """Not specified. """
+    """_No description given_ """
     CLAN = 2
-    """Not specified. """
+    """_No description given_ """
     ITEM = 3
-    """Not specified. """
+    """_No description given_ """
     IMPLICIT_FROM_EQUIPMENT = 4
-    """Not specified. """
+    """_No description given_ """
     MAPPED = 5
-    """Not specified. """
+    """_No description given_ """
     MAPPED_AGGREGATE = 6
-    """Not specified. """
+    """_No description given_ """
     MAPPED_STAT = 7
-    """Not specified. """
+    """_No description given_ """
     MAPPED_UNLOCK_VALUE = 8
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyProgressionStepDisplayEffect(BaseEnum):
@@ -108,11 +116,11 @@ class DestinyProgressionStepDisplayEffect(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     CHARACTER = 1
-    """Not specified. """
+    """_No description given_ """
     ITEM = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
@@ -139,26 +147,26 @@ class SocketTypeActionType(BaseEnum):
     """
 
     INSERT_PLUG = 0
-    """Not specified. """
+    """_No description given_ """
     INFUSE_ITEM = 1
-    """Not specified. """
+    """_No description given_ """
     REINITIALIZE_SOCKET = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinySocketVisibility(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     VISIBLE = 0
-    """Not specified. """
+    """_No description given_ """
     HIDDEN = 1
-    """Not specified. """
+    """_No description given_ """
     HIDDEN_WHEN_EMPTY = 2
-    """Not specified. """
+    """_No description given_ """
     HIDDEN_IF_NO_PLUGS_AVAILABLE = 3
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinySocketCategoryStyle(BaseEnum):
@@ -167,104 +175,102 @@ class DestinySocketCategoryStyle(BaseEnum):
     """
 
     UNKNOWN = 0
-    """Not specified. """
+    """_No description given_ """
     REUSABLE = 1
-    """Not specified. """
+    """_No description given_ """
     CONSUMABLE = 2
-    """Not specified. """
+    """_No description given_ """
     UNLOCKABLE = 3
-    """Not specified. """
+    """_No description given_ """
     INTRINSIC = 4
-    """Not specified. """
+    """_No description given_ """
     ENERGY_METER = 5
-    """Not specified. """
+    """_No description given_ """
     LARGE_PERK = 6
-    """Not specified. """
+    """_No description given_ """
     ABILITIES = 7
-    """Not specified. """
+    """_No description given_ """
     SUPERS = 8
-    """Not specified. """
+    """_No description given_ """
 
 
 class TierType(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     UNKNOWN = 0
-    """Not specified. """
+    """_No description given_ """
     CURRENCY = 1
-    """Not specified. """
+    """_No description given_ """
     BASIC = 2
-    """Not specified. """
+    """_No description given_ """
     COMMON = 3
-    """Not specified. """
+    """_No description given_ """
     RARE = 4
-    """Not specified. """
+    """_No description given_ """
     SUPERIOR = 5
-    """Not specified. """
+    """_No description given_ """
     EXOTIC = 6
-    """Not specified. """
+    """_No description given_ """
 
 
 class BucketScope(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     CHARACTER = 0
-    """Not specified. """
+    """_No description given_ """
     ACCOUNT = 1
-    """Not specified. """
+    """_No description given_ """
 
 
 class BucketCategory(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     INVISIBLE = 0
-    """Not specified. """
+    """_No description given_ """
     ITEM = 1
-    """Not specified. """
+    """_No description given_ """
     CURRENCY = 2
-    """Not specified. """
+    """_No description given_ """
     EQUIPPABLE = 3
-    """Not specified. """
+    """_No description given_ """
     IGNORED = 4
-    """Not specified. """
+    """_No description given_ """
 
 
 class ItemLocation(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     UNKNOWN = 0
-    """Not specified. """
+    """_No description given_ """
     INVENTORY = 1
-    """Not specified. """
+    """_No description given_ """
     VAULT = 2
-    """Not specified. """
+    """_No description given_ """
     VENDOR = 3
-    """Not specified. """
+    """_No description given_ """
     POSTMASTER = 4
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyStatAggregationType(BaseEnum):
     """
-        When a Stat (DestinyStatDefinition) is aggregated, this is the rules used for determining the level and formula used for aggregation.
-
-    * CharacterAverage = apply a weighted average using the related DestinyStatGroupDefinition on the DestinyInventoryItemDefinition across the character's equipped items. See both of those definitions for details. * Character = don't aggregate: the stat should be located and used directly on the character. * Item = don't aggregate: the stat should be located and used directly on the item.
+    When a Stat (DestinyStatDefinition) is aggregated, this is the rules used for determining the level and formula used for aggregation. * CharacterAverage = apply a weighted average using the related DestinyStatGroupDefinition on the DestinyInventoryItemDefinition across the character's equipped items. See both of those definitions for details. * Character = don't aggregate: the stat should be located and used directly on the character. * Item = don't aggregate: the stat should be located and used directly on the item.
     """
 
     CHARACTER_AVERAGE = 0
-    """Not specified. """
+    """_No description given_ """
     CHARACTER = 1
-    """Not specified. """
+    """_No description given_ """
     ITEM = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyStatCategory(BaseEnum):
@@ -273,51 +279,51 @@ class DestinyStatCategory(BaseEnum):
     """
 
     GAMEPLAY = 0
-    """Not specified. """
+    """_No description given_ """
     WEAPON = 1
-    """Not specified. """
+    """_No description given_ """
     DEFENSE = 2
-    """Not specified. """
+    """_No description given_ """
     PRIMARY = 3
-    """Not specified. """
+    """_No description given_ """
 
 
 class EquippingItemBlockAttributes(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     EQUIP_ON_ACQUIRE = 1
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyAmmunitionType(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     PRIMARY = 1
-    """Not specified. """
+    """_No description given_ """
     SPECIAL = 2
-    """Not specified. """
+    """_No description given_ """
     HEAVY = 3
-    """Not specified. """
+    """_No description given_ """
     UNKNOWN = 4
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class DyeReference(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        channel_hash: Not specified.
-        dye_hash: Not specified.
+        channel_hash: _No description given_
+        dye_hash: _No description given_
     """
 
     channel_hash: int = attr.field()
@@ -326,30 +332,30 @@ class DyeReference(BaseModel):
 
 class DestinyClass(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     TITAN = 0
-    """Not specified. """
+    """_No description given_ """
     HUNTER = 1
-    """Not specified. """
+    """_No description given_ """
     WARLOCK = 2
-    """Not specified. """
+    """_No description given_ """
     UNKNOWN = 3
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyGender(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     MALE = 0
-    """Not specified. """
+    """_No description given_ """
     FEMALE = 1
-    """Not specified. """
+    """_No description given_ """
     UNKNOWN = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyVendorProgressionType(BaseEnum):
@@ -371,9 +377,9 @@ class VendorDisplayCategorySortOrder(BaseEnum):
     """
 
     DEFAULT = 0
-    """Not specified. """
+    """_No description given_ """
     SORT_BY_TIER = 1
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyVendorInteractionRewardSelection(BaseEnum):
@@ -382,11 +388,11 @@ class DestinyVendorInteractionRewardSelection(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     ONE = 1
-    """Not specified. """
+    """_No description given_ """
     ALL = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyVendorReplyType(BaseEnum):
@@ -395,11 +401,11 @@ class DestinyVendorReplyType(BaseEnum):
     """
 
     ACCEPT = 0
-    """Not specified. """
+    """_No description given_ """
     DECLINE = 1
-    """Not specified. """
+    """_No description given_ """
     COMPLETE = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 class VendorInteractionType(BaseEnum):
@@ -408,7 +414,7 @@ class VendorInteractionType(BaseEnum):
     """
 
     UNKNOWN = 0
-    """Not specified. """
+    """_No description given_ """
     UNDEFINED = 1
     """An empty interaction. If this ends up in content, it is probably a game bug. """
     QUEST_COMPLETE = 2
@@ -437,11 +443,11 @@ class DestinyItemSortType(BaseEnum):
     """
 
     ITEM_ID = 0
-    """Not specified. """
+    """_No description given_ """
     TIMESTAMP = 1
-    """Not specified. """
+    """_No description given_ """
     STACK_SIZE = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyVendorItemRefundPolicy(BaseEnum):
@@ -450,46 +456,32 @@ class DestinyVendorItemRefundPolicy(BaseEnum):
     """
 
     NOT_REFUNDABLE = 0
-    """Not specified. """
+    """_No description given_ """
     DELETES_ITEM = 1
-    """Not specified. """
+    """_No description given_ """
     REVOKES_LICENSE = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyGatingScope(BaseEnum):
     """
-        This enumeration represents the most restrictive type of gating that is being performed by an entity. This is useful as a shortcut to avoid a lot of lookups when determining whether the gating on an Entity applies to everyone equally, or to their specific Profile or Character states.
-
-    None = There is no gating on this item.
-
-    Global = The gating on this item is based entirely on global game state. It will be gated the same for everyone.
-
-    Clan = The gating on this item is at the Clan level. For instance, if you're gated by Clan level this will be the case.
-
-    Profile = The gating includes Profile-specific checks, but not on the Profile's characters. An example of this might be when you acquire an Emblem: the Emblem will be available in your Kiosk for all characters in your Profile from that point onward.
-
-    Character = The gating includes Character-specific checks, including character level restrictions. An example of this might be an item that you can't purchase from a Vendor until you reach a specific Character Level.
-
-    Item = The gating includes item-specific checks. For BNet, this generally implies that we'll show this data only on a character level or deeper.
-
-    AssumedWorstCase = The unlocks and checks being used for this calculation are of an unknown type and are used for unknown purposes. For instance, if some great person decided that an unlock value should be globally scoped, but then the game changes it using character-specific data in a way that BNet doesn't know about. Because of the open-ended potential for this to occur, many unlock checks for "globally" scoped unlock data may be assumed as the worst case unless it has been specifically whitelisted as otherwise. That sucks, but them's the breaks.
+    This enumeration represents the most restrictive type of gating that is being performed by an entity. This is useful as a shortcut to avoid a lot of lookups when determining whether the gating on an Entity applies to everyone equally, or to their specific Profile or Character states. None = There is no gating on this item. Global = The gating on this item is based entirely on global game state. It will be gated the same for everyone. Clan = The gating on this item is at the Clan level. For instance, if you're gated by Clan level this will be the case. Profile = The gating includes Profile-specific checks, but not on the Profile's characters. An example of this might be when you acquire an Emblem: the Emblem will be available in your Kiosk for all characters in your Profile from that point onward. Character = The gating includes Character-specific checks, including character level restrictions. An example of this might be an item that you can't purchase from a Vendor until you reach a specific Character Level. Item = The gating includes item-specific checks. For BNet, this generally implies that we'll show this data only on a character level or deeper. AssumedWorstCase = The unlocks and checks being used for this calculation are of an unknown type and are used for unknown purposes. For instance, if some great person decided that an unlock value should be globally scoped, but then the game changes it using character-specific data in a way that BNet doesn't know about. Because of the open-ended potential for this to occur, many unlock checks for "globally" scoped unlock data may be assumed as the worst case unless it has been specifically whitelisted as otherwise. That sucks, but them's the breaks.
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     GLOBAL = 1
-    """Not specified. """
+    """_No description given_ """
     CLAN = 2
-    """Not specified. """
+    """_No description given_ """
     PROFILE = 3
-    """Not specified. """
+    """_No description given_ """
     CHARACTER = 4
-    """Not specified. """
+    """_No description given_ """
     ITEM = 5
-    """Not specified. """
+    """_No description given_ """
     ASSUMED_WORST_CASE = 6
-    """Not specified. """
+    """_No description given_ """
 
 
 class ActivityGraphNodeHighlightType(BaseEnum):
@@ -498,15 +490,15 @@ class ActivityGraphNodeHighlightType(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     NORMAL = 1
-    """Not specified. """
+    """_No description given_ """
     HYPER = 2
-    """Not specified. """
+    """_No description given_ """
     COMET = 3
-    """Not specified. """
+    """_No description given_ """
     RISE_OF_IRON = 4
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyUnlockValueUIStyle(BaseEnum):
@@ -552,32 +544,32 @@ class DestinyObjectiveGrantStyle(BaseEnum):
     """
 
     WHEN_INCOMPLETE = 0
-    """Not specified. """
+    """_No description given_ """
     WHEN_COMPLETE = 1
-    """Not specified. """
+    """_No description given_ """
     ALWAYS = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 class DamageType(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     KINETIC = 1
-    """Not specified. """
+    """_No description given_ """
     ARC = 2
-    """Not specified. """
+    """_No description given_ """
     THERMAL = 3
-    """Not specified. """
+    """_No description given_ """
     VOID = 4
-    """Not specified. """
+    """_No description given_ """
     RAID = 5
-    """Not specified. """
+    """_No description given_ """
     STASIS = 6
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyObjectiveUiStyle(BaseEnum):
@@ -586,60 +578,60 @@ class DestinyObjectiveUiStyle(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     HIGHLIGHTED = 1
-    """Not specified. """
+    """_No description given_ """
     CRAFTING_WEAPON_LEVEL = 2
-    """Not specified. """
+    """_No description given_ """
     CRAFTING_WEAPON_LEVEL_PROGRESS = 3
-    """Not specified. """
+    """_No description given_ """
     CRAFTING_WEAPON_TIMESTAMP = 4
-    """Not specified. """
+    """_No description given_ """
     CRAFTING_MEMENTOS = 5
-    """Not specified. """
+    """_No description given_ """
     CRAFTING_MEMENTO_TITLE = 6
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyActivityNavPointType(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     INACTIVE = 0
-    """Not specified. """
+    """_No description given_ """
     PRIMARY_OBJECTIVE = 1
-    """Not specified. """
+    """_No description given_ """
     SECONDARY_OBJECTIVE = 2
-    """Not specified. """
+    """_No description given_ """
     TRAVEL_OBJECTIVE = 3
-    """Not specified. """
+    """_No description given_ """
     PUBLIC_EVENT_OBJECTIVE = 4
-    """Not specified. """
+    """_No description given_ """
     AMMO_CACHE = 5
-    """Not specified. """
+    """_No description given_ """
     POINT_TYPE_FLAG = 6
-    """Not specified. """
+    """_No description given_ """
     CAPTURE_POINT = 7
-    """Not specified. """
+    """_No description given_ """
     DEFENSIVE_ENCOUNTER = 8
-    """Not specified. """
+    """_No description given_ """
     GHOST_INTERACTION = 9
-    """Not specified. """
+    """_No description given_ """
     KILL_AI = 10
-    """Not specified. """
+    """_No description given_ """
     QUEST_ITEM = 11
-    """Not specified. """
+    """_No description given_ """
     PATROL_MISSION = 12
-    """Not specified. """
+    """_No description given_ """
     INCOMING = 13
-    """Not specified. """
+    """_No description given_ """
     ARENA_OBJECTIVE = 14
-    """Not specified. """
+    """_No description given_ """
     AUTOMATION_HINT = 15
-    """Not specified. """
+    """_No description given_ """
     TRACKED_QUEST = 16
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyActivityModeCategory(BaseEnum):
@@ -659,15 +651,11 @@ class DestinyActivityModeCategory(BaseEnum):
 
 class DestinyItemSubType(BaseEnum):
     """
-        This Enumeration further classifies items by more specific categorizations than DestinyItemType. The "Sub-Type" is where we classify and categorize items one step further in specificity: "Auto Rifle" instead of just "Weapon" for example, or "Vanguard Bounty" instead of merely "Bounty".
-
-    These sub-types are provided for historical compatibility with Destiny 1, but an ideal alternative is to use DestinyItemCategoryDefinitions and the DestinyItemDefinition.itemCategories property instead. Item Categories allow for arbitrary hierarchies of specificity, and for items to belong to multiple categories across multiple hierarchies simultaneously. For this enum, we pick a single type as a "best guess" fit.
-
-    NOTE: This is not all of the item types available, and some of these are holdovers from Destiny 1 that may or may not still exist.
+    This Enumeration further classifies items by more specific categorizations than DestinyItemType. The "Sub-Type" is where we classify and categorize items one step further in specificity: "Auto Rifle" instead of just "Weapon" for example, or "Vanguard Bounty" instead of merely "Bounty". These sub-types are provided for historical compatibility with Destiny 1, but an ideal alternative is to use DestinyItemCategoryDefinitions and the DestinyItemDefinition.itemCategories property instead. Item Categories allow for arbitrary hierarchies of specificity, and for items to belong to multiple categories across multiple hierarchies simultaneously. For this enum, we pick a single type as a "best guess" fit. NOTE: This is not all of the item types available, and some of these are holdovers from Destiny 1 that may or may not still exist.
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     CRUCIBLE = 1
     """DEPRECATED. Items can be both "Crucible" and something else interesting. """
     VANGUARD = 2
@@ -675,59 +663,59 @@ class DestinyItemSubType(BaseEnum):
     EXOTIC = 5
     """DEPRECATED. An item can both be Exotic and something else. """
     AUTO_RIFLE = 6
-    """Not specified. """
+    """_No description given_ """
     SHOTGUN = 7
-    """Not specified. """
+    """_No description given_ """
     MACHINEGUN = 8
-    """Not specified. """
+    """_No description given_ """
     HAND_CANNON = 9
-    """Not specified. """
+    """_No description given_ """
     ROCKET_LAUNCHER = 10
-    """Not specified. """
+    """_No description given_ """
     FUSION_RIFLE = 11
-    """Not specified. """
+    """_No description given_ """
     SNIPER_RIFLE = 12
-    """Not specified. """
+    """_No description given_ """
     PULSE_RIFLE = 13
-    """Not specified. """
+    """_No description given_ """
     SCOUT_RIFLE = 14
-    """Not specified. """
+    """_No description given_ """
     CRM = 16
     """DEPRECATED. An item can both be CRM and something else. """
     SIDEARM = 17
-    """Not specified. """
+    """_No description given_ """
     SWORD = 18
-    """Not specified. """
+    """_No description given_ """
     MASK = 19
-    """Not specified. """
+    """_No description given_ """
     SHADER = 20
-    """Not specified. """
+    """_No description given_ """
     ORNAMENT = 21
-    """Not specified. """
+    """_No description given_ """
     FUSION_RIFLE_LINE = 22
-    """Not specified. """
+    """_No description given_ """
     GRENADE_LAUNCHER = 23
-    """Not specified. """
+    """_No description given_ """
     SUBMACHINE_GUN = 24
-    """Not specified. """
+    """_No description given_ """
     TRACE_RIFLE = 25
-    """Not specified. """
+    """_No description given_ """
     HELMET_ARMOR = 26
-    """Not specified. """
+    """_No description given_ """
     GAUNTLETS_ARMOR = 27
-    """Not specified. """
+    """_No description given_ """
     CHEST_ARMOR = 28
-    """Not specified. """
+    """_No description given_ """
     LEG_ARMOR = 29
-    """Not specified. """
+    """_No description given_ """
     CLASS_ARMOR = 30
-    """Not specified. """
+    """_No description given_ """
     BOW = 31
-    """Not specified. """
+    """_No description given_ """
     DUMMY_REPEATABLE_BOUNTY = 32
-    """Not specified. """
+    """_No description given_ """
     GLAIVE = 33
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyGraphNodeState(BaseEnum):
@@ -736,34 +724,34 @@ class DestinyGraphNodeState(BaseEnum):
     """
 
     HIDDEN = 0
-    """Not specified. """
+    """_No description given_ """
     VISIBLE = 1
-    """Not specified. """
+    """_No description given_ """
     TEASER = 2
-    """Not specified. """
+    """_No description given_ """
     INCOMPLETE = 3
-    """Not specified. """
+    """_No description given_ """
     COMPLETED = 4
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyPresentationNodeType(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     DEFAULT = 0
-    """Not specified. """
+    """_No description given_ """
     CATEGORY = 1
-    """Not specified. """
+    """_No description given_ """
     COLLECTIBLES = 2
-    """Not specified. """
+    """_No description given_ """
     RECORDS = 3
-    """Not specified. """
+    """_No description given_ """
     METRIC = 4
-    """Not specified. """
+    """_No description given_ """
     CRAFTABLE = 5
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyScope(BaseEnum):
@@ -772,9 +760,9 @@ class DestinyScope(BaseEnum):
     """
 
     PROFILE = 0
-    """Not specified. """
+    """_No description given_ """
     CHARACTER = 1
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyPresentationDisplayStyle(BaseEnum):
@@ -785,55 +773,55 @@ class DestinyPresentationDisplayStyle(BaseEnum):
     CATEGORY = 0
     """Display the item as a category, through which sub-items are filtered. """
     BADGE = 1
-    """Not specified. """
+    """_No description given_ """
     MEDALS = 2
-    """Not specified. """
+    """_No description given_ """
     COLLECTIBLE = 3
-    """Not specified. """
+    """_No description given_ """
     RECORD = 4
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyRecordValueStyle(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     INTEGER = 0
-    """Not specified. """
+    """_No description given_ """
     PERCENTAGE = 1
-    """Not specified. """
+    """_No description given_ """
     MILLISECONDS = 2
-    """Not specified. """
+    """_No description given_ """
     BOOLEAN = 3
-    """Not specified. """
+    """_No description given_ """
     DECIMAL = 4
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyRecordToastStyle(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     RECORD = 1
-    """Not specified. """
+    """_No description given_ """
     LORE = 2
-    """Not specified. """
+    """_No description given_ """
     BADGE = 3
-    """Not specified. """
+    """_No description given_ """
     META_RECORD = 4
-    """Not specified. """
+    """_No description given_ """
     MEDAL_COMPLETE = 5
-    """Not specified. """
+    """_No description given_ """
     SEASON_CHALLENGE_COMPLETE = 6
-    """Not specified. """
+    """_No description given_ """
     GILDED_TITLE_COMPLETE = 7
-    """Not specified. """
+    """_No description given_ """
     CRAFTING_RECIPE_UNLOCKED = 8
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyPresentationScreenStyle(BaseEnum):
@@ -855,30 +843,22 @@ class PlugUiStyles(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     MASTERWORK = 1
-    """Not specified. """
+    """_No description given_ """
 
 
 class PlugAvailabilityMode(BaseEnum):
     """
-        This enum determines whether the plug is available to be inserted.
-
-    - Normal means that all existing rules for plug insertion apply.
-
-    - UnavailableIfSocketContainsMatchingPlugCategory means that the plug is only available if the socket does NOT match the plug category.
-
-    - AvailableIfSocketContainsMatchingPlugCategory means that the plug is only available if the socket DOES match the plug category.
-
-    For category matching, use the plug's "plugCategoryIdentifier" property, comparing it to
+    This enum determines whether the plug is available to be inserted. - Normal means that all existing rules for plug insertion apply. - UnavailableIfSocketContainsMatchingPlugCategory means that the plug is only available if the socket does NOT match the plug category. - AvailableIfSocketContainsMatchingPlugCategory means that the plug is only available if the socket DOES match the plug category. For category matching, use the plug's "plugCategoryIdentifier" property, comparing it to
     """
 
     NORMAL = 0
-    """Not specified. """
+    """_No description given_ """
     UNAVAILABLE_IF_SOCKET_CONTAINS_MATCHING_PLUG_CATEGORY = 1
-    """Not specified. """
+    """_No description given_ """
     AVAILABLE_IF_SOCKET_CONTAINS_MATCHING_PLUG_CATEGORY = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyEnergyType(BaseEnum):
@@ -887,40 +867,32 @@ class DestinyEnergyType(BaseEnum):
     """
 
     ANY = 0
-    """Not specified. """
+    """_No description given_ """
     ARC = 1
-    """Not specified. """
+    """_No description given_ """
     THERMAL = 2
-    """Not specified. """
+    """_No description given_ """
     VOID = 3
-    """Not specified. """
+    """_No description given_ """
     GHOST = 4
-    """Not specified. """
+    """_No description given_ """
     SUBCLASS = 5
-    """Not specified. """
+    """_No description given_ """
     STASIS = 6
-    """Not specified. """
+    """_No description given_ """
 
 
 class SocketPlugSources(BaseEnum):
     """
-       Indicates how a socket is populated, and where you should look for valid plug data.
-
-    This is a flags enumeration/bitmask field, as you may have to look in multiple sources across multiple components for valid plugs.
-
-    For instance, a socket could have plugs that are sourced from its own definition, as well as plugs that are sourced from Character-scoped AND profile-scoped Plug Sets. Only by combining plug data for every indicated source will you be able to know all of the plugs available for a socket.
+    Indicates how a socket is populated, and where you should look for valid plug data.  This is a flags enumeration/bitmask field, as you may have to look in multiple sources across multiple components for valid plugs.  For instance, a socket could have plugs that are sourced from its own definition, as well as plugs that are sourced from Character-scoped AND profile-scoped Plug Sets. Only by combining plug data for every indicated source will you be able to know all of the plugs available for a socket.
     """
 
     NONE = 0
     """If there's no way we can detect to insert new plugs. """
     INVENTORY_SOURCED = 1
-    """Use plugs found in the player's inventory, based on the socket type rules (see DestinySocketTypeDefinition for more info)
-
-Note that a socket - like Shaders - can have *both* reusable plugs and inventory items inserted theoretically. """
+    """Use plugs found in the player's inventory, based on the socket type rules (see DestinySocketTypeDefinition for more info) Note that a socket - like Shaders - can have *both* reusable plugs and inventory items inserted theoretically. """
     REUSABLE_PLUG_ITEMS = 2
-    """Use the DestinyItemSocketsComponent.sockets.reusablePlugs property to determine which plugs are valid for this socket. This may have to be combined with other sources, such as plug sets, if those flags are set.
-
- Note that "Reusable" plugs may not necessarily come from a plug set, nor from the "reusablePlugItems" in the socket's Definition data. They can sometimes be "randomized" in which case the only source of truth at the moment is still the runtime DestinyItemSocketsComponent.sockets.reusablePlugs property. """
+    """Use the DestinyItemSocketsComponent.sockets.reusablePlugs property to determine which plugs are valid for this socket. This may have to be combined with other sources, such as plug sets, if those flags are set.  Note that "Reusable" plugs may not necessarily come from a plug set, nor from the "reusablePlugItems" in the socket's Definition data. They can sometimes be "randomized" in which case the only source of truth at the moment is still the runtime DestinyItemSocketsComponent.sockets.reusablePlugs property. """
     PROFILE_PLUG_SET = 4
     """Use the ProfilePlugSets (DestinyProfileResponse.profilePlugSets) component data to determine which plugs are valid for this socket. """
     CHARACTER_PLUG_SET = 8
@@ -933,107 +905,99 @@ class ItemPerkVisibility(BaseEnum):
     """
 
     VISIBLE = 0
-    """Not specified. """
+    """_No description given_ """
     DISABLED = 1
-    """Not specified. """
+    """_No description given_ """
     HIDDEN = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 class SpecialItemType(BaseEnum):
     """
-        As you run into items that need to be classified for Milestone purposes in ways that we cannot infer via direct data, add a new classification here and use a string constant to represent it in the local item config file.
-
-    NOTE: This is not all of the item types available, and some of these are holdovers from Destiny 1 that may or may not still exist.
+    As you run into items that need to be classified for Milestone purposes in ways that we cannot infer via direct data, add a new classification here and use a string constant to represent it in the local item config file. NOTE: This is not all of the item types available, and some of these are holdovers from Destiny 1 that may or may not still exist.
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     SPECIAL_CURRENCY = 1
-    """Not specified. """
+    """_No description given_ """
     ARMOR = 8
-    """Not specified. """
+    """_No description given_ """
     WEAPON = 9
-    """Not specified. """
+    """_No description given_ """
     ENGRAM = 23
-    """Not specified. """
+    """_No description given_ """
     CONSUMABLE = 24
-    """Not specified. """
+    """_No description given_ """
     EXCHANGE_MATERIAL = 25
-    """Not specified. """
+    """_No description given_ """
     MISSION_REWARD = 27
-    """Not specified. """
+    """_No description given_ """
     CURRENCY = 29
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyItemType(BaseEnum):
     """
-       An enumeration that indicates the high-level "type" of the item, attempting to iron out the context specific differences for specific instances of an entity. For instance, though a weapon may be of various weapon "Types", in DestinyItemType they are all classified as "Weapon". This allows for better filtering on a higher level of abstraction for the concept of types.
-
-    This enum is provided for historical compatibility with Destiny 1, but an ideal alternative is to use DestinyItemCategoryDefinitions and the DestinyItemDefinition.itemCategories property instead. Item Categories allow for arbitrary hierarchies of specificity, and for items to belong to multiple categories across multiple hierarchies simultaneously. For this enum, we pick a single type as a "best guess" fit.
-
-    NOTE: This is not all of the item types available, and some of these are holdovers from Destiny 1 that may or may not still exist.
-
-    I keep updating these because they're so damn convenient. I guess I shouldn't fight it.
+    An enumeration that indicates the high-level "type" of the item, attempting to iron out the context specific differences for specific instances of an entity. For instance, though a weapon may be of various weapon "Types", in DestinyItemType they are all classified as "Weapon". This allows for better filtering on a higher level of abstraction for the concept of types.  This enum is provided for historical compatibility with Destiny 1, but an ideal alternative is to use DestinyItemCategoryDefinitions and the DestinyItemDefinition.itemCategories property instead. Item Categories allow for arbitrary hierarchies of specificity, and for items to belong to multiple categories across multiple hierarchies simultaneously. For this enum, we pick a single type as a "best guess" fit.  NOTE: This is not all of the item types available, and some of these are holdovers from Destiny 1 that may or may not still exist.  I keep updating these because they're so damn convenient. I guess I shouldn't fight it.
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     CURRENCY = 1
-    """Not specified. """
+    """_No description given_ """
     ARMOR = 2
-    """Not specified. """
+    """_No description given_ """
     WEAPON = 3
-    """Not specified. """
+    """_No description given_ """
     MESSAGE = 7
-    """Not specified. """
+    """_No description given_ """
     ENGRAM = 8
-    """Not specified. """
+    """_No description given_ """
     CONSUMABLE = 9
-    """Not specified. """
+    """_No description given_ """
     EXCHANGE_MATERIAL = 10
-    """Not specified. """
+    """_No description given_ """
     MISSION_REWARD = 11
-    """Not specified. """
+    """_No description given_ """
     QUEST_STEP = 12
-    """Not specified. """
+    """_No description given_ """
     QUEST_STEP_COMPLETE = 13
-    """Not specified. """
+    """_No description given_ """
     EMBLEM = 14
-    """Not specified. """
+    """_No description given_ """
     QUEST = 15
-    """Not specified. """
+    """_No description given_ """
     SUBCLASS = 16
-    """Not specified. """
+    """_No description given_ """
     CLAN_BANNER = 17
-    """Not specified. """
+    """_No description given_ """
     AURA = 18
-    """Not specified. """
+    """_No description given_ """
     MOD = 19
-    """Not specified. """
+    """_No description given_ """
     DUMMY = 20
-    """Not specified. """
+    """_No description given_ """
     SHIP = 21
-    """Not specified. """
+    """_No description given_ """
     VEHICLE = 22
-    """Not specified. """
+    """_No description given_ """
     EMOTE = 23
-    """Not specified. """
+    """_No description given_ """
     GHOST = 24
-    """Not specified. """
+    """_No description given_ """
     PACKAGE = 25
-    """Not specified. """
+    """_No description given_ """
     BOUNTY = 26
-    """Not specified. """
+    """_No description given_ """
     WRAPPER = 27
-    """Not specified. """
+    """_No description given_ """
     SEASONAL_ARTIFACT = 28
-    """Not specified. """
+    """_No description given_ """
     FINISHER = 29
-    """Not specified. """
+    """_No description given_ """
     PATTERN = 30
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyBreakerType(BaseEnum):
@@ -1042,13 +1006,13 @@ class DestinyBreakerType(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     SHIELD_PIERCING = 1
-    """Not specified. """
+    """_No description given_ """
     DISRUPTION = 2
-    """Not specified. """
+    """_No description given_ """
     STAGGER = 3
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyProgressionRewardItemAcquisitionBehavior(BaseEnum):
@@ -1057,24 +1021,24 @@ class DestinyProgressionRewardItemAcquisitionBehavior(BaseEnum):
     """
 
     INSTANT = 0
-    """Not specified. """
+    """_No description given_ """
     PLAYER_CLAIM_REQUIRED = 1
-    """Not specified. """
+    """_No description given_ """
 
 
 class ItemBindStatus(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NOT_BOUND = 0
-    """Not specified. """
+    """_No description given_ """
     BOUND_TO_CHARACTER = 1
-    """Not specified. """
+    """_No description given_ """
     BOUND_TO_ACCOUNT = 2
-    """Not specified. """
+    """_No description given_ """
     BOUND_TO_GUILD = 3
-    """Not specified. """
+    """_No description given_ """
 
 
 class TransferStatuses(BaseEnum):
@@ -1098,7 +1062,7 @@ class ItemState(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     LOCKED = 1
     """If this bit is set, the item has been "locked" by the user and cannot be deleted. You may want to represent this visually with a "lock" icon. """
     TRACKED = 2
@@ -1117,36 +1081,34 @@ class DestinyGameVersions(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     DESTINY2 = 1
-    """Not specified. """
+    """_No description given_ """
     D_L_C1 = 2
-    """Not specified. """
+    """_No description given_ """
     D_L_C2 = 4
-    """Not specified. """
+    """_No description given_ """
     FORSAKEN = 8
-    """Not specified. """
+    """_No description given_ """
     YEAR_TWO_ANNUAL_PASS = 16
-    """Not specified. """
+    """_No description given_ """
     SHADOWKEEP = 32
-    """Not specified. """
+    """_No description given_ """
     BEYOND_LIGHT = 64
-    """Not specified. """
+    """_No description given_ """
     ANNIVERSARY30TH = 128
-    """Not specified. """
+    """_No description given_ """
     THE_WITCH_QUEEN = 256
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyComponentType(BaseEnum):
     """
-        Represents the possible components that can be returned from Destiny "Get" calls such as GetProfile, GetCharacter, GetVendor etc...
-
-    When making one of these requests, you will pass one or more of these components as a comma separated list in the "?components=" querystring parameter. For instance, if you want baseline Profile data, Character Data, and character progressions, you would pass "?components=Profiles,Characters,CharacterProgressions" You may use either the numerical or string values.
+    Represents the possible components that can be returned from Destiny "Get" calls such as GetProfile, GetCharacter, GetVendor etc... When making one of these requests, you will pass one or more of these components as a comma separated list in the "?components=" querystring parameter. For instance, if you want baseline Profile data, Character Data, and character progressions, you would pass "?components=Profiles,Characters,CharacterProgressions" You may use either the numerical or string values.
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     PROFILES = 100
     """Profiles is the most basic component, only relevant when calling GetProfile. This returns basic information about the profile, which is almost nothing: a list of characterIds, some information about the last time you logged in, and that most sobering statistic: how long you've played. """
     VENDOR_RECEIPTS = 101
@@ -1158,9 +1120,7 @@ class DestinyComponentType(BaseEnum):
     PROFILE_PROGRESSION = 104
     """This will get you any progression-related information that exists on a Profile-wide level, across all characters. """
     PLATFORM_SILVER = 105
-    """This will get you information about the silver that this profile has on every platform on which it plays.
-
- You may only request this component for the logged in user's Profile, and will not recieve it if you request it for another Profile. """
+    """This will get you information about the silver that this profile has on every platform on which it plays.  You may only request this component for the logged in user's Profile, and will not recieve it if you request it for another Profile. """
     CHARACTERS = 200
     """This will get you summary info about each of the characters in the profile. """
     CHARACTER_INVENTORIES = 201
@@ -1194,13 +1154,7 @@ class DestinyComponentType(BaseEnum):
     ITEM_PLUG_OBJECTIVES = 309
     """Sometimes, plugs have objectives on them. This data can get really large, so we split it into its own component. Please, don't grab it unless you need it. """
     ITEM_REUSABLE_PLUGS = 310
-    """Sometimes, designers create thousands of reusable plugs and suddenly your response sizes are almost 3MB, and something has to give.
-
- Reusable Plugs were split off as their own component, away from ItemSockets, as a result of the Plug changes in Shadowkeep that made plug data infeasibly large for the most common use cases.
-
- Request this component if and only if you need to know what plugs *could* be inserted into a socket, and need to know it before "drilling" into the details of an item in your application (for instance, if you're doing some sort of interesting sorting or aggregation based on available plugs.
-
- When you get this, you will also need to combine it with "Plug Sets" data if you want a full picture of all of the available plugs: this component will only return plugs that have state data that is per-item. See Plug Sets for available plugs that have Character, Profile, or no state-specific restrictions. """
+    """Sometimes, designers create thousands of reusable plugs and suddenly your response sizes are almost 3MB, and something has to give.  Reusable Plugs were split off as their own component, away from ItemSockets, as a result of the Plug changes in Shadowkeep that made plug data infeasibly large for the most common use cases.  Request this component if and only if you need to know what plugs *could* be inserted into a socket, and need to know it before "drilling" into the details of an item in your application (for instance, if you're doing some sort of interesting sorting or aggregation based on available plugs.  When you get this, you will also need to combine it with "Plug Sets" data if you want a full picture of all of the available plugs: this component will only return plugs that have state data that is per-item. See Plug Sets for available plugs that have Character, Profile, or no state-specific restrictions. """
     VENDORS = 400
     """When obtaining vendor information, this will return summary information about the Vendor or Vendors being returned. """
     VENDOR_CATEGORIES = 401
@@ -1233,7 +1187,7 @@ class DestinyPresentationNodeState(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     INVISIBLE = 1
     """If this is set, the game recommends that you not show this node. But you know your life, do what you've got to do. """
     OBSCURED = 2
@@ -1265,21 +1219,17 @@ class DestinyRecordState(BaseEnum):
 
 class DestinyCollectibleState(BaseEnum):
     """
-        A Flags Enumeration/bitmask where each bit represents a different state that the Collectible can be in. A collectible can be in any number of these states, and you can choose to use or ignore any or all of them when making your own UI that shows Collectible info. Our displays are going to honor them, but we're also the kind of people who only pretend to inhale before quickly passing it to the left. So, you know, do what you got to do.
-
-    (All joking aside, please note the caveat I mention around the Invisible flag: there are cases where it is in the best interest of your users to honor these flags even if you're a "show all the data" person. Collector-oriented compulsion is a very unfortunate and real thing, and I would hate to instill that compulsion in others through showing them items that they cannot earn. Please consider this when you are making your own apps/sites.)
+    A Flags Enumeration/bitmask where each bit represents a different state that the Collectible can be in. A collectible can be in any number of these states, and you can choose to use or ignore any or all of them when making your own UI that shows Collectible info. Our displays are going to honor them, but we're also the kind of people who only pretend to inhale before quickly passing it to the left. So, you know, do what you got to do. (All joking aside, please note the caveat I mention around the Invisible flag: there are cases where it is in the best interest of your users to honor these flags even if you're a "show all the data" person. Collector-oriented compulsion is a very unfortunate and real thing, and I would hate to instill that compulsion in others through showing them items that they cannot earn. Please consider this when you are making your own apps/sites.)
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     NOT_ACQUIRED = 1
     """If this flag is set, you have not yet obtained this collectible. """
     OBSCURED = 2
     """If this flag is set, the item is "obscured" to you: you can/should use the alternate item hash found in DestinyCollectibleDefinition.stateInfo.obscuredOverrideItemHash when displaying this collectible instead of the default display info. """
     INVISIBLE = 4
-    """If this flag is set, the collectible should not be shown to the user.
-
-Please do consider honoring this flag. It is used - for example - to hide items that a person didn't get from the Eververse. I can't prevent these from being returned in definitions, because some people may have acquired them and thus they should show up: but I would hate for people to start feeling some variant of a Collector's Remorse about these items, and thus increasing their purchasing based on that compulsion. That would be a very unfortunate outcome, and one that I wouldn't like to see happen. So please, whether or not I'm your mom, consider honoring this flag and don't show people invisible collectibles. """
+    """If this flag is set, the collectible should not be shown to the user. Please do consider honoring this flag. It is used - for example - to hide items that a person didn't get from the Eververse. I can't prevent these from being returned in definitions, because some people may have acquired them and thus they should show up: but I would hate for people to start feeling some variant of a Collector's Remorse about these items, and thus increasing their purchasing based on that compulsion. That would be a very unfortunate outcome, and one that I wouldn't like to see happen. So please, whether or not I'm your mom, consider honoring this flag and don't show people invisible collectibles. """
     CANNOT_AFFORD_MATERIAL_REQUIREMENTS = 8
     """If this flag is set, the collectible requires payment for creating an instance of the item, and you are lacking in currency. Bring the benjamins next time. Or spinmetal. Whatever. """
     INVENTORY_SPACE_UNAVAILABLE = 16
@@ -1296,15 +1246,13 @@ class DestinyPartyMemberStates(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     FIRETEAM_MEMBER = 1
     """This one's pretty obvious - they're on your Fireteam. """
     POSSE_MEMBER = 2
     """I don't know what it means to be in a 'Posse', but apparently this is it. """
     GROUP_MEMBER = 4
-    """Nor do I understand the difference between them being in a 'Group' vs. a 'Fireteam'.
-
-I'll update these docs once I get more info. If I get more info. If you're reading this, I never got more info. You're on your own, kid. """
+    """Nor do I understand the difference between them being in a 'Group' vs. a 'Fireteam'. I'll update these docs once I get more info. If I get more info. If you're reading this, I never got more info. You're on your own, kid. """
     PARTY_LEADER = 8
     """This person is the party leader. """
 
@@ -1315,15 +1263,15 @@ class DestinyGamePrivacySetting(BaseEnum):
     """
 
     OPEN = 0
-    """Not specified. """
+    """_No description given_ """
     CLAN_AND_FRIENDS_ONLY = 1
-    """Not specified. """
+    """_No description given_ """
     FRIENDS_ONLY = 2
-    """Not specified. """
+    """_No description given_ """
     INVITATION_ONLY = 3
-    """Not specified. """
+    """_No description given_ """
     CLOSED = 4
-    """Not specified. """
+    """_No description given_ """
 
 
 class DestinyJoinClosedReasons(BaseEnum):
@@ -1332,7 +1280,7 @@ class DestinyJoinClosedReasons(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     IN_MATCHMAKING = 1
     """The user is currently in matchmaking. """
     LOADING = 2
@@ -1349,48 +1297,38 @@ class DestinyJoinClosedReasons(BaseEnum):
 
 class DestinyRace(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     HUMAN = 0
-    """Not specified. """
+    """_No description given_ """
     AWOKEN = 1
-    """Not specified. """
+    """_No description given_ """
     EXO = 2
-    """Not specified. """
+    """_No description given_ """
     UNKNOWN = 3
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class DestinyActivity(BaseModel):
     """
-        Represents the "Live" data that we can obtain about a Character's status with a specific Activity. This will tell you whether the character can participate in the activity, as well as some other basic mutable information.
+    Represents the "Live" data that we can obtain about a Character's status with a specific Activity. This will tell you whether the character can participate in the activity, as well as some other basic mutable information.  Meant to be combined with static DestinyActivityDefinition data for a full picture of the Activity.
 
-    Meant to be combined with static DestinyActivityDefinition data for a full picture of the Activity.
-
-        Attributes:
-            activity_hash: The hash identifier of the Activity. Use this to look up the DestinyActivityDefinition of the activity.
-            is_new: If true, then the activity should have a "new" indicator in the Director UI.
-            can_lead: If true, the user is allowed to lead a Fireteam into this activity.
-            can_join: If true, the user is allowed to join with another Fireteam in this activity.
-            is_completed: If true, we both have the ability to know that the user has completed this activity and they have completed it. Unfortunately, we can't necessarily know this for all activities. As such, this should probably only be used if you already know in advance which specific activities you wish to check.
-            is_visible: If true, the user should be able to see this activity.
-            display_level: The difficulty level of the activity, if applicable.
-            recommended_light: The recommended light level for the activity, if applicable.
-            difficulty_tier: A DestinyActivityDifficultyTier enum value indicating the difficulty of the activity.
-            challenges: Not specified.
-            modifier_hashes: If the activity has modifiers, this will be the list of modifiers that all variants have in common. Perform lookups against DestinyActivityModifierDefinition which defines the modifier being applied to get at the modifier data.
-
-    Note that, in the DestiyActivityDefinition, you will see many more modifiers than this being referred to: those are all *possible* modifiers for the activity, not the active ones. Use only the active ones to match what's really live.
-            boolean_activity_options: The set of activity options for this activity, keyed by an identifier that's unique for this activity (not guaranteed to be unique between or across all activities, though should be unique for every *variant* of a given *conceptual* activity: for instance, the original D2 Raid has many variant DestinyActivityDefinitions. While other activities could potentially have the same option hashes, for any given D2 base Raid variant the hash will be unique).
-
-    As a concrete example of this data, the hashes you get for Raids will correspond to the currently active "Challenge Mode".
-
-    We don't have any human readable information for these, but saavy 3rd party app users could manually associate the key (a hash identifier for the "option" that is enabled/disabled) and the value (whether it's enabled or disabled presently)
-
-    On our side, we don't necessarily even know what these are used for (the game designers know, but we don't), and we have no human readable data for them. In order to use them, you will have to do some experimentation.
-            loadout_requirement_index: If returned, this is the index into the DestinyActivityDefinition's "loadouts" property, indicating the currently active loadout requirements.
+    Attributes:
+        activity_hash: The hash identifier of the Activity. Use this to look up the DestinyActivityDefinition of the activity.
+        is_new: If true, then the activity should have a "new" indicator in the Director UI.
+        can_lead: If true, the user is allowed to lead a Fireteam into this activity.
+        can_join: If true, the user is allowed to join with another Fireteam in this activity.
+        is_completed: If true, we both have the ability to know that the user has completed this activity and they have completed it. Unfortunately, we can't necessarily know this for all activities. As such, this should probably only be used if you already know in advance which specific activities you wish to check.
+        is_visible: If true, the user should be able to see this activity.
+        display_level: The difficulty level of the activity, if applicable.
+        recommended_light: The recommended light level for the activity, if applicable.
+        difficulty_tier: A DestinyActivityDifficultyTier enum value indicating the difficulty of the activity.
+        challenges: _No description given_
+        modifier_hashes: If the activity has modifiers, this will be the list of modifiers that all variants have in common. Perform lookups against DestinyActivityModifierDefinition which defines the modifier being applied to get at the modifier data. Note that, in the DestiyActivityDefinition, you will see many more modifiers than this being referred to: those are all *possible* modifiers for the activity, not the active ones. Use only the active ones to match what's really live.
+        boolean_activity_options: The set of activity options for this activity, keyed by an identifier that's unique for this activity (not guaranteed to be unique between or across all activities, though should be unique for every *variant* of a given *conceptual* activity: for instance, the original D2 Raid has many variant DestinyActivityDefinitions. While other activities could potentially have the same option hashes, for any given D2 base Raid variant the hash will be unique). As a concrete example of this data, the hashes you get for Raids will correspond to the currently active "Challenge Mode". We don't have any human readable information for these, but saavy 3rd party app users could manually associate the key (a hash identifier for the "option" that is enabled/disabled) and the value (whether it's enabled or disabled presently) On our side, we don't necessarily even know what these are used for (the game designers know, but we don't), and we have no human readable data for them. In order to use them, you will have to do some experimentation.
+        loadout_requirement_index: If returned, this is the index into the DestinyActivityDefinition's "loadouts" property, indicating the currently active loadout requirements.
     """
 
     activity_hash: int = attr.field()
@@ -1414,21 +1352,21 @@ class DestinyActivityDifficultyTier(BaseEnum):
     """
 
     TRIVIAL = 0
-    """Not specified. """
+    """_No description given_ """
     EASY = 1
-    """Not specified. """
+    """_No description given_ """
     NORMAL = 2
-    """Not specified. """
+    """_No description given_ """
     CHALLENGING = 3
-    """Not specified. """
+    """_No description given_ """
     HARD = 4
-    """Not specified. """
+    """_No description given_ """
     BRAVE = 5
-    """Not specified. """
+    """_No description given_ """
     ALMOST_IMPOSSIBLE = 6
-    """Not specified. """
+    """_No description given_ """
     IMPOSSIBLE = 7
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
@@ -1491,42 +1429,42 @@ class DestinyTalentNode(BaseModel):
     activation_grid_level: int = attr.field()
     progress_percent: float = attr.field()
     hidden: bool = attr.field()
-    node_stats_block: Any = attr.field()
+    node_stats_block: "DestinyTalentNodeStatBlock" = attr.field()
 
 
 class DestinyTalentNodeState(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     INVALID = 0
-    """Not specified. """
+    """_No description given_ """
     CAN_UPGRADE = 1
-    """Not specified. """
+    """_No description given_ """
     NO_POINTS = 2
-    """Not specified. """
+    """_No description given_ """
     NO_PREREQUISITES = 3
-    """Not specified. """
+    """_No description given_ """
     NO_STEPS = 4
-    """Not specified. """
+    """_No description given_ """
     NO_UNLOCK = 5
-    """Not specified. """
+    """_No description given_ """
     NO_MATERIAL = 6
-    """Not specified. """
+    """_No description given_ """
     NO_GRID_LEVEL = 7
-    """Not specified. """
+    """_No description given_ """
     SWAPPING_LOCKED = 8
-    """Not specified. """
+    """_No description given_ """
     MUST_SWAP = 9
-    """Not specified. """
+    """_No description given_ """
     COMPLETE = 10
-    """Not specified. """
+    """_No description given_ """
     UNKNOWN = 11
-    """Not specified. """
+    """_No description given_ """
     CREATION_ONLY = 12
-    """Not specified. """
+    """_No description given_ """
     HIDDEN = 13
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
@@ -1549,58 +1487,56 @@ class DestinyVendorFilter(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     API_PURCHASABLE = 1
-    """Not specified. """
+    """_No description given_ """
 
 
 class VendorItemStatus(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     SUCCESS = 0
-    """Not specified. """
+    """_No description given_ """
     NO_INVENTORY_SPACE = 1
-    """Not specified. """
+    """_No description given_ """
     NO_FUNDS = 2
-    """Not specified. """
+    """_No description given_ """
     NO_PROGRESSION = 4
-    """Not specified. """
+    """_No description given_ """
     NO_UNLOCK = 8
-    """Not specified. """
+    """_No description given_ """
     NO_QUANTITY = 16
-    """Not specified. """
+    """_No description given_ """
     OUTSIDE_PURCHASE_WINDOW = 32
-    """Not specified. """
+    """_No description given_ """
     NOT_AVAILABLE = 64
-    """Not specified. """
+    """_No description given_ """
     UNIQUENESS_VIOLATION = 128
-    """Not specified. """
+    """_No description given_ """
     UNKNOWN_ERROR = 256
-    """Not specified. """
+    """_No description given_ """
     ALREADY_SELLING = 512
-    """Not specified. """
+    """_No description given_ """
     UNSELLABLE = 1024
-    """Not specified. """
+    """_No description given_ """
     SELLING_INHIBITED = 2048
-    """Not specified. """
+    """_No description given_ """
     ALREADY_OWNED = 4096
-    """Not specified. """
+    """_No description given_ """
     DISPLAY_ONLY = 8192
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class DestinyUnlockStatus(BaseModel):
     """
-        Indicates the status of an "Unlock Flag" on a Character or Profile.
+    Indicates the status of an "Unlock Flag" on a Character or Profile. These are individual bits of state that can be either set or not set, and sometimes provide interesting human-readable information in their related DestinyUnlockDefinition.
 
-    These are individual bits of state that can be either set or not set, and sometimes provide interesting human-readable information in their related DestinyUnlockDefinition.
-
-        Attributes:
-            unlock_hash: The hash identifier for the Unlock Flag. Use to lookup DestinyUnlockDefinition for static data. Not all unlocks have human readable data - in fact, most don't. But when they do, it can be very useful to show. Even if they don't have human readable data, you might be able to infer the meaning of an unlock flag with a bit of experimentation...
-            is_set: Whether the unlock flag is set.
+    Attributes:
+        unlock_hash: The hash identifier for the Unlock Flag. Use to lookup DestinyUnlockDefinition for static data. Not all unlocks have human readable data - in fact, most don't. But when they do, it can be very useful to show. Even if they don't have human readable data, you might be able to infer the meaning of an unlock flag with a bit of experimentation...
+        is_set: Whether the unlock flag is set.
     """
 
     unlock_hash: int = attr.field()
@@ -1660,7 +1596,7 @@ class DestinyEquipItemResults(BaseModel):
     The results of a bulk Equipping operation performed through the Destiny API.
 
     Attributes:
-        equip_results: Not specified.
+        equip_results: _No description given_
     """
 
     equip_results: list["DestinyEquipItemResult"] = attr.field()

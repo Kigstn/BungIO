@@ -91,7 +91,7 @@ class {name}(BaseModel):
         if create_raw_http:
             docs_name = f"{topic} HTTP Routes"
         else:
-            docs_name = f"{topic} Routes Interface"
+            docs_name = f"{topic} Routes"
 
             # is there an overwrite?
             overwrite_path = os.path.join(
@@ -132,10 +132,9 @@ class AllRouteHttpRequests({", ".join(list(names))}):
             # overwrite exists?
             try:
                 overwrite_import_path = path.replace("bungie", "overwrites")
-                overwrite_name = f"{name}Overwrite"
-                importlib.import_module(overwrite_import_path, overwrite_name)  # todo test
-                overwrite_init_text += f"from {overwrite_import_path} import {overwrite_name}\n"
-                overwrite_names.append(overwrite_name)
+                importlib.import_module(overwrite_import_path, name)  # todo test
+                overwrite_init_text += f"from {overwrite_import_path} import {name}\n"
+                overwrite_names.append(name)
             except ModuleNotFoundError:
                 init_text += f"from {path} import {name}\n"
                 init_name.append(name)
@@ -157,7 +156,7 @@ class AllRouteInterfacesOverwrites({", ".join(overwrite_names)}):
         with open(overwrite_path, "w", encoding="utf-8") as file:
             file.write(overwrite_init_text)
 
-    os.system(f"""autoflake --remove-all-unused-imports -r "{base_path}\"""")
+    os.system(f"""autoflake --ignore-init-module-imports --remove-all-unused-imports -i -r "{base_path}\"""")
     os.system(f"""black "{base_path}\"""")
     os.system(f"""git add "{base_path}\"""")
 
@@ -191,7 +190,7 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
                         {
                             "name": capital_case_to_snake_case(name),
                             "og_name": name,
-                            "description": value.get("description", "Not specified."),
+                            "description": clean_desc(value),
                             "type": arg_type,
                         }
                     )
@@ -201,13 +200,13 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
                 body.append(
                     {
                         "name": "body_data",
-                        "description": schema_data.get("description", "Not specified."),
+                        "description": clean_desc(schema_data),
                         "type": arg_type,
                     }
                 )
         else:
             if "$ref" in schema_data:
-                import_path, actual_import_path, arg_type, clean_model_name = add_to_import_paths(
+                import_path, _, arg_type, clean_model_name = add_to_import_paths(
                     file_imports=file_imports,
                     schema_dict=schema_data,
                     overwrite_path="bungio.models.overwrites",
@@ -227,7 +226,7 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
 
         info = {
             "name": new_name,
-            "description": param["description"] or "Not specified.",
+            "description": clean_desc(param),
             "in": param["in"],
         }
 
@@ -311,18 +310,10 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
 
         """
     else:
-        docs_path = "/API Reference/Models/"
-        if "overwrites" in actual_return_import_path:  # noqa
-            docs_path += "Custom Overwrites/"
-        else:
-            docs_path += "Bungie API Models/"
-        docs_path += f"{return_import_path}/#{actual_return_import_path}.{clean_return_model}"  # noqa
-
         text += f"""
 
         Returns:
-            The [model]({docs_path}) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         \"\"\"
 
         """
@@ -367,7 +358,7 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
         text += f"""
         response = await self._client.http.{func_name}({", ".join(request_params)})
         """
-        if actual_return_import_path:
+        if return_import_path:  # noqa
             if "list" not in return_model:
                 text += f"""return {return_model}.from_dict(data=response, client=self._client)
 
@@ -387,11 +378,18 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
 def convert_to_typing(
     data: dict, return_class_names: bool = False, path: Optional[str] = None, file_imports: Optional[set] = None
 ) -> str:
-    if "$ref" in data:
+    if new_data := data.get("allOf", None):
+        assert isinstance(new_data, list)
+        assert len(new_data) == 1
+        return convert_to_typing(
+            data=new_data[0], return_class_names=return_class_names, path=path, file_imports=file_imports
+        )
+
+    if new_data := data.get("$ref", None):
         if return_class_names:
-            import_path, import_name = get_import_name_from_ref(data["$ref"])
-            if file_imports and path and import_path != path:
-                file_imports.add(f"    from bungio.models.bungie.{path} import {import_name}")
+            _, import_name = get_import_name_from_ref(new_data)
+            if isinstance(file_imports, set):
+                file_imports.add(f"    from bungio.models import {import_name}")
             return f'"{import_name}"'
         else:
             return "Any"
@@ -434,7 +432,7 @@ def get_import_name_from_ref(string: str) -> tuple[str, str]:
     import_path = ".".join([s.lower() for s in strings[:-1]])
     import_name = strings[-1]
 
-    return import_path, import_name
+    return import_path.removesuffix("."), import_name
 
 
 def generate_models(api_schema: dict):
@@ -476,7 +474,7 @@ from bungio.models.base import BaseModel, BaseEnum
         if file_imports:
             formatted_imports = f"""
 if TYPE_CHECKING:
-    {formatted_imports}"""
+{formatted_imports}"""
         text = text.format(imports=formatted_imports)
         file_path = os.path.join(base_path, path.replace(".", "/"))
 
@@ -486,20 +484,37 @@ if TYPE_CHECKING:
         else:
             file_path = f"{file_path}.py"
 
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        dir_path = os.path.dirname(file_path)
+        os.makedirs(dir_path, exist_ok=True)
+
         with open(file_path, "w", encoding="utf-8") as file:
             file.write(text)
 
+    # todo docs for __init__
+    # generate the docs
+    for path, models in by_path.items():
         file_path = os.path.join(docs_path, f"""{path.replace(".", "/")}.md""")
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
-        with open(file_path, "w", encoding="utf-8") as file:
-            file.write(
-                f"""# {path.split(".")[-1].capitalize()} API Models
 
-::: bungio.models.bungie.{path}
+        doc_text = f"""# {path.split(".")[-1].capitalize()} API Models
+
 """
-            )
-    # todo docs need to not be divided as much -> one folder for both models and overwrites
+
+        # do the overwrites exist
+        import_name = f"bungio.models.overwrites.{path}"
+        try:
+            importlib.import_module(import_name)
+            doc_text += f"""::: {import_name}
+options:
+    show_if_no_docstring: true
+"""
+        except ModuleNotFoundError:
+            pass
+        doc_text += f"""::: {import_name.replace("overwrites", "bungie")}
+"""
+
+        with open(file_path, "w", encoding="utf-8") as file:
+            file.write(doc_text)
 
     # write init files
     init_text = ""
@@ -513,17 +528,13 @@ if TYPE_CHECKING:
             if "[]" in name:
                 continue
 
-            if "ClanBannerSource" in name:
-                print(1)
-
             # overwrite exists?
             try:
                 overwrite_import_path = init_path.replace("bungie", "overwrites")
-                overwrite_name = f"{name}Overwrite"
                 imp = importlib.import_module(overwrite_import_path)
-                if not hasattr(imp, overwrite_name):
+                if not hasattr(imp, name):
                     raise ModuleNotFoundError
-                overwrite_init_text += f"from {overwrite_import_path} import {overwrite_name}\n"
+                overwrite_init_text += f"from {overwrite_import_path} import {name}\n"
             except ModuleNotFoundError:
                 try:
                     imp = importlib.import_module(init_path)
@@ -541,7 +552,15 @@ if TYPE_CHECKING:
     with open(overwrite_path, "w", encoding="utf-8") as file:
         file.write(overwrite_init_text)
 
-    os.system(f"""autoflake --remove-all-unused-imports -r "{base_path}\"""")
+    # create empty inits, needed for docs collection
+    for subdir, _, _ in os.walk(base_path):
+        if "__" not in subdir:
+            init_path = os.path.join(subdir, "__init__.py")
+            if not os.path.exists(init_path):
+                with open(init_path, "w", encoding="utf-8") as file:
+                    file.write("")
+
+    os.system(f"""autoflake --ignore-init-module-imports --remove-all-unused-imports -i -r "{base_path}\"""")
     os.system(f"""black "{base_path}\"""")
     os.system(f"""git add "{base_path}\"""")
 
@@ -549,22 +568,23 @@ if TYPE_CHECKING:
 def generate_model(api_schema: dict, model: dict, path: str, file_imports: set) -> str:
     """
     Returns:
-        text, list of required imports
+        text
     """
-    text = ""
+
+    required_imports = []
 
     # enums
     if data := model.get("x-enum-values", None):
         text = f"""
 class {model["name"]}(BaseEnum):
     \"\"\"
-    {model.get("description", "Not specified.")}
+    {clean_desc(model)}
     \"\"\"
 """
         for item in data:
             text += f"""
     {capital_case_to_snake_case(item["identifier"]).upper()} = {item["numericValue"]}
-    \"\"\"{item.get("description", "Not specified.")} \"\"\""""
+    \"\"\"{clean_desc(item)} \"\"\""""
 
     # classes
     elif model["type"] == "object":
@@ -575,13 +595,13 @@ class {model["name"]}(BaseEnum):
 @attr.define
 class {model["name"]}(BaseModel):
     \"\"\"
-    {model.get("description", "Not specified.")}
+    {clean_desc(model)}
 
     Attributes:"""
 
         for name, data in model["properties"].items():
             text += f"""
-        {capital_case_to_snake_case(name)}: {data.get("description", "Not specified.")}"""
+        {capital_case_to_snake_case(name)}: {clean_desc(data)}"""
 
         text += """
     \"\"\"
@@ -590,7 +610,7 @@ class {model["name"]}(BaseModel):
         for name, data in model["properties"].items():
             text += f"""
     {capital_case_to_snake_case(name)}: {convert_to_typing(data, return_class_names=True, file_imports=file_imports, path=path)} = attr.field()"""
-            # todo the above doesnt work. see DestinyProfileResponse -> Any instead of actual schema
+
     # arrays
     elif model["type"] == "array":
         return ""
@@ -625,25 +645,15 @@ def add_to_import_paths(
         import_path, model_name = get_import_name_from_ref(schema_dict["$ref"])
         clean_model_name = model_name
 
-        import_path = import_path.removesuffix(".")
+        actual_import_path = f"{overwrite_path}.{import_path}"
+        import_path = "bungio.models"
 
-        # try the overwrite
+        # does the model exist
         try:
-            actual_import_path = f"{overwrite_path}.{import_path}"
-            overwrite_name = f"{model_name}Overwrite"
-            imp = importlib.import_module(actual_import_path)
-            if not hasattr(imp, overwrite_name):
-                raise ModuleNotFoundError
-            model_name = overwrite_name
-        except ModuleNotFoundError:
-            actual_import_path = f"{regular_path}.{import_path}"
-
-        # does the normal model exists?
-        try:
-            imp = importlib.import_module(actual_import_path)
+            imp = importlib.import_module(import_path)
             if not hasattr(imp, model_name):
                 raise ModuleNotFoundError
-            file_imports.add(f"from {actual_import_path} import {model_name}")
+            file_imports.add(f"from {import_path} import {model_name}")
 
         # there are some models without any definition, like ClanBannerSource
         except ModuleNotFoundError:
@@ -652,4 +662,12 @@ def add_to_import_paths(
     return import_path, actual_import_path, model_name, clean_model_name
 
 
+def clean_desc(data: dict) -> str:
+    text = data.get("description", "_No description given_")
+    return text.replace("\n", " ").replace("\r", "")
+
+
 main()
+
+# todo inherited overwrite classes do not display as docs correctly -> https://mkdocstrings.github.io/handlers/overview/#selection-options (inherited members)
+# todo docs for BaseType and BaseEnum

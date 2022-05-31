@@ -1,11 +1,14 @@
-import datetime
-from typing import Any, Optional
+from typing import Optional
 
 import attr
 
+from bungio.models import (
+    SearchResultOfTrendingEntry,
+    TrendingCategories,
+    TrendingDetail,
+)
 from bungio.models.auth import AuthData
 from bungio.models.base import BaseModel
-from bungio.models.bungie.trending import TrendingCategories, TrendingDetail
 
 
 @attr.define
@@ -18,14 +21,15 @@ class TrendingRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/trending/#bungio.models.bungie.trending.TrendingCategories) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_trending_categories(auth=auth)
         return TrendingCategories.from_dict(data=response, client=self._client)
 
-    async def get_trending_category(self, category_id: str, page_number: int, auth: Optional[AuthData] = None) -> dict:
+    async def get_trending_category(
+        self, category_id: str, page_number: int, auth: Optional[AuthData] = None
+    ) -> SearchResultOfTrendingEntry:
         """
         Returns paginated lists of trending items for a category.
 
@@ -35,14 +39,13 @@ class TrendingRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.dict) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_trending_category(
             category_id=category_id, page_number=page_number, auth=auth
         )
-        return response["Result"]
+        return SearchResultOfTrendingEntry.from_dict(data=response, client=self._client)
 
     async def get_trending_entry_detail(
         self, identifier: str, trending_entry_type: int, auth: Optional[AuthData] = None
@@ -56,8 +59,7 @@ class TrendingRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/trending/#bungio.models.bungie.trending.TrendingDetail) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_trending_entry_detail(

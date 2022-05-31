@@ -1,20 +1,17 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
-
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
 
 
 @attr.define
 class DestinyAnimationReference(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        anim_name: Not specified.
-        anim_identifier: Not specified.
-        path: Not specified.
+        anim_name: _No description given_
+        anim_identifier: _No description given_
+        path: _No description given_
     """
 
     anim_name: str = attr.field()

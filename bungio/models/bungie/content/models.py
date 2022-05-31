@@ -1,38 +1,47 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
 
+if TYPE_CHECKING:
+    from bungio.models import (
+        ContentPreview,
+        ContentTypeDefaultValue,
+        ContentTypeProperty,
+        ContentTypePropertySection,
+        TagMetadataDefinition,
+        TagMetadataItem,
+    )
+
 
 @attr.define
 class ContentTypeDescription(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        c_type: Not specified.
-        name: Not specified.
-        content_description: Not specified.
-        preview_image: Not specified.
-        priority: Not specified.
-        reminder: Not specified.
-        properties: Not specified.
-        tag_metadata: Not specified.
-        tag_metadata_items: Not specified.
-        usage_examples: Not specified.
-        show_in_content_editor: Not specified.
-        type_of: Not specified.
-        bind_identifier_to_property: Not specified.
-        bound_regex: Not specified.
-        force_identifier_binding: Not specified.
-        allow_comments: Not specified.
-        auto_english_property_fallback: Not specified.
-        bulk_uploadable: Not specified.
-        previews: Not specified.
-        suppress_cms_path: Not specified.
-        property_sections: Not specified.
+        c_type: _No description given_
+        name: _No description given_
+        content_description: _No description given_
+        preview_image: _No description given_
+        priority: _No description given_
+        reminder: _No description given_
+        properties: _No description given_
+        tag_metadata: _No description given_
+        tag_metadata_items: _No description given_
+        usage_examples: _No description given_
+        show_in_content_editor: _No description given_
+        type_of: _No description given_
+        bind_identifier_to_property: _No description given_
+        bound_regex: _No description given_
+        force_identifier_binding: _No description given_
+        allow_comments: _No description given_
+        auto_english_property_fallback: _No description given_
+        bulk_uploadable: _No description given_
+        previews: _No description given_
+        suppress_cms_path: _No description given_
+        property_sections: _No description given_
     """
 
     c_type: str = attr.field()
@@ -61,51 +70,51 @@ class ContentTypeDescription(BaseModel):
 @attr.define
 class ContentTypeProperty(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        name: Not specified.
-        root_property_name: Not specified.
-        readable_name: Not specified.
-        value: Not specified.
-        property_description: Not specified.
-        localizable: Not specified.
-        fallback: Not specified.
-        enabled: Not specified.
-        order: Not specified.
-        visible: Not specified.
-        is_title: Not specified.
-        required: Not specified.
-        max_length: Not specified.
-        max_byte_length: Not specified.
-        max_file_size: Not specified.
-        regexp: Not specified.
-        validate_as: Not specified.
-        rss_attribute: Not specified.
-        visible_dependency: Not specified.
-        visible_on: Not specified.
-        datatype: Not specified.
-        attributes: Not specified.
-        child_properties: Not specified.
-        content_type_allowed: Not specified.
-        bind_to_property: Not specified.
-        bound_regex: Not specified.
-        representation_selection: Not specified.
-        default_values: Not specified.
-        is_external_allowed: Not specified.
-        property_section: Not specified.
-        weight: Not specified.
-        entitytype: Not specified.
-        is_combo: Not specified.
-        suppress_property: Not specified.
-        legal_content_types: Not specified.
-        representation_validation_string: Not specified.
-        min_width: Not specified.
-        max_width: Not specified.
-        min_height: Not specified.
-        max_height: Not specified.
-        is_video: Not specified.
-        is_image: Not specified.
+        name: _No description given_
+        root_property_name: _No description given_
+        readable_name: _No description given_
+        value: _No description given_
+        property_description: _No description given_
+        localizable: _No description given_
+        fallback: _No description given_
+        enabled: _No description given_
+        order: _No description given_
+        visible: _No description given_
+        is_title: _No description given_
+        required: _No description given_
+        max_length: _No description given_
+        max_byte_length: _No description given_
+        max_file_size: _No description given_
+        regexp: _No description given_
+        validate_as: _No description given_
+        rss_attribute: _No description given_
+        visible_dependency: _No description given_
+        visible_on: _No description given_
+        datatype: _No description given_
+        attributes: _No description given_
+        child_properties: _No description given_
+        content_type_allowed: _No description given_
+        bind_to_property: _No description given_
+        bound_regex: _No description given_
+        representation_selection: _No description given_
+        default_values: _No description given_
+        is_external_allowed: _No description given_
+        property_section: _No description given_
+        weight: _No description given_
+        entitytype: _No description given_
+        is_combo: _No description given_
+        suppress_property: _No description given_
+        legal_content_types: _No description given_
+        representation_validation_string: _No description given_
+        min_width: _No description given_
+        max_width: _No description given_
+        min_height: _No description given_
+        max_height: _No description given_
+        is_video: _No description given_
+        is_image: _No description given_
     """
 
     name: str = attr.field()
@@ -154,50 +163,50 @@ class ContentTypeProperty(BaseModel):
 
 class ContentPropertyDataTypeEnum(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     PLAINTEXT = 1
-    """Not specified. """
+    """_No description given_ """
     HTML = 2
-    """Not specified. """
+    """_No description given_ """
     DROPDOWN = 3
-    """Not specified. """
+    """_No description given_ """
     LIST = 4
-    """Not specified. """
+    """_No description given_ """
     JSON = 5
-    """Not specified. """
+    """_No description given_ """
     CONTENT = 6
-    """Not specified. """
+    """_No description given_ """
     REPRESENTATION = 7
-    """Not specified. """
+    """_No description given_ """
     SET = 8
-    """Not specified. """
+    """_No description given_ """
     FILE = 9
-    """Not specified. """
+    """_No description given_ """
     FOLDER_SET = 10
-    """Not specified. """
+    """_No description given_ """
     DATE = 11
-    """Not specified. """
+    """_No description given_ """
     MULTILINE_PLAINTEXT = 12
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CONTENT = 13
-    """Not specified. """
+    """_No description given_ """
     COLOR = 14
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class ContentTypeDefaultValue(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        when_clause: Not specified.
-        when_value: Not specified.
-        default_value: Not specified.
+        when_clause: _No description given_
+        when_value: _No description given_
+        default_value: _No description given_
     """
 
     when_clause: str = attr.field()
@@ -208,15 +217,15 @@ class ContentTypeDefaultValue(BaseModel):
 @attr.define
 class TagMetadataDefinition(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        description: Not specified.
-        order: Not specified.
-        items: Not specified.
-        datatype: Not specified.
-        name: Not specified.
-        is_required: Not specified.
+        description: _No description given_
+        order: _No description given_
+        items: _No description given_
+        datatype: _No description given_
+        name: _No description given_
+        is_required: _No description given_
     """
 
     description: str = attr.field()
@@ -230,14 +239,14 @@ class TagMetadataDefinition(BaseModel):
 @attr.define
 class TagMetadataItem(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        description: Not specified.
-        tag_text: Not specified.
-        groups: Not specified.
-        is_default: Not specified.
-        name: Not specified.
+        description: _No description given_
+        tag_text: _No description given_
+        groups: _No description given_
+        is_default: _No description given_
+        name: _No description given_
     """
 
     description: str = attr.field()
@@ -250,15 +259,15 @@ class TagMetadataItem(BaseModel):
 @attr.define
 class ContentPreview(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        name: Not specified.
-        path: Not specified.
-        item_in_set: Not specified.
-        set_tag: Not specified.
-        set_nesting: Not specified.
-        use_set_id: Not specified.
+        name: _No description given_
+        path: _No description given_
+        item_in_set: _No description given_
+        set_tag: _No description given_
+        set_nesting: _No description given_
+        use_set_id: _No description given_
     """
 
     name: str = attr.field()
@@ -272,12 +281,12 @@ class ContentPreview(BaseModel):
 @attr.define
 class ContentTypePropertySection(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        name: Not specified.
-        readable_name: Not specified.
-        collapsed: Not specified.
+        name: _No description given_
+        readable_name: _No description given_
+        collapsed: _No description given_
     """
 
     name: str = attr.field()

@@ -1,6 +1,3 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
-
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
@@ -12,7 +9,7 @@ class ComponentResponse(BaseModel):
     The base class for any component-returning object that may need to indicate information about the state of the component being returned.
 
     Attributes:
-        privacy: Not specified.
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -26,8 +23,8 @@ class ComponentPrivacySetting(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     PUBLIC = 1
-    """Not specified. """
+    """_No description given_ """
     PRIVATE = 2
-    """Not specified. """
+    """_No description given_ """

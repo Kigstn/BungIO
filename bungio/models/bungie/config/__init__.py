@@ -9,12 +9,12 @@ from bungio.models.base import BaseEnum, BaseModel
 @attr.define
 class UserTheme(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        user_theme_id: Not specified.
-        user_theme_name: Not specified.
-        user_theme_description: Not specified.
+        user_theme_id: _No description given_
+        user_theme_name: _No description given_
+        user_theme_description: _No description given_
     """
 
     user_theme_id: int = attr.field()
@@ -25,12 +25,12 @@ class UserTheme(BaseModel):
 @attr.define
 class GroupTheme(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        name: Not specified.
-        folder: Not specified.
-        description: Not specified.
+        name: _No description given_
+        folder: _No description given_
+        description: _No description given_
     """
 
     name: str = attr.field()

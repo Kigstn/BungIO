@@ -1,9 +1,88 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import (
+        ContentItemPublicContract,
+        DestinyCharacterActivitiesComponent,
+        DestinyCharacterComponent,
+        DestinyCharacterProgressionComponent,
+        DestinyCharacterRecordsComponent,
+        DestinyCharacterRenderComponent,
+        DestinyCollectiblesComponent,
+        DestinyCurrenciesComponent,
+        DestinyEntitySearchResultItem,
+        DestinyInventoryComponent,
+        DestinyItemComponent,
+        DestinyItemInstanceComponent,
+        DestinyItemObjectivesComponent,
+        DestinyItemPerksComponent,
+        DestinyItemPlugObjectivesComponent,
+        DestinyItemRenderComponent,
+        DestinyItemReusablePlugsComponent,
+        DestinyItemSocketsComponent,
+        DestinyItemStatsComponent,
+        DestinyItemTalentGridComponent,
+        DestinyKiosksComponent,
+        DestinyMetricsComponent,
+        DestinyPlatformSilverComponent,
+        DestinyPlugSetsComponent,
+        DestinyPresentationNodesComponent,
+        DestinyProfileCollectiblesComponent,
+        DestinyProfileComponent,
+        DestinyProfileProgressionComponent,
+        DestinyProfileRecordsComponent,
+        DestinyProfileTransitoryComponent,
+        DestinyStringVariablesComponent,
+        DestinyVendorCategoriesComponent,
+        DestinyVendorComponent,
+        DestinyVendorGroupComponent,
+        DestinyVendorReceiptsComponent,
+        DictionaryComponentResponseOfint32AndDestinyItemInstanceComponent,
+        DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent,
+        DictionaryComponentResponseOfint32AndDestinyItemPerksComponent,
+        DictionaryComponentResponseOfint32AndDestinyItemPlugObjectivesComponent,
+        DictionaryComponentResponseOfint32AndDestinyItemRenderComponent,
+        DictionaryComponentResponseOfint32AndDestinyItemReusablePlugsComponent,
+        DictionaryComponentResponseOfint32AndDestinyItemSocketsComponent,
+        DictionaryComponentResponseOfint32AndDestinyItemStatsComponent,
+        DictionaryComponentResponseOfint32AndDestinyItemTalentGridComponent,
+        DictionaryComponentResponseOfint64AndDestinyItemInstanceComponent,
+        DictionaryComponentResponseOfint64AndDestinyItemObjectivesComponent,
+        DictionaryComponentResponseOfint64AndDestinyItemPerksComponent,
+        DictionaryComponentResponseOfint64AndDestinyItemPlugObjectivesComponent,
+        DictionaryComponentResponseOfint64AndDestinyItemRenderComponent,
+        DictionaryComponentResponseOfint64AndDestinyItemReusablePlugsComponent,
+        DictionaryComponentResponseOfint64AndDestinyItemSocketsComponent,
+        DictionaryComponentResponseOfint64AndDestinyItemStatsComponent,
+        DictionaryComponentResponseOfint64AndDestinyItemTalentGridComponent,
+        DictionaryComponentResponseOfuint32AndDestinyItemInstanceComponent,
+        DictionaryComponentResponseOfuint32AndDestinyItemObjectivesComponent,
+        DictionaryComponentResponseOfuint32AndDestinyItemPerksComponent,
+        DictionaryComponentResponseOfuint32AndDestinyItemPlugComponent,
+        DictionaryComponentResponseOfuint32AndDestinyItemPlugObjectivesComponent,
+        DictionaryComponentResponseOfuint32AndDestinyItemRenderComponent,
+        DictionaryComponentResponseOfuint32AndDestinyItemReusablePlugsComponent,
+        DictionaryComponentResponseOfuint32AndDestinyItemSocketsComponent,
+        DictionaryComponentResponseOfuint32AndDestinyItemStatsComponent,
+        DictionaryComponentResponseOfuint32AndDestinyItemTalentGridComponent,
+        FireteamResponse,
+        FireteamSummary,
+        GroupBan,
+        GroupMember,
+        GroupMemberApplication,
+        GroupMembership,
+        GroupPotentialMembership,
+        GroupV2Card,
+        PagedQuery,
+        PostResponse,
+        StreamInfo,
+        TrendingEntry,
+    )
 
 
 class BungieMembershipType(BaseEnum):
@@ -12,21 +91,21 @@ class BungieMembershipType(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     TIGER_XBOX = 1
-    """Not specified. """
+    """_No description given_ """
     TIGER_PSN = 2
-    """Not specified. """
+    """_No description given_ """
     TIGER_STEAM = 3
-    """Not specified. """
+    """_No description given_ """
     TIGER_BLIZZARD = 4
-    """Not specified. """
+    """_No description given_ """
     TIGER_STADIA = 5
-    """Not specified. """
+    """_No description given_ """
     TIGER_DEMON = 10
-    """Not specified. """
+    """_No description given_ """
     BUNGIE_NEXT = 254
-    """Not specified. """
+    """_No description given_ """
     ALL = -1
     """"All" is only valid for searching capabilities: you need to pass the actual matching BungieMembershipType for any query where you pass a known membershipId. """
 
@@ -37,51 +116,45 @@ class BungieCredentialType(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     XUID = 1
-    """Not specified. """
+    """_No description given_ """
     PSNID = 2
-    """Not specified. """
+    """_No description given_ """
     WLID = 3
-    """Not specified. """
+    """_No description given_ """
     FAKE = 4
-    """Not specified. """
+    """_No description given_ """
     FACEBOOK = 5
-    """Not specified. """
+    """_No description given_ """
     GOOGLE = 8
-    """Not specified. """
+    """_No description given_ """
     WINDOWS = 9
-    """Not specified. """
+    """_No description given_ """
     DEMON_ID = 10
-    """Not specified. """
+    """_No description given_ """
     STEAM_ID = 12
-    """Not specified. """
+    """_No description given_ """
     BATTLE_NET_ID = 14
-    """Not specified. """
+    """_No description given_ """
     STADIA_ID = 16
-    """Not specified. """
+    """_No description given_ """
     TWITCH_ID = 18
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class SearchResultOfContentItemPublicContract(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            results: Not specified.
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        results: _No description given_
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     results: list["ContentItemPublicContract"] = attr.field()
@@ -95,21 +168,15 @@ class SearchResultOfContentItemPublicContract(BaseModel):
 @attr.define
 class SearchResultOfPostResponse(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            results: Not specified.
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        results: _No description given_
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     results: list["PostResponse"] = attr.field()
@@ -123,21 +190,15 @@ class SearchResultOfPostResponse(BaseModel):
 @attr.define
 class SearchResultOfGroupV2Card(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            results: Not specified.
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        results: _No description given_
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     results: list["GroupV2Card"] = attr.field()
@@ -151,21 +212,15 @@ class SearchResultOfGroupV2Card(BaseModel):
 @attr.define
 class SearchResultOfGroupMember(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            results: Not specified.
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        results: _No description given_
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     results: list["GroupMember"] = attr.field()
@@ -179,21 +234,15 @@ class SearchResultOfGroupMember(BaseModel):
 @attr.define
 class SearchResultOfGroupBan(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            results: Not specified.
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        results: _No description given_
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     results: list["GroupBan"] = attr.field()
@@ -207,21 +256,15 @@ class SearchResultOfGroupBan(BaseModel):
 @attr.define
 class SearchResultOfGroupMemberApplication(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            results: Not specified.
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        results: _No description given_
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     results: list["GroupMemberApplication"] = attr.field()
@@ -235,21 +278,15 @@ class SearchResultOfGroupMemberApplication(BaseModel):
 @attr.define
 class SearchResultOfGroupMembership(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            results: Not specified.
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        results: _No description given_
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     results: list["GroupMembership"] = attr.field()
@@ -263,21 +300,15 @@ class SearchResultOfGroupMembership(BaseModel):
 @attr.define
 class SearchResultOfGroupPotentialMembership(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            results: Not specified.
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        results: _No description given_
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     results: list["GroupPotentialMembership"] = attr.field()
@@ -291,11 +322,11 @@ class SearchResultOfGroupPotentialMembership(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyVendorReceiptsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -307,11 +338,11 @@ class SingleComponentResponseOfDestinyVendorReceiptsComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyInventoryComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -323,11 +354,11 @@ class SingleComponentResponseOfDestinyInventoryComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyProfileComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -339,11 +370,11 @@ class SingleComponentResponseOfDestinyProfileComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyPlatformSilverComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -355,11 +386,11 @@ class SingleComponentResponseOfDestinyPlatformSilverComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyKiosksComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -371,11 +402,11 @@ class SingleComponentResponseOfDestinyKiosksComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyPlugSetsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -387,11 +418,11 @@ class SingleComponentResponseOfDestinyPlugSetsComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyProfileProgressionComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -403,11 +434,11 @@ class SingleComponentResponseOfDestinyProfileProgressionComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyPresentationNodesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -419,11 +450,11 @@ class SingleComponentResponseOfDestinyPresentationNodesComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyProfileRecordsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -435,11 +466,11 @@ class SingleComponentResponseOfDestinyProfileRecordsComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyProfileCollectiblesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -451,11 +482,11 @@ class SingleComponentResponseOfDestinyProfileCollectiblesComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyProfileTransitoryComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -467,11 +498,11 @@ class SingleComponentResponseOfDestinyProfileTransitoryComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyMetricsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -483,11 +514,11 @@ class SingleComponentResponseOfDestinyMetricsComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyStringVariablesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -499,11 +530,11 @@ class SingleComponentResponseOfDestinyStringVariablesComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyCharacterComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -515,11 +546,11 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyInventoryComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -531,11 +562,11 @@ class DictionaryComponentResponseOfint64AndDestinyInventoryComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -547,11 +578,11 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent(
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyCharacterRenderComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -563,11 +594,11 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterRenderComponent(BaseM
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -579,11 +610,11 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent(B
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyKiosksComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -595,11 +626,11 @@ class DictionaryComponentResponseOfint64AndDestinyKiosksComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyPlugSetsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -611,11 +642,11 @@ class DictionaryComponentResponseOfint64AndDestinyPlugSetsComponent(BaseModel):
 @attr.define
 class DestinyBaseItemComponentSetOfuint32(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        objectives: Not specified.
-        perks: Not specified.
+        objectives: _No description given_
+        perks: _No description given_
     """
 
     objectives: "DictionaryComponentResponseOfuint32AndDestinyItemObjectivesComponent" = attr.field()
@@ -625,11 +656,11 @@ class DestinyBaseItemComponentSetOfuint32(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemObjectivesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -641,11 +672,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemObjectivesComponent(BaseM
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemPerksComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -657,11 +688,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemPerksComponent(BaseModel)
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyPresentationNodesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -673,11 +704,11 @@ class DictionaryComponentResponseOfint64AndDestinyPresentationNodesComponent(Bas
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyCharacterRecordsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -689,11 +720,11 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterRecordsComponent(Base
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyCollectiblesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -705,11 +736,11 @@ class DictionaryComponentResponseOfint64AndDestinyCollectiblesComponent(BaseMode
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyStringVariablesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -721,11 +752,11 @@ class DictionaryComponentResponseOfint64AndDestinyStringVariablesComponent(BaseM
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyCraftablesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -737,11 +768,11 @@ class DictionaryComponentResponseOfint64AndDestinyCraftablesComponent(BaseModel)
 @attr.define
 class DestinyBaseItemComponentSetOfint64(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        objectives: Not specified.
-        perks: Not specified.
+        objectives: _No description given_
+        perks: _No description given_
     """
 
     objectives: "DictionaryComponentResponseOfint64AndDestinyItemObjectivesComponent" = attr.field()
@@ -751,11 +782,11 @@ class DestinyBaseItemComponentSetOfint64(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemObjectivesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -767,11 +798,11 @@ class DictionaryComponentResponseOfint64AndDestinyItemObjectivesComponent(BaseMo
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemPerksComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -783,19 +814,19 @@ class DictionaryComponentResponseOfint64AndDestinyItemPerksComponent(BaseModel):
 @attr.define
 class DestinyItemComponentSetOfint64(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        instances: Not specified.
-        render_data: Not specified.
-        stats: Not specified.
-        sockets: Not specified.
-        reusable_plugs: Not specified.
-        plug_objectives: Not specified.
-        talent_grids: Not specified.
-        plug_states: Not specified.
-        objectives: Not specified.
-        perks: Not specified.
+        instances: _No description given_
+        render_data: _No description given_
+        stats: _No description given_
+        sockets: _No description given_
+        reusable_plugs: _No description given_
+        plug_objectives: _No description given_
+        talent_grids: _No description given_
+        plug_states: _No description given_
+        objectives: _No description given_
+        perks: _No description given_
     """
 
     instances: "DictionaryComponentResponseOfint64AndDestinyItemInstanceComponent" = attr.field()
@@ -813,11 +844,11 @@ class DestinyItemComponentSetOfint64(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemInstanceComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -829,11 +860,11 @@ class DictionaryComponentResponseOfint64AndDestinyItemInstanceComponent(BaseMode
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemRenderComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -845,11 +876,11 @@ class DictionaryComponentResponseOfint64AndDestinyItemRenderComponent(BaseModel)
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemStatsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -861,11 +892,11 @@ class DictionaryComponentResponseOfint64AndDestinyItemStatsComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemSocketsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -877,11 +908,11 @@ class DictionaryComponentResponseOfint64AndDestinyItemSocketsComponent(BaseModel
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemReusablePlugsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -893,11 +924,11 @@ class DictionaryComponentResponseOfint64AndDestinyItemReusablePlugsComponent(Bas
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemPlugObjectivesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -909,11 +940,11 @@ class DictionaryComponentResponseOfint64AndDestinyItemPlugObjectivesComponent(Ba
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyItemTalentGridComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -925,11 +956,11 @@ class DictionaryComponentResponseOfint64AndDestinyItemTalentGridComponent(BaseMo
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemPlugComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -941,11 +972,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemPlugComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint64AndDestinyCurrenciesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -957,11 +988,11 @@ class DictionaryComponentResponseOfint64AndDestinyCurrenciesComponent(BaseModel)
 @attr.define
 class SingleComponentResponseOfDestinyCharacterComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -973,11 +1004,11 @@ class SingleComponentResponseOfDestinyCharacterComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyCharacterProgressionComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -989,11 +1020,11 @@ class SingleComponentResponseOfDestinyCharacterProgressionComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyCharacterRenderComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1005,11 +1036,11 @@ class SingleComponentResponseOfDestinyCharacterRenderComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyCharacterActivitiesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1021,11 +1052,11 @@ class SingleComponentResponseOfDestinyCharacterActivitiesComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyCharacterRecordsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1037,11 +1068,11 @@ class SingleComponentResponseOfDestinyCharacterRecordsComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyCollectiblesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1053,11 +1084,11 @@ class SingleComponentResponseOfDestinyCollectiblesComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyCurrenciesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1069,11 +1100,11 @@ class SingleComponentResponseOfDestinyCurrenciesComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1085,11 +1116,11 @@ class SingleComponentResponseOfDestinyItemComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemInstanceComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1101,11 +1132,11 @@ class SingleComponentResponseOfDestinyItemInstanceComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemObjectivesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1117,11 +1148,11 @@ class SingleComponentResponseOfDestinyItemObjectivesComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemPerksComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1133,11 +1164,11 @@ class SingleComponentResponseOfDestinyItemPerksComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemRenderComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1149,11 +1180,11 @@ class SingleComponentResponseOfDestinyItemRenderComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemStatsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1165,11 +1196,11 @@ class SingleComponentResponseOfDestinyItemStatsComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemTalentGridComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1181,11 +1212,11 @@ class SingleComponentResponseOfDestinyItemTalentGridComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemSocketsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1197,11 +1228,11 @@ class SingleComponentResponseOfDestinyItemSocketsComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemReusablePlugsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1213,11 +1244,11 @@ class SingleComponentResponseOfDestinyItemReusablePlugsComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyItemPlugObjectivesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1229,11 +1260,11 @@ class SingleComponentResponseOfDestinyItemPlugObjectivesComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyVendorGroupComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1245,11 +1276,11 @@ class SingleComponentResponseOfDestinyVendorGroupComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyVendorComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1261,11 +1292,11 @@ class DictionaryComponentResponseOfuint32AndDestinyVendorComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1277,10 +1308,10 @@ class DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent(Bas
 @attr.define
 class DestinyVendorSaleItemSetComponentOfDestinyVendorSaleItemComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        sale_items: Not specified.
+        sale_items: _No description given_
     """
 
     sale_items: Any = attr.field()
@@ -1289,11 +1320,11 @@ class DestinyVendorSaleItemSetComponentOfDestinyVendorSaleItemComponent(BaseMode
 @attr.define
 class DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1305,11 +1336,11 @@ class DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComp
 @attr.define
 class DestinyBaseItemComponentSetOfint32(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        objectives: Not specified.
-        perks: Not specified.
+        objectives: _No description given_
+        perks: _No description given_
     """
 
     objectives: "DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent" = attr.field()
@@ -1319,11 +1350,11 @@ class DestinyBaseItemComponentSetOfint32(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1335,11 +1366,11 @@ class DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent(BaseMo
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemPerksComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1351,19 +1382,19 @@ class DictionaryComponentResponseOfint32AndDestinyItemPerksComponent(BaseModel):
 @attr.define
 class DestinyItemComponentSetOfint32(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        instances: Not specified.
-        render_data: Not specified.
-        stats: Not specified.
-        sockets: Not specified.
-        reusable_plugs: Not specified.
-        plug_objectives: Not specified.
-        talent_grids: Not specified.
-        plug_states: Not specified.
-        objectives: Not specified.
-        perks: Not specified.
+        instances: _No description given_
+        render_data: _No description given_
+        stats: _No description given_
+        sockets: _No description given_
+        reusable_plugs: _No description given_
+        plug_objectives: _No description given_
+        talent_grids: _No description given_
+        plug_states: _No description given_
+        objectives: _No description given_
+        perks: _No description given_
     """
 
     instances: "DictionaryComponentResponseOfint32AndDestinyItemInstanceComponent" = attr.field()
@@ -1381,11 +1412,11 @@ class DestinyItemComponentSetOfint32(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemInstanceComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1397,11 +1428,11 @@ class DictionaryComponentResponseOfint32AndDestinyItemInstanceComponent(BaseMode
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemRenderComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1413,11 +1444,11 @@ class DictionaryComponentResponseOfint32AndDestinyItemRenderComponent(BaseModel)
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemStatsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1429,11 +1460,11 @@ class DictionaryComponentResponseOfint32AndDestinyItemStatsComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemSocketsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1445,11 +1476,11 @@ class DictionaryComponentResponseOfint32AndDestinyItemSocketsComponent(BaseModel
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemReusablePlugsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1461,11 +1492,11 @@ class DictionaryComponentResponseOfint32AndDestinyItemReusablePlugsComponent(Bas
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemPlugObjectivesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1477,11 +1508,11 @@ class DictionaryComponentResponseOfint32AndDestinyItemPlugObjectivesComponent(Ba
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyItemTalentGridComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1493,11 +1524,11 @@ class DictionaryComponentResponseOfint32AndDestinyItemTalentGridComponent(BaseMo
 @attr.define
 class SingleComponentResponseOfDestinyVendorComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1509,11 +1540,11 @@ class SingleComponentResponseOfDestinyVendorComponent(BaseModel):
 @attr.define
 class SingleComponentResponseOfDestinyVendorCategoriesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1525,11 +1556,11 @@ class SingleComponentResponseOfDestinyVendorCategoriesComponent(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1541,11 +1572,11 @@ class DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent(BaseMo
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyPublicVendorComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1557,10 +1588,10 @@ class DictionaryComponentResponseOfuint32AndDestinyPublicVendorComponent(BaseMod
 @attr.define
 class DestinyVendorSaleItemSetComponentOfDestinyPublicVendorSaleItemComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        sale_items: Not specified.
+        sale_items: _No description given_
     """
 
     sale_items: Any = attr.field()
@@ -1569,11 +1600,11 @@ class DestinyVendorSaleItemSetComponentOfDestinyPublicVendorSaleItemComponent(Ba
 @attr.define
 class DictionaryComponentResponseOfuint32AndPublicDestinyVendorSaleItemSetComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1585,19 +1616,19 @@ class DictionaryComponentResponseOfuint32AndPublicDestinyVendorSaleItemSetCompon
 @attr.define
 class DestinyItemComponentSetOfuint32(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        instances: Not specified.
-        render_data: Not specified.
-        stats: Not specified.
-        sockets: Not specified.
-        reusable_plugs: Not specified.
-        plug_objectives: Not specified.
-        talent_grids: Not specified.
-        plug_states: Not specified.
-        objectives: Not specified.
-        perks: Not specified.
+        instances: _No description given_
+        render_data: _No description given_
+        stats: _No description given_
+        sockets: _No description given_
+        reusable_plugs: _No description given_
+        plug_objectives: _No description given_
+        talent_grids: _No description given_
+        plug_states: _No description given_
+        objectives: _No description given_
+        perks: _No description given_
     """
 
     instances: "DictionaryComponentResponseOfuint32AndDestinyItemInstanceComponent" = attr.field()
@@ -1615,11 +1646,11 @@ class DestinyItemComponentSetOfuint32(BaseModel):
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemInstanceComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1631,11 +1662,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemInstanceComponent(BaseMod
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemRenderComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1647,11 +1678,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemRenderComponent(BaseModel
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemStatsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1663,11 +1694,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemStatsComponent(BaseModel)
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemSocketsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1679,11 +1710,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemSocketsComponent(BaseMode
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemReusablePlugsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1695,11 +1726,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemReusablePlugsComponent(Ba
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemPlugObjectivesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1711,11 +1742,11 @@ class DictionaryComponentResponseOfuint32AndDestinyItemPlugObjectivesComponent(B
 @attr.define
 class DictionaryComponentResponseOfuint32AndDestinyItemTalentGridComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        data: Not specified.
-        privacy: Not specified.
+        data: _No description given_
+        privacy: _No description given_
         disabled: If true, this component is disabled.
     """
 
@@ -1727,21 +1758,15 @@ class DictionaryComponentResponseOfuint32AndDestinyItemTalentGridComponent(BaseM
 @attr.define
 class SearchResultOfDestinyEntitySearchResultItem(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            results: Not specified.
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        results: _No description given_
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     results: list["DestinyEntitySearchResultItem"] = attr.field()
@@ -1755,21 +1780,15 @@ class SearchResultOfDestinyEntitySearchResultItem(BaseModel):
 @attr.define
 class SearchResultOfTrendingEntry(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            results: Not specified.
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        results: _No description given_
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     results: list["TrendingEntry"] = attr.field()
@@ -1783,21 +1802,15 @@ class SearchResultOfTrendingEntry(BaseModel):
 @attr.define
 class SearchResultOfFireteamSummary(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            results: Not specified.
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        results: _No description given_
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     results: list["FireteamSummary"] = attr.field()
@@ -1811,21 +1824,15 @@ class SearchResultOfFireteamSummary(BaseModel):
 @attr.define
 class SearchResultOfFireteamResponse(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            results: Not specified.
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        results: _No description given_
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     results: list["FireteamResponse"] = attr.field()
@@ -1839,16 +1846,16 @@ class SearchResultOfFireteamResponse(BaseModel):
 @attr.define
 class GlobalAlert(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        alert_key: Not specified.
-        alert_html: Not specified.
-        alert_timestamp: Not specified.
-        alert_link: Not specified.
-        alert_level: Not specified.
-        alert_type: Not specified.
-        stream_info: Not specified.
+        alert_key: _No description given_
+        alert_html: _No description given_
+        alert_timestamp: _No description given_
+        alert_link: _No description given_
+        alert_level: _No description given_
+        alert_type: _No description given_
+        stream_info: _No description given_
     """
 
     alert_key: str = attr.field()
@@ -1862,37 +1869,37 @@ class GlobalAlert(BaseModel):
 
 class GlobalAlertLevel(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     UNKNOWN = 0
-    """Not specified. """
+    """_No description given_ """
     BLUE = 1
-    """Not specified. """
+    """_No description given_ """
     YELLOW = 2
-    """Not specified. """
+    """_No description given_ """
     RED = 3
-    """Not specified. """
+    """_No description given_ """
 
 
 class GlobalAlertType(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     GLOBAL_ALERT = 0
-    """Not specified. """
+    """_No description given_ """
     STREAMING_ALERT = 1
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class StreamInfo(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        channel_name: Not specified.
+        channel_name: _No description given_
     """
 
     channel_name: str = attr.field()

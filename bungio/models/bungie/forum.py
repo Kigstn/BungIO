@@ -1,96 +1,109 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
 
+if TYPE_CHECKING:
+    from bungio.models import (
+        ForumRecruitmentDetail,
+        GeneralUser,
+        GroupResponse,
+        IgnoreResponse,
+        PagedQuery,
+        PollResponse,
+        PollResult,
+        PostResponse,
+        TagResponse,
+    )
+
 
 class ForumTopicsCategoryFiltersEnum(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     LINKS = 1
-    """Not specified. """
+    """_No description given_ """
     QUESTIONS = 2
-    """Not specified. """
+    """_No description given_ """
     ANSWERED_QUESTIONS = 4
-    """Not specified. """
+    """_No description given_ """
     MEDIA = 8
-    """Not specified. """
+    """_No description given_ """
     TEXT_ONLY = 16
-    """Not specified. """
+    """_No description given_ """
     ANNOUNCEMENT = 32
-    """Not specified. """
+    """_No description given_ """
     BUNGIE_OFFICIAL = 64
-    """Not specified. """
+    """_No description given_ """
     POLLS = 128
-    """Not specified. """
+    """_No description given_ """
 
 
 class ForumTopicsQuickDateEnum(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     ALL = 0
-    """Not specified. """
+    """_No description given_ """
     LAST_YEAR = 1
-    """Not specified. """
+    """_No description given_ """
     LAST_MONTH = 2
-    """Not specified. """
+    """_No description given_ """
     LAST_WEEK = 3
-    """Not specified. """
+    """_No description given_ """
     LAST_DAY = 4
-    """Not specified. """
+    """_No description given_ """
 
 
 class ForumTopicsSortEnum(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     DEFAULT = 0
-    """Not specified. """
+    """_No description given_ """
     LAST_REPLIED = 1
-    """Not specified. """
+    """_No description given_ """
     MOST_REPLIED = 2
-    """Not specified. """
+    """_No description given_ """
     POPULARITY = 3
-    """Not specified. """
+    """_No description given_ """
     CONTROVERSIALITY = 4
-    """Not specified. """
+    """_No description given_ """
     LIKED = 5
-    """Not specified. """
+    """_No description given_ """
     HIGHEST_RATED = 6
-    """Not specified. """
+    """_No description given_ """
     MOST_UPVOTED = 7
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class PostResponse(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        last_reply_timestamp: Not specified.
-        is_pinned: Not specified.
-        url_media_type: Not specified.
-        thumbnail: Not specified.
-        popularity: Not specified.
-        is_active: Not specified.
-        is_announcement: Not specified.
-        user_rating: Not specified.
-        user_has_rated: Not specified.
-        user_has_muted_post: Not specified.
-        latest_reply_post_id: Not specified.
-        latest_reply_author_id: Not specified.
-        ignore_status: Not specified.
-        locale: Not specified.
+        last_reply_timestamp: _No description given_
+        is_pinned: _No description given_
+        url_media_type: _No description given_
+        thumbnail: _No description given_
+        popularity: _No description given_
+        is_active: _No description given_
+        is_announcement: _No description given_
+        user_rating: _No description given_
+        user_has_rated: _No description given_
+        user_has_muted_post: _No description given_
+        latest_reply_post_id: _No description given_
+        latest_reply_author_id: _No description given_
+        ignore_status: _No description given_
+        locale: _No description given_
     """
 
     last_reply_timestamp: datetime.datetime = attr.field()
@@ -111,63 +124,57 @@ class PostResponse(BaseModel):
 
 class ForumMediaType(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     IMAGE = 1
-    """Not specified. """
+    """_No description given_ """
     VIDEO = 2
-    """Not specified. """
+    """_No description given_ """
     YOUTUBE = 3
-    """Not specified. """
+    """_No description given_ """
 
 
 class ForumPostPopularity(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     EMPTY = 0
-    """Not specified. """
+    """_No description given_ """
     DEFAULT = 1
-    """Not specified. """
+    """_No description given_ """
     DISCUSSED = 2
-    """Not specified. """
+    """_No description given_ """
     COOL_STORY = 3
-    """Not specified. """
+    """_No description given_ """
     HEATING_UP = 4
-    """Not specified. """
+    """_No description given_ """
     HOT = 5
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class PostSearchResponse(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            related_posts: Not specified.
-            authors: Not specified.
-            groups: Not specified.
-            searched_tags: Not specified.
-            polls: Not specified.
-            recruitment_details: Not specified.
-            available_pages: Not specified.
-            results: Not specified.
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        related_posts: _No description given_
+        authors: _No description given_
+        groups: _No description given_
+        searched_tags: _No description given_
+        polls: _No description given_
+        recruitment_details: _No description given_
+        available_pages: _No description given_
+        results: _No description given_
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     related_posts: list["PostResponse"] = attr.field()
@@ -188,12 +195,12 @@ class PostSearchResponse(BaseModel):
 @attr.define
 class PollResponse(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        topic_id: Not specified.
-        results: Not specified.
-        total_votes: Not specified.
+        topic_id: _No description given_
+        results: _No description given_
+        total_votes: _No description given_
     """
 
     topic_id: int = attr.field()
@@ -204,14 +211,14 @@ class PollResponse(BaseModel):
 @attr.define
 class PollResult(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        answer_text: Not specified.
-        answer_slot: Not specified.
-        last_vote_date: Not specified.
-        votes: Not specified.
-        requesting_user_voted: Not specified.
+        answer_text: _No description given_
+        answer_slot: _No description given_
+        last_vote_date: _No description given_
+        votes: _No description given_
+        requesting_user_voted: _No description given_
     """
 
     answer_text: str = attr.field()
@@ -224,19 +231,19 @@ class PollResult(BaseModel):
 @attr.define
 class ForumRecruitmentDetail(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        topic_id: Not specified.
-        microphone_required: Not specified.
-        intensity: Not specified.
-        tone: Not specified.
-        approved: Not specified.
-        conversation_id: Not specified.
-        player_slots_total: Not specified.
-        player_slots_remaining: Not specified.
-        fireteam: Not specified.
-        kicked_player_ids: Not specified.
+        topic_id: _No description given_
+        microphone_required: _No description given_
+        intensity: _No description given_
+        tone: _No description given_
+        approved: _No description given_
+        conversation_id: _No description given_
+        player_slots_total: _No description given_
+        player_slots_remaining: _No description given_
+        fireteam: _No description given_
+        kicked_player_ids: _No description given_
     """
 
     topic_id: int = attr.field()
@@ -253,49 +260,49 @@ class ForumRecruitmentDetail(BaseModel):
 
 class ForumRecruitmentIntensityLabel(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     CASUAL = 1
-    """Not specified. """
+    """_No description given_ """
     PROFESSIONAL = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 class ForumRecruitmentToneLabel(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     FAMILY_FRIENDLY = 1
-    """Not specified. """
+    """_No description given_ """
     ROWDY = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 class ForumPostSortEnum(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     DEFAULT = 0
-    """Not specified. """
+    """_No description given_ """
     OLDEST_FIRST = 1
-    """Not specified. """
+    """_No description given_ """
 
 
 class CommunityContentSortMode(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     TRENDING = 0
-    """Not specified. """
+    """_No description given_ """
     LATEST = 1
-    """Not specified. """
+    """_No description given_ """
     HIGHEST_RATED = 2
-    """Not specified. """
+    """_No description given_ """

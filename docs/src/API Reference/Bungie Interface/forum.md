@@ -1,3 +1,3 @@
-# Forum Routes Interface
+# Forum Routes
 
 ::: bungio.api.bungie.forum

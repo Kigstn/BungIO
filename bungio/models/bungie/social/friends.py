@@ -1,18 +1,20 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
 
+if TYPE_CHECKING:
+    from bungio.models import BungieFriend, GeneralUser, PlatformFriend
+
 
 @attr.define
 class BungieFriendListResponse(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        friends: Not specified.
+        friends: _No description given_
     """
 
     friends: list["BungieFriend"] = attr.field()
@@ -21,17 +23,17 @@ class BungieFriendListResponse(BaseModel):
 @attr.define
 class BungieFriend(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        last_seen_as_membership_id: Not specified.
-        last_seen_as_bungie_membership_type: Not specified.
-        bungie_global_display_name: Not specified.
-        bungie_global_display_name_code: Not specified.
-        online_status: Not specified.
-        online_title: Not specified.
-        relationship: Not specified.
-        bungie_net_user: Not specified.
+        last_seen_as_membership_id: _No description given_
+        last_seen_as_bungie_membership_type: _No description given_
+        bungie_global_display_name: _No description given_
+        bungie_global_display_name_code: _No description given_
+        online_status: _No description given_
+        online_title: _No description given_
+        relationship: _No description given_
+        bungie_net_user: _No description given_
     """
 
     last_seen_as_membership_id: int = attr.field()
@@ -46,51 +48,51 @@ class BungieFriend(BaseModel):
 
 class PresenceStatus(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     OFFLINE_OR_UNKNOWN = 0
-    """Not specified. """
+    """_No description given_ """
     ONLINE = 1
-    """Not specified. """
+    """_No description given_ """
 
 
 class PresenceOnlineStateFlags(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     DESTINY1 = 1
-    """Not specified. """
+    """_No description given_ """
     DESTINY2 = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 class FriendRelationshipState(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     UNKNOWN = 0
-    """Not specified. """
+    """_No description given_ """
     FRIEND = 1
-    """Not specified. """
+    """_No description given_ """
     INCOMING_REQUEST = 2
-    """Not specified. """
+    """_No description given_ """
     OUTGOING_REQUEST = 3
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class BungieFriendRequestListResponse(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        incoming_requests: Not specified.
-        outgoing_requests: Not specified.
+        incoming_requests: _No description given_
+        outgoing_requests: _No description given_
     """
 
     incoming_requests: list["BungieFriend"] = attr.field()
@@ -99,29 +101,29 @@ class BungieFriendRequestListResponse(BaseModel):
 
 class PlatformFriendType(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     UNKNOWN = 0
-    """Not specified. """
+    """_No description given_ """
     XBOX = 1
-    """Not specified. """
+    """_No description given_ """
     P_S_N = 2
-    """Not specified. """
+    """_No description given_ """
     STEAM = 3
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class PlatformFriendResponse(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        items_per_page: Not specified.
-        current_page: Not specified.
-        has_more: Not specified.
-        platform_friends: Not specified.
+        items_per_page: _No description given_
+        current_page: _No description given_
+        has_more: _No description given_
+        platform_friends: _No description given_
     """
 
     items_per_page: int = attr.field()
@@ -133,16 +135,16 @@ class PlatformFriendResponse(BaseModel):
 @attr.define
 class PlatformFriend(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        platform_display_name: Not specified.
-        friend_platform: Not specified.
-        destiny_membership_id: Not specified.
-        destiny_membership_type: Not specified.
-        bungie_net_membership_id: Not specified.
-        bungie_global_display_name: Not specified.
-        bungie_global_display_name_code: Not specified.
+        platform_display_name: _No description given_
+        friend_platform: _No description given_
+        destiny_membership_id: _No description given_
+        destiny_membership_type: _No description given_
+        bungie_net_membership_id: _No description given_
+        bungie_global_display_name: _No description given_
+        bungie_global_display_name_code: _No description given_
     """
 
     platform_display_name: str = attr.field()

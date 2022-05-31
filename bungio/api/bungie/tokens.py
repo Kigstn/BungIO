@@ -1,14 +1,10 @@
-import datetime
 from typing import Any, Optional
 
 import attr
 
+from bungio.models import PartnerOfferClaimRequest, PartnerOfferSkuHistoryResponse
 from bungio.models.auth import AuthData
 from bungio.models.base import BaseModel
-from bungio.models.bungie.tokens import (
-    PartnerOfferClaimRequest,
-    PartnerOfferSkuHistoryResponse,
-)
 
 
 @attr.define
@@ -25,8 +21,7 @@ class TokensRouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.bool) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.claim_partner_offer(auth=auth, **data.to_dict())
@@ -47,8 +42,7 @@ class TokensRouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.bool) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.apply_missing_partner_offers_without_claim(
@@ -73,8 +67,7 @@ class TokensRouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/tokens/#bungio.models.bungie.tokens.PartnerOfferSkuHistoryResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_partner_offer_sku_history(
@@ -98,8 +91,7 @@ class TokensRouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.Any) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_bungie_rewards_for_user(membership_id=membership_id, auth=auth)
@@ -113,8 +105,7 @@ class TokensRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.Any) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_bungie_rewards_list(auth=auth)

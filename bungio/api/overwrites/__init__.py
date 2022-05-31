@@ -1,5 +1,5 @@
-from bungio.api.overwrites.app import AppRouteInterfaceOverwrite
+from bungio.api.overwrites.app import AppRouteInterface
 
 
-class AllRouteInterfacesOverwrites(AppRouteInterfaceOverwrite):
+class AllRouteInterfacesOverwrites(AppRouteInterface):
     pass

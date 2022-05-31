@@ -1,3 +1,3 @@
-# Settings Routes Interface
+# Settings Routes
 
 ::: bungio.api.bungie.settings

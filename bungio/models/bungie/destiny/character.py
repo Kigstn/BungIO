@@ -1,31 +1,31 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import DestinyItemPeerView, DyeReference
 
 
 @attr.define
 class DestinyCharacterCustomization(BaseModel):
     """
-        Raw data about the customization options chosen for a character's face and appearance.
+    Raw data about the customization options chosen for a character's face and appearance. You can look up the relevant class/race/gender combo in DestinyCharacterCustomizationOptionDefinition for the character, and then look up these values within the CustomizationOptions found to pull some data about their choices. Warning: not all of that data is meaningful. Some data has useful icons. Others have nothing, and are only meant for 3D rendering purposes (which we sadly do not expose yet)
 
-    You can look up the relevant class/race/gender combo in DestinyCharacterCustomizationOptionDefinition for the character, and then look up these values within the CustomizationOptions found to pull some data about their choices. Warning: not all of that data is meaningful. Some data has useful icons. Others have nothing, and are only meant for 3D rendering purposes (which we sadly do not expose yet)
-
-        Attributes:
-            personality: Not specified.
-            face: Not specified.
-            skin_color: Not specified.
-            lip_color: Not specified.
-            eye_color: Not specified.
-            hair_colors: Not specified.
-            feature_colors: Not specified.
-            decal_color: Not specified.
-            wear_helmet: Not specified.
-            hair_index: Not specified.
-            feature_index: Not specified.
-            decal_index: Not specified.
+    Attributes:
+        personality: _No description given_
+        face: _No description given_
+        skin_color: _No description given_
+        lip_color: _No description given_
+        eye_color: _No description given_
+        hair_colors: _No description given_
+        feature_colors: _No description given_
+        decal_color: _No description given_
+        wear_helmet: _No description given_
+        hair_index: _No description given_
+        feature_index: _No description given_
+        decal_index: _No description given_
     """
 
     personality: int = attr.field()
@@ -48,7 +48,7 @@ class DestinyCharacterPeerView(BaseModel):
     A minimal view of a character's equipped items, for the purpose of rendering a summary screen or showing the character in 3D.
 
     Attributes:
-        equipment: Not specified.
+        equipment: _No description given_
     """
 
     equipment: list["DestinyItemPeerView"] = attr.field()

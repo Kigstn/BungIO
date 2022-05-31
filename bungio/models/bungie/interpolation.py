@@ -1,19 +1,16 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
-
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
 
 
 @attr.define
 class InterpolationPoint(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        value: Not specified.
-        weight: Not specified.
+        value: _No description given_
+        weight: _No description given_
     """
 
     value: int = attr.field()
@@ -23,11 +20,11 @@ class InterpolationPoint(BaseModel):
 @attr.define
 class InterpolationPointFloat(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        value: Not specified.
-        weight: Not specified.
+        value: _No description given_
+        weight: _No description given_
     """
 
     value: float = attr.field()

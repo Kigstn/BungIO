@@ -1,18 +1,20 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
 
+if TYPE_CHECKING:
+    from bungio.models import DestinyInsertPlugsRequestEntry
+
 
 @attr.define
 class DestinyActionRequest(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        membership_type: Not specified.
+        membership_type: _No description given_
     """
 
     membership_type: int = attr.field()
@@ -21,11 +23,11 @@ class DestinyActionRequest(BaseModel):
 @attr.define
 class DestinyCharacterActionRequest(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        character_id: Not specified.
-        membership_type: Not specified.
+        character_id: _No description given_
+        membership_type: _No description given_
     """
 
     character_id: int = attr.field()
@@ -35,12 +37,12 @@ class DestinyCharacterActionRequest(BaseModel):
 @attr.define
 class DestinyItemActionRequest(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         item_id: The instance ID of the item for this action request.
-        character_id: Not specified.
-        membership_type: Not specified.
+        character_id: _No description given_
+        membership_type: _No description given_
     """
 
     item_id: int = attr.field()
@@ -51,14 +53,14 @@ class DestinyItemActionRequest(BaseModel):
 @attr.define
 class DestinyPostmasterTransferRequest(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        item_reference_hash: Not specified.
-        stack_size: Not specified.
+        item_reference_hash: _No description given_
+        stack_size: _No description given_
         item_id: The instance ID of the item for this action request.
-        character_id: Not specified.
-        membership_type: Not specified.
+        character_id: _No description given_
+        membership_type: _No description given_
     """
 
     item_reference_hash: int = attr.field()
@@ -71,12 +73,12 @@ class DestinyPostmasterTransferRequest(BaseModel):
 @attr.define
 class DestinyItemSetActionRequest(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        item_ids: Not specified.
-        character_id: Not specified.
-        membership_type: Not specified.
+        item_ids: _No description given_
+        character_id: _No description given_
+        membership_type: _No description given_
     """
 
     item_ids: list[int] = attr.field()
@@ -87,13 +89,13 @@ class DestinyItemSetActionRequest(BaseModel):
 @attr.define
 class DestinyItemStateRequest(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        state: Not specified.
+        state: _No description given_
         item_id: The instance ID of the item for this action request.
-        character_id: Not specified.
-        membership_type: Not specified.
+        character_id: _No description given_
+        membership_type: _No description given_
     """
 
     state: bool = attr.field()
@@ -105,19 +107,19 @@ class DestinyItemStateRequest(BaseModel):
 @attr.define
 class DestinyInsertPlugsActionRequest(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         action_token: Action token provided by the AwaGetActionToken API call.
         item_instance_id: The instance ID of the item having a plug inserted. Only instanced items can have sockets.
         plug: The plugs being inserted.
-        character_id: Not specified.
-        membership_type: Not specified.
+        character_id: _No description given_
+        membership_type: _No description given_
     """
 
     action_token: str = attr.field()
     item_instance_id: int = attr.field()
-    plug: Any = attr.field()
+    plug: "DestinyInsertPlugsRequestEntry" = attr.field()
     character_id: int = attr.field()
     membership_type: int = attr.field()
 
@@ -125,16 +127,12 @@ class DestinyInsertPlugsActionRequest(BaseModel):
 @attr.define
 class DestinyInsertPlugsRequestEntry(BaseModel):
     """
-        Represents all of the data related to a single plug to be inserted.
+    Represents all of the data related to a single plug to be inserted. Note that, while you *can* point to a socket that represents infusion, you will receive an error if you attempt to do so. Come on guys, let's play nice.
 
-    Note that, while you *can* point to a socket that represents infusion, you will receive an error if you attempt to do so. Come on guys, let's play nice.
-
-        Attributes:
-            socket_index: The index into the socket array, which identifies the specific socket being operated on. We also need to know the socketArrayType in order to uniquely identify the socket.
-
-    Don't point to or try to insert a plug into an infusion socket. It won't work.
-            socket_array_type: This property, combined with the socketIndex, tells us which socket we are referring to (since operations can be performed on both Intrinsic and "default" sockets, and they occupy different arrays in the Inventory Item Definition). I know, I know. Don't give me that look.
-            plug_item_hash: Plugs are never instanced (except in infusion). So with the hash alone, we should be able to: 1) Infer whether the player actually needs to have the item, or if it's a reusable plug 2) Perform any operation needed to use the Plug, including removing the plug item and running reward sheets.
+    Attributes:
+        socket_index: The index into the socket array, which identifies the specific socket being operated on. We also need to know the socketArrayType in order to uniquely identify the socket. Don't point to or try to insert a plug into an infusion socket. It won't work.
+        socket_array_type: This property, combined with the socketIndex, tells us which socket we are referring to (since operations can be performed on both Intrinsic and "default" sockets, and they occupy different arrays in the Inventory Item Definition). I know, I know. Don't give me that look.
+        plug_item_hash: Plugs are never instanced (except in infusion). So with the hash alone, we should be able to: 1) Infer whether the player actually needs to have the item, or if it's a reusable plug 2) Perform any operation needed to use the Plug, including removing the plug item and running reward sheets.
     """
 
     socket_index: int = attr.field()
@@ -144,30 +142,28 @@ class DestinyInsertPlugsRequestEntry(BaseModel):
 
 class DestinySocketArrayType(BaseEnum):
     """
-        If you look in the DestinyInventoryItemDefinition's "sockets" property, you'll see that there are two types of sockets: intrinsic, and "socketEntry."
-
-    Unfortunately, because Intrinsic sockets are a whole separate array, it is no longer sufficient to know the index into that array to know which socket we're talking about. You have to know whether it's in the default "socketEntries" or if it's in the "intrinsic" list.
+    If you look in the DestinyInventoryItemDefinition's "sockets" property, you'll see that there are two types of sockets: intrinsic, and "socketEntry." Unfortunately, because Intrinsic sockets are a whole separate array, it is no longer sufficient to know the index into that array to know which socket we're talking about. You have to know whether it's in the default "socketEntries" or if it's in the "intrinsic" list.
     """
 
     DEFAULT = 0
-    """Not specified. """
+    """_No description given_ """
     INTRINSIC = 1
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class DestinyInsertPlugsFreeActionRequest(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         plug: The plugs being inserted.
         item_id: The instance ID of the item for this action request.
-        character_id: Not specified.
-        membership_type: Not specified.
+        character_id: _No description given_
+        membership_type: _No description given_
     """
 
-    plug: Any = attr.field()
+    plug: "DestinyInsertPlugsRequestEntry" = attr.field()
     item_id: int = attr.field()
     character_id: int = attr.field()
     membership_type: int = attr.field()

@@ -1,26 +1,24 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import DestinyDisplayPropertiesDefinition
 
 
 @attr.define
 class DestinyReportReasonCategoryDefinition(BaseModel):
     """
-        If you're going to report someone for a Terms of Service violation, you need to choose a category and reason for the report. This definition holds both the categories and the reasons within those categories, for simplicity and my own laziness' sake.
+    If you're going to report someone for a Terms of Service violation, you need to choose a category and reason for the report. This definition holds both the categories and the reasons within those categories, for simplicity and my own laziness' sake. Note tha this means that, to refer to a Reason by reasonHash, you need a combination of the reasonHash *and* the associated ReasonCategory's hash: there are some reasons defined under multiple categories.
 
-    Note tha this means that, to refer to a Reason by reasonHash, you need a combination of the reasonHash *and* the associated ReasonCategory's hash: there are some reasons defined under multiple categories.
-
-        Attributes:
-            display_properties: Not specified.
-            reasons: The specific reasons for the report under this category.
-            hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally.
-
-    When entities refer to each other in Destiny content, it is this hash that they are referring to.
-            index: The index of the entity as it was found in the investment tables.
-            redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+    Attributes:
+        display_properties: _No description given_
+        reasons: The specific reasons for the report under this category.
+        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
+        index: The index of the entity as it was found in the investment tables.
+        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
@@ -37,7 +35,7 @@ class DestinyReportReasonDefinition(BaseModel):
 
     Attributes:
         reason_hash: The identifier for the reason: they are only guaranteed unique under the Category in which they are found.
-        display_properties: Not specified.
+        display_properties: _No description given_
     """
 
     reason_hash: int = attr.field()

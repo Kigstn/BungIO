@@ -1,1649 +1,1644 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
-
-import attr
-
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseEnum
 
 
 class PlatformErrorCodes(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     SUCCESS = 1
-    """Not specified. """
+    """_No description given_ """
     TRANSPORT_EXCEPTION = 2
-    """Not specified. """
+    """_No description given_ """
     UNHANDLED_EXCEPTION = 3
-    """Not specified. """
+    """_No description given_ """
     NOT_IMPLEMENTED = 4
-    """Not specified. """
+    """_No description given_ """
     SYSTEM_DISABLED = 5
-    """Not specified. """
+    """_No description given_ """
     FAILED_TO_LOAD_AVAILABLE_LOCALES_CONFIGURATION = 6
-    """Not specified. """
+    """_No description given_ """
     PARAMETER_PARSE_FAILURE = 7
-    """Not specified. """
+    """_No description given_ """
     PARAMETER_INVALID_RANGE = 8
-    """Not specified. """
+    """_No description given_ """
     BAD_REQUEST = 9
-    """Not specified. """
+    """_No description given_ """
     AUTHENTICATION_INVALID = 10
-    """Not specified. """
+    """_No description given_ """
     DATA_NOT_FOUND = 11
-    """Not specified. """
+    """_No description given_ """
     INSUFFICIENT_PRIVILEGES = 12
-    """Not specified. """
+    """_No description given_ """
     DUPLICATE = 13
-    """Not specified. """
+    """_No description given_ """
     UNKNOWN_SQL_RESULT = 14
     """Deprecated, please do not check for this value anywhere. """
     VALIDATION_ERROR = 15
-    """Not specified. """
+    """_No description given_ """
     VALIDATION_MISSING_FIELD_ERROR = 16
-    """Not specified. """
+    """_No description given_ """
     VALIDATION_INVALID_INPUT_ERROR = 17
-    """Not specified. """
+    """_No description given_ """
     INVALID_PARAMETERS = 18
-    """Not specified. """
+    """_No description given_ """
     PARAMETER_NOT_FOUND = 19
-    """Not specified. """
+    """_No description given_ """
     UNHANDLED_HTTP_EXCEPTION = 20
-    """Not specified. """
+    """_No description given_ """
     NOT_FOUND = 21
-    """Not specified. """
+    """_No description given_ """
     WEB_AUTH_MODULE_ASYNC_FAILED = 22
-    """Not specified. """
+    """_No description given_ """
     INVALID_RETURN_VALUE = 23
-    """Not specified. """
+    """_No description given_ """
     USER_BANNED = 24
-    """Not specified. """
+    """_No description given_ """
     INVALID_POST_BODY = 25
-    """Not specified. """
+    """_No description given_ """
     MISSING_POST_BODY = 26
-    """Not specified. """
+    """_No description given_ """
     EXTERNAL_SERVICE_TIMEOUT = 27
-    """Not specified. """
+    """_No description given_ """
     VALIDATION_LENGTH_ERROR = 28
-    """Not specified. """
+    """_No description given_ """
     VALIDATION_RANGE_ERROR = 29
-    """Not specified. """
+    """_No description given_ """
     JSON_DESERIALIZATION_ERROR = 30
-    """Not specified. """
+    """_No description given_ """
     THROTTLE_LIMIT_EXCEEDED = 31
-    """Not specified. """
+    """_No description given_ """
     VALIDATION_TAG_ERROR = 32
-    """Not specified. """
+    """_No description given_ """
     VALIDATION_PROFANITY_ERROR = 33
-    """Not specified. """
+    """_No description given_ """
     VALIDATION_URL_FORMAT_ERROR = 34
-    """Not specified. """
+    """_No description given_ """
     THROTTLE_LIMIT_EXCEEDED_MINUTES = 35
-    """Not specified. """
+    """_No description given_ """
     THROTTLE_LIMIT_EXCEEDED_MOMENTARILY = 36
-    """Not specified. """
+    """_No description given_ """
     THROTTLE_LIMIT_EXCEEDED_SECONDS = 37
-    """Not specified. """
+    """_No description given_ """
     EXTERNAL_SERVICE_UNKNOWN = 38
-    """Not specified. """
+    """_No description given_ """
     VALIDATION_WORD_LENGTH_ERROR = 39
-    """Not specified. """
+    """_No description given_ """
     VALIDATION_INVISIBLE_UNICODE = 40
-    """Not specified. """
+    """_No description given_ """
     VALIDATION_BAD_NAMES = 41
-    """Not specified. """
+    """_No description given_ """
     EXTERNAL_SERVICE_FAILED = 42
-    """Not specified. """
+    """_No description given_ """
     SERVICE_RETIRED = 43
-    """Not specified. """
+    """_No description given_ """
     UNKNOWN_SQL_EXCEPTION = 44
-    """Not specified. """
+    """_No description given_ """
     UNSUPPORTED_LOCALE = 45
-    """Not specified. """
+    """_No description given_ """
     INVALID_PAGE_NUMBER = 46
-    """Not specified. """
+    """_No description given_ """
     MAXIMUM_PAGE_SIZE_EXCEEDED = 47
-    """Not specified. """
+    """_No description given_ """
     SERVICE_UNSUPPORTED = 48
-    """Not specified. """
+    """_No description given_ """
     VALIDATION_MAXIMUM_UNICODE_COMBINING_CHARACTERS = 49
-    """Not specified. """
+    """_No description given_ """
     VALIDATION_MAXIMUM_SEQUENTIAL_CARRIAGE_RETURNS = 50
-    """Not specified. """
+    """_No description given_ """
     PER_ENDPOINT_REQUEST_THROTTLE_EXCEEDED = 51
-    """Not specified. """
+    """_No description given_ """
     AUTH_CONTEXT_CACHE_ASSERTION = 52
-    """Not specified. """
+    """_No description given_ """
     EX_PLATFORM_STRING_VALIDATION_ERROR = 53
-    """Not specified. """
+    """_No description given_ """
     PER_APPLICATION_THROTTLE_EXCEEDED = 54
-    """Not specified. """
+    """_No description given_ """
     PER_APPLICATION_ANONYMOUS_THROTTLE_EXCEEDED = 55
-    """Not specified. """
+    """_No description given_ """
     PER_APPLICATION_AUTHENTICATED_THROTTLE_EXCEEDED = 56
-    """Not specified. """
+    """_No description given_ """
     PER_USER_THROTTLE_EXCEEDED = 57
-    """Not specified. """
+    """_No description given_ """
     PAYLOAD_SIGNATURE_VERIFICATION_FAILURE = 58
-    """Not specified. """
+    """_No description given_ """
     INVALID_SERVICE_AUTH_CONTEXT = 59
-    """Not specified. """
+    """_No description given_ """
     OBSOLETE_CREDENTIAL_TYPE = 89
-    """Not specified. """
+    """_No description given_ """
     UNABLE_TO_UN_PAIR_MOBILE_APP = 90
-    """Not specified. """
+    """_No description given_ """
     UNABLE_TO_PAIR_MOBILE_APP = 91
-    """Not specified. """
+    """_No description given_ """
     CANNOT_USE_MOBILE_AUTH_WITH_NON_MOBILE_PROVIDER = 92
-    """Not specified. """
+    """_No description given_ """
     MISSING_DEVICE_COOKIE = 93
-    """Not specified. """
+    """_No description given_ """
     FACEBOOK_TOKEN_EXPIRED = 94
-    """Not specified. """
+    """_No description given_ """
     AUTH_TICKET_REQUIRED = 95
-    """Not specified. """
+    """_No description given_ """
     COOKIE_CONTEXT_REQUIRED = 96
-    """Not specified. """
+    """_No description given_ """
     UNKNOWN_AUTHENTICATION_ERROR = 97
-    """Not specified. """
+    """_No description given_ """
     BUNGIE_NET_ACCOUNT_CREATION_REQUIRED = 98
-    """Not specified. """
+    """_No description given_ """
     WEB_AUTH_REQUIRED = 99
-    """Not specified. """
+    """_No description given_ """
     CONTENT_UNKNOWN_SQL_RESULT = 100
-    """Not specified. """
+    """_No description given_ """
     CONTENT_NEED_UNIQUE_PATH = 101
-    """Not specified. """
+    """_No description given_ """
     CONTENT_SQL_EXCEPTION = 102
-    """Not specified. """
+    """_No description given_ """
     CONTENT_NOT_FOUND = 103
-    """Not specified. """
+    """_No description given_ """
     CONTENT_SUCCESS_WITH_TAG_ADD_FAIL = 104
-    """Not specified. """
+    """_No description given_ """
     CONTENT_SEARCH_MISSING_PARAMETERS = 105
-    """Not specified. """
+    """_No description given_ """
     CONTENT_INVALID_ID = 106
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PHYSICAL_FILE_DELETION_ERROR = 107
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PHYSICAL_FILE_CREATION_ERROR = 108
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PERFORCE_SUBMISSION_ERROR = 109
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PERFORCE_INITIALIZATION_ERROR = 110
-    """Not specified. """
+    """_No description given_ """
     CONTENT_DEPLOYMENT_PACKAGE_NOT_READY_ERROR = 111
-    """Not specified. """
+    """_No description given_ """
     CONTENT_UPLOAD_FAILED = 112
-    """Not specified. """
+    """_No description given_ """
     CONTENT_TOO_MANY_RESULTS = 113
-    """Not specified. """
+    """_No description given_ """
     CONTENT_INVALID_STATE = 115
-    """Not specified. """
+    """_No description given_ """
     CONTENT_NAVIGATION_PARENT_NOT_FOUND = 116
-    """Not specified. """
+    """_No description given_ """
     CONTENT_NAVIGATION_PARENT_UPDATE_ERROR = 117
-    """Not specified. """
+    """_No description given_ """
     DEPLOYMENT_PACKAGE_NOT_EDITABLE = 118
-    """Not specified. """
+    """_No description given_ """
     CONTENT_VALIDATION_ERROR = 119
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PROPERTIES_VALIDATION_ERROR = 120
-    """Not specified. """
+    """_No description given_ """
     CONTENT_TYPE_NOT_FOUND = 121
-    """Not specified. """
+    """_No description given_ """
     DEPLOYMENT_PACKAGE_NOT_FOUND = 122
-    """Not specified. """
+    """_No description given_ """
     CONTENT_SEARCH_INVALID_PARAMETERS = 123
-    """Not specified. """
+    """_No description given_ """
     CONTENT_ITEM_PROPERTY_AGGREGATION_ERROR = 124
-    """Not specified. """
+    """_No description given_ """
     DEPLOYMENT_PACKAGE_FILE_NOT_FOUND = 125
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PERFORCE_FILE_HISTORY_NOT_FOUND = 126
-    """Not specified. """
+    """_No description given_ """
     CONTENT_ASSET_ZIP_CREATION_FAILURE = 127
-    """Not specified. """
+    """_No description given_ """
     CONTENT_ASSET_ZIP_CREATION_BUSY = 128
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PROJECT_NOT_FOUND = 129
-    """Not specified. """
+    """_No description given_ """
     CONTENT_FOLDER_NOT_FOUND = 130
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PACKAGES_INCONSISTENT = 131
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PACKAGES_INVALID_STATE = 132
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PACKAGES_INCONSISTENT_TYPE = 133
-    """Not specified. """
+    """_No description given_ """
     CONTENT_CANNOT_DELETE_PACKAGE = 134
-    """Not specified. """
+    """_No description given_ """
     CONTENT_LOCKED_FOR_CHANGES = 135
-    """Not specified. """
+    """_No description given_ """
     CONTENT_FILE_UPLOAD_FAILED = 136
-    """Not specified. """
+    """_No description given_ """
     CONTENT_NOT_REVIEWED = 137
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PERMISSION_DENIED = 138
-    """Not specified. """
+    """_No description given_ """
     CONTENT_INVALID_EXTERNAL_URL = 139
-    """Not specified. """
+    """_No description given_ """
     CONTENT_EXTERNAL_FILE_CANNOT_BE_IMPORTED_LOCALLY = 140
-    """Not specified. """
+    """_No description given_ """
     CONTENT_TAG_SAVE_FAILURE = 141
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PERFORCE_UNMATCHED_FILE_ERROR = 142
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PERFORCE_CHANGELIST_RESULT_NOT_FOUND = 143
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PERFORCE_CHANGELIST_FILE_ITEMS_NOT_FOUND = 144
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PERFORCE_INVALID_REVISION_ERROR = 145
-    """Not specified. """
+    """_No description given_ """
     CONTENT_UNLOADED_SAVE_RESULT = 146
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PROPERTY_INVALID_NUMBER = 147
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PROPERTY_INVALID_URL = 148
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PROPERTY_INVALID_DATE = 149
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PROPERTY_INVALID_SET = 150
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PROPERTY_CANNOT_DESERIALIZE = 151
-    """Not specified. """
+    """_No description given_ """
     CONTENT_REGEX_VALIDATION_FAIL_ON_PROPERTY = 152
-    """Not specified. """
+    """_No description given_ """
     CONTENT_MAX_LENGTH_FAIL_ON_PROPERTY = 153
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PROPERTY_UNEXPECTED_DESERIALIZATION_ERROR = 154
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PROPERTY_REQUIRED = 155
-    """Not specified. """
+    """_No description given_ """
     CONTENT_CANNOT_CREATE_FILE = 156
-    """Not specified. """
+    """_No description given_ """
     CONTENT_INVALID_MIGRATION_FILE = 157
-    """Not specified. """
+    """_No description given_ """
     CONTENT_MIGRATION_ALTERING_PROCESSED_ITEM = 158
-    """Not specified. """
+    """_No description given_ """
     CONTENT_PROPERTY_DEFINITION_NOT_FOUND = 159
-    """Not specified. """
+    """_No description given_ """
     CONTENT_REVIEW_DATA_CHANGED = 160
-    """Not specified. """
+    """_No description given_ """
     CONTENT_ROLLBACK_REVISION_NOT_IN_PACKAGE = 161
-    """Not specified. """
+    """_No description given_ """
     CONTENT_ITEM_NOT_BASED_ON_LATEST_REVISION = 162
-    """Not specified. """
+    """_No description given_ """
     CONTENT_UNAUTHORIZED = 163
-    """Not specified. """
+    """_No description given_ """
     CONTENT_CANNOT_CREATE_DEPLOYMENT_PACKAGE = 164
-    """Not specified. """
+    """_No description given_ """
     CONTENT_USER_NOT_FOUND = 165
-    """Not specified. """
+    """_No description given_ """
     CONTENT_LOCALE_PERMISSION_DENIED = 166
-    """Not specified. """
+    """_No description given_ """
     CONTENT_INVALID_LINK_TO_INTERNAL_ENVIRONMENT = 167
-    """Not specified. """
+    """_No description given_ """
     CONTENT_INVALID_BLACKLISTED_CONTENT = 168
-    """Not specified. """
+    """_No description given_ """
     CONTENT_MACRO_MALFORMED_NO_CONTENT_ID = 169
-    """Not specified. """
+    """_No description given_ """
     CONTENT_MACRO_MALFORMED_NO_TEMPLATE_TYPE = 170
-    """Not specified. """
+    """_No description given_ """
     CONTENT_ILLEGAL_B_NET_MEMBERSHIP_ID = 171
-    """Not specified. """
+    """_No description given_ """
     CONTENT_LOCALE_DID_NOT_MATCH_EXPECTED = 172
-    """Not specified. """
+    """_No description given_ """
     CONTENT_BABEL_CALL_FAILED = 173
-    """Not specified. """
+    """_No description given_ """
     CONTENT_ENGLISH_POST_LIVE_FORBIDDEN = 174
-    """Not specified. """
+    """_No description given_ """
     CONTENT_LOCALE_EDIT_PERMISSION_DENIED = 175
-    """Not specified. """
+    """_No description given_ """
     USER_NON_UNIQUE_NAME = 200
-    """Not specified. """
+    """_No description given_ """
     USER_MANUAL_LINKING_STEP_REQUIRED = 201
-    """Not specified. """
+    """_No description given_ """
     USER_CREATE_UNKNOWN_SQL_RESULT = 202
-    """Not specified. """
+    """_No description given_ """
     USER_CREATE_UNKNOWN_SQL_EXCEPTION = 203
-    """Not specified. """
+    """_No description given_ """
     USER_MALFORMED_MEMBERSHIP_ID = 204
-    """Not specified. """
+    """_No description given_ """
     USER_CANNOT_FIND_REQUESTED_USER = 205
-    """Not specified. """
+    """_No description given_ """
     USER_CANNOT_LOAD_ACCOUNT_CREDENTIAL_LINK_INFO = 206
-    """Not specified. """
+    """_No description given_ """
     USER_INVALID_MOBILE_APP_TYPE = 207
-    """Not specified. """
+    """_No description given_ """
     USER_MISSING_MOBILE_PAIRING_INFO = 208
-    """Not specified. """
+    """_No description given_ """
     USER_CANNOT_GENERATE_MOBILE_KEY_WHILE_USING_MOBILE_CREDENTIAL = 209
-    """Not specified. """
+    """_No description given_ """
     USER_GENERATE_MOBILE_KEY_EXISTING_SLOT_COLLISION = 210
-    """Not specified. """
+    """_No description given_ """
     USER_DISPLAY_NAME_MISSING_OR_INVALID = 211
-    """Not specified. """
+    """_No description given_ """
     USER_CANNOT_LOAD_ACCOUNT_PROFILE_DATA = 212
-    """Not specified. """
+    """_No description given_ """
     USER_CANNOT_SAVE_USER_PROFILE_DATA = 213
-    """Not specified. """
+    """_No description given_ """
     USER_EMAIL_MISSING_OR_INVALID = 214
-    """Not specified. """
+    """_No description given_ """
     USER_TERMS_OF_USE_REQUIRED = 215
-    """Not specified. """
+    """_No description given_ """
     USER_CANNOT_CREATE_NEW_ACCOUNT_WHILE_LOGGED_IN = 216
-    """Not specified. """
+    """_No description given_ """
     USER_CANNOT_RESOLVE_CENTRAL_ACCOUNT = 217
-    """Not specified. """
+    """_No description given_ """
     USER_INVALID_AVATAR = 218
-    """Not specified. """
+    """_No description given_ """
     USER_MISSING_CREATED_USER_RESULT = 219
-    """Not specified. """
+    """_No description given_ """
     USER_CANNOT_CHANGE_UNIQUE_NAME_YET = 220
-    """Not specified. """
+    """_No description given_ """
     USER_CANNOT_CHANGE_DISPLAY_NAME_YET = 221
-    """Not specified. """
+    """_No description given_ """
     USER_CANNOT_CHANGE_EMAIL = 222
-    """Not specified. """
+    """_No description given_ """
     USER_UNIQUE_NAME_MUST_START_WITH_LETTER = 223
-    """Not specified. """
+    """_No description given_ """
     USER_NO_LINKED_ACCOUNTS_SUPPORT_FRIEND_LISTINGS = 224
-    """Not specified. """
+    """_No description given_ """
     USER_ACKNOWLEDGMENT_TABLE_FULL = 225
-    """Not specified. """
+    """_No description given_ """
     USER_CREATION_DESTINY_MEMBERSHIP_REQUIRED = 226
-    """Not specified. """
+    """_No description given_ """
     USER_FRIENDS_TOKEN_NEEDS_REFRESH = 227
-    """Not specified. """
+    """_No description given_ """
     USER_EMAIL_VALIDATION_UNKNOWN = 228
-    """Not specified. """
+    """_No description given_ """
     USER_EMAIL_VALIDATION_LIMIT = 229
-    """Not specified. """
+    """_No description given_ """
     TRANSACTION_EMAIL_SEND_FAILURE = 230
-    """Not specified. """
+    """_No description given_ """
     MAIL_HOOK_PERMISSION_FAILURE = 231
-    """Not specified. """
+    """_No description given_ """
     MAIL_SERVICE_RATE_LIMIT = 232
-    """Not specified. """
+    """_No description given_ """
     USER_EMAIL_MUST_BE_VERIFIED = 233
-    """Not specified. """
+    """_No description given_ """
     USER_MUST_ALLOW_CUSTOMER_SERVICE_EMAILS = 234
-    """Not specified. """
+    """_No description given_ """
     NON_TRANSACTIONAL_EMAIL_SEND_FAILURE = 235
-    """Not specified. """
+    """_No description given_ """
     UNKNOWN_ERROR_SETTING_GLOBAL_DISPLAY_NAME = 236
-    """Not specified. """
+    """_No description given_ """
     DUPLICATE_GLOBAL_DISPLAY_NAME = 237
-    """Not specified. """
+    """_No description given_ """
     ERROR_RUNNING_NAME_VALIDATION_CHECKS = 238
-    """Not specified. """
+    """_No description given_ """
     ERROR_DATABASE_GLOBAL_NAME = 239
-    """Not specified. """
+    """_No description given_ """
     ERROR_NO_AVAILABLE_NAME_CHANGES = 240
-    """Not specified. """
+    """_No description given_ """
     ERROR_NAME_ALREADY_SET_TO_INPUT = 241
-    """Not specified. """
+    """_No description given_ """
     MESSAGING_UNKNOWN_ERROR = 300
-    """Not specified. """
+    """_No description given_ """
     MESSAGING_SELF_ERROR = 301
-    """Not specified. """
+    """_No description given_ """
     MESSAGING_SEND_THROTTLE = 302
-    """Not specified. """
+    """_No description given_ """
     MESSAGING_NO_BODY = 303
-    """Not specified. """
+    """_No description given_ """
     MESSAGING_TOO_MANY_USERS = 304
-    """Not specified. """
+    """_No description given_ """
     MESSAGING_CAN_NOT_LEAVE_CONVERSATION = 305
-    """Not specified. """
+    """_No description given_ """
     MESSAGING_UNABLE_TO_SEND = 306
-    """Not specified. """
+    """_No description given_ """
     MESSAGING_DELETED_USER_FORBIDDEN = 307
-    """Not specified. """
+    """_No description given_ """
     MESSAGING_CANNOT_DELETE_EXTERNAL_CONVERSATION = 308
-    """Not specified. """
+    """_No description given_ """
     MESSAGING_GROUP_CHAT_DISABLED = 309
-    """Not specified. """
+    """_No description given_ """
     MESSAGING_MUST_INCLUDE_SELF_IN_PRIVATE_MESSAGE = 310
-    """Not specified. """
+    """_No description given_ """
     MESSAGING_SENDER_IS_BANNED = 311
-    """Not specified. """
+    """_No description given_ """
     MESSAGING_GROUP_OPTIONAL_CHAT_EXCEEDED_MAXIMUM = 312
-    """Not specified. """
+    """_No description given_ """
     PRIVATE_MESSAGING_REQUIRES_DESTINY_MEMBERSHIP = 313
-    """Not specified. """
+    """_No description given_ """
     ADD_SURVEY_ANSWERS_UNKNOWN_SQL_EXCEPTION = 400
-    """Not specified. """
+    """_No description given_ """
     FORUM_BODY_CANNOT_BE_EMPTY = 500
-    """Not specified. """
+    """_No description given_ """
     FORUM_SUBJECT_CANNOT_BE_EMPTY_ON_TOPIC_POST = 501
-    """Not specified. """
+    """_No description given_ """
     FORUM_CANNOT_LOCATE_PARENT_POST = 502
-    """Not specified. """
+    """_No description given_ """
     FORUM_THREAD_LOCKED_FOR_REPLIES = 503
-    """Not specified. """
+    """_No description given_ """
     FORUM_UNKNOWN_SQL_RESULT_DURING_CREATE_POST = 504
-    """Not specified. """
+    """_No description given_ """
     FORUM_UNKNOWN_TAG_CREATION_ERROR = 505
-    """Not specified. """
+    """_No description given_ """
     FORUM_UNKNOWN_SQL_RESULT_DURING_TAG_ITEM = 506
-    """Not specified. """
+    """_No description given_ """
     FORUM_UNKNOWN_EXCEPTION_CREATE_POST = 507
-    """Not specified. """
+    """_No description given_ """
     FORUM_QUESTION_MUST_BE_TOPIC_POST = 508
-    """Not specified. """
+    """_No description given_ """
     FORUM_EXCEPTION_DURING_TAG_SEARCH = 509
-    """Not specified. """
+    """_No description given_ """
     FORUM_EXCEPTION_DURING_TOPIC_RETRIEVAL = 510
-    """Not specified. """
+    """_No description given_ """
     FORUM_ALIASED_TAG_ERROR = 511
-    """Not specified. """
+    """_No description given_ """
     FORUM_CANNOT_LOCATE_THREAD = 512
-    """Not specified. """
+    """_No description given_ """
     FORUM_UNKNOWN_EXCEPTION_EDIT_POST = 513
-    """Not specified. """
+    """_No description given_ """
     FORUM_CANNOT_LOCATE_POST = 514
-    """Not specified. """
+    """_No description given_ """
     FORUM_UNKNOWN_EXCEPTION_GET_OR_CREATE_TAGS = 515
-    """Not specified. """
+    """_No description given_ """
     FORUM_EDIT_PERMISSION_DENIED = 516
-    """Not specified. """
+    """_No description given_ """
     FORUM_UNKNOWN_SQL_RESULT_DURING_TAG_ID_RETRIEVAL = 517
-    """Not specified. """
+    """_No description given_ """
     FORUM_CANNOT_GET_RATING = 518
-    """Not specified. """
+    """_No description given_ """
     FORUM_UNKNOWN_EXCEPTION_GET_RATING = 519
-    """Not specified. """
+    """_No description given_ """
     FORUM_RATINGS_ACCESS_ERROR = 520
-    """Not specified. """
+    """_No description given_ """
     FORUM_RELATED_POST_ACCESS_ERROR = 521
-    """Not specified. """
+    """_No description given_ """
     FORUM_LATEST_REPLY_ACCESS_ERROR = 522
-    """Not specified. """
+    """_No description given_ """
     FORUM_USER_STATUS_ACCESS_ERROR = 523
-    """Not specified. """
+    """_No description given_ """
     FORUM_AUTHOR_ACCESS_ERROR = 524
-    """Not specified. """
+    """_No description given_ """
     FORUM_GROUP_ACCESS_ERROR = 525
-    """Not specified. """
+    """_No description given_ """
     FORUM_URL_EXPECTED_BUT_MISSING = 526
-    """Not specified. """
+    """_No description given_ """
     FORUM_REPLIES_CANNOT_BE_EMPTY = 527
-    """Not specified. """
+    """_No description given_ """
     FORUM_REPLIES_CANNOT_BE_IN_DIFFERENT_GROUPS = 528
-    """Not specified. """
+    """_No description given_ """
     FORUM_SUB_TOPIC_CANNOT_BE_CREATED_AT_THIS_THREAD_LEVEL = 529
-    """Not specified. """
+    """_No description given_ """
     FORUM_CANNOT_CREATE_CONTENT_TOPIC = 530
-    """Not specified. """
+    """_No description given_ """
     FORUM_TOPIC_DOES_NOT_EXIST = 531
-    """Not specified. """
+    """_No description given_ """
     FORUM_CONTENT_COMMENTS_NOT_ALLOWED = 532
-    """Not specified. """
+    """_No description given_ """
     FORUM_UNKNOWN_SQL_RESULT_DURING_EDIT_POST = 533
-    """Not specified. """
+    """_No description given_ """
     FORUM_UNKNOWN_SQL_RESULT_DURING_GET_POST = 534
-    """Not specified. """
+    """_No description given_ """
     FORUM_POST_VALIDATION_BAD_URL = 535
-    """Not specified. """
+    """_No description given_ """
     FORUM_BODY_TOO_LONG = 536
-    """Not specified. """
+    """_No description given_ """
     FORUM_SUBJECT_TOO_LONG = 537
-    """Not specified. """
+    """_No description given_ """
     FORUM_ANNOUNCEMENT_NOT_ALLOWED = 538
-    """Not specified. """
+    """_No description given_ """
     FORUM_CANNOT_SHARE_OWN_POST = 539
-    """Not specified. """
+    """_No description given_ """
     FORUM_EDIT_NO_OP = 540
-    """Not specified. """
+    """_No description given_ """
     FORUM_UNKNOWN_DATABASE_ERROR_DURING_GET_POST = 541
-    """Not specified. """
+    """_No description given_ """
     FORUM_EXCEEED_MAXIMUM_ROW_LIMIT = 542
-    """Not specified. """
+    """_No description given_ """
     FORUM_CANNOT_SHARE_PRIVATE_POST = 543
-    """Not specified. """
+    """_No description given_ """
     FORUM_CANNOT_CROSS_POST_BETWEEN_GROUPS = 544
-    """Not specified. """
+    """_No description given_ """
     FORUM_INCOMPATIBLE_CATEGORIES = 555
-    """Not specified. """
+    """_No description given_ """
     FORUM_CANNOT_USE_THESE_CATEGORIES_ON_NON_TOPIC_POST = 556
-    """Not specified. """
+    """_No description given_ """
     FORUM_CAN_ONLY_DELETE_TOPICS = 557
-    """Not specified. """
+    """_No description given_ """
     FORUM_DELETE_SQL_EXCEPTION = 558
-    """Not specified. """
+    """_No description given_ """
     FORUM_DELETE_SQL_UNKNOWN_RESULT = 559
-    """Not specified. """
+    """_No description given_ """
     FORUM_TOO_MANY_TAGS = 560
-    """Not specified. """
+    """_No description given_ """
     FORUM_CAN_ONLY_RATE_TOPICS = 561
-    """Not specified. """
+    """_No description given_ """
     FORUM_BANNED_POSTS_CANNOT_BE_EDITED = 562
-    """Not specified. """
+    """_No description given_ """
     FORUM_THREAD_ROOT_IS_BANNED = 563
-    """Not specified. """
+    """_No description given_ """
     FORUM_CANNOT_USE_OFFICIAL_TAG_CATEGORY_AS_TAG = 564
-    """Not specified. """
+    """_No description given_ """
     FORUM_ANSWER_CANNOT_BE_MADE_ON_CREATE_POST = 565
-    """Not specified. """
+    """_No description given_ """
     FORUM_ANSWER_CANNOT_BE_MADE_ON_EDIT_POST = 566
-    """Not specified. """
+    """_No description given_ """
     FORUM_ANSWER_POST_ID_IS_NOT_A_DIRECT_REPLY_OF_QUESTION = 567
-    """Not specified. """
+    """_No description given_ """
     FORUM_ANSWER_TOPIC_ID_IS_NOT_A_QUESTION = 568
-    """Not specified. """
+    """_No description given_ """
     FORUM_UNKNOWN_EXCEPTION_DURING_MARK_ANSWER = 569
-    """Not specified. """
+    """_No description given_ """
     FORUM_UNKNOWN_SQL_RESULT_DURING_MARK_ANSWER = 570
-    """Not specified. """
+    """_No description given_ """
     FORUM_CANNOT_RATE_YOUR_OWN_POSTS = 571
-    """Not specified. """
+    """_No description given_ """
     FORUM_POLLS_MUST_BE_THE_FIRST_POST_IN_TOPIC = 572
-    """Not specified. """
+    """_No description given_ """
     FORUM_INVALID_POLL_INPUT = 573
-    """Not specified. """
+    """_No description given_ """
     FORUM_GROUP_ADMIN_EDIT_NON_MEMBER = 574
-    """Not specified. """
+    """_No description given_ """
     FORUM_CANNOT_EDIT_MODERATOR_EDITED_POST = 575
-    """Not specified. """
+    """_No description given_ """
     FORUM_REQUIRES_DESTINY_MEMBERSHIP = 576
-    """Not specified. """
+    """_No description given_ """
     FORUM_UNEXPECTED_ERROR = 577
-    """Not specified. """
+    """_No description given_ """
     FORUM_AGE_LOCK = 578
-    """Not specified. """
+    """_No description given_ """
     FORUM_MAX_PAGES = 579
-    """Not specified. """
+    """_No description given_ """
     FORUM_MAX_PAGES_OLDEST_FIRST = 580
-    """Not specified. """
+    """_No description given_ """
     FORUM_CANNOT_APPLY_FORUM_ID_WITHOUT_TAGS = 581
-    """Not specified. """
+    """_No description given_ """
     FORUM_CANNOT_APPLY_FORUM_ID_TO_NON_TOPICS = 582
-    """Not specified. """
+    """_No description given_ """
     FORUM_CANNOT_DOWNVOTE_COMMUNITY_CREATIONS = 583
-    """Not specified. """
+    """_No description given_ """
     FORUM_TOPICS_MUST_HAVE_OFFICIAL_CATEGORY = 584
-    """Not specified. """
+    """_No description given_ """
     FORUM_RECRUITMENT_TOPIC_MALFORMED = 585
-    """Not specified. """
+    """_No description given_ """
     FORUM_RECRUITMENT_TOPIC_NOT_FOUND = 586
-    """Not specified. """
+    """_No description given_ """
     FORUM_RECRUITMENT_TOPIC_NO_SLOTS_REMAINING = 587
-    """Not specified. """
+    """_No description given_ """
     FORUM_RECRUITMENT_TOPIC_KICK_BAN = 588
-    """Not specified. """
+    """_No description given_ """
     FORUM_RECRUITMENT_TOPIC_REQUIREMENTS_NOT_MET = 589
-    """Not specified. """
+    """_No description given_ """
     FORUM_RECRUITMENT_TOPIC_NO_PLAYERS = 590
-    """Not specified. """
+    """_No description given_ """
     FORUM_RECRUITMENT_APPROVE_FAIL_MESSAGE_BAN = 591
-    """Not specified. """
+    """_No description given_ """
     FORUM_RECRUITMENT_GLOBAL_BAN = 592
-    """Not specified. """
+    """_No description given_ """
     FORUM_USER_BANNED_FROM_THIS_TOPIC = 593
-    """Not specified. """
+    """_No description given_ """
     FORUM_RECRUITMENT_FIRETEAM_MEMBERS_ONLY = 594
-    """Not specified. """
+    """_No description given_ """
     FORUM_REQUIRES_DESTINY2_PROGRESS = 595
-    """Not specified. """
+    """_No description given_ """
     GROUP_MEMBERSHIP_APPLICATION_ALREADY_RESOLVED = 601
-    """Not specified. """
+    """_No description given_ """
     GROUP_MEMBERSHIP_ALREADY_APPLIED = 602
-    """Not specified. """
+    """_No description given_ """
     GROUP_MEMBERSHIP_INSUFFICIENT_PRIVILEGES = 603
-    """Not specified. """
+    """_No description given_ """
     GROUP_ID_NOT_RETURNED_FROM_CREATION = 604
-    """Not specified. """
+    """_No description given_ """
     GROUP_SEARCH_INVALID_PARAMETERS = 605
-    """Not specified. """
+    """_No description given_ """
     GROUP_MEMBERSHIP_PENDING_APPLICATION_NOT_FOUND = 606
-    """Not specified. """
+    """_No description given_ """
     GROUP_INVALID_ID = 607
-    """Not specified. """
+    """_No description given_ """
     GROUP_INVALID_MEMBERSHIP_ID = 608
-    """Not specified. """
+    """_No description given_ """
     GROUP_INVALID_MEMBERSHIP_TYPE = 609
-    """Not specified. """
+    """_No description given_ """
     GROUP_MISSING_TAGS = 610
-    """Not specified. """
+    """_No description given_ """
     GROUP_MEMBERSHIP_NOT_FOUND = 611
-    """Not specified. """
+    """_No description given_ """
     GROUP_INVALID_RATING = 612
-    """Not specified. """
+    """_No description given_ """
     GROUP_USER_FOLLOWING_ACCESS_ERROR = 613
-    """Not specified. """
+    """_No description given_ """
     GROUP_USER_MEMBERSHIP_ACCESS_ERROR = 614
-    """Not specified. """
+    """_No description given_ """
     GROUP_CREATOR_ACCESS_ERROR = 615
-    """Not specified. """
+    """_No description given_ """
     GROUP_ADMIN_ACCESS_ERROR = 616
-    """Not specified. """
+    """_No description given_ """
     GROUP_PRIVATE_POST_NOT_VIEWABLE = 617
-    """Not specified. """
+    """_No description given_ """
     GROUP_MEMBERSHIP_NOT_LOGGED_IN = 618
-    """Not specified. """
+    """_No description given_ """
     GROUP_NOT_DELETED = 619
-    """Not specified. """
+    """_No description given_ """
     GROUP_UNKNOWN_ERROR_UNDELETING_GROUP = 620
-    """Not specified. """
+    """_No description given_ """
     GROUP_DELETED = 621
-    """Not specified. """
+    """_No description given_ """
     GROUP_NOT_FOUND = 622
-    """Not specified. """
+    """_No description given_ """
     GROUP_MEMBER_BANNED = 623
-    """Not specified. """
+    """_No description given_ """
     GROUP_MEMBERSHIP_CLOSED = 624
-    """Not specified. """
+    """_No description given_ """
     GROUP_PRIVATE_POST_OVERRIDE_ERROR = 625
-    """Not specified. """
+    """_No description given_ """
     GROUP_NAME_TAKEN = 626
-    """Not specified. """
+    """_No description given_ """
     GROUP_DELETION_GRACE_PERIOD_EXPIRED = 627
-    """Not specified. """
+    """_No description given_ """
     GROUP_CANNOT_CHECK_BAN_STATUS = 628
-    """Not specified. """
+    """_No description given_ """
     GROUP_MAXIMUM_MEMBERSHIP_COUNT_REACHED = 629
-    """Not specified. """
+    """_No description given_ """
     NO_DESTINY_ACCOUNT_FOR_CLAN_PLATFORM = 630
-    """Not specified. """
+    """_No description given_ """
     ALREADY_REQUESTING_MEMBERSHIP_FOR_CLAN_PLATFORM = 631
-    """Not specified. """
+    """_No description given_ """
     ALREADY_CLAN_MEMBER_ON_PLATFORM = 632
-    """Not specified. """
+    """_No description given_ """
     GROUP_JOINED_CANNOT_SET_CLAN_NAME = 633
-    """Not specified. """
+    """_No description given_ """
     GROUP_LEFT_CANNOT_CLEAR_CLAN_NAME = 634
-    """Not specified. """
+    """_No description given_ """
     GROUP_RELATIONSHIP_REQUEST_PENDING = 635
-    """Not specified. """
+    """_No description given_ """
     GROUP_RELATIONSHIP_REQUEST_BLOCKED = 636
-    """Not specified. """
+    """_No description given_ """
     GROUP_RELATIONSHIP_REQUEST_NOT_FOUND = 637
-    """Not specified. """
+    """_No description given_ """
     GROUP_RELATIONSHIP_BLOCK_NOT_FOUND = 638
-    """Not specified. """
+    """_No description given_ """
     GROUP_RELATIONSHIP_NOT_FOUND = 639
-    """Not specified. """
+    """_No description given_ """
     GROUP_ALREADY_ALLIED = 641
-    """Not specified. """
+    """_No description given_ """
     GROUP_ALREADY_MEMBER = 642
-    """Not specified. """
+    """_No description given_ """
     GROUP_RELATIONSHIP_ALREADY_EXISTS = 643
-    """Not specified. """
+    """_No description given_ """
     INVALID_GROUP_TYPES_FOR_RELATIONSHIP_REQUEST = 644
-    """Not specified. """
+    """_No description given_ """
     GROUP_AT_MAXIMUM_ALLIANCES = 646
-    """Not specified. """
+    """_No description given_ """
     GROUP_CANNOT_SET_CLAN_ONLY_SETTINGS = 647
-    """Not specified. """
+    """_No description given_ """
     CLAN_CANNOT_SET_TWO_DEFAULT_POST_TYPES = 648
-    """Not specified. """
+    """_No description given_ """
     GROUP_MEMBER_INVALID_MEMBER_TYPE = 649
-    """Not specified. """
+    """_No description given_ """
     GROUP_INVALID_PLATFORM_TYPE = 650
-    """Not specified. """
+    """_No description given_ """
     GROUP_MEMBER_INVALID_SORT = 651
-    """Not specified. """
+    """_No description given_ """
     GROUP_INVALID_RESOLVE_STATE = 652
-    """Not specified. """
+    """_No description given_ """
     CLAN_ALREADY_ENABLED_FOR_PLATFORM = 653
-    """Not specified. """
+    """_No description given_ """
     CLAN_NOT_ENABLED_FOR_PLATFORM = 654
-    """Not specified. """
+    """_No description given_ """
     CLAN_ENABLED_BUT_COULD_NOT_JOIN_NO_ACCOUNT = 655
-    """Not specified. """
+    """_No description given_ """
     CLAN_ENABLED_BUT_COULD_NOT_JOIN_ALREADY_MEMBER = 656
-    """Not specified. """
+    """_No description given_ """
     CLAN_CANNOT_JOIN_NO_CREDENTIAL = 657
-    """Not specified. """
+    """_No description given_ """
     NO_CLAN_MEMBERSHIP_FOR_PLATFORM = 658
-    """Not specified. """
+    """_No description given_ """
     GROUP_TO_GROUP_FOLLOW_LIMIT_REACHED = 659
-    """Not specified. """
+    """_No description given_ """
     CHILD_GROUP_ALREADY_IN_ALLIANCE = 660
-    """Not specified. """
+    """_No description given_ """
     OWNER_GROUP_ALREADY_IN_ALLIANCE = 661
-    """Not specified. """
+    """_No description given_ """
     ALLIANCE_OWNER_CANNOT_JOIN_ALLIANCE = 662
-    """Not specified. """
+    """_No description given_ """
     GROUP_NOT_IN_ALLIANCE = 663
-    """Not specified. """
+    """_No description given_ """
     CHILD_GROUP_CANNOT_INVITE_TO_ALLIANCE = 664
-    """Not specified. """
+    """_No description given_ """
     GROUP_TO_GROUP_ALREADY_FOLLOWED = 665
-    """Not specified. """
+    """_No description given_ """
     GROUP_TO_GROUP_NOT_FOLLOWING = 666
-    """Not specified. """
+    """_No description given_ """
     CLAN_MAXIMUM_MEMBERSHIP_REACHED = 667
-    """Not specified. """
+    """_No description given_ """
     CLAN_NAME_NOT_VALID = 668
-    """Not specified. """
+    """_No description given_ """
     CLAN_NAME_NOT_VALID_ERROR = 669
-    """Not specified. """
+    """_No description given_ """
     ALLIANCE_OWNER_NOT_DEFINED = 670
-    """Not specified. """
+    """_No description given_ """
     ALLIANCE_CHILD_NOT_DEFINED = 671
-    """Not specified. """
+    """_No description given_ """
     CLAN_CULTURE_ILLEGAL_CHARACTERS = 672
-    """Not specified. """
+    """_No description given_ """
     CLAN_TAG_ILLEGAL_CHARACTERS = 673
-    """Not specified. """
+    """_No description given_ """
     CLAN_REQUIRES_INVITATION = 674
-    """Not specified. """
+    """_No description given_ """
     CLAN_MEMBERSHIP_CLOSED = 675
-    """Not specified. """
+    """_No description given_ """
     CLAN_INVITE_ALREADY_MEMBER = 676
-    """Not specified. """
+    """_No description given_ """
     GROUP_INVITE_ALREADY_MEMBER = 677
-    """Not specified. """
+    """_No description given_ """
     GROUP_JOIN_APPROVAL_REQUIRED = 678
-    """Not specified. """
+    """_No description given_ """
     CLAN_TAG_REQUIRED = 679
-    """Not specified. """
+    """_No description given_ """
     GROUP_NAME_CANNOT_START_OR_END_WITH_WHITE_SPACE = 680
-    """Not specified. """
+    """_No description given_ """
     CLAN_CALLSIGN_CANNOT_START_OR_END_WITH_WHITE_SPACE = 681
-    """Not specified. """
+    """_No description given_ """
     CLAN_MIGRATION_FAILED = 682
-    """Not specified. """
+    """_No description given_ """
     CLAN_NOT_ENABLED_ALREADY_MEMBER_OF_ANOTHER_CLAN = 683
-    """Not specified. """
+    """_No description given_ """
     GROUP_MODERATION_NOT_PERMITTED_ON_NON_MEMBERS = 684
-    """Not specified. """
+    """_No description given_ """
     CLAN_CREATION_IN_WORLD_SERVER_FAILED = 685
-    """Not specified. """
+    """_No description given_ """
     CLAN_NOT_FOUND = 686
-    """Not specified. """
+    """_No description given_ """
     CLAN_MEMBERSHIP_LEVEL_DOES_NOT_PERMIT_THAT_ACTION = 687
-    """Not specified. """
+    """_No description given_ """
     CLAN_MEMBER_NOT_FOUND = 688
-    """Not specified. """
+    """_No description given_ """
     CLAN_MISSING_MEMBERSHIP_APPROVERS = 689
-    """Not specified. """
+    """_No description given_ """
     CLAN_IN_WRONG_STATE_FOR_REQUESTED_ACTION = 690
-    """Not specified. """
+    """_No description given_ """
     CLAN_NAME_ALREADY_USED = 691
-    """Not specified. """
+    """_No description given_ """
     CLAN_TOO_FEW_MEMBERS = 692
-    """Not specified. """
+    """_No description given_ """
     CLAN_INFO_CANNOT_BE_WHITESPACE = 693
-    """Not specified. """
+    """_No description given_ """
     GROUP_CULTURE_THROTTLE = 694
-    """Not specified. """
+    """_No description given_ """
     CLAN_TARGET_DISALLOWS_INVITES = 695
-    """Not specified. """
+    """_No description given_ """
     CLAN_INVALID_OPERATION = 696
-    """Not specified. """
+    """_No description given_ """
     CLAN_FOUNDER_CANNOT_LEAVE_WITHOUT_ABDICATION = 697
-    """Not specified. """
+    """_No description given_ """
     CLAN_NAME_RESERVED = 698
-    """Not specified. """
+    """_No description given_ """
     CLAN_APPLICANT_IN_CLAN_SO_NOW_INVITED = 699
-    """Not specified. """
+    """_No description given_ """
     ACTIVITIES_UNKNOWN_EXCEPTION = 701
-    """Not specified. """
+    """_No description given_ """
     ACTIVITIES_PARAMETER_NULL = 702
-    """Not specified. """
+    """_No description given_ """
     ACTIVITY_COUNTS_DIABLED = 703
-    """Not specified. """
+    """_No description given_ """
     ACTIVITY_SEARCH_INVALID_PARAMETERS = 704
-    """Not specified. """
+    """_No description given_ """
     ACTIVITY_PERMISSION_DENIED = 705
-    """Not specified. """
+    """_No description given_ """
     SHARE_ALREADY_SHARED = 706
-    """Not specified. """
+    """_No description given_ """
     ACTIVITY_LOGGING_DISABLED = 707
-    """Not specified. """
+    """_No description given_ """
     CLAN_REQUIRES_EXISTING_DESTINY_ACCOUNT = 750
-    """Not specified. """
+    """_No description given_ """
     CLAN_NAME_RESTRICTED = 751
-    """Not specified. """
+    """_No description given_ """
     CLAN_CREATION_BAN = 752
-    """Not specified. """
+    """_No description given_ """
     CLAN_CREATION_TENURE_REQUIREMENTS_NOT_MET = 753
-    """Not specified. """
+    """_No description given_ """
     ITEM_ALREADY_FOLLOWED = 801
-    """Not specified. """
+    """_No description given_ """
     ITEM_NOT_FOLLOWED = 802
-    """Not specified. """
+    """_No description given_ """
     CANNOT_FOLLOW_SELF = 803
-    """Not specified. """
+    """_No description given_ """
     GROUP_FOLLOW_LIMIT_EXCEEDED = 804
-    """Not specified. """
+    """_No description given_ """
     TAG_FOLLOW_LIMIT_EXCEEDED = 805
-    """Not specified. """
+    """_No description given_ """
     USER_FOLLOW_LIMIT_EXCEEDED = 806
-    """Not specified. """
+    """_No description given_ """
     FOLLOW_UNSUPPORTED_ENTITY_TYPE = 807
-    """Not specified. """
+    """_No description given_ """
     NO_VALID_TAGS_IN_LIST = 900
-    """Not specified. """
+    """_No description given_ """
     BELOW_MINIMUM_SUGGESTION_LENGTH = 901
-    """Not specified. """
+    """_No description given_ """
     CANNOT_GET_SUGGESTIONS_ON_MULTIPLE_TAGS_SIMULTANEOUSLY = 902
-    """Not specified. """
+    """_No description given_ """
     NOT_A_VALID_PARTIAL_TAG = 903
-    """Not specified. """
+    """_No description given_ """
     TAG_SUGGESTIONS_UNKNOWN_SQL_RESULT = 904
-    """Not specified. """
+    """_No description given_ """
     TAGS_UNABLE_TO_LOAD_POPULAR_TAGS_FROM_DATABASE = 905
-    """Not specified. """
+    """_No description given_ """
     TAG_INVALID = 906
-    """Not specified. """
+    """_No description given_ """
     TAG_NOT_FOUND = 907
-    """Not specified. """
+    """_No description given_ """
     SINGLE_TAG_EXPECTED = 908
-    """Not specified. """
+    """_No description given_ """
     TAGS_EXCEEDED_MAXIMUM_PER_ITEM = 909
-    """Not specified. """
+    """_No description given_ """
     IGNORE_INVALID_PARAMETERS = 1000
-    """Not specified. """
+    """_No description given_ """
     IGNORE_SQL_EXCEPTION = 1001
-    """Not specified. """
+    """_No description given_ """
     IGNORE_ERROR_RETRIEVING_GROUP_PERMISSIONS = 1002
-    """Not specified. """
+    """_No description given_ """
     IGNORE_ERROR_INSUFFICIENT_PERMISSION = 1003
-    """Not specified. """
+    """_No description given_ """
     IGNORE_ERROR_RETRIEVING_ITEM = 1004
-    """Not specified. """
+    """_No description given_ """
     IGNORE_CANNOT_IGNORE_SELF = 1005
-    """Not specified. """
+    """_No description given_ """
     IGNORE_ILLEGAL_TYPE = 1006
-    """Not specified. """
+    """_No description given_ """
     IGNORE_NOT_FOUND = 1007
-    """Not specified. """
+    """_No description given_ """
     IGNORE_USER_GLOBALLY_IGNORED = 1008
-    """Not specified. """
+    """_No description given_ """
     IGNORE_USER_IGNORED = 1009
-    """Not specified. """
+    """_No description given_ """
     TARGET_USER_IGNORED = 1010
-    """Not specified. """
+    """_No description given_ """
     NOTIFICATION_SETTING_INVALID = 1100
-    """Not specified. """
+    """_No description given_ """
     PSN_API_EXPIRED_ACCESS_TOKEN = 1204
-    """Not specified. """
+    """_No description given_ """
     P_S_N_EX_FORBIDDEN = 1205
-    """Not specified. """
+    """_No description given_ """
     P_S_N_EX_SYSTEM_DISABLED = 1218
-    """Not specified. """
+    """_No description given_ """
     PSN_API_ERROR_CODE_UNKNOWN = 1223
-    """Not specified. """
+    """_No description given_ """
     PSN_API_ERROR_WEB_EXCEPTION = 1224
-    """Not specified. """
+    """_No description given_ """
     PSN_API_BAD_REQUEST = 1225
-    """Not specified. """
+    """_No description given_ """
     PSN_API_ACCESS_TOKEN_REQUIRED = 1226
-    """Not specified. """
+    """_No description given_ """
     PSN_API_INVALID_ACCESS_TOKEN = 1227
-    """Not specified. """
+    """_No description given_ """
     PSN_API_BANNED_USER = 1229
-    """Not specified. """
+    """_No description given_ """
     PSN_API_ACCOUNT_UPGRADE_REQUIRED = 1230
-    """Not specified. """
+    """_No description given_ """
     PSN_API_SERVICE_TEMPORARILY_UNAVAILABLE = 1231
-    """Not specified. """
+    """_No description given_ """
     PSN_API_SERVER_BUSY = 1232
-    """Not specified. """
+    """_No description given_ """
     PSN_API_UNDER_MAINTENANCE = 1233
-    """Not specified. """
+    """_No description given_ """
     PSN_API_PROFILE_USER_NOT_FOUND = 1234
-    """Not specified. """
+    """_No description given_ """
     PSN_API_PROFILE_PRIVACY_RESTRICTION = 1235
-    """Not specified. """
+    """_No description given_ """
     PSN_API_PROFILE_UNDER_MAINTENANCE = 1236
-    """Not specified. """
+    """_No description given_ """
     PSN_API_ACCOUNT_ATTRIBUTE_MISSING = 1237
-    """Not specified. """
+    """_No description given_ """
     PSN_API_NO_PERMISSION = 1238
-    """Not specified. """
+    """_No description given_ """
     PSN_API_TARGET_USER_BLOCKED = 1239
-    """Not specified. """
+    """_No description given_ """
     PSN_API_JWKS_MISSING = 1240
-    """Not specified. """
+    """_No description given_ """
     PSN_API_JWT_MALFORMED_HEADER = 1241
-    """Not specified. """
+    """_No description given_ """
     PSN_API_JWT_MALFORMED_PAYLOAD = 1242
-    """Not specified. """
+    """_No description given_ """
     XBL_EX_SYSTEM_DISABLED = 1300
-    """Not specified. """
+    """_No description given_ """
     XBL_EX_UNKNOWN_ERROR = 1301
-    """Not specified. """
+    """_No description given_ """
     XBL_API_ERROR_WEB_EXCEPTION = 1302
-    """Not specified. """
+    """_No description given_ """
     XBL_STS_TOKEN_INVALID = 1303
-    """Not specified. """
+    """_No description given_ """
     XBL_STS_MISSING_TOKEN = 1304
-    """Not specified. """
+    """_No description given_ """
     XBL_STS_EXPIRED_TOKEN = 1305
-    """Not specified. """
+    """_No description given_ """
     XBL_ACCESS_TO_THE_SANDBOX_DENIED = 1306
-    """Not specified. """
+    """_No description given_ """
     XBL_MSA_RESPONSE_MISSING = 1307
-    """Not specified. """
+    """_No description given_ """
     XBL_MSA_ACCESS_TOKEN_EXPIRED = 1308
-    """Not specified. """
+    """_No description given_ """
     XBL_MSA_INVALID_REQUEST = 1309
-    """Not specified. """
+    """_No description given_ """
     XBL_MSA_FRIENDS_REQUIRE_SIGN_IN = 1310
-    """Not specified. """
+    """_No description given_ """
     XBL_USER_ACTION_REQUIRED = 1311
-    """Not specified. """
+    """_No description given_ """
     XBL_PARENTAL_CONTROLS = 1312
-    """Not specified. """
+    """_No description given_ """
     XBL_DEVELOPER_ACCOUNT = 1313
-    """Not specified. """
+    """_No description given_ """
     XBL_USER_TOKEN_EXPIRED = 1314
-    """Not specified. """
+    """_No description given_ """
     XBL_USER_TOKEN_INVALID = 1315
-    """Not specified. """
+    """_No description given_ """
     XBL_OFFLINE = 1316
-    """Not specified. """
+    """_No description given_ """
     XBL_UNKNOWN_ERROR_CODE = 1317
-    """Not specified. """
+    """_No description given_ """
     XBL_MSA_INVALID_GRANT = 1318
-    """Not specified. """
+    """_No description given_ """
     REPORT_NOT_YET_RESOLVED = 1400
-    """Not specified. """
+    """_No description given_ """
     REPORT_OVERTURN_DOES_NOT_CHANGE_DECISION = 1401
-    """Not specified. """
+    """_No description given_ """
     REPORT_NOT_FOUND = 1402
-    """Not specified. """
+    """_No description given_ """
     REPORT_ALREADY_REPORTED = 1403
-    """Not specified. """
+    """_No description given_ """
     REPORT_INVALID_RESOLUTION = 1404
-    """Not specified. """
+    """_No description given_ """
     REPORT_NOT_ASSIGNED_TO_YOU = 1405
-    """Not specified. """
+    """_No description given_ """
     LEGACY_GAME_STATS_SYSTEM_DISABLED = 1500
-    """Not specified. """
+    """_No description given_ """
     LEGACY_GAME_STATS_UNKNOWN_ERROR = 1501
-    """Not specified. """
+    """_No description given_ """
     LEGACY_GAME_STATS_MALFORMED_SNEAKER_NET_CODE = 1502
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ACCOUNT_ACQUISITION_FAILURE = 1600
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ACCOUNT_NOT_FOUND = 1601
-    """Not specified. """
+    """_No description given_ """
     DESTINY_BUILD_STATS_DATABASE_ERROR = 1602
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CHARACTER_STATS_DATABASE_ERROR = 1603
-    """Not specified. """
+    """_No description given_ """
     DESTINY_PV_P_STATS_DATABASE_ERROR = 1604
-    """Not specified. """
+    """_No description given_ """
     DESTINY_PV_E_STATS_DATABASE_ERROR = 1605
-    """Not specified. """
+    """_No description given_ """
     DESTINY_GRIMOIRE_STATS_DATABASE_ERROR = 1606
-    """Not specified. """
+    """_No description given_ """
     DESTINY_STATS_PARAMETER_MEMBERSHIP_TYPE_PARSE_ERROR = 1607
-    """Not specified. """
+    """_No description given_ """
     DESTINY_STATS_PARAMETER_MEMBERSHIP_ID_PARSE_ERROR = 1608
-    """Not specified. """
+    """_No description given_ """
     DESTINY_STATS_PARAMETER_RANGE_PARSE_ERROR = 1609
-    """Not specified. """
+    """_No description given_ """
     DESTINY_STRING_ITEM_HASH_NOT_FOUND = 1610
-    """Not specified. """
+    """_No description given_ """
     DESTINY_STRING_SET_NOT_FOUND = 1611
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CONTENT_LOOKUP_NOT_FOUND_FOR_KEY = 1612
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CONTENT_ITEM_NOT_FOUND = 1613
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CONTENT_SECTION_NOT_FOUND = 1614
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CONTENT_PROPERTY_NOT_FOUND = 1615
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CONTENT_CONFIG_NOT_FOUND = 1616
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CONTENT_PROPERTY_BUCKET_VALUE_NOT_FOUND = 1617
-    """Not specified. """
+    """_No description given_ """
     DESTINY_UNEXPECTED_ERROR = 1618
-    """Not specified. """
+    """_No description given_ """
     DESTINY_INVALID_ACTION = 1619
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CHARACTER_NOT_FOUND = 1620
-    """Not specified. """
+    """_No description given_ """
     DESTINY_INVALID_FLAG = 1621
-    """Not specified. """
+    """_No description given_ """
     DESTINY_INVALID_REQUEST = 1622
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ITEM_NOT_FOUND = 1623
-    """Not specified. """
+    """_No description given_ """
     DESTINY_INVALID_CUSTOMIZATION_CHOICES = 1624
-    """Not specified. """
+    """_No description given_ """
     DESTINY_VENDOR_ITEM_NOT_FOUND = 1625
-    """Not specified. """
+    """_No description given_ """
     DESTINY_INTERNAL_ERROR = 1626
-    """Not specified. """
+    """_No description given_ """
     DESTINY_VENDOR_NOT_FOUND = 1627
-    """Not specified. """
+    """_No description given_ """
     DESTINY_RECENT_ACTIVITIES_DATABASE_ERROR = 1628
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ITEM_BUCKET_NOT_FOUND = 1629
-    """Not specified. """
+    """_No description given_ """
     DESTINY_INVALID_MEMBERSHIP_TYPE = 1630
-    """Not specified. """
+    """_No description given_ """
     DESTINY_VERSION_INCOMPATIBILITY = 1631
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ITEM_ALREADY_IN_INVENTORY = 1632
-    """Not specified. """
+    """_No description given_ """
     DESTINY_BUCKET_NOT_FOUND = 1633
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CHARACTER_NOT_IN_TOWER = 1634
     """Note: This is one of those holdovers from Destiny 1. We didn't change the enum because I am lazy, but in Destiny 2 this would read "DestinyCharacterNotInSocialSpace" """
     DESTINY_CHARACTER_NOT_LOGGED_IN = 1635
-    """Not specified. """
+    """_No description given_ """
     DESTINY_DEFINITIONS_NOT_LOADED = 1636
-    """Not specified. """
+    """_No description given_ """
     DESTINY_INVENTORY_FULL = 1637
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ITEM_FAILED_LEVEL_CHECK = 1638
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ITEM_FAILED_UNLOCK_CHECK = 1639
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ITEM_UNEQUIPPABLE = 1640
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ITEM_UNIQUE_EQUIP_RESTRICTED = 1641
-    """Not specified. """
+    """_No description given_ """
     DESTINY_NO_ROOM_IN_DESTINATION = 1642
-    """Not specified. """
+    """_No description given_ """
     DESTINY_SERVICE_FAILURE = 1643
-    """Not specified. """
+    """_No description given_ """
     DESTINY_SERVICE_RETIRED = 1644
-    """Not specified. """
+    """_No description given_ """
     DESTINY_TRANSFER_FAILED = 1645
-    """Not specified. """
+    """_No description given_ """
     DESTINY_TRANSFER_NOT_FOUND_FOR_SOURCE_BUCKET = 1646
-    """Not specified. """
+    """_No description given_ """
     DESTINY_UNEXPECTED_RESULT_IN_VENDOR_TRANSFER_CHECK = 1647
-    """Not specified. """
+    """_No description given_ """
     DESTINY_UNIQUENESS_VIOLATION = 1648
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ERROR_DESERIALIZATION_FAILURE = 1649
-    """Not specified. """
+    """_No description given_ """
     DESTINY_VALID_ACCOUNT_TICKET_REQUIRED = 1650
-    """Not specified. """
+    """_No description given_ """
     DESTINY_SHARD_RELAY_CLIENT_TIMEOUT = 1651
-    """Not specified. """
+    """_No description given_ """
     DESTINY_SHARD_RELAY_PROXY_TIMEOUT = 1652
-    """Not specified. """
+    """_No description given_ """
     DESTINY_P_G_C_R_NOT_FOUND = 1653
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ACCOUNT_MUST_BE_OFFLINE = 1654
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CAN_ONLY_EQUIP_IN_GAME = 1655
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CANNOT_PERFORM_ACTION_ON_EQUIPPED_ITEM = 1656
-    """Not specified. """
+    """_No description given_ """
     DESTINY_QUEST_ALREADY_COMPLETED = 1657
-    """Not specified. """
+    """_No description given_ """
     DESTINY_QUEST_ALREADY_TRACKED = 1658
-    """Not specified. """
+    """_No description given_ """
     DESTINY_TRACKABLE_QUESTS_FULL = 1659
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ITEM_NOT_TRANSFERRABLE = 1660
-    """Not specified. """
+    """_No description given_ """
     DESTINY_VENDOR_PURCHASE_NOT_ALLOWED = 1661
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CONTENT_VERSION_MISMATCH = 1662
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ITEM_ACTION_FORBIDDEN = 1663
-    """Not specified. """
+    """_No description given_ """
     DESTINY_REFUND_INVALID = 1664
-    """Not specified. """
+    """_No description given_ """
     DESTINY_PRIVACY_RESTRICTION = 1665
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ACTION_INSUFFICIENT_PRIVILEGES = 1666
-    """Not specified. """
+    """_No description given_ """
     DESTINY_INVALID_CLAIM_EXCEPTION = 1667
-    """Not specified. """
+    """_No description given_ """
     DESTINY_LEGACY_PLATFORM_RESTRICTED = 1668
-    """Not specified. """
+    """_No description given_ """
     DESTINY_LEGACY_PLATFORM_IN_USE = 1669
-    """Not specified. """
+    """_No description given_ """
     DESTINY_LEGACY_PLATFORM_INACCESSIBLE = 1670
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CANNOT_PERFORM_ACTION_AT_THIS_LOCATION = 1671
-    """Not specified. """
+    """_No description given_ """
     DESTINY_THROTTLED_BY_GAME_SERVER = 1672
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ITEM_NOT_TRANSFERRABLE_HAS_SIDE_EFFECTS = 1673
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ITEM_LOCKED = 1674
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CANNOT_AFFORD_MATERIAL_REQUIREMENTS = 1675
-    """Not specified. """
+    """_No description given_ """
     DESTINY_FAILED_PLUG_INSERTION_RULES = 1676
-    """Not specified. """
+    """_No description given_ """
     DESTINY_SOCKET_NOT_FOUND = 1677
-    """Not specified. """
+    """_No description given_ """
     DESTINY_SOCKET_ACTION_NOT_ALLOWED = 1678
-    """Not specified. """
+    """_No description given_ """
     DESTINY_SOCKET_ALREADY_HAS_PLUG = 1679
-    """Not specified. """
+    """_No description given_ """
     DESTINY_PLUG_ITEM_NOT_AVAILABLE = 1680
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CHARACTER_LOGGED_IN_NOT_ALLOWED = 1681
-    """Not specified. """
+    """_No description given_ """
     DESTINY_PUBLIC_ACCOUNT_NOT_ACCESSIBLE = 1682
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CLAIMS_ITEM_ALREADY_CLAIMED = 1683
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CLAIMS_NO_INVENTORY_SPACE = 1684
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CLAIMS_REQUIRED_LEVEL_NOT_MET = 1685
-    """Not specified. """
+    """_No description given_ """
     DESTINY_CLAIMS_INVALID_STATE = 1686
-    """Not specified. """
+    """_No description given_ """
     DESTINY_NOT_ENOUGH_ROOM_FOR_MULTIPLE_REWARDS = 1687
-    """Not specified. """
+    """_No description given_ """
     DESTINY_DIRECT_BABEL_CLIENT_TIMEOUT = 1688
-    """Not specified. """
+    """_No description given_ """
     FB_INVALID_REQUEST = 1800
-    """Not specified. """
+    """_No description given_ """
     FB_REDIRECT_MISMATCH = 1801
-    """Not specified. """
+    """_No description given_ """
     FB_ACCESS_DENIED = 1802
-    """Not specified. """
+    """_No description given_ """
     FB_UNSUPPORTED_RESPONSE_TYPE = 1803
-    """Not specified. """
+    """_No description given_ """
     FB_INVALID_SCOPE = 1804
-    """Not specified. """
+    """_No description given_ """
     FB_UNSUPPORTED_GRANT_TYPE = 1805
-    """Not specified. """
+    """_No description given_ """
     FB_INVALID_GRANT = 1806
-    """Not specified. """
+    """_No description given_ """
     INVITATION_EXPIRED = 1900
-    """Not specified. """
+    """_No description given_ """
     INVITATION_UNKNOWN_TYPE = 1901
-    """Not specified. """
+    """_No description given_ """
     INVITATION_INVALID_RESPONSE_STATUS = 1902
-    """Not specified. """
+    """_No description given_ """
     INVITATION_INVALID_TYPE = 1903
-    """Not specified. """
+    """_No description given_ """
     INVITATION_ALREADY_PENDING = 1904
-    """Not specified. """
+    """_No description given_ """
     INVITATION_INSUFFICIENT_PERMISSION = 1905
-    """Not specified. """
+    """_No description given_ """
     INVITATION_INVALID_CODE = 1906
-    """Not specified. """
+    """_No description given_ """
     INVITATION_INVALID_TARGET_STATE = 1907
-    """Not specified. """
+    """_No description given_ """
     INVITATION_CANNOT_BE_REACTIVATED = 1908
-    """Not specified. """
+    """_No description given_ """
     INVITATION_NO_RECIPIENTS = 1910
-    """Not specified. """
+    """_No description given_ """
     INVITATION_GROUP_CANNOT_SEND_TO_SELF = 1911
-    """Not specified. """
+    """_No description given_ """
     INVITATION_TOO_MANY_RECIPIENTS = 1912
-    """Not specified. """
+    """_No description given_ """
     INVITATION_INVALID = 1913
-    """Not specified. """
+    """_No description given_ """
     INVITATION_NOT_FOUND = 1914
-    """Not specified. """
+    """_No description given_ """
     TOKEN_INVALID = 2000
-    """Not specified. """
+    """_No description given_ """
     TOKEN_BAD_FORMAT = 2001
-    """Not specified. """
+    """_No description given_ """
     TOKEN_ALREADY_CLAIMED = 2002
-    """Not specified. """
+    """_No description given_ """
     TOKEN_ALREADY_CLAIMED_SELF = 2003
-    """Not specified. """
+    """_No description given_ """
     TOKEN_THROTTLING = 2004
-    """Not specified. """
+    """_No description given_ """
     TOKEN_UNKNOWN_REDEMPTION_FAILURE = 2005
-    """Not specified. """
+    """_No description given_ """
     TOKEN_PURCHASE_CLAIM_FAILED_AFTER_TOKEN_CLAIMED = 2006
-    """Not specified. """
+    """_No description given_ """
     TOKEN_USER_ALREADY_OWNS_OFFER = 2007
-    """Not specified. """
+    """_No description given_ """
     TOKEN_INVALID_OFFER_KEY = 2008
-    """Not specified. """
+    """_No description given_ """
     TOKEN_EMAIL_NOT_VALIDATED = 2009
-    """Not specified. """
+    """_No description given_ """
     TOKEN_PROVISIONING_BAD_VENDOR_OR_OFFER = 2010
-    """Not specified. """
+    """_No description given_ """
     TOKEN_PURCHASE_HISTORY_UNKNOWN_ERROR = 2011
-    """Not specified. """
+    """_No description given_ """
     TOKEN_THROTTLE_STATE_UNKNOWN_ERROR = 2012
-    """Not specified. """
+    """_No description given_ """
     TOKEN_USER_AGE_NOT_VERIFIED = 2013
-    """Not specified. """
+    """_No description given_ """
     TOKEN_EXCEEDED_OFFER_MAXIMUM = 2014
-    """Not specified. """
+    """_No description given_ """
     TOKEN_NO_AVAILABLE_UNLOCKS = 2015
-    """Not specified. """
+    """_No description given_ """
     TOKEN_MARKETPLACE_INVALID_PLATFORM = 2016
-    """Not specified. """
+    """_No description given_ """
     TOKEN_NO_MARKETPLACE_CODES_FOUND = 2017
-    """Not specified. """
+    """_No description given_ """
     TOKEN_OFFER_NOT_AVAILABLE_FOR_REDEMPTION = 2018
-    """Not specified. """
+    """_No description given_ """
     TOKEN_UNLOCK_PARTIAL_FAILURE = 2019
-    """Not specified. """
+    """_No description given_ """
     TOKEN_MARKETPLACE_INVALID_REGION = 2020
-    """Not specified. """
+    """_No description given_ """
     TOKEN_OFFER_EXPIRED = 2021
-    """Not specified. """
+    """_No description given_ """
     R_A_F_EXCEEDED_MAXIMUM_REFERRALS = 2022
-    """Not specified. """
+    """_No description given_ """
     R_A_F_DUPLICATE_BOND = 2023
-    """Not specified. """
+    """_No description given_ """
     R_A_F_NO_VALID_VETERAN_DESTINY_MEMBERSHIPS_FOUND = 2024
-    """Not specified. """
+    """_No description given_ """
     R_A_F_NOT_A_VALID_VETERAN_USER = 2025
-    """Not specified. """
+    """_No description given_ """
     R_A_F_CODE_ALREADY_CLAIMED_OR_NOT_FOUND = 2026
-    """Not specified. """
+    """_No description given_ """
     R_A_F_MISMATCHED_DESTINY_MEMBERSHIP_TYPE = 2027
-    """Not specified. """
+    """_No description given_ """
     R_A_F_UNABLE_TO_ACCESS_PURCHASE_HISTORY = 2028
-    """Not specified. """
+    """_No description given_ """
     R_A_F_UNABLE_TO_CREATE_BOND = 2029
-    """Not specified. """
+    """_No description given_ """
     R_A_F_UNABLE_TO_FIND_BOND = 2030
-    """Not specified. """
+    """_No description given_ """
     R_A_F_UNABLE_TO_REMOVE_BOND = 2031
-    """Not specified. """
+    """_No description given_ """
     R_A_F_CANNOT_BOND_TO_SELF = 2032
-    """Not specified. """
+    """_No description given_ """
     R_A_F_INVALID_PLATFORM = 2033
-    """Not specified. """
+    """_No description given_ """
     R_A_F_GENERATE_THROTTLED = 2034
-    """Not specified. """
+    """_No description given_ """
     R_A_F_UNABLE_TO_CREATE_BOND_VERSION_MISMATCH = 2035
-    """Not specified. """
+    """_No description given_ """
     R_A_F_UNABLE_TO_REMOVE_BOND_VERSION_MISMATCH = 2036
-    """Not specified. """
+    """_No description given_ """
     R_A_F_REDEEM_THROTTLED = 2037
-    """Not specified. """
+    """_No description given_ """
     NO_AVAILABLE_DISCOUNT_CODE = 2038
-    """Not specified. """
+    """_No description given_ """
     DISCOUNT_ALREADY_CLAIMED = 2039
-    """Not specified. """
+    """_No description given_ """
     DISCOUNT_CLAIM_FAILURE = 2040
-    """Not specified. """
+    """_No description given_ """
     DISCOUNT_CONFIGURATION_FAILURE = 2041
-    """Not specified. """
+    """_No description given_ """
     DISCOUNT_GENERATION_FAILURE = 2042
-    """Not specified. """
+    """_No description given_ """
     DISCOUNT_ALREADY_EXISTS = 2043
-    """Not specified. """
+    """_No description given_ """
     TOKEN_REQUIRES_CREDENTIAL_XUID = 2044
-    """Not specified. """
+    """_No description given_ """
     TOKEN_REQUIRES_CREDENTIAL_PSNID = 2045
-    """Not specified. """
+    """_No description given_ """
     OFFER_REQUIRED = 2046
-    """Not specified. """
+    """_No description given_ """
     UNKNOWN_EVERVERSE_HISTORY_ERROR = 2047
-    """Not specified. """
+    """_No description given_ """
     MISSING_EVERVERSE_HISTORY_ERROR = 2048
-    """Not specified. """
+    """_No description given_ """
     BUNGIE_REWARD_EMAIL_STATE_INVALID = 2049
-    """Not specified. """
+    """_No description given_ """
     BUNGIE_REWARD_NOT_YET_CLAIMABLE = 2050
-    """Not specified. """
+    """_No description given_ """
     MISSING_OFFER_CONFIG = 2051
-    """Not specified. """
+    """_No description given_ """
     R_A_F_QUEST_ENTITLEMENT_REQUIRES_BNET = 2052
-    """Not specified. """
+    """_No description given_ """
     R_A_F_QUEST_ENTITLEMENT_TRANSPORT_FAILURE = 2053
-    """Not specified. """
+    """_No description given_ """
     R_A_F_QUEST_ENTITLEMENT_UNKNOWN_FAILURE = 2054
-    """Not specified. """
+    """_No description given_ """
     R_A_F_VETERAN_REWARD_UNKNOWN_FAILURE = 2055
-    """Not specified. """
+    """_No description given_ """
     R_A_F_TOO_EARLY_TO_CANCEL_BOND = 2056
-    """Not specified. """
+    """_No description given_ """
     LOYALTY_REWARD_ALREADY_REDEEMED = 2057
-    """Not specified. """
+    """_No description given_ """
     UNCLAIMED_LOYALTY_REWARD_ENTRY_NOT_FOUND = 2058
-    """Not specified. """
+    """_No description given_ """
     PARTNER_OFFER_PARTIAL_FAILURE = 2059
-    """Not specified. """
+    """_No description given_ """
     PARTNER_OFFER_ALREADY_CLAIMED = 2060
-    """Not specified. """
+    """_No description given_ """
     PARTNER_OFFER_SKU_NOT_FOUND = 2061
-    """Not specified. """
+    """_No description given_ """
     PARTNER_OFFER_SKU_EXPIRED = 2062
-    """Not specified. """
+    """_No description given_ """
     PARTNER_OFFER_PERMISSION_FAILURE = 2063
-    """Not specified. """
+    """_No description given_ """
     PARTNER_OFFER_NO_DESTINY_ACCOUNT = 2064
-    """Not specified. """
+    """_No description given_ """
     PARTNER_OFFER_APPLY_DATA_NOT_FOUND = 2065
-    """Not specified. """
+    """_No description given_ """
     API_EXCEEDED_MAX_KEYS = 2100
-    """Not specified. """
+    """_No description given_ """
     API_INVALID_OR_EXPIRED_KEY = 2101
-    """Not specified. """
+    """_No description given_ """
     API_KEY_MISSING_FROM_REQUEST = 2102
-    """Not specified. """
+    """_No description given_ """
     APPLICATION_DISABLED = 2103
-    """Not specified. """
+    """_No description given_ """
     APPLICATION_EXCEEDED_MAX = 2104
-    """Not specified. """
+    """_No description given_ """
     APPLICATION_DISALLOWED_BY_SCOPE = 2105
-    """Not specified. """
+    """_No description given_ """
     AUTHORIZATION_CODE_INVALID = 2106
-    """Not specified. """
+    """_No description given_ """
     ORIGIN_HEADER_DOES_NOT_MATCH_KEY = 2107
-    """Not specified. """
+    """_No description given_ """
     ACCESS_NOT_PERMITTED_BY_APPLICATION_SCOPE = 2108
-    """Not specified. """
+    """_No description given_ """
     APPLICATION_NAME_IS_TAKEN = 2109
-    """Not specified. """
+    """_No description given_ """
     REFRESH_TOKEN_NOT_YET_VALID = 2110
-    """Not specified. """
+    """_No description given_ """
     ACCESS_TOKEN_HAS_EXPIRED = 2111
-    """Not specified. """
+    """_No description given_ """
     APPLICATION_TOKEN_FORMAT_NOT_VALID = 2112
-    """Not specified. """
+    """_No description given_ """
     APPLICATION_NOT_CONFIGURED_FOR_BUNGIE_AUTH = 2113
-    """Not specified. """
+    """_No description given_ """
     APPLICATION_NOT_CONFIGURED_FOR_O_AUTH = 2114
-    """Not specified. """
+    """_No description given_ """
     O_AUTH_ACCESS_TOKEN_EXPIRED = 2115
-    """Not specified. """
+    """_No description given_ """
     APPLICATION_TOKEN_KEY_ID_DOES_NOT_EXIST = 2116
-    """Not specified. """
+    """_No description given_ """
     PROVIDED_TOKEN_NOT_VALID_REFRESH_TOKEN = 2117
-    """Not specified. """
+    """_No description given_ """
     REFRESH_TOKEN_EXPIRED = 2118
-    """Not specified. """
+    """_No description given_ """
     AUTHORIZATION_RECORD_INVALID = 2119
-    """Not specified. """
+    """_No description given_ """
     TOKEN_PREVIOUSLY_REVOKED = 2120
-    """Not specified. """
+    """_No description given_ """
     TOKEN_INVALID_MEMBERSHIP = 2121
-    """Not specified. """
+    """_No description given_ """
     AUTHORIZATION_CODE_STALE = 2122
-    """Not specified. """
+    """_No description given_ """
     AUTHORIZATION_RECORD_EXPIRED = 2123
-    """Not specified. """
+    """_No description given_ """
     AUTHORIZATION_RECORD_REVOKED = 2124
-    """Not specified. """
+    """_No description given_ """
     AUTHORIZATION_RECORD_INACTIVE_API_KEY = 2125
-    """Not specified. """
+    """_No description given_ """
     AUTHORIZATION_RECORD_API_KEY_MATCHING = 2126
-    """Not specified. """
+    """_No description given_ """
     PARTNERSHIP_INVALID_TYPE = 2200
-    """Not specified. """
+    """_No description given_ """
     PARTNERSHIP_VALIDATION_ERROR = 2201
-    """Not specified. """
+    """_No description given_ """
     PARTNERSHIP_VALIDATION_TIMEOUT = 2202
-    """Not specified. """
+    """_No description given_ """
     PARTNERSHIP_ACCESS_FAILURE = 2203
-    """Not specified. """
+    """_No description given_ """
     PARTNERSHIP_ACCOUNT_INVALID = 2204
-    """Not specified. """
+    """_No description given_ """
     PARTNERSHIP_GET_ACCOUNT_INFO_FAILURE = 2205
-    """Not specified. """
+    """_No description given_ """
     PARTNERSHIP_DISABLED = 2206
-    """Not specified. """
+    """_No description given_ """
     PARTNERSHIP_ALREADY_EXISTS = 2207
-    """Not specified. """
+    """_No description given_ """
     COMMUNITY_STREAMING_UNAVAILABLE = 2300
-    """Not specified. """
+    """_No description given_ """
     TWITCH_NOT_LINKED = 2500
-    """Not specified. """
+    """_No description given_ """
     TWITCH_ACCOUNT_NOT_FOUND = 2501
-    """Not specified. """
+    """_No description given_ """
     TWITCH_COULD_NOT_LOAD_DESTINY_INFO = 2502
-    """Not specified. """
+    """_No description given_ """
     TWITCH_COULD_NOT_REGISTER_USER = 2503
-    """Not specified. """
+    """_No description given_ """
     TWITCH_COULD_NOT_UNREGISTER_USER = 2504
-    """Not specified. """
+    """_No description given_ """
     TWITCH_REQUIRES_RELINKING = 2505
-    """Not specified. """
+    """_No description given_ """
     TWITCH_NO_PLATFORM_CHOSEN = 2506
-    """Not specified. """
+    """_No description given_ """
     TRENDING_CATEGORY_NOT_FOUND = 2600
-    """Not specified. """
+    """_No description given_ """
     TRENDING_ENTRY_TYPE_NOT_SUPPORTED = 2601
-    """Not specified. """
+    """_No description given_ """
     REPORT_OFFENDER_NOT_IN_PGCR = 2700
-    """Not specified. """
+    """_No description given_ """
     REPORT_REQUESTOR_NOT_IN_PGCR = 2701
-    """Not specified. """
+    """_No description given_ """
     REPORT_SUBMISSION_FAILED = 2702
-    """Not specified. """
+    """_No description given_ """
     REPORT_CANNOT_REPORT_SELF = 2703
-    """Not specified. """
+    """_No description given_ """
     AWA_TYPE_DISABLED = 2800
-    """Not specified. """
+    """_No description given_ """
     AWA_TOO_MANY_PENDING_REQUESTS = 2801
-    """Not specified. """
+    """_No description given_ """
     AWA_THE_FEATURE_REQUIRES_A_REGISTERED_DEVICE = 2802
-    """Not specified. """
+    """_No description given_ """
     AWA_REQUEST_WAS_UNANSWERED_FOR_TOO_LONG = 2803
-    """Not specified. """
+    """_No description given_ """
     AWA_WRITE_REQUEST_MISSING_OR_INVALID_TOKEN = 2804
-    """Not specified. """
+    """_No description given_ """
     AWA_WRITE_REQUEST_TOKEN_EXPIRED = 2805
-    """Not specified. """
+    """_No description given_ """
     AWA_WRITE_REQUEST_TOKEN_USAGE_LIMIT_REACHED = 2806
-    """Not specified. """
+    """_No description given_ """
     STEAM_WEB_API_ERROR = 2900
-    """Not specified. """
+    """_No description given_ """
     STEAM_WEB_NULL_RESPONSE_ERROR = 2901
-    """Not specified. """
+    """_No description given_ """
     STEAM_ACCOUNT_REQUIRED = 2902
-    """Not specified. """
+    """_No description given_ """
     STEAM_NOT_AUTHORIZED = 2903
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_NOT_FOUND = 3000
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_ADD_NO_ALTERNATES_FOR_IMMEDIATE = 3001
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_FULL = 3002
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_ALT_FULL = 3003
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_BLOCKED = 3004
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_PLAYER_ENTRY_NOT_FOUND = 3005
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_PERMISSIONS = 3006
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_INVALID_PLATFORM = 3007
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_CANNOT_ADJUST_SLOT_COUNT = 3008
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_INVALID_PLAYER_PLATFORM = 3009
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_NOT_READY_FOR_INVITES_NOT_ENOUGH_PLAYERS = 3010
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_GAME_INVITES_NOT_SUPPORT_FOR_PLATFORM = 3011
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_PLATFORM_INVITE_PREQ_FAILURE = 3012
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_INVALID_AUTH_CONTEXT = 3013
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_INVALID_AUTH_PROVIDER_PSN = 3014
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_PS4_SESSION_FULL = 3015
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_INVALID_AUTH_TOKEN = 3016
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_SCHEDULED_FIRETEAMS_DISABLED = 3017
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_NOT_READY_FOR_INVITES_NOT_SCHEDULED_YET = 3018
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_NOT_READY_FOR_INVITES_CLOSED = 3019
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_SCHEDULED_FIRETEAMS_REQUIRE_ADMIN_PERMISSIONS = 3020
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_NON_PUBLIC_MUST_HAVE_CLAN = 3021
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_PUBLIC_CREATION_RESTRICTION = 3022
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_ALREADY_JOINED = 3023
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_SCHEDULED_FIRETEAMS_RANGE = 3024
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_PUBLIC_CREATION_RESTRICTION_EXTENDED = 3025
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_EXPIRED = 3026
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_INVALID_AUTH_PROVIDER = 3027
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_INVALID_AUTH_PROVIDER_XUID = 3028
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_THROTTLE = 3029
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_TOO_MANY_OPEN_SCHEDULED_FIRETEAMS = 3030
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_CANNOT_REOPEN_SCHEDULED_FIRETEAMS = 3031
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_JOIN_NO_ACCOUNT_SPECIFIED = 3032
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_MIN_DESTINY2_PROGRESS_FOR_CREATION = 3033
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_MIN_DESTINY2_PROGRESS_FOR_JOIN = 3034
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_S_M_S_OR_PURCHASE_REQUIRED_CREATE = 3035
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_PURCHASE_REQUIRED_CREATE = 3036
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_S_M_S_OR_PURCHASE_REQUIRED_JOIN = 3037
-    """Not specified. """
+    """_No description given_ """
     CLAN_FIRETEAM_PURCHASE_REQUIRED_JOIN = 3038
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_OVERRIDDEN_ACCOUNT_NOT_FOUND = 3200
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_TOO_MANY_OVERRIDDEN_PLATFORMS = 3201
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_NO_OVERRIDDEN_PLATFORMS = 3202
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_PRIMARY_ACCOUNT_NOT_FOUND = 3203
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_REQUEST_INVALID = 3204
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_BUNGIE_ACCOUNT_VALIDATION_FAILURE = 3206
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_OVERRIDDEN_PLATFORM_NOT_ALLOWED = 3207
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_THRESHOLD_EXCEEDED = 3208
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_INCOMPATIBLE_MEMBERSHIP_TYPE = 3209
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_COULD_NOT_FIND_LINKED_ACCOUNT_FOR_MEMBERSHIP_TYPE = 3210
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_COULD_NOT_CREATE_DESTINY_PROFILE_FOR_MEMBERSHIP_TYPE = 3211
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_ERROR_CREATING_DESTINY_PROFILE_FOR_MEMBERSHIP_TYPE = 3212
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_CANNOT_OVERRIDE_SELF = 3213
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_RECENT_SILVER_PURCHASE = 3214
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_SILVER_BALANCE_NEGATIVE = 3215
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_ACCOUNT_NOT_AUTHENTICATED = 3216
-    """Not specified. """
+    """_No description given_ """
     ERROR_ONE_ACCOUNT_ALREADY_ACTIVE = 3217
-    """Not specified. """
+    """_No description given_ """
     ERROR_ONE_ACCOUNT_DESTINY_RESTRICTION = 3218
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_MUST_MIGRATE_TO_STEAM = 3219
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_STEAM_ALREADY_PAIRED = 3220
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_CANNOT_PAIR_JUST_STEAM_AND_BLIZZARD = 3221
-    """Not specified. """
+    """_No description given_ """
     CROSS_SAVE_CANNOT_PAIR_STEAM_ALONE_BEFORE_SHADOWKEEP = 3222
-    """Not specified. """
+    """_No description given_ """
     AUTH_VERIFICATION_NOT_LINKED_TO_ACCOUNT = 3300
-    """Not specified. """
+    """_No description given_ """
     P_C_MIGRATION_MISSING_BLIZZARD = 3400
-    """Not specified. """
+    """_No description given_ """
     P_C_MIGRATION_MISSING_STEAM = 3401
-    """Not specified. """
+    """_No description given_ """
     P_C_MIGRATION_INVALID_BLIZZARD = 3402
-    """Not specified. """
+    """_No description given_ """
     P_C_MIGRATION_INVALID_STEAM = 3403
-    """Not specified. """
+    """_No description given_ """
     P_C_MIGRATION_UNKNOWN_FAILURE = 3404
-    """Not specified. """
+    """_No description given_ """
     P_C_MIGRATION_UNKNOWN_EXCEPTION = 3405
-    """Not specified. """
+    """_No description given_ """
     P_C_MIGRATION_NOT_LINKED = 3406
-    """Not specified. """
+    """_No description given_ """
     P_C_MIGRATION_ACCOUNTS_ALREADY_USED = 3407
-    """Not specified. """
+    """_No description given_ """
     P_C_MIGRATION_STEP_FAILED = 3408
-    """Not specified. """
+    """_No description given_ """
     P_C_MIGRATION_INVALID_BLIZZARD_CROSS_SAVE_STATE = 3409
-    """Not specified. """
+    """_No description given_ """
     P_C_MIGRATION_DESTINATION_BANNED = 3410
-    """Not specified. """
+    """_No description given_ """
     P_C_MIGRATION_DESTINY_FAILURE = 3411
-    """Not specified. """
+    """_No description given_ """
     P_C_MIGRATION_SILVER_TRANSFER_FAILED = 3412
-    """Not specified. """
+    """_No description given_ """
     P_C_MIGRATION_ENTITLEMENT_TRANSFER_FAILED = 3413
-    """Not specified. """
+    """_No description given_ """
     P_C_MIGRATION_CANNOT_STOMP_CLAN_FOUNDER = 3414
-    """Not specified. """
+    """_No description given_ """
     UNSUPPORTED_BROWSER = 3500
-    """Not specified. """
+    """_No description given_ """
     STADIA_ACCOUNT_REQUIRED = 3600
-    """Not specified. """
+    """_No description given_ """
     ERROR_PHONE_VALIDATION_TOO_MANY_USES = 3702
-    """Not specified. """
+    """_No description given_ """
     ERROR_PHONE_VALIDATION_NO_ASSOCIATED_PHONE = 3703
-    """Not specified. """
+    """_No description given_ """
     ERROR_PHONE_VALIDATION_CODE_INVALID = 3705
-    """Not specified. """
+    """_No description given_ """
     ERROR_PHONE_VALIDATION_BANNED = 3706
-    """Not specified. """
+    """_No description given_ """
     ERROR_PHONE_VALIDATION_CODE_TOO_RECENTLY_SENT = 3707
-    """Not specified. """
+    """_No description given_ """
     ERROR_PHONE_VALIDATION_CODE_EXPIRED = 3708
-    """Not specified. """
+    """_No description given_ """
     ERROR_PHONE_VALIDATION_INVALID_NUMBER_TYPE = 3709
-    """Not specified. """
+    """_No description given_ """
     ERROR_PHONE_VALIDATION_CODE_TOO_RECENTLY_CHECKED = 3710
-    """Not specified. """
+    """_No description given_ """
     APPLE_PUSH_ERROR_UNKNOWN = 3800
-    """Not specified. """
+    """_No description given_ """
     APPLE_PUSH_ERROR_NULL = 3801
-    """Not specified. """
+    """_No description given_ """
     APPLE_PUSH_ERROR_TIMEOUT = 3802
-    """Not specified. """
+    """_No description given_ """
     APPLE_PUSH_BAD_REQUEST = 3803
-    """Not specified. """
+    """_No description given_ """
     APPLE_PUSH_FAILED_AUTH = 3804
-    """Not specified. """
+    """_No description given_ """
     APPLE_PUSH_THROTTLED = 3805
-    """Not specified. """
+    """_No description given_ """
     APPLE_PUSH_SERVICE_UNAVAILABLE = 3806
-    """Not specified. """
+    """_No description given_ """
     NOT_AN_IMAGE_OR_VIDEO = 3807
-    """Not specified. """
+    """_No description given_ """
     ERROR_BUNGIE_FRIENDS_BLOCK_FAILED = 3900
-    """Not specified. """
+    """_No description given_ """
     ERROR_BUNGIE_FRIENDS_AUTO_REJECT = 3901
-    """Not specified. """
+    """_No description given_ """
     ERROR_BUNGIE_FRIENDS_NO_REQUEST_FOUND = 3902
-    """Not specified. """
+    """_No description given_ """
     ERROR_BUNGIE_FRIENDS_ALREADY_FRIENDS = 3903
-    """Not specified. """
+    """_No description given_ """
     ERROR_BUNGIE_FRIENDS_UNABLE_TO_REMOVE_REQUEST = 3904
-    """Not specified. """
+    """_No description given_ """
     ERROR_BUNGIE_FRIENDS_UNABLE_TO_REMOVE = 3905
-    """Not specified. """
+    """_No description given_ """
     ERROR_BUNGIE_FRIENDS_IDENTICAL_SOURCE_TARGET = 3906
-    """Not specified. """
+    """_No description given_ """
     ERROR_BUNGIE_FRIENDS_SELF = 3907
-    """Not specified. """
+    """_No description given_ """
     ERROR_BUNGIE_BLOCK_SELF = 3908
-    """Not specified. """
+    """_No description given_ """
     ERROR_BUNGIE_FRIENDS_LIST_FULL = 3910
-    """Not specified. """
+    """_No description given_ """
     ERROR_BUNGIE_BLOCK_LIST_FULL = 3911
-    """Not specified. """
+    """_No description given_ """

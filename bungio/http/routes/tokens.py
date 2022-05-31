@@ -1,5 +1,4 @@
-import datetime
-from typing import Any, Callable, Coroutine, Optional
+from typing import Callable, Coroutine, Optional
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -18,9 +17,9 @@ class TokensRouteHttpRequests:
             Required oauth2 scopes: PartnerOfferGrant
 
         Args:
-            partner_offer_id: Not specified.
-            bungie_net_membership_id: Not specified.
-            transaction_id: Not specified.
+            partner_offer_id: _No description given_
+            bungie_net_membership_id: _No description given_
+            transaction_id: _No description given_
             auth: Authentication information.
 
         Raises:

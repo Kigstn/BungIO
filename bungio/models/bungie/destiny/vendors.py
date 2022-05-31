@@ -1,9 +1,12 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import DestinyItemQuantity
 
 
 @attr.define
@@ -23,7 +26,7 @@ class DestinyVendorReceipt(BaseModel):
     """
 
     currency_paid: list["DestinyItemQuantity"] = attr.field()
-    item_received: Any = attr.field()
+    item_received: "DestinyItemQuantity" = attr.field()
     license_unlock_hash: int = attr.field()
     purchased_by_character_id: int = attr.field()
     refund_policy: int = attr.field()

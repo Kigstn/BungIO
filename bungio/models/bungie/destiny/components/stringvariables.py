@@ -1,18 +1,17 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import Any
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
 
 
 @attr.define
 class DestinyStringVariablesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        integer_values_by_hash: Not specified.
+        integer_values_by_hash: _No description given_
     """
 
     integer_values_by_hash: Any = attr.field()

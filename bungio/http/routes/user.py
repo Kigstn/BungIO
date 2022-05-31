@@ -1,5 +1,4 @@
-import datetime
-from typing import Any, Callable, Coroutine, Optional
+from typing import Callable, Coroutine, Optional
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -221,7 +220,7 @@ class UserRouteHttpRequests:
         Given the prefix of a global display name, returns all users who share that name.
 
         Args:
-            display_name_prefix: Not specified.
+            display_name_prefix: _No description given_
             page: The zero-based page of results you desire.
             auth: Authentication information. Required when users with a private profile are queried.
 

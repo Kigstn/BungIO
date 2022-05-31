@@ -32,6 +32,7 @@ from bungio.models.bungie.content.models import (
     TagMetadataDefinition,
     TagMetadataItem,
 )
+from bungio.models.bungie.dates import DateRange
 from bungio.models.bungie.destiny import (
     ActivityGraphNodeHighlightType,
     BucketCategory,
@@ -591,7 +592,6 @@ from bungio.models.bungie.fireteam import (
     FireteamPublicSearchOption,
     FireteamResponse,
     FireteamSlotSearch,
-    FireteamSummary,
     FireteamUserInfoCard,
 )
 from bungio.models.bungie.forum import (

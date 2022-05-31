@@ -1,15 +1,20 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import (
+        DestinyCraftableSocketComponent,
+        DestinyCraftableSocketPlugComponent,
+    )
 
 
 @attr.define
 class DestinyCraftablesComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         craftables: A map of craftable item hashes to craftable item state components.
@@ -23,10 +28,10 @@ class DestinyCraftablesComponent(BaseModel):
 @attr.define
 class DestinyCraftableComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        visible: Not specified.
+        visible: _No description given_
         failed_requirement_indexes: If the requirements are not met for crafting this item, these will index into the list of failure strings.
         sockets: Plug item state for the crafting sockets.
     """
@@ -39,10 +44,10 @@ class DestinyCraftableComponent(BaseModel):
 @attr.define
 class DestinyCraftableSocketComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        plug_set_hash: Not specified.
+        plug_set_hash: _No description given_
         plugs: Unlock state for plugs in the socket plug set definition
     """
 
@@ -53,10 +58,10 @@ class DestinyCraftableSocketComponent(BaseModel):
 @attr.define
 class DestinyCraftableSocketPlugComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        plug_item_hash: Not specified.
+        plug_item_hash: _No description given_
         failed_requirement_indexes: Index into the unlock requirements to display failure descriptions
     """
 

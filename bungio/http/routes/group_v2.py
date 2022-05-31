@@ -1,4 +1,3 @@
-import datetime
 from typing import Any, Callable, Coroutine, Optional
 
 from bungio.http.route import Route
@@ -125,16 +124,16 @@ class GroupV2RouteHttpRequests:
         Search for Groups.
 
         Args:
-            name: Not specified.
-            group_type: Not specified.
-            creation_date: Not specified.
-            sort_by: Not specified.
-            group_member_count_filter: Not specified.
-            locale_filter: Not specified.
-            tag_text: Not specified.
-            items_per_page: Not specified.
-            current_page: Not specified.
-            request_continuation_token: Not specified.
+            name: _No description given_
+            group_type: _No description given_
+            creation_date: _No description given_
+            sort_by: _No description given_
+            group_member_count_filter: _No description given_
+            locale_filter: _No description given_
+            tag_text: _No description given_
+            items_per_page: _No description given_
+            current_page: _No description given_
+            request_continuation_token: _No description given_
             auth: Authentication information. Required when users with a private profile are queried.
 
         Raises:
@@ -217,8 +216,8 @@ class GroupV2RouteHttpRequests:
         Get information about a specific group with the given name and type. The POST version.
 
         Args:
-            group_name: Not specified.
-            group_type: Not specified.
+            group_name: _No description given_
+            group_type: _No description given_
             auth: Authentication information. Required when users with a private profile are queried.
 
         Raises:
@@ -292,22 +291,22 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            name: Not specified.
-            about: Not specified.
-            motto: Not specified.
-            theme: Not specified.
-            avatar_image_index: Not specified.
-            tags: Not specified.
-            is_public: Not specified.
-            membership_option: Not specified.
-            is_public_topic_admin_only: Not specified.
-            allow_chat: Not specified.
-            chat_security: Not specified.
-            callsign: Not specified.
-            locale: Not specified.
-            homepage: Not specified.
-            enable_invitation_messaging_for_admins: Not specified.
-            default_publicity: Not specified.
+            name: _No description given_
+            about: _No description given_
+            motto: _No description given_
+            theme: _No description given_
+            avatar_image_index: _No description given_
+            tags: _No description given_
+            is_public: _No description given_
+            membership_option: _No description given_
+            is_public_topic_admin_only: _No description given_
+            allow_chat: _No description given_
+            chat_security: _No description given_
+            callsign: _No description given_
+            locale: _No description given_
+            homepage: _No description given_
+            enable_invitation_messaging_for_admins: _No description given_
+            default_publicity: _No description given_
             group_id: Group ID of the group to edit.
             auth: Authentication information.
 
@@ -364,13 +363,13 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            decal_id: Not specified.
-            decal_color_id: Not specified.
-            decal_background_color_id: Not specified.
-            gonfalon_id: Not specified.
-            gonfalon_color_id: Not specified.
-            gonfalon_detail_id: Not specified.
-            gonfalon_detail_color_id: Not specified.
+            decal_id: _No description given_
+            decal_color_id: _No description given_
+            decal_background_color_id: _No description given_
+            gonfalon_id: _No description given_
+            gonfalon_color_id: _No description given_
+            gonfalon_detail_id: _No description given_
+            gonfalon_detail_color_id: _No description given_
             group_id: Group ID of the group to edit.
             auth: Authentication information.
 
@@ -412,57 +411,31 @@ class GroupV2RouteHttpRequests:
         auth: AuthData,
     ) -> dict:
         """
-                Edit group options only available to a founder. You must have suitable permissions in the group to perform this operation.
+        Edit group options only available to a founder. You must have suitable permissions in the group to perform this operation.
 
-                Warning: Requires Authentication.
-                    Required oauth2 scopes: AdminGroups
+        Warning: Requires Authentication.
+            Required oauth2 scopes: AdminGroups
 
-                Args:
-                    invite_permission_override: Minimum Member Level allowed to invite new members to group
+        Args:
+            invite_permission_override: Minimum Member Level allowed to invite new members to group Always Allowed: Founder, Acting Founder True means admins have this power, false means they don't Default is false for clans, true for groups.
+            update_culture_permission_override: Minimum Member Level allowed to update group culture Always Allowed: Founder, Acting Founder True means admins have this power, false means they don't Default is false for clans, true for groups.
+            host_guided_game_permission_override: Minimum Member Level allowed to host guided games Always Allowed: Founder, Acting Founder, Admin Allowed Overrides: None, Member, Beginner Default is Member for clans, None for groups, although this means nothing for groups.
+            update_banner_permission_override: Minimum Member Level allowed to update banner Always Allowed: Founder, Acting Founder True means admins have this power, false means they don't Default is false for clans, true for groups.
+            join_level: Level to join a member at when accepting an invite, application, or joining an open clan Default is Beginner.
+            group_id: Group ID of the group to edit.
+            auth: Authentication information.
 
-        Always Allowed: Founder, Acting Founder
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
 
-        True means admins have this power, false means they don't
-
-        Default is false for clans, true for groups.
-                    update_culture_permission_override: Minimum Member Level allowed to update group culture
-
-        Always Allowed: Founder, Acting Founder
-
-        True means admins have this power, false means they don't
-
-        Default is false for clans, true for groups.
-                    host_guided_game_permission_override: Minimum Member Level allowed to host guided games
-
-        Always Allowed: Founder, Acting Founder, Admin
-
-        Allowed Overrides: None, Member, Beginner
-
-        Default is Member for clans, None for groups, although this means nothing for groups.
-                    update_banner_permission_override: Minimum Member Level allowed to update banner
-
-        Always Allowed: Founder, Acting Founder
-
-        True means admins have this power, false means they don't
-
-        Default is false for clans, true for groups.
-                    join_level: Level to join a member at when accepting an invite, application, or joining an open clan
-
-        Default is Beginner.
-                    group_id: Group ID of the group to edit.
-                    auth: Authentication information.
-
-                Raises:
-                    NotFound: 404 request
-                    BadRequest: 400 request
-                    InvalidAuthentication: If authentication is invalid
-                    TimeoutException: If no connection could be made
-                    BungieDead: Servers are down
-                    AuthenticationTooSlow: The authentication key has expired
-                    BungieException: Relaying the bungie error
-
-                Returns:
-                    The json response
+        Returns:
+            The json response
         """
 
         data = {
@@ -487,8 +460,8 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            chat_name: Not specified.
-            chat_security: Not specified.
+            chat_name: _No description given_
+            chat_security: _No description given_
             group_id: Group ID of the group to edit.
             auth: Authentication information.
 
@@ -530,9 +503,9 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            chat_enabled: Not specified.
-            chat_name: Not specified.
-            chat_security: Not specified.
+            chat_enabled: _No description given_
+            chat_name: _No description given_
+            chat_security: _No description given_
             conversation_id: Conversation Id of the channel being edited.
             group_id: Group ID of the group to edit.
             auth: Authentication information.
@@ -709,8 +682,8 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            comment: Not specified.
-            length: Not specified.
+            comment: _No description given_
+            length: _No description given_
             group_id: Group ID that has the member to ban.
             membership_id: Membership ID of the member to ban from the group.
             membership_type: Membership type of the provided membership ID.
@@ -751,7 +724,7 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            group_id: Not specified.
+            group_id:
             membership_id: Membership ID of the member to unban from the group
             membership_type: Membership type of the provided membership ID.
             auth: Authentication information.
@@ -899,7 +872,7 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            message: Not specified.
+            message: _No description given_
             group_id: ID of the group.
             auth: Authentication information.
 
@@ -932,7 +905,7 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            message: Not specified.
+            message: _No description given_
             group_id: ID of the group.
             auth: Authentication information.
 
@@ -967,8 +940,8 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            memberships: Not specified.
-            message: Not specified.
+            memberships: _No description given_
+            message: _No description given_
             group_id: ID of the group.
             auth: Authentication information.
 
@@ -1004,7 +977,7 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            message: Not specified.
+            message: _No description given_
             group_id: ID of the group.
             membership_id: The membership id being approved.
             membership_type: Membership type of the supplied membership ID.
@@ -1044,8 +1017,8 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            memberships: Not specified.
-            message: Not specified.
+            memberships: _No description given_
+            message: _No description given_
             group_id: ID of the group.
             auth: Authentication information.
 
@@ -1176,7 +1149,7 @@ class GroupV2RouteHttpRequests:
             Required oauth2 scopes: AdminGroups
 
         Args:
-            message: Not specified.
+            message: _No description given_
             group_id: ID of the group you would like to join.
             membership_id: Membership id of the account being invited.
             membership_type: MembershipType of the account being invited.

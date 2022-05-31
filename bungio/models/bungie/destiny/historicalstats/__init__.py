@@ -5,11 +5,30 @@ import attr
 
 from bungio.models.base import BaseEnum, BaseModel
 
+if TYPE_CHECKING:
+    from bungio.models import (
+        DestinyAggregateActivityStats,
+        DestinyHistoricalStatsActivity,
+        DestinyHistoricalStatsByPeriod,
+        DestinyHistoricalStatsPerCharacter,
+        DestinyHistoricalStatsPeriodGroup,
+        DestinyHistoricalStatsValue,
+        DestinyHistoricalStatsValuePair,
+        DestinyHistoricalStatsWithMerged,
+        DestinyHistoricalWeaponStats,
+        DestinyLeaderboardEntry,
+        DestinyPlayer,
+        DestinyPostGameCarnageReportEntry,
+        DestinyPostGameCarnageReportExtendedData,
+        DestinyPostGameCarnageReportTeamEntry,
+        UserInfoCard,
+    )
+
 
 @attr.define
 class DestinyPostGameCarnageReportData(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         period: Date and time for the activity.
@@ -23,7 +42,7 @@ class DestinyPostGameCarnageReportData(BaseModel):
     period: datetime.datetime = attr.field()
     starting_phase_index: int = attr.field()
     activity_was_started_from_beginning: bool = attr.field()
-    activity_details: Any = attr.field()
+    activity_details: "DestinyHistoricalStatsActivity" = attr.field()
     entries: list["DestinyPostGameCarnageReportEntry"] = attr.field()
     teams: list["DestinyPostGameCarnageReportTeamEntry"] = attr.field()
 
@@ -31,18 +50,16 @@ class DestinyPostGameCarnageReportData(BaseModel):
 @attr.define
 class DestinyHistoricalStatsActivity(BaseModel):
     """
-        Summary information about the activity that was played.
+    Summary information about the activity that was played.
 
-        Attributes:
-            reference_id: The unique hash identifier of the DestinyActivityDefinition that was played. If I had this to do over, it'd be named activityHash. Too late now.
-            director_activity_hash: The unique hash identifier of the DestinyActivityDefinition that was played.
-            instance_id: The unique identifier for this *specific* match that was played.
-
-    This value can be used to get additional data about this activity such as who else was playing via the GetPostGameCarnageReport endpoint.
-            mode: Indicates the most specific game mode of the activity that we could find.
-            modes: The list of all Activity Modes to which this activity applies, including aggregates. This will let you see, for example, whether the activity was both Clash and part of the Trials of the Nine event.
-            is_private: Whether or not the match was a private match.
-            membership_type: The Membership Type indicating the platform on which this match was played.
+    Attributes:
+        reference_id: The unique hash identifier of the DestinyActivityDefinition that was played. If I had this to do over, it'd be named activityHash. Too late now.
+        director_activity_hash: The unique hash identifier of the DestinyActivityDefinition that was played.
+        instance_id: The unique identifier for this *specific* match that was played. This value can be used to get additional data about this activity such as who else was playing via the GetPostGameCarnageReport endpoint.
+        mode: Indicates the most specific game mode of the activity that we could find.
+        modes: The list of all Activity Modes to which this activity applies, including aggregates. This will let you see, for example, whether the activity was both Clash and part of the Trials of the Nine event.
+        is_private: Whether or not the match was a private match.
+        membership_type: The Membership Type indicating the platform on which this match was played.
     """
 
     reference_id: int = attr.field()
@@ -57,7 +74,7 @@ class DestinyHistoricalStatsActivity(BaseModel):
 @attr.define
 class DestinyPostGameCarnageReportEntry(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         standing: Standing of the player
@@ -69,17 +86,17 @@ class DestinyPostGameCarnageReportEntry(BaseModel):
     """
 
     standing: int = attr.field()
-    score: Any = attr.field()
-    player: Any = attr.field()
+    score: "DestinyHistoricalStatsValue" = attr.field()
+    player: "DestinyPlayer" = attr.field()
     character_id: int = attr.field()
     values: Any = attr.field()
-    extended: Any = attr.field()
+    extended: "DestinyPostGameCarnageReportExtendedData" = attr.field()
 
 
 @attr.define
 class DestinyHistoricalStatsValue(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         stat_id: Unique ID for this stat
@@ -90,16 +107,16 @@ class DestinyHistoricalStatsValue(BaseModel):
     """
 
     stat_id: str = attr.field()
-    basic: Any = attr.field()
-    pga: Any = attr.field()
-    weighted: Any = attr.field()
+    basic: "DestinyHistoricalStatsValuePair" = attr.field()
+    pga: "DestinyHistoricalStatsValuePair" = attr.field()
+    weighted: "DestinyHistoricalStatsValuePair" = attr.field()
     activity_id: int = attr.field()
 
 
 @attr.define
 class DestinyHistoricalStatsValuePair(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         value: Raw value of the statistic
@@ -113,14 +130,14 @@ class DestinyHistoricalStatsValuePair(BaseModel):
 @attr.define
 class DestinyPlayer(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         destiny_user_info: Details about the player as they are known in game (platform display name, Destiny emblem)
         character_class: Class of the character if applicable and available.
-        class_hash: Not specified.
-        race_hash: Not specified.
-        gender_hash: Not specified.
+        class_hash: _No description given_
+        race_hash: _No description given_
+        gender_hash: _No description given_
         character_level: Level of the character if available. Zero if it is not available.
         light_level: Light Level of the character if available. Zero if it is not available.
         bungie_net_user_info: Details about the player as they are known on BungieNet. This will be undefined if the player has marked their credential private, or does not have a BungieNet account.
@@ -129,14 +146,14 @@ class DestinyPlayer(BaseModel):
         emblem_hash: If we know the emblem's hash, this can be used to look up the player's emblem at the time of a match when receiving PGCR data, or otherwise their currently equipped emblem (if we are able to obtain it).
     """
 
-    destiny_user_info: Any = attr.field()
+    destiny_user_info: "UserInfoCard" = attr.field()
     character_class: str = attr.field()
     class_hash: int = attr.field()
     race_hash: int = attr.field()
     gender_hash: int = attr.field()
     character_level: int = attr.field()
     light_level: int = attr.field()
-    bungie_net_user_info: Any = attr.field()
+    bungie_net_user_info: "UserInfoCard" = attr.field()
     clan_name: str = attr.field()
     clan_tag: str = attr.field()
     emblem_hash: int = attr.field()
@@ -145,7 +162,7 @@ class DestinyPlayer(BaseModel):
 @attr.define
 class DestinyPostGameCarnageReportExtendedData(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         weapons: List of weapons and their perspective values.
@@ -159,7 +176,7 @@ class DestinyPostGameCarnageReportExtendedData(BaseModel):
 @attr.define
 class DestinyHistoricalWeaponStats(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         reference_id: The hash ID of the item definition that describes the weapon.
@@ -173,7 +190,7 @@ class DestinyHistoricalWeaponStats(BaseModel):
 @attr.define
 class DestinyPostGameCarnageReportTeamEntry(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         team_id: Integer ID for the team.
@@ -183,19 +200,19 @@ class DestinyPostGameCarnageReportTeamEntry(BaseModel):
     """
 
     team_id: int = attr.field()
-    standing: Any = attr.field()
-    score: Any = attr.field()
+    standing: "DestinyHistoricalStatsValue" = attr.field()
+    score: "DestinyHistoricalStatsValue" = attr.field()
     team_name: str = attr.field()
 
 
 @attr.define
 class DestinyLeaderboard(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        stat_id: Not specified.
-        entries: Not specified.
+        stat_id: _No description given_
+        entries: _No description given_
     """
 
     stat_id: str = attr.field()
@@ -205,7 +222,7 @@ class DestinyLeaderboard(BaseModel):
 @attr.define
 class DestinyLeaderboardEntry(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         rank: Where this player ranks on the leaderboard. A value of 1 is the top rank.
@@ -215,15 +232,15 @@ class DestinyLeaderboardEntry(BaseModel):
     """
 
     rank: int = attr.field()
-    player: Any = attr.field()
+    player: "DestinyPlayer" = attr.field()
     character_id: int = attr.field()
-    value: Any = attr.field()
+    value: "DestinyHistoricalStatsValue" = attr.field()
 
 
 @attr.define
 class DestinyLeaderboardResults(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         focus_membership_id: Indicate the membership ID of the account that is the focal point of the provided leaderboards.
@@ -237,7 +254,7 @@ class DestinyLeaderboardResults(BaseModel):
 @attr.define
 class DestinyClanAggregateStat(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         mode: The id of the mode of stats (allPvp, allPvE, etc)
@@ -247,21 +264,21 @@ class DestinyClanAggregateStat(BaseModel):
 
     mode: int = attr.field()
     stat_id: str = attr.field()
-    value: Any = attr.field()
+    value: "DestinyHistoricalStatsValue" = attr.field()
 
 
 @attr.define
 class DestinyHistoricalStatsByPeriod(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        all_time: Not specified.
-        all_time_tier1: Not specified.
-        all_time_tier2: Not specified.
-        all_time_tier3: Not specified.
-        daily: Not specified.
-        monthly: Not specified.
+        all_time: _No description given_
+        all_time_tier1: _No description given_
+        all_time_tier2: _No description given_
+        all_time_tier3: _No description given_
+        daily: _No description given_
+        monthly: _No description given_
     """
 
     all_time: Any = attr.field()
@@ -275,7 +292,7 @@ class DestinyHistoricalStatsByPeriod(BaseModel):
 @attr.define
 class DestinyHistoricalStatsPeriodGroup(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         period: Period for the group. If the stat periodType is day, then this will have a specific day. If the type is monthly, then this value will be the first day of the applicable month. This value is not set when the periodType is 'all time'.
@@ -284,19 +301,19 @@ class DestinyHistoricalStatsPeriodGroup(BaseModel):
     """
 
     period: datetime.datetime = attr.field()
-    activity_details: Any = attr.field()
+    activity_details: "DestinyHistoricalStatsActivity" = attr.field()
     values: Any = attr.field()
 
 
 @attr.define
 class DestinyHistoricalStatsAccountResult(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        merged_deleted_characters: Not specified.
-        merged_all_characters: Not specified.
-        characters: Not specified.
+        merged_deleted_characters: _No description given_
+        merged_all_characters: _No description given_
+        characters: _No description given_
     """
 
     merged_deleted_characters: "DestinyHistoricalStatsWithMerged" = attr.field()
@@ -307,11 +324,11 @@ class DestinyHistoricalStatsAccountResult(BaseModel):
 @attr.define
 class DestinyHistoricalStatsWithMerged(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        results: Not specified.
-        merged: Not specified.
+        results: _No description given_
+        merged: _No description given_
     """
 
     results: Any = attr.field()
@@ -321,13 +338,13 @@ class DestinyHistoricalStatsWithMerged(BaseModel):
 @attr.define
 class DestinyHistoricalStatsPerCharacter(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        character_id: Not specified.
-        deleted: Not specified.
-        results: Not specified.
-        merged: Not specified.
+        character_id: _No description given_
+        deleted: _No description given_
+        results: _No description given_
+        merged: _No description given_
     """
 
     character_id: int = attr.field()
@@ -339,7 +356,7 @@ class DestinyHistoricalStatsPerCharacter(BaseModel):
 @attr.define
 class DestinyActivityHistoryResults(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         activities: List of activities, the most recent activity first.
@@ -351,7 +368,7 @@ class DestinyActivityHistoryResults(BaseModel):
 @attr.define
 class DestinyHistoricalWeaponStatsData(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         weapons: List of weapons and their perspective values.
@@ -363,7 +380,7 @@ class DestinyHistoricalWeaponStatsData(BaseModel):
 @attr.define
 class DestinyAggregateActivityResults(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         activities: List of all activities the player has participated in.
@@ -375,7 +392,7 @@ class DestinyAggregateActivityResults(BaseModel):
 @attr.define
 class DestinyAggregateActivityStats(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
         activity_hash: Hash ID that can be looked up in the DestinyActivityTable.

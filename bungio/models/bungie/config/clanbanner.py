@@ -1,20 +1,17 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
-
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
 
 
 @attr.define
 class ClanBannerDecal(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        identifier: Not specified.
-        foreground_path: Not specified.
-        background_path: Not specified.
+        identifier: _No description given_
+        foreground_path: _No description given_
+        background_path: _No description given_
     """
 
     identifier: str = attr.field()

@@ -1,19 +1,18 @@
-import datetime
 from typing import Any, Optional
 
 import attr
 
-from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
-from bungio.models.bungie.config import UserTheme
-from bungio.models.bungie.user import (
+from bungio.models import (
     GeneralUser,
+    GetCredentialTypesForAccountResponse,
     HardLinkedUserMembership,
     UserMembershipData,
     UserSearchPrefixRequest,
     UserSearchResponse,
+    UserTheme,
 )
-from bungio.models.bungie.user.models import GetCredentialTypesForAccountResponse
+from bungio.models.auth import AuthData
+from bungio.models.base import BaseModel
 
 
 @attr.define
@@ -27,8 +26,7 @@ class UserRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/user/#bungio.models.bungie.user.GeneralUser) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_bungie_net_user_by_id(id=id, auth=auth)
@@ -43,8 +41,7 @@ class UserRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.Any) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_sanitized_platform_display_names(membership_id=membership_id, auth=auth)
@@ -61,8 +58,7 @@ class UserRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/user.models/#bungio.models.bungie.user.models.GetCredentialTypesForAccountResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_credential_types_for_target_account(
@@ -81,8 +77,7 @@ class UserRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/config/#bungio.models.bungie.config.UserTheme) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_available_themes(auth=auth)
@@ -100,8 +95,7 @@ class UserRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/user/#bungio.models.bungie.user.UserMembershipData) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_membership_data_by_id(
@@ -120,8 +114,7 @@ class UserRouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/user/#bungio.models.bungie.user.UserMembershipData) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_membership_data_for_current_user(auth=auth)
@@ -139,8 +132,7 @@ class UserRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/user/#bungio.models.bungie.user.HardLinkedUserMembership) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_membership_from_hard_linked_credential(
@@ -160,8 +152,7 @@ class UserRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/user/#bungio.models.bungie.user.UserSearchResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.search_by_global_name_prefix(
@@ -181,8 +172,7 @@ class UserRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/user/#bungio.models.bungie.user.UserSearchResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.search_by_global_name_post(page=page, auth=auth, **data.to_dict())

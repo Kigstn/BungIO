@@ -1,3 +1,3 @@
-# Trending Routes Interface
+# Trending Routes
 
 ::: bungio.api.bungie.trending

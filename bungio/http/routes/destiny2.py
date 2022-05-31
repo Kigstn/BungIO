@@ -65,8 +65,8 @@ class Destiny2RouteHttpRequests:
         Returns a list of Destiny memberships given a global Bungie Display Name. This method will hide overridden memberships due to cross save.
 
         Args:
-            display_name: Not specified.
-            display_name_code: Not specified.
+            display_name: _No description given_
+            display_name_code: _No description given_
             membership_type: A valid non-BungieNet membership type, or All. Indicates which memberships to return. You probably want this set to All.
             auth: Authentication information. Required when users with a private profile are queried.
 
@@ -465,12 +465,12 @@ class Destiny2RouteHttpRequests:
             Required oauth2 scopes: MoveEquipDestinyItems
 
         Args:
-            item_reference_hash: Not specified.
-            stack_size: Not specified.
-            transfer_to_vault: Not specified.
+            item_reference_hash: _No description given_
+            stack_size: _No description given_
+            transfer_to_vault: _No description given_
             item_id: The instance ID of the item for this action request.
-            character_id: Not specified.
-            membership_type: Not specified.
+            character_id: _No description given_
+            membership_type: _No description given_
             auth: Authentication information.
 
         Raises:
@@ -515,11 +515,11 @@ class Destiny2RouteHttpRequests:
             Required oauth2 scopes: MoveEquipDestinyItems
 
         Args:
-            item_reference_hash: Not specified.
-            stack_size: Not specified.
+            item_reference_hash: _No description given_
+            stack_size: _No description given_
             item_id: The instance ID of the item for this action request.
-            character_id: Not specified.
-            membership_type: Not specified.
+            character_id: _No description given_
+            membership_type: _No description given_
             auth: Authentication information.
 
         Raises:
@@ -556,8 +556,8 @@ class Destiny2RouteHttpRequests:
 
         Args:
             item_id: The instance ID of the item for this action request.
-            character_id: Not specified.
-            membership_type: Not specified.
+            character_id: _No description given_
+            membership_type: _No description given_
             auth: Authentication information.
 
         Raises:
@@ -591,9 +591,9 @@ class Destiny2RouteHttpRequests:
             Required oauth2 scopes: MoveEquipDestinyItems
 
         Args:
-            item_ids: Not specified.
-            character_id: Not specified.
-            membership_type: Not specified.
+            item_ids: _No description given_
+            character_id: _No description given_
+            membership_type: _No description given_
             auth: Authentication information.
 
         Raises:
@@ -629,10 +629,10 @@ class Destiny2RouteHttpRequests:
             Required oauth2 scopes: MoveEquipDestinyItems
 
         Args:
-            state: Not specified.
+            state: _No description given_
             item_id: The instance ID of the item for this action request.
-            character_id: Not specified.
-            membership_type: Not specified.
+            character_id: _No description given_
+            membership_type: _No description given_
             auth: Authentication information.
 
         Raises:
@@ -669,10 +669,10 @@ class Destiny2RouteHttpRequests:
             Required oauth2 scopes: MoveEquipDestinyItems
 
         Args:
-            state: Not specified.
+            state: _No description given_
             item_id: The instance ID of the item for this action request.
-            character_id: Not specified.
-            membership_type: Not specified.
+            character_id: _No description given_
+            membership_type: _No description given_
             auth: Authentication information.
 
         Raises:
@@ -718,8 +718,8 @@ class Destiny2RouteHttpRequests:
             action_token: Action token provided by the AwaGetActionToken API call.
             item_instance_id: The instance ID of the item having a plug inserted. Only instanced items can have sockets.
             plug: The plugs being inserted.
-            character_id: Not specified.
-            membership_type: Not specified.
+            character_id: _No description given_
+            membership_type: _No description given_
             auth: Authentication information.
 
         Raises:
@@ -759,8 +759,8 @@ class Destiny2RouteHttpRequests:
         Args:
             plug: The plugs being inserted.
             item_id: The instance ID of the item for this action request.
-            character_id: Not specified.
-            membership_type: Not specified.
+            character_id: _No description given_
+            membership_type: _No description given_
             auth: Authentication information.
 
         Raises:

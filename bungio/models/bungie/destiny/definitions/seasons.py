@@ -1,33 +1,38 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import (
+        DestinyDisplayPropertiesDefinition,
+        DestinySeasonPreviewDefinition,
+        DestinySeasonPreviewImageDefinition,
+    )
 
 
 @attr.define
 class DestinySeasonDefinition(BaseModel):
     """
-        Defines a canonical "Season" of Destiny: a range of a few months where the game highlights certain challenges, provides new loot, has new Clan-related rewards and celebrates various seasonal events.
+    Defines a canonical "Season" of Destiny: a range of a few months where the game highlights certain challenges, provides new loot, has new Clan-related rewards and celebrates various seasonal events.
 
-        Attributes:
-            display_properties: Not specified.
-            background_image_path: Not specified.
-            season_number: Not specified.
-            start_date: Not specified.
-            end_date: Not specified.
-            season_pass_hash: Not specified.
-            season_pass_progression_hash: Not specified.
-            artifact_item_hash: Not specified.
-            seal_presentation_node_hash: Not specified.
-            seasonal_challenges_presentation_node_hash: Not specified.
-            preview: Optional - Defines the promotional text, images, and links to preview this season.
-            hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally.
-
-    When entities refer to each other in Destiny content, it is this hash that they are referring to.
-            index: The index of the entity as it was found in the investment tables.
-            redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+    Attributes:
+        display_properties: _No description given_
+        background_image_path: _No description given_
+        season_number: _No description given_
+        start_date: _No description given_
+        end_date: _No description given_
+        season_pass_hash: _No description given_
+        season_pass_progression_hash: _No description given_
+        artifact_item_hash: _No description given_
+        seal_presentation_node_hash: _No description given_
+        seasonal_challenges_presentation_node_hash: _No description given_
+        preview: Optional - Defines the promotional text, images, and links to preview this season.
+        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
+        index: The index of the entity as it was found in the investment tables.
+        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
@@ -40,7 +45,7 @@ class DestinySeasonDefinition(BaseModel):
     artifact_item_hash: int = attr.field()
     seal_presentation_node_hash: int = attr.field()
     seasonal_challenges_presentation_node_hash: int = attr.field()
-    preview: Any = attr.field()
+    preview: "DestinySeasonPreviewDefinition" = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
@@ -81,19 +86,15 @@ class DestinySeasonPreviewImageDefinition(BaseModel):
 @attr.define
 class DestinySeasonPassDefinition(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            display_properties: Not specified.
-            reward_progression_hash: This is the progression definition related to the progression for the initial levels 1-100 that provide item rewards for the Season pass. Further experience after you reach the limit is provided in the "Prestige" progression referred to by prestigeProgressionHash.
-            prestige_progression_hash: I know what you're thinking, but I promise we're not going to duplicate and drown you. Instead, we're giving you sweet, sweet power bonuses.
-
-     Prestige progression is further progression that you can make on the Season pass after you gain max ranks, that will ultimately increase your power/light level over the theoretical limit.
-            hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally.
-
-    When entities refer to each other in Destiny content, it is this hash that they are referring to.
-            index: The index of the entity as it was found in the investment tables.
-            redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+    Attributes:
+        display_properties: _No description given_
+        reward_progression_hash: This is the progression definition related to the progression for the initial levels 1-100 that provide item rewards for the Season pass. Further experience after you reach the limit is provided in the "Prestige" progression referred to by prestigeProgressionHash.
+        prestige_progression_hash: I know what you're thinking, but I promise we're not going to duplicate and drown you. Instead, we're giving you sweet, sweet power bonuses.  Prestige progression is further progression that you can make on the Season pass after you gain max ranks, that will ultimately increase your power/light level over the theoretical limit.
+        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
+        index: The index of the entity as it was found in the investment tables.
+        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()

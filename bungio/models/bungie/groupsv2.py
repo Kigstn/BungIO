@@ -1,31 +1,47 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
 
+if TYPE_CHECKING:
+    from bungio.models import (
+        ClanBanner,
+        GroupFeatures,
+        GroupMember,
+        GroupMembership,
+        GroupPotentialMember,
+        GroupPotentialMembership,
+        GroupUserInfoCard,
+        GroupV2,
+        GroupV2Card,
+        GroupV2ClanInfo,
+        GroupV2ClanInfoAndInvestment,
+        PagedQuery,
+        UserInfoCard,
+        UserMembership,
+    )
+
 
 @attr.define
 class GroupUserInfoCard(BaseModel):
     """
-       Not specified.
+    _No description given_
 
-       Attributes:
-           last_seen_display_name: This will be the display name the clan server last saw the user as. If the account is an active cross save override, this will be the display name to use. Otherwise, this will match the displayName property.
-           last_seen_display_name_type: The platform of the LastSeenDisplayName
-           supplemental_display_name: A platform specific additional display name - ex: psn Real Name, bnet Unique Name, etc.
-           icon_path: URL the Icon if available.
-           cross_save_override: If there is a cross save override in effect, this value will tell you the type that is overridding this one.
-           applicable_membership_types: The list of Membership Types indicating the platforms on which this Membership can be used.
-
-    Not in Cross Save = its original membership type. Cross Save Primary = Any membership types it is overridding, and its original membership type Cross Save Overridden = Empty list
-           is_public: If True, this is a public user membership.
-           membership_type: Type of the membership. Not necessarily the native type.
-           membership_id: Membership ID as they user is known in the Accounts service
-           display_name: Display Name the player has chosen for themselves. The display name is optional when the data type is used as input to a platform API.
-           bungie_global_display_name: The bungie global display name, if set.
-           bungie_global_display_name_code: The bungie global display name code, if set.
+    Attributes:
+        last_seen_display_name: This will be the display name the clan server last saw the user as. If the account is an active cross save override, this will be the display name to use. Otherwise, this will match the displayName property.
+        last_seen_display_name_type: The platform of the LastSeenDisplayName
+        supplemental_display_name: A platform specific additional display name - ex: psn Real Name, bnet Unique Name, etc.
+        icon_path: URL the Icon if available.
+        cross_save_override: If there is a cross save override in effect, this value will tell you the type that is overridding this one.
+        applicable_membership_types: The list of Membership Types indicating the platforms on which this Membership can be used.  Not in Cross Save = its original membership type. Cross Save Primary = Any membership types it is overridding, and its original membership type Cross Save Overridden = Empty list
+        is_public: If True, this is a public user membership.
+        membership_type: Type of the membership. Not necessarily the native type.
+        membership_id: Membership ID as they user is known in the Accounts service
+        display_name: Display Name the player has chosen for themselves. The display name is optional when the data type is used as input to a platform API.
+        bungie_global_display_name: The bungie global display name, if set.
+        bungie_global_display_name_code: The bungie global display name code, if set.
     """
 
     last_seen_display_name: str = attr.field()
@@ -45,15 +61,15 @@ class GroupUserInfoCard(BaseModel):
 @attr.define
 class GroupResponse(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        detail: Not specified.
-        founder: Not specified.
-        allied_ids: Not specified.
-        parent_group: Not specified.
-        alliance_status: Not specified.
-        group_join_invite_count: Not specified.
+        detail: _No description given_
+        founder: _No description given_
+        allied_ids: _No description given_
+        parent_group: _No description given_
+        alliance_status: _No description given_
+        group_join_invite_count: _No description given_
         current_user_memberships_inactive_for_destiny: A convenience property that indicates if every membership you (the current user) have that is a part of this group are part of an account that is considered inactive - for example, overridden accounts in Cross Save.
         current_user_member_map: This property will be populated if the authenticated user is a member of the group. Note that because of account linking, a user can sometimes be part of a clan more than once. As such, this returns the highest member type available.
         current_user_potential_member_map: This property will be populated if the authenticated user is an applicant or has an outstanding invitation to join. Note that because of account linking, a user can sometimes be part of a clan more than once.
@@ -73,37 +89,37 @@ class GroupResponse(BaseModel):
 @attr.define
 class GroupV2(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        group_id: Not specified.
-        name: Not specified.
-        group_type: Not specified.
-        membership_id_created: Not specified.
-        creation_date: Not specified.
-        modification_date: Not specified.
-        about: Not specified.
-        tags: Not specified.
-        member_count: Not specified.
-        is_public: Not specified.
-        is_public_topic_admin_only: Not specified.
-        motto: Not specified.
-        allow_chat: Not specified.
-        is_default_post_public: Not specified.
-        chat_security: Not specified.
-        locale: Not specified.
-        avatar_image_index: Not specified.
-        homepage: Not specified.
-        membership_option: Not specified.
-        default_publicity: Not specified.
-        theme: Not specified.
-        banner_path: Not specified.
-        avatar_path: Not specified.
-        conversation_id: Not specified.
-        enable_invitation_messaging_for_admins: Not specified.
-        ban_expire_date: Not specified.
-        features: Not specified.
-        clan_info: Not specified.
+        group_id: _No description given_
+        name: _No description given_
+        group_type: _No description given_
+        membership_id_created: _No description given_
+        creation_date: _No description given_
+        modification_date: _No description given_
+        about: _No description given_
+        tags: _No description given_
+        member_count: _No description given_
+        is_public: _No description given_
+        is_public_topic_admin_only: _No description given_
+        motto: _No description given_
+        allow_chat: _No description given_
+        is_default_post_public: _No description given_
+        chat_security: _No description given_
+        locale: _No description given_
+        avatar_image_index: _No description given_
+        homepage: _No description given_
+        membership_option: _No description given_
+        default_publicity: _No description given_
+        theme: _No description given_
+        banner_path: _No description given_
+        avatar_path: _No description given_
+        conversation_id: _No description given_
+        enable_invitation_messaging_for_admins: _No description given_
+        ban_expire_date: _No description given_
+        features: _No description given_
+        clan_info: _No description given_
     """
 
     group_id: int = attr.field()
@@ -138,106 +154,80 @@ class GroupV2(BaseModel):
 
 class GroupType(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     GENERAL = 0
-    """Not specified. """
+    """_No description given_ """
     CLAN = 1
-    """Not specified. """
+    """_No description given_ """
 
 
 class ChatSecuritySetting(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     GROUP = 0
-    """Not specified. """
+    """_No description given_ """
     ADMINS = 1
-    """Not specified. """
+    """_No description given_ """
 
 
 class GroupHomepage(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     WALL = 0
-    """Not specified. """
+    """_No description given_ """
     FORUM = 1
-    """Not specified. """
+    """_No description given_ """
     ALLIANCE_FORUM = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 class MembershipOption(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     REVIEWED = 0
-    """Not specified. """
+    """_No description given_ """
     OPEN = 1
-    """Not specified. """
+    """_No description given_ """
     CLOSED = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 class GroupPostPublicity(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     PUBLIC = 0
-    """Not specified. """
+    """_No description given_ """
     ALLIANCE = 1
-    """Not specified. """
+    """_No description given_ """
     PRIVATE = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class GroupFeatures(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            maximum_members: Not specified.
-            maximum_memberships_of_group_type: Maximum number of groups of this type a typical membership may join. For example, a user may join about 50 General groups with their Bungie.net account. They may join one clan per Destiny membership.
-            capabilities: Not specified.
-            membership_types: Not specified.
-            invite_permission_override: Minimum Member Level allowed to invite new members to group
-
-    Always Allowed: Founder, Acting Founder
-
-    True means admins have this power, false means they don't
-
-    Default is false for clans, true for groups.
-            update_culture_permission_override: Minimum Member Level allowed to update group culture
-
-    Always Allowed: Founder, Acting Founder
-
-    True means admins have this power, false means they don't
-
-    Default is false for clans, true for groups.
-            host_guided_game_permission_override: Minimum Member Level allowed to host guided games
-
-    Always Allowed: Founder, Acting Founder, Admin
-
-    Allowed Overrides: None, Member, Beginner
-
-    Default is Member for clans, None for groups, although this means nothing for groups.
-            update_banner_permission_override: Minimum Member Level allowed to update banner
-
-    Always Allowed: Founder, Acting Founder
-
-    True means admins have this power, false means they don't
-
-    Default is false for clans, true for groups.
-            join_level: Level to join a member at when accepting an invite, application, or joining an open clan
-
-    Default is Beginner.
+    Attributes:
+        maximum_members: _No description given_
+        maximum_memberships_of_group_type: Maximum number of groups of this type a typical membership may join. For example, a user may join about 50 General groups with their Bungie.net account. They may join one clan per Destiny membership.
+        capabilities: _No description given_
+        membership_types: _No description given_
+        invite_permission_override: Minimum Member Level allowed to invite new members to group Always Allowed: Founder, Acting Founder True means admins have this power, false means they don't Default is false for clans, true for groups.
+        update_culture_permission_override: Minimum Member Level allowed to update group culture Always Allowed: Founder, Acting Founder True means admins have this power, false means they don't Default is false for clans, true for groups.
+        host_guided_game_permission_override: Minimum Member Level allowed to host guided games Always Allowed: Founder, Acting Founder, Admin Allowed Overrides: None, Member, Beginner Default is Member for clans, None for groups, although this means nothing for groups.
+        update_banner_permission_override: Minimum Member Level allowed to update banner Always Allowed: Founder, Acting Founder True means admins have this power, false means they don't Default is false for clans, true for groups.
+        join_level: Level to join a member at when accepting an invite, application, or joining an open clan Default is Beginner.
     """
 
     maximum_members: int = attr.field()
@@ -253,25 +243,25 @@ class GroupFeatures(BaseModel):
 
 class Capabilities(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     LEADERBOARDS = 1
-    """Not specified. """
+    """_No description given_ """
     CALLSIGN = 2
-    """Not specified. """
+    """_No description given_ """
     OPTIONAL_CONVERSATIONS = 4
-    """Not specified. """
+    """_No description given_ """
     CLAN_BANNER = 8
-    """Not specified. """
+    """_No description given_ """
     D2_INVESTMENT_DATA = 16
-    """Not specified. """
+    """_No description given_ """
     TAGS = 32
-    """Not specified. """
+    """_No description given_ """
     ALLIANCES = 64
-    """Not specified. """
+    """_No description given_ """
 
 
 class HostGuidedGamesPermissionLevel(BaseEnum):
@@ -280,11 +270,11 @@ class HostGuidedGamesPermissionLevel(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     BEGINNER = 1
-    """Not specified. """
+    """_No description given_ """
     MEMBER = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 class RuntimeGroupMemberType(BaseEnum):
@@ -293,17 +283,17 @@ class RuntimeGroupMemberType(BaseEnum):
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     BEGINNER = 1
-    """Not specified. """
+    """_No description given_ """
     MEMBER = 2
-    """Not specified. """
+    """_No description given_ """
     ADMIN = 3
-    """Not specified. """
+    """_No description given_ """
     ACTING_FOUNDER = 4
-    """Not specified. """
+    """_No description given_ """
     FOUNDER = 5
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
@@ -312,8 +302,8 @@ class GroupV2ClanInfo(BaseModel):
     This contract contains clan-specific group information. It does not include any investment data.
 
     Attributes:
-        clan_callsign: Not specified.
-        clan_banner_data: Not specified.
+        clan_callsign: _No description given_
+        clan_banner_data: _No description given_
     """
 
     clan_callsign: str = attr.field()
@@ -323,16 +313,16 @@ class GroupV2ClanInfo(BaseModel):
 @attr.define
 class ClanBanner(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        decal_id: Not specified.
-        decal_color_id: Not specified.
-        decal_background_color_id: Not specified.
-        gonfalon_id: Not specified.
-        gonfalon_color_id: Not specified.
-        gonfalon_detail_id: Not specified.
-        gonfalon_detail_color_id: Not specified.
+        decal_id: _No description given_
+        decal_color_id: _No description given_
+        decal_background_color_id: _No description given_
+        gonfalon_id: _No description given_
+        gonfalon_color_id: _No description given_
+        gonfalon_detail_id: _No description given_
+        gonfalon_detail_color_id: _No description given_
     """
 
     decal_id: int = attr.field()
@@ -350,9 +340,9 @@ class GroupV2ClanInfoAndInvestment(BaseModel):
     The same as GroupV2ClanInfo, but includes any investment data.
 
     Attributes:
-        d2_clan_progressions: Not specified.
-        clan_callsign: Not specified.
-        clan_banner_data: Not specified.
+        d2_clan_progressions: _No description given_
+        clan_callsign: _No description given_
+        clan_banner_data: _No description given_
     """
 
     d2_clan_progressions: Any = attr.field()
@@ -363,13 +353,13 @@ class GroupV2ClanInfoAndInvestment(BaseModel):
 @attr.define
 class GroupUserBase(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        group_id: Not specified.
-        destiny_user_info: Not specified.
-        bungie_net_user_info: Not specified.
-        join_date: Not specified.
+        group_id: _No description given_
+        destiny_user_info: _No description given_
+        bungie_net_user_info: _No description given_
+        join_date: _No description given_
     """
 
     group_id: int = attr.field()
@@ -381,16 +371,16 @@ class GroupUserBase(BaseModel):
 @attr.define
 class GroupMember(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        member_type: Not specified.
-        is_online: Not specified.
-        last_online_status_change: Not specified.
-        group_id: Not specified.
-        destiny_user_info: Not specified.
-        bungie_net_user_info: Not specified.
-        join_date: Not specified.
+        member_type: _No description given_
+        is_online: _No description given_
+        last_online_status_change: _No description given_
+        group_id: _No description given_
+        destiny_user_info: _No description given_
+        bungie_net_user_info: _No description given_
+        join_date: _No description given_
     """
 
     member_type: int = attr.field()
@@ -404,28 +394,28 @@ class GroupMember(BaseModel):
 
 class GroupAllianceStatus(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     UNALLIED = 0
-    """Not specified. """
+    """_No description given_ """
     PARENT = 1
-    """Not specified. """
+    """_No description given_ """
     CHILD = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class GroupPotentialMember(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        potential_status: Not specified.
-        group_id: Not specified.
-        destiny_user_info: Not specified.
-        bungie_net_user_info: Not specified.
-        join_date: Not specified.
+        potential_status: _No description given_
+        group_id: _No description given_
+        destiny_user_info: _No description given_
+        bungie_net_user_info: _No description given_
+        join_date: _No description given_
     """
 
     potential_status: int = attr.field()
@@ -437,32 +427,32 @@ class GroupPotentialMember(BaseModel):
 
 class GroupPotentialMemberStatus(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NONE = 0
-    """Not specified. """
+    """_No description given_ """
     APPLICANT = 1
-    """Not specified. """
+    """_No description given_ """
     INVITEE = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 class GroupDateRange(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     ALL = 0
-    """Not specified. """
+    """_No description given_ """
     PAST_DAY = 1
-    """Not specified. """
+    """_No description given_ """
     PAST_WEEK = 2
-    """Not specified. """
+    """_No description given_ """
     PAST_MONTH = 3
-    """Not specified. """
+    """_No description given_ """
     PAST_YEAR = 4
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
@@ -471,19 +461,19 @@ class GroupV2Card(BaseModel):
     A small infocard of group information, usually used for when a list of groups are returned
 
     Attributes:
-        group_id: Not specified.
-        name: Not specified.
-        group_type: Not specified.
-        creation_date: Not specified.
-        about: Not specified.
-        motto: Not specified.
-        member_count: Not specified.
-        locale: Not specified.
-        membership_option: Not specified.
-        capabilities: Not specified.
-        clan_info: Not specified.
-        avatar_path: Not specified.
-        theme: Not specified.
+        group_id: _No description given_
+        name: _No description given_
+        group_type: _No description given_
+        creation_date: _No description given_
+        about: _No description given_
+        motto: _No description given_
+        member_count: _No description given_
+        locale: _No description given_
+        membership_option: _No description given_
+        capabilities: _No description given_
+        clan_info: _No description given_
+        avatar_path: _No description given_
+        theme: _No description given_
     """
 
     group_id: int = attr.field()
@@ -504,21 +494,15 @@ class GroupV2Card(BaseModel):
 @attr.define
 class GroupSearchResponse(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            results: Not specified.
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        results: _No description given_
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     results: list["GroupV2Card"] = attr.field()
@@ -532,27 +516,19 @@ class GroupSearchResponse(BaseModel):
 @attr.define
 class GroupQuery(BaseModel):
     """
-        NOTE: GroupQuery, as of Destiny 2, has essentially two totally different and incompatible "modes".
+    NOTE: GroupQuery, as of Destiny 2, has essentially two totally different and incompatible "modes". If you are querying for a group, you can pass any of the properties below. If you are querying for a Clan, you MUST NOT pass any of the following properties (they must be null or undefined in your request, not just empty string/default values): - groupMemberCountFilter - localeFilter - tagText If you pass these, you will get a useless InvalidParameters error.
 
-    If you are querying for a group, you can pass any of the properties below.
-
-    If you are querying for a Clan, you MUST NOT pass any of the following properties (they must be null or undefined in your request, not just empty string/default values):
-
-    - groupMemberCountFilter - localeFilter - tagText
-
-    If you pass these, you will get a useless InvalidParameters error.
-
-        Attributes:
-            name: Not specified.
-            group_type: Not specified.
-            creation_date: Not specified.
-            sort_by: Not specified.
-            group_member_count_filter: Not specified.
-            locale_filter: Not specified.
-            tag_text: Not specified.
-            items_per_page: Not specified.
-            current_page: Not specified.
-            request_continuation_token: Not specified.
+    Attributes:
+        name: _No description given_
+        group_type: _No description given_
+        creation_date: _No description given_
+        sort_by: _No description given_
+        group_member_count_filter: _No description given_
+        locale_filter: _No description given_
+        tag_text: _No description given_
+        items_per_page: _No description given_
+        current_page: _No description given_
+        request_continuation_token: _No description given_
     """
 
     name: str = attr.field()
@@ -569,42 +545,42 @@ class GroupQuery(BaseModel):
 
 class GroupSortBy(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     NAME = 0
-    """Not specified. """
+    """_No description given_ """
     DATE = 1
-    """Not specified. """
+    """_No description given_ """
     POPULARITY = 2
-    """Not specified. """
+    """_No description given_ """
     ID = 3
-    """Not specified. """
+    """_No description given_ """
 
 
 class GroupMemberCountFilter(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     ALL = 0
-    """Not specified. """
+    """_No description given_ """
     ONE_TO_TEN = 1
-    """Not specified. """
+    """_No description given_ """
     ELEVEN_TO_ONE_HUNDRED = 2
-    """Not specified. """
+    """_No description given_ """
     GREATER_THAN_ONE_HUNDRED = 3
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class GroupNameSearchRequest(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        group_name: Not specified.
-        group_type: Not specified.
+        group_name: _No description given_
+        group_type: _No description given_
     """
 
     group_name: str = attr.field()
@@ -614,14 +590,14 @@ class GroupNameSearchRequest(BaseModel):
 @attr.define
 class GroupOptionalConversation(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        group_id: Not specified.
-        conversation_id: Not specified.
-        chat_enabled: Not specified.
-        chat_name: Not specified.
-        chat_security: Not specified.
+        group_id: _No description given_
+        conversation_id: _No description given_
+        chat_enabled: _No description given_
+        chat_name: _No description given_
+        chat_security: _No description given_
     """
 
     group_id: int = attr.field()
@@ -634,25 +610,25 @@ class GroupOptionalConversation(BaseModel):
 @attr.define
 class GroupEditAction(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        name: Not specified.
-        about: Not specified.
-        motto: Not specified.
-        theme: Not specified.
-        avatar_image_index: Not specified.
-        tags: Not specified.
-        is_public: Not specified.
-        membership_option: Not specified.
-        is_public_topic_admin_only: Not specified.
-        allow_chat: Not specified.
-        chat_security: Not specified.
-        callsign: Not specified.
-        locale: Not specified.
-        homepage: Not specified.
-        enable_invitation_messaging_for_admins: Not specified.
-        default_publicity: Not specified.
+        name: _No description given_
+        about: _No description given_
+        motto: _No description given_
+        theme: _No description given_
+        avatar_image_index: _No description given_
+        tags: _No description given_
+        is_public: _No description given_
+        membership_option: _No description given_
+        is_public_topic_admin_only: _No description given_
+        allow_chat: _No description given_
+        chat_security: _No description given_
+        callsign: _No description given_
+        locale: _No description given_
+        homepage: _No description given_
+        enable_invitation_messaging_for_admins: _No description given_
+        default_publicity: _No description given_
     """
 
     name: str = attr.field()
@@ -676,40 +652,14 @@ class GroupEditAction(BaseModel):
 @attr.define
 class GroupOptionsEditAction(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            invite_permission_override: Minimum Member Level allowed to invite new members to group
-
-    Always Allowed: Founder, Acting Founder
-
-    True means admins have this power, false means they don't
-
-    Default is false for clans, true for groups.
-            update_culture_permission_override: Minimum Member Level allowed to update group culture
-
-    Always Allowed: Founder, Acting Founder
-
-    True means admins have this power, false means they don't
-
-    Default is false for clans, true for groups.
-            host_guided_game_permission_override: Minimum Member Level allowed to host guided games
-
-    Always Allowed: Founder, Acting Founder, Admin
-
-    Allowed Overrides: None, Member, Beginner
-
-    Default is Member for clans, None for groups, although this means nothing for groups.
-            update_banner_permission_override: Minimum Member Level allowed to update banner
-
-    Always Allowed: Founder, Acting Founder
-
-    True means admins have this power, false means they don't
-
-    Default is false for clans, true for groups.
-            join_level: Level to join a member at when accepting an invite, application, or joining an open clan
-
-    Default is Beginner.
+    Attributes:
+        invite_permission_override: Minimum Member Level allowed to invite new members to group Always Allowed: Founder, Acting Founder True means admins have this power, false means they don't Default is false for clans, true for groups.
+        update_culture_permission_override: Minimum Member Level allowed to update group culture Always Allowed: Founder, Acting Founder True means admins have this power, false means they don't Default is false for clans, true for groups.
+        host_guided_game_permission_override: Minimum Member Level allowed to host guided games Always Allowed: Founder, Acting Founder, Admin Allowed Overrides: None, Member, Beginner Default is Member for clans, None for groups, although this means nothing for groups.
+        update_banner_permission_override: Minimum Member Level allowed to update banner Always Allowed: Founder, Acting Founder True means admins have this power, false means they don't Default is false for clans, true for groups.
+        join_level: Level to join a member at when accepting an invite, application, or joining an open clan Default is Beginner.
     """
 
     invite_permission_override: bool = attr.field()
@@ -722,11 +672,11 @@ class GroupOptionsEditAction(BaseModel):
 @attr.define
 class GroupOptionalConversationAddRequest(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        chat_name: Not specified.
-        chat_security: Not specified.
+        chat_name: _No description given_
+        chat_security: _No description given_
     """
 
     chat_name: str = attr.field()
@@ -736,12 +686,12 @@ class GroupOptionalConversationAddRequest(BaseModel):
 @attr.define
 class GroupOptionalConversationEditRequest(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        chat_enabled: Not specified.
-        chat_name: Not specified.
-        chat_security: Not specified.
+        chat_enabled: _No description given_
+        chat_name: _No description given_
+        chat_security: _No description given_
     """
 
     chat_enabled: bool = attr.field()
@@ -752,11 +702,11 @@ class GroupOptionalConversationEditRequest(BaseModel):
 @attr.define
 class GroupMemberLeaveResult(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        group: Not specified.
-        group_deleted: Not specified.
+        group: _No description given_
+        group_deleted: _No description given_
     """
 
     group: "GroupV2" = attr.field()
@@ -766,11 +716,11 @@ class GroupMemberLeaveResult(BaseModel):
 @attr.define
 class GroupBanRequest(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        comment: Not specified.
-        length: Not specified.
+        comment: _No description given_
+        length: _No description given_
     """
 
     comment: str = attr.field()
@@ -780,17 +730,17 @@ class GroupBanRequest(BaseModel):
 @attr.define
 class GroupBan(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        group_id: Not specified.
-        last_modified_by: Not specified.
-        created_by: Not specified.
-        date_banned: Not specified.
-        date_expires: Not specified.
-        comment: Not specified.
-        bungie_net_user_info: Not specified.
-        destiny_user_info: Not specified.
+        group_id: _No description given_
+        last_modified_by: _No description given_
+        created_by: _No description given_
+        date_banned: _No description given_
+        date_expires: _No description given_
+        comment: _No description given_
+        bungie_net_user_info: _No description given_
+        destiny_user_info: _No description given_
     """
 
     group_id: int = attr.field()
@@ -806,18 +756,18 @@ class GroupBan(BaseModel):
 @attr.define
 class GroupMemberApplication(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        group_id: Not specified.
-        creation_date: Not specified.
-        resolve_state: Not specified.
-        resolve_date: Not specified.
-        resolved_by_membership_id: Not specified.
-        request_message: Not specified.
-        resolve_message: Not specified.
-        destiny_user_info: Not specified.
-        bungie_net_user_info: Not specified.
+        group_id: _No description given_
+        creation_date: _No description given_
+        resolve_state: _No description given_
+        resolve_date: _No description given_
+        resolved_by_membership_id: _No description given_
+        request_message: _No description given_
+        resolve_message: _No description given_
+        destiny_user_info: _No description given_
+        bungie_net_user_info: _No description given_
     """
 
     group_id: int = attr.field()
@@ -833,26 +783,26 @@ class GroupMemberApplication(BaseModel):
 
 class GroupApplicationResolveState(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     UNRESOLVED = 0
-    """Not specified. """
+    """_No description given_ """
     ACCEPTED = 1
-    """Not specified. """
+    """_No description given_ """
     DENIED = 2
-    """Not specified. """
+    """_No description given_ """
     RESCINDED = 3
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class GroupApplicationRequest(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        message: Not specified.
+        message: _No description given_
     """
 
     message: str = attr.field()
@@ -861,11 +811,11 @@ class GroupApplicationRequest(BaseModel):
 @attr.define
 class GroupApplicationListRequest(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        memberships: Not specified.
-        message: Not specified.
+        memberships: _No description given_
+        message: _No description given_
     """
 
     memberships: list["UserMembership"] = attr.field()
@@ -874,24 +824,24 @@ class GroupApplicationListRequest(BaseModel):
 
 class GroupsForMemberFilter(BaseEnum):
     """
-    Not specified.
+    _No description given_
     """
 
     ALL = 0
-    """Not specified. """
+    """_No description given_ """
     FOUNDED = 1
-    """Not specified. """
+    """_No description given_ """
     NON_FOUNDED = 2
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class GroupMembershipBase(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        group: Not specified.
+        group: _No description given_
     """
 
     group: "GroupV2" = attr.field()
@@ -900,11 +850,11 @@ class GroupMembershipBase(BaseModel):
 @attr.define
 class GroupMembership(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        member: Not specified.
-        group: Not specified.
+        member: _No description given_
+        group: _No description given_
     """
 
     member: "GroupMember" = attr.field()
@@ -914,21 +864,15 @@ class GroupMembership(BaseModel):
 @attr.define
 class GroupMembershipSearchResponse(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            results: Not specified.
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        results: _No description given_
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     results: list["GroupMembership"] = attr.field()
@@ -942,24 +886,16 @@ class GroupMembershipSearchResponse(BaseModel):
 @attr.define
 class GetGroupsForMemberResponse(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            are_all_memberships_inactive: A convenience property that indicates if every membership this user has that is a part of this group are part of an account that is considered inactive - for example, overridden accounts in Cross Save.
-
-     The key is the Group ID for the group being checked, and the value is true if the users' memberships for that group are all inactive.
-            results: Not specified.
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        are_all_memberships_inactive: A convenience property that indicates if every membership this user has that is a part of this group are part of an account that is considered inactive - for example, overridden accounts in Cross Save.  The key is the Group ID for the group being checked, and the value is true if the users' memberships for that group are all inactive.
+        results: _No description given_
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     are_all_memberships_inactive: Any = attr.field()
@@ -974,11 +910,11 @@ class GetGroupsForMemberResponse(BaseModel):
 @attr.define
 class GroupPotentialMembership(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        member: Not specified.
-        group: Not specified.
+        member: _No description given_
+        group: _No description given_
     """
 
     member: "GroupPotentialMember" = attr.field()
@@ -988,21 +924,15 @@ class GroupPotentialMembership(BaseModel):
 @attr.define
 class GroupPotentialMembershipSearchResponse(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            results: Not specified.
-            total_results: Not specified.
-            has_more: Not specified.
-            query: Not specified.
-            replacement_continuation_token: Not specified.
-            use_total_results: If useTotalResults is true, then totalResults represents an accurate count.
-
-    If False, it does not, and may be estimated/only the size of the current page.
-
-    Either way, you should probably always only trust hasMore.
-
-    This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    Attributes:
+        results: _No description given_
+        total_results: _No description given_
+        has_more: _No description given_
+        query: _No description given_
+        replacement_continuation_token: _No description given_
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
     results: list["GroupPotentialMembership"] = attr.field()
@@ -1016,10 +946,10 @@ class GroupPotentialMembershipSearchResponse(BaseModel):
 @attr.define
 class GroupApplicationResponse(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        resolution: Not specified.
+        resolution: _No description given_
     """
 
     resolution: int = attr.field()

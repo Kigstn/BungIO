@@ -1,4 +1,3 @@
-import datetime
 from typing import Any, Optional
 
 import attr
@@ -17,8 +16,7 @@ class GetAvailableLocalesRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.Any) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_available_locales(auth=auth)

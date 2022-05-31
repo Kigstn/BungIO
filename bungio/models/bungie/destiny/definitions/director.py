@@ -1,36 +1,42 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import (
+        DestinyActivityGraphArtElementDefinition,
+        DestinyActivityGraphConnectionDefinition,
+        DestinyActivityGraphDisplayObjectiveDefinition,
+        DestinyActivityGraphDisplayProgressionDefinition,
+        DestinyActivityGraphNodeActivityDefinition,
+        DestinyActivityGraphNodeDefinition,
+        DestinyActivityGraphNodeFeaturingStateDefinition,
+        DestinyActivityGraphNodeStateEntry,
+        DestinyDisplayPropertiesDefinition,
+        DestinyLinkedGraphDefinition,
+        DestinyLinkedGraphEntryDefinition,
+        DestinyPositionDefinition,
+        DestinyUnlockExpressionDefinition,
+    )
 
 
 @attr.define
 class DestinyActivityGraphDefinition(BaseModel):
     """
-        Represents a Map View in the director: be them overview views, destination views, or other.
+    Represents a Map View in the director: be them overview views, destination views, or other. They have nodes which map to activities, and other various visual elements that we (or others) may or may not be able to use. Activity graphs, most importantly, have nodes which can have activities in various states of playability. Unfortunately, activity graphs are combined at runtime with Game UI-only assets such as fragments of map images, various in-game special effects, decals etc... that we don't get in these definitions. If we end up having time, we may end up trying to manually populate those here: but the last time we tried that, before the lead-up to D1, it proved to be unmaintainable as the game's content changed. So don't bet the farm on us providing that content in this definition.
 
-    They have nodes which map to activities, and other various visual elements that we (or others) may or may not be able to use.
-
-    Activity graphs, most importantly, have nodes which can have activities in various states of playability.
-
-    Unfortunately, activity graphs are combined at runtime with Game UI-only assets such as fragments of map images, various in-game special effects, decals etc... that we don't get in these definitions.
-
-    If we end up having time, we may end up trying to manually populate those here: but the last time we tried that, before the lead-up to D1, it proved to be unmaintainable as the game's content changed. So don't bet the farm on us providing that content in this definition.
-
-        Attributes:
-            nodes: These represent the visual "nodes" on the map's view. These are the activities you can click on in the map.
-            art_elements: Represents one-off/special UI elements that appear on the map.
-            connections: Represents connections between graph nodes. However, it lacks context that we'd need to make good use of it.
-            display_objectives: Objectives can display on maps, and this is supposedly metadata for that. I have not had the time to analyze the details of what is useful within however: we could be missing important data to make this work. Expect this property to be expanded on later if possible.
-            display_progressions: Progressions can also display on maps, but similarly to displayObjectives we appear to lack some required information and context right now. We will have to look into it later and add more data if possible.
-            linked_graphs: Represents links between this Activity Graph and other ones.
-            hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally.
-
-    When entities refer to each other in Destiny content, it is this hash that they are referring to.
-            index: The index of the entity as it was found in the investment tables.
-            redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+    Attributes:
+        nodes: These represent the visual "nodes" on the map's view. These are the activities you can click on in the map.
+        art_elements: Represents one-off/special UI elements that appear on the map.
+        connections: Represents connections between graph nodes. However, it lacks context that we'd need to make good use of it.
+        display_objectives: Objectives can display on maps, and this is supposedly metadata for that. I have not had the time to analyze the details of what is useful within however: we could be missing important data to make this work. Expect this property to be expanded on later if possible.
+        display_progressions: Progressions can also display on maps, but similarly to displayObjectives we appear to lack some required information and context right now. We will have to look into it later and add more data if possible.
+        linked_graphs: Represents links between this Activity Graph and other ones.
+        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
+        index: The index of the entity as it was found in the investment tables.
+        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
     nodes: list["DestinyActivityGraphNodeDefinition"] = attr.field()
@@ -59,8 +65,8 @@ class DestinyActivityGraphNodeDefinition(BaseModel):
     """
 
     node_id: int = attr.field()
-    override_display: Any = attr.field()
-    position: Any = attr.field()
+    override_display: "DestinyDisplayPropertiesDefinition" = attr.field()
+    position: "DestinyPositionDefinition" = attr.field()
     featuring_states: list["DestinyActivityGraphNodeFeaturingStateDefinition"] = attr.field()
     activities: list["DestinyActivityGraphNodeActivityDefinition"] = attr.field()
     states: list["DestinyActivityGraphNodeStateEntry"] = attr.field()
@@ -98,7 +104,7 @@ class DestinyActivityGraphNodeStateEntry(BaseModel):
     Represents a single state that a graph node might end up in. Depending on what's going on in the game, graph nodes could be shown in different ways or even excluded from view entirely.
 
     Attributes:
-        state: Not specified.
+        state: _No description given_
     """
 
     state: int = attr.field()
@@ -113,7 +119,7 @@ class DestinyActivityGraphArtElementDefinition(BaseModel):
         position: The position on the map of the art element.
     """
 
-    position: Any = attr.field()
+    position: "DestinyPositionDefinition" = attr.field()
 
 
 @attr.define
@@ -122,8 +128,8 @@ class DestinyActivityGraphConnectionDefinition(BaseModel):
     Nodes on a graph can be visually connected: this appears to be the information about which nodes to link. It appears to lack more detailed information, such as the path for that linking.
 
     Attributes:
-        source_node_hash: Not specified.
-        dest_node_hash: Not specified.
+        source_node_hash: _No description given_
+        dest_node_hash: _No description given_
     """
 
     source_node_hash: int = attr.field()
@@ -150,8 +156,8 @@ class DestinyActivityGraphDisplayProgressionDefinition(BaseModel):
     When a Graph needs to show active Progressions, this defines those objectives as well as an identifier.
 
     Attributes:
-        id: Not specified.
-        progression_hash: Not specified.
+        id: _No description given_
+        progression_hash: _No description given_
     """
 
     id: int = attr.field()
@@ -164,12 +170,12 @@ class DestinyLinkedGraphDefinition(BaseModel):
     This describes links between the current graph and others, as well as when that link is relevant.
 
     Attributes:
-        description: Not specified.
-        name: Not specified.
-        unlock_expression: Not specified.
-        linked_graph_id: Not specified.
-        linked_graphs: Not specified.
-        overview: Not specified.
+        description: _No description given_
+        name: _No description given_
+        unlock_expression: _No description given_
+        linked_graph_id: _No description given_
+        linked_graphs: _No description given_
+        overview: _No description given_
     """
 
     description: str = attr.field()
@@ -183,10 +189,10 @@ class DestinyLinkedGraphDefinition(BaseModel):
 @attr.define
 class DestinyLinkedGraphEntryDefinition(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        activity_graph_hash: Not specified.
+        activity_graph_hash: _No description given_
     """
 
     activity_graph_hash: int = attr.field()

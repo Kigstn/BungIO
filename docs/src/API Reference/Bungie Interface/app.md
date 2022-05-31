@@ -1,3 +1,3 @@
-# App Routes Interface
+# App Routes
 
 ::: bungio.api.overwrites.app

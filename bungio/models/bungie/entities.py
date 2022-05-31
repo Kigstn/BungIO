@@ -1,19 +1,16 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
-
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
 
 
 @attr.define
 class EntityActionResult(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        entity_id: Not specified.
-        result: Not specified.
+        entity_id: _No description given_
+        result: _No description given_
     """
 
     entity_id: int = attr.field()

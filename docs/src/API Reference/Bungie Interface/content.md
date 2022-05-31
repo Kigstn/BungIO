@@ -1,3 +1,3 @@
-# Content Routes Interface
+# Content Routes
 
 ::: bungio.api.bungie.content

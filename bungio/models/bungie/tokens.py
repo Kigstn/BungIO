@@ -1,20 +1,32 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import (
+        CollectibleDefinitions,
+        DestinyCollectibleDefinition,
+        DestinyInventoryItemDefinition,
+        DestinyRecordDefinition,
+        PartnerOfferHistoryResponse,
+        RewardAvailabilityModel,
+        RewardDisplayProperties,
+        UserRewardAvailabilityModel,
+    )
 
 
 @attr.define
 class PartnerOfferClaimRequest(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        partner_offer_id: Not specified.
-        bungie_net_membership_id: Not specified.
-        transaction_id: Not specified.
+        partner_offer_id: _No description given_
+        bungie_net_membership_id: _No description given_
+        transaction_id: _No description given_
     """
 
     partner_offer_id: str = attr.field()
@@ -25,16 +37,16 @@ class PartnerOfferClaimRequest(BaseModel):
 @attr.define
 class PartnerOfferSkuHistoryResponse(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        sku_identifier: Not specified.
-        localized_name: Not specified.
-        localized_description: Not specified.
-        claim_date: Not specified.
-        all_offers_applied: Not specified.
-        transaction_id: Not specified.
-        sku_offers: Not specified.
+        sku_identifier: _No description given_
+        localized_name: _No description given_
+        localized_description: _No description given_
+        claim_date: _No description given_
+        all_offers_applied: _No description given_
+        transaction_id: _No description given_
+        sku_offers: _No description given_
     """
 
     sku_identifier: str = attr.field()
@@ -49,17 +61,17 @@ class PartnerOfferSkuHistoryResponse(BaseModel):
 @attr.define
 class PartnerOfferHistoryResponse(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        partner_offer_key: Not specified.
-        membership_id: Not specified.
-        membership_type: Not specified.
-        localized_name: Not specified.
-        localized_description: Not specified.
-        is_consumable: Not specified.
-        quantity_applied: Not specified.
-        apply_date: Not specified.
+        partner_offer_key: _No description given_
+        membership_id: _No description given_
+        membership_type: _No description given_
+        localized_name: _No description given_
+        localized_description: _No description given_
+        is_consumable: _No description given_
+        quantity_applied: _No description given_
+        apply_date: _No description given_
     """
 
     partner_offer_key: str = attr.field()
@@ -75,12 +87,12 @@ class PartnerOfferHistoryResponse(BaseModel):
 @attr.define
 class BungieRewardDisplay(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        user_reward_availability_model: Not specified.
-        objective_display_properties: Not specified.
-        reward_display_properties: Not specified.
+        user_reward_availability_model: _No description given_
+        objective_display_properties: _No description given_
+        reward_display_properties: _No description given_
     """
 
     user_reward_availability_model: "UserRewardAvailabilityModel" = attr.field()
@@ -91,12 +103,12 @@ class BungieRewardDisplay(BaseModel):
 @attr.define
 class UserRewardAvailabilityModel(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        availability_model: Not specified.
-        is_available_for_user: Not specified.
-        is_unlocked_for_user: Not specified.
+        availability_model: _No description given_
+        is_available_for_user: _No description given_
+        is_unlocked_for_user: _No description given_
     """
 
     availability_model: "RewardAvailabilityModel" = attr.field()
@@ -107,20 +119,20 @@ class UserRewardAvailabilityModel(BaseModel):
 @attr.define
 class RewardAvailabilityModel(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        has_existing_code: Not specified.
-        record_definitions: Not specified.
-        collectible_definitions: Not specified.
-        is_offer: Not specified.
-        has_offer: Not specified.
-        offer_applied: Not specified.
-        decrypted_token: Not specified.
-        is_loyalty_reward: Not specified.
-        shopify_end_date: Not specified.
-        game_earn_by_date: Not specified.
-        redemption_end_date: Not specified.
+        has_existing_code: _No description given_
+        record_definitions: _No description given_
+        collectible_definitions: _No description given_
+        is_offer: _No description given_
+        has_offer: _No description given_
+        offer_applied: _No description given_
+        decrypted_token: _No description given_
+        is_loyalty_reward: _No description given_
+        shopify_end_date: _No description given_
+        game_earn_by_date: _No description given_
+        redemption_end_date: _No description given_
     """
 
     has_existing_code: bool = attr.field()
@@ -139,11 +151,11 @@ class RewardAvailabilityModel(BaseModel):
 @attr.define
 class CollectibleDefinitions(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        collectible_definition: Not specified.
-        destiny_inventory_item_definition: Not specified.
+        collectible_definition: _No description given_
+        destiny_inventory_item_definition: _No description given_
     """
 
     collectible_definition: "DestinyCollectibleDefinition" = attr.field()
@@ -153,12 +165,12 @@ class CollectibleDefinitions(BaseModel):
 @attr.define
 class RewardDisplayProperties(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        name: Not specified.
-        description: Not specified.
-        image_path: Not specified.
+        name: _No description given_
+        description: _No description given_
+        image_path: _No description given_
     """
 
     name: str = attr.field()

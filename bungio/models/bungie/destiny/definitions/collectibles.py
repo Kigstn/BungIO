@@ -1,38 +1,40 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import (
+        DestinyCollectibleAcquisitionBlock,
+        DestinyCollectibleStateBlock,
+        DestinyDisplayPropertiesDefinition,
+        DestinyPresentationChildBlock,
+        DestinyPresentationNodeRequirementsBlock,
+    )
 
 
 @attr.define
 class DestinyCollectibleDefinition(BaseModel):
     """
-        Defines a
+    Defines a
 
-        Attributes:
-            display_properties: Not specified.
-            scope: Indicates whether the state of this Collectible is determined on a per-character or on an account-wide basis.
-            source_string: A human readable string for a hint about how to acquire the item.
-            source_hash: This is a hash identifier we are building on the BNet side in an attempt to let people group collectibles by similar sources.
-
-    I can't promise that it's going to be 100% accurate, but if the designers were consistent in assigning the same source strings to items with the same sources, it *ought to* be. No promises though.
-
-    This hash also doesn't relate to an actual definition, just to note: we've got nothing useful other than the source string for this data.
-            item_hash: Not specified.
-            acquisition_info: Not specified.
-            state_info: Not specified.
-            presentation_info: Not specified.
-            presentation_node_type: Not specified.
-            trait_ids: Not specified.
-            trait_hashes: Not specified.
-            parent_node_hashes: A quick reference to presentation nodes that have this node as a child. Presentation nodes can be parented under multiple parents.
-            hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally.
-
-    When entities refer to each other in Destiny content, it is this hash that they are referring to.
-            index: The index of the entity as it was found in the investment tables.
-            redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+    Attributes:
+        display_properties: _No description given_
+        scope: Indicates whether the state of this Collectible is determined on a per-character or on an account-wide basis.
+        source_string: A human readable string for a hint about how to acquire the item.
+        source_hash: This is a hash identifier we are building on the BNet side in an attempt to let people group collectibles by similar sources. I can't promise that it's going to be 100% accurate, but if the designers were consistent in assigning the same source strings to items with the same sources, it *ought to* be. No promises though. This hash also doesn't relate to an actual definition, just to note: we've got nothing useful other than the source string for this data.
+        item_hash: _No description given_
+        acquisition_info: _No description given_
+        state_info: _No description given_
+        presentation_info: _No description given_
+        presentation_node_type: _No description given_
+        trait_ids: _No description given_
+        trait_hashes: _No description given_
+        parent_node_hashes: A quick reference to presentation nodes that have this node as a child. Presentation nodes can be parented under multiple parents.
+        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
+        index: The index of the entity as it was found in the investment tables.
+        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
@@ -55,11 +57,11 @@ class DestinyCollectibleDefinition(BaseModel):
 @attr.define
 class DestinyCollectibleAcquisitionBlock(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        acquire_material_requirement_hash: Not specified.
-        acquire_timestamp_unlock_value_hash: Not specified.
+        acquire_material_requirement_hash: _No description given_
+        acquire_timestamp_unlock_value_hash: _No description given_
     """
 
     acquire_material_requirement_hash: int = attr.field()
@@ -69,11 +71,11 @@ class DestinyCollectibleAcquisitionBlock(BaseModel):
 @attr.define
 class DestinyCollectibleStateBlock(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        obscured_override_item_hash: Not specified.
-        requirements: Not specified.
+        obscured_override_item_hash: _No description given_
+        requirements: _No description given_
     """
 
     obscured_override_item_hash: int = attr.field()

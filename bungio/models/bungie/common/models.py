@@ -1,38 +1,40 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import CoreSetting, Destiny2CoreSettings, EmailSettings
 
 
 @attr.define
 class CoreSettingsConfiguration(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        environment: Not specified.
-        systems: Not specified.
-        ignore_reasons: Not specified.
-        forum_categories: Not specified.
-        group_avatars: Not specified.
-        destiny_membership_types: Not specified.
-        recruitment_platform_tags: Not specified.
-        recruitment_misc_tags: Not specified.
-        recruitment_activities: Not specified.
-        user_content_locales: Not specified.
-        system_content_locales: Not specified.
-        clan_banner_decals: Not specified.
-        clan_banner_decal_colors: Not specified.
-        clan_banner_gonfalons: Not specified.
-        clan_banner_gonfalon_colors: Not specified.
-        clan_banner_gonfalon_details: Not specified.
-        clan_banner_gonfalon_detail_colors: Not specified.
-        clan_banner_standards: Not specified.
-        destiny2_core_settings: Not specified.
-        email_settings: Not specified.
-        fireteam_activities: Not specified.
+        environment: _No description given_
+        systems: _No description given_
+        ignore_reasons: _No description given_
+        forum_categories: _No description given_
+        group_avatars: _No description given_
+        destiny_membership_types: _No description given_
+        recruitment_platform_tags: _No description given_
+        recruitment_misc_tags: _No description given_
+        recruitment_activities: _No description given_
+        user_content_locales: _No description given_
+        system_content_locales: _No description given_
+        clan_banner_decals: _No description given_
+        clan_banner_decal_colors: _No description given_
+        clan_banner_gonfalons: _No description given_
+        clan_banner_gonfalon_colors: _No description given_
+        clan_banner_gonfalon_details: _No description given_
+        clan_banner_gonfalon_detail_colors: _No description given_
+        clan_banner_standards: _No description given_
+        destiny2_core_settings: _No description given_
+        email_settings: _No description given_
+        fireteam_activities: _No description given_
     """
 
     environment: str = attr.field()
@@ -61,11 +63,11 @@ class CoreSettingsConfiguration(BaseModel):
 @attr.define
 class CoreSystem(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        enabled: Not specified.
-        parameters: Not specified.
+        enabled: _No description given_
+        parameters: _No description given_
     """
 
     enabled: bool = attr.field()
@@ -75,15 +77,15 @@ class CoreSystem(BaseModel):
 @attr.define
 class CoreSetting(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        identifier: Not specified.
-        is_default: Not specified.
-        display_name: Not specified.
-        summary: Not specified.
-        image_path: Not specified.
-        child_settings: Not specified.
+        identifier: _No description given_
+        is_default: _No description given_
+        display_name: _No description given_
+        summary: _No description given_
+        image_path: _No description given_
+        child_settings: _No description given_
     """
 
     identifier: str = attr.field()
@@ -97,34 +99,34 @@ class CoreSetting(BaseModel):
 @attr.define
 class Destiny2CoreSettings(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        collection_root_node: Not specified.
-        badges_root_node: Not specified.
-        records_root_node: Not specified.
-        medals_root_node: Not specified.
-        metrics_root_node: Not specified.
-        active_triumphs_root_node_hash: Not specified.
-        active_seals_root_node_hash: Not specified.
-        legacy_triumphs_root_node_hash: Not specified.
-        legacy_seals_root_node_hash: Not specified.
-        medals_root_node_hash: Not specified.
-        exotic_catalysts_root_node_hash: Not specified.
-        lore_root_node_hash: Not specified.
-        crafting_root_node_hash: Not specified.
-        current_rank_progression_hashes: Not specified.
-        insert_plug_free_protected_plug_item_hashes: Not specified.
-        insert_plug_free_blocked_socket_type_hashes: Not specified.
-        undiscovered_collectible_image: Not specified.
-        ammo_type_heavy_icon: Not specified.
-        ammo_type_special_icon: Not specified.
-        ammo_type_primary_icon: Not specified.
-        current_seasonal_artifact_hash: Not specified.
-        current_season_hash: Not specified.
-        seasonal_challenges_presentation_node_hash: Not specified.
-        future_season_hashes: Not specified.
-        past_season_hashes: Not specified.
+        collection_root_node: _No description given_
+        badges_root_node: _No description given_
+        records_root_node: _No description given_
+        medals_root_node: _No description given_
+        metrics_root_node: _No description given_
+        active_triumphs_root_node_hash: _No description given_
+        active_seals_root_node_hash: _No description given_
+        legacy_triumphs_root_node_hash: _No description given_
+        legacy_seals_root_node_hash: _No description given_
+        medals_root_node_hash: _No description given_
+        exotic_catalysts_root_node_hash: _No description given_
+        lore_root_node_hash: _No description given_
+        crafting_root_node_hash: _No description given_
+        current_rank_progression_hashes: _No description given_
+        insert_plug_free_protected_plug_item_hashes: _No description given_
+        insert_plug_free_blocked_socket_type_hashes: _No description given_
+        undiscovered_collectible_image: _No description given_
+        ammo_type_heavy_icon: _No description given_
+        ammo_type_special_icon: _No description given_
+        ammo_type_primary_icon: _No description given_
+        current_seasonal_artifact_hash: _No description given_
+        current_season_hash: _No description given_
+        seasonal_challenges_presentation_node_hash: _No description given_
+        future_season_hashes: _No description given_
+        past_season_hashes: _No description given_
     """
 
     collection_root_node: int = attr.field()

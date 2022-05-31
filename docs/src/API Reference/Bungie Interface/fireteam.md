@@ -1,3 +1,3 @@
-# Fireteam Routes Interface
+# Fireteam Routes
 
 ::: bungio.api.bungie.fireteam

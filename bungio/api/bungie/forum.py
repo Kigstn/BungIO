@@ -1,12 +1,10 @@
-import datetime
-from typing import Any, Optional
+from typing import Optional
 
 import attr
 
+from bungio.models import ForumRecruitmentDetail, PostSearchResponse, TagResponse
 from bungio.models.auth import AuthData
 from bungio.models.base import BaseModel
-from bungio.models.bungie.forum import ForumRecruitmentDetail, PostSearchResponse
-from bungio.models.bungie.tags.models.contracts import TagResponse
 
 
 @attr.define
@@ -38,8 +36,7 @@ class ForumRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/forum/#bungio.models.bungie.forum.PostSearchResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_topics_paged(
@@ -76,8 +73,7 @@ class ForumRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/forum/#bungio.models.bungie.forum.PostSearchResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_core_topics_paged(
@@ -101,19 +97,18 @@ class ForumRouteInterface(BaseModel):
         Returns a thread of posts at the given parent, optionally returning replies to those posts as well as the original parent.
 
         Args:
-            get_parent_post: Not specified.
-            page: Not specified.
-            page_size: Not specified.
-            parent_post_id: Not specified.
-            reply_size: Not specified.
-            root_thread_mode: Not specified.
-            sort_mode: Not specified.
+            get_parent_post:
+            page:
+            page_size:
+            parent_post_id:
+            reply_size:
+            root_thread_mode:
+            sort_mode:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/forum/#bungio.models.bungie.forum.PostSearchResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_posts_threaded_paged(
@@ -144,18 +139,17 @@ class ForumRouteInterface(BaseModel):
         Returns a thread of posts starting at the topicId of the input childPostId, optionally returning replies to those posts as well as the original parent.
 
         Args:
-            child_post_id: Not specified.
-            page: Not specified.
-            page_size: Not specified.
-            reply_size: Not specified.
-            root_thread_mode: Not specified.
-            sort_mode: Not specified.
+            child_post_id:
+            page:
+            page_size:
+            reply_size:
+            root_thread_mode:
+            sort_mode:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/forum/#bungio.models.bungie.forum.PostSearchResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_posts_threaded_paged_from_child(
@@ -177,13 +171,12 @@ class ForumRouteInterface(BaseModel):
         Returns the post specified and its immediate parent.
 
         Args:
-            child_post_id: Not specified.
+            child_post_id:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/forum/#bungio.models.bungie.forum.PostSearchResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_post_and_parent(
@@ -198,13 +191,12 @@ class ForumRouteInterface(BaseModel):
         Returns the post specified and its immediate parent of posts that are awaiting approval.
 
         Args:
-            child_post_id: Not specified.
+            child_post_id:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/forum/#bungio.models.bungie.forum.PostSearchResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_post_and_parent_awaiting_approval(
@@ -217,12 +209,11 @@ class ForumRouteInterface(BaseModel):
         Gets the post Id for the given content item's comments, if it exists.
 
         Args:
-            content_id: Not specified.
+            content_id:
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.int) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_topic_for_content(content_id=content_id, auth=auth)
@@ -239,8 +230,7 @@ class ForumRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/tags.models.contracts/#bungio.models.bungie.tags.models.contracts.TagResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_forum_tag_suggestions(partialtag=partialtag, auth=auth)
@@ -255,8 +245,7 @@ class ForumRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/forum/#bungio.models.bungie.forum.PostSearchResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_poll(topic_id=topic_id, auth=auth)
@@ -273,8 +262,7 @@ class ForumRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/forum/#bungio.models.bungie.forum.ForumRecruitmentDetail) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_recruitment_thread_summaries(auth=auth, **data.to_dict())

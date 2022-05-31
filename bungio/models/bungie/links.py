@@ -1,19 +1,16 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
-
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
 
 
 @attr.define
 class HyperlinkReference(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        title: Not specified.
-        url: Not specified.
+        title: _No description given_
+        url: _No description given_
     """
 
     title: str = attr.field()

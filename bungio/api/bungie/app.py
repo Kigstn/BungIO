@@ -1,11 +1,11 @@
 import datetime
-from typing import Any, Optional
+from typing import Optional
 
 import attr
 
+from bungio.models import ApiUsage, Application
 from bungio.models.auth import AuthData
 from bungio.models.base import BaseModel
-from bungio.models.bungie.applications import ApiUsage, Application
 
 
 @attr.define
@@ -30,8 +30,7 @@ class AppRouteInterface(BaseModel):
             start: Start time for query. Goes to 24 hours ago if not specified.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/applications/#bungio.models.bungie.applications.ApiUsage) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_application_api_usage(
@@ -47,8 +46,7 @@ class AppRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/applications/#bungio.models.bungie.applications.Application) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_bungie_applications(auth=auth)

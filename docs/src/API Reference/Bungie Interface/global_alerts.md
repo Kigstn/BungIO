@@ -1,3 +1,3 @@
-# GlobalAlerts Routes Interface
+# GlobalAlerts Routes
 
 ::: bungio.api.bungie.global_alerts

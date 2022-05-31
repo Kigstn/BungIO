@@ -1,24 +1,28 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import (
+        DestinyArtifactTier,
+        DestinyArtifactTierItem,
+        DestinyProgression,
+    )
 
 
 @attr.define
 class DestinyArtifactProfileScoped(BaseModel):
     """
-        Represents a Seasonal Artifact and all data related to it for the requested Account.
+    Represents a Seasonal Artifact and all data related to it for the requested Account. It can be combined with Character-scoped data for a full picture of what a character has available/has chosen, or just these settings can be used for overview information.
 
-    It can be combined with Character-scoped data for a full picture of what a character has available/has chosen, or just these settings can be used for overview information.
-
-        Attributes:
-            artifact_hash: Not specified.
-            point_progression: Not specified.
-            points_acquired: Not specified.
-            power_bonus_progression: Not specified.
-            power_bonus: Not specified.
+    Attributes:
+        artifact_hash: _No description given_
+        point_progression: _No description given_
+        points_acquired: _No description given_
+        power_bonus_progression: _No description given_
+        power_bonus: _No description given_
     """
 
     artifact_hash: int = attr.field()
@@ -31,13 +35,13 @@ class DestinyArtifactProfileScoped(BaseModel):
 @attr.define
 class DestinyArtifactCharacterScoped(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        artifact_hash: Not specified.
-        points_used: Not specified.
-        reset_count: Not specified.
-        tiers: Not specified.
+        artifact_hash: _No description given_
+        points_used: _No description given_
+        reset_count: _No description given_
+        tiers: _No description given_
     """
 
     artifact_hash: int = attr.field()
@@ -49,13 +53,13 @@ class DestinyArtifactCharacterScoped(BaseModel):
 @attr.define
 class DestinyArtifactTier(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        tier_hash: Not specified.
-        is_unlocked: Not specified.
-        points_to_unlock: Not specified.
-        items: Not specified.
+        tier_hash: _No description given_
+        is_unlocked: _No description given_
+        points_to_unlock: _No description given_
+        items: _No description given_
     """
 
     tier_hash: int = attr.field()
@@ -67,11 +71,11 @@ class DestinyArtifactTier(BaseModel):
 @attr.define
 class DestinyArtifactTierItem(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        item_hash: Not specified.
-        is_active: Not specified.
+        item_hash: _No description given_
+        is_active: _No description given_
     """
 
     item_hash: int = attr.field()

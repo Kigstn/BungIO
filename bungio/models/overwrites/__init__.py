@@ -1,1 +1,1 @@
-from bungio.models.overwrites.dates import DateRangeOverwrite
+from bungio.models.overwrites.fireteam import FireteamSummary

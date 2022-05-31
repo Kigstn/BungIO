@@ -1,18 +1,35 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
 
+if TYPE_CHECKING:
+    from bungio.models import (
+        ContentItemPublicContract,
+        DestinyMilestoneContent,
+        DestinyPublicActivityStatus,
+        DestinyPublicMilestone,
+        SearchResultOfTrendingEntry,
+        TrendingCategory,
+        TrendingEntry,
+        TrendingEntryCommunityCreation,
+        TrendingEntryDestinyActivity,
+        TrendingEntryDestinyItem,
+        TrendingEntryDestinyRitual,
+        TrendingEntryNews,
+        TrendingEntrySupportArticle,
+    )
+
 
 @attr.define
 class TrendingCategories(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        categories: Not specified.
+        categories: _No description given_
     """
 
     categories: list["TrendingCategory"] = attr.field()
@@ -21,12 +38,12 @@ class TrendingCategories(BaseModel):
 @attr.define
 class TrendingCategory(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        category_name: Not specified.
-        entries: Not specified.
-        category_id: Not specified.
+        category_name: _No description given_
+        entries: _No description given_
+        category_id: _No description given_
     """
 
     category_name: str = attr.field()
@@ -41,15 +58,15 @@ class TrendingEntry(BaseModel):
 
     Attributes:
         weight: The weighted score of this trending item.
-        is_featured: Not specified.
+        is_featured: _No description given_
         identifier: We don't know whether the identifier will be a string, a uint, or a long... so we're going to cast it all to a string. But either way, we need any trending item created to have a single unique identifier for its type.
         entity_type: An enum - unfortunately - dictating all of the possible kinds of trending items that you might get in your result set, in case you want to do custom rendering or call to get the details of the item.
         display_name: The localized "display name/article title/'primary localized identifier'" of the entity.
         tagline: If the entity has a localized tagline/subtitle/motto/whatever, that is found here.
-        image: Not specified.
-        start_date: Not specified.
-        end_date: Not specified.
-        link: Not specified.
+        image: _No description given_
+        start_date: _No description given_
+        end_date: _No description given_
+        link: _No description given_
         webm_video: If this is populated, the entry has a related WebM video to show. I am 100% certain I am going to regret putting this directly on TrendingEntry, but it will work so yolo
         mp4_video: If this is populated, the entry has a related MP4 video to show. I am 100% certain I am going to regret putting this directly on TrendingEntry, but it will work so yolo
         feature_image: If isFeatured, this image will be populated with whatever the featured image is. Note that this will likely be a very large image, so don't use it all the time.
@@ -80,45 +97,45 @@ class TrendingEntryType(BaseEnum):
     """
 
     NEWS = 0
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ITEM = 1
-    """Not specified. """
+    """_No description given_ """
     DESTINY_ACTIVITY = 2
-    """Not specified. """
+    """_No description given_ """
     DESTINY_RITUAL = 3
-    """Not specified. """
+    """_No description given_ """
     SUPPORT_ARTICLE = 4
-    """Not specified. """
+    """_No description given_ """
     CREATION = 5
-    """Not specified. """
+    """_No description given_ """
     STREAM = 6
-    """Not specified. """
+    """_No description given_ """
     UPDATE = 7
-    """Not specified. """
+    """_No description given_ """
     LINK = 8
-    """Not specified. """
+    """_No description given_ """
     FORUM_TAG = 9
-    """Not specified. """
+    """_No description given_ """
     CONTAINER = 10
-    """Not specified. """
+    """_No description given_ """
     RELEASE = 11
-    """Not specified. """
+    """_No description given_ """
 
 
 @attr.define
 class TrendingDetail(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        identifier: Not specified.
-        entity_type: Not specified.
-        news: Not specified.
-        support: Not specified.
-        destiny_item: Not specified.
-        destiny_activity: Not specified.
-        destiny_ritual: Not specified.
-        creation: Not specified.
+        identifier: _No description given_
+        entity_type: _No description given_
+        news: _No description given_
+        support: _No description given_
+        destiny_item: _No description given_
+        destiny_activity: _No description given_
+        destiny_ritual: _No description given_
+        creation: _No description given_
     """
 
     identifier: str = attr.field()
@@ -134,10 +151,10 @@ class TrendingDetail(BaseModel):
 @attr.define
 class TrendingEntryNews(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        article: Not specified.
+        article: _No description given_
     """
 
     article: "ContentItemPublicContract" = attr.field()
@@ -146,10 +163,10 @@ class TrendingEntryNews(BaseModel):
 @attr.define
 class TrendingEntrySupportArticle(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        article: Not specified.
+        article: _No description given_
     """
 
     article: "ContentItemPublicContract" = attr.field()
@@ -158,10 +175,10 @@ class TrendingEntrySupportArticle(BaseModel):
 @attr.define
 class TrendingEntryDestinyItem(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        item_hash: Not specified.
+        item_hash: _No description given_
     """
 
     item_hash: int = attr.field()
@@ -170,11 +187,11 @@ class TrendingEntryDestinyItem(BaseModel):
 @attr.define
 class TrendingEntryDestinyActivity(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        activity_hash: Not specified.
-        status: Not specified.
+        activity_hash: _No description given_
+        status: _No description given_
     """
 
     activity_hash: int = attr.field()
@@ -184,15 +201,15 @@ class TrendingEntryDestinyActivity(BaseModel):
 @attr.define
 class TrendingEntryDestinyRitual(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        image: Not specified.
-        icon: Not specified.
-        title: Not specified.
-        subtitle: Not specified.
-        date_start: Not specified.
-        date_end: Not specified.
+        image: _No description given_
+        icon: _No description given_
+        title: _No description given_
+        subtitle: _No description given_
+        date_start: _No description given_
+        date_end: _No description given_
         milestone_details: A destiny event does not necessarily have a related Milestone, but if it does the details will be returned here.
         event_content: A destiny event will not necessarily have milestone "custom content", but if it does the details will be here.
     """
@@ -203,23 +220,23 @@ class TrendingEntryDestinyRitual(BaseModel):
     subtitle: str = attr.field()
     date_start: datetime.datetime = attr.field()
     date_end: datetime.datetime = attr.field()
-    milestone_details: Any = attr.field()
-    event_content: Any = attr.field()
+    milestone_details: "DestinyPublicMilestone" = attr.field()
+    event_content: "DestinyMilestoneContent" = attr.field()
 
 
 @attr.define
 class TrendingEntryCommunityCreation(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        media: Not specified.
-        title: Not specified.
-        author: Not specified.
-        author_membership_id: Not specified.
-        post_id: Not specified.
-        body: Not specified.
-        upvotes: Not specified.
+        media: _No description given_
+        title: _No description given_
+        author: _No description given_
+        author_membership_id: _No description given_
+        post_id: _No description given_
+        body: _No description given_
+        upvotes: _No description given_
     """
 
     media: str = attr.field()

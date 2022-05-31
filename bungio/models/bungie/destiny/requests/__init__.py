@@ -9,15 +9,15 @@ from bungio.models.base import BaseEnum, BaseModel
 @attr.define
 class DestinyItemTransferRequest(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        item_reference_hash: Not specified.
-        stack_size: Not specified.
-        transfer_to_vault: Not specified.
+        item_reference_hash: _No description given_
+        stack_size: _No description given_
+        transfer_to_vault: _No description given_
         item_id: The instance ID of the item for this action request.
-        character_id: Not specified.
-        membership_type: Not specified.
+        character_id: _No description given_
+        membership_type: _No description given_
     """
 
     item_reference_hash: int = attr.field()

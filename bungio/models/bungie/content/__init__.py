@@ -5,30 +5,31 @@ import attr
 
 from bungio.models.base import BaseEnum, BaseModel
 
+if TYPE_CHECKING:
+    from bungio.models import CommentSummary, ContentRepresentation, GeneralUser
+
 
 @attr.define
 class ContentItemPublicContract(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            content_id: Not specified.
-            c_type: Not specified.
-            cms_path: Not specified.
-            creation_date: Not specified.
-            modify_date: Not specified.
-            allow_comments: Not specified.
-            has_age_gate: Not specified.
-            minimum_age: Not specified.
-            rating_image_path: Not specified.
-            author: Not specified.
-            auto_english_property_fallback: Not specified.
-            properties: Firehose content is really a collection of metadata and "properties", which are the potentially-but-not-strictly localizable data that comprises the meat of whatever content is being shown.
-
-    As Cole Porter would have crooned, "Anything Goes" with Firehose properties. They are most often strings, but they can theoretically be anything. They are JSON encoded, and could be JSON structures, simple strings, numbers etc... The Content Type of the item (cType) will describe the properties, and thus how they ought to be deserialized.
-            representations: Not specified.
-            tags: NOTE: Tags will always be lower case.
-            comment_summary: Not specified.
+    Attributes:
+        content_id: _No description given_
+        c_type: _No description given_
+        cms_path: _No description given_
+        creation_date: _No description given_
+        modify_date: _No description given_
+        allow_comments: _No description given_
+        has_age_gate: _No description given_
+        minimum_age: _No description given_
+        rating_image_path: _No description given_
+        author: _No description given_
+        auto_english_property_fallback: _No description given_
+        properties: Firehose content is really a collection of metadata and "properties", which are the potentially-but-not-strictly localizable data that comprises the meat of whatever content is being shown. As Cole Porter would have crooned, "Anything Goes" with Firehose properties. They are most often strings, but they can theoretically be anything. They are JSON encoded, and could be JSON structures, simple strings, numbers etc... The Content Type of the item (cType) will describe the properties, and thus how they ought to be deserialized.
+        representations: _No description given_
+        tags: NOTE: Tags will always be lower case.
+        comment_summary: _No description given_
     """
 
     content_id: int = attr.field()
@@ -51,12 +52,12 @@ class ContentItemPublicContract(BaseModel):
 @attr.define
 class ContentRepresentation(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        name: Not specified.
-        path: Not specified.
-        validation_string: Not specified.
+        name: _No description given_
+        path: _No description given_
+        validation_string: _No description given_
     """
 
     name: str = attr.field()
@@ -67,11 +68,11 @@ class ContentRepresentation(BaseModel):
 @attr.define
 class CommentSummary(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        topic_id: Not specified.
-        comment_count: Not specified.
+        topic_id: _No description given_
+        comment_count: _No description given_
     """
 
     topic_id: int = attr.field()

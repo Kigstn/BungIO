@@ -1,14 +1,10 @@
-import datetime
 from typing import Any, Optional
 
 import attr
 
-from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
-from bungio.models.bungie.config import GroupTheme
-from bungio.models.bungie.entities import EntityActionResult
-from bungio.models.bungie.groupsv2 import (
+from bungio.models import (
     ClanBanner,
+    EntityActionResult,
     GetGroupsForMemberResponse,
     GroupApplicationListRequest,
     GroupApplicationRequest,
@@ -26,8 +22,14 @@ from bungio.models.bungie.groupsv2 import (
     GroupQuery,
     GroupResponse,
     GroupSearchResponse,
+    GroupTheme,
     GroupV2Card,
+    SearchResultOfGroupBan,
+    SearchResultOfGroupMember,
+    SearchResultOfGroupMemberApplication,
 )
+from bungio.models.auth import AuthData
+from bungio.models.base import BaseModel
 
 
 @attr.define
@@ -40,8 +42,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.Any) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_available_avatars(auth=auth)
@@ -55,8 +56,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/config/#bungio.models.bungie.config.GroupTheme) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_available_themes(auth=auth)
@@ -74,8 +74,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.bool) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_user_clan_invite_setting(m_type=m_type, auth=auth)
@@ -96,8 +95,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/groupsv2/#bungio.models.bungie.groupsv2.GroupV2Card) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_recommended_groups(
@@ -114,8 +112,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/groupsv2/#bungio.models.bungie.groupsv2.GroupSearchResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.group_search(auth=auth, **data.to_dict())
@@ -130,8 +127,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/groupsv2/#bungio.models.bungie.groupsv2.GroupResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_group(group_id=group_id, auth=auth)
@@ -149,8 +145,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/groupsv2/#bungio.models.bungie.groupsv2.GroupResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_group_by_name(group_name=group_name, group_type=group_type, auth=auth)
@@ -167,8 +162,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/groupsv2/#bungio.models.bungie.groupsv2.GroupResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_group_by_name_v2(auth=auth, **data.to_dict())
@@ -185,8 +179,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/groupsv2/#bungio.models.bungie.groupsv2.GroupOptionalConversation) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_group_optional_conversations(group_id=group_id, auth=auth)
@@ -205,8 +198,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.int) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.edit_group(group_id=group_id, auth=auth, **data.to_dict())
@@ -225,8 +217,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.int) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.edit_clan_banner(group_id=group_id, auth=auth, **data.to_dict())
@@ -245,8 +236,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.int) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.edit_founder_options(group_id=group_id, auth=auth, **data.to_dict())
@@ -267,8 +257,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.int) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.add_optional_conversation(group_id=group_id, auth=auth, **data.to_dict())
@@ -290,8 +279,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.int) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.edit_optional_conversation(
@@ -306,7 +294,7 @@ class GroupV2RouteInterface(BaseModel):
         member_type: Optional[int] = None,
         name_search: Optional[str] = None,
         auth: Optional[AuthData] = None,
-    ) -> dict:
+    ) -> SearchResultOfGroupMember:
         """
         Get the list of members in a given group.
 
@@ -318,18 +306,17 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.dict) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_members_of_group(
             currentpage=currentpage, group_id=group_id, member_type=member_type, name_search=name_search, auth=auth
         )
-        return response["Result"]
+        return SearchResultOfGroupMember.from_dict(data=response, client=self._client)
 
     async def get_admins_and_founder_of_group(
         self, currentpage: int, group_id: int, auth: Optional[AuthData] = None
-    ) -> dict:
+    ) -> SearchResultOfGroupMember:
         """
         Get the list of members in a given group who are of admin level or higher.
 
@@ -339,14 +326,13 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.dict) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_admins_and_founder_of_group(
             currentpage=currentpage, group_id=group_id, auth=auth
         )
-        return response["Result"]
+        return SearchResultOfGroupMember.from_dict(data=response, client=self._client)
 
     async def edit_group_membership(
         self, group_id: int, membership_id: int, membership_type: int, member_type: int, auth: AuthData
@@ -365,8 +351,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.int) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.edit_group_membership(
@@ -394,8 +379,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/groupsv2/#bungio.models.bungie.groupsv2.GroupMemberLeaveResult) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.kick_member(
@@ -420,8 +404,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.int) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.ban_member(
@@ -437,14 +420,13 @@ class GroupV2RouteInterface(BaseModel):
             Required oauth2 scopes: AdminGroups
 
         Args:
-            group_id: Not specified.
+            group_id:
             membership_id: Membership ID of the member to unban from the group
             membership_type: Membership type of the provided membership ID.
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.int) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.unban_member(
@@ -452,7 +434,9 @@ class GroupV2RouteInterface(BaseModel):
         )
         return response["Result"]
 
-    async def get_banned_members_of_group(self, currentpage: int, group_id: int, auth: AuthData) -> dict:
+    async def get_banned_members_of_group(
+        self, currentpage: int, group_id: int, auth: AuthData
+    ) -> SearchResultOfGroupBan:
         """
         Get the list of banned members in a given group. Only accessible to group Admins and above. Not applicable to all groups. Check group features.
 
@@ -465,14 +449,13 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.dict) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_banned_members_of_group(
             currentpage=currentpage, group_id=group_id, auth=auth
         )
-        return response["Result"]
+        return SearchResultOfGroupBan.from_dict(data=response, client=self._client)
 
     async def abdicate_foundership(
         self, founder_id_new: int, group_id: int, membership_type: int, auth: Optional[AuthData] = None
@@ -487,8 +470,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.bool) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.abdicate_foundership(
@@ -496,7 +478,9 @@ class GroupV2RouteInterface(BaseModel):
         )
         return response["Result"]
 
-    async def get_pending_memberships(self, currentpage: int, group_id: int, auth: AuthData) -> dict:
+    async def get_pending_memberships(
+        self, currentpage: int, group_id: int, auth: AuthData
+    ) -> SearchResultOfGroupMemberApplication:
         """
         Get the list of users who are awaiting a decision on their application to join a given group. Modified to include application info.
 
@@ -509,16 +493,17 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.dict) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_pending_memberships(
             currentpage=currentpage, group_id=group_id, auth=auth
         )
-        return response["Result"]
+        return SearchResultOfGroupMemberApplication.from_dict(data=response, client=self._client)
 
-    async def get_invited_individuals(self, currentpage: int, group_id: int, auth: AuthData) -> dict:
+    async def get_invited_individuals(
+        self, currentpage: int, group_id: int, auth: AuthData
+    ) -> SearchResultOfGroupMemberApplication:
         """
         Get the list of users who have been invited into the group.
 
@@ -531,14 +516,13 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.dict) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_invited_individuals(
             currentpage=currentpage, group_id=group_id, auth=auth
         )
-        return response["Result"]
+        return SearchResultOfGroupMemberApplication.from_dict(data=response, client=self._client)
 
     async def approve_all_pending(
         self, data: GroupApplicationRequest, group_id: int, auth: AuthData
@@ -555,8 +539,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/entities/#bungio.models.bungie.entities.EntityActionResult) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.approve_all_pending(group_id=group_id, auth=auth, **data.to_dict())
@@ -577,8 +560,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/entities/#bungio.models.bungie.entities.EntityActionResult) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.deny_all_pending(group_id=group_id, auth=auth, **data.to_dict())
@@ -599,8 +581,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/entities/#bungio.models.bungie.entities.EntityActionResult) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.approve_pending_for_list(group_id=group_id, auth=auth, **data.to_dict())
@@ -623,8 +604,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.bool) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.approve_pending(
@@ -647,8 +627,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/entities/#bungio.models.bungie.entities.EntityActionResult) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.deny_pending_for_list(group_id=group_id, auth=auth, **data.to_dict())
@@ -668,8 +647,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/groupsv2/#bungio.models.bungie.groupsv2.GetGroupsForMemberResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_groups_for_member(
@@ -694,8 +672,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/groupsv2/#bungio.models.bungie.groupsv2.GroupMembershipSearchResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.recover_group_for_founder(
@@ -717,8 +694,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/groupsv2/#bungio.models.bungie.groupsv2.GroupPotentialMembershipSearchResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_potential_groups_for_member(
@@ -747,8 +723,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/groupsv2/#bungio.models.bungie.groupsv2.GroupApplicationResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.individual_group_invite(
@@ -772,8 +747,7 @@ class GroupV2RouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/groupsv2/#bungio.models.bungie.groupsv2.GroupApplicationResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.individual_group_invite_cancel(

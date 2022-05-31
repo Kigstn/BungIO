@@ -1,19 +1,21 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import DestinyObjectiveProgress
 
 
 @attr.define
 class DestinyMetricsComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        metrics: Not specified.
-        metrics_root_node_hash: Not specified.
+        metrics: _No description given_
+        metrics_root_node_hash: _No description given_
     """
 
     metrics: Any = attr.field()
@@ -23,11 +25,11 @@ class DestinyMetricsComponent(BaseModel):
 @attr.define
 class DestinyMetricComponent(BaseModel):
     """
-    Not specified.
+    _No description given_
 
     Attributes:
-        invisible: Not specified.
-        objective_progress: Not specified.
+        invisible: _No description given_
+        objective_progress: _No description given_
     """
 
     invisible: bool = attr.field()

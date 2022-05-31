@@ -1,5 +1,4 @@
-import datetime
-from typing import Any, Callable, Coroutine, Optional
+from typing import Callable, Coroutine, Optional
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -13,7 +12,7 @@ class ContentRouteHttpRequests:
         Gets an object describing a particular variant of content.
 
         Args:
-            type: Not specified.
+            type:
             auth: Authentication information. Required when users with a private profile are queried.
 
         Raises:
@@ -38,8 +37,8 @@ class ContentRouteHttpRequests:
         Returns a content item referenced by id
 
         Args:
-            id: Not specified.
-            locale: Not specified.
+            id:
+            locale:
             head: false
             auth: Authentication information. Required when users with a private profile are queried.
 
@@ -67,9 +66,9 @@ class ContentRouteHttpRequests:
         Returns the newest item that matches a given tag and Content Type.
 
         Args:
-            locale: Not specified.
-            tag: Not specified.
-            type: Not specified.
+            locale:
+            tag:
+            type:
             head: Not used.
             auth: Authentication information. Required when users with a private profile are queried.
 
@@ -105,7 +104,7 @@ class ContentRouteHttpRequests:
         Gets content based on querystring information passed in. Provides basic search and text search capabilities.
 
         Args:
-            locale: Not specified.
+            locale:
             ctype: Content type tag: Help, News, etc. Supply multiple ctypes separated by space.
             currentpage: Page number for the search results, starting with page 1.
             head: Not used.
@@ -155,9 +154,9 @@ class ContentRouteHttpRequests:
         Searches for Content Items that match the given Tag and Content Type.
 
         Args:
-            locale: Not specified.
-            tag: Not specified.
-            type: Not specified.
+            locale:
+            tag:
+            type:
             currentpage: Page number for the search results starting with page 1.
             head: Not used.
             itemsperpage: Not used.
@@ -192,8 +191,8 @@ class ContentRouteHttpRequests:
         Search for Help Articles.
 
         Args:
-            searchtext: Not specified.
-            size: Not specified.
+            searchtext:
+            size:
             auth: Authentication information. Required when users with a private profile are queried.
 
         Raises:

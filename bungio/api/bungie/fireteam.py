@@ -1,11 +1,14 @@
-import datetime
-from typing import Any, Optional
+from typing import Optional
 
 import attr
 
+from bungio.models import (
+    FireteamResponse,
+    SearchResultOfFireteamResponse,
+    SearchResultOfFireteamSummary,
+)
 from bungio.models.auth import AuthData
 from bungio.models.base import BaseModel
-from bungio.models.bungie.fireteam import FireteamResponse
 
 
 @attr.define
@@ -22,8 +25,7 @@ class FireteamRouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.int) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_active_private_clan_fireteam_count(group_id=group_id, auth=auth)
@@ -40,7 +42,7 @@ class FireteamRouteInterface(BaseModel):
         slot_filter: int,
         auth: AuthData,
         lang_filter: Optional[str] = None,
-    ) -> dict:
+    ) -> SearchResultOfFireteamSummary:
         """
         Gets a listing of all of this clan's fireteams that are have available slots. Caller is not checked for join criteria so caching is maximized.
 
@@ -59,8 +61,7 @@ class FireteamRouteInterface(BaseModel):
             lang_filter: An optional language filter.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.dict) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_available_clan_fireteams(
@@ -74,7 +75,7 @@ class FireteamRouteInterface(BaseModel):
             auth=auth,
             lang_filter=lang_filter,
         )
-        return response["Result"]
+        return SearchResultOfFireteamSummary.from_dict(data=response, client=self._client)
 
     async def search_public_available_clan_fireteams(
         self,
@@ -85,7 +86,7 @@ class FireteamRouteInterface(BaseModel):
         slot_filter: int,
         auth: AuthData,
         lang_filter: Optional[str] = None,
-    ) -> dict:
+    ) -> SearchResultOfFireteamSummary:
         """
         Gets a listing of all public fireteams starting now with open slots. Caller is not checked for join criteria so caching is maximized.
 
@@ -102,8 +103,7 @@ class FireteamRouteInterface(BaseModel):
             lang_filter: An optional language filter.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.dict) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.search_public_available_clan_fireteams(
@@ -115,7 +115,7 @@ class FireteamRouteInterface(BaseModel):
             auth=auth,
             lang_filter=lang_filter,
         )
-        return response["Result"]
+        return SearchResultOfFireteamSummary.from_dict(data=response, client=self._client)
 
     async def get_my_clan_fireteams(
         self,
@@ -126,7 +126,7 @@ class FireteamRouteInterface(BaseModel):
         auth: AuthData,
         group_filter: Optional[bool] = None,
         lang_filter: Optional[str] = None,
-    ) -> dict:
+    ) -> SearchResultOfFireteamResponse:
         """
         Gets a listing of all fireteams that caller is an applicant, a member, or an alternate of.
 
@@ -143,8 +143,7 @@ class FireteamRouteInterface(BaseModel):
             lang_filter: An optional language filter.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.dict) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_my_clan_fireteams(
@@ -156,7 +155,7 @@ class FireteamRouteInterface(BaseModel):
             group_filter=group_filter,
             lang_filter=lang_filter,
         )
-        return response["Result"]
+        return SearchResultOfFireteamResponse.from_dict(data=response, client=self._client)
 
     async def get_clan_fireteam(self, fireteam_id: int, group_id: int, auth: AuthData) -> FireteamResponse:
         """
@@ -171,8 +170,7 @@ class FireteamRouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/fireteam/#bungio.models.bungie.fireteam.FireteamResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_clan_fireteam(fireteam_id=fireteam_id, group_id=group_id, auth=auth)

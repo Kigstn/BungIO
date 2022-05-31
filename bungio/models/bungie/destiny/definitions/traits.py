@@ -1,26 +1,26 @@
-import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import DestinyDisplayPropertiesDefinition
 
 
 @attr.define
 class DestinyTraitDefinition(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            display_properties: Not specified.
-            trait_category_id: Not specified.
-            trait_category_hash: Not specified.
-            display_hint: An identifier for how this trait can be displayed. For example: a 'keyword' hint to show an explanation for certain related terms.
-            hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally.
-
-    When entities refer to each other in Destiny content, it is this hash that they are referring to.
-            index: The index of the entity as it was found in the investment tables.
-            redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+    Attributes:
+        display_properties: _No description given_
+        trait_category_id: _No description given_
+        trait_category_hash: _No description given_
+        display_hint: An identifier for how this trait can be displayed. For example: a 'keyword' hint to show an explanation for certain related terms.
+        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
+        index: The index of the entity as it was found in the investment tables.
+        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
@@ -35,17 +35,15 @@ class DestinyTraitDefinition(BaseModel):
 @attr.define
 class DestinyTraitCategoryDefinition(BaseModel):
     """
-        Not specified.
+    _No description given_
 
-        Attributes:
-            trait_category_id: Not specified.
-            trait_hashes: Not specified.
-            trait_ids: Not specified.
-            hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally.
-
-    When entities refer to each other in Destiny content, it is this hash that they are referring to.
-            index: The index of the entity as it was found in the investment tables.
-            redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+    Attributes:
+        trait_category_id: _No description given_
+        trait_hashes: _No description given_
+        trait_ids: _No description given_
+        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
+        index: The index of the entity as it was found in the investment tables.
+        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
     trait_category_id: str = attr.field()

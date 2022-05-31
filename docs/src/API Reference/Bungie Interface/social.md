@@ -1,3 +1,3 @@
-# Social Routes Interface
+# Social Routes
 
 ::: bungio.api.bungie.social

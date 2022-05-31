@@ -1,15 +1,14 @@
-import datetime
-from typing import Any, Optional
+from typing import Optional
 
 import attr
 
-from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
-from bungio.models.bungie.social.friends import (
+from bungio.models import (
     BungieFriendListResponse,
     BungieFriendRequestListResponse,
     PlatformFriendResponse,
 )
+from bungio.models.auth import AuthData
+from bungio.models.base import BaseModel
 
 
 @attr.define
@@ -25,8 +24,7 @@ class SocialRouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/social.friends/#bungio.models.bungie.social.friends.BungieFriendListResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_friend_list(auth=auth)
@@ -43,8 +41,7 @@ class SocialRouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/social.friends/#bungio.models.bungie.social.friends.BungieFriendRequestListResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_friend_request_list(auth=auth)
@@ -62,8 +59,7 @@ class SocialRouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.bool) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.issue_friend_request(membership_id=membership_id, auth=auth)
@@ -81,8 +77,7 @@ class SocialRouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.bool) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.accept_friend_request(membership_id=membership_id, auth=auth)
@@ -100,8 +95,7 @@ class SocialRouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.bool) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.decline_friend_request(membership_id=membership_id, auth=auth)
@@ -119,8 +113,7 @@ class SocialRouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.bool) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.remove_friend(membership_id=membership_id, auth=auth)
@@ -138,8 +131,7 @@ class SocialRouteInterface(BaseModel):
             auth: Authentication information.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models//#.bool) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.remove_friend_request(membership_id=membership_id, auth=auth)
@@ -157,8 +149,7 @@ class SocialRouteInterface(BaseModel):
             auth: Authentication information. Required when users with a private profile are queried.
 
         Returns:
-            The [model](/API Reference/Models/Bungie API Models/social.friends/#bungio.models.bungie.social.friends.PlatformFriendResponse) which is returned by bungie.
-            Click [here](https://bungie-net.github.io/multi/index.html) for general endpoint information.
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_platform_friend_list(

@@ -1,5 +1,4 @@
-import datetime
-from typing import Any, Callable, Coroutine, Optional
+from typing import Callable, Coroutine, Optional
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -115,13 +114,13 @@ class ForumRouteHttpRequests:
         Returns a thread of posts at the given parent, optionally returning replies to those posts as well as the original parent.
 
         Args:
-            get_parent_post: Not specified.
-            page: Not specified.
-            page_size: Not specified.
-            parent_post_id: Not specified.
-            reply_size: Not specified.
-            root_thread_mode: Not specified.
-            sort_mode: Not specified.
+            get_parent_post:
+            page:
+            page_size:
+            parent_post_id:
+            reply_size:
+            root_thread_mode:
+            sort_mode:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
             auth: Authentication information. Required when users with a private profile are queried.
 
@@ -162,12 +161,12 @@ class ForumRouteHttpRequests:
         Returns a thread of posts starting at the topicId of the input childPostId, optionally returning replies to those posts as well as the original parent.
 
         Args:
-            child_post_id: Not specified.
-            page: Not specified.
-            page_size: Not specified.
-            reply_size: Not specified.
-            root_thread_mode: Not specified.
-            sort_mode: Not specified.
+            child_post_id:
+            page:
+            page_size:
+            reply_size:
+            root_thread_mode:
+            sort_mode:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
             auth: Authentication information. Required when users with a private profile are queried.
 
@@ -200,7 +199,7 @@ class ForumRouteHttpRequests:
         Returns the post specified and its immediate parent.
 
         Args:
-            child_post_id: Not specified.
+            child_post_id:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
             auth: Authentication information. Required when users with a private profile are queried.
 
@@ -228,7 +227,7 @@ class ForumRouteHttpRequests:
         Returns the post specified and its immediate parent of posts that are awaiting approval.
 
         Args:
-            child_post_id: Not specified.
+            child_post_id:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
             auth: Authentication information. Required when users with a private profile are queried.
 
@@ -259,7 +258,7 @@ class ForumRouteHttpRequests:
         Gets the post Id for the given content item's comments, if it exists.
 
         Args:
-            content_id: Not specified.
+            content_id:
             auth: Authentication information. Required when users with a private profile are queried.
 
         Raises:
@@ -332,7 +331,7 @@ class ForumRouteHttpRequests:
         Allows the caller to get a list of to 25 recruitment thread summary information objects.
 
         Args:
-            body_data: Not specified.
+            body_data: _No description given_
             auth: Authentication information. Required when users with a private profile are queried.
 
         Raises:
