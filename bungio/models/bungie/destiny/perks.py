@@ -1,6 +1,11 @@
+from typing import TYPE_CHECKING
+
 import attr
 
 from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import DestinySandboxPerkDefinition
 
 
 @attr.define
@@ -15,7 +20,7 @@ class DestinyPerkReference(BaseModel):
         visible: Some perks provide benefits, but aren't visible in the UI. This value will let you know if this is perk should be shown in your UI.
     """
 
-    perk_hash: int = attr.field()
+    perk_hash: "DestinySandboxPerkDefinition" = attr.field()
     icon_path: str = attr.field()
     is_active: bool = attr.field()
     visible: bool = attr.field()

@@ -1,11 +1,15 @@
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 import attr
 
 from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyObjectiveProgress
+    from bungio.models import (
+        DestinyObjectiveProgress,
+        DestinyPresentationNodeDefinition,
+        DestinyPresentationNodeState,
+    )
 
 
 @attr.define
@@ -17,7 +21,7 @@ class DestinyPresentationNodesComponent(BaseModel):
         nodes: _No description given by bungie_
     """
 
-    nodes: Any = attr.field()
+    nodes: "DestinyPresentationNodeDefinition" = attr.field()
 
 
 @attr.define
@@ -33,7 +37,7 @@ class DestinyPresentationNodeComponent(BaseModel):
         record_category_score: If available, this is the current score for the record category that this node represents.
     """
 
-    state: int = attr.field()
+    state: "DestinyPresentationNodeState" = attr.field()
     objective: "DestinyObjectiveProgress" = attr.field()
     progress_value: int = attr.field()
     completion_value: int = attr.field()

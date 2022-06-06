@@ -6,11 +6,16 @@ from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
-        DestinyCollectibleAcquisitionBlock,
-        DestinyCollectibleStateBlock,
         DestinyDisplayPropertiesDefinition,
+        DestinyInventoryItemDefinition,
+        DestinyMaterialRequirementSetDefinition,
         DestinyPresentationChildBlock,
+        DestinyPresentationNodeDefinition,
         DestinyPresentationNodeRequirementsBlock,
+        DestinyPresentationNodeType,
+        DestinyScope,
+        DestinyTraitDefinition,
+        DestinyUnlockValueDefinition,
     )
 
 
@@ -38,17 +43,17 @@ class DestinyCollectibleDefinition(BaseModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    scope: int = attr.field()
+    scope: "DestinyScope" = attr.field()
     source_string: str = attr.field()
     source_hash: int = attr.field()
-    item_hash: int = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
     acquisition_info: "DestinyCollectibleAcquisitionBlock" = attr.field()
     state_info: "DestinyCollectibleStateBlock" = attr.field()
     presentation_info: "DestinyPresentationChildBlock" = attr.field()
-    presentation_node_type: int = attr.field()
+    presentation_node_type: "DestinyPresentationNodeType" = attr.field()
     trait_ids: list[str] = attr.field()
-    trait_hashes: list[int] = attr.field()
-    parent_node_hashes: list[int] = attr.field()
+    trait_hashes: list["DestinyTraitDefinition"] = attr.field()
+    parent_node_hashes: list["DestinyPresentationNodeDefinition"] = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
@@ -64,8 +69,8 @@ class DestinyCollectibleAcquisitionBlock(BaseModel):
         acquire_timestamp_unlock_value_hash: _No description given by bungie_
     """
 
-    acquire_material_requirement_hash: int = attr.field()
-    acquire_timestamp_unlock_value_hash: int = attr.field()
+    acquire_material_requirement_hash: "DestinyMaterialRequirementSetDefinition" = attr.field()
+    acquire_timestamp_unlock_value_hash: "DestinyUnlockValueDefinition" = attr.field()
 
 
 @attr.define
@@ -78,5 +83,5 @@ class DestinyCollectibleStateBlock(BaseModel):
         requirements: _No description given by bungie_
     """
 
-    obscured_override_item_hash: int = attr.field()
+    obscured_override_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     requirements: "DestinyPresentationNodeRequirementsBlock" = attr.field()

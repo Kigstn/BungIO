@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 import attr
 
@@ -7,20 +7,13 @@ from bungio.models.base import BaseEnum, BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
-        DestinyAggregateActivityStats,
-        DestinyHistoricalStatsActivity,
-        DestinyHistoricalStatsByPeriod,
-        DestinyHistoricalStatsPerCharacter,
-        DestinyHistoricalStatsPeriodGroup,
-        DestinyHistoricalStatsValue,
-        DestinyHistoricalStatsValuePair,
-        DestinyHistoricalStatsWithMerged,
-        DestinyHistoricalWeaponStats,
-        DestinyLeaderboardEntry,
-        DestinyPlayer,
-        DestinyPostGameCarnageReportEntry,
-        DestinyPostGameCarnageReportExtendedData,
-        DestinyPostGameCarnageReportTeamEntry,
+        BungieMembershipType,
+        DestinyActivityDefinition,
+        DestinyActivityModeType,
+        DestinyClassDefinition,
+        DestinyGenderDefinition,
+        DestinyInventoryItemDefinition,
+        DestinyRaceDefinition,
         UserInfoCard,
     )
 
@@ -62,13 +55,13 @@ class DestinyHistoricalStatsActivity(BaseModel):
         membership_type: The Membership Type indicating the platform on which this match was played.
     """
 
-    reference_id: int = attr.field()
-    director_activity_hash: int = attr.field()
+    reference_id: "DestinyActivityDefinition" = attr.field()
+    director_activity_hash: "DestinyActivityDefinition" = attr.field()
     instance_id: int = attr.field()
-    mode: int = attr.field()
-    modes: list[int] = attr.field()
+    mode: "DestinyActivityModeType" = attr.field()
+    modes: list["DestinyActivityModeType"] = attr.field()
     is_private: bool = attr.field()
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
 
 
 @attr.define
@@ -148,15 +141,15 @@ class DestinyPlayer(BaseModel):
 
     destiny_user_info: "UserInfoCard" = attr.field()
     character_class: str = attr.field()
-    class_hash: int = attr.field()
-    race_hash: int = attr.field()
-    gender_hash: int = attr.field()
+    class_hash: "DestinyClassDefinition" = attr.field()
+    race_hash: "DestinyRaceDefinition" = attr.field()
+    gender_hash: "DestinyGenderDefinition" = attr.field()
     character_level: int = attr.field()
     light_level: int = attr.field()
     bungie_net_user_info: "UserInfoCard" = attr.field()
     clan_name: str = attr.field()
     clan_tag: str = attr.field()
-    emblem_hash: int = attr.field()
+    emblem_hash: "DestinyInventoryItemDefinition" = attr.field()
 
 
 @attr.define
@@ -183,7 +176,7 @@ class DestinyHistoricalWeaponStats(BaseModel):
         values: Collection of stats for the period.
     """
 
-    reference_id: int = attr.field()
+    reference_id: "DestinyInventoryItemDefinition" = attr.field()
     values: Any = attr.field()
 
 
@@ -262,7 +255,7 @@ class DestinyClanAggregateStat(BaseModel):
         value: Value of the stat for this player
     """
 
-    mode: int = attr.field()
+    mode: "DestinyActivityModeType" = attr.field()
     stat_id: str = attr.field()
     value: "DestinyHistoricalStatsValue" = attr.field()
 
@@ -399,5 +392,5 @@ class DestinyAggregateActivityStats(BaseModel):
         values: Collection of stats for the player in this activity.
     """
 
-    activity_hash: int = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
     values: Any = attr.field()

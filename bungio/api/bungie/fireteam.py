@@ -3,7 +3,11 @@ from typing import Optional
 import attr
 
 from bungio.models import (
+    FireteamDateRange,
+    FireteamPlatform,
+    FireteamPublicSearchOption,
     FireteamResponse,
+    FireteamSlotSearch,
     SearchResultOfFireteamResponse,
     SearchResultOfFireteamSummary,
 )
@@ -29,17 +33,17 @@ class FireteamRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_active_private_clan_fireteam_count(group_id=group_id, auth=auth)
-        return response["Result"]
+        return int.from_dict(data=response, client=self._client)
 
     async def get_available_clan_fireteams(
         self,
         activity_type: int,
-        date_range: int,
+        date_range: FireteamDateRange,
         group_id: int,
         page: int,
-        platform: int,
-        public_only: int,
-        slot_filter: int,
+        platform: FireteamPlatform,
+        public_only: FireteamPublicSearchOption,
+        slot_filter: FireteamSlotSearch,
         auth: AuthData,
         lang_filter: Optional[str] = None,
     ) -> SearchResultOfFireteamSummary:
@@ -66,12 +70,12 @@ class FireteamRouteInterface(BaseModel):
 
         response = await self._client.http.get_available_clan_fireteams(
             activity_type=activity_type,
-            date_range=date_range,
+            date_range=date_range.value,
             group_id=group_id,
             page=page,
-            platform=platform,
-            public_only=public_only,
-            slot_filter=slot_filter,
+            platform=platform.value,
+            public_only=public_only.value,
+            slot_filter=slot_filter.value,
             auth=auth,
             lang_filter=lang_filter,
         )
@@ -80,10 +84,10 @@ class FireteamRouteInterface(BaseModel):
     async def search_public_available_clan_fireteams(
         self,
         activity_type: int,
-        date_range: int,
+        date_range: FireteamDateRange,
         page: int,
-        platform: int,
-        slot_filter: int,
+        platform: FireteamPlatform,
+        slot_filter: FireteamSlotSearch,
         auth: AuthData,
         lang_filter: Optional[str] = None,
     ) -> SearchResultOfFireteamSummary:
@@ -108,10 +112,10 @@ class FireteamRouteInterface(BaseModel):
 
         response = await self._client.http.search_public_available_clan_fireteams(
             activity_type=activity_type,
-            date_range=date_range,
+            date_range=date_range.value,
             page=page,
-            platform=platform,
-            slot_filter=slot_filter,
+            platform=platform.value,
+            slot_filter=slot_filter.value,
             auth=auth,
             lang_filter=lang_filter,
         )
@@ -122,7 +126,7 @@ class FireteamRouteInterface(BaseModel):
         group_id: int,
         include_closed: bool,
         page: int,
-        platform: int,
+        platform: FireteamPlatform,
         auth: AuthData,
         group_filter: Optional[bool] = None,
         lang_filter: Optional[str] = None,
@@ -150,7 +154,7 @@ class FireteamRouteInterface(BaseModel):
             group_id=group_id,
             include_closed=include_closed,
             page=page,
-            platform=platform,
+            platform=platform.value,
             auth=auth,
             group_filter=group_filter,
             lang_filter=lang_filter,

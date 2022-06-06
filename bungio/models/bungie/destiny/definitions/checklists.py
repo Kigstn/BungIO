@@ -6,8 +6,13 @@ from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
-        DestinyChecklistEntryDefinition,
+        DestinyActivityDefinition,
+        DestinyDestinationDefinition,
         DestinyDisplayPropertiesDefinition,
+        DestinyInventoryItemDefinition,
+        DestinyLocationDefinition,
+        DestinyScope,
+        DestinyVendorDefinition,
     )
 
 
@@ -28,7 +33,7 @@ class DestinyChecklistDefinition(BaseModel):
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     view_action_string: str = attr.field()
-    scope: int = attr.field()
+    scope: "DestinyScope" = attr.field()
     entries: list["DestinyChecklistEntryDefinition"] = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
@@ -55,11 +60,11 @@ class DestinyChecklistEntryDefinition(BaseModel):
 
     hash: int = attr.field()
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    destination_hash: int = attr.field()
-    location_hash: int = attr.field()
+    destination_hash: "DestinyDestinationDefinition" = attr.field()
+    location_hash: "DestinyLocationDefinition" = attr.field()
     bubble_hash: int = attr.field()
-    activity_hash: int = attr.field()
-    item_hash: int = attr.field()
-    vendor_hash: int = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
+    vendor_hash: "DestinyVendorDefinition" = attr.field()
     vendor_interaction_index: int = attr.field()
-    scope: int = attr.field()
+    scope: "DestinyScope" = attr.field()

@@ -6,7 +6,12 @@ import attr
 from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyItemQuantity, DestinyVendorGroup
+    from bungio.models import (
+        DestinyInventoryItemDefinition,
+        DestinyItemQuantity,
+        DestinyVendorDefinition,
+        DestinyVendorGroupDefinition,
+    )
 
 
 @attr.define
@@ -31,8 +36,8 @@ class DestinyVendorGroup(BaseModel):
         vendor_hashes: The ordered list of vendors within a particular group.
     """
 
-    vendor_group_hash: int = attr.field()
-    vendor_hashes: list[int] = attr.field()
+    vendor_group_hash: "DestinyVendorGroupDefinition" = attr.field()
+    vendor_hashes: list["DestinyVendorDefinition"] = attr.field()
 
 
 @attr.define
@@ -46,7 +51,7 @@ class DestinyVendorBaseComponent(BaseModel):
         enabled: If True, the Vendor is currently accessible.  If False, they may not actually be visible in the world at the moment.
     """
 
-    vendor_hash: int = attr.field()
+    vendor_hash: "DestinyVendorDefinition" = attr.field()
     next_refresh_date: datetime.datetime = attr.field()
     enabled: bool = attr.field()
 
@@ -67,8 +72,8 @@ class DestinyVendorSaleItemBaseComponent(BaseModel):
     """
 
     vendor_item_index: int = attr.field()
-    item_hash: int = attr.field()
-    override_style_item_hash: int = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
+    override_style_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     quantity: int = attr.field()
     costs: list["DestinyItemQuantity"] = attr.field()
     override_next_refresh_date: datetime.datetime = attr.field()
@@ -86,7 +91,7 @@ class DestinyPublicVendorComponent(BaseModel):
         enabled: If True, the Vendor is currently accessible.  If False, they may not actually be visible in the world at the moment.
     """
 
-    vendor_hash: int = attr.field()
+    vendor_hash: "DestinyVendorDefinition" = attr.field()
     next_refresh_date: datetime.datetime = attr.field()
     enabled: bool = attr.field()
 
@@ -107,8 +112,8 @@ class DestinyPublicVendorSaleItemComponent(BaseModel):
     """
 
     vendor_item_index: int = attr.field()
-    item_hash: int = attr.field()
-    override_style_item_hash: int = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
+    override_style_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     quantity: int = attr.field()
     costs: list["DestinyItemQuantity"] = attr.field()
     override_next_refresh_date: datetime.datetime = attr.field()

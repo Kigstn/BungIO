@@ -19,7 +19,6 @@ class Route:
     def __init__(
         self, path: str, method: str, data: Optional[dict | list] = None, auth: Optional[AuthData] = None, **params
     ):
-        self.params = params or {}
         self.data = data
         self.auth = auth
         self.method = method
@@ -27,3 +26,11 @@ class Route:
 
         if "PostGameCarnageReport" in self.path:
             self.path = self.path.replace("www", "stats")
+
+        if not params:
+            self.params = {}
+        else:
+            for name, value in params.items():
+                if isinstance(value, list):
+                    value = ",".join(value)
+                self.params[name] = value

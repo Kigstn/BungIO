@@ -5,7 +5,12 @@ import attr
 from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyObjectiveProgress
+    from bungio.models import (
+        DestinyObjectiveProgress,
+        DestinyPresentationNodeDefinition,
+        DestinyRecordDefinition,
+        DestinyRecordState,
+    )
 
 
 @attr.define
@@ -20,8 +25,8 @@ class DestinyRecordsComponent(BaseModel):
     """
 
     records: Any = attr.field()
-    record_categories_root_node_hash: int = attr.field()
-    record_seals_root_node_hash: int = attr.field()
+    record_categories_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
+    record_seals_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
 
 
 @attr.define
@@ -38,7 +43,7 @@ class DestinyRecordComponent(BaseModel):
         reward_visibilty: If available, a list that describes which reward rewards should be shown (true) or hidden (false). This property is for regular record rewards, and not for interval objective rewards.
     """
 
-    state: int = attr.field()
+    state: "DestinyRecordState" = attr.field()
     objectives: list["DestinyObjectiveProgress"] = attr.field()
     interval_objectives: list["DestinyObjectiveProgress"] = attr.field()
     intervals_redeemed_count: int = attr.field()
@@ -66,10 +71,10 @@ class DestinyProfileRecordsComponent(BaseModel):
     active_score: int = attr.field()
     legacy_score: int = attr.field()
     lifetime_score: int = attr.field()
-    tracked_record_hash: int = attr.field()
+    tracked_record_hash: "DestinyRecordDefinition" = attr.field()
     records: Any = attr.field()
-    record_categories_root_node_hash: int = attr.field()
-    record_seals_root_node_hash: int = attr.field()
+    record_categories_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
+    record_seals_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
 
 
 @attr.define
@@ -84,7 +89,7 @@ class DestinyCharacterRecordsComponent(BaseModel):
         record_seals_root_node_hash: The hash for the root presentation node definition of Triumph Seals.
     """
 
-    featured_record_hashes: list[int] = attr.field()
+    featured_record_hashes: list["DestinyRecordDefinition"] = attr.field()
     records: Any = attr.field()
-    record_categories_root_node_hash: int = attr.field()
-    record_seals_root_node_hash: int = attr.field()
+    record_categories_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
+    record_seals_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()

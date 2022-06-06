@@ -5,7 +5,11 @@ import attr
 from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import (
+        DestinyDisplayPropertiesDefinition,
+        DestinyEnergyType,
+        DestinyStatDefinition,
+    )
 
 
 @attr.define
@@ -28,9 +32,9 @@ class DestinyEnergyTypeDefinition(BaseModel):
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     transparent_icon_path: str = attr.field()
     show_icon: bool = attr.field()
-    enum_value: int = attr.field()
-    capacity_stat_hash: int = attr.field()
-    cost_stat_hash: int = attr.field()
+    enum_value: "DestinyEnergyType" = attr.field()
+    capacity_stat_hash: "DestinyStatDefinition" = attr.field()
+    cost_stat_hash: "DestinyStatDefinition" = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()

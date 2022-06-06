@@ -20,4 +20,4 @@ class UserSystemOverridesRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_user_system_overrides(auth=auth)
-        return response["Result"]
+        return Any.from_dict(data=response, client=self._client)

@@ -1,6 +1,11 @@
+from typing import TYPE_CHECKING
+
 import attr
 
 from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import DestinyDestinationDefinition
 
 
 @attr.define
@@ -13,5 +18,5 @@ class DestinyVendorLocationDefinition(BaseModel):
         background_image_path: The relative path to the background image representing this Vendor at this location, for use in a banner.
     """
 
-    destination_hash: int = attr.field()
+    destination_hash: "DestinyDestinationDefinition" = attr.field()
     background_image_path: str = attr.field()

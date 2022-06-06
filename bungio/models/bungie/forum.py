@@ -7,14 +7,10 @@ from bungio.models.base import BaseEnum, BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
-        ForumRecruitmentDetail,
         GeneralUser,
         GroupResponse,
         IgnoreResponse,
         PagedQuery,
-        PollResponse,
-        PollResult,
-        PostResponse,
         TagResponse,
     )
 
@@ -108,9 +104,9 @@ class PostResponse(BaseModel):
 
     last_reply_timestamp: datetime.datetime = attr.field()
     is_pinned: bool = attr.field()
-    url_media_type: int = attr.field()
+    url_media_type: "ForumMediaType" = attr.field()
     thumbnail: str = attr.field()
-    popularity: int = attr.field()
+    popularity: "ForumPostPopularity" = attr.field()
     is_active: bool = attr.field()
     is_announcement: bool = attr.field()
     user_rating: int = attr.field()
@@ -248,8 +244,8 @@ class ForumRecruitmentDetail(BaseModel):
 
     topic_id: int = attr.field()
     microphone_required: bool = attr.field()
-    intensity: int = attr.field()
-    tone: int = attr.field()
+    intensity: "ForumRecruitmentIntensityLabel" = attr.field()
+    tone: "ForumRecruitmentToneLabel" = attr.field()
     approved: bool = attr.field()
     conversation_id: int = attr.field()
     player_slots_total: int = attr.field()

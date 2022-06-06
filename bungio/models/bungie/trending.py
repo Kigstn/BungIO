@@ -12,14 +12,6 @@ if TYPE_CHECKING:
         DestinyPublicActivityStatus,
         DestinyPublicMilestone,
         SearchResultOfTrendingEntry,
-        TrendingCategory,
-        TrendingEntry,
-        TrendingEntryCommunityCreation,
-        TrendingEntryDestinyActivity,
-        TrendingEntryDestinyItem,
-        TrendingEntryDestinyRitual,
-        TrendingEntryNews,
-        TrendingEntrySupportArticle,
     )
 
 
@@ -77,7 +69,7 @@ class TrendingEntry(BaseModel):
     weight: float = attr.field()
     is_featured: bool = attr.field()
     identifier: str = attr.field()
-    entity_type: int = attr.field()
+    entity_type: "TrendingEntryType" = attr.field()
     display_name: str = attr.field()
     tagline: str = attr.field()
     image: str = attr.field()
@@ -139,7 +131,7 @@ class TrendingDetail(BaseModel):
     """
 
     identifier: str = attr.field()
-    entity_type: int = attr.field()
+    entity_type: "TrendingEntryType" = attr.field()
     news: "TrendingEntryNews" = attr.field()
     support: "TrendingEntrySupportArticle" = attr.field()
     destiny_item: "TrendingEntryDestinyItem" = attr.field()

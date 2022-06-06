@@ -5,7 +5,7 @@ import attr
 from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyObjectiveProgress
+    from bungio.models import DestinyInventoryItemDefinition, DestinyObjectiveProgress
 
 
 @attr.define
@@ -21,7 +21,7 @@ class DestinyItemPlugBase(BaseModel):
         enable_fail_indexes: If a plug is not enabled, this will be populated with indexes into the plug item definition's plug.enabledRules property, so that you can show the reasons why it is not enabled. This list will be empty if the plug is enabled.
     """
 
-    plug_item_hash: int = attr.field()
+    plug_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     can_insert: bool = attr.field()
     enabled: bool = attr.field()
     insert_fail_indexes: list[int] = attr.field()
@@ -43,7 +43,7 @@ class DestinyItemPlug(BaseModel):
     """
 
     plug_objectives: list["DestinyObjectiveProgress"] = attr.field()
-    plug_item_hash: int = attr.field()
+    plug_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     can_insert: bool = attr.field()
     enabled: bool = attr.field()
     insert_fail_indexes: list[int] = attr.field()

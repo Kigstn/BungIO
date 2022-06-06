@@ -7,10 +7,11 @@ from bungio.models.base import BaseModel
 if TYPE_CHECKING:
     from bungio.models import (
         DestinyDisplayPropertiesDefinition,
-        DestinyInsertPlugActionDefinition,
+        DestinyInventoryItemDefinition,
         DestinyItemSocketEntryPlugItemRandomizedDefinition,
-        DestinyPlugWhitelistEntryDefinition,
-        DestinySocketTypeScalarMaterialRequirementEntry,
+        DestinySocketCategoryStyle,
+        DestinySocketVisibility,
+        SocketTypeActionType,
     )
 
 
@@ -39,8 +40,8 @@ class DestinySocketTypeDefinition(BaseModel):
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     insert_action: "DestinyInsertPlugActionDefinition" = attr.field()
     plug_whitelist: list["DestinyPlugWhitelistEntryDefinition"] = attr.field()
-    socket_category_hash: int = attr.field()
-    visibility: int = attr.field()
+    socket_category_hash: "DestinySocketCategoryDefinition" = attr.field()
+    visibility: "DestinySocketVisibility" = attr.field()
     always_randomize_sockets: bool = attr.field()
     is_preview_enabled: bool = attr.field()
     hide_duplicate_reusable_plugs: bool = attr.field()
@@ -63,7 +64,7 @@ class DestinyInsertPlugActionDefinition(BaseModel):
     """
 
     action_execute_seconds: int = attr.field()
-    action_type: int = attr.field()
+    action_type: "SocketTypeActionType" = attr.field()
 
 
 @attr.define
@@ -92,7 +93,7 @@ class DestinySocketTypeScalarMaterialRequirementEntry(BaseModel):
         scalar_value: _No description given by bungie_
     """
 
-    currency_item_hash: int = attr.field()
+    currency_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     scalar_value: int = attr.field()
 
 
@@ -112,7 +113,7 @@ class DestinySocketCategoryDefinition(BaseModel):
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     ui_category_style: int = attr.field()
-    category_style: int = attr.field()
+    category_style: "DestinySocketCategoryStyle" = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()

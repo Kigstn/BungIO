@@ -1,6 +1,16 @@
+from typing import TYPE_CHECKING
+
 import attr
 
 from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import (
+        DestinyActivityDefinition,
+        DestinyInventoryItemDefinition,
+        DestinyLocationDefinition,
+        DestinyObjectiveDefinition,
+    )
 
 
 @attr.define
@@ -16,8 +26,8 @@ class DestinyEnvironmentLocationMapping(BaseModel):
         activity_hash: If this is populated, this is the activity you have to be playing in order to see this location appear because of this mapping. (theoretically, a location can have multiple mappings, and some might require you to be in a specific activity when others don't)
     """
 
-    location_hash: int = attr.field()
+    location_hash: "DestinyLocationDefinition" = attr.field()
     activation_source: str = attr.field()
-    item_hash: int = attr.field()
-    objective_hash: int = attr.field()
-    activity_hash: int = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
+    objective_hash: "DestinyObjectiveDefinition" = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()

@@ -1,21 +1,12 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import (
-        EmailSubscriptionDefinition,
-        EmailViewDefinitionSetting,
-        GeneralUser,
-        GroupUserInfoCard,
-        IgnoreResponse,
-        UserInfoCard,
-        UserSearchResponseDetail,
-        UserToUserContext,
-    )
+    from bungio.models import BungieMembershipType, GroupUserInfoCard, IgnoreResponse
 
 
 @attr.define
@@ -31,7 +22,7 @@ class UserMembership(BaseModel):
         bungie_global_display_name_code: The bungie global display name code, if set.
     """
 
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
     membership_id: int = attr.field()
     display_name: str = attr.field()
     bungie_global_display_name: str = attr.field()
@@ -54,10 +45,10 @@ class CrossSaveUserMembership(BaseModel):
         bungie_global_display_name_code: The bungie global display name code, if set.
     """
 
-    cross_save_override: int = attr.field()
-    applicable_membership_types: list[int] = attr.field()
+    cross_save_override: "BungieMembershipType" = attr.field()
+    applicable_membership_types: list["BungieMembershipType"] = attr.field()
     is_public: bool = attr.field()
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
     membership_id: int = attr.field()
     display_name: str = attr.field()
     bungie_global_display_name: str = attr.field()
@@ -84,10 +75,10 @@ class UserInfoCard(BaseModel):
 
     supplemental_display_name: str = attr.field()
     icon_path: str = attr.field()
-    cross_save_override: int = attr.field()
-    applicable_membership_types: list[int] = attr.field()
+    cross_save_override: "BungieMembershipType" = attr.field()
+    applicable_membership_types: list["BungieMembershipType"] = attr.field()
     is_public: bool = attr.field()
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
     membership_id: int = attr.field()
     display_name: str = attr.field()
     bungie_global_display_name: str = attr.field()
@@ -218,9 +209,9 @@ class HardLinkedUserMembership(BaseModel):
         cross_save_overridden_membership_id: _No description given by bungie_
     """
 
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
     membership_id: int = attr.field()
-    cross_save_overridden_type: int = attr.field()
+    cross_save_overridden_type: "BungieMembershipType" = attr.field()
     cross_save_overridden_membership_id: int = attr.field()
 
 
@@ -313,7 +304,7 @@ class EmailOptInDefinition(BaseModel):
     """
 
     name: str = attr.field()
-    value: int = attr.field()
+    value: "OptInFlags" = attr.field()
     set_by_default: bool = attr.field()
     dependent_subscriptions: list["EmailSubscriptionDefinition"] = attr.field()
 
@@ -429,5 +420,5 @@ class EmailViewDefinitionSetting(BaseModel):
     name: str = attr.field()
     localization: Any = attr.field()
     set_by_default: bool = attr.field()
-    opt_in_aggregate_value: int = attr.field()
+    opt_in_aggregate_value: "OptInFlags" = attr.field()
     subscriptions: list["EmailSubscriptionDefinition"] = attr.field()

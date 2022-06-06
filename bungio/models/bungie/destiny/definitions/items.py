@@ -6,13 +6,13 @@ from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
-        DestinyDerivedItemDefinition,
         DestinyDisplayPropertiesDefinition,
-        DestinyEnergyCapacityEntry,
-        DestinyEnergyCostEntry,
-        DestinyItemTierTypeInfusionBlock,
-        DestinyParentItemOverride,
-        DestinyPlugRuleDefinition,
+        DestinyEnergyType,
+        DestinyEnergyTypeDefinition,
+        DestinyInventoryItemDefinition,
+        DestinyMaterialRequirementSetDefinition,
+        PlugAvailabilityMode,
+        PlugUiStyles,
     )
 
 
@@ -115,15 +115,15 @@ class DestinyItemPlugDefinition(BaseModel):
     plug_category_identifier: str = attr.field()
     plug_category_hash: int = attr.field()
     on_action_recreate_self: bool = attr.field()
-    insertion_material_requirement_hash: int = attr.field()
-    preview_item_override_hash: int = attr.field()
-    enabled_material_requirement_hash: int = attr.field()
+    insertion_material_requirement_hash: "DestinyMaterialRequirementSetDefinition" = attr.field()
+    preview_item_override_hash: "DestinyInventoryItemDefinition" = attr.field()
+    enabled_material_requirement_hash: "DestinyMaterialRequirementSetDefinition" = attr.field()
     enabled_rules: list["DestinyPlugRuleDefinition"] = attr.field()
     ui_plug_label: str = attr.field()
-    plug_style: int = attr.field()
-    plug_availability: int = attr.field()
+    plug_style: "PlugUiStyles" = attr.field()
+    plug_availability: "PlugAvailabilityMode" = attr.field()
     alternate_ui_plug_label: str = attr.field()
-    alternate_plug_style: int = attr.field()
+    alternate_plug_style: "PlugUiStyles" = attr.field()
     is_dummy_plug: bool = attr.field()
     parent_item_override: "DestinyParentItemOverride" = attr.field()
     energy_capacity: "DestinyEnergyCapacityEntry" = attr.field()
@@ -168,8 +168,8 @@ class DestinyEnergyCapacityEntry(BaseModel):
     """
 
     capacity_value: int = attr.field()
-    energy_type_hash: int = attr.field()
-    energy_type: int = attr.field()
+    energy_type_hash: "DestinyEnergyTypeDefinition" = attr.field()
+    energy_type: "DestinyEnergyType" = attr.field()
 
 
 @attr.define
@@ -184,5 +184,5 @@ class DestinyEnergyCostEntry(BaseModel):
     """
 
     energy_cost: int = attr.field()
-    energy_type_hash: int = attr.field()
-    energy_type: int = attr.field()
+    energy_type_hash: "DestinyEnergyTypeDefinition" = attr.field()
+    energy_type: "DestinyEnergyType" = attr.field()

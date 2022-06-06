@@ -1,18 +1,8 @@
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
-
-if TYPE_CHECKING:
-    from bungio.models import (
-        ContentPreview,
-        ContentTypeDefaultValue,
-        ContentTypeProperty,
-        ContentTypePropertySection,
-        TagMetadataDefinition,
-        TagMetadataItem,
-    )
 
 
 @attr.define
@@ -137,7 +127,7 @@ class ContentTypeProperty(BaseModel):
     rss_attribute: str = attr.field()
     visible_dependency: str = attr.field()
     visible_on: str = attr.field()
-    datatype: int = attr.field()
+    datatype: "ContentPropertyDataTypeEnum" = attr.field()
     attributes: Any = attr.field()
     child_properties: list["ContentTypeProperty"] = attr.field()
     content_type_allowed: str = attr.field()

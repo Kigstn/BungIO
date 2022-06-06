@@ -6,14 +6,17 @@ from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
+        DestinyCollectibleDefinition,
         DestinyDisplayPropertiesDefinition,
-        DestinyPresentationNodeChildEntry,
-        DestinyPresentationNodeChildrenBlock,
-        DestinyPresentationNodeCollectibleChildEntry,
-        DestinyPresentationNodeCraftableChildEntry,
-        DestinyPresentationNodeMetricChildEntry,
-        DestinyPresentationNodeRecordChildEntry,
-        DestinyPresentationNodeRequirementsBlock,
+        DestinyInventoryItemDefinition,
+        DestinyMetricDefinition,
+        DestinyObjectiveDefinition,
+        DestinyPresentationDisplayStyle,
+        DestinyPresentationNodeType,
+        DestinyPresentationScreenStyle,
+        DestinyRecordDefinition,
+        DestinyScope,
+        DestinyTraitDefinition,
     )
 
 
@@ -32,10 +35,10 @@ class DestinyPresentationNodeBaseDefinition(BaseModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    presentation_node_type: int = attr.field()
+    presentation_node_type: "DestinyPresentationNodeType" = attr.field()
     trait_ids: list[str] = attr.field()
-    trait_hashes: list[int] = attr.field()
-    parent_node_hashes: list[int] = attr.field()
+    trait_hashes: list["DestinyTraitDefinition"] = attr.field()
+    parent_node_hashes: list["DestinyPresentationNodeDefinition"] = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
@@ -58,10 +61,10 @@ class DestinyScoredPresentationNodeBaseDefinition(BaseModel):
     """
 
     max_category_record_score: int = attr.field()
-    presentation_node_type: int = attr.field()
+    presentation_node_type: "DestinyPresentationNodeType" = attr.field()
     trait_ids: list[str] = attr.field()
-    trait_hashes: list[int] = attr.field()
-    parent_node_hashes: list[int] = attr.field()
+    trait_hashes: list["DestinyTraitDefinition"] = attr.field()
+    parent_node_hashes: list["DestinyPresentationNodeDefinition"] = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
@@ -98,20 +101,20 @@ class DestinyPresentationNodeDefinition(BaseModel):
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     original_icon: str = attr.field()
     root_view_icon: str = attr.field()
-    node_type: int = attr.field()
-    scope: int = attr.field()
-    objective_hash: int = attr.field()
-    completion_record_hash: int = attr.field()
+    node_type: "DestinyPresentationNodeType" = attr.field()
+    scope: "DestinyScope" = attr.field()
+    objective_hash: "DestinyObjectiveDefinition" = attr.field()
+    completion_record_hash: "DestinyRecordDefinition" = attr.field()
     children: "DestinyPresentationNodeChildrenBlock" = attr.field()
-    display_style: int = attr.field()
-    screen_style: int = attr.field()
+    display_style: "DestinyPresentationDisplayStyle" = attr.field()
+    screen_style: "DestinyPresentationScreenStyle" = attr.field()
     requirements: "DestinyPresentationNodeRequirementsBlock" = attr.field()
     disable_child_subscreen_navigation: bool = attr.field()
     max_category_record_score: int = attr.field()
-    presentation_node_type: int = attr.field()
+    presentation_node_type: "DestinyPresentationNodeType" = attr.field()
     trait_ids: list[str] = attr.field()
-    trait_hashes: list[int] = attr.field()
-    parent_node_hashes: list[int] = attr.field()
+    trait_hashes: list["DestinyTraitDefinition"] = attr.field()
+    parent_node_hashes: list["DestinyPresentationNodeDefinition"] = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
@@ -159,7 +162,7 @@ class DestinyPresentationNodeChildEntry(BaseModel):
         node_display_priority: Use this value to sort the presentation node children in ascending order.
     """
 
-    presentation_node_hash: int = attr.field()
+    presentation_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
     node_display_priority: int = attr.field()
 
 
@@ -173,7 +176,7 @@ class DestinyPresentationNodeCollectibleChildEntry(BaseModel):
         node_display_priority: Use this value to sort the presentation node children in ascending order.
     """
 
-    collectible_hash: int = attr.field()
+    collectible_hash: "DestinyCollectibleDefinition" = attr.field()
     node_display_priority: int = attr.field()
 
 
@@ -200,9 +203,9 @@ class DestinyPresentationChildBlock(BaseModel):
         display_style: _No description given by bungie_
     """
 
-    presentation_node_type: int = attr.field()
-    parent_presentation_node_hashes: list[int] = attr.field()
-    display_style: int = attr.field()
+    presentation_node_type: "DestinyPresentationNodeType" = attr.field()
+    parent_presentation_node_hashes: list["DestinyPresentationNodeDefinition"] = attr.field()
+    display_style: "DestinyPresentationDisplayStyle" = attr.field()
 
 
 @attr.define
@@ -215,7 +218,7 @@ class DestinyPresentationNodeRecordChildEntry(BaseModel):
         node_display_priority: Use this value to sort the presentation node children in ascending order.
     """
 
-    record_hash: int = attr.field()
+    record_hash: "DestinyRecordDefinition" = attr.field()
     node_display_priority: int = attr.field()
 
 
@@ -229,7 +232,7 @@ class DestinyPresentationNodeMetricChildEntry(BaseModel):
         node_display_priority: Use this value to sort the presentation node children in ascending order.
     """
 
-    metric_hash: int = attr.field()
+    metric_hash: "DestinyMetricDefinition" = attr.field()
     node_display_priority: int = attr.field()
 
 
@@ -243,5 +246,5 @@ class DestinyPresentationNodeCraftableChildEntry(BaseModel):
         node_display_priority: Use this value to sort the presentation node children in ascending order.
     """
 
-    craftable_item_hash: int = attr.field()
+    craftable_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     node_display_priority: int = attr.field()

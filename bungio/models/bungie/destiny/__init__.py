@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 import attr
 
@@ -7,12 +7,15 @@ from bungio.models.base import BaseEnum, BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
+        DestinyActivityDefinition,
+        DestinyActivityModifierDefinition,
         DestinyChallengeStatus,
-        DestinyEquipItemResult,
+        DestinyInventoryItemDefinition,
         DestinyMaterialRequirement,
-        DestinyProgressionResetEntry,
-        DestinyStat,
-        DestinyTalentNodeStatBlock,
+        DestinyProgressionDefinition,
+        DestinyStatDefinition,
+        DestinyUnlockDefinition,
+        PlatformErrorCodes,
     )
 
 
@@ -38,7 +41,7 @@ class DestinyProgression(BaseModel):
         reward_item_states: Information about historical rewards for this progression, if there is any data for it.
     """
 
-    progression_hash: int = attr.field()
+    progression_hash: "DestinyProgressionDefinition" = attr.field()
     daily_progress: int = attr.field()
     daily_limit: int = attr.field()
     weekly_progress: int = attr.field()
@@ -51,7 +54,7 @@ class DestinyProgression(BaseModel):
     next_level_at: int = attr.field()
     current_reset_count: int = attr.field()
     season_resets: list["DestinyProgressionResetEntry"] = attr.field()
-    reward_item_states: list[int] = attr.field()
+    reward_item_states: list["DestinyProgressionRewardItemState"] = attr.field()
 
 
 @attr.define
@@ -135,7 +138,7 @@ class DestinyItemQuantity(BaseModel):
         has_conditional_visibility: Indicates that this item quantity may be conditionally shown or hidden, based on various sources of state. For example: server flags, account state, or character progress.
     """
 
-    item_hash: int = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
     item_instance_id: int = attr.field()
     quantity: int = attr.field()
     has_conditional_visibility: bool = attr.field()
@@ -1331,7 +1334,7 @@ class DestinyActivity(BaseModel):
         loadout_requirement_index: If returned, this is the index into the DestinyActivityDefinition's "loadouts" property, indicating the currently active loadout requirements.
     """
 
-    activity_hash: int = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
     is_new: bool = attr.field()
     can_lead: bool = attr.field()
     can_join: bool = attr.field()
@@ -1339,9 +1342,9 @@ class DestinyActivity(BaseModel):
     is_visible: bool = attr.field()
     display_level: int = attr.field()
     recommended_light: int = attr.field()
-    difficulty_tier: int = attr.field()
+    difficulty_tier: "DestinyActivityDifficultyTier" = attr.field()
     challenges: list["DestinyChallengeStatus"] = attr.field()
-    modifier_hashes: list[int] = attr.field()
+    modifier_hashes: list["DestinyActivityModifierDefinition"] = attr.field()
     boolean_activity_options: Any = attr.field()
     loadout_requirement_index: int = attr.field()
 
@@ -1379,7 +1382,7 @@ class DestinyStat(BaseModel):
         value: The current value of the Stat.
     """
 
-    stat_hash: int = attr.field()
+    stat_hash: "DestinyStatDefinition" = attr.field()
     value: int = attr.field()
 
 
@@ -1422,7 +1425,7 @@ class DestinyTalentNode(BaseModel):
 
     node_index: int = attr.field()
     node_hash: int = attr.field()
-    state: int = attr.field()
+    state: "DestinyTalentNodeState" = attr.field()
     is_activated: bool = attr.field()
     step_index: int = attr.field()
     materials_to_upgrade: list["DestinyMaterialRequirement"] = attr.field()
@@ -1539,7 +1542,7 @@ class DestinyUnlockStatus(BaseModel):
         is_set: Whether the unlock flag is set.
     """
 
-    unlock_hash: int = attr.field()
+    unlock_hash: "DestinyUnlockDefinition" = attr.field()
     is_set: bool = attr.field()
 
 
@@ -1613,4 +1616,4 @@ class DestinyEquipItemResult(BaseModel):
     """
 
     item_instance_id: int = attr.field()
-    equip_status: int = attr.field()
+    equip_status: "PlatformErrorCodes" = attr.field()

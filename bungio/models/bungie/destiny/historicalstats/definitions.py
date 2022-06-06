@@ -1,6 +1,11 @@
+from typing import TYPE_CHECKING
+
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import DestinyMedalTierDefinition
 
 
 class DestinyActivityModeType(BaseEnum):
@@ -199,19 +204,19 @@ class DestinyHistoricalStatsDefinition(BaseModel):
     """
 
     stat_id: str = attr.field()
-    group: int = attr.field()
-    period_types: list[int] = attr.field()
-    modes: list[int] = attr.field()
-    category: int = attr.field()
+    group: "DestinyStatsGroupType" = attr.field()
+    period_types: list["PeriodType"] = attr.field()
+    modes: list["DestinyActivityModeType"] = attr.field()
+    category: "DestinyStatsCategoryType" = attr.field()
     stat_name: str = attr.field()
     stat_name_abbr: str = attr.field()
     stat_description: str = attr.field()
-    unit_type: int = attr.field()
+    unit_type: "UnitType" = attr.field()
     icon_image: str = attr.field()
     merge_method: int = attr.field()
     unit_label: str = attr.field()
     weight: int = attr.field()
-    medal_tier_hash: int = attr.field()
+    medal_tier_hash: "DestinyMedalTierDefinition" = attr.field()
 
 
 class DestinyStatsGroupType(BaseEnum):

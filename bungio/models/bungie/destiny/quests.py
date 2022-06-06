@@ -5,7 +5,12 @@ import attr
 from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyObjectiveProgress
+    from bungio.models import (
+        DestinyActivityDefinition,
+        DestinyDestinationDefinition,
+        DestinyInventoryItemDefinition,
+        DestinyObjectiveDefinition,
+    )
 
 
 @attr.define
@@ -23,9 +28,9 @@ class DestinyObjectiveProgress(BaseModel):
         visible: If this is true, the objective is visible in-game. Otherwise, it's not yet visible to the player. Up to you if you want to honor this property.
     """
 
-    objective_hash: int = attr.field()
-    destination_hash: int = attr.field()
-    activity_hash: int = attr.field()
+    objective_hash: "DestinyObjectiveDefinition" = attr.field()
+    destination_hash: "DestinyDestinationDefinition" = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
     progress: int = attr.field()
     completion_value: int = attr.field()
     complete: bool = attr.field()
@@ -49,8 +54,8 @@ class DestinyQuestStatus(BaseModel):
         vendor_hash: If the quest has a related Vendor that you should talk to in order to initiate the quest/earn rewards/continue the quest, this will be the hash identifier of that Vendor. Look it up its DestinyVendorDefinition.
     """
 
-    quest_hash: int = attr.field()
-    step_hash: int = attr.field()
+    quest_hash: "DestinyInventoryItemDefinition" = attr.field()
+    step_hash: "DestinyInventoryItemDefinition" = attr.field()
     step_objectives: list["DestinyObjectiveProgress"] = attr.field()
     tracked: bool = attr.field()
     item_instance_id: int = attr.field()

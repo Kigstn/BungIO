@@ -5,7 +5,15 @@ import attr
 from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import CoreSetting, Destiny2CoreSettings, EmailSettings
+    from bungio.models import (
+        DestinyInventoryItemDefinition,
+        DestinyPresentationNodeDefinition,
+        DestinyProgressionDefinition,
+        DestinySeasonDefinition,
+        DestinySocketTypeDefinition,
+        DestinyVendorDefinition,
+        EmailSettings,
+    )
 
 
 @attr.define
@@ -129,28 +137,28 @@ class Destiny2CoreSettings(BaseModel):
         past_season_hashes: _No description given by bungie_
     """
 
-    collection_root_node: int = attr.field()
-    badges_root_node: int = attr.field()
-    records_root_node: int = attr.field()
-    medals_root_node: int = attr.field()
-    metrics_root_node: int = attr.field()
-    active_triumphs_root_node_hash: int = attr.field()
-    active_seals_root_node_hash: int = attr.field()
-    legacy_triumphs_root_node_hash: int = attr.field()
-    legacy_seals_root_node_hash: int = attr.field()
-    medals_root_node_hash: int = attr.field()
-    exotic_catalysts_root_node_hash: int = attr.field()
-    lore_root_node_hash: int = attr.field()
-    crafting_root_node_hash: int = attr.field()
-    current_rank_progression_hashes: list[int] = attr.field()
-    insert_plug_free_protected_plug_item_hashes: list[int] = attr.field()
-    insert_plug_free_blocked_socket_type_hashes: list[int] = attr.field()
+    collection_root_node: "DestinyPresentationNodeDefinition" = attr.field()
+    badges_root_node: "DestinyPresentationNodeDefinition" = attr.field()
+    records_root_node: "DestinyPresentationNodeDefinition" = attr.field()
+    medals_root_node: "DestinyPresentationNodeDefinition" = attr.field()
+    metrics_root_node: "DestinyPresentationNodeDefinition" = attr.field()
+    active_triumphs_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
+    active_seals_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
+    legacy_triumphs_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
+    legacy_seals_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
+    medals_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
+    exotic_catalysts_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
+    lore_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
+    crafting_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
+    current_rank_progression_hashes: list["DestinyProgressionDefinition"] = attr.field()
+    insert_plug_free_protected_plug_item_hashes: list["DestinyInventoryItemDefinition"] = attr.field()
+    insert_plug_free_blocked_socket_type_hashes: list["DestinySocketTypeDefinition"] = attr.field()
     undiscovered_collectible_image: str = attr.field()
     ammo_type_heavy_icon: str = attr.field()
     ammo_type_special_icon: str = attr.field()
     ammo_type_primary_icon: str = attr.field()
-    current_seasonal_artifact_hash: int = attr.field()
-    current_season_hash: int = attr.field()
-    seasonal_challenges_presentation_node_hash: int = attr.field()
-    future_season_hashes: list[int] = attr.field()
-    past_season_hashes: list[int] = attr.field()
+    current_seasonal_artifact_hash: "DestinyVendorDefinition" = attr.field()
+    current_season_hash: "DestinySeasonDefinition" = attr.field()
+    seasonal_challenges_presentation_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
+    future_season_hashes: list["DestinySeasonDefinition"] = attr.field()
+    past_season_hashes: list["DestinySeasonDefinition"] = attr.field()

@@ -7,15 +7,13 @@ from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
+        BungieMembershipType,
         DestinyBaseItemComponentSetOfuint32,
-        DestinyErrorProfile,
         DestinyItemComponent,
         DestinyItemComponentSetOfint32,
         DestinyItemComponentSetOfint64,
         DestinyItemComponentSetOfuint32,
-        DestinyItemResponse,
         DestinyPlatformSilverComponent,
-        DestinyProfileUserInfoCard,
         DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent,
         DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent,
         DictionaryComponentResponseOfint64AndDestinyCharacterComponent,
@@ -35,6 +33,7 @@ if TYPE_CHECKING:
         DictionaryComponentResponseOfuint32AndDestinyVendorComponent,
         DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComponent,
         DictionaryComponentResponseOfuint32AndPublicDestinyVendorSaleItemSetComponent,
+        PlatformErrorCodes,
         SingleComponentResponseOfDestinyCharacterActivitiesComponent,
         SingleComponentResponseOfDestinyCharacterComponent,
         SingleComponentResponseOfDestinyCharacterProgressionComponent,
@@ -118,10 +117,10 @@ class DestinyProfileUserInfoCard(BaseModel):
     unpaired_game_versions: int = attr.field()
     supplemental_display_name: str = attr.field()
     icon_path: str = attr.field()
-    cross_save_override: int = attr.field()
-    applicable_membership_types: list[int] = attr.field()
+    cross_save_override: "BungieMembershipType" = attr.field()
+    applicable_membership_types: list["BungieMembershipType"] = attr.field()
     is_public: bool = attr.field()
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
     membership_id: int = attr.field()
     display_name: str = attr.field()
     bungie_global_display_name: str = attr.field()
@@ -138,7 +137,7 @@ class DestinyErrorProfile(BaseModel):
         info_card: Basic info about the account that failed. Don't expect anything other than membership ID, Membership Type, and displayName to be populated.
     """
 
-    error_code: int = attr.field()
+    error_code: "PlatformErrorCodes" = attr.field()
     info_card: "UserInfoCard" = attr.field()
 
 

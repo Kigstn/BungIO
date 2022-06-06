@@ -1,8 +1,11 @@
-from typing import Any
+from typing import TYPE_CHECKING
 
 import attr
 
 from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import DestinyPlugSetDefinition
 
 
 @attr.define
@@ -14,4 +17,4 @@ class DestinyPlugSetsComponent(BaseModel):
         plugs: The shared list of plugs for each relevant PlugSet, keyed by the hash identifier of the PlugSet (DestinyPlugSetDefinition).
     """
 
-    plugs: Any = attr.field()
+    plugs: "DestinyPlugSetDefinition" = attr.field()

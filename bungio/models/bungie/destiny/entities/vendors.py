@@ -7,10 +7,14 @@ from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
+        DestinyInventoryItemDefinition,
         DestinyItemQuantity,
         DestinyProgression,
+        DestinyUnlockDefinition,
         DestinyUnlockStatus,
-        DestinyVendorCategory,
+        DestinyVendorDefinition,
+        DestinyVendorItemState,
+        VendorItemStatus,
     )
 
 
@@ -33,7 +37,7 @@ class DestinyVendorComponent(BaseModel):
     progression: "DestinyProgression" = attr.field()
     vendor_location_index: int = attr.field()
     seasonal_rank: int = attr.field()
-    vendor_hash: int = attr.field()
+    vendor_hash: "DestinyVendorDefinition" = attr.field()
     next_refresh_date: datetime.datetime = attr.field()
     enabled: bool = attr.field()
 
@@ -85,15 +89,15 @@ class DestinyVendorSaleItemComponent(BaseModel):
         api_purchasable: If true, this item can be purchased through the Bungie.net API.
     """
 
-    sale_status: int = attr.field()
-    required_unlocks: list[int] = attr.field()
+    sale_status: "VendorItemStatus" = attr.field()
+    required_unlocks: list["DestinyUnlockDefinition"] = attr.field()
     unlock_statuses: list["DestinyUnlockStatus"] = attr.field()
     failure_indexes: list[int] = attr.field()
-    augments: int = attr.field()
+    augments: "DestinyVendorItemState" = attr.field()
     item_value_visibility: list[bool] = attr.field()
     vendor_item_index: int = attr.field()
-    item_hash: int = attr.field()
-    override_style_item_hash: int = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
+    override_style_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     quantity: int = attr.field()
     costs: list["DestinyItemQuantity"] = attr.field()
     override_next_refresh_date: datetime.datetime = attr.field()

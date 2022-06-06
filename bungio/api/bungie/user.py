@@ -3,6 +3,8 @@ from typing import Any, Optional
 import attr
 
 from bungio.models import (
+    BungieCredentialType,
+    BungieMembershipType,
     GeneralUser,
     GetCredentialTypesForAccountResponse,
     HardLinkedUserMembership,
@@ -45,7 +47,7 @@ class UserRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_sanitized_platform_display_names(membership_id=membership_id, auth=auth)
-        return response["Result"]
+        return Any.from_dict(data=response, client=self._client)
 
     async def get_credential_types_for_target_account(
         self, membership_id: int, auth: Optional[AuthData] = None
@@ -84,7 +86,7 @@ class UserRouteInterface(BaseModel):
         return [UserTheme.from_dict(data=entry, client=self._client) for entry in response["Result"]]
 
     async def get_membership_data_by_id(
-        self, membership_id: int, membership_type: int, auth: Optional[AuthData] = None
+        self, membership_id: int, membership_type: BungieMembershipType, auth: Optional[AuthData] = None
     ) -> UserMembershipData:
         """
         Returns a list of accounts associated with the supplied membership ID and membership type. This will include all linked accounts (even when hidden) if supplied credentials permit it.
@@ -99,7 +101,7 @@ class UserRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_membership_data_by_id(
-            membership_id=membership_id, membership_type=membership_type, auth=auth
+            membership_id=membership_id, membership_type=membership_type.value, auth=auth
         )
         return UserMembershipData.from_dict(data=response, client=self._client)
 
@@ -121,7 +123,7 @@ class UserRouteInterface(BaseModel):
         return UserMembershipData.from_dict(data=response, client=self._client)
 
     async def get_membership_from_hard_linked_credential(
-        self, credential: str, cr_type: int, auth: Optional[AuthData] = None
+        self, credential: str, cr_type: BungieCredentialType, auth: Optional[AuthData] = None
     ) -> HardLinkedUserMembership:
         """
         Gets any hard linked membership given a credential. Only works for credentials that are public (just SteamID64 right now). Cross Save aware.
@@ -136,7 +138,7 @@ class UserRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_membership_from_hard_linked_credential(
-            credential=credential, cr_type=cr_type, auth=auth
+            credential=credential, cr_type=cr_type.value, auth=auth
         )
         return HardLinkedUserMembership.from_dict(data=response, client=self._client)
 

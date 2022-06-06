@@ -6,7 +6,7 @@ import attr
 from bungio.models.base import BaseEnum, BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import ApplicationDeveloper, Datapoint, Series, UserInfoCard
+    from bungio.models import UserInfoCard
 
 
 class ApplicationScopes(BaseEnum):
@@ -114,7 +114,7 @@ class Application(BaseModel):
     link: str = attr.field()
     scope: int = attr.field()
     origin: str = attr.field()
-    status: int = attr.field()
+    status: "ApplicationStatus" = attr.field()
     creation_date: datetime.datetime = attr.field()
     status_changed: datetime.datetime = attr.field()
     first_published: datetime.datetime = attr.field()
@@ -150,7 +150,7 @@ class ApplicationDeveloper(BaseModel):
         user: _No description given by bungie_
     """
 
-    role: int = attr.field()
+    role: "DeveloperRole" = attr.field()
     api_eula_version: int = attr.field()
     user: "UserInfoCard" = attr.field()
 

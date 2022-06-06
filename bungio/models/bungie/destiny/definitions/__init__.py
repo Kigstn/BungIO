@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 import attr
 
@@ -7,106 +7,71 @@ from bungio.models.base import BaseEnum, BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
+        BucketCategory,
+        BucketScope,
+        BungieMembershipType,
+        DamageType,
         DateRange,
-        DestinyActivityChallengeDefinition,
-        DestinyActivityGraphListEntryDefinition,
-        DestinyActivityGuidedBlockDefinition,
-        DestinyActivityInsertionPointDefinition,
-        DestinyActivityLoadoutRequirement,
-        DestinyActivityLoadoutRequirementSet,
-        DestinyActivityMatchmakingBlockDefinition,
-        DestinyActivityModifierReferenceDefinition,
-        DestinyActivityPlaylistItemDefinition,
-        DestinyActivityRewardDefinition,
-        DestinyActivityUnlockStringDefinition,
+        DestinyActivityGraphDefinition,
+        DestinyActivityModeCategory,
+        DestinyActivityModeType,
+        DestinyActivityModifierDefinition,
+        DestinyActivityNavPointType,
+        DestinyAmmunitionType,
         DestinyAnimationReference,
-        DestinyArrangementRegionFilterDefinition,
-        DestinyArtDyeReference,
-        DestinyBubbleDefinition,
+        DestinyArtifactDefinition,
+        DestinyBreakerType,
+        DestinyBreakerTypeDefinition,
+        DestinyClass,
+        DestinyCollectibleDefinition,
         DestinyColor,
         DestinyDerivedItemCategoryDefinition,
-        DestinyDestinationBubbleSettingDefinition,
-        DestinyDisplayCategoryDefinition,
         DestinyDisplayPropertiesDefinition,
         DestinyEnvironmentLocationMapping,
-        DestinyEquippingBlockDefinition,
-        DestinyFactionVendorDefinition,
-        DestinyGearArtArrangementReference,
+        DestinyGatingScope,
+        DestinyGender,
         DestinyIconSequenceDefinition,
-        DestinyItemActionBlockDefinition,
-        DestinyItemActionRequiredItemDefinition,
-        DestinyItemCraftingBlockBonusPlugDefinition,
-        DestinyItemCraftingBlockDefinition,
-        DestinyItemCreationEntryLevelDefinition,
-        DestinyItemGearsetBlockDefinition,
-        DestinyItemIntrinsicSocketEntryDefinition,
-        DestinyItemInventoryBlockDefinition,
-        DestinyItemInvestmentStatDefinition,
-        DestinyItemMetricBlockDefinition,
-        DestinyItemObjectiveBlockDefinition,
-        DestinyItemPerkEntryDefinition,
         DestinyItemPlugDefinition,
-        DestinyItemPreviewBlockDefinition,
-        DestinyItemQualityBlockDefinition,
         DestinyItemQuantity,
-        DestinyItemSackBlockDefinition,
-        DestinyItemSetBlockDefinition,
-        DestinyItemSetBlockEntryDefinition,
-        DestinyItemSocketBlockDefinition,
-        DestinyItemSocketCategoryDefinition,
-        DestinyItemSocketEntryDefinition,
-        DestinyItemSocketEntryPlugItemDefinition,
-        DestinyItemSourceBlockDefinition,
+        DestinyItemSortType,
         DestinyItemSourceDefinition,
-        DestinyItemStatBlockDefinition,
-        DestinyItemSummaryBlockDefinition,
-        DestinyItemTalentGridBlockDefinition,
-        DestinyItemTooltipNotification,
-        DestinyItemTranslationBlockDefinition,
-        DestinyItemValueBlockDefinition,
-        DestinyItemVendorSourceReference,
-        DestinyItemVersionDefinition,
-        DestinyLocationReleaseDefinition,
-        DestinyMaterialRequirement,
-        DestinyNodeActivationRequirement,
-        DestinyNodeSocketReplaceResponse,
-        DestinyNodeStepDefinition,
-        DestinyObjectiveDisplayProperties,
-        DestinyObjectivePerkEntryDefinition,
-        DestinyObjectiveStatEntryDefinition,
-        DestinyPlugItemCraftingRequirements,
-        DestinyPlugItemCraftingUnlockRequirement,
-        DestinyProgressionDisplayPropertiesDefinition,
-        DestinyProgressionRewardDefinition,
-        DestinyProgressionRewardItemQuantity,
-        DestinyProgressionStepDefinition,
-        DestinyStatDisplayDefinition,
-        DestinyTalentNodeCategory,
-        DestinyTalentNodeDefinition,
-        DestinyTalentNodeExclusiveSetDefinition,
-        DestinyTalentNodeStepGroups,
-        DestinyVendorAcceptedItemDefinition,
-        DestinyVendorActionDefinition,
-        DestinyVendorCategoryEntryDefinition,
-        DestinyVendorCategoryOverlayDefinition,
-        DestinyVendorDisplayPropertiesDefinition,
-        DestinyVendorGroupReference,
-        DestinyVendorInteractionDefinition,
-        DestinyVendorInteractionReplyDefinition,
-        DestinyVendorInteractionSackEntryDefinition,
-        DestinyVendorInventoryFlyoutBucketDefinition,
-        DestinyVendorInventoryFlyoutDefinition,
-        DestinyVendorItemDefinition,
-        DestinyVendorItemQuantity,
-        DestinyVendorItemSocketOverride,
+        DestinyItemSubType,
+        DestinyItemTierTypeDefinition,
+        DestinyItemType,
+        DestinyLoreDefinition,
+        DestinyObjectiveGrantStyle,
+        DestinyObjectiveUiStyle,
+        DestinyPlugSetDefinition,
+        DestinyPowerCapDefinition,
+        DestinyPresentationNodeDefinition,
+        DestinyProgressionLevelRequirementDefinition,
+        DestinyProgressionRewardItemAcquisitionBehavior,
+        DestinyProgressionScope,
+        DestinyProgressionStepDisplayEffect,
+        DestinyRace,
+        DestinySeasonDefinition,
+        DestinySocketCategoryDefinition,
+        DestinySocketTypeDefinition,
+        DestinyStatAggregationType,
+        DestinyStatCategory,
+        DestinyUnlockValueUIStyle,
+        DestinyVendorInteractionRewardSelection,
+        DestinyVendorItemRefundPolicy,
         DestinyVendorLocationDefinition,
-        DestinyVendorRequirementDisplayEntryDefinition,
-        DestinyVendorSaleItemActionBlockDefinition,
-        DestinyVendorServiceDefinition,
+        DestinyVendorProgressionType,
+        DestinyVendorReplyType,
         DyeReference,
+        EquippingItemBlockAttributes,
         HyperlinkReference,
         InterpolationPoint,
+        ItemLocation,
+        ItemPerkVisibility,
         SearchResultOfDestinyEntitySearchResultItem,
+        SocketPlugSources,
+        SpecialItemType,
+        TierType,
+        VendorDisplayCategorySortOrder,
+        VendorInteractionType,
     )
 
 
@@ -148,12 +113,12 @@ class DestinyProgressionDefinition(BaseModel):
     """
 
     display_properties: "DestinyProgressionDisplayPropertiesDefinition" = attr.field()
-    scope: int = attr.field()
+    scope: "DestinyProgressionScope" = attr.field()
     repeat_last_step: bool = attr.field()
     source: str = attr.field()
     steps: list["DestinyProgressionStepDefinition"] = attr.field()
     visible: bool = attr.field()
-    faction_hash: int = attr.field()
+    faction_hash: "DestinyFactionDefinition" = attr.field()
     color: "DestinyColor" = attr.field()
     rank_icon: str = attr.field()
     reward_items: list["DestinyProgressionRewardItemQuantity"] = attr.field()
@@ -200,7 +165,7 @@ class DestinyProgressionStepDefinition(BaseModel):
     """
 
     step_name: str = attr.field()
-    display_effect_type: int = attr.field()
+    display_effect_type: "DestinyProgressionStepDisplayEffect" = attr.field()
     progress_total: int = attr.field()
     reward_items: list["DestinyItemQuantity"] = attr.field()
     icon: str = attr.field()
@@ -280,7 +245,7 @@ class DestinyInventoryItemDefinition(BaseModel):
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     tooltip_notifications: list["DestinyItemTooltipNotification"] = attr.field()
-    collectible_hash: int = attr.field()
+    collectible_hash: "DestinyCollectibleDefinition" = attr.field()
     icon_watermark: str = attr.field()
     icon_watermark_shelved: str = attr.field()
     secondary_icon: str = attr.field()
@@ -316,26 +281,26 @@ class DestinyInventoryItemDefinition(BaseModel):
     talent_grid: "DestinyItemTalentGridBlockDefinition" = attr.field()
     investment_stats: list["DestinyItemInvestmentStatDefinition"] = attr.field()
     perks: list["DestinyItemPerkEntryDefinition"] = attr.field()
-    lore_hash: int = attr.field()
-    summary_item_hash: int = attr.field()
+    lore_hash: "DestinyLoreDefinition" = attr.field()
+    summary_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     animations: list["DestinyAnimationReference"] = attr.field()
     allow_actions: bool = attr.field()
     links: list["HyperlinkReference"] = attr.field()
     does_postmaster_pull_have_side_effects: bool = attr.field()
     non_transferrable: bool = attr.field()
-    item_category_hashes: list[int] = attr.field()
-    special_item_type: int = attr.field()
-    item_type: int = attr.field()
-    item_sub_type: int = attr.field()
-    class_type: int = attr.field()
-    breaker_type: int = attr.field()
-    breaker_type_hash: int = attr.field()
+    item_category_hashes: list["DestinyItemCategoryDefinition"] = attr.field()
+    special_item_type: "SpecialItemType" = attr.field()
+    item_type: "DestinyItemType" = attr.field()
+    item_sub_type: "DestinyItemSubType" = attr.field()
+    class_type: "DestinyClass" = attr.field()
+    breaker_type: "DestinyBreakerType" = attr.field()
+    breaker_type_hash: "DestinyBreakerTypeDefinition" = attr.field()
     equippable: bool = attr.field()
-    damage_type_hashes: list[int] = attr.field()
-    damage_types: list[int] = attr.field()
-    default_damage_type: int = attr.field()
-    default_damage_type_hash: int = attr.field()
-    season_hash: int = attr.field()
+    damage_type_hashes: list["DestinyDamageTypeDefinition"] = attr.field()
+    damage_types: list["DamageType"] = attr.field()
+    default_damage_type: "DamageType" = attr.field()
+    default_damage_type_hash: "DestinyDamageTypeDefinition" = attr.field()
+    season_hash: "DestinySeasonDefinition" = attr.field()
     is_wrapper: bool = attr.field()
     trait_ids: list[str] = attr.field()
     trait_hashes: list[int] = attr.field()
@@ -408,7 +373,7 @@ class DestinyItemActionRequiredItemDefinition(BaseModel):
     """
 
     count: int = attr.field()
-    item_hash: int = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
     delete_on_action: bool = attr.field()
 
 
@@ -423,7 +388,7 @@ class DestinyProgressionRewardDefinition(BaseModel):
         apply_throttles: If true, the game's internal mechanisms to throttle progression should be applied.
     """
 
-    progression_mapping_hash: int = attr.field()
+    progression_mapping_hash: "DestinyProgressionMappingDefinition" = attr.field()
     amount: int = attr.field()
     apply_throttles: bool = attr.field()
 
@@ -461,10 +426,10 @@ class DestinyItemCraftingBlockDefinition(BaseModel):
         bonus_plugs: A list of 'bonus' socket plugs that may be available if certain requirements are met.
     """
 
-    output_item_hash: int = attr.field()
-    required_socket_type_hashes: list[int] = attr.field()
+    output_item_hash: "DestinyInventoryItemDefinition" = attr.field()
+    required_socket_type_hashes: list["DestinySocketTypeDefinition"] = attr.field()
     failed_requirement_strings: list[str] = attr.field()
-    base_material_requirements: int = attr.field()
+    base_material_requirements: "DestinyMaterialRequirementSetDefinition" = attr.field()
     bonus_plugs: list["DestinyItemCraftingBlockBonusPlugDefinition"] = attr.field()
 
 
@@ -478,8 +443,8 @@ class DestinyItemCraftingBlockBonusPlugDefinition(BaseModel):
         plug_item_hash: _No description given by bungie_
     """
 
-    socket_type_hash: int = attr.field()
-    plug_item_hash: int = attr.field()
+    socket_type_hash: "DestinySocketTypeDefinition" = attr.field()
+    plug_item_hash: "DestinyInventoryItemDefinition" = attr.field()
 
 
 @attr.define
@@ -513,7 +478,7 @@ class DestinyMaterialRequirement(BaseModel):
         omit_from_requirements: If True, this requirement is "silent": don't bother showing it in a material requirements display. I mean, I'm not your mom: I'm not going to tell you you *can't* show it. But we won't show it in our UI.
     """
 
-    item_hash: int = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
     delete_on_action: bool = attr.field()
     count: int = attr.field()
     count_is_constant: bool = attr.field()
@@ -543,17 +508,17 @@ class DestinyItemInventoryBlockDefinition(BaseModel):
 
     stack_unique_label: str = attr.field()
     max_stack_size: int = attr.field()
-    bucket_type_hash: int = attr.field()
-    recovery_bucket_type_hash: int = attr.field()
-    tier_type_hash: int = attr.field()
+    bucket_type_hash: "DestinyInventoryBucketDefinition" = attr.field()
+    recovery_bucket_type_hash: "DestinyInventoryBucketDefinition" = attr.field()
+    tier_type_hash: "DestinyItemTierTypeDefinition" = attr.field()
     is_instance_item: bool = attr.field()
     tier_type_name: str = attr.field()
-    tier_type: int = attr.field()
+    tier_type: "TierType" = attr.field()
     expiration_tooltip: str = attr.field()
     expired_in_activity_message: str = attr.field()
     expired_in_orbit_message: str = attr.field()
     suppress_expiration_when_objectives_complete: bool = attr.field()
-    recipe_item_hash: int = attr.field()
+    recipe_item_hash: "DestinyInventoryItemDefinition" = attr.field()
 
 
 @attr.define
@@ -577,11 +542,11 @@ class DestinyInventoryBucketDefinition(BaseModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    scope: int = attr.field()
-    category: int = attr.field()
+    scope: "BucketScope" = attr.field()
+    category: "BucketCategory" = attr.field()
     bucket_order: int = attr.field()
     item_count: int = attr.field()
-    location: int = attr.field()
+    location: "ItemLocation" = attr.field()
     has_transfer_destination: bool = attr.field()
     enabled: bool = attr.field()
     fifo: bool = attr.field()
@@ -625,7 +590,7 @@ class DestinyItemSetBlockEntryDefinition(BaseModel):
     """
 
     tracking_value: int = attr.field()
-    item_hash: int = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
 
 
 @attr.define
@@ -642,10 +607,10 @@ class DestinyItemStatBlockDefinition(BaseModel):
     """
 
     disable_primary_stat_display: bool = attr.field()
-    stat_group_hash: int = attr.field()
-    stats: Any = attr.field()
+    stat_group_hash: "DestinyStatGroupDefinition" = attr.field()
+    stats: "DestinyStatDefinition" = attr.field()
     has_displayable_stats: bool = attr.field()
-    primary_base_stat_hash: int = attr.field()
+    primary_base_stat_hash: "DestinyStatDefinition" = attr.field()
 
 
 @attr.define
@@ -661,7 +626,7 @@ class DestinyInventoryItemStatDefinition(BaseModel):
         display_maximum: The maximum possible value for the stat as shown in the UI, if it is being shown somewhere that reveals maximum in the UI (such as a bar chart-style view). This is pulled directly from the item's DestinyStatGroupDefinition, and placed here for convenience. If not returned, there is no maximum to use (and thus the stat should not be shown in a way that assumes there is a limit to the stat)
     """
 
-    stat_hash: int = attr.field()
+    stat_hash: "DestinyStatDefinition" = attr.field()
     value: int = attr.field()
     minimum: int = attr.field()
     maximum: int = attr.field()
@@ -684,9 +649,9 @@ class DestinyStatDefinition(BaseModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    aggregation_type: int = attr.field()
+    aggregation_type: "DestinyStatAggregationType" = attr.field()
     has_computed_block: bool = attr.field()
-    stat_category: int = attr.field()
+    stat_category: "DestinyStatCategory" = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
@@ -728,7 +693,7 @@ class DestinyStatDisplayDefinition(BaseModel):
         display_interpolation: The interpolation table representing how the Investment Stat is transformed into a Display Stat.  See DestinyStatDefinition for a description of the stages of stat transformation.
     """
 
-    stat_hash: int = attr.field()
+    stat_hash: "DestinyStatDefinition" = attr.field()
     maximum_value: int = attr.field()
     display_as_numeric: bool = attr.field()
     display_interpolation: list["InterpolationPoint"] = attr.field()
@@ -744,7 +709,7 @@ class DestinyStatOverrideDefinition(BaseModel):
         display_properties: The display properties to show instead of the base DestinyStatDefinition display properties.
     """
 
-    stat_hash: int = attr.field()
+    stat_hash: "DestinyStatDefinition" = attr.field()
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
 
 
@@ -763,12 +728,12 @@ class DestinyEquippingBlockDefinition(BaseModel):
         display_strings: These are strings that represent the possible Game/Account/Character state failure conditions that can occur when trying to equip the item. They match up one-to-one with requiredUnlockExpressions.
     """
 
-    gearset_item_hash: int = attr.field()
+    gearset_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     unique_label: str = attr.field()
     unique_label_hash: int = attr.field()
-    equipment_slot_type_hash: int = attr.field()
-    attributes: int = attr.field()
-    ammo_type: int = attr.field()
+    equipment_slot_type_hash: "DestinyEquipmentSlotDefinition" = attr.field()
+    attributes: "EquippingItemBlockAttributes" = attr.field()
+    ammo_type: "DestinyAmmunitionType" = attr.field()
     display_strings: list[str] = attr.field()
 
 
@@ -790,7 +755,7 @@ class DestinyEquipmentSlotDefinition(BaseModel):
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     equipment_category_hash: int = attr.field()
-    bucket_type_hash: int = attr.field()
+    bucket_type_hash: "DestinyInventoryBucketDefinition" = attr.field()
     apply_custom_art_dyes: bool = attr.field()
     art_dye_channels: list["DestinyArtDyeReference"] = attr.field()
     hash: int = attr.field()
@@ -826,7 +791,7 @@ class DestinyItemTranslationBlockDefinition(BaseModel):
     """
 
     weapon_pattern_identifier: str = attr.field()
-    weapon_pattern_hash: int = attr.field()
+    weapon_pattern_hash: "DestinySandboxPatternDefinition" = attr.field()
     default_dyes: list["DyeReference"] = attr.field()
     locked_dyes: list["DyeReference"] = attr.field()
     custom_dyes: list["DyeReference"] = attr.field()
@@ -844,7 +809,7 @@ class DestinyGearArtArrangementReference(BaseModel):
         art_arrangement_hash: _No description given by bungie_
     """
 
-    class_hash: int = attr.field()
+    class_hash: "DestinyClassDefinition" = attr.field()
     art_arrangement_hash: int = attr.field()
 
 
@@ -864,11 +829,11 @@ class DestinyClassDefinition(BaseModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    class_type: int = attr.field()
+    class_type: "DestinyClass" = attr.field()
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     gendered_class_names: Any = attr.field()
-    gendered_class_names_by_gender_hash: Any = attr.field()
-    mentor_vendor_hash: int = attr.field()
+    gendered_class_names_by_gender_hash: "DestinyGenderDefinition" = attr.field()
+    mentor_vendor_hash: "DestinyVendorDefinition" = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
@@ -887,7 +852,7 @@ class DestinyGenderDefinition(BaseModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    gender_type: int = attr.field()
+    gender_type: "DestinyGender" = attr.field()
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
@@ -938,13 +903,13 @@ class DestinyVendorDefinition(BaseModel):
     """
 
     display_properties: "DestinyVendorDisplayPropertiesDefinition" = attr.field()
-    vendor_progression_type: int = attr.field()
+    vendor_progression_type: "DestinyVendorProgressionType" = attr.field()
     buy_string: str = attr.field()
     sell_string: str = attr.field()
-    display_item_hash: int = attr.field()
+    display_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     inhibit_buying: bool = attr.field()
     inhibit_selling: bool = attr.field()
-    faction_hash: int = attr.field()
+    faction_hash: "DestinyFactionDefinition" = attr.field()
     reset_interval_minutes: int = attr.field()
     reset_offset_minutes: int = attr.field()
     failure_strings: list[str] = attr.field()
@@ -1115,7 +1080,7 @@ class DestinyVendorCategoryOverlayDefinition(BaseModel):
     description: str = attr.field()
     icon: str = attr.field()
     title: str = attr.field()
-    currency_item_hash: int = attr.field()
+    currency_item_hash: "DestinyInventoryItemDefinition" = attr.field()
 
 
 @attr.define
@@ -1140,8 +1105,8 @@ class DestinyDisplayCategoryDefinition(BaseModel):
     display_category_hash: int = attr.field()
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     display_in_banner: bool = attr.field()
-    progression_hash: int = attr.field()
-    sort_order: int = attr.field()
+    progression_hash: "DestinyProgressionDefinition" = attr.field()
+    sort_order: "VendorDisplayCategorySortOrder" = attr.field()
     display_style_hash: int = attr.field()
     display_style_identifier: str = attr.field()
 
@@ -1170,10 +1135,10 @@ class DestinyVendorInteractionDefinition(BaseModel):
     interaction_index: int = attr.field()
     replies: list["DestinyVendorInteractionReplyDefinition"] = attr.field()
     vendor_category_index: int = attr.field()
-    questline_item_hash: int = attr.field()
+    questline_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     sack_interaction_list: list["DestinyVendorInteractionSackEntryDefinition"] = attr.field()
     ui_interaction_type: int = attr.field()
-    interaction_type: int = attr.field()
+    interaction_type: "VendorInteractionType" = attr.field()
     reward_block_label: str = attr.field()
     reward_vendor_category_index: int = attr.field()
     flavor_line_one: str = attr.field()
@@ -1193,9 +1158,9 @@ class DestinyVendorInteractionReplyDefinition(BaseModel):
         reply_type: An enum indicating the type of reply being made.
     """
 
-    item_rewards_selection: int = attr.field()
+    item_rewards_selection: "DestinyVendorInteractionRewardSelection" = attr.field()
     reply: str = attr.field()
-    reply_type: int = attr.field()
+    reply_type: "DestinyVendorReplyType" = attr.field()
 
 
 @attr.define
@@ -1244,8 +1209,8 @@ class DestinyVendorInventoryFlyoutBucketDefinition(BaseModel):
     """
 
     collapsible: bool = attr.field()
-    inventory_bucket_hash: int = attr.field()
-    sort_items_by: int = attr.field()
+    inventory_bucket_hash: "DestinyInventoryBucketDefinition" = attr.field()
+    sort_items_by: "DestinyItemSortType" = attr.field()
 
 
 @attr.define
@@ -1283,11 +1248,11 @@ class DestinyVendorItemDefinition(BaseModel):
     """
 
     vendor_item_index: int = attr.field()
-    item_hash: int = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
     quantity: int = attr.field()
     failure_indexes: list[int] = attr.field()
     currencies: list["DestinyVendorItemQuantity"] = attr.field()
-    refund_policy: int = attr.field()
+    refund_policy: "DestinyVendorItemRefundPolicy" = attr.field()
     refund_time_limit: int = attr.field()
     creation_levels: list["DestinyItemCreationEntryLevelDefinition"] = attr.field()
     display_category_index: int = attr.field()
@@ -1297,10 +1262,10 @@ class DestinyVendorItemDefinition(BaseModel):
     maximum_level: int = attr.field()
     action: "DestinyVendorSaleItemActionBlockDefinition" = attr.field()
     display_category: str = attr.field()
-    inventory_bucket_hash: int = attr.field()
-    visibility_scope: int = attr.field()
-    purchasable_scope: int = attr.field()
-    exclusivity: int = attr.field()
+    inventory_bucket_hash: "DestinyInventoryBucketDefinition" = attr.field()
+    visibility_scope: "DestinyGatingScope" = attr.field()
+    purchasable_scope: "DestinyGatingScope" = attr.field()
+    exclusivity: "BungieMembershipType" = attr.field()
     is_offer: bool = attr.field()
     is_crm: bool = attr.field()
     sort_value: int = attr.field()
@@ -1322,7 +1287,7 @@ class DestinyVendorItemQuantity(BaseModel):
         has_conditional_visibility: Indicates that this item quantity may be conditionally shown or hidden, based on various sources of state. For example: server flags, account state, or character progress.
     """
 
-    item_hash: int = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
     item_instance_id: int = attr.field()
     quantity: int = attr.field()
     has_conditional_visibility: bool = attr.field()
@@ -1365,9 +1330,9 @@ class DestinyVendorItemSocketOverride(BaseModel):
         socket_type_hash: This appears to be used to select which socket ultimately gets the override defined here.
     """
 
-    single_item_hash: int = attr.field()
+    single_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     randomized_options_count: int = attr.field()
-    socket_type_hash: int = attr.field()
+    socket_type_hash: "DestinySocketTypeDefinition" = attr.field()
 
 
 @attr.define
@@ -1392,8 +1357,8 @@ class DestinyVendorAcceptedItemDefinition(BaseModel):
         destination_inventory_bucket_hash: This is the bucket where the item being transferred will be put, given that it was being transferred *from* the bucket defined in acceptedInventoryBucketHash.
     """
 
-    accepted_inventory_bucket_hash: int = attr.field()
-    destination_inventory_bucket_hash: int = attr.field()
+    accepted_inventory_bucket_hash: "DestinyInventoryBucketDefinition" = attr.field()
+    destination_inventory_bucket_hash: "DestinyInventoryBucketDefinition" = attr.field()
 
 
 @attr.define
@@ -1414,8 +1379,8 @@ class DestinyDestinationDefinition(BaseModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    place_hash: int = attr.field()
-    default_freeroam_activity_hash: int = attr.field()
+    place_hash: "DestinyPlaceDefinition" = attr.field()
+    default_freeroam_activity_hash: "DestinyActivityDefinition" = attr.field()
     activity_graph_entries: list["DestinyActivityGraphListEntryDefinition"] = attr.field()
     bubble_settings: list["DestinyDestinationBubbleSettingDefinition"] = attr.field()
     bubbles: list["DestinyBubbleDefinition"] = attr.field()
@@ -1433,7 +1398,7 @@ class DestinyActivityGraphListEntryDefinition(BaseModel):
         activity_graph_hash: The hash identifier of the DestinyActivityGraphDefinition that should be shown when opening the director.
     """
 
-    activity_graph_hash: int = attr.field()
+    activity_graph_hash: "DestinyActivityGraphDefinition" = attr.field()
 
 
 @attr.define
@@ -1481,9 +1446,9 @@ class DestinyActivityDefinition(BaseModel):
     release_icon: str = attr.field()
     release_time: int = attr.field()
     activity_light_level: int = attr.field()
-    destination_hash: int = attr.field()
-    place_hash: int = attr.field()
-    activity_type_hash: int = attr.field()
+    destination_hash: "DestinyDestinationDefinition" = attr.field()
+    place_hash: "DestinyPlaceDefinition" = attr.field()
+    activity_type_hash: "DestinyActivityTypeDefinition" = attr.field()
     tier: int = attr.field()
     pgcr_image: str = attr.field()
     rewards: list["DestinyActivityRewardDefinition"] = attr.field()
@@ -1495,11 +1460,11 @@ class DestinyActivityDefinition(BaseModel):
     activity_graph_list: list["DestinyActivityGraphListEntryDefinition"] = attr.field()
     matchmaking: "DestinyActivityMatchmakingBlockDefinition" = attr.field()
     guided_game: "DestinyActivityGuidedBlockDefinition" = attr.field()
-    direct_activity_mode_hash: int = attr.field()
+    direct_activity_mode_hash: "DestinyActivityModeDefinition" = attr.field()
     direct_activity_mode_type: int = attr.field()
     loadouts: list["DestinyActivityLoadoutRequirementSet"] = attr.field()
-    activity_mode_hashes: list[int] = attr.field()
-    activity_mode_types: list[int] = attr.field()
+    activity_mode_hashes: list["DestinyActivityModeDefinition"] = attr.field()
+    activity_mode_types: list["DestinyActivityModeType"] = attr.field()
     is_pv_p: bool = attr.field()
     insertion_points: list["DestinyActivityInsertionPointDefinition"] = attr.field()
     activity_location_mappings: list["DestinyEnvironmentLocationMapping"] = attr.field()
@@ -1531,7 +1496,7 @@ class DestinyActivityModifierReferenceDefinition(BaseModel):
         activity_modifier_hash: The hash identifier for the DestinyActivityModifierDefinition referenced by this activity.
     """
 
-    activity_modifier_hash: int = attr.field()
+    activity_modifier_hash: "DestinyActivityModifierDefinition" = attr.field()
 
 
 @attr.define
@@ -1544,7 +1509,7 @@ class DestinyActivityChallengeDefinition(BaseModel):
         dummy_rewards: The rewards as they're represented in the UI. Note that they generally link to "dummy" items that give a summary of rewards rather than direct, real items themselves. If the quantity is 0, don't show the quantity.
     """
 
-    objective_hash: int = attr.field()
+    objective_hash: "DestinyObjectiveDefinition" = attr.field()
     dummy_rewards: list["DestinyItemQuantity"] = attr.field()
 
 
@@ -1579,22 +1544,22 @@ class DestinyObjectiveDefinition(BaseModel):
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     completion_value: int = attr.field()
-    scope: int = attr.field()
-    location_hash: int = attr.field()
+    scope: "DestinyGatingScope" = attr.field()
+    location_hash: "DestinyLocationDefinition" = attr.field()
     allow_negative_value: bool = attr.field()
     allow_value_change_when_completed: bool = attr.field()
     is_counting_downward: bool = attr.field()
-    value_style: int = attr.field()
+    value_style: "DestinyUnlockValueUIStyle" = attr.field()
     progress_description: str = attr.field()
     perks: "DestinyObjectivePerkEntryDefinition" = attr.field()
     stats: "DestinyObjectiveStatEntryDefinition" = attr.field()
     minimum_visibility_threshold: int = attr.field()
     allow_overcompletion: bool = attr.field()
     show_value_on_complete: bool = attr.field()
-    completed_value_style: int = attr.field()
-    in_progress_value_style: int = attr.field()
+    completed_value_style: "DestinyUnlockValueUIStyle" = attr.field()
+    in_progress_value_style: "DestinyUnlockValueUIStyle" = attr.field()
     ui_label: str = attr.field()
-    ui_style: int = attr.field()
+    ui_style: "DestinyObjectiveUiStyle" = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
@@ -1610,8 +1575,8 @@ class DestinyObjectivePerkEntryDefinition(BaseModel):
         style: An enumeration indicating whether it will be applied as long as the Objective is active, when it's completed, or until it's completed.
     """
 
-    perk_hash: int = attr.field()
-    style: int = attr.field()
+    perk_hash: "DestinySandboxPerkDefinition" = attr.field()
+    style: "DestinyObjectiveGrantStyle" = attr.field()
 
 
 @attr.define
@@ -1634,8 +1599,8 @@ class DestinySandboxPerkDefinition(BaseModel):
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     perk_identifier: str = attr.field()
     is_displayable: bool = attr.field()
-    damage_type: int = attr.field()
-    damage_type_hash: int = attr.field()
+    damage_type: "DamageType" = attr.field()
+    damage_type_hash: "DestinyDamageTypeDefinition" = attr.field()
     perk_groups: "DestinyTalentNodeStepGroups" = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
@@ -1655,11 +1620,11 @@ class DestinyTalentNodeStepGroups(BaseModel):
         damage_types: _No description given by bungie_
     """
 
-    weapon_performance: int = attr.field()
-    impact_effects: int = attr.field()
-    guardian_attributes: int = attr.field()
-    light_abilities: int = attr.field()
-    damage_types: int = attr.field()
+    weapon_performance: "DestinyTalentNodeStepWeaponPerformances" = attr.field()
+    impact_effects: "DestinyTalentNodeStepImpactEffects" = attr.field()
+    guardian_attributes: "DestinyTalentNodeStepGuardianAttributes" = attr.field()
+    light_abilities: "DestinyTalentNodeStepLightAbilities" = attr.field()
+    damage_types: "DestinyTalentNodeStepDamageTypes" = attr.field()
 
 
 class DestinyTalentNodeStepWeaponPerformances(BaseEnum):
@@ -1809,7 +1774,7 @@ class DestinyDamageTypeDefinition(BaseModel):
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     transparent_icon_path: str = attr.field()
     show_icon: bool = attr.field()
-    enum_value: int = attr.field()
+    enum_value: "DamageType" = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
@@ -1826,7 +1791,7 @@ class DestinyObjectiveStatEntryDefinition(BaseModel):
     """
 
     stat: "DestinyItemInvestmentStatDefinition" = attr.field()
-    style: int = attr.field()
+    style: "DestinyObjectiveGrantStyle" = attr.field()
 
 
 @attr.define
@@ -1840,7 +1805,7 @@ class DestinyItemInvestmentStatDefinition(BaseModel):
         is_conditionally_active: If this is true, the stat will only be applied on the item in certain game state conditions, and we can't know statically whether or not this stat will be applied. Check the "live" API data instead for whether this value is being applied on a specific instance of the item in question, and you can use this to decide whether you want to show the stat on the generic view of the item, or whether you want to show some kind of caveat or warning about the stat value being conditional on game state.
     """
 
-    stat_type_hash: int = attr.field()
+    stat_type_hash: "DestinyStatDefinition" = attr.field()
     value: int = attr.field()
     is_conditionally_active: bool = attr.field()
 
@@ -1858,7 +1823,7 @@ class DestinyLocationDefinition(BaseModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    vendor_hash: int = attr.field()
+    vendor_hash: "DestinyVendorDefinition" = attr.field()
     location_releases: list["DestinyLocationReleaseDefinition"] = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
@@ -1892,14 +1857,14 @@ class DestinyLocationReleaseDefinition(BaseModel):
     map_icon: str = attr.field()
     large_transparent_icon: str = attr.field()
     spawn_point: int = attr.field()
-    destination_hash: int = attr.field()
-    activity_hash: int = attr.field()
+    destination_hash: "DestinyDestinationDefinition" = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
     activity_graph_hash: int = attr.field()
     activity_graph_node_hash: int = attr.field()
     activity_bubble_name: int = attr.field()
     activity_path_bundle: int = attr.field()
     activity_path_destination: int = attr.field()
-    nav_point_type: int = attr.field()
+    nav_point_type: "DestinyActivityNavPointType" = attr.field()
     world_position: list[int] = attr.field()
 
 
@@ -1928,11 +1893,11 @@ class DestinyActivityPlaylistItemDefinition(BaseModel):
         activity_mode_types: The activity modes - if any - in enum form. Because we can't seem to escape the enums.
     """
 
-    activity_hash: int = attr.field()
-    direct_activity_mode_hash: int = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
+    direct_activity_mode_hash: "DestinyActivityModeDefinition" = attr.field()
     direct_activity_mode_type: int = attr.field()
-    activity_mode_hashes: list[int] = attr.field()
-    activity_mode_types: list[int] = attr.field()
+    activity_mode_hashes: list["DestinyActivityModeDefinition"] = attr.field()
+    activity_mode_types: list["DestinyActivityModeType"] = attr.field()
 
 
 @attr.define
@@ -1959,8 +1924,8 @@ class DestinyActivityModeDefinition(BaseModel):
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     pgcr_image: str = attr.field()
-    mode_type: int = attr.field()
-    activity_mode_category: int = attr.field()
+    mode_type: "DestinyActivityModeType" = attr.field()
+    activity_mode_category: "DestinyActivityModeCategory" = attr.field()
     is_team_based: bool = attr.field()
     is_aggregate_mode: bool = attr.field()
     parent_hashes: list[int] = attr.field()
@@ -2032,9 +1997,9 @@ class DestinyActivityLoadoutRequirement(BaseModel):
         allowed_weapon_sub_types: _No description given by bungie_
     """
 
-    equipment_slot_hash: int = attr.field()
-    allowed_equipped_item_hashes: list[int] = attr.field()
-    allowed_weapon_sub_types: list[int] = attr.field()
+    equipment_slot_hash: "DestinyEquipmentSlotDefinition" = attr.field()
+    allowed_equipped_item_hashes: list["DestinyInventoryItemDefinition"] = attr.field()
+    allowed_weapon_sub_types: list["DestinyItemSubType"] = attr.field()
 
 
 @attr.define
@@ -2094,7 +2059,7 @@ class DestinyUnlockExpressionDefinition(BaseModel):
         scope: A shortcut for determining the most restrictive gating that this expression performs. See the DestinyGatingScope enum's documentation for more details.
     """
 
-    scope: int = attr.field()
+    scope: "DestinyGatingScope" = attr.field()
 
 
 @attr.define
@@ -2132,7 +2097,7 @@ class DestinyVendorGroupReference(BaseModel):
         vendor_group_hash: The DestinyVendorGroupDefinition to which this Vendor can belong.
     """
 
-    vendor_group_hash: int = attr.field()
+    vendor_group_hash: "DestinyVendorGroupDefinition" = attr.field()
 
 
 @attr.define
@@ -2173,10 +2138,10 @@ class DestinyFactionDefinition(BaseModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    progression_hash: int = attr.field()
+    progression_hash: "DestinyProgressionDefinition" = attr.field()
     token_values: Any = attr.field()
-    reward_item_hash: int = attr.field()
-    reward_vendor_hash: int = attr.field()
+    reward_item_hash: "DestinyInventoryItemDefinition" = attr.field()
+    reward_vendor_hash: "DestinyVendorDefinition" = attr.field()
     vendors: list["DestinyFactionVendorDefinition"] = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
@@ -2194,8 +2159,8 @@ class DestinyFactionVendorDefinition(BaseModel):
         background_image_path: The relative path to the background image representing this Vendor at this location, for use in a banner.
     """
 
-    vendor_hash: int = attr.field()
-    destination_hash: int = attr.field()
+    vendor_hash: "DestinyVendorDefinition" = attr.field()
+    destination_hash: "DestinyDestinationDefinition" = attr.field()
     background_image_path: str = attr.field()
 
 
@@ -2222,7 +2187,7 @@ class DestinySandboxPatternDefinition(BaseModel):
     weapon_content_group_hash: int = attr.field()
     weapon_translation_group_hash: int = attr.field()
     weapon_type_hash: int = attr.field()
-    weapon_type: int = attr.field()
+    weapon_type: "DestinyItemSubType" = attr.field()
     filters: list["DestinyArrangementRegionFilterDefinition"] = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
@@ -2261,8 +2226,8 @@ class DestinyItemPreviewBlockDefinition(BaseModel):
     """
 
     screen_style: str = attr.field()
-    preview_vendor_hash: int = attr.field()
-    artifact_hash: int = attr.field()
+    preview_vendor_hash: "DestinyVendorDefinition" = attr.field()
+    artifact_hash: "DestinyArtifactDefinition" = attr.field()
     preview_action_string: str = attr.field()
     derived_item_categories: list["DestinyDerivedItemCategoryDefinition"] = attr.field()
 
@@ -2289,7 +2254,7 @@ class DestinyItemQualityBlockDefinition(BaseModel):
     infusion_category_name: str = attr.field()
     infusion_category_hash: int = attr.field()
     infusion_category_hashes: list[int] = attr.field()
-    progression_level_requirement_hash: int = attr.field()
+    progression_level_requirement_hash: "DestinyProgressionLevelRequirementDefinition" = attr.field()
     current_version: int = attr.field()
     versions: list["DestinyItemVersionDefinition"] = attr.field()
     display_version_watermark_icons: list[str] = attr.field()
@@ -2304,7 +2269,7 @@ class DestinyItemVersionDefinition(BaseModel):
         power_cap_hash: A reference to the power cap for this item version.
     """
 
-    power_cap_hash: int = attr.field()
+    power_cap_hash: "DestinyPowerCapDefinition" = attr.field()
 
 
 @attr.define
@@ -2333,9 +2298,9 @@ class DestinyItemSourceBlockDefinition(BaseModel):
         vendor_sources: A denormalized reference back to vendors that potentially sell this item.
     """
 
-    source_hashes: list[int] = attr.field()
+    source_hashes: list["DestinyRewardSourceDefinition"] = attr.field()
     sources: list["DestinyItemSourceDefinition"] = attr.field()
-    exclusive: int = attr.field()
+    exclusive: "BungieMembershipType" = attr.field()
     vendor_sources: list["DestinyItemVendorSourceReference"] = attr.field()
 
 
@@ -2353,7 +2318,7 @@ class DestinyRewardSourceDefinition(BaseModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    category: int = attr.field()
+    category: "DestinyRewardSourceCategory" = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
@@ -2384,7 +2349,7 @@ class DestinyItemVendorSourceReference(BaseModel):
         vendor_item_indexes: The Vendor sale item indexes that represent the sale information for this item. The same vendor may sell an item in multiple "ways", hence why this is a list. (for instance, a weapon may be "sold" as a reward in a quest, for Glimmer, and for Masterwork Cores: each of those ways would be represented by a different vendor sale item with a different index)
     """
 
-    vendor_hash: int = attr.field()
+    vendor_hash: "DestinyVendorDefinition" = attr.field()
     vendor_item_indexes: list[int] = attr.field()
 
 
@@ -2406,10 +2371,10 @@ class DestinyItemObjectiveBlockDefinition(BaseModel):
         display_as_stat_tracker: _No description given by bungie_
     """
 
-    objective_hashes: list[int] = attr.field()
-    display_activity_hashes: list[int] = attr.field()
+    objective_hashes: list["DestinyObjectiveDefinition"] = attr.field()
+    display_activity_hashes: list["DestinyActivityDefinition"] = attr.field()
     require_full_objective_completion: bool = attr.field()
-    questline_item_hash: int = attr.field()
+    questline_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     narrative: str = attr.field()
     objective_verb_name: str = attr.field()
     quest_type_identifier: str = attr.field()
@@ -2428,7 +2393,7 @@ class DestinyObjectiveDisplayProperties(BaseModel):
         display_on_item_preview_screen: If true, the game shows this objective on item preview screens.
     """
 
-    activity_hash: int = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
     display_on_item_preview_screen: bool = attr.field()
 
 
@@ -2441,7 +2406,7 @@ class DestinyItemMetricBlockDefinition(BaseModel):
         available_metric_category_node_hashes: Hash identifiers for any DestinyPresentationNodeDefinition entry that can be used to list available metrics. Any metric listed directly below these nodes, or in any of these nodes' children will be made available for selection.
     """
 
-    available_metric_category_node_hashes: list[int] = attr.field()
+    available_metric_category_node_hashes: list["DestinyPresentationNodeDefinition"] = attr.field()
 
 
 @attr.define
@@ -2471,7 +2436,7 @@ class DestinyItemGearsetBlockDefinition(BaseModel):
     """
 
     tracking_value_max: int = attr.field()
-    item_list: list[int] = attr.field()
+    item_list: list["DestinyInventoryItemDefinition"] = attr.field()
 
 
 @attr.define
@@ -2529,14 +2494,14 @@ class DestinyItemSocketEntryDefinition(BaseModel):
         default_visible: If true, then this socket is visible in the item's "default" state. If you have an instance, you should always check the runtime state, as that can override this visibility setting: but if you're looking at the item on a conceptual level, this property can be useful for hiding data such as legacy sockets - which remain defined on items for infrastructure purposes, but can be confusing for users to see.
     """
 
-    socket_type_hash: int = attr.field()
-    single_initial_item_hash: int = attr.field()
+    socket_type_hash: "DestinySocketTypeDefinition" = attr.field()
+    single_initial_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     reusable_plug_items: list["DestinyItemSocketEntryPlugItemDefinition"] = attr.field()
     prevent_initialization_on_vendor_purchase: bool = attr.field()
     hide_perks_in_item_tooltip: bool = attr.field()
-    plug_sources: int = attr.field()
-    reusable_plug_set_hash: int = attr.field()
-    randomized_plug_set_hash: int = attr.field()
+    plug_sources: "SocketPlugSources" = attr.field()
+    reusable_plug_set_hash: "DestinyPlugSetDefinition" = attr.field()
+    randomized_plug_set_hash: "DestinyPlugSetDefinition" = attr.field()
     default_visible: bool = attr.field()
 
 
@@ -2549,7 +2514,7 @@ class DestinyItemSocketEntryPlugItemDefinition(BaseModel):
         plug_item_hash: The hash identifier of a DestinyInventoryItemDefinition representing the plug that can be inserted.
     """
 
-    plug_item_hash: int = attr.field()
+    plug_item_hash: "DestinyInventoryItemDefinition" = attr.field()
 
 
 @attr.define
@@ -2565,7 +2530,7 @@ class DestinyItemSocketEntryPlugItemRandomizedDefinition(BaseModel):
 
     crafting_requirements: "DestinyPlugItemCraftingRequirements" = attr.field()
     currently_can_roll: bool = attr.field()
-    plug_item_hash: int = attr.field()
+    plug_item_hash: "DestinyInventoryItemDefinition" = attr.field()
 
 
 @attr.define
@@ -2581,7 +2546,7 @@ class DestinyPlugItemCraftingRequirements(BaseModel):
 
     unlock_requirements: list["DestinyPlugItemCraftingUnlockRequirement"] = attr.field()
     required_level: int = attr.field()
-    material_requirement_hashes: list[int] = attr.field()
+    material_requirement_hashes: list["DestinyMaterialRequirementSetDefinition"] = attr.field()
 
 
 @attr.define
@@ -2607,8 +2572,8 @@ class DestinyItemIntrinsicSocketEntryDefinition(BaseModel):
         default_visible: If true, then this socket is visible in the item's "default" state. If you have an instance, you should always check the runtime state, as that can override this visibility setting: but if you're looking at the item on a conceptual level, this property can be useful for hiding data such as legacy sockets - which remain defined on items for infrastructure purposes, but can be confusing for users to see.
     """
 
-    plug_item_hash: int = attr.field()
-    socket_type_hash: int = attr.field()
+    plug_item_hash: "DestinyInventoryItemDefinition" = attr.field()
+    socket_type_hash: "DestinySocketTypeDefinition" = attr.field()
     default_visible: bool = attr.field()
 
 
@@ -2622,7 +2587,7 @@ class DestinyItemSocketCategoryDefinition(BaseModel):
         socket_indexes: Use these indexes to look up the sockets in the "sockets.socketEntries" property on the item definition. These are the indexes under the category, in game-rendered order.
     """
 
-    socket_category_hash: int = attr.field()
+    socket_category_hash: "DestinySocketCategoryDefinition" = attr.field()
     socket_indexes: list[int] = attr.field()
 
 
@@ -2651,10 +2616,10 @@ class DestinyItemTalentGridBlockDefinition(BaseModel):
         hud_icon: If the talent grid has a special icon that's shown in the game UI (like builds, funny that), this is the identifier for that icon. Sadly, we don't actually get that icon right now. I'll be looking to replace this with a path to the actual icon itself.
     """
 
-    talent_grid_hash: int = attr.field()
+    talent_grid_hash: "DestinyTalentGridDefinition" = attr.field()
     item_detail_string: str = attr.field()
     build_name: str = attr.field()
-    hud_damage_type: int = attr.field()
+    hud_damage_type: "DamageType" = attr.field()
     hud_icon: str = attr.field()
 
 
@@ -2679,7 +2644,7 @@ class DestinyTalentGridDefinition(BaseModel):
 
     max_grid_level: int = attr.field()
     grid_level_per_column: int = attr.field()
-    progression_hash: int = attr.field()
+    progression_hash: "DestinyProgressionDefinition" = attr.field()
     nodes: list["DestinyTalentNodeDefinition"] = attr.field()
     exclusive_sets: list["DestinyTalentNodeExclusiveSetDefinition"] = attr.field()
     independent_node_indexes: list[int] = attr.field()
@@ -2733,7 +2698,7 @@ class DestinyTalentNodeDefinition(BaseModel):
     random_start_progression_bar_at_progression: int = attr.field()
     layout_identifier: str = attr.field()
     group_hash: int = attr.field()
-    lore_hash: int = attr.field()
+    lore_hash: "DestinyLoreDefinition" = attr.field()
     node_style_identifier: str = attr.field()
     ignore_for_completion: bool = attr.field()
 
@@ -2749,7 +2714,7 @@ class DestinyNodeActivationRequirement(BaseModel):
     """
 
     grid_level: int = attr.field()
-    material_requirement_hashes: list[int] = attr.field()
+    material_requirement_hashes: list["DestinyMaterialRequirementSetDefinition"] = attr.field()
 
 
 @attr.define
@@ -2781,15 +2746,15 @@ class DestinyNodeStepDefinition(BaseModel):
     step_index: int = attr.field()
     node_step_hash: int = attr.field()
     interaction_description: str = attr.field()
-    damage_type: int = attr.field()
-    damage_type_hash: int = attr.field()
+    damage_type: "DamageType" = attr.field()
+    damage_type_hash: "DestinyDamageTypeDefinition" = attr.field()
     activation_requirement: "DestinyNodeActivationRequirement" = attr.field()
     can_activate_next_step: bool = attr.field()
     next_step_index: int = attr.field()
     is_next_step_random: bool = attr.field()
-    perk_hashes: list[int] = attr.field()
+    perk_hashes: list["DestinySandboxPerkDefinition"] = attr.field()
     start_progression_bar_at_progress: int = attr.field()
-    stat_hashes: list[int] = attr.field()
+    stat_hashes: list["DestinyStatDefinition"] = attr.field()
     affects_quality: bool = attr.field()
     step_groups: "DestinyTalentNodeStepGroups" = attr.field()
     affects_level: bool = attr.field()
@@ -2806,8 +2771,8 @@ class DestinyNodeSocketReplaceResponse(BaseModel):
         plug_item_hash: The hash identifier of the plug item that will be inserted into the socket found.
     """
 
-    socket_type_hash: int = attr.field()
-    plug_item_hash: int = attr.field()
+    socket_type_hash: "DestinySocketTypeDefinition" = attr.field()
+    plug_item_hash: "DestinyInventoryItemDefinition" = attr.field()
 
 
 @attr.define
@@ -2836,7 +2801,7 @@ class DestinyTalentExclusiveGroup(BaseModel):
     """
 
     group_hash: int = attr.field()
-    lore_hash: int = attr.field()
+    lore_hash: "DestinyLoreDefinition" = attr.field()
     node_hashes: list[int] = attr.field()
     opposing_group_hashes: list[int] = attr.field()
     opposing_node_hashes: list[int] = attr.field()
@@ -2872,8 +2837,8 @@ class DestinyItemPerkEntryDefinition(BaseModel):
     """
 
     requirement_display_string: str = attr.field()
-    perk_hash: int = attr.field()
-    perk_visibility: int = attr.field()
+    perk_hash: "DestinySandboxPerkDefinition" = attr.field()
+    perk_visibility: "ItemPerkVisibility" = attr.field()
 
 
 @attr.define
@@ -2908,15 +2873,15 @@ class DestinyItemCategoryDefinition(BaseModel):
     deprecated: bool = attr.field()
     short_title: str = attr.field()
     item_type_regex: str = attr.field()
-    grant_destiny_breaker_type: int = attr.field()
+    grant_destiny_breaker_type: "DestinyBreakerType" = attr.field()
     plug_category_identifier: str = attr.field()
     item_type_regex_not: str = attr.field()
     origin_bucket_identifier: str = attr.field()
-    grant_destiny_item_type: int = attr.field()
-    grant_destiny_sub_type: int = attr.field()
-    grant_destiny_class: int = attr.field()
+    grant_destiny_item_type: "DestinyItemType" = attr.field()
+    grant_destiny_sub_type: "DestinyItemSubType" = attr.field()
+    grant_destiny_class: "DestinyClass" = attr.field()
     trait_id: str = attr.field()
-    grouped_category_hashes: list[int] = attr.field()
+    grouped_category_hashes: list["DestinyItemCategoryDefinition"] = attr.field()
     parent_category_hashes: list[int] = attr.field()
     group_category_only: bool = attr.field()
     hash: int = attr.field()
@@ -2941,10 +2906,10 @@ class DestinyProgressionRewardItemQuantity(BaseModel):
     """
 
     rewarded_at_progression_level: int = attr.field()
-    acquisition_behavior: int = attr.field()
+    acquisition_behavior: "DestinyProgressionRewardItemAcquisitionBehavior" = attr.field()
     ui_display_style: str = attr.field()
     claim_unlock_display_strings: list[str] = attr.field()
-    item_hash: int = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
     item_instance_id: int = attr.field()
     quantity: int = attr.field()
     has_conditional_visibility: bool = attr.field()
@@ -2966,9 +2931,9 @@ class DestinyRaceDefinition(BaseModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    race_type: int = attr.field()
+    race_type: "DestinyRace" = attr.field()
     gendered_race_names: Any = attr.field()
-    gendered_race_names_by_gender_hash: Any = attr.field()
+    gendered_race_names_by_gender_hash: "DestinyGenderDefinition" = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()

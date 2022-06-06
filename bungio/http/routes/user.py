@@ -1,4 +1,4 @@
-from typing import Callable, Coroutine, Optional
+from typing import Any, Callable, Coroutine, Optional
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -105,7 +105,7 @@ class UserRouteHttpRequests:
         return await self.request(Route(path=f"/User/GetAvailableThemes/", method="GET", auth=auth))
 
     async def get_membership_data_by_id(
-        self, membership_id: int, membership_type: int, auth: Optional[AuthData] = None
+        self, membership_id: int, membership_type: Any, auth: Optional[AuthData] = None
     ) -> dict:
         """
         Returns a list of accounts associated with the supplied membership ID and membership type. This will include all linked accounts (even when hidden) if supplied credentials permit it.
@@ -158,7 +158,7 @@ class UserRouteHttpRequests:
         return await self.request(Route(path=f"/User/GetMembershipsForCurrentUser/", method="GET", auth=auth))
 
     async def get_membership_from_hard_linked_credential(
-        self, credential: str, cr_type: int, auth: Optional[AuthData] = None
+        self, credential: str, cr_type: Any, auth: Optional[AuthData] = None
     ) -> dict:
         """
         Gets any hard linked membership given a credential. Only works for credentials that are public (just SteamID64 right now). Cross Save aware.

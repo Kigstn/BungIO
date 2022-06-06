@@ -25,7 +25,7 @@ class DestinyTraitDefinition(BaseModel):
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     trait_category_id: str = attr.field()
-    trait_category_hash: int = attr.field()
+    trait_category_hash: "DestinyTraitCategoryDefinition" = attr.field()
     display_hint: str = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
@@ -47,7 +47,7 @@ class DestinyTraitCategoryDefinition(BaseModel):
     """
 
     trait_category_id: str = attr.field()
-    trait_hashes: list[int] = attr.field()
+    trait_hashes: list["DestinyTraitDefinition"] = attr.field()
     trait_ids: list[str] = attr.field()
     hash: int = attr.field()
     index: int = attr.field()

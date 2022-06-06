@@ -6,17 +6,11 @@ from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
-        DestinyActivityGraphArtElementDefinition,
-        DestinyActivityGraphConnectionDefinition,
-        DestinyActivityGraphDisplayObjectiveDefinition,
-        DestinyActivityGraphDisplayProgressionDefinition,
-        DestinyActivityGraphNodeActivityDefinition,
-        DestinyActivityGraphNodeDefinition,
-        DestinyActivityGraphNodeFeaturingStateDefinition,
-        DestinyActivityGraphNodeStateEntry,
+        ActivityGraphNodeHighlightType,
+        DestinyActivityDefinition,
         DestinyDisplayPropertiesDefinition,
-        DestinyLinkedGraphDefinition,
-        DestinyLinkedGraphEntryDefinition,
+        DestinyGraphNodeState,
+        DestinyObjectiveDefinition,
         DestinyPositionDefinition,
         DestinyUnlockExpressionDefinition,
     )
@@ -81,7 +75,7 @@ class DestinyActivityGraphNodeFeaturingStateDefinition(BaseModel):
         highlight_type: The node can be highlighted in a variety of ways - the game iterates through these and finds the first FeaturingState that is valid at the present moment given the Game, Account, and Character state, and renders the node in that state. See the ActivityGraphNodeHighlightType enum for possible values.
     """
 
-    highlight_type: int = attr.field()
+    highlight_type: "ActivityGraphNodeHighlightType" = attr.field()
 
 
 @attr.define
@@ -95,7 +89,7 @@ class DestinyActivityGraphNodeActivityDefinition(BaseModel):
     """
 
     node_activity_id: int = attr.field()
-    activity_hash: int = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
 
 
 @attr.define
@@ -107,7 +101,7 @@ class DestinyActivityGraphNodeStateEntry(BaseModel):
         state: _No description given by bungie_
     """
 
-    state: int = attr.field()
+    state: "DestinyGraphNodeState" = attr.field()
 
 
 @attr.define
@@ -147,7 +141,7 @@ class DestinyActivityGraphDisplayObjectiveDefinition(BaseModel):
     """
 
     id: int = attr.field()
-    objective_hash: int = attr.field()
+    objective_hash: "DestinyObjectiveDefinition" = attr.field()
 
 
 @attr.define

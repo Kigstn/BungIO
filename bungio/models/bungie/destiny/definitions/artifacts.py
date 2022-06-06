@@ -6,9 +6,8 @@ from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
-        DestinyArtifactTierDefinition,
-        DestinyArtifactTierItemDefinition,
         DestinyDisplayPropertiesDefinition,
+        DestinyInventoryItemDefinition,
         DestinyItemTranslationBlockDefinition,
     )
 
@@ -64,4 +63,4 @@ class DestinyArtifactTierItemDefinition(BaseModel):
         item_hash: The identifier of the Plug Item unlocked by activating this item in the Artifact.
     """
 
-    item_hash: int = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()

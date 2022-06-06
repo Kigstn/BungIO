@@ -5,7 +5,7 @@ import attr
 from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import InterpolationPointFloat
+    from bungio.models import DestinyProgressionDefinition, InterpolationPointFloat
 
 
 @attr.define
@@ -22,7 +22,7 @@ class DestinyProgressionLevelRequirementDefinition(BaseModel):
     """
 
     requirement_curve: list["InterpolationPointFloat"] = attr.field()
-    progression_hash: int = attr.field()
+    progression_hash: "DestinyProgressionDefinition" = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()

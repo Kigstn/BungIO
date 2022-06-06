@@ -55,4 +55,7 @@
 
 
 
-#
+# what do those mean
+- x-mobile-manifest-name
+- x-dictionary-key
+- x-destiny-component-type-dependency

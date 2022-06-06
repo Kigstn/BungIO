@@ -6,8 +6,8 @@ from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
-        DestinyArtifactTier,
-        DestinyArtifactTierItem,
+        DestinyArtifactDefinition,
+        DestinyInventoryItemDefinition,
         DestinyProgression,
     )
 
@@ -25,7 +25,7 @@ class DestinyArtifactProfileScoped(BaseModel):
         power_bonus: _No description given by bungie_
     """
 
-    artifact_hash: int = attr.field()
+    artifact_hash: "DestinyArtifactDefinition" = attr.field()
     point_progression: "DestinyProgression" = attr.field()
     points_acquired: int = attr.field()
     power_bonus_progression: "DestinyProgression" = attr.field()
@@ -44,7 +44,7 @@ class DestinyArtifactCharacterScoped(BaseModel):
         tiers: _No description given by bungie_
     """
 
-    artifact_hash: int = attr.field()
+    artifact_hash: "DestinyArtifactDefinition" = attr.field()
     points_used: int = attr.field()
     reset_count: int = attr.field()
     tiers: list["DestinyArtifactTier"] = attr.field()
@@ -78,5 +78,5 @@ class DestinyArtifactTierItem(BaseModel):
         is_active: _No description given by bungie_
     """
 
-    item_hash: int = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
     is_active: bool = attr.field()

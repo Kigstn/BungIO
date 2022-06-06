@@ -1,6 +1,11 @@
+from typing import TYPE_CHECKING
+
 import attr
 
 from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import PlatformErrorCodes
 
 
 @attr.define
@@ -14,4 +19,4 @@ class EntityActionResult(BaseModel):
     """
 
     entity_id: int = attr.field()
-    result: int = attr.field()
+    result: "PlatformErrorCodes" = attr.field()

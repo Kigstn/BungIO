@@ -7,17 +7,8 @@ from bungio.models.base import BaseEnum, BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
-        ClanBanner,
-        GroupFeatures,
-        GroupMember,
-        GroupMembership,
-        GroupPotentialMember,
-        GroupPotentialMembership,
-        GroupUserInfoCard,
-        GroupV2,
-        GroupV2Card,
-        GroupV2ClanInfo,
-        GroupV2ClanInfoAndInvestment,
+        BungieMembershipType,
+        IgnoreLength,
         PagedQuery,
         UserInfoCard,
         UserMembership,
@@ -45,13 +36,13 @@ class GroupUserInfoCard(BaseModel):
     """
 
     last_seen_display_name: str = attr.field()
-    last_seen_display_name_type: int = attr.field()
+    last_seen_display_name_type: "BungieMembershipType" = attr.field()
     supplemental_display_name: str = attr.field()
     icon_path: str = attr.field()
-    cross_save_override: int = attr.field()
-    applicable_membership_types: list[int] = attr.field()
+    cross_save_override: "BungieMembershipType" = attr.field()
+    applicable_membership_types: list["BungieMembershipType"] = attr.field()
     is_public: bool = attr.field()
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
     membership_id: int = attr.field()
     display_name: str = attr.field()
     bungie_global_display_name: str = attr.field()
@@ -79,7 +70,7 @@ class GroupResponse(BaseModel):
     founder: "GroupMember" = attr.field()
     allied_ids: list[int] = attr.field()
     parent_group: "GroupV2" = attr.field()
-    alliance_status: int = attr.field()
+    alliance_status: "GroupAllianceStatus" = attr.field()
     group_join_invite_count: int = attr.field()
     current_user_memberships_inactive_for_destiny: bool = attr.field()
     current_user_member_map: Any = attr.field()
@@ -124,7 +115,7 @@ class GroupV2(BaseModel):
 
     group_id: int = attr.field()
     name: str = attr.field()
-    group_type: int = attr.field()
+    group_type: "GroupType" = attr.field()
     membership_id_created: int = attr.field()
     creation_date: datetime.datetime = attr.field()
     modification_date: datetime.datetime = attr.field()
@@ -136,12 +127,12 @@ class GroupV2(BaseModel):
     motto: str = attr.field()
     allow_chat: bool = attr.field()
     is_default_post_public: bool = attr.field()
-    chat_security: int = attr.field()
+    chat_security: "ChatSecuritySetting" = attr.field()
     locale: str = attr.field()
     avatar_image_index: int = attr.field()
-    homepage: int = attr.field()
-    membership_option: int = attr.field()
-    default_publicity: int = attr.field()
+    homepage: "GroupHomepage" = attr.field()
+    membership_option: "MembershipOption" = attr.field()
+    default_publicity: "GroupPostPublicity" = attr.field()
     theme: str = attr.field()
     banner_path: str = attr.field()
     avatar_path: str = attr.field()
@@ -232,13 +223,13 @@ class GroupFeatures(BaseModel):
 
     maximum_members: int = attr.field()
     maximum_memberships_of_group_type: int = attr.field()
-    capabilities: int = attr.field()
-    membership_types: list[int] = attr.field()
+    capabilities: "Capabilities" = attr.field()
+    membership_types: list["BungieMembershipType"] = attr.field()
     invite_permission_override: bool = attr.field()
     update_culture_permission_override: bool = attr.field()
-    host_guided_game_permission_override: int = attr.field()
+    host_guided_game_permission_override: "HostGuidedGamesPermissionLevel" = attr.field()
     update_banner_permission_override: bool = attr.field()
-    join_level: int = attr.field()
+    join_level: "RuntimeGroupMemberType" = attr.field()
 
 
 class Capabilities(BaseEnum):
@@ -383,7 +374,7 @@ class GroupMember(BaseModel):
         join_date: _No description given by bungie_
     """
 
-    member_type: int = attr.field()
+    member_type: "RuntimeGroupMemberType" = attr.field()
     is_online: bool = attr.field()
     last_online_status_change: int = attr.field()
     group_id: int = attr.field()
@@ -418,7 +409,7 @@ class GroupPotentialMember(BaseModel):
         join_date: _No description given by bungie_
     """
 
-    potential_status: int = attr.field()
+    potential_status: "GroupPotentialMemberStatus" = attr.field()
     group_id: int = attr.field()
     destiny_user_info: "GroupUserInfoCard" = attr.field()
     bungie_net_user_info: "UserInfoCard" = attr.field()
@@ -478,14 +469,14 @@ class GroupV2Card(BaseModel):
 
     group_id: int = attr.field()
     name: str = attr.field()
-    group_type: int = attr.field()
+    group_type: "GroupType" = attr.field()
     creation_date: datetime.datetime = attr.field()
     about: str = attr.field()
     motto: str = attr.field()
     member_count: int = attr.field()
     locale: str = attr.field()
-    membership_option: int = attr.field()
-    capabilities: int = attr.field()
+    membership_option: "MembershipOption" = attr.field()
+    capabilities: "Capabilities" = attr.field()
     clan_info: "GroupV2ClanInfo" = attr.field()
     avatar_path: str = attr.field()
     theme: str = attr.field()
@@ -532,9 +523,9 @@ class GroupQuery(BaseModel):
     """
 
     name: str = attr.field()
-    group_type: int = attr.field()
-    creation_date: int = attr.field()
-    sort_by: int = attr.field()
+    group_type: "GroupType" = attr.field()
+    creation_date: "GroupDateRange" = attr.field()
+    sort_by: "GroupSortBy" = attr.field()
     group_member_count_filter: int = attr.field()
     locale_filter: str = attr.field()
     tag_text: str = attr.field()
@@ -584,7 +575,7 @@ class GroupNameSearchRequest(BaseModel):
     """
 
     group_name: str = attr.field()
-    group_type: int = attr.field()
+    group_type: "GroupType" = attr.field()
 
 
 @attr.define
@@ -604,7 +595,7 @@ class GroupOptionalConversation(BaseModel):
     conversation_id: int = attr.field()
     chat_enabled: bool = attr.field()
     chat_name: str = attr.field()
-    chat_security: int = attr.field()
+    chat_security: "ChatSecuritySetting" = attr.field()
 
 
 @attr.define
@@ -680,7 +671,7 @@ class GroupOptionalConversationAddRequest(BaseModel):
     """
 
     chat_name: str = attr.field()
-    chat_security: int = attr.field()
+    chat_security: "ChatSecuritySetting" = attr.field()
 
 
 @attr.define
@@ -724,7 +715,7 @@ class GroupBanRequest(BaseModel):
     """
 
     comment: str = attr.field()
-    length: int = attr.field()
+    length: "IgnoreLength" = attr.field()
 
 
 @attr.define
@@ -772,7 +763,7 @@ class GroupMemberApplication(BaseModel):
 
     group_id: int = attr.field()
     creation_date: datetime.datetime = attr.field()
-    resolve_state: int = attr.field()
+    resolve_state: "GroupApplicationResolveState" = attr.field()
     resolve_date: datetime.datetime = attr.field()
     resolved_by_membership_id: int = attr.field()
     request_message: str = attr.field()
@@ -952,4 +943,4 @@ class GroupApplicationResponse(BaseModel):
         resolution: _No description given by bungie_
     """
 
-    resolution: int = attr.field()
+    resolution: "GroupApplicationResolveState" = attr.field()

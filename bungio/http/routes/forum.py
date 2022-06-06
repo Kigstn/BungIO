@@ -1,4 +1,4 @@
-from typing import Callable, Coroutine, Optional
+from typing import Any, Callable, Coroutine, Optional
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -9,12 +9,12 @@ class ForumRouteHttpRequests:
 
     async def get_topics_paged(
         self,
-        category_filter: int,
+        category_filter: Any,
         group: int,
         page: int,
         page_size: int,
-        quick_date: int,
-        sort: int,
+        quick_date: Any,
+        sort: Any,
         locales: Optional[str] = None,
         tagstring: Optional[str] = None,
         auth: Optional[AuthData] = None,
@@ -58,10 +58,10 @@ class ForumRouteHttpRequests:
 
     async def get_core_topics_paged(
         self,
-        category_filter: int,
+        category_filter: Any,
         page: int,
-        quick_date: int,
-        sort: int,
+        quick_date: Any,
+        sort: Any,
         locales: Optional[str] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
@@ -106,7 +106,7 @@ class ForumRouteHttpRequests:
         parent_post_id: int,
         reply_size: int,
         root_thread_mode: bool,
-        sort_mode: int,
+        sort_mode: Any,
         showbanned: Optional[str] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
@@ -153,7 +153,7 @@ class ForumRouteHttpRequests:
         page_size: int,
         reply_size: int,
         root_thread_mode: bool,
-        sort_mode: int,
+        sort_mode: Any,
         showbanned: Optional[str] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:

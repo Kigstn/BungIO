@@ -14,7 +14,7 @@ class IgnoreResponse(BaseModel):
     """
 
     is_ignored: bool = attr.field()
-    ignore_flags: int = attr.field()
+    ignore_flags: "IgnoreStatus" = attr.field()
 
 
 class IgnoreStatus(BaseEnum):

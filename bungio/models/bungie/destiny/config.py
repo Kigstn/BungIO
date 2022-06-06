@@ -1,11 +1,8 @@
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 import attr
 
 from bungio.models.base import BaseModel
-
-if TYPE_CHECKING:
-    from bungio.models import GearAssetDataBaseDefinition, ImagePyramidEntry
 
 
 @attr.define

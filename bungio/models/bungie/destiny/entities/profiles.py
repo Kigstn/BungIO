@@ -6,7 +6,12 @@ import attr
 from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyVendorReceipt, UserInfoCard
+    from bungio.models import (
+        DestinyGameVersions,
+        DestinySeasonDefinition,
+        DestinyVendorReceipt,
+        UserInfoCard,
+    )
 
 
 @attr.define
@@ -38,8 +43,8 @@ class DestinyProfileComponent(BaseModel):
 
     user_info: "UserInfoCard" = attr.field()
     date_last_played: datetime.datetime = attr.field()
-    versions_owned: int = attr.field()
+    versions_owned: "DestinyGameVersions" = attr.field()
     character_ids: list[int] = attr.field()
-    season_hashes: list[int] = attr.field()
-    current_season_hash: int = attr.field()
+    season_hashes: list["DestinySeasonDefinition"] = attr.field()
+    current_season_hash: "DestinySeasonDefinition" = attr.field()
     current_season_reward_power_cap: int = attr.field()

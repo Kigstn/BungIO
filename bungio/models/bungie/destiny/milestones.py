@@ -7,24 +7,15 @@ from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
+        DestinyActivityDefinition,
+        DestinyActivityModeDefinition,
+        DestinyActivityModifierDefinition,
         DestinyChallengeStatus,
-        DestinyMilestoneActivity,
-        DestinyMilestoneActivityCompletionStatus,
-        DestinyMilestoneActivityPhase,
-        DestinyMilestoneActivityVariant,
-        DestinyMilestoneChallengeActivity,
-        DestinyMilestoneContentItemCategory,
-        DestinyMilestoneQuest,
-        DestinyMilestoneRewardCategory,
-        DestinyMilestoneRewardEntry,
-        DestinyMilestoneVendor,
-        DestinyPublicMilestoneActivity,
-        DestinyPublicMilestoneActivityVariant,
-        DestinyPublicMilestoneChallenge,
-        DestinyPublicMilestoneChallengeActivity,
-        DestinyPublicMilestoneQuest,
-        DestinyPublicMilestoneVendor,
+        DestinyInventoryItemDefinition,
+        DestinyMilestoneDefinition,
+        DestinyObjectiveDefinition,
         DestinyQuestStatus,
+        DestinyVendorDefinition,
     )
 
 
@@ -46,11 +37,11 @@ class DestinyMilestone(BaseModel):
         order: Used for ordering milestones in a display to match how we order them in BNet. May pull from static data, or possibly in the future from dynamic information.
     """
 
-    milestone_hash: int = attr.field()
+    milestone_hash: "DestinyMilestoneDefinition" = attr.field()
     available_quests: list["DestinyMilestoneQuest"] = attr.field()
     activities: list["DestinyMilestoneChallengeActivity"] = attr.field()
     values: Any = attr.field()
-    vendor_hashes: list[int] = attr.field()
+    vendor_hashes: list["DestinyVendorDefinition"] = attr.field()
     vendors: list["DestinyMilestoneVendor"] = attr.field()
     rewards: list["DestinyMilestoneRewardCategory"] = attr.field()
     start_date: datetime.datetime = attr.field()
@@ -70,7 +61,7 @@ class DestinyMilestoneQuest(BaseModel):
         challenges: The activities referred to by this quest can have many associated challenges. They are all contained here, with activityHashes so that you can associate them with the specific activity variants in which they can be found. In retrospect, I probably should have put these under the specific Activity Variants, but it's too late to change it now. Theoretically, a quest without Activities can still have Challenges, which is why this is on a higher level than activity/variants, but it probably should have been in both places. That may come as a later revision.
     """
 
-    quest_item_hash: int = attr.field()
+    quest_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     status: "DestinyQuestStatus" = attr.field()
     activity: "DestinyMilestoneActivity" = attr.field()
     challenges: list["DestinyChallengeStatus"] = attr.field()
@@ -89,10 +80,10 @@ class DestinyMilestoneActivity(BaseModel):
         variants: If you want more than just name/location/etc... you're going to have to dig into and show the variants of the conceptual activity. These will differ in seemingly arbitrary ways, like difficulty level and modifiers applied. Show it in whatever way tickles your fancy.
     """
 
-    activity_hash: int = attr.field()
-    activity_mode_hash: int = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
+    activity_mode_hash: "DestinyActivityModeDefinition" = attr.field()
     activity_mode_type: int = attr.field()
-    modifier_hashes: list[int] = attr.field()
+    modifier_hashes: list["DestinyActivityModifierDefinition"] = attr.field()
     variants: list["DestinyMilestoneActivityVariant"] = attr.field()
 
 
@@ -108,9 +99,9 @@ class DestinyMilestoneActivityVariant(BaseModel):
         activity_mode_type: The enumeration equivalent of the most specific Activity Mode under which this activity is played.
     """
 
-    activity_hash: int = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
     completion_status: "DestinyMilestoneActivityCompletionStatus" = attr.field()
-    activity_mode_hash: int = attr.field()
+    activity_mode_hash: "DestinyActivityModeDefinition" = attr.field()
     activity_mode_type: int = attr.field()
 
 
@@ -156,9 +147,9 @@ class DestinyMilestoneChallengeActivity(BaseModel):
         phases: If the Activity has discrete "phases" that we can track, that info will be here. Otherwise, this value will be NULL. Note that this is a list and not a dictionary: the order implies the ascending order of phases or progression in this activity.
     """
 
-    activity_hash: int = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
     challenges: list["DestinyChallengeStatus"] = attr.field()
-    modifier_hashes: list[int] = attr.field()
+    modifier_hashes: list["DestinyActivityModifierDefinition"] = attr.field()
     boolean_activity_options: Any = attr.field()
     loadout_requirement_index: int = attr.field()
     phases: list["DestinyMilestoneActivityPhase"] = attr.field()
@@ -174,8 +165,8 @@ class DestinyMilestoneVendor(BaseModel):
         preview_item_hash: If this vendor is featuring a specific item for this event, this will be the hash identifier of that item. I'm taking bets now on how long we go before this needs to be a list or some other, more complex representation instead and I deprecate this too. I'm going to go with 5 months. Calling it now, 2017-09-14 at 9:46pm PST.
     """
 
-    vendor_hash: int = attr.field()
-    preview_item_hash: int = attr.field()
+    vendor_hash: "DestinyVendorDefinition" = attr.field()
+    preview_item_hash: "DestinyInventoryItemDefinition" = attr.field()
 
 
 @attr.define
@@ -237,7 +228,7 @@ class DestinyMilestoneContentItemCategory(BaseModel):
     """
 
     title: str = attr.field()
-    item_hashes: list[int] = attr.field()
+    item_hashes: list["DestinyInventoryItemDefinition"] = attr.field()
 
 
 @attr.define
@@ -256,7 +247,7 @@ class DestinyPublicMilestone(BaseModel):
         order: Used for ordering milestones in a display to match how we order them in BNet. May pull from static data, or possibly in the future from dynamic information.
     """
 
-    milestone_hash: int = attr.field()
+    milestone_hash: "DestinyMilestoneDefinition" = attr.field()
     available_quests: list["DestinyPublicMilestoneQuest"] = attr.field()
     activities: list["DestinyPublicMilestoneChallengeActivity"] = attr.field()
     vendor_hashes: list[int] = attr.field()
@@ -277,7 +268,7 @@ class DestinyPublicMilestoneQuest(BaseModel):
         challenges: For the given quest there could be 0-to-Many challenges: mini quests that you can perform in the course of doing this quest, that may grant you rewards and benefits.
     """
 
-    quest_item_hash: int = attr.field()
+    quest_item_hash: "DestinyMilestoneDefinition" = attr.field()
     activity: "DestinyPublicMilestoneActivity" = attr.field()
     challenges: list["DestinyPublicMilestoneChallenge"] = attr.field()
 
@@ -295,10 +286,10 @@ class DestinyPublicMilestoneActivity(BaseModel):
         activity_mode_type: The enumeration equivalent of the most specific Activity Mode under which this activity is played.
     """
 
-    activity_hash: int = attr.field()
-    modifier_hashes: list[int] = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
+    modifier_hashes: list["DestinyActivityModifierDefinition"] = attr.field()
     variants: list["DestinyPublicMilestoneActivityVariant"] = attr.field()
-    activity_mode_hash: int = attr.field()
+    activity_mode_hash: "DestinyActivityModeDefinition" = attr.field()
     activity_mode_type: int = attr.field()
 
 
@@ -313,8 +304,8 @@ class DestinyPublicMilestoneActivityVariant(BaseModel):
         activity_mode_type: The enumeration equivalent of the most specific Activity Mode under which this activity is played.
     """
 
-    activity_hash: int = attr.field()
-    activity_mode_hash: int = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
+    activity_mode_hash: "DestinyActivityModeDefinition" = attr.field()
     activity_mode_type: int = attr.field()
 
 
@@ -328,8 +319,8 @@ class DestinyPublicMilestoneChallenge(BaseModel):
         activity_hash: IF the Objective is related to a specific Activity, this will be that activity's hash. Use it to look up the DestinyActivityDefinition for additional data to show.
     """
 
-    objective_hash: int = attr.field()
-    activity_hash: int = attr.field()
+    objective_hash: "DestinyObjectiveDefinition" = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
 
 
 @attr.define
@@ -346,9 +337,9 @@ class DestinyPublicMilestoneChallengeActivity(BaseModel):
         boolean_activity_options: The set of activity options for this activity, keyed by an identifier that's unique for this activity (not guaranteed to be unique between or across all activities, though should be unique for every *variant* of a given *conceptual* activity: for instance, the original D2 Raid has many variant DestinyActivityDefinitions. While other activities could potentially have the same option hashes, for any given D2 base Raid variant the hash will be unique). As a concrete example of this data, the hashes you get for Raids will correspond to the currently active "Challenge Mode". We have no human readable information for this data, so it's up to you if you want to associate it with such info to show it.
     """
 
-    activity_hash: int = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
     challenge_objective_hashes: list[int] = attr.field()
-    modifier_hashes: list[int] = attr.field()
+    modifier_hashes: list["DestinyActivityModifierDefinition"] = attr.field()
     loadout_requirement_index: int = attr.field()
     phase_hashes: list[int] = attr.field()
     boolean_activity_options: Any = attr.field()
@@ -364,5 +355,5 @@ class DestinyPublicMilestoneVendor(BaseModel):
         preview_item_hash: If this vendor is featuring a specific item for this event, this will be the hash identifier of that item. I'm taking bets now on how long we go before this needs to be a list or some other, more complex representation instead and I deprecate this too. I'm going to go with 5 months. Calling it now, 2017-09-14 at 9:46pm PST.
     """
 
-    vendor_hash: int = attr.field()
-    preview_item_hash: int = attr.field()
+    vendor_hash: "DestinyVendorDefinition" = attr.field()
+    preview_item_hash: "DestinyInventoryItemDefinition" = attr.field()

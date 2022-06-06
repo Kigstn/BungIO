@@ -5,7 +5,10 @@ import attr
 from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyObjectiveProgress
+    from bungio.models import (
+        DestinyObjectiveProgress,
+        DestinyPresentationNodeDefinition,
+    )
 
 
 @attr.define
@@ -19,7 +22,7 @@ class DestinyMetricsComponent(BaseModel):
     """
 
     metrics: Any = attr.field()
-    metrics_root_node_hash: int = attr.field()
+    metrics_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
 
 
 @attr.define

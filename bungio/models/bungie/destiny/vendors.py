@@ -6,7 +6,7 @@ import attr
 from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyItemQuantity
+    from bungio.models import DestinyItemQuantity, DestinyVendorItemRefundPolicy
 
 
 @attr.define
@@ -29,7 +29,7 @@ class DestinyVendorReceipt(BaseModel):
     item_received: "DestinyItemQuantity" = attr.field()
     license_unlock_hash: int = attr.field()
     purchased_by_character_id: int = attr.field()
-    refund_policy: int = attr.field()
+    refund_policy: "DestinyVendorItemRefundPolicy" = attr.field()
     sequence_number: int = attr.field()
     time_to_expiration: int = attr.field()
     expires_on: datetime.datetime = attr.field()

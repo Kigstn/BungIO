@@ -5,7 +5,7 @@ import attr
 from bungio.models.base import BaseEnum, BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyInsertPlugsRequestEntry
+    from bungio.models import BungieMembershipType, DestinyInventoryItemDefinition
 
 
 @attr.define
@@ -17,7 +17,7 @@ class DestinyActionRequest(BaseModel):
         membership_type: _No description given by bungie_
     """
 
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
 
 
 @attr.define
@@ -31,7 +31,7 @@ class DestinyCharacterActionRequest(BaseModel):
     """
 
     character_id: int = attr.field()
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
 
 
 @attr.define
@@ -47,7 +47,7 @@ class DestinyItemActionRequest(BaseModel):
 
     item_id: int = attr.field()
     character_id: int = attr.field()
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
 
 
 @attr.define
@@ -63,11 +63,11 @@ class DestinyPostmasterTransferRequest(BaseModel):
         membership_type: _No description given by bungie_
     """
 
-    item_reference_hash: int = attr.field()
+    item_reference_hash: "DestinyInventoryItemDefinition" = attr.field()
     stack_size: int = attr.field()
     item_id: int = attr.field()
     character_id: int = attr.field()
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
 
 
 @attr.define
@@ -83,7 +83,7 @@ class DestinyItemSetActionRequest(BaseModel):
 
     item_ids: list[int] = attr.field()
     character_id: int = attr.field()
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
 
 
 @attr.define
@@ -101,7 +101,7 @@ class DestinyItemStateRequest(BaseModel):
     state: bool = attr.field()
     item_id: int = attr.field()
     character_id: int = attr.field()
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
 
 
 @attr.define
@@ -121,7 +121,7 @@ class DestinyInsertPlugsActionRequest(BaseModel):
     item_instance_id: int = attr.field()
     plug: "DestinyInsertPlugsRequestEntry" = attr.field()
     character_id: int = attr.field()
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
 
 
 @attr.define
@@ -136,7 +136,7 @@ class DestinyInsertPlugsRequestEntry(BaseModel):
     """
 
     socket_index: int = attr.field()
-    socket_array_type: int = attr.field()
+    socket_array_type: "DestinySocketArrayType" = attr.field()
     plug_item_hash: int = attr.field()
 
 
@@ -166,4 +166,4 @@ class DestinyInsertPlugsFreeActionRequest(BaseModel):
     plug: "DestinyInsertPlugsRequestEntry" = attr.field()
     item_id: int = attr.field()
     character_id: int = attr.field()
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()

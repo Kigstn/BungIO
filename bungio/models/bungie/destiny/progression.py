@@ -5,7 +5,12 @@ import attr
 from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyProgressionResetEntry
+    from bungio.models import (
+        DestinyFactionDefinition,
+        DestinyProgressionDefinition,
+        DestinyProgressionResetEntry,
+        DestinyProgressionRewardItemState,
+    )
 
 
 @attr.define
@@ -32,9 +37,9 @@ class DestinyFactionProgression(BaseModel):
         reward_item_states: Information about historical rewards for this progression, if there is any data for it.
     """
 
-    faction_hash: int = attr.field()
+    faction_hash: "DestinyFactionDefinition" = attr.field()
     faction_vendor_index: int = attr.field()
-    progression_hash: int = attr.field()
+    progression_hash: "DestinyProgressionDefinition" = attr.field()
     daily_progress: int = attr.field()
     daily_limit: int = attr.field()
     weekly_progress: int = attr.field()
@@ -47,4 +52,4 @@ class DestinyFactionProgression(BaseModel):
     next_level_at: int = attr.field()
     current_reset_count: int = attr.field()
     season_resets: list["DestinyProgressionResetEntry"] = attr.field()
-    reward_item_states: list[int] = attr.field()
+    reward_item_states: list["DestinyProgressionRewardItemState"] = attr.field()

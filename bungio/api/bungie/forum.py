@@ -2,7 +2,15 @@ from typing import Optional
 
 import attr
 
-from bungio.models import ForumRecruitmentDetail, PostSearchResponse, TagResponse
+from bungio.models import (
+    ForumPostSortEnum,
+    ForumRecruitmentDetail,
+    ForumTopicsCategoryFiltersEnum,
+    ForumTopicsQuickDateEnum,
+    ForumTopicsSortEnum,
+    PostSearchResponse,
+    TagResponse,
+)
 from bungio.models.auth import AuthData
 from bungio.models.base import BaseModel
 
@@ -11,12 +19,12 @@ from bungio.models.base import BaseModel
 class ForumRouteInterface(BaseModel):
     async def get_topics_paged(
         self,
-        category_filter: int,
+        category_filter: ForumTopicsCategoryFiltersEnum,
         group: int,
         page: int,
         page_size: int,
-        quick_date: int,
-        sort: int,
+        quick_date: ForumTopicsQuickDateEnum,
+        sort: ForumTopicsSortEnum,
         locales: Optional[str] = None,
         tagstring: Optional[str] = None,
         auth: Optional[AuthData] = None,
@@ -40,12 +48,12 @@ class ForumRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_topics_paged(
-            category_filter=category_filter,
+            category_filter=category_filter.value,
             group=group,
             page=page,
             page_size=page_size,
-            quick_date=quick_date,
-            sort=sort,
+            quick_date=quick_date.value,
+            sort=sort.value,
             locales=locales,
             tagstring=tagstring,
             auth=auth,
@@ -54,10 +62,10 @@ class ForumRouteInterface(BaseModel):
 
     async def get_core_topics_paged(
         self,
-        category_filter: int,
+        category_filter: ForumTopicsCategoryFiltersEnum,
         page: int,
-        quick_date: int,
-        sort: int,
+        quick_date: ForumTopicsQuickDateEnum,
+        sort: ForumTopicsSortEnum,
         locales: Optional[str] = None,
         auth: Optional[AuthData] = None,
     ) -> PostSearchResponse:
@@ -77,7 +85,12 @@ class ForumRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_core_topics_paged(
-            category_filter=category_filter, page=page, quick_date=quick_date, sort=sort, locales=locales, auth=auth
+            category_filter=category_filter.value,
+            page=page,
+            quick_date=quick_date.value,
+            sort=sort.value,
+            locales=locales,
+            auth=auth,
         )
         return PostSearchResponse.from_dict(data=response, client=self._client)
 
@@ -89,7 +102,7 @@ class ForumRouteInterface(BaseModel):
         parent_post_id: int,
         reply_size: int,
         root_thread_mode: bool,
-        sort_mode: int,
+        sort_mode: ForumPostSortEnum,
         showbanned: Optional[str] = None,
         auth: Optional[AuthData] = None,
     ) -> PostSearchResponse:
@@ -118,7 +131,7 @@ class ForumRouteInterface(BaseModel):
             parent_post_id=parent_post_id,
             reply_size=reply_size,
             root_thread_mode=root_thread_mode,
-            sort_mode=sort_mode,
+            sort_mode=sort_mode.value,
             showbanned=showbanned,
             auth=auth,
         )
@@ -131,7 +144,7 @@ class ForumRouteInterface(BaseModel):
         page_size: int,
         reply_size: int,
         root_thread_mode: bool,
-        sort_mode: int,
+        sort_mode: ForumPostSortEnum,
         showbanned: Optional[str] = None,
         auth: Optional[AuthData] = None,
     ) -> PostSearchResponse:
@@ -158,7 +171,7 @@ class ForumRouteInterface(BaseModel):
             page_size=page_size,
             reply_size=reply_size,
             root_thread_mode=root_thread_mode,
-            sort_mode=sort_mode,
+            sort_mode=sort_mode.value,
             showbanned=showbanned,
             auth=auth,
         )
@@ -217,7 +230,7 @@ class ForumRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_topic_for_content(content_id=content_id, auth=auth)
-        return response["Result"]
+        return int.from_dict(data=response, client=self._client)
 
     async def get_forum_tag_suggestions(
         self, partialtag: Optional[str] = None, auth: Optional[AuthData] = None

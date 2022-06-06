@@ -7,16 +7,18 @@ from bungio.models.base import BaseModel
 if TYPE_CHECKING:
     from bungio.models import (
         DestinyDisplayPropertiesDefinition,
+        DestinyGenderDefinition,
         DestinyItemQuantity,
+        DestinyLoreDefinition,
+        DestinyObjectiveDefinition,
         DestinyPresentationChildBlock,
+        DestinyPresentationNodeDefinition,
         DestinyPresentationNodeRequirementsBlock,
-        DestinyRecordCompletionBlock,
-        DestinyRecordExpirationBlock,
-        DestinyRecordIntervalBlock,
-        DestinyRecordIntervalObjective,
-        DestinyRecordIntervalRewards,
-        DestinyRecordTitleBlock,
-        SchemaRecordStateBlock,
+        DestinyPresentationNodeType,
+        DestinyRecordToastStyle,
+        DestinyRecordValueStyle,
+        DestinyScope,
+        DestinyTraitDefinition,
     )
 
 
@@ -51,11 +53,11 @@ class DestinyRecordDefinition(BaseModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    scope: int = attr.field()
+    scope: "DestinyScope" = attr.field()
     presentation_info: "DestinyPresentationChildBlock" = attr.field()
-    lore_hash: int = attr.field()
-    objective_hashes: list[int] = attr.field()
-    record_value_style: int = attr.field()
+    lore_hash: "DestinyLoreDefinition" = attr.field()
+    objective_hashes: list["DestinyObjectiveDefinition"] = attr.field()
+    record_value_style: "DestinyRecordValueStyle" = attr.field()
     for_title_gilding: bool = attr.field()
     should_show_large_icons: bool = attr.field()
     title_info: "DestinyRecordTitleBlock" = attr.field()
@@ -65,10 +67,10 @@ class DestinyRecordDefinition(BaseModel):
     expiration_info: "DestinyRecordExpirationBlock" = attr.field()
     interval_info: "DestinyRecordIntervalBlock" = attr.field()
     reward_items: list["DestinyItemQuantity"] = attr.field()
-    presentation_node_type: int = attr.field()
+    presentation_node_type: "DestinyPresentationNodeType" = attr.field()
     trait_ids: list[str] = attr.field()
-    trait_hashes: list[int] = attr.field()
-    parent_node_hashes: list[int] = attr.field()
+    trait_hashes: list["DestinyTraitDefinition"] = attr.field()
+    parent_node_hashes: list["DestinyPresentationNodeDefinition"] = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
@@ -88,8 +90,8 @@ class DestinyRecordTitleBlock(BaseModel):
 
     has_title: bool = attr.field()
     titles_by_gender: Any = attr.field()
-    titles_by_gender_hash: Any = attr.field()
-    gilding_tracking_record_hash: int = attr.field()
+    titles_by_gender_hash: "DestinyGenderDefinition" = attr.field()
+    gilding_tracking_record_hash: "DestinyRecordDefinition" = attr.field()
 
 
 @attr.define
@@ -107,7 +109,7 @@ class DestinyRecordCompletionBlock(BaseModel):
     partial_completion_objective_count_threshold: int = attr.field()
     score_value: int = attr.field()
     should_fire_toast: bool = attr.field()
-    toast_style: int = attr.field()
+    toast_style: "DestinyRecordToastStyle" = attr.field()
 
 
 @attr.define
@@ -166,7 +168,7 @@ class DestinyRecordIntervalObjective(BaseModel):
         interval_score_value: _No description given by bungie_
     """
 
-    interval_objective_hash: int = attr.field()
+    interval_objective_hash: "DestinyObjectiveDefinition" = attr.field()
     interval_score_value: int = attr.field()
 
 

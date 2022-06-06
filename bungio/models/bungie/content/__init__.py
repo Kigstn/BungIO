@@ -1,12 +1,12 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import CommentSummary, ContentRepresentation, GeneralUser
+    from bungio.models import GeneralUser
 
 
 @attr.define

@@ -13,7 +13,7 @@ class ComponentResponse(BaseModel):
         disabled: If true, this component is disabled.
     """
 
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 

@@ -1,8 +1,15 @@
-from typing import Any
+from typing import TYPE_CHECKING
 
 import attr
 
 from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import (
+        DestinyCollectibleDefinition,
+        DestinyCollectibleState,
+        DestinyPresentationNodeDefinition,
+    )
 
 
 @attr.define
@@ -16,9 +23,9 @@ class DestinyCollectiblesComponent(BaseModel):
         collection_badges_root_node_hash: The hash for the root presentation node definition of Collection Badges.
     """
 
-    collectibles: Any = attr.field()
-    collection_categories_root_node_hash: int = attr.field()
-    collection_badges_root_node_hash: int = attr.field()
+    collectibles: "DestinyCollectibleDefinition" = attr.field()
+    collection_categories_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
+    collection_badges_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
 
 
 @attr.define
@@ -30,7 +37,7 @@ class DestinyCollectibleComponent(BaseModel):
         state: _No description given by bungie_
     """
 
-    state: int = attr.field()
+    state: "DestinyCollectibleState" = attr.field()
 
 
 @attr.define
@@ -46,8 +53,8 @@ class DestinyProfileCollectiblesComponent(BaseModel):
         collection_badges_root_node_hash: The hash for the root presentation node definition of Collection Badges.
     """
 
-    recent_collectible_hashes: list[int] = attr.field()
-    newness_flagged_collectible_hashes: list[int] = attr.field()
-    collectibles: Any = attr.field()
-    collection_categories_root_node_hash: int = attr.field()
-    collection_badges_root_node_hash: int = attr.field()
+    recent_collectible_hashes: list["DestinyCollectibleDefinition"] = attr.field()
+    newness_flagged_collectible_hashes: list["DestinyCollectibleDefinition"] = attr.field()
+    collectibles: "DestinyCollectibleDefinition" = attr.field()
+    collection_categories_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
+    collection_badges_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()

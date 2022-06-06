@@ -6,12 +6,7 @@ import attr
 from bungio.models.base import BaseEnum, BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import (
-        FireteamMember,
-        FireteamSummary,
-        FireteamUserInfoCard,
-        UserInfoCard,
-    )
+    from bungio.models import BungieMembershipType, UserInfoCard
 
 
 class FireteamDateRange(BaseEnum):
@@ -105,7 +100,7 @@ class FireteamSummary(BaseModel):
 
     fireteam_id: int = attr.field()
     group_id: int = attr.field()
-    platform: int = attr.field()
+    platform: "FireteamPlatform" = attr.field()
     activity_type: int = attr.field()
     is_immediate: bool = attr.field()
     scheduled_time: datetime.datetime = attr.field()
@@ -161,7 +156,7 @@ class FireteamMember(BaseModel):
     date_joined: datetime.datetime = attr.field()
     has_microphone: bool = attr.field()
     last_platform_invite_attempt_date: datetime.datetime = attr.field()
-    last_platform_invite_attempt_result: int = attr.field()
+    last_platform_invite_attempt_result: "FireteamPlatformInviteResult" = attr.field()
 
 
 @attr.define
@@ -185,13 +180,13 @@ class FireteamUserInfoCard(BaseModel):
     """
 
     fireteam_display_name: str = attr.field()
-    fireteam_membership_type: int = attr.field()
+    fireteam_membership_type: "BungieMembershipType" = attr.field()
     supplemental_display_name: str = attr.field()
     icon_path: str = attr.field()
-    cross_save_override: int = attr.field()
-    applicable_membership_types: list[int] = attr.field()
+    cross_save_override: "BungieMembershipType" = attr.field()
+    applicable_membership_types: list["BungieMembershipType"] = attr.field()
     is_public: bool = attr.field()
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
     membership_id: int = attr.field()
     display_name: str = attr.field()
     bungie_global_display_name: str = attr.field()

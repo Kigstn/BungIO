@@ -6,6 +6,7 @@ from bungio.models import (
     SearchResultOfTrendingEntry,
     TrendingCategories,
     TrendingDetail,
+    TrendingEntryType,
 )
 from bungio.models.auth import AuthData
 from bungio.models.base import BaseModel
@@ -48,7 +49,7 @@ class TrendingRouteInterface(BaseModel):
         return SearchResultOfTrendingEntry.from_dict(data=response, client=self._client)
 
     async def get_trending_entry_detail(
-        self, identifier: str, trending_entry_type: int, auth: Optional[AuthData] = None
+        self, identifier: str, trending_entry_type: TrendingEntryType, auth: Optional[AuthData] = None
     ) -> TrendingDetail:
         """
         Returns the detailed results for a specific trending entry. Note that trending entries are uniquely identified by a combination of *both* the TrendingEntryType *and* the identifier: the identifier alone is not guaranteed to be globally unique.
@@ -63,6 +64,6 @@ class TrendingRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_trending_entry_detail(
-            identifier=identifier, trending_entry_type=trending_entry_type, auth=auth
+            identifier=identifier, trending_entry_type=trending_entry_type.value, auth=auth
         )
         return TrendingDetail.from_dict(data=response, client=self._client)

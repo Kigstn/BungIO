@@ -47,7 +47,7 @@ def generate_functions(api_schema: dict, folder_path: str, docs_path: str, creat
         if create_raw_http:
             name = f"{topic}RouteHttpRequests"
             text = f"""import datetime
-from typing import Callable, Coroutine, Optional, Any
+from typing import Callable, Coroutine, Optional, Any, Union
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -61,7 +61,7 @@ class {name}:
             name = f"{topic}RouteInterface"
             text = f"""import datetime
 import attr
-from typing import Optional, Any
+from typing import Optional, Any, Union
 
 from bungio.models.base import BaseModel
 from bungio.models.auth import AuthData
@@ -192,6 +192,7 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
                             "og_name": name,
                             "description": clean_desc(value),
                             "type": arg_type,
+                            "append": "",
                         }
                     )
 
@@ -202,19 +203,11 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
                         "name": "body_data",
                         "description": clean_desc(schema_data),
                         "type": arg_type,
+                        "append": "",
                     }
                 )
         else:
-            if "$ref" in schema_data:
-                import_path, _, arg_type, clean_model_name = add_to_import_paths(
-                    file_imports=file_imports,
-                    schema_dict=schema_data,
-                    overwrite_path="bungio.models.overwrites",
-                    regular_path="bungio.models.bungie",
-                )
-            else:
-                arg_type = convert_to_typing(schema_data)
-
+            arg_type = convert_to_typing(data=schema_data, return_class_names=True, file_imports=file_imports)
             body.append({"name": "data", "description": "The required data for this request.", "type": arg_type})
 
     # path / query params
@@ -228,9 +221,33 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
             "name": new_name,
             "description": clean_desc(param),
             "in": param["in"],
+            "format": "{name}",
         }
 
-        arg_type = convert_to_typing(param["schema"])
+        if create_raw_http:
+            arg_type = convert_to_typing(param["schema"])
+        else:
+            arg_type = convert_to_typing(param["schema"], return_class_names=True, file_imports=file_imports)
+
+            is_optional = False
+            is_list = False
+            clean_arg_type = arg_type
+            if "Optional" in arg_type:
+                clean_arg_type = clean_arg_type.removesuffix("]").removeprefix("Optional[")
+                is_optional = True
+
+            if "list" in arg_type:
+                clean_arg_type = clean_arg_type.removesuffix("]").removeprefix("list[")
+                is_list = True
+
+            if any(clean_arg_type in imports for imports in file_imports):
+                if is_list:
+                    info["format"] = "[x.value for x in {name}]"
+                else:
+                    info["format"] = "{name}.value"
+
+            if is_optional:
+                info["format"] = f"""{info["format"]} if {info["name"]} else None"""
 
         if info["in"] == "query":
             arg_type = f"Optional[{arg_type}] = None"
@@ -240,6 +257,7 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
 
     security_info = {
         "name": "auth",
+        "format": "{name}",
     }
     if security:
         security_info["description"] = "Authentication information."
@@ -267,12 +285,7 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
         ]["properties"]["Response"]
 
         # try to get the overwrite path if that exists and add that to the imports
-        return_import_path, actual_return_import_path, return_model, clean_return_model = add_to_import_paths(
-            file_imports=file_imports,
-            schema_dict=return_info,
-            overwrite_path="bungio.models.overwrites",
-            regular_path="bungio.models.bungie",
-        )
+        return_model = convert_to_typing(data=return_info, return_class_names=True, file_imports=file_imports)
 
     text += f""") -> {return_model}:
         \"\"\"
@@ -351,48 +364,94 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
     else:
         request_params = []
         for param in params:
-            request_params.append(f"""{param["name"]}={param["name"]}""")
+            request_params.append(f"""{param["name"]}={param["format"].format(name=param["name"])}""")
         if body:
             request_params.append("**data.to_dict()")
 
         text += f"""
         response = await self._client.http.{func_name}({", ".join(request_params)})
         """
-        if return_import_path:  # noqa
+
+        if return_model == "dict":
+            text += f"""return response["Result"]
+
+            """
+        else:
             if "list" not in return_model:
                 text += f"""return {return_model}.from_dict(data=response, client=self._client)
 
                 """
             else:
+                clean_return_model = return_model.removesuffix("]").removeprefix("list[")
                 text += f"""return [{clean_return_model}.from_dict(data=entry, client=self._client) for entry in response["Result"]]
 
                 """
-        else:
-            text += f"""return response["Result"]
-
-            """
 
     return text
 
 
 def convert_to_typing(
-    data: dict, return_class_names: bool = False, path: Optional[str] = None, file_imports: Optional[set] = None
+    data: dict,
+    return_class_names: bool = False,
+    file_imports: Optional[set] = None,
+    type_checking_imports: bool = False,
 ) -> str:
+    arg_type = []
+    is_list = False
+
     if new_data := data.get("allOf", None):
         assert isinstance(new_data, list)
         assert len(new_data) == 1
         return convert_to_typing(
-            data=new_data[0], return_class_names=return_class_names, path=path, file_imports=file_imports
+            data=new_data[0],
+            return_class_names=return_class_names,
+            file_imports=file_imports,
+            type_checking_imports=type_checking_imports,
         )
 
     if new_data := data.get("$ref", None):
         if return_class_names:
             _, import_name = get_import_name_from_ref(new_data)
-            if isinstance(file_imports, set):
-                file_imports.add(f"    from bungio.models import {import_name}")
-            return f'"{import_name}"'
+            import_path = "bungio.models"
+
+            # does the model exist
+            try:
+                imp = importlib.import_module(import_path)
+                if not hasattr(imp, import_name):
+                    raise ModuleNotFoundError
+
+                if isinstance(file_imports, set):
+                    file_imports.add(
+                        f"""{"    " if type_checking_imports else ""}from {import_path} import {import_name}"""
+                    )
+                if type_checking_imports:
+                    import_name = f'"{import_name}"'
+
+            # there are some models without any definition, like ClanBannerSource
+            except ModuleNotFoundError:
+                import_name = "dict"
+
+            return import_name
         else:
             return "Any"
+
+    if new_data := data.get("x-mapped-definition", None):
+        ref_arg_type = convert_to_typing(
+            data=new_data,
+            return_class_names=return_class_names,
+            file_imports=file_imports,
+            type_checking_imports=type_checking_imports,
+        )
+        arg_type.append(ref_arg_type)
+
+    if new_data := data.get("x-enum-reference", None):
+        ref_arg_type = convert_to_typing(
+            data=new_data,
+            return_class_names=return_class_names,
+            file_imports=file_imports,
+            type_checking_imports=type_checking_imports,
+        )
+        arg_type.append(ref_arg_type)
 
     if "format" not in data:
         arg_format = data["type"]
@@ -401,23 +460,29 @@ def convert_to_typing(
 
     match arg_format:
         case "int16" | "int32" | "int64" | "byte" | "uint32":
-            arg_type = "int"
+            arg_type.append("int")
         case "double" | "float":
-            arg_type = "float"
+            arg_type.append("float")
         case "string":
-            arg_type = "str"
+            arg_type.append("str")
         case "boolean":
-            arg_type = "bool"
+            arg_type.append("bool")
         case "date-time":
-            arg_type = "datetime.datetime"
+            arg_type.append("datetime.datetime")
         case "array":
-            arg_type = f"""list[{convert_to_typing(data["items"], return_class_names=return_class_names, file_imports=file_imports, path=path)}]"""
+            arg_type.append(
+                f"""{convert_to_typing(data["items"], return_class_names=return_class_names, file_imports=file_imports, type_checking_imports=type_checking_imports)}"""
+            )
+            is_list = True
         case "object":
-            arg_type = "Any"
+            arg_type.append("Any")
         case _:
             raise ValueError(arg_format)
 
-    return arg_type
+    return_text = arg_type[0]
+    if is_list:
+        return_text = f"list[{return_text}]"
+    return return_text
 
 
 def capital_case_to_snake_case(string: str) -> str:
@@ -458,7 +523,7 @@ def generate_models(api_schema: dict):
         text = """import attr
 import datetime
 
-from typing import Optional, Any, TYPE_CHECKING
+from typing import Optional, Any, TYPE_CHECKING, Union
 
 from bungio.models.base import BaseModel, BaseEnum
 
@@ -471,8 +536,14 @@ from bungio.models.base import BaseModel, BaseEnum
 {model_text}
             """
 
-        formatted_imports = "\n".join(list(file_imports))
-        if file_imports:
+        clean_file_imports = set()
+        for import_string in file_imports:
+            import_name = f"""class {import_string.split("import")[1].strip()}("""
+            if import_name not in text:
+                clean_file_imports.add(import_string)
+
+        formatted_imports = "\n".join(clean_file_imports)
+        if formatted_imports:
             formatted_imports = f"""
 if TYPE_CHECKING:
 {formatted_imports}"""
@@ -599,8 +670,6 @@ def generate_model(api_schema: dict, model: dict, path: str, file_imports: set) 
         text
     """
 
-    required_imports = []
-
     # enums
     if data := model.get("x-enum-values", None):
         text = f"""
@@ -637,7 +706,7 @@ class {model["name"]}(BaseModel):
 
         for name, data in model["properties"].items():
             text += f"""
-    {capital_case_to_snake_case(name)}: {convert_to_typing(data, return_class_names=True, file_imports=file_imports, path=path)} = attr.field()"""
+    {capital_case_to_snake_case(name)}: {convert_to_typing(data, return_class_names=True, file_imports=file_imports, type_checking_imports=True)} = attr.field()"""
 
     # arrays
     elif model["type"] == "array":
@@ -649,47 +718,6 @@ class {model["name"]}(BaseModel):
     return text
 
 
-def add_to_import_paths(
-    file_imports: set, schema_dict: dict, overwrite_path: str, regular_path: str
-) -> tuple[str, str, str, str]:
-    if "$ref" not in schema_dict:
-        schema_type = schema_dict.get("type", None)
-        if schema_type == "array":
-            import_path, actual_import_path, model_name, clean_model_name = add_to_import_paths(
-                file_imports=file_imports,
-                schema_dict=schema_dict["items"],
-                overwrite_path=overwrite_path,
-                regular_path=regular_path,
-            )
-            model_name = f"list[{model_name}]"
-        else:
-            import_path, actual_import_path, = (
-                "",
-                "",
-            )
-            model_name = clean_model_name = convert_to_typing(schema_dict, return_class_names=True)
-
-    else:
-        import_path, model_name = get_import_name_from_ref(schema_dict["$ref"])
-        clean_model_name = model_name
-
-        actual_import_path = f"{overwrite_path}.{import_path}"
-        import_path = "bungio.models"
-
-        # does the model exist
-        try:
-            imp = importlib.import_module(import_path)
-            if not hasattr(imp, model_name):
-                raise ModuleNotFoundError
-            file_imports.add(f"from {import_path} import {model_name}")
-
-        # there are some models without any definition, like ClanBannerSource
-        except ModuleNotFoundError:
-            import_path, actual_import_path, model_name, clean_model_name = "", "", "dict", "dict"
-
-    return import_path, actual_import_path, model_name, clean_model_name
-
-
 def clean_desc(data: dict) -> str:
     text = data.get("description", "_No description given by bungie_")
     return text.replace("\n", " ").replace("\r", "")
@@ -698,6 +726,5 @@ def clean_desc(data: dict) -> str:
 main()
 
 # todo inherited overwrite classes do not display as docs correctly -> https://mkdocstrings.github.io/handlers/overview/#selection-options (inherited members)
-# todo docs for BaseType and BaseEnum
 # todo options: members: [] does not work -> config/config.md
-# todo interface funcs that need enums should actually import them -> BungieMembershipType
+# todo DestinyActivityPlaylistItemDefinition -> directActivityModeType is very unfun. Enum which is defined in a model

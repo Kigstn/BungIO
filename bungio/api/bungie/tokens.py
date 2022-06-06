@@ -25,7 +25,7 @@ class TokensRouteInterface(BaseModel):
         """
 
         response = await self._client.http.claim_partner_offer(auth=auth, **data.to_dict())
-        return response["Result"]
+        return bool.from_dict(data=response, client=self._client)
 
     async def apply_missing_partner_offers_without_claim(
         self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData
@@ -50,7 +50,7 @@ class TokensRouteInterface(BaseModel):
             target_bnet_membership_id=target_bnet_membership_id,
             auth=auth,
         )
-        return response["Result"]
+        return bool.from_dict(data=response, client=self._client)
 
     async def get_partner_offer_sku_history(
         self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData
@@ -95,7 +95,7 @@ class TokensRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_bungie_rewards_for_user(membership_id=membership_id, auth=auth)
-        return response["Result"]
+        return Any.from_dict(data=response, client=self._client)
 
     async def get_bungie_rewards_list(self, auth: Optional[AuthData] = None) -> Any:
         """
@@ -109,4 +109,4 @@ class TokensRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_bungie_rewards_list(auth=auth)
-        return response["Result"]
+        return Any.from_dict(data=response, client=self._client)

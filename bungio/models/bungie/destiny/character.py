@@ -5,7 +5,7 @@ import attr
 from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyItemPeerView, DyeReference
+    from bungio.models import DestinyInventoryItemDefinition, DyeReference
 
 
 @attr.define
@@ -64,5 +64,5 @@ class DestinyItemPeerView(BaseModel):
         dyes: The list of dyes that have been applied to this item.
     """
 
-    item_hash: int = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
     dyes: list["DyeReference"] = attr.field()

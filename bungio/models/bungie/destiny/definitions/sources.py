@@ -1,8 +1,11 @@
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import attr
 
 from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import DestinyRewardSourceDefinition
 
 
 @attr.define
@@ -26,4 +29,4 @@ class DestinyItemSourceDefinition(BaseModel):
     min_level_required: int = attr.field()
     max_level_required: int = attr.field()
     computed_stats: Any = attr.field()
-    source_hashes: list[int] = attr.field()
+    source_hashes: list["DestinyRewardSourceDefinition"] = attr.field()

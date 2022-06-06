@@ -7,6 +7,7 @@ from bungio.models.base import BaseEnum, BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
+        ComponentPrivacySetting,
         ContentItemPublicContract,
         DestinyCharacterActivitiesComponent,
         DestinyCharacterComponent,
@@ -42,34 +43,6 @@ if TYPE_CHECKING:
         DestinyVendorComponent,
         DestinyVendorGroupComponent,
         DestinyVendorReceiptsComponent,
-        DictionaryComponentResponseOfint32AndDestinyItemInstanceComponent,
-        DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent,
-        DictionaryComponentResponseOfint32AndDestinyItemPerksComponent,
-        DictionaryComponentResponseOfint32AndDestinyItemPlugObjectivesComponent,
-        DictionaryComponentResponseOfint32AndDestinyItemRenderComponent,
-        DictionaryComponentResponseOfint32AndDestinyItemReusablePlugsComponent,
-        DictionaryComponentResponseOfint32AndDestinyItemSocketsComponent,
-        DictionaryComponentResponseOfint32AndDestinyItemStatsComponent,
-        DictionaryComponentResponseOfint32AndDestinyItemTalentGridComponent,
-        DictionaryComponentResponseOfint64AndDestinyItemInstanceComponent,
-        DictionaryComponentResponseOfint64AndDestinyItemObjectivesComponent,
-        DictionaryComponentResponseOfint64AndDestinyItemPerksComponent,
-        DictionaryComponentResponseOfint64AndDestinyItemPlugObjectivesComponent,
-        DictionaryComponentResponseOfint64AndDestinyItemRenderComponent,
-        DictionaryComponentResponseOfint64AndDestinyItemReusablePlugsComponent,
-        DictionaryComponentResponseOfint64AndDestinyItemSocketsComponent,
-        DictionaryComponentResponseOfint64AndDestinyItemStatsComponent,
-        DictionaryComponentResponseOfint64AndDestinyItemTalentGridComponent,
-        DictionaryComponentResponseOfuint32AndDestinyItemInstanceComponent,
-        DictionaryComponentResponseOfuint32AndDestinyItemObjectivesComponent,
-        DictionaryComponentResponseOfuint32AndDestinyItemPerksComponent,
-        DictionaryComponentResponseOfuint32AndDestinyItemPlugComponent,
-        DictionaryComponentResponseOfuint32AndDestinyItemPlugObjectivesComponent,
-        DictionaryComponentResponseOfuint32AndDestinyItemRenderComponent,
-        DictionaryComponentResponseOfuint32AndDestinyItemReusablePlugsComponent,
-        DictionaryComponentResponseOfuint32AndDestinyItemSocketsComponent,
-        DictionaryComponentResponseOfuint32AndDestinyItemStatsComponent,
-        DictionaryComponentResponseOfuint32AndDestinyItemTalentGridComponent,
         FireteamResponse,
         FireteamSummary,
         GroupBan,
@@ -80,7 +53,6 @@ if TYPE_CHECKING:
         GroupV2Card,
         PagedQuery,
         PostResponse,
-        StreamInfo,
         TrendingEntry,
     )
 
@@ -331,7 +303,7 @@ class SingleComponentResponseOfDestinyVendorReceiptsComponent(BaseModel):
     """
 
     data: "DestinyVendorReceiptsComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -347,7 +319,7 @@ class SingleComponentResponseOfDestinyInventoryComponent(BaseModel):
     """
 
     data: "DestinyInventoryComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -363,7 +335,7 @@ class SingleComponentResponseOfDestinyProfileComponent(BaseModel):
     """
 
     data: "DestinyProfileComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -379,7 +351,7 @@ class SingleComponentResponseOfDestinyPlatformSilverComponent(BaseModel):
     """
 
     data: "DestinyPlatformSilverComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -395,7 +367,7 @@ class SingleComponentResponseOfDestinyKiosksComponent(BaseModel):
     """
 
     data: "DestinyKiosksComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -411,7 +383,7 @@ class SingleComponentResponseOfDestinyPlugSetsComponent(BaseModel):
     """
 
     data: "DestinyPlugSetsComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -427,7 +399,7 @@ class SingleComponentResponseOfDestinyProfileProgressionComponent(BaseModel):
     """
 
     data: "DestinyProfileProgressionComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -443,7 +415,7 @@ class SingleComponentResponseOfDestinyPresentationNodesComponent(BaseModel):
     """
 
     data: "DestinyPresentationNodesComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -459,7 +431,7 @@ class SingleComponentResponseOfDestinyProfileRecordsComponent(BaseModel):
     """
 
     data: "DestinyProfileRecordsComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -475,7 +447,7 @@ class SingleComponentResponseOfDestinyProfileCollectiblesComponent(BaseModel):
     """
 
     data: "DestinyProfileCollectiblesComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -491,7 +463,7 @@ class SingleComponentResponseOfDestinyProfileTransitoryComponent(BaseModel):
     """
 
     data: "DestinyProfileTransitoryComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -507,7 +479,7 @@ class SingleComponentResponseOfDestinyMetricsComponent(BaseModel):
     """
 
     data: "DestinyMetricsComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -523,7 +495,7 @@ class SingleComponentResponseOfDestinyStringVariablesComponent(BaseModel):
     """
 
     data: "DestinyStringVariablesComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -539,7 +511,7 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterComponent(BaseModel):
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -555,7 +527,7 @@ class DictionaryComponentResponseOfint64AndDestinyInventoryComponent(BaseModel):
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -571,7 +543,7 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent(
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -587,7 +559,7 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterRenderComponent(BaseM
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -603,7 +575,7 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent(B
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -619,7 +591,7 @@ class DictionaryComponentResponseOfint64AndDestinyKiosksComponent(BaseModel):
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -635,7 +607,7 @@ class DictionaryComponentResponseOfint64AndDestinyPlugSetsComponent(BaseModel):
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -665,7 +637,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemObjectivesComponent(BaseM
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -681,7 +653,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemPerksComponent(BaseModel)
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -697,7 +669,7 @@ class DictionaryComponentResponseOfint64AndDestinyPresentationNodesComponent(Bas
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -713,7 +685,7 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterRecordsComponent(Base
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -729,7 +701,7 @@ class DictionaryComponentResponseOfint64AndDestinyCollectiblesComponent(BaseMode
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -745,7 +717,7 @@ class DictionaryComponentResponseOfint64AndDestinyStringVariablesComponent(BaseM
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -761,7 +733,7 @@ class DictionaryComponentResponseOfint64AndDestinyCraftablesComponent(BaseModel)
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -791,7 +763,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemObjectivesComponent(BaseMo
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -807,7 +779,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemPerksComponent(BaseModel):
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -853,7 +825,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemInstanceComponent(BaseMode
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -869,7 +841,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemRenderComponent(BaseModel)
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -885,7 +857,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemStatsComponent(BaseModel):
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -901,7 +873,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemSocketsComponent(BaseModel
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -917,7 +889,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemReusablePlugsComponent(Bas
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -933,7 +905,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemPlugObjectivesComponent(Ba
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -949,7 +921,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemTalentGridComponent(BaseMo
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -965,7 +937,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemPlugComponent(BaseModel):
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -981,7 +953,7 @@ class DictionaryComponentResponseOfint64AndDestinyCurrenciesComponent(BaseModel)
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -997,7 +969,7 @@ class SingleComponentResponseOfDestinyCharacterComponent(BaseModel):
     """
 
     data: "DestinyCharacterComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1013,7 +985,7 @@ class SingleComponentResponseOfDestinyCharacterProgressionComponent(BaseModel):
     """
 
     data: "DestinyCharacterProgressionComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1029,7 +1001,7 @@ class SingleComponentResponseOfDestinyCharacterRenderComponent(BaseModel):
     """
 
     data: "DestinyCharacterRenderComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1045,7 +1017,7 @@ class SingleComponentResponseOfDestinyCharacterActivitiesComponent(BaseModel):
     """
 
     data: "DestinyCharacterActivitiesComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1061,7 +1033,7 @@ class SingleComponentResponseOfDestinyCharacterRecordsComponent(BaseModel):
     """
 
     data: "DestinyCharacterRecordsComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1077,7 +1049,7 @@ class SingleComponentResponseOfDestinyCollectiblesComponent(BaseModel):
     """
 
     data: "DestinyCollectiblesComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1093,7 +1065,7 @@ class SingleComponentResponseOfDestinyCurrenciesComponent(BaseModel):
     """
 
     data: "DestinyCurrenciesComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1109,7 +1081,7 @@ class SingleComponentResponseOfDestinyItemComponent(BaseModel):
     """
 
     data: "DestinyItemComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1125,7 +1097,7 @@ class SingleComponentResponseOfDestinyItemInstanceComponent(BaseModel):
     """
 
     data: "DestinyItemInstanceComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1141,7 +1113,7 @@ class SingleComponentResponseOfDestinyItemObjectivesComponent(BaseModel):
     """
 
     data: "DestinyItemObjectivesComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1157,7 +1129,7 @@ class SingleComponentResponseOfDestinyItemPerksComponent(BaseModel):
     """
 
     data: "DestinyItemPerksComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1173,7 +1145,7 @@ class SingleComponentResponseOfDestinyItemRenderComponent(BaseModel):
     """
 
     data: "DestinyItemRenderComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1189,7 +1161,7 @@ class SingleComponentResponseOfDestinyItemStatsComponent(BaseModel):
     """
 
     data: "DestinyItemStatsComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1205,7 +1177,7 @@ class SingleComponentResponseOfDestinyItemTalentGridComponent(BaseModel):
     """
 
     data: "DestinyItemTalentGridComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1221,7 +1193,7 @@ class SingleComponentResponseOfDestinyItemSocketsComponent(BaseModel):
     """
 
     data: "DestinyItemSocketsComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1237,7 +1209,7 @@ class SingleComponentResponseOfDestinyItemReusablePlugsComponent(BaseModel):
     """
 
     data: "DestinyItemReusablePlugsComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1253,7 +1225,7 @@ class SingleComponentResponseOfDestinyItemPlugObjectivesComponent(BaseModel):
     """
 
     data: "DestinyItemPlugObjectivesComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1269,7 +1241,7 @@ class SingleComponentResponseOfDestinyVendorGroupComponent(BaseModel):
     """
 
     data: "DestinyVendorGroupComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1285,7 +1257,7 @@ class DictionaryComponentResponseOfuint32AndDestinyVendorComponent(BaseModel):
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1301,7 +1273,7 @@ class DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent(Bas
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1329,7 +1301,7 @@ class DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComp
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1359,7 +1331,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent(BaseMo
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1375,7 +1347,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemPerksComponent(BaseModel):
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1421,7 +1393,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemInstanceComponent(BaseMode
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1437,7 +1409,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemRenderComponent(BaseModel)
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1453,7 +1425,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemStatsComponent(BaseModel):
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1469,7 +1441,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemSocketsComponent(BaseModel
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1485,7 +1457,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemReusablePlugsComponent(Bas
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1501,7 +1473,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemPlugObjectivesComponent(Ba
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1517,7 +1489,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemTalentGridComponent(BaseMo
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1533,7 +1505,7 @@ class SingleComponentResponseOfDestinyVendorComponent(BaseModel):
     """
 
     data: "DestinyVendorComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1549,7 +1521,7 @@ class SingleComponentResponseOfDestinyVendorCategoriesComponent(BaseModel):
     """
 
     data: "DestinyVendorCategoriesComponent" = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1565,7 +1537,7 @@ class DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent(BaseMo
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1581,7 +1553,7 @@ class DictionaryComponentResponseOfuint32AndDestinyPublicVendorComponent(BaseMod
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1609,7 +1581,7 @@ class DictionaryComponentResponseOfuint32AndPublicDestinyVendorSaleItemSetCompon
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1655,7 +1627,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemInstanceComponent(BaseMod
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1671,7 +1643,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemRenderComponent(BaseModel
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1687,7 +1659,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemStatsComponent(BaseModel)
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1703,7 +1675,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemSocketsComponent(BaseMode
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1719,7 +1691,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemReusablePlugsComponent(Ba
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1735,7 +1707,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemPlugObjectivesComponent(B
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1751,7 +1723,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemTalentGridComponent(BaseM
     """
 
     data: Any = attr.field()
-    privacy: int = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
 
 
@@ -1862,8 +1834,8 @@ class GlobalAlert(BaseModel):
     alert_html: str = attr.field()
     alert_timestamp: datetime.datetime = attr.field()
     alert_link: str = attr.field()
-    alert_level: int = attr.field()
-    alert_type: int = attr.field()
+    alert_level: "GlobalAlertLevel" = attr.field()
+    alert_type: "GlobalAlertType" = attr.field()
     stream_info: "StreamInfo" = attr.field()
 
 

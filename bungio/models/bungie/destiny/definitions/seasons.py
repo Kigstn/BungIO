@@ -8,8 +8,9 @@ from bungio.models.base import BaseModel
 if TYPE_CHECKING:
     from bungio.models import (
         DestinyDisplayPropertiesDefinition,
-        DestinySeasonPreviewDefinition,
-        DestinySeasonPreviewImageDefinition,
+        DestinyInventoryItemDefinition,
+        DestinyPresentationNodeDefinition,
+        DestinyProgressionDefinition,
     )
 
 
@@ -40,11 +41,11 @@ class DestinySeasonDefinition(BaseModel):
     season_number: int = attr.field()
     start_date: datetime.datetime = attr.field()
     end_date: datetime.datetime = attr.field()
-    season_pass_hash: int = attr.field()
-    season_pass_progression_hash: int = attr.field()
-    artifact_item_hash: int = attr.field()
-    seal_presentation_node_hash: int = attr.field()
-    seasonal_challenges_presentation_node_hash: int = attr.field()
+    season_pass_hash: "DestinySeasonPassDefinition" = attr.field()
+    season_pass_progression_hash: "DestinyProgressionDefinition" = attr.field()
+    artifact_item_hash: "DestinyInventoryItemDefinition" = attr.field()
+    seal_presentation_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
+    seasonal_challenges_presentation_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
     preview: "DestinySeasonPreviewDefinition" = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
@@ -98,8 +99,8 @@ class DestinySeasonPassDefinition(BaseModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    reward_progression_hash: int = attr.field()
-    prestige_progression_hash: int = attr.field()
+    reward_progression_hash: "DestinyProgressionDefinition" = attr.field()
+    prestige_progression_hash: "DestinyProgressionDefinition" = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()

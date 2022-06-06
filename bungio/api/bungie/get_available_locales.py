@@ -20,4 +20,4 @@ class GetAvailableLocalesRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_available_locales(auth=auth)
-        return response["Result"]
+        return Any.from_dict(data=response, client=self._client)

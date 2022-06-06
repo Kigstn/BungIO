@@ -5,7 +5,7 @@ import attr
 from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyBreakerType, DestinyDisplayPropertiesDefinition
 
 
 @attr.define
@@ -22,7 +22,7 @@ class DestinyBreakerTypeDefinition(BaseModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    enum_value: int = attr.field()
+    enum_value: "DestinyBreakerType" = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()

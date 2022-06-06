@@ -5,7 +5,7 @@ import attr
 from bungio.models.base import BaseEnum, BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import BungieFriend, GeneralUser, PlatformFriend
+    from bungio.models import BungieMembershipType, GeneralUser
 
 
 @attr.define
@@ -37,12 +37,12 @@ class BungieFriend(BaseModel):
     """
 
     last_seen_as_membership_id: int = attr.field()
-    last_seen_as_bungie_membership_type: int = attr.field()
+    last_seen_as_bungie_membership_type: "BungieMembershipType" = attr.field()
     bungie_global_display_name: str = attr.field()
     bungie_global_display_name_code: int = attr.field()
-    online_status: int = attr.field()
-    online_title: int = attr.field()
-    relationship: int = attr.field()
+    online_status: "PresenceStatus" = attr.field()
+    online_title: "PresenceOnlineStateFlags" = attr.field()
+    relationship: "FriendRelationshipState" = attr.field()
     bungie_net_user: "GeneralUser" = attr.field()
 
 
@@ -148,7 +148,7 @@ class PlatformFriend(BaseModel):
     """
 
     platform_display_name: str = attr.field()
-    friend_platform: int = attr.field()
+    friend_platform: "PlatformFriendType" = attr.field()
     destiny_membership_id: int = attr.field()
     destiny_membership_type: int = attr.field()
     bungie_net_membership_id: int = attr.field()

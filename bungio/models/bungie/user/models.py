@@ -1,6 +1,11 @@
+from typing import TYPE_CHECKING
+
 import attr
 
 from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import BungieCredentialType
 
 
 @attr.define
@@ -15,7 +20,7 @@ class GetCredentialTypesForAccountResponse(BaseModel):
         credential_as_string: _No description given by bungie_
     """
 
-    credential_type: int = attr.field()
+    credential_type: "BungieCredentialType" = attr.field()
     credential_display_name: str = attr.field()
     is_public: bool = attr.field()
     credential_as_string: str = attr.field()

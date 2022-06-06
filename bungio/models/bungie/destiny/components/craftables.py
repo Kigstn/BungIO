@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 import attr
 
@@ -6,8 +6,9 @@ from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
-        DestinyCraftableSocketComponent,
-        DestinyCraftableSocketPlugComponent,
+        DestinyInventoryItemDefinition,
+        DestinyPlugSetDefinition,
+        DestinyPresentationNodeDefinition,
     )
 
 
@@ -21,8 +22,8 @@ class DestinyCraftablesComponent(BaseModel):
         crafting_root_node_hash: The hash for the root presentation node definition of craftable item categories.
     """
 
-    craftables: Any = attr.field()
-    crafting_root_node_hash: int = attr.field()
+    craftables: "DestinyInventoryItemDefinition" = attr.field()
+    crafting_root_node_hash: "DestinyPresentationNodeDefinition" = attr.field()
 
 
 @attr.define
@@ -51,7 +52,7 @@ class DestinyCraftableSocketComponent(BaseModel):
         plugs: Unlock state for plugs in the socket plug set definition
     """
 
-    plug_set_hash: int = attr.field()
+    plug_set_hash: "DestinyPlugSetDefinition" = attr.field()
     plugs: list["DestinyCraftableSocketPlugComponent"] = attr.field()
 
 
@@ -65,5 +66,5 @@ class DestinyCraftableSocketPlugComponent(BaseModel):
         failed_requirement_indexes: Index into the unlock requirements to display failure descriptions
     """
 
-    plug_item_hash: int = attr.field()
+    plug_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     failed_requirement_indexes: list[int] = attr.field()

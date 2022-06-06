@@ -7,14 +7,9 @@ from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
-        CollectibleDefinitions,
         DestinyCollectibleDefinition,
         DestinyInventoryItemDefinition,
         DestinyRecordDefinition,
-        PartnerOfferHistoryResponse,
-        RewardAvailabilityModel,
-        RewardDisplayProperties,
-        UserRewardAvailabilityModel,
     )
 
 

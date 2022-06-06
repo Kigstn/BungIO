@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 import attr
 
@@ -7,11 +7,16 @@ from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
+        DestinyActivityDefinition,
         DestinyArtifactProfileScoped,
-        DestinyProfileTransitoryCurrentActivity,
-        DestinyProfileTransitoryJoinability,
-        DestinyProfileTransitoryPartyMember,
-        DestinyProfileTransitoryTrackingEntry,
+        DestinyChecklistDefinition,
+        DestinyDestinationDefinition,
+        DestinyGamePrivacySetting,
+        DestinyInventoryItemDefinition,
+        DestinyJoinClosedReasons,
+        DestinyLocationDefinition,
+        DestinyObjectiveDefinition,
+        DestinyPartyMemberStates,
     )
 
 
@@ -25,7 +30,7 @@ class DestinyProfileProgressionComponent(BaseModel):
         seasonal_artifact: Data related to your progress on the current season's artifact that is the same across characters.
     """
 
-    checklists: Any = attr.field()
+    checklists: "DestinyChecklistDefinition" = attr.field()
     seasonal_artifact: "DestinyArtifactProfileScoped" = attr.field()
 
 
@@ -46,7 +51,7 @@ class DestinyProfileTransitoryComponent(BaseModel):
     current_activity: "DestinyProfileTransitoryCurrentActivity" = attr.field()
     joinability: "DestinyProfileTransitoryJoinability" = attr.field()
     tracking: list["DestinyProfileTransitoryTrackingEntry"] = attr.field()
-    last_orbited_destination_hash: int = attr.field()
+    last_orbited_destination_hash: "DestinyDestinationDefinition" = attr.field()
 
 
 @attr.define
@@ -62,9 +67,9 @@ class DestinyProfileTransitoryPartyMember(BaseModel):
     """
 
     membership_id: int = attr.field()
-    emblem_hash: int = attr.field()
+    emblem_hash: "DestinyInventoryItemDefinition" = attr.field()
     display_name: str = attr.field()
-    status: int = attr.field()
+    status: "DestinyPartyMemberStates" = attr.field()
 
 
 @attr.define
@@ -101,8 +106,8 @@ class DestinyProfileTransitoryJoinability(BaseModel):
     """
 
     open_slots: int = attr.field()
-    privacy_setting: int = attr.field()
-    closed_reasons: int = attr.field()
+    privacy_setting: "DestinyGamePrivacySetting" = attr.field()
+    closed_reasons: "DestinyJoinClosedReasons" = attr.field()
 
 
 @attr.define
@@ -119,9 +124,9 @@ class DestinyProfileTransitoryTrackingEntry(BaseModel):
         tracked_date: OPTIONAL - I've got to level with you, I don't really know what this is. Is it when you started tracking it? Is it only populated for tracked items that have time limits? I don't know, but we can get at it - when I get time to actually test what it is, I'll update this. In the meantime, bask in the mysterious data.
     """
 
-    location_hash: int = attr.field()
-    item_hash: int = attr.field()
-    objective_hash: int = attr.field()
-    activity_hash: int = attr.field()
-    questline_item_hash: int = attr.field()
+    location_hash: "DestinyLocationDefinition" = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
+    objective_hash: "DestinyObjectiveDefinition" = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
+    questline_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     tracked_date: datetime.datetime = attr.field()

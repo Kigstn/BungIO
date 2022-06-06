@@ -5,7 +5,13 @@ import attr
 from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import (
+        DestinyDisplayPropertiesDefinition,
+        DestinyObjectiveDefinition,
+        DestinyPresentationNodeDefinition,
+        DestinyPresentationNodeType,
+        DestinyTraitDefinition,
+    )
 
 
 @attr.define
@@ -27,12 +33,12 @@ class DestinyMetricDefinition(BaseModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    tracking_objective_hash: int = attr.field()
+    tracking_objective_hash: "DestinyObjectiveDefinition" = attr.field()
     lower_value_is_better: bool = attr.field()
-    presentation_node_type: int = attr.field()
+    presentation_node_type: "DestinyPresentationNodeType" = attr.field()
     trait_ids: list[str] = attr.field()
-    trait_hashes: list[int] = attr.field()
-    parent_node_hashes: list[int] = attr.field()
+    trait_hashes: list["DestinyTraitDefinition"] = attr.field()
+    parent_node_hashes: list["DestinyPresentationNodeDefinition"] = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()

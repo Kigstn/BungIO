@@ -1,8 +1,12 @@
 import datetime
+from typing import TYPE_CHECKING
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import BungieMembershipType
 
 
 @attr.define
@@ -31,9 +35,9 @@ class AwaPermissionRequested(BaseModel):
         character_id: Destiny character ID, if applicable, that will be affected by the action.
     """
 
-    type: int = attr.field()
+    type: "AwaType" = attr.field()
     affected_item_id: int = attr.field()
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
     character_id: int = attr.field()
 
 
@@ -59,7 +63,7 @@ class AwaUserResponse(BaseModel):
         nonce: Secret nonce received via the PUSH notification.
     """
 
-    selection: int = attr.field()
+    selection: "AwaUserSelection" = attr.field()
     correlation_id: str = attr.field()
     nonce: list[int] = attr.field()
 
@@ -93,14 +97,14 @@ class AwaAuthorizationResult(BaseModel):
         membership_type: MembershipType from the permission request.
     """
 
-    user_selection: int = attr.field()
-    response_reason: int = attr.field()
+    user_selection: "AwaUserSelection" = attr.field()
+    response_reason: "AwaResponseReason" = attr.field()
     developer_note: str = attr.field()
     action_token: str = attr.field()
     maximum_number_of_uses: int = attr.field()
     valid_until: datetime.datetime = attr.field()
-    type: int = attr.field()
-    membership_type: int = attr.field()
+    type: "AwaType" = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
 
 
 class AwaResponseReason(BaseEnum):

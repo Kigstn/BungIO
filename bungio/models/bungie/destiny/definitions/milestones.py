@@ -6,15 +6,13 @@ from bungio.models.base import BaseEnum, BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
+        DestinyActivityDefinition,
+        DestinyDestinationDefinition,
         DestinyDisplayPropertiesDefinition,
+        DestinyInventoryItemDefinition,
         DestinyItemQuantity,
-        DestinyMilestoneChallengeActivityDefinition,
-        DestinyMilestoneChallengeActivityGraphNodeEntry,
-        DestinyMilestoneChallengeActivityPhase,
-        DestinyMilestoneChallengeDefinition,
-        DestinyMilestoneQuestRewardItem,
-        DestinyMilestoneQuestRewardsDefinition,
-        DestinyMilestoneVendorDefinition,
+        DestinyObjectiveDefinition,
+        DestinyVendorDefinition,
     )
 
 
@@ -48,9 +46,9 @@ class DestinyMilestoneDefinition(BaseModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    display_preference: int = attr.field()
+    display_preference: "DestinyMilestoneDisplayPreference" = attr.field()
     image: str = attr.field()
-    milestone_type: int = attr.field()
+    milestone_type: "DestinyMilestoneType" = attr.field()
     recruitable: bool = attr.field()
     friendly_name: str = attr.field()
     show_in_explorer: bool = attr.field()
@@ -116,12 +114,12 @@ class DestinyMilestoneQuestDefinition(BaseModel):
         destination_hash: Sometimes, a Milestone's quest is related to an entire Destination rather than a specific activity. In that situation, this will be the hash of that Destination. Hotspots are currently the only Milestones that expose this data, but that does not preclude this data from being returned for other Milestones in the future.
     """
 
-    quest_item_hash: int = attr.field()
+    quest_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     override_image: str = attr.field()
     quest_rewards: "DestinyMilestoneQuestRewardsDefinition" = attr.field()
-    activities: Any = attr.field()
-    destination_hash: int = attr.field()
+    activities: "DestinyActivityDefinition" = attr.field()
+    destination_hash: "DestinyDestinationDefinition" = attr.field()
 
 
 @attr.define
@@ -150,9 +148,9 @@ class DestinyMilestoneQuestRewardItem(BaseModel):
         has_conditional_visibility: Indicates that this item quantity may be conditionally shown or hidden, based on various sources of state. For example: server flags, account state, or character progress.
     """
 
-    vendor_hash: int = attr.field()
+    vendor_hash: "DestinyVendorDefinition" = attr.field()
     vendor_item_index: int = attr.field()
-    item_hash: int = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
     item_instance_id: int = attr.field()
     quantity: int = attr.field()
     has_conditional_visibility: bool = attr.field()
@@ -168,8 +166,8 @@ class DestinyMilestoneActivityDefinition(BaseModel):
         variants: A milestone-referenced activity can have many variants, such as Tiers or alternative modes of play. Even if there is only a single variant, the details for these are represented within as a variant definition. It is assumed that, if this DestinyMilestoneActivityDefinition is active, then all variants should be active. If a Milestone could ever split the variants' active status conditionally, they should all have their own DestinyMilestoneActivityDefinition instead! The potential duplication will be worth it for the obviousness of processing and use.
     """
 
-    conceptual_activity_hash: int = attr.field()
-    variants: Any = attr.field()
+    conceptual_activity_hash: "DestinyActivityDefinition" = attr.field()
+    variants: "DestinyActivityDefinition" = attr.field()
 
 
 @attr.define
@@ -182,7 +180,7 @@ class DestinyMilestoneActivityVariantDefinition(BaseModel):
         order: If you care to do so, render the variants in the order prescribed by this value. When you combine live Milestone data with the definition, the order becomes more useful because you'll be cross-referencing between the definition and live data.
     """
 
-    activity_hash: int = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
     order: int = attr.field()
 
 
@@ -223,7 +221,7 @@ class DestinyMilestoneRewardEntryDefinition(BaseModel):
     reward_entry_hash: int = attr.field()
     reward_entry_identifier: str = attr.field()
     items: list["DestinyItemQuantity"] = attr.field()
-    vendor_hash: int = attr.field()
+    vendor_hash: "DestinyVendorDefinition" = attr.field()
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     order: int = attr.field()
 
@@ -237,7 +235,7 @@ class DestinyMilestoneVendorDefinition(BaseModel):
         vendor_hash: The hash of the vendor whose wares should be shown as associated with the Milestone.
     """
 
-    vendor_hash: int = attr.field()
+    vendor_hash: "DestinyVendorDefinition" = attr.field()
 
 
 @attr.define
@@ -266,7 +264,7 @@ class DestinyMilestoneChallengeActivityDefinition(BaseModel):
         phases: Phases related to this activity, if there are any. These will be listed in the order in which they will appear in the actual activity.
     """
 
-    activity_hash: int = attr.field()
+    activity_hash: "DestinyActivityDefinition" = attr.field()
     challenges: list["DestinyMilestoneChallengeDefinition"] = attr.field()
     activity_graph_nodes: list["DestinyMilestoneChallengeActivityGraphNodeEntry"] = attr.field()
     phases: list["DestinyMilestoneChallengeActivityPhase"] = attr.field()
@@ -281,7 +279,7 @@ class DestinyMilestoneChallengeDefinition(BaseModel):
         challenge_objective_hash: The challenge related to this milestone.
     """
 
-    challenge_objective_hash: int = attr.field()
+    challenge_objective_hash: "DestinyObjectiveDefinition" = attr.field()
 
 
 @attr.define

@@ -1,4 +1,4 @@
-from typing import Callable, Coroutine, Optional
+from typing import Any, Callable, Coroutine, Optional
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -8,7 +8,7 @@ class CommunityContentRouteHttpRequests:
     request: Callable[..., Coroutine]
 
     async def get_community_content(
-        self, media_filter: int, page: int, sort: int, auth: Optional[AuthData] = None
+        self, media_filter: Any, page: int, sort: Any, auth: Optional[AuthData] = None
     ) -> dict:
         """
         Returns community content.

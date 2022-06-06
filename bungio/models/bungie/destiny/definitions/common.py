@@ -1,11 +1,6 @@
-from typing import TYPE_CHECKING
-
 import attr
 
 from bungio.models.base import BaseModel
-
-if TYPE_CHECKING:
-    from bungio.models import DestinyIconSequenceDefinition
 
 
 @attr.define

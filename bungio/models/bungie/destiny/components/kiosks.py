@@ -1,11 +1,11 @@
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 import attr
 
 from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyObjectiveProgress
+    from bungio.models import DestinyObjectiveProgress, DestinyVendorDefinition
 
 
 @attr.define
@@ -17,7 +17,7 @@ class DestinyKiosksComponent(BaseModel):
         kiosk_items: A dictionary keyed by the Kiosk Vendor's hash identifier (use it to look up the DestinyVendorDefinition for the relevant kiosk vendor), and whose value is a list of all the items that the user can "see" in the Kiosk, and any other interesting metadata.
     """
 
-    kiosk_items: Any = attr.field()
+    kiosk_items: "DestinyVendorDefinition" = attr.field()
 
 
 @attr.define

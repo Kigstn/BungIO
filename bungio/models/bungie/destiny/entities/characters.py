@@ -7,13 +7,29 @@ from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
+        BungieMembershipType,
         DestinyActivity,
+        DestinyActivityDefinition,
+        DestinyActivityModeDefinition,
+        DestinyActivityModeType,
         DestinyArtifactCharacterScoped,
         DestinyCharacterCustomization,
         DestinyCharacterPeerView,
+        DestinyChecklistDefinition,
+        DestinyClass,
+        DestinyClassDefinition,
         DestinyColor,
+        DestinyFactionDefinition,
+        DestinyGender,
+        DestinyGenderDefinition,
+        DestinyInventoryItemDefinition,
+        DestinyMilestoneDefinition,
         DestinyProgression,
+        DestinyProgressionDefinition,
         DestinyQuestStatus,
+        DestinyRace,
+        DestinyRaceDefinition,
+        DestinyRecordDefinition,
         DyeReference,
     )
 
@@ -49,27 +65,27 @@ class DestinyCharacterComponent(BaseModel):
     """
 
     membership_id: int = attr.field()
-    membership_type: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
     character_id: int = attr.field()
     date_last_played: datetime.datetime = attr.field()
     minutes_played_this_session: int = attr.field()
     minutes_played_total: int = attr.field()
     light: int = attr.field()
     stats: Any = attr.field()
-    race_hash: int = attr.field()
-    gender_hash: int = attr.field()
-    class_hash: int = attr.field()
-    race_type: int = attr.field()
-    class_type: int = attr.field()
-    gender_type: int = attr.field()
+    race_hash: "DestinyRaceDefinition" = attr.field()
+    gender_hash: "DestinyGenderDefinition" = attr.field()
+    class_hash: "DestinyClassDefinition" = attr.field()
+    race_type: "DestinyRace" = attr.field()
+    class_type: "DestinyClass" = attr.field()
+    gender_type: "DestinyGender" = attr.field()
     emblem_path: str = attr.field()
     emblem_background_path: str = attr.field()
-    emblem_hash: int = attr.field()
+    emblem_hash: "DestinyInventoryItemDefinition" = attr.field()
     emblem_color: "DestinyColor" = attr.field()
     level_progression: "DestinyProgression" = attr.field()
     base_character_level: int = attr.field()
     percent_to_next_level: float = attr.field()
-    title_record_hash: int = attr.field()
+    title_record_hash: "DestinyRecordDefinition" = attr.field()
 
 
 @attr.define
@@ -88,13 +104,13 @@ class DestinyCharacterProgressionComponent(BaseModel):
         seasonal_artifact: Data related to your progress on the current season's artifact that can vary per character.
     """
 
-    progressions: Any = attr.field()
-    factions: Any = attr.field()
-    milestones: Any = attr.field()
+    progressions: "DestinyProgressionDefinition" = attr.field()
+    factions: "DestinyFactionDefinition" = attr.field()
+    milestones: "DestinyMilestoneDefinition" = attr.field()
     quests: list["DestinyQuestStatus"] = attr.field()
-    uninstanced_item_objectives: Any = attr.field()
-    uninstanced_item_perks: Any = attr.field()
-    checklists: Any = attr.field()
+    uninstanced_item_objectives: "DestinyInventoryItemDefinition" = attr.field()
+    uninstanced_item_perks: "DestinyInventoryItemDefinition" = attr.field()
+    checklists: "DestinyChecklistDefinition" = attr.field()
     seasonal_artifact: "DestinyArtifactCharacterScoped" = attr.field()
 
 
@@ -133,10 +149,10 @@ class DestinyCharacterActivitiesComponent(BaseModel):
 
     date_activity_started: datetime.datetime = attr.field()
     available_activities: list["DestinyActivity"] = attr.field()
-    current_activity_hash: int = attr.field()
-    current_activity_mode_hash: int = attr.field()
+    current_activity_hash: "DestinyActivityDefinition" = attr.field()
+    current_activity_mode_hash: "DestinyActivityModeDefinition" = attr.field()
     current_activity_mode_type: int = attr.field()
-    current_activity_mode_hashes: list[int] = attr.field()
-    current_activity_mode_types: list[int] = attr.field()
-    current_playlist_activity_hash: int = attr.field()
-    last_completed_story_hash: int = attr.field()
+    current_activity_mode_hashes: list["DestinyActivityModeDefinition"] = attr.field()
+    current_activity_mode_types: list["DestinyActivityModeType"] = attr.field()
+    current_playlist_activity_hash: "DestinyActivityDefinition" = attr.field()
+    last_completed_story_hash: "DestinyActivityDefinition" = attr.field()

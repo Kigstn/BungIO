@@ -1,6 +1,11 @@
+from typing import TYPE_CHECKING
+
 import attr
 
 from bungio.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from bungio.models import DestinyReportReasonCategoryDefinition
 
 
 @attr.define
@@ -14,6 +19,6 @@ class DestinyReportOffensePgcrRequest(BaseModel):
         offending_character_id: Within the PGCR provided when calling the Reporting endpoint, this should be the character ID of the user that you thought was violating terms of use. They must exist in the PGCR provided.
     """
 
-    reason_category_hashes: list[int] = attr.field()
+    reason_category_hashes: list["DestinyReportReasonCategoryDefinition"] = attr.field()
     reason_hashes: list[int] = attr.field()
     offending_character_id: int = attr.field()

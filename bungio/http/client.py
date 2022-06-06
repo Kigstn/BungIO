@@ -40,7 +40,7 @@ __all__ = ("HttpClient",)
 token_update_lock: dict[int, Lock] = {}
 
 
-class HttpClient(AllHttpRequests, AuthHttpRequests, metaclass=SingletonMetaclass):
+class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMetaclass):
     """
     The singleton http client doing all communication with bungie
     """

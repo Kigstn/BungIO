@@ -7,13 +7,27 @@ from bungio.models.base import BaseModel
 
 if TYPE_CHECKING:
     from bungio.models import (
-        DestinyItemInstanceEnergy,
-        DestinyItemSocketState,
+        DamageType,
+        DestinyBreakerTypeDefinition,
+        DestinyDamageTypeDefinition,
+        DestinyEnergyType,
+        DestinyEnergyTypeDefinition,
+        DestinyInventoryBucketDefinition,
+        DestinyInventoryItemDefinition,
+        DestinyMetricDefinition,
         DestinyObjectiveProgress,
         DestinyPerkReference,
         DestinyProgression,
         DestinyStat,
+        DestinyStatDefinition,
+        DestinyTalentGridDefinition,
         DestinyTalentNode,
+        DestinyUnlockDefinition,
+        EquipFailureReason,
+        ItemBindStatus,
+        ItemLocation,
+        ItemState,
+        TransferStatuses,
     )
 
 
@@ -42,20 +56,20 @@ class DestinyItemComponent(BaseModel):
         item_value_visibility: If available, a list that describes which item values (rewards) should be shown (true) or hidden (false).
     """
 
-    item_hash: int = attr.field()
+    item_hash: "DestinyInventoryItemDefinition" = attr.field()
     item_instance_id: int = attr.field()
     quantity: int = attr.field()
-    bind_status: int = attr.field()
-    location: int = attr.field()
-    bucket_hash: int = attr.field()
-    transfer_status: int = attr.field()
+    bind_status: "ItemBindStatus" = attr.field()
+    location: "ItemLocation" = attr.field()
+    bucket_hash: "DestinyInventoryBucketDefinition" = attr.field()
+    transfer_status: "TransferStatuses" = attr.field()
     lockable: bool = attr.field()
-    state: int = attr.field()
-    override_style_item_hash: int = attr.field()
+    state: "ItemState" = attr.field()
+    override_style_item_hash: "DestinyInventoryItemDefinition" = attr.field()
     expiration_date: datetime.datetime = attr.field()
     is_wrapper: bool = attr.field()
     tooltip_notification_indexes: list[int] = attr.field()
-    metric_hash: int = attr.field()
+    metric_hash: "DestinyMetricDefinition" = attr.field()
     metric_objective: "DestinyObjectiveProgress" = attr.field()
     version_number: int = attr.field()
     item_value_visibility: list[bool] = attr.field()
@@ -110,18 +124,18 @@ class DestinyItemInstanceComponent(BaseModel):
         energy: IF populated, this item supports Energy mechanics (i.e. Armor 2.0), and these are the current details of its energy type and available capacity to spend energy points.
     """
 
-    damage_type: int = attr.field()
-    damage_type_hash: int = attr.field()
+    damage_type: "DamageType" = attr.field()
+    damage_type_hash: "DestinyDamageTypeDefinition" = attr.field()
     primary_stat: "DestinyStat" = attr.field()
     item_level: int = attr.field()
     quality: int = attr.field()
     is_equipped: bool = attr.field()
     can_equip: bool = attr.field()
     equip_required_level: int = attr.field()
-    unlock_hashes_required_to_equip: list[int] = attr.field()
-    cannot_equip_reason: int = attr.field()
+    unlock_hashes_required_to_equip: list["DestinyUnlockDefinition"] = attr.field()
+    cannot_equip_reason: "EquipFailureReason" = attr.field()
     breaker_type: int = attr.field()
-    breaker_type_hash: int = attr.field()
+    breaker_type_hash: "DestinyBreakerTypeDefinition" = attr.field()
     energy: "DestinyItemInstanceEnergy" = attr.field()
 
 
@@ -138,8 +152,8 @@ class DestinyItemInstanceEnergy(BaseModel):
         energy_unused: The amount of energy still available for inserting new plugs.
     """
 
-    energy_type_hash: int = attr.field()
-    energy_type: int = attr.field()
+    energy_type_hash: "DestinyEnergyTypeDefinition" = attr.field()
+    energy_type: "DestinyEnergyType" = attr.field()
     energy_capacity: int = attr.field()
     energy_used: int = attr.field()
     energy_unused: int = attr.field()
@@ -168,7 +182,7 @@ class DestinyItemStatsComponent(BaseModel):
         stats: If the item has stats that it provides (damage, defense, etc...), it will be given here.
     """
 
-    stats: Any = attr.field()
+    stats: "DestinyStatDefinition" = attr.field()
 
 
 @attr.define
@@ -195,7 +209,7 @@ class DestinyItemSocketState(BaseModel):
         enable_fail_indexes: If a plug is inserted but not enabled, this will be populated with indexes into the plug item definition's plug.enabledRules property, so that you can show the reasons why it is not enabled.
     """
 
-    plug_hash: int = attr.field()
+    plug_hash: "DestinyInventoryItemDefinition" = attr.field()
     is_enabled: bool = attr.field()
     is_visible: bool = attr.field()
     enable_fail_indexes: list[int] = attr.field()
@@ -213,7 +227,7 @@ class DestinyItemTalentGridComponent(BaseModel):
         grid_progression: If the item has a progression, it will be detailed here. A progression means that the item can gain experience. Thresholds of experience are what determines whether and when a talent node can be activated.
     """
 
-    talent_grid_hash: int = attr.field()
+    talent_grid_hash: "DestinyTalentGridDefinition" = attr.field()
     nodes: list["DestinyTalentNode"] = attr.field()
     is_grid_complete: bool = attr.field()
     grid_progression: "DestinyProgression" = attr.field()
