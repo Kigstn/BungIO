@@ -279,7 +279,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMeta
                 )
                 await asyncio.sleep(60)
 
-            case (_, "DestinyServiceFailure" | "DestinyInternalError"):
+            case (_, "DestinyServiceFailure" | "DestinyInternalError" | "UnhandledException"):
                 # timeout
                 self._client.logger.debug(
                     f"`{response.status} - {error} | {error_code}`: Retrying... - Bungie is having problems `{route_with_params}`\n{content}"
