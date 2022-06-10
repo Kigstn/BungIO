@@ -1,15 +1,22 @@
+import asyncio
+import datetime
 import logging
 from base64 import b64encode
+from copy import copy
 from typing import TYPE_CHECKING, Callable, Optional
 
 import attr
 from aiohttp import ClientSession, DummyCookieJar
 from sqlalchemy.orm import sessionmaker
 
+from bungio import InvalidAuthentication
+from bungio.api import ApiClient
 from bungio.definitions import LOGGER_NAME
 from bungio.http.client import HttpClient
+from bungio.models import BungieMembershipType
 from bungio.models.auth import AuthData
 from bungio.models.enums import BungieLanguage
+from bungio.utils import get_now_with_tz
 
 if TYPE_CHECKING:
     from aiohttp_client_cache import CacheBackend
@@ -35,6 +42,8 @@ except ModuleNotFoundError:
 default_logger = logging.getLogger(LOGGER_NAME)
 default_logger.setLevel(logging.ERROR)
 
+token_update_lock: dict[int, asyncio.Lock] = {}
+
 
 @attr.define
 class Client:
@@ -42,14 +51,14 @@ class Client:
     The api client
 
     Attributes:
-        client_id: The bungie.net client id
-        client_secret: The bungie.net client secret
-        token: The bungie.net token
+        bungie_client_id: The bungie.net client id
+        bungie_client_secret: The bungie.net client secret
+        bungie_token: The bungie.net token
     """
 
-    client_id: str = attr.field()
-    client_secret: str = attr.field()
-    token: str = attr.field()
+    bungie_client_id: str = attr.field()
+    bungie_client_secret: str = attr.field()
+    bungie_token: str = attr.field()
 
     logger: logging.Logger = attr.field(default=default_logger)
 
@@ -61,7 +70,8 @@ class Client:
     json_dumps: Callable = attr.field(init=False, default=json_dumps)
     json_loads: Callable = attr.field(init=False, default=json_loads)
 
-    _http: HttpClient = attr.field(init=False)
+    api: ApiClient = attr.field(init=False)
+    http: HttpClient = attr.field(init=False)
 
     @use_manifest.validator  # noqa
     def use_manifest_check(self, attribute, value):
@@ -80,27 +90,31 @@ class Client:
             self.use_manifest = sessionmaker(bind=engine, class_=AsyncSession, future=True)
 
         # set up the http client
-        self._http = HttpClient()
-        self._http._client = self
-        self._http._bungie_auth_headers = {
+        self.api = ApiClient()
+        self.api._client = self
+
+        # set up the http client
+        self.http = HttpClient()
+        self.http._client = self
+        self.http._bungie_auth_headers = {
             "User-Agent": "BungIO",
             "Content-Type": "application/x-www-form-urlencoded",
-            "Authorization": f"""Basic {b64encode(f"{self.client_id}:{self.client_secret}".encode()).decode()}""",
+            "Authorization": f"""Basic {b64encode(f"{self.bungie_client_id}:{self.bungie_client_secret}".encode()).decode()}""",
             "Accept": "application/json",
         }
-        self._http._bungie_headers = {
+        self.http._bungie_headers = {
             "User-Agent": "BungIO",
-            "X-API-Key": self.token,
+            "X-API-Key": self.bungie_token,
             "Accept": "application/json",
         }
         try:
             from aiohttp_client_cache import CachedSession
 
-            self._http.__session = CachedSession(
+            self.http._session = CachedSession(
                 json_serialize=self.json_dumps, cookie_jar=DummyCookieJar(), cache=self.cache
             )
         except ModuleNotFoundError:
-            self._http.__session = ClientSession(json_serialize=self.json_dumps, cookie_jar=DummyCookieJar())
+            self.http._session = ClientSession(json_serialize=self.json_dumps, cookie_jar=DummyCookieJar())
 
     def get_auth_url(self, state: str) -> str:
         """
@@ -117,14 +131,110 @@ class Client:
             The auth url
         """
 
-        return f"https://www.bungie.net/en/oauth/authorize?client_id={self.client_id}&response_type=code&state={state}"
+        return f"https://www.bungie.net/en/oauth/authorize?client_id={self.bungie_client_id}&response_type=code&state={state}"
 
-    async def on_token_update(self, before: AuthData, after: AuthData) -> None:
+    async def generate_auth(
+        self, membership_type: BungieMembershipType, destiny_membership_id: int, code: str
+    ) -> AuthData:
         """
-        Dispatched whenever a token is updated
+        Generate authentication information from a bungie code. For information on how to get that code, visit the [official documentation](
+        https://github.com/Bungie-net/api/wiki/OAuth-Documentation)
+
+        Tip: Staying up to date
+            This dispatches the Client.on_token_update()
+
+        Args:
+            membership_type: The `membership_type` of the user this data belongs to
+            destiny_membership_id: The `destiny_membership_id` of the user this data belongs to
+            code: The code bungie sent
+
+        Raises:
+            InvalidAuthentication: If authentication is invalid
+
+        Returns:
+            The working authentication info.
+        """
+
+        now = get_now_with_tz()
+        data = await self.request_access_token(code=code)
+
+        auth = AuthData(
+            membership_type=membership_type,
+            destiny_membership_id=destiny_membership_id,
+            token=data["access_token"],
+            token_expiry=now + datetime.timedelta(seconds=data["expires_in"]),
+            refresh_token=data["refresh_token"],
+            refresh_token_expiry=now + datetime.timedelta(seconds=data["refresh_expires_in"]),
+        )
+
+        # dispatch the update event
+        asyncio.create_task(self._client.on_token_update(before=None, after=auth))
+
+        return auth
+
+    async def get_working_auth(self, auth: AuthData) -> AuthData:
+        """
+        Check if tokens need to be refreshed and then do that.
+
+        Tip: Staying up to date
+            This dispatches the Client.on_token_update()
+
+        Args:
+            auth: The potentially old authentication info.
+
+        Raises:
+            InvalidAuthentication: If authentication is invalid
+
+        Returns:
+            The working authentication info.
+        """
+
+        # locked this on a per-user basis
+        if auth.destiny_membership_id not in token_update_lock:
+            token_update_lock.update({auth.destiny_membership_id: asyncio.Lock()})
+        async with token_update_lock[auth.destiny_membership_id]:
+
+            # check that token exists
+            if auth.token is None:
+                raise InvalidAuthentication(auth)
+
+            # check if token is expired
+            now = get_now_with_tz()
+            if auth.token_expiry < (now - datetime.timedelta(minutes=5)):
+                return auth
+
+            # check the refresh token expiry
+            if auth.refresh_token_expiry > (now - datetime.timedelta(minutes=5)):
+                self._invalidate_token(auth=auth)
+                raise InvalidAuthentication(auth)
+
+            old_auth = copy(auth)
+
+            # refresh the data
+            data = await self.refresh_access_token(auth=auth)
+            auth.token = data["access_token"]
+            auth.refresh_token = data["refresh_token"]
+            auth.token_expiry = now + datetime.timedelta(seconds=data["expires_in"])
+            auth.refresh_expires_in = now + datetime.timedelta(seconds=data["refresh_expires_in"])
+
+            # dispatch the update event
+            asyncio.create_task(self._client.on_token_update(before=old_auth, after=auth))
+
+        return auth
+
+    async def on_token_update(self, before: Optional[AuthData], after: AuthData) -> None:
+        """
+        Dispatched whenever a token is generated, updated, or invalidated.
 
         Tip: Subclassing
             It is highly recommended to subclass the Client and overwrite this function to suite your own needs
+
+        Note: Generation
+            If the first token is generated, `before` will be `None`.
+
+        Note: Invalidation
+            The token can be invalidated if the auth data is expired. To prevent that, make sure your tokens are updated regularly.
+            If the token is invalidated, `after.token` will be `None`.
 
         Args:
             before: The old auth info

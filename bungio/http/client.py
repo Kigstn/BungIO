@@ -1,6 +1,5 @@
 import asyncio
-import datetime
-from asyncio import Lock, Semaphore
+from asyncio import Semaphore
 from copy import copy
 from typing import TYPE_CHECKING, Optional
 from urllib.parse import urlencode
@@ -29,15 +28,11 @@ from bungio.http.route import Route
 from bungio.http.routes import AllRouteHttpRequests
 from bungio.models.auth import AuthData
 from bungio.singleton import SingletonMetaclass
-from bungio.utils import get_now_with_tz
 
 if TYPE_CHECKING:
     from bungio.client import Client
 
 __all__ = ("HttpClient",)
-
-
-token_update_lock: dict[int, Lock] = {}
 
 
 class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMetaclass):
@@ -55,7 +50,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMeta
 
     _max_attempts: int = 5
 
-    __session: ClientSession
+    _session: ClientSession
 
     async def request(self, route: Route) -> dict:
         """
@@ -139,7 +134,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMeta
                 await self.ratelimiter.wait_for_token()
 
                 try:
-                    async with self.__session.request(
+                    async with self._session.request(
                         method=method,
                         url=route,
                         headers=headers,
@@ -351,7 +346,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMeta
         headers = self._bungie_headers.copy()
 
         # get a working token or abort
-        await self.get_working_auth(auth=auth)
+        await self._client.get_working_auth(auth=auth)
 
         headers.update(
             {
@@ -360,56 +355,6 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMeta
         )
 
         return headers
-
-    async def get_working_auth(self, auth: AuthData) -> AuthData:
-        """
-        Check if tokens need to be refreshed and then do that.
-
-        Tip: Staying up to date
-            This dispatches the Client.on_token_update()
-
-        Args:
-            auth: The potentially old authentication info.
-
-        Raises:
-            InvalidAuthentication: If authentication is invalid
-
-        Returns:
-            The working authentication info.
-        """
-
-        # locked this on a per-user basis
-        if auth.destiny_membership_id not in token_update_lock:
-            token_update_lock.update({auth.destiny_membership_id: asyncio.Lock()})
-        async with token_update_lock[auth.destiny_membership_id]:
-
-            # check that token exists
-            if auth.token is None:
-                raise InvalidAuthentication(auth)
-
-            # check if token is expired
-            now = get_now_with_tz()
-            if auth.token_expiry < (now - datetime.timedelta(minutes=5)):
-                return auth
-
-            # check the refresh token expiry
-            if auth.refresh_token_expiry > (now - datetime.timedelta(minutes=5)):
-                self._invalidate_token(auth=auth)
-                raise InvalidAuthentication(auth)
-
-            old_auth = copy(auth)
-
-            # refresh the data
-            data = await self.refresh_access_token(auth=auth)
-            auth.token = data["access_token"]
-            auth.refresh_token = data["refresh_token"]
-            auth.token_expiry = now + datetime.timedelta(seconds=data["expires_in"])
-            auth.refresh_expires_in = now + datetime.timedelta(seconds=data["refresh_expires_in"])
-
-            # dispatch the update event
-            asyncio.create_task(self._client.on_token_update(before=old_auth, after=auth))
-
-        return auth
 
     def _invalidate_token(self, auth: AuthData) -> None:
         """

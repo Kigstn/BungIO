@@ -7,7 +7,6 @@ from bungio.models.auth import AuthData
 
 class AuthHttpRequests:
     _request: Callable[..., Coroutine]
-    _client_id: str
     _bungie_auth_headers: dict[str, str]
 
     async def request_access_token(

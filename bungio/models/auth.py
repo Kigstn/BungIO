@@ -3,6 +3,7 @@ from typing import Optional
 
 import attr
 
+from bungio.models import BungieMembershipType
 from bungio.models.base import BaseModel
 
 
@@ -20,7 +21,7 @@ class AuthData(BaseModel):
         refresh_token_expiry: The refresh token expiry date
     """
 
-    membership_type: int
+    membership_type: BungieMembershipType
     destiny_membership_id: int
 
     token: Optional[str]

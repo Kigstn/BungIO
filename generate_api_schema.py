@@ -728,3 +728,4 @@ main()
 # todo inherited overwrite classes do not display as docs correctly -> https://mkdocstrings.github.io/handlers/overview/#selection-options (inherited members)
 # todo options: members: [] does not work -> config/config.md
 # todo DestinyActivityPlaylistItemDefinition -> directActivityModeType is very unfun. Enum which is defined in a model
+# todo fix int.from_dict | Any.from_dict
