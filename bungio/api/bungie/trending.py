@@ -26,7 +26,7 @@ class TrendingRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_trending_categories(auth=auth)
-        return TrendingCategories.from_dict(data=response, client=self._client)
+        return await TrendingCategories.from_dict(data=response, client=self._client)
 
     async def get_trending_category(
         self, category_id: str, page_number: int, auth: Optional[AuthData] = None
@@ -46,7 +46,7 @@ class TrendingRouteInterface(BaseModel):
         response = await self._client.http.get_trending_category(
             category_id=category_id, page_number=page_number, auth=auth
         )
-        return SearchResultOfTrendingEntry.from_dict(data=response, client=self._client)
+        return await SearchResultOfTrendingEntry.from_dict(data=response, client=self._client)
 
     async def get_trending_entry_detail(
         self, identifier: str, trending_entry_type: TrendingEntryType, auth: Optional[AuthData] = None
@@ -66,4 +66,4 @@ class TrendingRouteInterface(BaseModel):
         response = await self._client.http.get_trending_entry_detail(
             identifier=identifier, trending_entry_type=trending_entry_type.value, auth=auth
         )
-        return TrendingDetail.from_dict(data=response, client=self._client)
+        return await TrendingDetail.from_dict(data=response, client=self._client)

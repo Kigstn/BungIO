@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Optional
 
 import attr
 
@@ -8,7 +8,7 @@ from bungio.models.base import BaseModel
 
 @attr.define
 class GetAvailableLocalesRouteInterface(BaseModel):
-    async def get_available_locales(self, auth: Optional[AuthData] = None) -> Any:
+    async def get_available_locales(self, auth: Optional[AuthData] = None) -> dict[str, str]:
         """
         List of available localization cultures
 
@@ -20,4 +20,4 @@ class GetAvailableLocalesRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_available_locales(auth=auth)
-        return Any.from_dict(data=response, client=self._client)
+        return await dict[str, str].from_dict(data=response, client=self._client)

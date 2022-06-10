@@ -6,14 +6,15 @@ from bungio.models.base import BaseModel
 @attr.define
 class DestinyAnimationReference(BaseModel):
     """
-    _No description given by bungie_
+    _No description given by bungie._
 
+    None
     Attributes:
-        anim_name: _No description given by bungie_
-        anim_identifier: _No description given by bungie_
-        path: _No description given by bungie_
+        anim_identifier: _No description given by bungie._
+        anim_name: _No description given by bungie._
+        path: _No description given by bungie._
     """
 
-    anim_name: str = attr.field()
     anim_identifier: str = attr.field()
+    anim_name: str = attr.field()
     path: str = attr.field()

@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Optional
 
 import attr
 
@@ -32,9 +32,11 @@ class UserRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_bungie_net_user_by_id(id=id, auth=auth)
-        return GeneralUser.from_dict(data=response, client=self._client)
+        return await GeneralUser.from_dict(data=response, client=self._client)
 
-    async def get_sanitized_platform_display_names(self, membership_id: int, auth: Optional[AuthData] = None) -> Any:
+    async def get_sanitized_platform_display_names(
+        self, membership_id: int, auth: Optional[AuthData] = None
+    ) -> dict[BungieCredentialType, str]:
         """
         Gets a list of all display names linked to this membership id but sanitized (profanity filtered). Obeys all visibility rules of calling user and is heavily cached.
 
@@ -47,7 +49,7 @@ class UserRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_sanitized_platform_display_names(membership_id=membership_id, auth=auth)
-        return Any.from_dict(data=response, client=self._client)
+        return await dict[BungieCredentialType, str].from_dict(data=response, client=self._client)
 
     async def get_credential_types_for_target_account(
         self, membership_id: int, auth: Optional[AuthData] = None
@@ -67,7 +69,7 @@ class UserRouteInterface(BaseModel):
             membership_id=membership_id, auth=auth
         )
         return [
-            GetCredentialTypesForAccountResponse.from_dict(data=entry, client=self._client)
+            await GetCredentialTypesForAccountResponse.from_dict(data=entry, client=self._client)
             for entry in response["Result"]
         ]
 
@@ -83,7 +85,7 @@ class UserRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_available_themes(auth=auth)
-        return [UserTheme.from_dict(data=entry, client=self._client) for entry in response["Result"]]
+        return [await UserTheme.from_dict(data=entry, client=self._client) for entry in response["Result"]]
 
     async def get_membership_data_by_id(
         self, membership_id: int, membership_type: BungieMembershipType, auth: Optional[AuthData] = None
@@ -103,7 +105,7 @@ class UserRouteInterface(BaseModel):
         response = await self._client.http.get_membership_data_by_id(
             membership_id=membership_id, membership_type=membership_type.value, auth=auth
         )
-        return UserMembershipData.from_dict(data=response, client=self._client)
+        return await UserMembershipData.from_dict(data=response, client=self._client)
 
     async def get_membership_data_for_current_user(self, auth: AuthData) -> UserMembershipData:
         """
@@ -120,7 +122,7 @@ class UserRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_membership_data_for_current_user(auth=auth)
-        return UserMembershipData.from_dict(data=response, client=self._client)
+        return await UserMembershipData.from_dict(data=response, client=self._client)
 
     async def get_membership_from_hard_linked_credential(
         self, credential: str, cr_type: BungieCredentialType, auth: Optional[AuthData] = None
@@ -140,7 +142,7 @@ class UserRouteInterface(BaseModel):
         response = await self._client.http.get_membership_from_hard_linked_credential(
             credential=credential, cr_type=cr_type.value, auth=auth
         )
-        return HardLinkedUserMembership.from_dict(data=response, client=self._client)
+        return await HardLinkedUserMembership.from_dict(data=response, client=self._client)
 
     async def search_by_global_name_prefix(
         self, display_name_prefix: str, page: int, auth: Optional[AuthData] = None
@@ -160,7 +162,7 @@ class UserRouteInterface(BaseModel):
         response = await self._client.http.search_by_global_name_prefix(
             display_name_prefix=display_name_prefix, page=page, auth=auth
         )
-        return UserSearchResponse.from_dict(data=response, client=self._client)
+        return await UserSearchResponse.from_dict(data=response, client=self._client)
 
     async def search_by_global_name_post(
         self, data: UserSearchPrefixRequest, page: int, auth: Optional[AuthData] = None
@@ -178,4 +180,4 @@ class UserRouteInterface(BaseModel):
         """
 
         response = await self._client.http.search_by_global_name_post(page=page, auth=auth, **data.to_dict())
-        return UserSearchResponse.from_dict(data=response, client=self._client)
+        return await UserSearchResponse.from_dict(data=response, client=self._client)

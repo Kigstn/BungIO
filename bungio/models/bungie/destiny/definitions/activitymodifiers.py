@@ -13,18 +13,19 @@ class DestinyActivityModifierDefinition(BaseModel):
     """
     Modifiers - in Destiny 1, these were referred to as "Skulls" - are changes that can be applied to an Activity.
 
+    None
     Attributes:
-        display_properties: _No description given by bungie_
-        display_in_nav_mode: _No description given by bungie_
-        display_in_activity_selection: _No description given by bungie_
+        display_in_activity_selection: _No description given by bungie._
+        display_in_nav_mode: _No description given by bungie._
+        display_properties: _No description given by bungie._
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    display_in_nav_mode: bool = attr.field()
     display_in_activity_selection: bool = attr.field()
+    display_in_nav_mode: bool = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()

@@ -26,7 +26,7 @@ class ContentRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_content_type(type=type, auth=auth)
-        return ContentTypeDescription.from_dict(data=response, client=self._client)
+        return await ContentTypeDescription.from_dict(data=response, client=self._client)
 
     async def get_content_by_id(
         self, id: int, locale: str, head: Optional[bool] = None, auth: Optional[AuthData] = None
@@ -45,7 +45,7 @@ class ContentRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_content_by_id(id=id, locale=locale, head=head, auth=auth)
-        return ContentItemPublicContract.from_dict(data=response, client=self._client)
+        return await ContentItemPublicContract.from_dict(data=response, client=self._client)
 
     async def get_content_by_tag_and_type(
         self, locale: str, tag: str, type: str, head: Optional[bool] = None, auth: Optional[AuthData] = None
@@ -67,7 +67,7 @@ class ContentRouteInterface(BaseModel):
         response = await self._client.http.get_content_by_tag_and_type(
             locale=locale, tag=tag, type=type, head=head, auth=auth
         )
-        return ContentItemPublicContract.from_dict(data=response, client=self._client)
+        return await ContentItemPublicContract.from_dict(data=response, client=self._client)
 
     async def search_content_with_text(
         self,
@@ -107,7 +107,7 @@ class ContentRouteInterface(BaseModel):
             tag=tag,
             auth=auth,
         )
-        return SearchResultOfContentItemPublicContract.from_dict(data=response, client=self._client)
+        return await SearchResultOfContentItemPublicContract.from_dict(data=response, client=self._client)
 
     async def search_content_by_tag_and_type(
         self,
@@ -138,7 +138,7 @@ class ContentRouteInterface(BaseModel):
         response = await self._client.http.search_content_by_tag_and_type(
             locale=locale, tag=tag, type=type, currentpage=currentpage, head=head, itemsperpage=itemsperpage, auth=auth
         )
-        return SearchResultOfContentItemPublicContract.from_dict(data=response, client=self._client)
+        return await SearchResultOfContentItemPublicContract.from_dict(data=response, client=self._client)
 
     async def search_help_articles(self, searchtext: str, size: str, auth: Optional[AuthData] = None) -> Any:
         """
@@ -154,4 +154,4 @@ class ContentRouteInterface(BaseModel):
         """
 
         response = await self._client.http.search_help_articles(searchtext=searchtext, size=size, auth=auth)
-        return Any.from_dict(data=response, client=self._client)
+        return await Any.from_dict(data=response, client=self._client)

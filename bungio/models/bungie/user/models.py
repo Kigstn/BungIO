@@ -11,16 +11,17 @@ if TYPE_CHECKING:
 @attr.define
 class GetCredentialTypesForAccountResponse(BaseModel):
     """
-    _No description given by bungie_
+    _No description given by bungie._
 
+    None
     Attributes:
-        credential_type: _No description given by bungie_
-        credential_display_name: _No description given by bungie_
-        is_public: _No description given by bungie_
-        credential_as_string: _No description given by bungie_
+        credential_as_string: _No description given by bungie._
+        credential_display_name: _No description given by bungie._
+        credential_type: _No description given by bungie._
+        is_public: _No description given by bungie._
     """
 
-    credential_type: "BungieCredentialType" = attr.field()
-    credential_display_name: str = attr.field()
-    is_public: bool = attr.field()
     credential_as_string: str = attr.field()
+    credential_display_name: str = attr.field()
+    credential_type: "BungieCredentialType" = attr.field()
+    is_public: bool = attr.field()

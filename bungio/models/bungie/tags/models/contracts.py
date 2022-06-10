@@ -11,12 +11,13 @@ if TYPE_CHECKING:
 @attr.define
 class TagResponse(BaseModel):
     """
-    _No description given by bungie_
+    _No description given by bungie._
 
+    None
     Attributes:
-        tag_text: _No description given by bungie_
-        ignore_status: _No description given by bungie_
+        ignore_status: _No description given by bungie._
+        tag_text: _No description given by bungie._
     """
 
-    tag_text: str = attr.field()
     ignore_status: "IgnoreResponse" = attr.field()
+    tag_text: str = attr.field()

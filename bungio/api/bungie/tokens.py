@@ -1,8 +1,12 @@
-from typing import Any, Optional
+from typing import Optional
 
 import attr
 
-from bungio.models import PartnerOfferClaimRequest, PartnerOfferSkuHistoryResponse
+from bungio.models import (
+    BungieRewardDisplay,
+    PartnerOfferClaimRequest,
+    PartnerOfferSkuHistoryResponse,
+)
 from bungio.models.auth import AuthData
 from bungio.models.base import BaseModel
 
@@ -25,7 +29,7 @@ class TokensRouteInterface(BaseModel):
         """
 
         response = await self._client.http.claim_partner_offer(auth=auth, **data.to_dict())
-        return bool.from_dict(data=response, client=self._client)
+        return await bool.from_dict(data=response, client=self._client)
 
     async def apply_missing_partner_offers_without_claim(
         self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData
@@ -50,7 +54,7 @@ class TokensRouteInterface(BaseModel):
             target_bnet_membership_id=target_bnet_membership_id,
             auth=auth,
         )
-        return bool.from_dict(data=response, client=self._client)
+        return await bool.from_dict(data=response, client=self._client)
 
     async def get_partner_offer_sku_history(
         self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData
@@ -76,10 +80,11 @@ class TokensRouteInterface(BaseModel):
             auth=auth,
         )
         return [
-            PartnerOfferSkuHistoryResponse.from_dict(data=entry, client=self._client) for entry in response["Result"]
+            await PartnerOfferSkuHistoryResponse.from_dict(data=entry, client=self._client)
+            for entry in response["Result"]
         ]
 
-    async def get_bungie_rewards_for_user(self, membership_id: int, auth: AuthData) -> Any:
+    async def get_bungie_rewards_for_user(self, membership_id: int, auth: AuthData) -> dict[str, BungieRewardDisplay]:
         """
         Returns the bungie rewards for the targeted user.
 
@@ -95,9 +100,9 @@ class TokensRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_bungie_rewards_for_user(membership_id=membership_id, auth=auth)
-        return Any.from_dict(data=response, client=self._client)
+        return await dict[str, BungieRewardDisplay].from_dict(data=response, client=self._client)
 
-    async def get_bungie_rewards_list(self, auth: Optional[AuthData] = None) -> Any:
+    async def get_bungie_rewards_list(self, auth: Optional[AuthData] = None) -> dict[str, BungieRewardDisplay]:
         """
         Returns a list of the current bungie rewards
 
@@ -109,4 +114,4 @@ class TokensRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_bungie_rewards_list(auth=auth)
-        return Any.from_dict(data=response, client=self._client)
+        return await dict[str, BungieRewardDisplay].from_dict(data=response, client=self._client)

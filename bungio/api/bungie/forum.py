@@ -58,7 +58,7 @@ class ForumRouteInterface(BaseModel):
             tagstring=tagstring,
             auth=auth,
         )
-        return PostSearchResponse.from_dict(data=response, client=self._client)
+        return await PostSearchResponse.from_dict(data=response, client=self._client)
 
     async def get_core_topics_paged(
         self,
@@ -92,7 +92,7 @@ class ForumRouteInterface(BaseModel):
             locales=locales,
             auth=auth,
         )
-        return PostSearchResponse.from_dict(data=response, client=self._client)
+        return await PostSearchResponse.from_dict(data=response, client=self._client)
 
     async def get_posts_threaded_paged(
         self,
@@ -135,7 +135,7 @@ class ForumRouteInterface(BaseModel):
             showbanned=showbanned,
             auth=auth,
         )
-        return PostSearchResponse.from_dict(data=response, client=self._client)
+        return await PostSearchResponse.from_dict(data=response, client=self._client)
 
     async def get_posts_threaded_paged_from_child(
         self,
@@ -175,7 +175,7 @@ class ForumRouteInterface(BaseModel):
             showbanned=showbanned,
             auth=auth,
         )
-        return PostSearchResponse.from_dict(data=response, client=self._client)
+        return await PostSearchResponse.from_dict(data=response, client=self._client)
 
     async def get_post_and_parent(
         self, child_post_id: int, showbanned: Optional[str] = None, auth: Optional[AuthData] = None
@@ -195,7 +195,7 @@ class ForumRouteInterface(BaseModel):
         response = await self._client.http.get_post_and_parent(
             child_post_id=child_post_id, showbanned=showbanned, auth=auth
         )
-        return PostSearchResponse.from_dict(data=response, client=self._client)
+        return await PostSearchResponse.from_dict(data=response, client=self._client)
 
     async def get_post_and_parent_awaiting_approval(
         self, child_post_id: int, showbanned: Optional[str] = None, auth: Optional[AuthData] = None
@@ -215,7 +215,7 @@ class ForumRouteInterface(BaseModel):
         response = await self._client.http.get_post_and_parent_awaiting_approval(
             child_post_id=child_post_id, showbanned=showbanned, auth=auth
         )
-        return PostSearchResponse.from_dict(data=response, client=self._client)
+        return await PostSearchResponse.from_dict(data=response, client=self._client)
 
     async def get_topic_for_content(self, content_id: int, auth: Optional[AuthData] = None) -> int:
         """
@@ -230,7 +230,7 @@ class ForumRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_topic_for_content(content_id=content_id, auth=auth)
-        return int.from_dict(data=response, client=self._client)
+        return await int.from_dict(data=response, client=self._client)
 
     async def get_forum_tag_suggestions(
         self, partialtag: Optional[str] = None, auth: Optional[AuthData] = None
@@ -247,7 +247,7 @@ class ForumRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_forum_tag_suggestions(partialtag=partialtag, auth=auth)
-        return [TagResponse.from_dict(data=entry, client=self._client) for entry in response["Result"]]
+        return [await TagResponse.from_dict(data=entry, client=self._client) for entry in response["Result"]]
 
     async def get_poll(self, topic_id: int, auth: Optional[AuthData] = None) -> PostSearchResponse:
         """
@@ -262,7 +262,7 @@ class ForumRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_poll(topic_id=topic_id, auth=auth)
-        return PostSearchResponse.from_dict(data=response, client=self._client)
+        return await PostSearchResponse.from_dict(data=response, client=self._client)
 
     async def get_recruitment_thread_summaries(
         self, data: list[int], auth: Optional[AuthData] = None
@@ -279,4 +279,4 @@ class ForumRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_recruitment_thread_summaries(auth=auth, **data.to_dict())
-        return [ForumRecruitmentDetail.from_dict(data=entry, client=self._client) for entry in response["Result"]]
+        return [await ForumRecruitmentDetail.from_dict(data=entry, client=self._client) for entry in response["Result"]]

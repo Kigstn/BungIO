@@ -1,12 +1,16 @@
 # do not touch, very clunky black magic
+import copy
 import importlib
 import os
 import re
+from collections import namedtuple
 from typing import Optional
 
 import requests
 
 from bungio.definitions import ROOT_DIR
+
+Typing = namedtuple("Typing", "name manifest")
 
 
 def main():
@@ -185,7 +189,7 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
                 schema_data = full_data["components"]["schemas"][schema_name]["properties"]
 
                 for name, value in schema_data.items():
-                    arg_type = convert_to_typing(value)
+                    arg_type = convert_to_typing(value).name
                     body.append(
                         {
                             "name": capital_case_to_snake_case(name),
@@ -197,7 +201,7 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
                     )
 
             else:
-                arg_type = convert_to_typing(schema_data)
+                arg_type = convert_to_typing(schema_data).name
                 body.append(
                     {
                         "name": "body_data",
@@ -207,7 +211,7 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
                     }
                 )
         else:
-            arg_type = convert_to_typing(data=schema_data, return_class_names=True, file_imports=file_imports)
+            arg_type = convert_to_typing(data=schema_data, return_class_names=True, file_imports=file_imports).name
             body.append({"name": "data", "description": "The required data for this request.", "type": arg_type})
 
     # path / query params
@@ -225,9 +229,9 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
         }
 
         if create_raw_http:
-            arg_type = convert_to_typing(param["schema"])
+            arg_type = convert_to_typing(param["schema"]).name
         else:
-            arg_type = convert_to_typing(param["schema"], return_class_names=True, file_imports=file_imports)
+            arg_type = convert_to_typing(param["schema"], return_class_names=True, file_imports=file_imports).name
 
             is_optional = False
             is_list = False
@@ -285,7 +289,7 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
         ]["properties"]["Response"]
 
         # try to get the overwrite path if that exists and add that to the imports
-        return_model = convert_to_typing(data=return_info, return_class_names=True, file_imports=file_imports)
+        return_model = convert_to_typing(data=return_info, return_class_names=True, file_imports=file_imports).name
 
     text += f""") -> {return_model}:
         \"\"\"
@@ -378,12 +382,12 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
             """
         else:
             if "list" not in return_model:
-                text += f"""return {return_model}.from_dict(data=response, client=self._client)
+                text += f"""return await {return_model}.from_dict(data=response, client=self._client)
 
                 """
             else:
                 clean_return_model = return_model.removesuffix("]").removeprefix("list[")
-                text += f"""return [{clean_return_model}.from_dict(data=entry, client=self._client) for entry in response["Result"]]
+                text += f"""return [await {clean_return_model}.from_dict(data=entry, client=self._client) for entry in response["Result"]]
 
                 """
 
@@ -395,9 +399,10 @@ def convert_to_typing(
     return_class_names: bool = False,
     file_imports: Optional[set] = None,
     type_checking_imports: bool = False,
-) -> str:
+) -> Typing:
     arg_type = []
     is_list = False
+    manifest_name = None
 
     if new_data := data.get("allOf", None):
         assert isinstance(new_data, list)
@@ -407,6 +412,23 @@ def convert_to_typing(
             return_class_names=return_class_names,
             file_imports=file_imports,
             type_checking_imports=type_checking_imports,
+        )
+
+    if (dict_data := data.get("x-dictionary-key", None)) and (new_data := data.get("additionalProperties", None)):
+        data_type = convert_to_typing(
+            data=new_data,
+            return_class_names=return_class_names,
+            file_imports=file_imports,
+            type_checking_imports=type_checking_imports,
+        )
+        return Typing(
+            f"""dict[{convert_to_typing(
+                data=dict_data,
+                return_class_names=return_class_names,
+                file_imports=file_imports,
+                type_checking_imports=type_checking_imports,
+            ).name}, {data_type.name}]""",
+            data_type.manifest,
         )
 
     if new_data := data.get("$ref", None):
@@ -431,18 +453,9 @@ def convert_to_typing(
             except ModuleNotFoundError:
                 import_name = "dict"
 
-            return import_name
+            return Typing(import_name, None)
         else:
-            return "Any"
-
-    if new_data := data.get("x-mapped-definition", None):
-        ref_arg_type = convert_to_typing(
-            data=new_data,
-            return_class_names=return_class_names,
-            file_imports=file_imports,
-            type_checking_imports=type_checking_imports,
-        )
-        arg_type.append(ref_arg_type)
+            return Typing("Any", None)
 
     if new_data := data.get("x-enum-reference", None):
         ref_arg_type = convert_to_typing(
@@ -451,38 +464,56 @@ def convert_to_typing(
             file_imports=file_imports,
             type_checking_imports=type_checking_imports,
         )
-        arg_type.append(ref_arg_type)
+        arg_type.append(ref_arg_type.name)
 
-    if "format" not in data:
-        arg_format = data["type"]
     else:
-        arg_format = data["format"]
-
-    match arg_format:
-        case "int16" | "int32" | "int64" | "byte" | "uint32":
-            arg_type.append("int")
-        case "double" | "float":
-            arg_type.append("float")
-        case "string":
-            arg_type.append("str")
-        case "boolean":
-            arg_type.append("bool")
-        case "date-time":
-            arg_type.append("datetime.datetime")
-        case "array":
-            arg_type.append(
-                f"""{convert_to_typing(data["items"], return_class_names=return_class_names, file_imports=file_imports, type_checking_imports=type_checking_imports)}"""
+        if new_data := data.get("x-mapped-definition", None):
+            ref_arg_type = convert_to_typing(
+                data=new_data,
+                return_class_names=return_class_names,
+                file_imports=file_imports,
+                type_checking_imports=type_checking_imports,
             )
-            is_list = True
-        case "object":
-            arg_type.append("Any")
-        case _:
-            raise ValueError(arg_format)
+            manifest_name = ref_arg_type.name
 
-    return_text = arg_type[0]
+        if "format" not in data:
+            arg_format = data["type"]
+        else:
+            arg_format = data["format"]
+
+        match arg_format:
+            case "int16" | "int32" | "int64" | "byte" | "uint32":
+                arg_type.append("int")
+            case "double" | "float":
+                arg_type.append("float")
+            case "string":
+                arg_type.append("str")
+            case "boolean":
+                arg_type.append("bool")
+            case "date-time":
+                arg_type.append("datetime.datetime")
+            case "array":
+                array_type = convert_to_typing(
+                    data["items"],
+                    return_class_names=return_class_names,
+                    file_imports=file_imports,
+                    type_checking_imports=type_checking_imports,
+                )
+                manifest_name = array_type.manifest
+                arg_type.append(array_type.name)
+                is_list = True
+            case "object":
+                arg_type.append("Any")
+            case _:
+                raise ValueError(arg_format)
+
+    if len(arg_type) == 1:
+        return_text = arg_type[0]
+    else:
+        return_text = f"""Union[{", ".join(arg_type)}]"""
     if is_list:
         return_text = f"list[{return_text}]"
-    return return_text
+    return Typing(return_text, manifest_name)
 
 
 def capital_case_to_snake_case(string: str) -> str:
@@ -527,7 +558,7 @@ from typing import Optional, Any, TYPE_CHECKING, Union
 
 from bungio.models.base import BaseModel, BaseEnum
 
-{imports}"""
+%imports%"""
 
         file_imports = set()
         for model in models:
@@ -547,7 +578,7 @@ from bungio.models.base import BaseModel, BaseEnum
             formatted_imports = f"""
 if TYPE_CHECKING:
 {formatted_imports}"""
-        text = text.format(imports=formatted_imports)
+        text = text.replace("%imports%", formatted_imports)
         file_path = os.path.join(base_path, path.replace(".", "/"))
 
         # put files that are also folders in init file
@@ -688,25 +719,72 @@ class {model["name"]}(BaseEnum):
         if "properties" not in model:
             return ""
 
+        manifest_required = None
+        properties = {}
+        for name, data in model["properties"].items():
+            name = capital_case_to_snake_case(name)
+            param_type = convert_to_typing(
+                data, return_class_names=True, file_imports=file_imports, type_checking_imports=True
+            )
+            data["param_type"] = param_type.name
+            data["description"] = clean_desc(data)
+
+            # write the manifest data as a new attr
+            if param_type.manifest:
+                new_name = f"manifest_{name}"
+                new_data = {
+                    "param_type": f"Optional[{param_type.manifest}]",
+                    "default": "default=None",
+                    "description": f"Manifest information for `{capital_case_to_snake_case(name)}`",
+                }
+                properties[new_name] = new_data
+
+                if not manifest_required:
+                    manifest_required = True
+
+            properties[name] = data
+
+        properties = {
+            k: v for k, v in sorted(properties.items(), key=lambda x: x[0] if x[1].get("default", None) else f"_{x[0]}")
+        }
+
+        if manifest_required:
+            manifest_required = """Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+            """
+
         text = f"""
 @attr.define
 class {model["name"]}(BaseModel):
     \"\"\"
     {clean_desc(model)}
 
+    {manifest_required}
     Attributes:"""
 
-        for name, data in model["properties"].items():
+        for name, data in properties.items():
             text += f"""
-        {capital_case_to_snake_case(name)}: {clean_desc(data)}"""
+        {name}: {data["description"]}"""
 
         text += """
     \"\"\"
 """
 
-        for name, data in model["properties"].items():
+        for name, data in properties.items():
+            default = default_val = data.get("default", "")
+            if "list" in data["param_type"] or "dict" in data["param_type"]:
+                default = f"""metadata = {{"type": \"\"\"{data["param_type"]}\"\"\"}}"""
+                if default_val:
+                    default = f"{default}, {default_val}"
+
             text += f"""
-    {capital_case_to_snake_case(name)}: {convert_to_typing(data, return_class_names=True, file_imports=file_imports, type_checking_imports=True)} = attr.field()"""
+    {name}: {data["param_type"]} = attr.field({default})"""
 
     # arrays
     elif model["type"] == "array":
@@ -719,8 +797,8 @@ class {model["name"]}(BaseModel):
 
 
 def clean_desc(data: dict) -> str:
-    text = data.get("description", "_No description given by bungie_")
-    return text.replace("\n", " ").replace("\r", "")
+    text = data.get("description", "_No description given by bungie._")
+    return text.replace("\n", " ").replace("\r", "").strip()
 
 
 main()
@@ -728,4 +806,4 @@ main()
 # todo inherited overwrite classes do not display as docs correctly -> https://mkdocstrings.github.io/handlers/overview/#selection-options (inherited members)
 # todo options: members: [] does not work -> config/config.md
 # todo DestinyActivityPlaylistItemDefinition -> directActivityModeType is very unfun. Enum which is defined in a model
-# todo fix int.from_dict | Any.from_dict
+# todo fix int.from_dict | Any.from_dict | dict[int, DestinyPublicMilestone].from_dict

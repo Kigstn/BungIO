@@ -65,7 +65,8 @@ class Client:
     language: BungieLanguage = attr.field(default=BungieLanguage.ENGLISH)
 
     cache: Optional["CacheBackend"] = attr.field(default=None)
-    use_manifest: bool | sessionmaker = attr.field(default=False)
+    manifest_storage: bool | sessionmaker = attr.field(default=False)
+    always_return_manifest_information: bool = attr.field(default=False)
 
     json_dumps: Callable = attr.field(init=False, default=json_dumps)
     json_loads: Callable = attr.field(init=False, default=json_loads)
@@ -73,8 +74,8 @@ class Client:
     api: ApiClient = attr.field(init=False)
     http: HttpClient = attr.field(init=False)
 
-    @use_manifest.validator  # noqa
-    def use_manifest_check(self, attribute, value):
+    @manifest_storage.validator  # noqa
+    def manifest_storage_check(self, attribute, value):
         if isinstance(value, sessionmaker):
             if not isinstance(value.class_, AsyncSession):
                 raise ValueError(f"{attribute} obj must be bound to an async session")
@@ -85,9 +86,13 @@ class Client:
             raise ValueError(f"{attribute} must be an instance of type BungieLanguage")
 
     def __attrs_post_init__(self):
-        if self.use_manifest is True:
+        if self.manifest_storage is True:
             engine = create_async_engine("sqlite+aiosqlite:///manifest.db")
-            self.use_manifest = sessionmaker(bind=engine, class_=AsyncSession, future=True)
+            self.manifest_storage = sessionmaker(bind=engine, class_=AsyncSession, future=True)
+
+        if self.always_return_manifest_information:
+            if not isinstance(self.manifest_storage, sessionmaker):
+                raise ValueError("Client.manifest_storage must be set up to use this")
 
         # set up the http client
         self.api = ApiClient()
@@ -107,14 +112,6 @@ class Client:
             "X-API-Key": self.bungie_token,
             "Accept": "application/json",
         }
-        try:
-            from aiohttp_client_cache import CachedSession
-
-            self.http._session = CachedSession(
-                json_serialize=self.json_dumps, cookie_jar=DummyCookieJar(), cache=self.cache
-            )
-        except ModuleNotFoundError:
-            self.http._session = ClientSession(json_serialize=self.json_dumps, cookie_jar=DummyCookieJar())
 
     def get_auth_url(self, state: str) -> str:
         """

@@ -1,14 +1,15 @@
-from typing import Any, Optional
+from typing import Optional
 
 import attr
 
+from bungio.models import CoreSystem
 from bungio.models.auth import AuthData
 from bungio.models.base import BaseModel
 
 
 @attr.define
 class UserSystemOverridesRouteInterface(BaseModel):
-    async def get_user_system_overrides(self, auth: Optional[AuthData] = None) -> Any:
+    async def get_user_system_overrides(self, auth: Optional[AuthData] = None) -> dict[str, CoreSystem]:
         """
         Get the user-specific system overrides that should be respected alongside common systems.
 
@@ -20,4 +21,4 @@ class UserSystemOverridesRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_user_system_overrides(auth=auth)
-        return Any.from_dict(data=response, client=self._client)
+        return await dict[str, CoreSystem].from_dict(data=response, client=self._client)

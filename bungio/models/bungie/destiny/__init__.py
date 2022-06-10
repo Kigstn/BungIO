@@ -24,37 +24,52 @@ class DestinyProgression(BaseModel):
     """
     Information about a current character's status with a Progression. A progression is a value that can increase with activity and has levels. Think Character Level and Reputation Levels. Combine this "live" data with the related DestinyProgressionDefinition for a full picture of the Progression.
 
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
     Attributes:
-        progression_hash: The hash identifier of the Progression in question. Use it to look up the DestinyProgressionDefinition in static data.
-        daily_progress: The amount of progress earned today for this progression.
-        daily_limit: If this progression has a daily limit, this is that limit.
-        weekly_progress: The amount of progress earned toward this progression in the current week.
-        weekly_limit: If this progression has a weekly limit, this is that limit.
         current_progress: This is the total amount of progress obtained overall for this progression (for instance, the total amount of Character Level experience earned)
+        current_reset_count: The number of resets of this progression you've executed this season, if applicable to this progression.
+        daily_limit: If this progression has a daily limit, this is that limit.
+        daily_progress: The amount of progress earned today for this progression.
         level: This is the level of the progression (for instance, the Character Level).
         level_cap: This is the maximum possible level you can achieve for this progression (for example, the maximum character level obtainable)
-        step_index: Progressions define their levels in "steps". Since the last step may be repeatable, the user may be at a higher level than the actual Step achieved in the progression. Not necessarily useful, but potentially interesting for those cruising the API. Relate this to the "steps" property of the DestinyProgression to see which step the user is on, if you care about that. (Note that this is Content Version dependent since it refers to indexes.)
-        progress_to_next_level: The amount of progression (i.e. "Experience") needed to reach the next level of this Progression. Jeez, progression is such an overloaded word.
         next_level_at: The total amount of progression (i.e. "Experience") needed in order to reach the next level.
-        current_reset_count: The number of resets of this progression you've executed this season, if applicable to this progression.
-        season_resets: Information about historical resets of this progression, if there is any data for it.
+        progress_to_next_level: The amount of progression (i.e. "Experience") needed to reach the next level of this Progression. Jeez, progression is such an overloaded word.
+        progression_hash: The hash identifier of the Progression in question. Use it to look up the DestinyProgressionDefinition in static data.
         reward_item_states: Information about historical rewards for this progression, if there is any data for it.
+        season_resets: Information about historical resets of this progression, if there is any data for it.
+        step_index: Progressions define their levels in "steps". Since the last step may be repeatable, the user may be at a higher level than the actual Step achieved in the progression. Not necessarily useful, but potentially interesting for those cruising the API. Relate this to the "steps" property of the DestinyProgression to see which step the user is on, if you care about that. (Note that this is Content Version dependent since it refers to indexes.)
+        weekly_limit: If this progression has a weekly limit, this is that limit.
+        weekly_progress: The amount of progress earned toward this progression in the current week.
+        manifest_progression_hash: Manifest information for `progression_hash`
     """
 
-    progression_hash: "DestinyProgressionDefinition" = attr.field()
-    daily_progress: int = attr.field()
-    daily_limit: int = attr.field()
-    weekly_progress: int = attr.field()
-    weekly_limit: int = attr.field()
     current_progress: int = attr.field()
+    current_reset_count: int = attr.field()
+    daily_limit: int = attr.field()
+    daily_progress: int = attr.field()
     level: int = attr.field()
     level_cap: int = attr.field()
-    step_index: int = attr.field()
-    progress_to_next_level: int = attr.field()
     next_level_at: int = attr.field()
-    current_reset_count: int = attr.field()
-    season_resets: list["DestinyProgressionResetEntry"] = attr.field()
-    reward_item_states: list["DestinyProgressionRewardItemState"] = attr.field()
+    progress_to_next_level: int = attr.field()
+    progression_hash: int = attr.field()
+    reward_item_states: list["DestinyProgressionRewardItemState"] = attr.field(
+        metadata={"type": """list["DestinyProgressionRewardItemState"]"""}
+    )
+    season_resets: list["DestinyProgressionResetEntry"] = attr.field(
+        metadata={"type": """list["DestinyProgressionResetEntry"]"""}
+    )
+    step_index: int = attr.field()
+    weekly_limit: int = attr.field()
+    weekly_progress: int = attr.field()
+    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -62,13 +77,14 @@ class DestinyProgressionResetEntry(BaseModel):
     """
     Represents a season and the number of resets you had in that season.  We do not necessarily - even for progressions with resets - track it over all seasons. So be careful and check the season numbers being returned.
 
+    None
     Attributes:
-        season: _No description given by bungie_
-        resets: _No description given by bungie_
+        resets: _No description given by bungie._
+        season: _No description given by bungie._
     """
 
-    season: int = attr.field()
     resets: int = attr.field()
+    season: int = attr.field()
 
 
 class DestinyProgressionRewardItemState(BaseEnum):
@@ -77,7 +93,7 @@ class DestinyProgressionRewardItemState(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     INVISIBLE = 1
     """If this is set, the reward should be hidden. """
     EARNED = 2
@@ -94,23 +110,23 @@ class DestinyProgressionScope(BaseEnum):
     """
 
     ACCOUNT = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CHARACTER = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CLAN = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ITEM = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     IMPLICIT_FROM_EQUIPMENT = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     MAPPED = 5
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     MAPPED_AGGREGATE = 6
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     MAPPED_STAT = 7
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     MAPPED_UNLOCK_VALUE = 8
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyProgressionStepDisplayEffect(BaseEnum):
@@ -119,11 +135,11 @@ class DestinyProgressionStepDisplayEffect(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CHARACTER = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ITEM = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 @attr.define
@@ -131,17 +147,28 @@ class DestinyItemQuantity(BaseModel):
     """
     Used in a number of Destiny contracts to return data about an item stack and its quantity. Can optionally return an itemInstanceId if the item is instanced - in which case, the quantity returned will be 1. If it's not... uh, let me know okay? Thanks.
 
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
     Attributes:
+        has_conditional_visibility: Indicates that this item quantity may be conditionally shown or hidden, based on various sources of state. For example: server flags, account state, or character progress.
         item_hash: The hash identifier for the item in question. Use it to look up the item's DestinyInventoryItemDefinition.
         item_instance_id: If this quantity is referring to a specific instance of an item, this will have the item's instance ID. Normally, this will be null.
         quantity: The amount of the item needed/available depending on the context of where DestinyItemQuantity is being used.
-        has_conditional_visibility: Indicates that this item quantity may be conditionally shown or hidden, based on various sources of state. For example: server flags, account state, or character progress.
+        manifest_item_hash: Manifest information for `item_hash`
     """
 
-    item_hash: "DestinyInventoryItemDefinition" = attr.field()
+    has_conditional_visibility: bool = attr.field()
+    item_hash: int = attr.field()
     item_instance_id: int = attr.field()
     quantity: int = attr.field()
-    has_conditional_visibility: bool = attr.field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 class SocketTypeActionType(BaseEnum):
@@ -150,26 +177,26 @@ class SocketTypeActionType(BaseEnum):
     """
 
     INSERT_PLUG = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     INFUSE_ITEM = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     REINITIALIZE_SOCKET = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinySocketVisibility(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     VISIBLE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     HIDDEN = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     HIDDEN_WHEN_EMPTY = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     HIDDEN_IF_NO_PLUGS_AVAILABLE = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinySocketCategoryStyle(BaseEnum):
@@ -178,89 +205,89 @@ class DestinySocketCategoryStyle(BaseEnum):
     """
 
     UNKNOWN = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     REUSABLE = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CONSUMABLE = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     UNLOCKABLE = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     INTRINSIC = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ENERGY_METER = 5
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     LARGE_PERK = 6
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ABILITIES = 7
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SUPERS = 8
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class TierType(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     UNKNOWN = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CURRENCY = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     BASIC = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     COMMON = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     RARE = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SUPERIOR = 5
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     EXOTIC = 6
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class BucketScope(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     CHARACTER = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ACCOUNT = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class BucketCategory(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     INVISIBLE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ITEM = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CURRENCY = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     EQUIPPABLE = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     IGNORED = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class ItemLocation(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     UNKNOWN = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     INVENTORY = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     VAULT = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     VENDOR = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     POSTMASTER = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyStatAggregationType(BaseEnum):
@@ -269,11 +296,11 @@ class DestinyStatAggregationType(BaseEnum):
     """
 
     CHARACTER_AVERAGE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CHARACTER = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ITEM = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyStatCategory(BaseEnum):
@@ -282,51 +309,52 @@ class DestinyStatCategory(BaseEnum):
     """
 
     GAMEPLAY = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     WEAPON = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     DEFENSE = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     PRIMARY = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class EquippingItemBlockAttributes(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     EQUIP_ON_ACQUIRE = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyAmmunitionType(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     PRIMARY = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SPECIAL = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     HEAVY = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     UNKNOWN = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 @attr.define
 class DyeReference(BaseModel):
     """
-    _No description given by bungie_
+    _No description given by bungie._
 
+    None
     Attributes:
-        channel_hash: _No description given by bungie_
-        dye_hash: _No description given by bungie_
+        channel_hash: _No description given by bungie._
+        dye_hash: _No description given by bungie._
     """
 
     channel_hash: int = attr.field()
@@ -335,30 +363,30 @@ class DyeReference(BaseModel):
 
 class DestinyClass(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     TITAN = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     HUNTER = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     WARLOCK = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     UNKNOWN = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyGender(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     MALE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     FEMALE = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     UNKNOWN = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyVendorProgressionType(BaseEnum):
@@ -380,9 +408,9 @@ class VendorDisplayCategorySortOrder(BaseEnum):
     """
 
     DEFAULT = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SORT_BY_TIER = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyVendorInteractionRewardSelection(BaseEnum):
@@ -391,11 +419,11 @@ class DestinyVendorInteractionRewardSelection(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ONE = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ALL = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyVendorReplyType(BaseEnum):
@@ -404,11 +432,11 @@ class DestinyVendorReplyType(BaseEnum):
     """
 
     ACCEPT = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     DECLINE = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     COMPLETE = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class VendorInteractionType(BaseEnum):
@@ -417,7 +445,7 @@ class VendorInteractionType(BaseEnum):
     """
 
     UNKNOWN = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     UNDEFINED = 1
     """An empty interaction. If this ends up in content, it is probably a game bug. """
     QUEST_COMPLETE = 2
@@ -446,11 +474,11 @@ class DestinyItemSortType(BaseEnum):
     """
 
     ITEM_ID = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     TIMESTAMP = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     STACK_SIZE = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyVendorItemRefundPolicy(BaseEnum):
@@ -459,11 +487,11 @@ class DestinyVendorItemRefundPolicy(BaseEnum):
     """
 
     NOT_REFUNDABLE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     DELETES_ITEM = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     REVOKES_LICENSE = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyGatingScope(BaseEnum):
@@ -472,19 +500,19 @@ class DestinyGatingScope(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     GLOBAL = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CLAN = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     PROFILE = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CHARACTER = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ITEM = 5
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ASSUMED_WORST_CASE = 6
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class ActivityGraphNodeHighlightType(BaseEnum):
@@ -493,15 +521,15 @@ class ActivityGraphNodeHighlightType(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     NORMAL = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     HYPER = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     COMET = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     RISE_OF_IRON = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyUnlockValueUIStyle(BaseEnum):
@@ -547,32 +575,32 @@ class DestinyObjectiveGrantStyle(BaseEnum):
     """
 
     WHEN_INCOMPLETE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     WHEN_COMPLETE = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ALWAYS = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DamageType(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     KINETIC = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ARC = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     THERMAL = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     VOID = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     RAID = 5
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     STASIS = 6
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyObjectiveUiStyle(BaseEnum):
@@ -581,60 +609,60 @@ class DestinyObjectiveUiStyle(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     HIGHLIGHTED = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CRAFTING_WEAPON_LEVEL = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CRAFTING_WEAPON_LEVEL_PROGRESS = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CRAFTING_WEAPON_TIMESTAMP = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CRAFTING_MEMENTOS = 5
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CRAFTING_MEMENTO_TITLE = 6
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyActivityNavPointType(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     INACTIVE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     PRIMARY_OBJECTIVE = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SECONDARY_OBJECTIVE = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     TRAVEL_OBJECTIVE = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     PUBLIC_EVENT_OBJECTIVE = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     AMMO_CACHE = 5
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     POINT_TYPE_FLAG = 6
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CAPTURE_POINT = 7
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     DEFENSIVE_ENCOUNTER = 8
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     GHOST_INTERACTION = 9
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     KILL_AI = 10
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     QUEST_ITEM = 11
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     PATROL_MISSION = 12
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     INCOMING = 13
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ARENA_OBJECTIVE = 14
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     AUTOMATION_HINT = 15
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     TRACKED_QUEST = 16
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyActivityModeCategory(BaseEnum):
@@ -658,7 +686,7 @@ class DestinyItemSubType(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CRUCIBLE = 1
     """DEPRECATED. Items can be both "Crucible" and something else interesting. """
     VANGUARD = 2
@@ -666,59 +694,59 @@ class DestinyItemSubType(BaseEnum):
     EXOTIC = 5
     """DEPRECATED. An item can both be Exotic and something else. """
     AUTO_RIFLE = 6
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SHOTGUN = 7
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     MACHINEGUN = 8
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     HAND_CANNON = 9
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ROCKET_LAUNCHER = 10
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     FUSION_RIFLE = 11
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SNIPER_RIFLE = 12
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     PULSE_RIFLE = 13
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SCOUT_RIFLE = 14
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CRM = 16
     """DEPRECATED. An item can both be CRM and something else. """
     SIDEARM = 17
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SWORD = 18
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     MASK = 19
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SHADER = 20
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ORNAMENT = 21
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     FUSION_RIFLE_LINE = 22
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     GRENADE_LAUNCHER = 23
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SUBMACHINE_GUN = 24
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     TRACE_RIFLE = 25
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     HELMET_ARMOR = 26
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     GAUNTLETS_ARMOR = 27
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CHEST_ARMOR = 28
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     LEG_ARMOR = 29
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CLASS_ARMOR = 30
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     BOW = 31
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     DUMMY_REPEATABLE_BOUNTY = 32
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     GLAIVE = 33
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyGraphNodeState(BaseEnum):
@@ -727,34 +755,34 @@ class DestinyGraphNodeState(BaseEnum):
     """
 
     HIDDEN = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     VISIBLE = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     TEASER = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     INCOMPLETE = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     COMPLETED = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyPresentationNodeType(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     DEFAULT = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CATEGORY = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     COLLECTIBLES = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     RECORDS = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     METRIC = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CRAFTABLE = 5
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyScope(BaseEnum):
@@ -763,9 +791,9 @@ class DestinyScope(BaseEnum):
     """
 
     PROFILE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CHARACTER = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyPresentationDisplayStyle(BaseEnum):
@@ -776,55 +804,55 @@ class DestinyPresentationDisplayStyle(BaseEnum):
     CATEGORY = 0
     """Display the item as a category, through which sub-items are filtered. """
     BADGE = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     MEDALS = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     COLLECTIBLE = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     RECORD = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyRecordValueStyle(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     INTEGER = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     PERCENTAGE = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     MILLISECONDS = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     BOOLEAN = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     DECIMAL = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyRecordToastStyle(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     RECORD = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     LORE = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     BADGE = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     META_RECORD = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     MEDAL_COMPLETE = 5
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SEASON_CHALLENGE_COMPLETE = 6
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     GILDED_TITLE_COMPLETE = 7
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CRAFTING_RECIPE_UNLOCKED = 8
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyPresentationScreenStyle(BaseEnum):
@@ -846,9 +874,9 @@ class PlugUiStyles(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     MASTERWORK = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class PlugAvailabilityMode(BaseEnum):
@@ -857,11 +885,11 @@ class PlugAvailabilityMode(BaseEnum):
     """
 
     NORMAL = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     UNAVAILABLE_IF_SOCKET_CONTAINS_MATCHING_PLUG_CATEGORY = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     AVAILABLE_IF_SOCKET_CONTAINS_MATCHING_PLUG_CATEGORY = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyEnergyType(BaseEnum):
@@ -870,19 +898,19 @@ class DestinyEnergyType(BaseEnum):
     """
 
     ANY = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ARC = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     THERMAL = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     VOID = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     GHOST = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SUBCLASS = 5
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     STASIS = 6
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class SocketPlugSources(BaseEnum):
@@ -908,11 +936,11 @@ class ItemPerkVisibility(BaseEnum):
     """
 
     VISIBLE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     DISABLED = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     HIDDEN = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class SpecialItemType(BaseEnum):
@@ -921,23 +949,23 @@ class SpecialItemType(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SPECIAL_CURRENCY = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ARMOR = 8
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     WEAPON = 9
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ENGRAM = 23
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CONSUMABLE = 24
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     EXCHANGE_MATERIAL = 25
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     MISSION_REWARD = 27
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CURRENCY = 29
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyItemType(BaseEnum):
@@ -946,61 +974,61 @@ class DestinyItemType(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CURRENCY = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ARMOR = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     WEAPON = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     MESSAGE = 7
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ENGRAM = 8
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CONSUMABLE = 9
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     EXCHANGE_MATERIAL = 10
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     MISSION_REWARD = 11
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     QUEST_STEP = 12
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     QUEST_STEP_COMPLETE = 13
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     EMBLEM = 14
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     QUEST = 15
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SUBCLASS = 16
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CLAN_BANNER = 17
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     AURA = 18
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     MOD = 19
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     DUMMY = 20
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SHIP = 21
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     VEHICLE = 22
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     EMOTE = 23
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     GHOST = 24
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     PACKAGE = 25
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     BOUNTY = 26
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     WRAPPER = 27
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SEASONAL_ARTIFACT = 28
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     FINISHER = 29
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     PATTERN = 30
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyBreakerType(BaseEnum):
@@ -1009,13 +1037,13 @@ class DestinyBreakerType(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SHIELD_PIERCING = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     DISRUPTION = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     STAGGER = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyProgressionRewardItemAcquisitionBehavior(BaseEnum):
@@ -1024,24 +1052,24 @@ class DestinyProgressionRewardItemAcquisitionBehavior(BaseEnum):
     """
 
     INSTANT = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     PLAYER_CLAIM_REQUIRED = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class ItemBindStatus(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     NOT_BOUND = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     BOUND_TO_CHARACTER = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     BOUND_TO_ACCOUNT = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     BOUND_TO_GUILD = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class TransferStatuses(BaseEnum):
@@ -1065,7 +1093,7 @@ class ItemState(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     LOCKED = 1
     """If this bit is set, the item has been "locked" by the user and cannot be deleted. You may want to represent this visually with a "lock" icon. """
     TRACKED = 2
@@ -1084,25 +1112,25 @@ class DestinyGameVersions(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     DESTINY2 = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     D_L_C1 = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     D_L_C2 = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     FORSAKEN = 8
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     YEAR_TWO_ANNUAL_PASS = 16
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SHADOWKEEP = 32
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     BEYOND_LIGHT = 64
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ANNIVERSARY30TH = 128
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     THE_WITCH_QUEEN = 256
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyComponentType(BaseEnum):
@@ -1111,7 +1139,7 @@ class DestinyComponentType(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     PROFILES = 100
     """Profiles is the most basic component, only relevant when calling GetProfile. This returns basic information about the profile, which is almost nothing: a list of characterIds, some information about the last time you logged in, and that most sobering statistic: how long you've played. """
     VENDOR_RECEIPTS = 101
@@ -1190,7 +1218,7 @@ class DestinyPresentationNodeState(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     INVISIBLE = 1
     """If this is set, the game recommends that you not show this node. But you know your life, do what you've got to do. """
     OBSCURED = 2
@@ -1226,7 +1254,7 @@ class DestinyCollectibleState(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     NOT_ACQUIRED = 1
     """If this flag is set, you have not yet obtained this collectible. """
     OBSCURED = 2
@@ -1249,7 +1277,7 @@ class DestinyPartyMemberStates(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     FIRETEAM_MEMBER = 1
     """This one's pretty obvious - they're on your Fireteam. """
     POSSE_MEMBER = 2
@@ -1266,15 +1294,15 @@ class DestinyGamePrivacySetting(BaseEnum):
     """
 
     OPEN = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CLAN_AND_FRIENDS_ONLY = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     FRIENDS_ONLY = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     INVITATION_ONLY = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CLOSED = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class DestinyJoinClosedReasons(BaseEnum):
@@ -1283,7 +1311,7 @@ class DestinyJoinClosedReasons(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     IN_MATCHMAKING = 1
     """The user is currently in matchmaking. """
     LOADING = 2
@@ -1300,17 +1328,17 @@ class DestinyJoinClosedReasons(BaseEnum):
 
 class DestinyRace(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     HUMAN = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     AWOKEN = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     EXO = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     UNKNOWN = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 @attr.define
@@ -1318,35 +1346,46 @@ class DestinyActivity(BaseModel):
     """
     Represents the "Live" data that we can obtain about a Character's status with a specific Activity. This will tell you whether the character can participate in the activity, as well as some other basic mutable information.  Meant to be combined with static DestinyActivityDefinition data for a full picture of the Activity.
 
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
     Attributes:
         activity_hash: The hash identifier of the Activity. Use this to look up the DestinyActivityDefinition of the activity.
-        is_new: If true, then the activity should have a "new" indicator in the Director UI.
-        can_lead: If true, the user is allowed to lead a Fireteam into this activity.
-        can_join: If true, the user is allowed to join with another Fireteam in this activity.
-        is_completed: If true, we both have the ability to know that the user has completed this activity and they have completed it. Unfortunately, we can't necessarily know this for all activities. As such, this should probably only be used if you already know in advance which specific activities you wish to check.
-        is_visible: If true, the user should be able to see this activity.
-        display_level: The difficulty level of the activity, if applicable.
-        recommended_light: The recommended light level for the activity, if applicable.
-        difficulty_tier: A DestinyActivityDifficultyTier enum value indicating the difficulty of the activity.
-        challenges: _No description given by bungie_
-        modifier_hashes: If the activity has modifiers, this will be the list of modifiers that all variants have in common. Perform lookups against DestinyActivityModifierDefinition which defines the modifier being applied to get at the modifier data. Note that, in the DestiyActivityDefinition, you will see many more modifiers than this being referred to: those are all *possible* modifiers for the activity, not the active ones. Use only the active ones to match what's really live.
         boolean_activity_options: The set of activity options for this activity, keyed by an identifier that's unique for this activity (not guaranteed to be unique between or across all activities, though should be unique for every *variant* of a given *conceptual* activity: for instance, the original D2 Raid has many variant DestinyActivityDefinitions. While other activities could potentially have the same option hashes, for any given D2 base Raid variant the hash will be unique). As a concrete example of this data, the hashes you get for Raids will correspond to the currently active "Challenge Mode". We don't have any human readable information for these, but saavy 3rd party app users could manually associate the key (a hash identifier for the "option" that is enabled/disabled) and the value (whether it's enabled or disabled presently) On our side, we don't necessarily even know what these are used for (the game designers know, but we don't), and we have no human readable data for them. In order to use them, you will have to do some experimentation.
+        can_join: If true, the user is allowed to join with another Fireteam in this activity.
+        can_lead: If true, the user is allowed to lead a Fireteam into this activity.
+        challenges: _No description given by bungie._
+        difficulty_tier: A DestinyActivityDifficultyTier enum value indicating the difficulty of the activity.
+        display_level: The difficulty level of the activity, if applicable.
+        is_completed: If true, we both have the ability to know that the user has completed this activity and they have completed it. Unfortunately, we can't necessarily know this for all activities. As such, this should probably only be used if you already know in advance which specific activities you wish to check.
+        is_new: If true, then the activity should have a "new" indicator in the Director UI.
+        is_visible: If true, the user should be able to see this activity.
         loadout_requirement_index: If returned, this is the index into the DestinyActivityDefinition's "loadouts" property, indicating the currently active loadout requirements.
+        modifier_hashes: If the activity has modifiers, this will be the list of modifiers that all variants have in common. Perform lookups against DestinyActivityModifierDefinition which defines the modifier being applied to get at the modifier data. Note that, in the DestiyActivityDefinition, you will see many more modifiers than this being referred to: those are all *possible* modifiers for the activity, not the active ones. Use only the active ones to match what's really live.
+        recommended_light: The recommended light level for the activity, if applicable.
+        manifest_activity_hash: Manifest information for `activity_hash`
     """
 
-    activity_hash: "DestinyActivityDefinition" = attr.field()
-    is_new: bool = attr.field()
-    can_lead: bool = attr.field()
+    activity_hash: int = attr.field()
+    boolean_activity_options: dict[int, bool] = attr.field(metadata={"type": """dict[int, bool]"""})
     can_join: bool = attr.field()
-    is_completed: bool = attr.field()
-    is_visible: bool = attr.field()
-    display_level: int = attr.field()
-    recommended_light: int = attr.field()
+    can_lead: bool = attr.field()
+    challenges: list["DestinyChallengeStatus"] = attr.field(metadata={"type": """list["DestinyChallengeStatus"]"""})
     difficulty_tier: "DestinyActivityDifficultyTier" = attr.field()
-    challenges: list["DestinyChallengeStatus"] = attr.field()
-    modifier_hashes: list["DestinyActivityModifierDefinition"] = attr.field()
-    boolean_activity_options: Any = attr.field()
+    display_level: int = attr.field()
+    is_completed: bool = attr.field()
+    is_new: bool = attr.field()
+    is_visible: bool = attr.field()
     loadout_requirement_index: int = attr.field()
+    modifier_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
+    recommended_light: int = attr.field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
 
 
 class DestinyActivityDifficultyTier(BaseEnum):
@@ -1355,21 +1394,21 @@ class DestinyActivityDifficultyTier(BaseEnum):
     """
 
     TRIVIAL = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     EASY = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     NORMAL = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CHALLENGING = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     HARD = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     BRAVE = 5
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ALMOST_IMPOSSIBLE = 6
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     IMPOSSIBLE = 7
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 @attr.define
@@ -1377,13 +1416,24 @@ class DestinyStat(BaseModel):
     """
     Represents a stat on an item *or* Character (NOT a Historical Stat, but a physical attribute stat like Attack, Defense etc...)
 
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
     Attributes:
         stat_hash: The hash identifier for the Stat. Use it to look up the DestinyStatDefinition for static data about the stat.
         value: The current value of the Stat.
+        manifest_stat_hash: Manifest information for `stat_hash`
     """
 
-    stat_hash: "DestinyStatDefinition" = attr.field()
+    stat_hash: int = attr.field()
     value: int = attr.field()
+    manifest_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
 
 
 class EquipFailureReason(BaseEnum):
@@ -1410,64 +1460,67 @@ class DestinyTalentNode(BaseModel):
     """
     I see you've come to find out more about Talent Nodes. I'm so sorry. Talent Nodes are the conceptual, visual nodes that appear on Talent Grids. Talent Grids, in Destiny 1, were found on almost every instanced item: they had Nodes that could be activated to change the properties of the item. In Destiny 2, Talent Grids only exist for Builds/Subclasses, and while the basic concept is the same (Nodes can be activated once you've gained sufficient Experience on the Item, and provide effects), there are some new concepts from Destiny 1. Examine DestinyTalentGridDefinition and its subordinates for more information. This is the "Live" information for the current status of a Talent Node on a specific item. Talent Nodes have many Steps, but only one can be active at any one time: and it is the Step that determines both the visual and the game state-changing properties that the Node provides. Examine this and DestinyTalentNodeStepDefinition carefully. *IMPORTANT NOTE* Talent Nodes are, unfortunately, Content Version DEPENDENT. Though they refer to hashes for Nodes and Steps, those hashes are not guaranteed to be immutable across content versions. This is a source of great exasperation for me, but as a result anyone using Talent Grid data must ensure that the content version of their static content matches that of the server responses before showing or making decisions based on talent grid data.
 
+    None
     Attributes:
-        node_index: The index of the Talent Node being referred to (an index into DestinyTalentGridDefinition.nodes[]). CONTENT VERSION DEPENDENT.
-        node_hash: The hash of the Talent Node being referred to (in DestinyTalentGridDefinition.nodes). Deceptively CONTENT VERSION DEPENDENT. We have no guarantee of the hash's immutability between content versions.
-        state: An DestinyTalentNodeState enum value indicating the node's state: whether it can be activated or swapped, and why not if neither can be performed.
-        is_activated: If true, the node is activated: it's current step then provides its benefits.
-        step_index: The currently relevant Step for the node. It is this step that has rendering data for the node and the benefits that are provided if the node is activated. (the actual rules for benefits provided are extremely complicated in theory, but with how Talent Grids are being used in Destiny 2 you don't have to worry about a lot of those old Destiny 1 rules.) This is an index into: DestinyTalentGridDefinition.nodes[nodeIndex].steps[stepIndex]
-        materials_to_upgrade: If the node has material requirements to be activated, this is the list of those requirements.
         activation_grid_level: The progression level required on the Talent Grid in order to be able to activate this talent node. Talent Grids have their own Progression - similar to Character Level, but in this case it is experience related to the item itself.
-        progress_percent: If you want to show a progress bar or circle for how close this talent node is to being activate-able, this is the percentage to show. It follows the node's underlying rules about when the progress bar should first show up, and when it should be filled.
         hidden: Whether or not the talent node is actually visible in the game's UI. Whether you want to show it in your own UI is up to you! I'm not gonna tell you who to sock it to.
+        is_activated: If true, the node is activated: it's current step then provides its benefits.
+        materials_to_upgrade: If the node has material requirements to be activated, this is the list of those requirements.
+        node_hash: The hash of the Talent Node being referred to (in DestinyTalentGridDefinition.nodes). Deceptively CONTENT VERSION DEPENDENT. We have no guarantee of the hash's immutability between content versions.
+        node_index: The index of the Talent Node being referred to (an index into DestinyTalentGridDefinition.nodes[]). CONTENT VERSION DEPENDENT.
         node_stats_block: This property has some history. A talent grid can provide stats on both the item it's related to and the character equipping the item. This returns data about those stat bonuses.
+        progress_percent: If you want to show a progress bar or circle for how close this talent node is to being activate-able, this is the percentage to show. It follows the node's underlying rules about when the progress bar should first show up, and when it should be filled.
+        state: An DestinyTalentNodeState enum value indicating the node's state: whether it can be activated or swapped, and why not if neither can be performed.
+        step_index: The currently relevant Step for the node. It is this step that has rendering data for the node and the benefits that are provided if the node is activated. (the actual rules for benefits provided are extremely complicated in theory, but with how Talent Grids are being used in Destiny 2 you don't have to worry about a lot of those old Destiny 1 rules.) This is an index into: DestinyTalentGridDefinition.nodes[nodeIndex].steps[stepIndex]
     """
 
-    node_index: int = attr.field()
-    node_hash: int = attr.field()
-    state: "DestinyTalentNodeState" = attr.field()
-    is_activated: bool = attr.field()
-    step_index: int = attr.field()
-    materials_to_upgrade: list["DestinyMaterialRequirement"] = attr.field()
     activation_grid_level: int = attr.field()
-    progress_percent: float = attr.field()
     hidden: bool = attr.field()
+    is_activated: bool = attr.field()
+    materials_to_upgrade: list["DestinyMaterialRequirement"] = attr.field(
+        metadata={"type": """list["DestinyMaterialRequirement"]"""}
+    )
+    node_hash: int = attr.field()
+    node_index: int = attr.field()
     node_stats_block: "DestinyTalentNodeStatBlock" = attr.field()
+    progress_percent: float = attr.field()
+    state: "DestinyTalentNodeState" = attr.field()
+    step_index: int = attr.field()
 
 
 class DestinyTalentNodeState(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     INVALID = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CAN_UPGRADE = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     NO_POINTS = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     NO_PREREQUISITES = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     NO_STEPS = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     NO_UNLOCK = 5
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     NO_MATERIAL = 6
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     NO_GRID_LEVEL = 7
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SWAPPING_LOCKED = 8
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     MUST_SWAP = 9
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     COMPLETE = 10
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     UNKNOWN = 11
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     CREATION_ONLY = 12
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     HIDDEN = 13
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 @attr.define
@@ -1475,13 +1528,14 @@ class DestinyTalentNodeStatBlock(BaseModel):
     """
     This property has some history. A talent grid can provide stats on both the item it's related to and the character equipping the item. This returns data about those stat bonuses.
 
+    None
     Attributes:
         current_step_stats: The stat benefits conferred when this talent node is activated for the current Step that is active on the node.
         next_step_stats: This is a holdover from the old days of Destiny 1, when a node could be activated multiple times, conferring multiple steps worth of benefits: you would use this property to show what activating the "next" step on the node would provide vs. what the current step is providing. While Nodes are currently not being used this way, the underlying system for this functionality still exists. I hesitate to remove this property while the ability for designers to make such a talent grid still exists. Whether you want to show it is up to you.
     """
 
-    current_step_stats: list["DestinyStat"] = attr.field()
-    next_step_stats: list["DestinyStat"] = attr.field()
+    current_step_stats: list["DestinyStat"] = attr.field(metadata={"type": """list["DestinyStat"]"""})
+    next_step_stats: list["DestinyStat"] = attr.field(metadata={"type": """list["DestinyStat"]"""})
 
 
 class DestinyVendorFilter(BaseEnum):
@@ -1490,46 +1544,46 @@ class DestinyVendorFilter(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     API_PURCHASABLE = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class VendorItemStatus(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     SUCCESS = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     NO_INVENTORY_SPACE = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     NO_FUNDS = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     NO_PROGRESSION = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     NO_UNLOCK = 8
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     NO_QUANTITY = 16
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     OUTSIDE_PURCHASE_WINDOW = 32
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     NOT_AVAILABLE = 64
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     UNIQUENESS_VIOLATION = 128
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     UNKNOWN_ERROR = 256
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ALREADY_SELLING = 512
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     UNSELLABLE = 1024
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SELLING_INHIBITED = 2048
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     ALREADY_OWNED = 4096
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     DISPLAY_ONLY = 8192
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 @attr.define
@@ -1537,13 +1591,24 @@ class DestinyUnlockStatus(BaseModel):
     """
     Indicates the status of an "Unlock Flag" on a Character or Profile. These are individual bits of state that can be either set or not set, and sometimes provide interesting human-readable information in their related DestinyUnlockDefinition.
 
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
     Attributes:
-        unlock_hash: The hash identifier for the Unlock Flag. Use to lookup DestinyUnlockDefinition for static data. Not all unlocks have human readable data - in fact, most don't. But when they do, it can be very useful to show. Even if they don't have human readable data, you might be able to infer the meaning of an unlock flag with a bit of experimentation...
         is_set: Whether the unlock flag is set.
+        unlock_hash: The hash identifier for the Unlock Flag. Use to lookup DestinyUnlockDefinition for static data. Not all unlocks have human readable data - in fact, most don't. But when they do, it can be very useful to show. Even if they don't have human readable data, you might be able to infer the meaning of an unlock flag with a bit of experimentation...
+        manifest_unlock_hash: Manifest information for `unlock_hash`
     """
 
-    unlock_hash: "DestinyUnlockDefinition" = attr.field()
     is_set: bool = attr.field()
+    unlock_hash: int = attr.field()
+    manifest_unlock_hash: Optional["DestinyUnlockDefinition"] = attr.field(default=None)
 
 
 class DestinyVendorItemState(BaseEnum):
@@ -1598,11 +1663,12 @@ class DestinyEquipItemResults(BaseModel):
     """
     The results of a bulk Equipping operation performed through the Destiny API.
 
+    None
     Attributes:
-        equip_results: _No description given by bungie_
+        equip_results: _No description given by bungie._
     """
 
-    equip_results: list["DestinyEquipItemResult"] = attr.field()
+    equip_results: list["DestinyEquipItemResult"] = attr.field(metadata={"type": """list["DestinyEquipItemResult"]"""})
 
 
 @attr.define
@@ -1610,10 +1676,11 @@ class DestinyEquipItemResult(BaseModel):
     """
     The results of an Equipping operation performed through the Destiny API.
 
+    None
     Attributes:
-        item_instance_id: The instance ID of the item in question (all items that can be equipped must, but definition, be Instanced and thus have an Instance ID that you can use to refer to them)
         equip_status: A PlatformErrorCodes enum indicating whether it succeeded, and if it failed why.
+        item_instance_id: The instance ID of the item in question (all items that can be equipped must, but definition, be Instanced and thus have an Instance ID that you can use to refer to them)
     """
 
-    item_instance_id: int = attr.field()
     equip_status: "PlatformErrorCodes" = attr.field()
+    item_instance_id: int = attr.field()

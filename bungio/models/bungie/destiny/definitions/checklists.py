@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 import attr
 
@@ -21,23 +21,26 @@ class DestinyChecklistDefinition(BaseModel):
     """
     By public demand, Checklists are loose sets of "things to do/things you have done" in Destiny that we were actually able to track. They include easter eggs you find in the world, unique chests you unlock, and other such data where the first time you do it is significant enough to be tracked, and you have the potential to "get them all". These may be account-wide, or may be per character. The status of these will be returned in related "Checklist" data coming down from API requests such as GetProfile or GetCharacter. Generally speaking, the items in a checklist can be completed in any order: we return an ordered list which only implies the way we are showing them in our own UI, and you can feel free to alter it as you wish. Note that, in the future, there will be something resembling the old D1 Record Books in at least some vague form. When that is created, it may be that it will supercede much or all of this Checklist data. It remains to be seen if that will be the case, so for now assume that the Checklists will still exist even after the release of D2: Forsaken.
 
+    None
     Attributes:
-        display_properties: _No description given by bungie_
-        view_action_string: A localized string prompting you to view the checklist.
-        scope: Indicates whether you will find this checklist on the Profile or Character components.
+        display_properties: _No description given by bungie._
         entries: The individual checklist items. Gotta catch 'em all.
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+        scope: Indicates whether you will find this checklist on the Profile or Character components.
+        view_action_string: A localized string prompting you to view the checklist.
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    view_action_string: str = attr.field()
-    scope: "DestinyScope" = attr.field()
-    entries: list["DestinyChecklistEntryDefinition"] = attr.field()
+    entries: list["DestinyChecklistEntryDefinition"] = attr.field(
+        metadata={"type": """list["DestinyChecklistEntryDefinition"]"""}
+    )
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
+    scope: "DestinyScope" = attr.field()
+    view_action_string: str = attr.field()
 
 
 @attr.define
@@ -45,26 +48,45 @@ class DestinyChecklistEntryDefinition(BaseModel):
     """
     The properties of an individual checklist item. Note that almost everything is optional: it is *highly* variable what kind of data we'll actually be able to return: at times we may have no other relationships to entities at all. Whatever UI you build, do it with the knowledge that any given entry might not actually be able to be associated with some other Destiny entity.
 
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
     Attributes:
-        hash: The identifier for this Checklist entry. Guaranteed unique only within this Checklist Definition, and not globally/for all checklists.
-        display_properties: Even if no other associations exist, we will give you *something* for display properties. In cases where we have no associated entities, it may be as simple as a numerical identifier.
-        destination_hash: _No description given by bungie_
-        location_hash: _No description given by bungie_
+        activity_hash: _No description given by bungie._
         bubble_hash: Note that a Bubble's hash doesn't uniquely identify a "top level" entity in Destiny. Only the combination of location and bubble can uniquely identify a place in the world of Destiny: so if bubbleHash is populated, locationHash must too be populated for it to have any meaning. You can use this property if it is populated to look up the DestinyLocationDefinition's associated .locationReleases[].activityBubbleName property.
-        activity_hash: _No description given by bungie_
-        item_hash: _No description given by bungie_
-        vendor_hash: _No description given by bungie_
-        vendor_interaction_index: _No description given by bungie_
+        destination_hash: _No description given by bungie._
+        display_properties: Even if no other associations exist, we will give you *something* for display properties. In cases where we have no associated entities, it may be as simple as a numerical identifier.
+        hash: The identifier for this Checklist entry. Guaranteed unique only within this Checklist Definition, and not globally/for all checklists.
+        item_hash: _No description given by bungie._
+        location_hash: _No description given by bungie._
         scope: The scope at which this specific entry can be computed.
+        vendor_hash: _No description given by bungie._
+        vendor_interaction_index: _No description given by bungie._
+        manifest_activity_hash: Manifest information for `activity_hash`
+        manifest_destination_hash: Manifest information for `destination_hash`
+        manifest_item_hash: Manifest information for `item_hash`
+        manifest_location_hash: Manifest information for `location_hash`
+        manifest_vendor_hash: Manifest information for `vendor_hash`
     """
 
-    hash: int = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    destination_hash: "DestinyDestinationDefinition" = attr.field()
-    location_hash: "DestinyLocationDefinition" = attr.field()
+    activity_hash: int = attr.field()
     bubble_hash: int = attr.field()
-    activity_hash: "DestinyActivityDefinition" = attr.field()
-    item_hash: "DestinyInventoryItemDefinition" = attr.field()
-    vendor_hash: "DestinyVendorDefinition" = attr.field()
-    vendor_interaction_index: int = attr.field()
+    destination_hash: int = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
+    hash: int = attr.field()
+    item_hash: int = attr.field()
+    location_hash: int = attr.field()
     scope: "DestinyScope" = attr.field()
+    vendor_hash: int = attr.field()
+    vendor_interaction_index: int = attr.field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_location_hash: Optional["DestinyLocationDefinition"] = attr.field(default=None)
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)

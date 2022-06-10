@@ -65,8 +65,8 @@ class Destiny2RouteHttpRequests:
         Returns a list of Destiny memberships given a global Bungie Display Name. This method will hide overridden memberships due to cross save.
 
         Args:
-            display_name: _No description given by bungie_
-            display_name_code: _No description given by bungie_
+            display_name: _No description given by bungie._
+            display_name_code: _No description given by bungie._
             membership_type: A valid non-BungieNet membership type, or All. Indicates which memberships to return. You probably want this set to All.
             auth: Authentication information. Required when users with a private profile are queried.
 
@@ -450,7 +450,7 @@ class Destiny2RouteHttpRequests:
 
     async def transfer_item(
         self,
-        item_reference_hash: Any,
+        item_reference_hash: int,
         stack_size: int,
         transfer_to_vault: bool,
         item_id: int,
@@ -465,12 +465,12 @@ class Destiny2RouteHttpRequests:
             Required oauth2 scopes: MoveEquipDestinyItems
 
         Args:
-            item_reference_hash: _No description given by bungie_
-            stack_size: _No description given by bungie_
-            transfer_to_vault: _No description given by bungie_
+            item_reference_hash: _No description given by bungie._
+            stack_size: _No description given by bungie._
+            transfer_to_vault: _No description given by bungie._
             item_id: The instance ID of the item for this action request.
-            character_id: _No description given by bungie_
-            membership_type: _No description given by bungie_
+            character_id: _No description given by bungie._
+            membership_type: _No description given by bungie._
             auth: Authentication information.
 
         Raises:
@@ -501,7 +501,7 @@ class Destiny2RouteHttpRequests:
 
     async def pull_from_postmaster(
         self,
-        item_reference_hash: Any,
+        item_reference_hash: int,
         stack_size: int,
         item_id: int,
         character_id: int,
@@ -515,11 +515,11 @@ class Destiny2RouteHttpRequests:
             Required oauth2 scopes: MoveEquipDestinyItems
 
         Args:
-            item_reference_hash: _No description given by bungie_
-            stack_size: _No description given by bungie_
+            item_reference_hash: _No description given by bungie._
+            stack_size: _No description given by bungie._
             item_id: The instance ID of the item for this action request.
-            character_id: _No description given by bungie_
-            membership_type: _No description given by bungie_
+            character_id: _No description given by bungie._
+            membership_type: _No description given by bungie._
             auth: Authentication information.
 
         Raises:
@@ -556,8 +556,8 @@ class Destiny2RouteHttpRequests:
 
         Args:
             item_id: The instance ID of the item for this action request.
-            character_id: _No description given by bungie_
-            membership_type: _No description given by bungie_
+            character_id: _No description given by bungie._
+            membership_type: _No description given by bungie._
             auth: Authentication information.
 
         Raises:
@@ -591,9 +591,9 @@ class Destiny2RouteHttpRequests:
             Required oauth2 scopes: MoveEquipDestinyItems
 
         Args:
-            item_ids: _No description given by bungie_
-            character_id: _No description given by bungie_
-            membership_type: _No description given by bungie_
+            item_ids: _No description given by bungie._
+            character_id: _No description given by bungie._
+            membership_type: _No description given by bungie._
             auth: Authentication information.
 
         Raises:
@@ -629,10 +629,10 @@ class Destiny2RouteHttpRequests:
             Required oauth2 scopes: MoveEquipDestinyItems
 
         Args:
-            state: _No description given by bungie_
+            state: _No description given by bungie._
             item_id: The instance ID of the item for this action request.
-            character_id: _No description given by bungie_
-            membership_type: _No description given by bungie_
+            character_id: _No description given by bungie._
+            membership_type: _No description given by bungie._
             auth: Authentication information.
 
         Raises:
@@ -669,10 +669,10 @@ class Destiny2RouteHttpRequests:
             Required oauth2 scopes: MoveEquipDestinyItems
 
         Args:
-            state: _No description given by bungie_
+            state: _No description given by bungie._
             item_id: The instance ID of the item for this action request.
-            character_id: _No description given by bungie_
-            membership_type: _No description given by bungie_
+            character_id: _No description given by bungie._
+            membership_type: _No description given by bungie._
             auth: Authentication information.
 
         Raises:
@@ -718,8 +718,8 @@ class Destiny2RouteHttpRequests:
             action_token: Action token provided by the AwaGetActionToken API call.
             item_instance_id: The instance ID of the item having a plug inserted. Only instanced items can have sockets.
             plug: The plugs being inserted.
-            character_id: _No description given by bungie_
-            membership_type: _No description given by bungie_
+            character_id: _No description given by bungie._
+            membership_type: _No description given by bungie._
             auth: Authentication information.
 
         Raises:
@@ -759,8 +759,8 @@ class Destiny2RouteHttpRequests:
         Args:
             plug: The plugs being inserted.
             item_id: The instance ID of the item for this action request.
-            character_id: _No description given by bungie_
-            membership_type: _No description given by bungie_
+            character_id: _No description given by bungie._
+            membership_type: _No description given by bungie._
             auth: Authentication information.
 
         Raises:
@@ -814,7 +814,7 @@ class Destiny2RouteHttpRequests:
 
     async def report_offensive_post_game_carnage_report_player(
         self,
-        reason_category_hashes: list[Any],
+        reason_category_hashes: list[int],
         reason_hashes: list[int],
         offending_character_id: int,
         activity_id: int,

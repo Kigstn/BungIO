@@ -9,6 +9,7 @@ from aiohttp import (
     ClientOSError,
     ClientResponse,
     ClientSession,
+    DummyCookieJar,
     ServerDisconnectedError,
 )
 
@@ -50,7 +51,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMeta
 
     _max_attempts: int = 5
 
-    _session: ClientSession
+    __session: ClientSession = None
 
     async def request(self, route: Route) -> dict:
         """
@@ -126,62 +127,66 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMeta
             The json response.
         """
 
+        if not self.__session:
+            self.__setup_session()
+
         route_with_params = f"{route}?{urlencode(params or {})}"
 
-        for attempt in range(self._max_attempts):
-            # wait for a token
-            if use_ratelimiter:
-                await self.ratelimiter.wait_for_token()
+        async with self.__session as session:
+            for attempt in range(self._max_attempts):
+                # wait for a token
+                if use_ratelimiter:
+                    await self.ratelimiter.wait_for_token()
 
-                try:
-                    async with self._session.request(
-                        method=method,
-                        url=route,
-                        headers=headers,
-                        params=params,
-                        json=data,
-                        data=form_data,
-                    ) as response:
-                        self._client.logger.debug(f"[{response.status}] - {route_with_params}")
+                    try:
+                        async with session.request(
+                            method=method,
+                            url=route,
+                            headers=headers,
+                            params=params,
+                            json=data,
+                            data=form_data,
+                        ) as response:
+                            self._client.logger.debug(f"[{response.status}] - {route_with_params}")
 
-                        # cached responses do not have the content type field
-                        content_type = getattr(response, "content_type", None) or response.headers.get(
-                            "Content-Type", "NOT SET"
+                            # cached responses do not have the content type field
+                            content_type = getattr(response, "content_type", None) or response.headers.get(
+                                "Content-Type", "NOT SET"
+                            )
+
+                            # get the json
+                            content = (
+                                await response.json(loads=self._client.json_loads)
+                                if "application/json" in content_type
+                                else {}
+                            )
+
+                            if not await self._handle_response(
+                                route_with_params=route_with_params, response=response, content=content
+                            ):
+                                continue
+
+                            return content
+
+                    except _RouteError as e:
+                        route = e.route
+
+                    except _InvalidAuthentication:
+                        self._invalidate_token(auth=auth)
+                        raise InvalidAuthentication(auth=auth)
+
+                    except (
+                        asyncio.exceptions.TimeoutError,
+                        ConnectionResetError,
+                        ServerDisconnectedError,
+                        ClientConnectorCertificateError,
+                        ClientOSError,
+                    ):
+                        self._client.logger.debug(
+                            f"Retrying... - Timeout error for `{route}?{urlencode({} if params is None else params)}`"
                         )
-
-                        # get the json
-                        content = (
-                            await response.json(loads=self._client.json_loads)
-                            if "application/json" in content_type
-                            else {}
-                        )
-
-                        if not await self._handle_response(
-                            route_with_params=route_with_params, response=response, content=content
-                        ):
-                            continue
-
-                        return content
-
-                except _RouteError as e:
-                    route = e.route
-
-                except _InvalidAuthentication:
-                    self._invalidate_token(auth=auth)
-                    raise InvalidAuthentication(auth=auth)
-
-                except (
-                    asyncio.exceptions.TimeoutError,
-                    ConnectionResetError,
-                    ServerDisconnectedError,
-                    ClientConnectorCertificateError,
-                    ClientOSError,
-                ):
-                    self._client.logger.debug(
-                        f"Retrying... - Timeout error for `{route}?{urlencode({} if params is None else params)}`"
-                    )
-                    await asyncio.sleep(2 + attempt * 3)
-                    continue
+                        await asyncio.sleep(2 + attempt * 3)
+                        continue
 
         self._client.logger.exception(f"{route_with_params}- Aborting. Failed {self._max_attempts} times")
         raise TimeoutException
@@ -291,7 +296,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMeta
                     f"`{response.status} - {error} | {error_code}`: Not found for `{route_with_params}`\n{content}"
                 )
 
-                if error is not "MISSING":
+                if error != "MISSING":
                     raise BungieException(error=error, message=error_message, code=error_code, data=error_data)
                 else:
                     raise NotFound
@@ -302,7 +307,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMeta
                     f"`{response.status} - {error} | {error_code}`: Generic bad request for `{route_with_params}`\n{content}"
                 )
 
-                if error is not "MISSING":
+                if error != "MISSING":
                     raise BungieException(error=error, message=error_message, code=error_code, data=error_data)
                 else:
                     raise BadRequest
@@ -315,7 +320,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMeta
 
             case (status, _):
                 # retry if we didn't get an error message
-                retry = error is not "Success"
+                retry = error != "Success"
 
                 # catch the rest
                 self._client.logger.debug(
@@ -369,3 +374,17 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMeta
 
         # dispatch the update event
         asyncio.create_task(self._client.on_token_update(before=old_auth, after=auth))
+
+    def __setup_session(self) -> None:
+        """
+        Sets up the session to use for http requests
+        """
+
+        try:
+            from aiohttp_client_cache import CachedSession
+
+            self.__session = CachedSession(
+                json_serialize=self._client.json_dumps, cookie_jar=DummyCookieJar(), cache=self._client.cache
+            )
+        except ModuleNotFoundError:
+            self.__session = ClientSession(json_serialize=self._client.json_dumps, cookie_jar=DummyCookieJar())

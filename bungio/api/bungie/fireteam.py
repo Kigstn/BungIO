@@ -33,7 +33,7 @@ class FireteamRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_active_private_clan_fireteam_count(group_id=group_id, auth=auth)
-        return int.from_dict(data=response, client=self._client)
+        return await int.from_dict(data=response, client=self._client)
 
     async def get_available_clan_fireteams(
         self,
@@ -79,7 +79,7 @@ class FireteamRouteInterface(BaseModel):
             auth=auth,
             lang_filter=lang_filter,
         )
-        return SearchResultOfFireteamSummary.from_dict(data=response, client=self._client)
+        return await SearchResultOfFireteamSummary.from_dict(data=response, client=self._client)
 
     async def search_public_available_clan_fireteams(
         self,
@@ -119,7 +119,7 @@ class FireteamRouteInterface(BaseModel):
             auth=auth,
             lang_filter=lang_filter,
         )
-        return SearchResultOfFireteamSummary.from_dict(data=response, client=self._client)
+        return await SearchResultOfFireteamSummary.from_dict(data=response, client=self._client)
 
     async def get_my_clan_fireteams(
         self,
@@ -159,7 +159,7 @@ class FireteamRouteInterface(BaseModel):
             group_filter=group_filter,
             lang_filter=lang_filter,
         )
-        return SearchResultOfFireteamResponse.from_dict(data=response, client=self._client)
+        return await SearchResultOfFireteamResponse.from_dict(data=response, client=self._client)
 
     async def get_clan_fireteam(self, fireteam_id: int, group_id: int, auth: AuthData) -> FireteamResponse:
         """
@@ -178,4 +178,4 @@ class FireteamRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_clan_fireteam(fireteam_id=fireteam_id, group_id=group_id, auth=auth)
-        return FireteamResponse.from_dict(data=response, client=self._client)
+        return await FireteamResponse.from_dict(data=response, client=self._client)

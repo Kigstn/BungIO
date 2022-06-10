@@ -8,13 +8,14 @@ class ComponentResponse(BaseModel):
     """
     The base class for any component-returning object that may need to indicate information about the state of the component being returned.
 
+    None
     Attributes:
-        privacy: _No description given by bungie_
         disabled: If true, this component is disabled.
+        privacy: _No description given by bungie._
     """
 
-    privacy: "ComponentPrivacySetting" = attr.field()
     disabled: bool = attr.field()
+    privacy: "ComponentPrivacySetting" = attr.field()
 
 
 class ComponentPrivacySetting(BaseEnum):
@@ -23,8 +24,8 @@ class ComponentPrivacySetting(BaseEnum):
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     PUBLIC = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     PRIVATE = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """

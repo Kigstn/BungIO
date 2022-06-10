@@ -16,94 +16,101 @@ if TYPE_CHECKING:
 @attr.define
 class PartnerOfferClaimRequest(BaseModel):
     """
-    _No description given by bungie_
+    _No description given by bungie._
 
+    None
     Attributes:
-        partner_offer_id: _No description given by bungie_
-        bungie_net_membership_id: _No description given by bungie_
-        transaction_id: _No description given by bungie_
+        bungie_net_membership_id: _No description given by bungie._
+        partner_offer_id: _No description given by bungie._
+        transaction_id: _No description given by bungie._
     """
 
-    partner_offer_id: str = attr.field()
     bungie_net_membership_id: int = attr.field()
+    partner_offer_id: str = attr.field()
     transaction_id: str = attr.field()
 
 
 @attr.define
 class PartnerOfferSkuHistoryResponse(BaseModel):
     """
-    _No description given by bungie_
+    _No description given by bungie._
 
+    None
     Attributes:
-        sku_identifier: _No description given by bungie_
-        localized_name: _No description given by bungie_
-        localized_description: _No description given by bungie_
-        claim_date: _No description given by bungie_
-        all_offers_applied: _No description given by bungie_
-        transaction_id: _No description given by bungie_
-        sku_offers: _No description given by bungie_
+        all_offers_applied: _No description given by bungie._
+        claim_date: _No description given by bungie._
+        localized_description: _No description given by bungie._
+        localized_name: _No description given by bungie._
+        sku_identifier: _No description given by bungie._
+        sku_offers: _No description given by bungie._
+        transaction_id: _No description given by bungie._
     """
 
-    sku_identifier: str = attr.field()
-    localized_name: str = attr.field()
-    localized_description: str = attr.field()
-    claim_date: datetime.datetime = attr.field()
     all_offers_applied: bool = attr.field()
+    claim_date: datetime.datetime = attr.field()
+    localized_description: str = attr.field()
+    localized_name: str = attr.field()
+    sku_identifier: str = attr.field()
+    sku_offers: list["PartnerOfferHistoryResponse"] = attr.field(
+        metadata={"type": """list["PartnerOfferHistoryResponse"]"""}
+    )
     transaction_id: str = attr.field()
-    sku_offers: list["PartnerOfferHistoryResponse"] = attr.field()
 
 
 @attr.define
 class PartnerOfferHistoryResponse(BaseModel):
     """
-    _No description given by bungie_
+    _No description given by bungie._
 
+    None
     Attributes:
-        partner_offer_key: _No description given by bungie_
-        membership_id: _No description given by bungie_
-        membership_type: _No description given by bungie_
-        localized_name: _No description given by bungie_
-        localized_description: _No description given by bungie_
-        is_consumable: _No description given by bungie_
-        quantity_applied: _No description given by bungie_
-        apply_date: _No description given by bungie_
+        apply_date: _No description given by bungie._
+        is_consumable: _No description given by bungie._
+        localized_description: _No description given by bungie._
+        localized_name: _No description given by bungie._
+        membership_id: _No description given by bungie._
+        membership_type: _No description given by bungie._
+        partner_offer_key: _No description given by bungie._
+        quantity_applied: _No description given by bungie._
     """
 
-    partner_offer_key: str = attr.field()
+    apply_date: datetime.datetime = attr.field()
+    is_consumable: bool = attr.field()
+    localized_description: str = attr.field()
+    localized_name: str = attr.field()
     membership_id: int = attr.field()
     membership_type: int = attr.field()
-    localized_name: str = attr.field()
-    localized_description: str = attr.field()
-    is_consumable: bool = attr.field()
+    partner_offer_key: str = attr.field()
     quantity_applied: int = attr.field()
-    apply_date: datetime.datetime = attr.field()
 
 
 @attr.define
 class BungieRewardDisplay(BaseModel):
     """
-    _No description given by bungie_
+    _No description given by bungie._
 
+    None
     Attributes:
-        user_reward_availability_model: _No description given by bungie_
-        objective_display_properties: _No description given by bungie_
-        reward_display_properties: _No description given by bungie_
+        objective_display_properties: _No description given by bungie._
+        reward_display_properties: _No description given by bungie._
+        user_reward_availability_model: _No description given by bungie._
     """
 
-    user_reward_availability_model: "UserRewardAvailabilityModel" = attr.field()
     objective_display_properties: "RewardDisplayProperties" = attr.field()
     reward_display_properties: "RewardDisplayProperties" = attr.field()
+    user_reward_availability_model: "UserRewardAvailabilityModel" = attr.field()
 
 
 @attr.define
 class UserRewardAvailabilityModel(BaseModel):
     """
-    _No description given by bungie_
+    _No description given by bungie._
 
+    None
     Attributes:
-        availability_model: _No description given by bungie_
-        is_available_for_user: _No description given by bungie_
-        is_unlocked_for_user: _No description given by bungie_
+        availability_model: _No description given by bungie._
+        is_available_for_user: _No description given by bungie._
+        is_unlocked_for_user: _No description given by bungie._
     """
 
     availability_model: "RewardAvailabilityModel" = attr.field()
@@ -114,43 +121,49 @@ class UserRewardAvailabilityModel(BaseModel):
 @attr.define
 class RewardAvailabilityModel(BaseModel):
     """
-    _No description given by bungie_
+    _No description given by bungie._
 
+    None
     Attributes:
-        has_existing_code: _No description given by bungie_
-        record_definitions: _No description given by bungie_
-        collectible_definitions: _No description given by bungie_
-        is_offer: _No description given by bungie_
-        has_offer: _No description given by bungie_
-        offer_applied: _No description given by bungie_
-        decrypted_token: _No description given by bungie_
-        is_loyalty_reward: _No description given by bungie_
-        shopify_end_date: _No description given by bungie_
-        game_earn_by_date: _No description given by bungie_
-        redemption_end_date: _No description given by bungie_
+        collectible_definitions: _No description given by bungie._
+        decrypted_token: _No description given by bungie._
+        game_earn_by_date: _No description given by bungie._
+        has_existing_code: _No description given by bungie._
+        has_offer: _No description given by bungie._
+        is_loyalty_reward: _No description given by bungie._
+        is_offer: _No description given by bungie._
+        offer_applied: _No description given by bungie._
+        record_definitions: _No description given by bungie._
+        redemption_end_date: _No description given by bungie._
+        shopify_end_date: _No description given by bungie._
     """
 
-    has_existing_code: bool = attr.field()
-    record_definitions: list["DestinyRecordDefinition"] = attr.field()
-    collectible_definitions: list["CollectibleDefinitions"] = attr.field()
-    is_offer: bool = attr.field()
-    has_offer: bool = attr.field()
-    offer_applied: bool = attr.field()
+    collectible_definitions: list["CollectibleDefinitions"] = attr.field(
+        metadata={"type": """list["CollectibleDefinitions"]"""}
+    )
     decrypted_token: str = attr.field()
-    is_loyalty_reward: bool = attr.field()
-    shopify_end_date: datetime.datetime = attr.field()
     game_earn_by_date: datetime.datetime = attr.field()
+    has_existing_code: bool = attr.field()
+    has_offer: bool = attr.field()
+    is_loyalty_reward: bool = attr.field()
+    is_offer: bool = attr.field()
+    offer_applied: bool = attr.field()
+    record_definitions: list["DestinyRecordDefinition"] = attr.field(
+        metadata={"type": """list["DestinyRecordDefinition"]"""}
+    )
     redemption_end_date: datetime.datetime = attr.field()
+    shopify_end_date: datetime.datetime = attr.field()
 
 
 @attr.define
 class CollectibleDefinitions(BaseModel):
     """
-    _No description given by bungie_
+    _No description given by bungie._
 
+    None
     Attributes:
-        collectible_definition: _No description given by bungie_
-        destiny_inventory_item_definition: _No description given by bungie_
+        collectible_definition: _No description given by bungie._
+        destiny_inventory_item_definition: _No description given by bungie._
     """
 
     collectible_definition: "DestinyCollectibleDefinition" = attr.field()
@@ -160,14 +173,15 @@ class CollectibleDefinitions(BaseModel):
 @attr.define
 class RewardDisplayProperties(BaseModel):
     """
-    _No description given by bungie_
+    _No description given by bungie._
 
+    None
     Attributes:
-        name: _No description given by bungie_
-        description: _No description given by bungie_
-        image_path: _No description given by bungie_
+        description: _No description given by bungie._
+        image_path: _No description given by bungie._
+        name: _No description given by bungie._
     """
 
-    name: str = attr.field()
     description: str = attr.field()
     image_path: str = attr.field()
+    name: str = attr.field()

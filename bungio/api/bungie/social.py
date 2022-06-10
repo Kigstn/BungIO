@@ -29,7 +29,7 @@ class SocialRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_friend_list(auth=auth)
-        return BungieFriendListResponse.from_dict(data=response, client=self._client)
+        return await BungieFriendListResponse.from_dict(data=response, client=self._client)
 
     async def get_friend_request_list(self, auth: AuthData) -> BungieFriendRequestListResponse:
         """
@@ -46,7 +46,7 @@ class SocialRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_friend_request_list(auth=auth)
-        return BungieFriendRequestListResponse.from_dict(data=response, client=self._client)
+        return await BungieFriendRequestListResponse.from_dict(data=response, client=self._client)
 
     async def issue_friend_request(self, membership_id: str, auth: AuthData) -> bool:
         """
@@ -64,7 +64,7 @@ class SocialRouteInterface(BaseModel):
         """
 
         response = await self._client.http.issue_friend_request(membership_id=membership_id, auth=auth)
-        return bool.from_dict(data=response, client=self._client)
+        return await bool.from_dict(data=response, client=self._client)
 
     async def accept_friend_request(self, membership_id: str, auth: AuthData) -> bool:
         """
@@ -82,7 +82,7 @@ class SocialRouteInterface(BaseModel):
         """
 
         response = await self._client.http.accept_friend_request(membership_id=membership_id, auth=auth)
-        return bool.from_dict(data=response, client=self._client)
+        return await bool.from_dict(data=response, client=self._client)
 
     async def decline_friend_request(self, membership_id: str, auth: AuthData) -> bool:
         """
@@ -100,7 +100,7 @@ class SocialRouteInterface(BaseModel):
         """
 
         response = await self._client.http.decline_friend_request(membership_id=membership_id, auth=auth)
-        return bool.from_dict(data=response, client=self._client)
+        return await bool.from_dict(data=response, client=self._client)
 
     async def remove_friend(self, membership_id: str, auth: AuthData) -> bool:
         """
@@ -118,7 +118,7 @@ class SocialRouteInterface(BaseModel):
         """
 
         response = await self._client.http.remove_friend(membership_id=membership_id, auth=auth)
-        return bool.from_dict(data=response, client=self._client)
+        return await bool.from_dict(data=response, client=self._client)
 
     async def remove_friend_request(self, membership_id: str, auth: AuthData) -> bool:
         """
@@ -136,7 +136,7 @@ class SocialRouteInterface(BaseModel):
         """
 
         response = await self._client.http.remove_friend_request(membership_id=membership_id, auth=auth)
-        return bool.from_dict(data=response, client=self._client)
+        return await bool.from_dict(data=response, client=self._client)
 
     async def get_platform_friend_list(
         self, friend_platform: PlatformFriendType, page: str, auth: Optional[AuthData] = None
@@ -156,4 +156,4 @@ class SocialRouteInterface(BaseModel):
         response = await self._client.http.get_platform_friend_list(
             friend_platform=friend_platform.value, page=page, auth=auth
         )
-        return PlatformFriendResponse.from_dict(data=response, client=self._client)
+        return await PlatformFriendResponse.from_dict(data=response, client=self._client)

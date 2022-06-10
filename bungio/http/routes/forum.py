@@ -331,7 +331,7 @@ class ForumRouteHttpRequests:
         Allows the caller to get a list of to 25 recruitment thread summary information objects.
 
         Args:
-            body_data: _No description given by bungie_
+            body_data: _No description given by bungie._
             auth: Authentication information. Required when users with a private profile are queried.
 
         Raises:

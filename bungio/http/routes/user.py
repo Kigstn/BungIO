@@ -220,7 +220,7 @@ class UserRouteHttpRequests:
         Given the prefix of a global display name, returns all users who share that name.
 
         Args:
-            display_name_prefix: _No description given by bungie_
+            display_name_prefix: _No description given by bungie._
             page: The zero-based page of results you desire.
             auth: Authentication information. Required when users with a private profile are queried.
 

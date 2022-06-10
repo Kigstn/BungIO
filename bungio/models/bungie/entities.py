@@ -11,11 +11,12 @@ if TYPE_CHECKING:
 @attr.define
 class EntityActionResult(BaseModel):
     """
-    _No description given by bungie_
+    _No description given by bungie._
 
+    None
     Attributes:
-        entity_id: _No description given by bungie_
-        result: _No description given by bungie_
+        entity_id: _No description given by bungie._
+        result: _No description given by bungie._
     """
 
     entity_id: int = attr.field()

@@ -24,4 +24,4 @@ class GlobalAlertsRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_global_alerts(includestreaming=includestreaming, auth=auth)
-        return [GlobalAlert.from_dict(data=entry, client=self._client) for entry in response["Result"]]
+        return [await GlobalAlert.from_dict(data=entry, client=self._client) for entry in response["Result"]]

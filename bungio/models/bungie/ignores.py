@@ -6,64 +6,65 @@ from bungio.models.base import BaseEnum, BaseModel
 @attr.define
 class IgnoreResponse(BaseModel):
     """
-    _No description given by bungie_
+    _No description given by bungie._
 
+    None
     Attributes:
-        is_ignored: _No description given by bungie_
-        ignore_flags: _No description given by bungie_
+        ignore_flags: _No description given by bungie._
+        is_ignored: _No description given by bungie._
     """
 
-    is_ignored: bool = attr.field()
     ignore_flags: "IgnoreStatus" = attr.field()
+    is_ignored: bool = attr.field()
 
 
 class IgnoreStatus(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     NOT_IGNORED = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     IGNORED_USER = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     IGNORED_GROUP = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     IGNORED_BY_GROUP = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     IGNORED_POST = 8
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     IGNORED_TAG = 16
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     IGNORED_GLOBAL = 32
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
 
 
 class IgnoreLength(BaseEnum):
     """
-    _No description given by bungie_
+    _No description given by bungie._
     """
 
     NONE = 0
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     WEEK = 1
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     TWO_WEEKS = 2
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     THREE_WEEKS = 3
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     MONTH = 4
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     THREE_MONTHS = 5
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     SIX_MONTHS = 6
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     YEAR = 7
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     FOREVER = 8
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     THREE_MINUTES = 9
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     HOUR = 10
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """
     THIRTY_DAYS = 11
-    """_No description given by bungie_ """
+    """_No description given by bungie._ """

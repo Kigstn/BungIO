@@ -12,20 +12,31 @@ if TYPE_CHECKING:
 @attr.define
 class DestinyItemTransferRequest(BaseModel):
     """
-    _No description given by bungie_
+    _No description given by bungie._
+
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
-        item_reference_hash: _No description given by bungie_
-        stack_size: _No description given by bungie_
-        transfer_to_vault: _No description given by bungie_
+        character_id: _No description given by bungie._
         item_id: The instance ID of the item for this action request.
-        character_id: _No description given by bungie_
-        membership_type: _No description given by bungie_
+        item_reference_hash: _No description given by bungie._
+        membership_type: _No description given by bungie._
+        stack_size: _No description given by bungie._
+        transfer_to_vault: _No description given by bungie._
+        manifest_item_reference_hash: Manifest information for `item_reference_hash`
     """
 
-    item_reference_hash: "DestinyInventoryItemDefinition" = attr.field()
+    character_id: int = attr.field()
+    item_id: int = attr.field()
+    item_reference_hash: int = attr.field()
+    membership_type: "BungieMembershipType" = attr.field()
     stack_size: int = attr.field()
     transfer_to_vault: bool = attr.field()
-    item_id: int = attr.field()
-    character_id: int = attr.field()
-    membership_type: "BungieMembershipType" = attr.field()
+    manifest_item_reference_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
