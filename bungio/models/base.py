@@ -83,7 +83,7 @@ class BaseModel:
     Base methods which help to acquire this model from json and export it to json.
     """
 
-    _client: "Client" = attr.field(init=False)
+    _client: "Client" = attr.field(init=False, repr=False)
 
     @staticmethod
     def process_dict(data: dict, client: "Client", *args, **kwargs) -> dict:
