@@ -103,7 +103,7 @@ class DestinyProgressionDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -202,7 +202,7 @@ class DestinyInventoryItemDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -427,7 +427,7 @@ class DestinyItemActionRequiredItemDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -454,7 +454,7 @@ class DestinyProgressionRewardDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -502,7 +502,7 @@ class DestinyItemCraftingBlockDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -537,7 +537,7 @@ class DestinyItemCraftingBlockBonusPlugDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -585,7 +585,7 @@ class DestinyMaterialRequirement(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -616,7 +616,7 @@ class DestinyItemInventoryBlockDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -731,7 +731,7 @@ class DestinyItemSetBlockEntryDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -756,7 +756,7 @@ class DestinyItemStatBlockDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -791,7 +791,7 @@ class DestinyInventoryItemStatDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -876,7 +876,7 @@ class DestinyStatDisplayDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -905,7 +905,7 @@ class DestinyStatOverrideDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -930,7 +930,7 @@ class DestinyEquippingBlockDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -967,7 +967,7 @@ class DestinyEquipmentSlotDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -1019,7 +1019,7 @@ class DestinyItemTranslationBlockDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -1056,7 +1056,7 @@ class DestinyGearArtArrangementReference(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -1081,7 +1081,7 @@ class DestinyClassDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -1139,7 +1139,7 @@ class DestinyVendorDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -1386,7 +1386,7 @@ class DestinyVendorCategoryOverlayDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -1417,7 +1417,7 @@ class DestinyDisplayCategoryDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -1456,7 +1456,7 @@ class DestinyVendorInteractionDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -1562,7 +1562,7 @@ class DestinyVendorInventoryFlyoutBucketDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -1589,7 +1589,7 @@ class DestinyVendorItemDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -1670,7 +1670,7 @@ class DestinyVendorItemQuantity(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -1727,7 +1727,7 @@ class DestinyVendorItemSocketOverride(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -1769,7 +1769,7 @@ class DestinyVendorAcceptedItemDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -1796,7 +1796,7 @@ class DestinyDestinationDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -1841,7 +1841,7 @@ class DestinyActivityGraphListEntryDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -1864,7 +1864,7 @@ class DestinyActivityDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -1988,7 +1988,7 @@ class DestinyActivityModifierReferenceDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -2011,7 +2011,7 @@ class DestinyActivityChallengeDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -2036,7 +2036,7 @@ class DestinyObjectiveDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -2099,7 +2099,7 @@ class DestinyObjectivePerkEntryDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -2124,7 +2124,7 @@ class DestinySandboxPerkDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -2353,7 +2353,7 @@ class DestinyItemInvestmentStatDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -2380,7 +2380,7 @@ class DestinyLocationDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -2413,7 +2413,7 @@ class DestinyLocationReleaseDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -2477,7 +2477,7 @@ class DestinyActivityPlaylistItemDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -2606,7 +2606,7 @@ class DestinyActivityLoadoutRequirement(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -2727,7 +2727,7 @@ class DestinyVendorGroupReference(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -2771,7 +2771,7 @@ class DestinyFactionDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -2816,7 +2816,7 @@ class DestinyFactionVendorDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -2897,7 +2897,7 @@ class DestinyItemPreviewBlockDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -2932,7 +2932,7 @@ class DestinyItemQualityBlockDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -2975,7 +2975,7 @@ class DestinyItemVersionDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -3072,7 +3072,7 @@ class DestinyItemVendorSourceReference(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -3097,7 +3097,7 @@ class DestinyItemObjectiveBlockDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -3140,7 +3140,7 @@ class DestinyObjectiveDisplayProperties(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -3256,7 +3256,7 @@ class DestinyItemSocketEntryDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -3303,7 +3303,7 @@ class DestinyItemSocketEntryPlugItemDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -3326,7 +3326,7 @@ class DestinyItemSocketEntryPlugItemRandomizedDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -3385,7 +3385,7 @@ class DestinyItemIntrinsicSocketEntryDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -3414,7 +3414,7 @@ class DestinyItemSocketCategoryDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -3452,7 +3452,7 @@ class DestinyItemTalentGridBlockDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -3483,7 +3483,7 @@ class DestinyTalentGridDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -3534,7 +3534,7 @@ class DestinyTalentNodeDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -3608,7 +3608,7 @@ class DestinyNodeStepDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -3665,7 +3665,7 @@ class DestinyNodeSocketReplaceResponse(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -3705,7 +3705,7 @@ class DestinyTalentExclusiveGroup(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -3755,7 +3755,7 @@ class DestinyItemPerkEntryDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -3831,7 +3831,7 @@ class DestinyProgressionRewardItemQuantity(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:

@@ -24,8 +24,13 @@ class Route:
         self.method = method
         self.path = BASE_ROUTE + path
 
+        # pgcr need a different url
         if "PostGameCarnageReport" in self.path:
             self.path = self.path.replace("www", "stats")
+
+        # manifest too
+        if "destiny2_content" in self.path:
+            self.path = self.path.replace("/Platform", "")
 
         if not params:
             self.params = {}

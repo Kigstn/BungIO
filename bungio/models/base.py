@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import datetime
-import importlib
 from enum import Enum
 from typing import TYPE_CHECKING, Any, Optional
 
 import attr
 from sqlalchemy.orm import sessionmaker
+
+import bungio.models as models
 
 if TYPE_CHECKING:
     from bungio.client import Client
@@ -28,6 +29,10 @@ class MISSING:
 
 
 MISSING = MISSING()
+
+
+class ManifestModel:
+    pass
 
 
 class BaseEnum(Enum):
@@ -142,7 +147,7 @@ class BaseModel:
 
         # fill the manifest information
         if not recursive and res._client.always_return_manifest_information:
-            await res.get_manifest_information()
+            await res.fetch_manifest_information()
 
         return res
 
@@ -150,8 +155,7 @@ class BaseModel:
     async def _convert_to_type(field_type: Any, field_metadata: Optional[dict], value: Any, client: Client) -> Any:
         # sometimes the field type is the attr as a string
         if isinstance(field_type, str):
-            imp = importlib.import_module("bungio.models")
-            field_type = getattr(imp, field_type)
+            field_type = getattr(models, field_type)
 
         # convert models in models
         if hasattr(field_type, "from_dict"):
@@ -224,12 +228,31 @@ class BaseModel:
         # todo
         ...
 
-    async def get_manifest_information(self):
+    async def fetch_manifest_information(self):
         """
         Fill the model in-place with information from the manifest.
         """
 
-        # todo
-
         if not isinstance(self._client.manifest_storage, sessionmaker):
             raise ValueError("Client.manifest_storage must be set up to use this")
+
+        class_definition = attr.fields_dict(type(self))  # noqa
+
+        # loop through the attr attributes
+        for name in attr.asdict(self):  # noqa
+            if name.startswith("manifest_"):
+                attr_definition = class_definition["name"]
+                striped_name = name.removeprefix("manifest_")
+                manifest_class_name = attr_definition.type.__str__().removesuffix("')]").split("'")[-1]
+                manifest_value = await self._client.manifest.fetch(
+                    manifest_class=getattr(models, manifest_class_name), value=getattr(self, striped_name)
+                )
+
+                # check if the model has manifest models itself
+                if manifest_value:
+                    await manifest_value.fetch_manifest_information()
+
+                setattr(self, name, manifest_value)
+
+        # todo recursive for child models which are Type["BaseModel"]
+        # todo gather for speed

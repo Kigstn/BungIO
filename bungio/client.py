@@ -13,6 +13,7 @@ from bungio import InvalidAuthentication
 from bungio.api import ApiClient
 from bungio.definitions import LOGGER_NAME
 from bungio.http.client import HttpClient
+from bungio.manifest import Manifest
 from bungio.models import BungieMembershipType
 from bungio.models.auth import AuthData
 from bungio.models.enums import BungieLanguage
@@ -20,7 +21,7 @@ from bungio.utils import get_now_with_tz
 
 if TYPE_CHECKING:
     from aiohttp_client_cache import CacheBackend
-    from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+    from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 
 __all__ = ("Client",)
 
@@ -65,7 +66,7 @@ class Client:
     language: BungieLanguage = attr.field(default=BungieLanguage.ENGLISH)
 
     cache: Optional["CacheBackend"] = attr.field(default=None)
-    manifest_storage: bool | sessionmaker = attr.field(default=False)
+    manifest_storage: bool | AsyncEngine = attr.field(default=False)
     always_return_manifest_information: bool = attr.field(default=False)
 
     json_dumps: Callable = attr.field(init=False, default=json_dumps)
@@ -73,12 +74,12 @@ class Client:
 
     api: ApiClient = attr.field(init=False)
     http: HttpClient = attr.field(init=False)
+    manifest: Optional[Manifest] = attr.field(init=False, default=None)
 
     @manifest_storage.validator  # noqa
     def manifest_storage_check(self, attribute, value):
-        if isinstance(value, sessionmaker):
-            if not isinstance(value.class_, AsyncSession):
-                raise ValueError(f"{attribute} obj must be bound to an async session")
+        if not isinstance(value, AsyncEngine):
+            raise ValueError(f"{attribute} obj must be of type `AsyncEngine`")
 
     @language.validator  # noqa
     def language_check(self, attribute, value):
@@ -86,15 +87,11 @@ class Client:
             raise ValueError(f"{attribute} must be an instance of type BungieLanguage")
 
     def __attrs_post_init__(self):
-        if self.manifest_storage is True:
-            engine = create_async_engine("sqlite+aiosqlite:///manifest.db")
-            self.manifest_storage = sessionmaker(bind=engine, class_=AsyncSession, future=True)
-
         if self.always_return_manifest_information:
-            if not isinstance(self.manifest_storage, sessionmaker):
+            if not isinstance(self.manifest_storage, AsyncEngine):
                 raise ValueError("Client.manifest_storage must be set up to use this")
 
-        # set up the http client
+        # set up the api client
         self.api = ApiClient()
         self.api._client = self
 
@@ -112,6 +109,11 @@ class Client:
             "X-API-Key": self.bungie_token,
             "Accept": "application/json",
         }
+
+        if self.manifest_storage is True:
+            self.manifest_storage = create_async_engine("sqlite+aiosqlite:///manifest.db")
+            self.manifest = Manifest(_client=self)
+            await self.manifest.synchronise_with_db()
 
     def get_auth_url(self, state: str) -> str:
         """

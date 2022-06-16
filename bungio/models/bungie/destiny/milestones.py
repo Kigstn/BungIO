@@ -29,7 +29,7 @@ class DestinyMilestone(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -74,7 +74,7 @@ class DestinyMilestoneQuest(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -103,7 +103,7 @@ class DestinyMilestoneActivity(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -138,7 +138,7 @@ class DestinyMilestoneActivityVariant(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -201,7 +201,7 @@ class DestinyMilestoneChallengeActivity(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -236,7 +236,7 @@ class DestinyMilestoneVendor(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -333,7 +333,7 @@ class DestinyPublicMilestone(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -376,7 +376,7 @@ class DestinyPublicMilestoneQuest(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -405,7 +405,7 @@ class DestinyPublicMilestoneActivity(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -440,7 +440,7 @@ class DestinyPublicMilestoneActivityVariant(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -469,7 +469,7 @@ class DestinyPublicMilestoneChallenge(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -496,7 +496,7 @@ class DestinyPublicMilestoneChallengeActivity(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -529,7 +529,7 @@ class DestinyPublicMilestoneVendor(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:

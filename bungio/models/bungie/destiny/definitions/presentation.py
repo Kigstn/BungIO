@@ -82,7 +82,7 @@ class DestinyPresentationNodeDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -189,7 +189,7 @@ class DestinyPresentationNodeChildEntry(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -214,7 +214,7 @@ class DestinyPresentationNodeCollectibleChildEntry(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -269,7 +269,7 @@ class DestinyPresentationNodeRecordChildEntry(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -294,7 +294,7 @@ class DestinyPresentationNodeMetricChildEntry(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -319,7 +319,7 @@ class DestinyPresentationNodeCraftableChildEntry(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:

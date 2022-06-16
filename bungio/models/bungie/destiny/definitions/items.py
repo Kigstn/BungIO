@@ -103,7 +103,7 @@ class DestinyItemPlugDefinition(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -198,7 +198,7 @@ class DestinyEnergyCapacityEntry(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
@@ -225,7 +225,7 @@ class DestinyEnergyCostEntry(BaseModel):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:

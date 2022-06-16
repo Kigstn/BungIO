@@ -772,7 +772,7 @@ class {model["name"]}(BaseEnum):
 
         To fill the manifest dependent attributes, either:
 
-        - Run `await ThisClass.get_manifest_information()`, see [here](/API Reference/Models/base)
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
             """
 
@@ -823,3 +823,4 @@ main()
 # todo inherited overwrite classes do not display as docs correctly -> https://mkdocstrings.github.io/handlers/overview/#selection-options (inherited members)
 # todo options: members: [] does not work -> config/config.md
 # todo DestinyActivityPlaylistItemDefinition -> directActivityModeType is very unfun. Enum which is defined in a model
+# todo when x-mobile-manifest-name is set, inherit ManifestModel
