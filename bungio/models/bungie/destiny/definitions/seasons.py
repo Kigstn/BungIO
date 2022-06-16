@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Optional
 
 import attr
 
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, ManifestModel
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 
 
 @attr.define
-class DestinySeasonDefinition(BaseModel):
+class DestinySeasonDefinition(ManifestModel):
     """
     Defines a canonical "Season" of Destiny: a range of a few months where the game highlights certain challenges, provides new loot, has new Clan-related rewards and celebrates various seasonal events.
 
@@ -110,7 +110,7 @@ class DestinySeasonPreviewImageDefinition(BaseModel):
 
 
 @attr.define
-class DestinySeasonPassDefinition(BaseModel):
+class DestinySeasonPassDefinition(ManifestModel):
     """
     _No description given by bungie._
 

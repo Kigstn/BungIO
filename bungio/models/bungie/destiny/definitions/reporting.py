@@ -2,14 +2,14 @@ from typing import TYPE_CHECKING
 
 import attr
 
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, ManifestModel
 
 if TYPE_CHECKING:
     from bungio.models import DestinyDisplayPropertiesDefinition
 
 
 @attr.define
-class DestinyReportReasonCategoryDefinition(BaseModel):
+class DestinyReportReasonCategoryDefinition(ManifestModel):
     """
     If you're going to report someone for a Terms of Service violation, you need to choose a category and reason for the report. This definition holds both the categories and the reasons within those categories, for simplicity and my own laziness' sake. Note tha this means that, to refer to a Reason by reasonHash, you need a combination of the reasonHash *and* the associated ReasonCategory's hash: there are some reasons defined under multiple categories.
 

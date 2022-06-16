@@ -132,61 +132,60 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMeta
 
         route_with_params = f"{route}?{urlencode(params or {})}"
 
-        async with self.__session as session:
-            for attempt in range(self._max_attempts):
-                # wait for a token
-                if use_ratelimiter:
-                    await self.ratelimiter.wait_for_token()
+        for attempt in range(self._max_attempts):
+            # wait for a token
+            if use_ratelimiter:
+                await self.ratelimiter.wait_for_token()
 
-                    try:
-                        async with session.request(
-                            method=method,
-                            url=route,
-                            headers=headers,
-                            params=params,
-                            json=data,
-                            data=form_data,
-                        ) as response:
-                            self._client.logger.debug(f"[{response.status}] - {route_with_params}")
+                try:
+                    async with self.__session.request(
+                        method=method,
+                        url=route,
+                        headers=headers,
+                        params=params,
+                        json=data,
+                        data=form_data,
+                    ) as response:
+                        self._client.logger.debug(f"[{response.status}] - {route_with_params}")
 
-                            # cached responses do not have the content type field
-                            content_type = getattr(response, "content_type", None) or response.headers.get(
-                                "Content-Type", "NOT SET"
-                            )
-
-                            # get the json
-                            content = (
-                                await response.json(loads=self._client.json_loads)
-                                if "application/json" in content_type
-                                else {}
-                            )
-
-                            if not await self._handle_response(
-                                route_with_params=route_with_params, response=response, content=content
-                            ):
-                                continue
-
-                            return content
-
-                    except _RouteError as e:
-                        route = e.route
-
-                    except _InvalidAuthentication:
-                        self._invalidate_token(auth=auth)
-                        raise InvalidAuthentication(auth=auth)
-
-                    except (
-                        asyncio.exceptions.TimeoutError,
-                        ConnectionResetError,
-                        ServerDisconnectedError,
-                        ClientConnectorCertificateError,
-                        ClientOSError,
-                    ):
-                        self._client.logger.debug(
-                            f"Retrying... - Timeout error for `{route}?{urlencode({} if params is None else params)}`"
+                        # cached responses do not have the content type field
+                        content_type = getattr(response, "content_type", None) or response.headers.get(
+                            "Content-Type", "NOT SET"
                         )
-                        await asyncio.sleep(2 + attempt * 3)
-                        continue
+
+                        # get the json
+                        content = (
+                            await response.json(loads=self._client.json_loads)
+                            if "application/json" in content_type
+                            else {}
+                        )
+
+                        if not await self._handle_response(
+                            route_with_params=route_with_params, response=response, content=content
+                        ):
+                            continue
+
+                        return content
+
+                except _RouteError as e:
+                    route = e.route
+
+                except _InvalidAuthentication:
+                    self._invalidate_token(auth=auth)
+                    raise InvalidAuthentication(auth=auth)
+
+                except (
+                    asyncio.exceptions.TimeoutError,
+                    ConnectionResetError,
+                    ServerDisconnectedError,
+                    ClientConnectorCertificateError,
+                    ClientOSError,
+                ):
+                    self._client.logger.debug(
+                        f"Retrying... - Timeout error for `{route}?{urlencode({} if params is None else params)}`"
+                    )
+                    await asyncio.sleep(2 + attempt * 3)
+                    continue
 
         self._client.logger.exception(f"{route_with_params}- Aborting. Failed {self._max_attempts} times")
         raise TimeoutException

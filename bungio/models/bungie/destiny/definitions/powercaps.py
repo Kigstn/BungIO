@@ -1,10 +1,10 @@
 import attr
 
-from bungio.models.base import BaseModel
+from bungio.models.base import ManifestModel
 
 
 @attr.define
-class DestinyPowerCapDefinition(BaseModel):
+class DestinyPowerCapDefinition(ManifestModel):
     """
     Defines a 'power cap' (limit) for gear items, based on the rarity tier and season of release.
 

@@ -2,14 +2,14 @@ from typing import TYPE_CHECKING, Optional
 
 import attr
 
-from bungio.models.base import BaseModel
+from bungio.models.base import ManifestModel
 
 if TYPE_CHECKING:
     from bungio.models import DestinyDisplayPropertiesDefinition
 
 
 @attr.define
-class DestinyTraitDefinition(BaseModel):
+class DestinyTraitDefinition(ManifestModel):
     """
     _No description given by bungie._
 
@@ -44,7 +44,7 @@ class DestinyTraitDefinition(BaseModel):
 
 
 @attr.define
-class DestinyTraitCategoryDefinition(BaseModel):
+class DestinyTraitCategoryDefinition(ManifestModel):
     """
     _No description given by bungie._
 

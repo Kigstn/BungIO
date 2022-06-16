@@ -5,34 +5,27 @@ from enum import Enum
 from typing import TYPE_CHECKING, Any, Optional
 
 import attr
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.asyncio import AsyncEngine
 
 import bungio.models as models
 
 if TYPE_CHECKING:
     from bungio.client import Client
 
-
 __all__ = (
     "MISSING",
     "BaseEnum",
     "BaseModel",
+    "ManifestModel",
 )
 
 
 class MISSING:
-    def __getattr__(self, *_) -> None:
-        return None
-
     def __bool__(self) -> bool:
         return False
 
 
 MISSING = MISSING()
-
-
-class ManifestModel:
-    pass
 
 
 class BaseEnum(Enum):
@@ -113,6 +106,9 @@ class BaseModel:
         if isinstance(data, cls):
             return data
 
+        if not isinstance(data, dict):
+            raise ValueError
+
         if "Response" in data:
             data = data["Response"]
 
@@ -155,7 +151,11 @@ class BaseModel:
     async def _convert_to_type(field_type: Any, field_metadata: Optional[dict], value: Any, client: Client) -> Any:
         # sometimes the field type is the attr as a string
         if isinstance(field_type, str):
-            field_type = getattr(models, field_type)
+            # catch build-ins
+            if field_type in ["dict", "int", "str", "Any", "float", "bool"]:
+                return value
+            else:
+                field_type = getattr(models, field_type)
 
         # convert models in models
         if hasattr(field_type, "from_dict"):
@@ -228,31 +228,59 @@ class BaseModel:
         # todo
         ...
 
-    async def fetch_manifest_information(self):
+    async def fetch_manifest_information(self, _cache: Optional[dict] = None):
         """
         Fill the model in-place with information from the manifest.
+
+        Args:
+            _cache: Internal cache to avoid infinite recursion
         """
 
-        if not isinstance(self._client.manifest_storage, sessionmaker):
+        if not isinstance(self._client.manifest_storage, AsyncEngine):
             raise ValueError("Client.manifest_storage must be set up to use this")
+
+        if not _cache:
+            _cache = {}
 
         class_definition = attr.fields_dict(type(self))  # noqa
 
-        # loop through the attr attributes
-        for name in attr.asdict(self):  # noqa
-            if name.startswith("manifest_"):
-                attr_definition = class_definition["name"]
-                striped_name = name.removeprefix("manifest_")
-                manifest_class_name = attr_definition.type.__str__().removesuffix("')]").split("'")[-1]
-                manifest_value = await self._client.manifest.fetch(
-                    manifest_class=getattr(models, manifest_class_name), value=getattr(self, striped_name)
-                )
+        # loop through the class attributes
+        for name in self.__dir__():
+            if name.startswith("__"):
+                continue
 
-                # check if the model has manifest models itself
-                if manifest_value:
-                    await manifest_value.fetch_manifest_information()
+            # manifest entries
+            if name.startswith("manifest_"):
+                striped_name = name.removeprefix("manifest_")
+                value = getattr(self, striped_name)
+
+                if value is MISSING:
+                    return
+
+                # check the cache to avoid infinite recursion
+                if cached := _cache.get(value, None):
+                    manifest_value = cached
+
+                else:
+                    attr_definition = class_definition[name]
+                    manifest_class_name = attr_definition.type.__str__().removesuffix("')]").split("'")[-1]
+                    manifest_value = await self._client.manifest.fetch(
+                        manifest_class=getattr(models, manifest_class_name), value=value
+                    )
+
+                    _cache[value] = manifest_value
+
+                    # check if the model has manifest models itself
+                    if manifest_value:
+                        await manifest_value.fetch_manifest_information(_cache=_cache)
 
                 setattr(self, name, manifest_value)
 
-        # todo recursive for child models which are Type["BaseModel"]
-        # todo gather for speed
+            # sub models which may have manifest entries too
+            elif hasattr((value := getattr(self, name)), "fetch_manifest_information"):
+                await value.fetch_manifest_information(_cache=_cache)
+
+
+@attr.define
+class ManifestModel(BaseModel):
+    pass

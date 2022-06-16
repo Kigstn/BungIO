@@ -2,14 +2,14 @@ from typing import TYPE_CHECKING
 
 import attr
 
-from bungio.models.base import BaseModel
+from bungio.models.base import ManifestModel
 
 if TYPE_CHECKING:
     from bungio.models import DestinyDisplayPropertiesDefinition
 
 
 @attr.define
-class DestinyLoreDefinition(BaseModel):
+class DestinyLoreDefinition(ManifestModel):
     """
     These are definitions for in-game "Lore," meant to be narrative enhancements of the game experience. DestinyInventoryItemDefinitions for interesting items point to these definitions, but nothing's stopping you from scraping all of these and doing something cool with them. If they end up having cool data.
 

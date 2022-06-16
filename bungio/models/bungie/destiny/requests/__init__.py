@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Any, Optional, Union
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseEnum, BaseModel, ManifestModel
 
 if TYPE_CHECKING:
     from bungio.models import BungieMembershipType, DestinyInventoryItemDefinition

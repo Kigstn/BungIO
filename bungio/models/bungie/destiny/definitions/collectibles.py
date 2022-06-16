@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING, Optional
 
 import attr
 
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, ManifestModel
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 
 
 @attr.define
-class DestinyCollectibleDefinition(BaseModel):
+class DestinyCollectibleDefinition(ManifestModel):
     """
     Defines a
 

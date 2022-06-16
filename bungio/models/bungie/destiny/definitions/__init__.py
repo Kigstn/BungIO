@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Any, Optional, Union
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseEnum, BaseModel, ManifestModel
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -93,7 +93,7 @@ class DestinyDefinition(BaseModel):
 
 
 @attr.define
-class DestinyProgressionDefinition(BaseModel):
+class DestinyProgressionDefinition(ManifestModel):
     """
     A "Progression" in Destiny is best explained by an example. A Character's "Level" is a progression: it has Experience that can be earned, levels that can be gained, and is evaluated and displayed at various points in the game. A Character's "Faction Reputation" is also a progression for much the same reason. Progression is used by a variety of systems, and the definition of a Progression will generally only be useful if combining with live data (such as a character's DestinyCharacterProgressionComponent.progressions property, which holds that character's live Progression states). Fundamentally, a Progression measures your "Level" by evaluating the thresholds in its Steps (one step per level, except for the last step which can be repeated indefinitely for "Levels" that have no ceiling) against the total earned "progression points"/experience. (for simplicity purposes, we will henceforth refer to earned progression points as experience, though it need not be a mechanic that in any way resembles Experience in a traditional sense). Earned experience is calculated in a variety of ways, determined by the Progression's scope. These go from looking up a stored value to performing exceedingly obtuse calculations. This is why we provide live data in DestinyCharacterProgressionComponent.progressions, so you don't have to worry about those.
 
@@ -192,7 +192,7 @@ class DestinyProgressionStepDefinition(BaseModel):
 
 
 @attr.define
-class DestinyInventoryItemDefinition(BaseModel):
+class DestinyInventoryItemDefinition(ManifestModel):
     """
     So much of what you see in Destiny is actually an Item used in a new and creative way. This is the definition for Items in Destiny, which started off as just entities that could exist in your Inventory but ended up being the backing data for so much more: quests, reward previews, slots, and subclasses. In practice, you will want to associate this data with "live" item data from a Bungie.Net Platform call: these definitions describe the item in generic, non-instanced terms: but an actual instance of an item can vary widely from these generic definitions.
 
@@ -554,7 +554,7 @@ class DestinyItemCraftingBlockBonusPlugDefinition(BaseModel):
 
 
 @attr.define
-class DestinyMaterialRequirementSetDefinition(BaseModel):
+class DestinyMaterialRequirementSetDefinition(ManifestModel):
     """
     Represent a set of material requirements: Items that either need to be owned or need to be consumed in order to perform an action. A variety of other entities refer to these as gatekeepers and payments for actions that can be performed in game.
 
@@ -659,7 +659,7 @@ class DestinyItemInventoryBlockDefinition(BaseModel):
 
 
 @attr.define
-class DestinyInventoryBucketDefinition(BaseModel):
+class DestinyInventoryBucketDefinition(ManifestModel):
     """
     An Inventory (be it Character or Profile level) is comprised of many Buckets. An example of a bucket is "Primary Weapons", where all of the primary weapons on a character are gathered together into a single visual element in the UI: a subset of the inventory that has a limited number of slots, and in this case also has an associated Equipment Slot for equipping an item in the bucket. Item definitions declare what their "default" bucket is (DestinyInventoryItemDefinition.inventory.bucketTypeHash), and Item instances will tell you which bucket they are currently residing in (DestinyItemComponent.bucketHash). You can use this information along with the DestinyInventoryBucketDefinition to show these items grouped by bucket. You cannot transfer an item to a bucket that is not its Default without going through a Vendor's "accepted items" (DestinyVendorDefinition.acceptedItems). This is how transfer functionality like the Vault is implemented, as a feature of a Vendor. See the vendor's acceptedItems property for more details.
 
@@ -812,7 +812,7 @@ class DestinyInventoryItemStatDefinition(BaseModel):
 
 
 @attr.define
-class DestinyStatDefinition(BaseModel):
+class DestinyStatDefinition(ManifestModel):
     """
     This represents a stat that's applied to a character or an item (such as a weapon, piece of armor, or a vehicle). An example of a stat might be Attack Power on a weapon. Stats go through a complex set of transformations before they end up being shown to the user as a number or a progress bar, and those transformations are fundamentally intertwined with the concept of a "Stat Group" (DestinyStatGroupDefinition). Items have both Stats and a reference to a Stat Group, and it is the Stat Group that takes the raw stat information and gives it both rendering metadata (such as whether to show it as a number or a progress bar) and the final transformation data (interpolation tables to turn the raw investment stat into a display stat). Please see DestinyStatGroupDefinition for more information on that transformational process. Stats are segregated from Stat Groups because different items and types of items can refer to the same stat, but have different "scales" for the stat while still having the same underlying value. For example, both a Shotgun and an Auto Rifle may have a "raw" impact stat of 50, but the Auto Rifle's Stat Group will scale that 50 down so that, when it is displayed, it is a smaller value relative to the shotgun. (this is a totally made up example, don't assume shotguns have naturally higher impact than auto rifles because of this) A final caveat is that some stats, even after this "final" transformation, go through yet another set of transformations directly in the game as a result of dynamic, stateful scripts that get run. BNet has no access to these scripts, nor any way to know which scripts get executed. As a result, the stats for an item that you see in-game - particularly for stats that are often impacted by Perks, like Magazine Size - can change dramatically from what we return on Bungie.Net. This is a known issue with no fix coming down the pipeline. Take these stats with a grain of salt. Stats actually go through four transformations, for those interested: 1) "Sandbox" stat, the "most raw" form. These are pretty much useless without transformations applied, and thus are not currently returned in the API. If you really want these, we can provide them. Maybe someone could do something cool with it? 2) "Investment" stat (the stat's value after DestinyStatDefinition's interpolation tables and aggregation logic is applied to the "Sandbox" stat value) 3) "Display" stat (the stat's base UI-visible value after DestinyStatGroupDefinition's interpolation tables are applied to the Investment Stat value. For most stats, this is what is displayed.) 4) Underlying in-game stat (the stat's actual value according to the game, after the game runs dynamic scripts based on the game and character's state. This is the final transformation that BNet does not have access to. For most stats, this is not actually displayed to the user, with the exception of Magazine Size which is then piped back to the UI for display in-game, but not to BNet.)
 
@@ -837,7 +837,7 @@ class DestinyStatDefinition(BaseModel):
 
 
 @attr.define
-class DestinyStatGroupDefinition(BaseModel):
+class DestinyStatGroupDefinition(ManifestModel):
     """
     When an inventory item (DestinyInventoryItemDefinition) has Stats (such as Attack Power), the item will refer to a Stat Group. This definition enumerates the properties used to transform the item's "Investment" stats into "Display" stats. See DestinyStatDefinition's documentation for information about the transformation of Stats, and the meaning of an Investment vs. a Display stat. If you don't want to do these calculations on your own, fear not: pulling live data from the BNet endpoints will return display stat values pre-computed and ready for you to use. I highly recommend this approach, saves a lot of time and also accounts for certain stat modifiers that can't easily be accounted for without live data (such as stat modifiers on Talent Grids and Socket Plugs)
 
@@ -957,7 +957,7 @@ class DestinyEquippingBlockDefinition(BaseModel):
 
 
 @attr.define
-class DestinyEquipmentSlotDefinition(BaseModel):
+class DestinyEquipmentSlotDefinition(ManifestModel):
     """
     Characters can not only have Inventory buckets (containers of items that are generally matched by their type or functionality), they can also have Equipment Slots. The Equipment Slot is an indicator that the related bucket can have instanced items equipped on the character. For instance, the Primary Weapon bucket has an Equipment Slot that determines whether you can equip primary weapons, and holds the association between its slot and the inventory bucket from which it can have items equipped. An Equipment Slot must have a related Inventory Bucket, but not all inventory buckets must have Equipment Slots.
 
@@ -1071,7 +1071,7 @@ class DestinyGearArtArrangementReference(BaseModel):
 
 
 @attr.define
-class DestinyClassDefinition(BaseModel):
+class DestinyClassDefinition(ManifestModel):
     """
     Defines a Character Class in Destiny 2. These are types of characters you can play, like Titan, Warlock, and Hunter.
 
@@ -1108,7 +1108,7 @@ class DestinyClassDefinition(BaseModel):
 
 
 @attr.define
-class DestinyGenderDefinition(BaseModel):
+class DestinyGenderDefinition(ManifestModel):
     """
     Gender is a social construct, and as such we have definitions for Genders. Right now there happens to only be two, but we'll see what the future holds.
 
@@ -1129,7 +1129,7 @@ class DestinyGenderDefinition(BaseModel):
 
 
 @attr.define
-class DestinyVendorDefinition(BaseModel):
+class DestinyVendorDefinition(ManifestModel):
     """
     These are the definitions for Vendors. In Destiny, a Vendor can be a lot of things - some things that you wouldn't expect, and some things that you don't even see directly in the game. Vendors are the Dolly Levi of the Destiny universe. - Traditional Vendors as you see in game: people who you come up to and who give you quests, rewards, or who you can buy things from. - Kiosks/Collections, which are really just Vendors that don't charge currency (or charge some pittance of a currency) and whose gating for purchases revolves more around your character's state. - Previews for rewards or the contents of sacks. These are implemented as Vendors, where you can't actually purchase from them but the items that they have for sale and the categories of sale items reflect the rewards or contents of the sack. This is so that the game could reuse the existing Vendor display UI for rewards and save a bunch of wheel reinvention. - Item Transfer capabilities, like the Vault and Postmaster. Vendors can have "acceptedItem" buckets that determine the source and destination buckets for transfers. When you interact with such a vendor, these buckets are what gets shown in the UI instead of any items that the Vendor would have for sale. Yep, the Vault is a vendor. It is pretty much guaranteed that they'll be used for even more features in the future. They have come to be seen more as generic categorized containers for items than "vendors" in a traditional sense, for better or worse. Where possible and time allows, we'll attempt to split those out into their own more digestible derived "Definitions": but often time does not allow that, as you can see from the above ways that vendors are used which we never split off from Vendor Definitions externally. Since Vendors are so many things to so many parts of the game, the definition is understandably complex. You will want to combine this data with live Vendor information from the API when it is available.
 
@@ -1786,7 +1786,7 @@ class DestinyVendorAcceptedItemDefinition(BaseModel):
 
 
 @attr.define
-class DestinyDestinationDefinition(BaseModel):
+class DestinyDestinationDefinition(ManifestModel):
     """
     On to one of the more confusing subjects of the API. What is a Destination, and what is the relationship between it, Activities, Locations, and Places? A "Destination" is a specific region/city/area of a larger "Place". For instance, a Place might be Earth where a Destination might be Bellevue, Washington. (Please, pick a more interesting destination if you come to visit Earth).
 
@@ -1854,7 +1854,7 @@ class DestinyActivityGraphListEntryDefinition(BaseModel):
 
 
 @attr.define
-class DestinyActivityDefinition(BaseModel):
+class DestinyActivityDefinition(ManifestModel):
     """
     The static data about Activities in Destiny 2. Note that an Activity must be combined with an ActivityMode to know - from a Gameplay perspective - what the user is "Playing". In most PvE activities, this is fairly straightforward. A Story Activity can only be played in the Story Activity Mode. However, in PvP activities, the Activity alone only tells you the map being played, or the Playlist that the user chose to enter. You'll need to know the Activity Mode they're playing to know that they're playing Mode X on Map Y. Activity Definitions tell a great deal of information about what *could* be relevant to a user: what rewards they can earn, what challenges could be performed, what modifiers could be applied. To figure out which of these properties is actually live, you'll need to combine the definition with "Live" data from one of the Destiny endpoints. Activities also have Activity Types, but unfortunately in Destiny 2 these are even less reliable of a source of information than they were in Destiny 1. I will be looking into ways to provide more reliable sources for type information as time goes on, but for now we're going to have to deal with the limitations. See DestinyActivityTypeDefinition for more information.
 
@@ -2026,7 +2026,7 @@ class DestinyActivityChallengeDefinition(BaseModel):
 
 
 @attr.define
-class DestinyObjectiveDefinition(BaseModel):
+class DestinyObjectiveDefinition(ManifestModel):
     """
     Defines an "Objective". An objective is a specific task you should accomplish in the game. These are referred to by: - Quest Steps (which are DestinyInventoryItemDefinition entities with Objectives) - Challenges (which are Objectives defined on an DestinyActivityDefintion) - Milestones (which refer to Objectives that are defined on both Quest Steps and Activities) - Anything else that the designers decide to do later. Objectives have progress, a notion of having been Completed, human readable data describing the task to be accomplished, and a lot of optional tack-on data that can enhance the information provided about the task.
 
@@ -2114,7 +2114,7 @@ class DestinyObjectivePerkEntryDefinition(BaseModel):
 
 
 @attr.define
-class DestinySandboxPerkDefinition(BaseModel):
+class DestinySandboxPerkDefinition(ManifestModel):
     """
     Perks are modifiers to a character or item that can be applied situationally. - Perks determine a weapons' damage type. - Perks put the Mods in Modifiers (they are literally the entity that bestows the Sandbox benefit for whatever fluff text about the modifier in the Socket, Plug or Talent Node) - Perks are applied for unique alterations of state in Objectives Anyways, I'm sure you can see why perks are so interesting. What Perks often don't have is human readable information, so we attempt to reverse engineer that by pulling that data from places that uniquely refer to these perks: namely, Talent Nodes and Plugs. That only gives us a subset of perks that are human readable, but those perks are the ones people generally care about anyways. The others are left as a mystery, their true purpose mostly unknown and undocumented.
 
@@ -2303,7 +2303,7 @@ class DestinyTalentNodeStepDamageTypes(BaseEnum):
 
 
 @attr.define
-class DestinyDamageTypeDefinition(BaseModel):
+class DestinyDamageTypeDefinition(ManifestModel):
     """
     All damage types that are possible in the game are defined here, along with localized info and icons as needed.
 
@@ -2370,7 +2370,7 @@ class DestinyItemInvestmentStatDefinition(BaseModel):
 
 
 @attr.define
-class DestinyLocationDefinition(BaseModel):
+class DestinyLocationDefinition(ManifestModel):
     """
     A "Location" is a sort of shortcut for referring to a specific combination of Activity, Destination, Place, and even Bubble or NavPoint within a space. Most of this data isn't intrinsically useful to us, but Objectives refer to locations, and through that we can at least infer the Activity, Destination, and Place being referred to by the Objective.
 
@@ -2502,7 +2502,7 @@ class DestinyActivityPlaylistItemDefinition(BaseModel):
 
 
 @attr.define
-class DestinyActivityModeDefinition(BaseModel):
+class DestinyActivityModeDefinition(ManifestModel):
     """
     This definition represents an "Activity Mode" as it exists in the Historical Stats endpoints. An individual Activity Mode represents a collection of activities that are played in a certain way. For example, Nightfall Strikes are part of a "Nightfall" activity mode, and any activities played as the PVP mode "Clash" are part of the "Clash activity mode. Activity modes are nested under each other in a hierarchy, so that if you ask for - for example - "AllPvP", you will get any PVP activities that the user has played, regardless of what specific PVP mode was being played.
 
@@ -2638,7 +2638,7 @@ class DestinyActivityInsertionPointDefinition(BaseModel):
 
 
 @attr.define
-class DestinyPlaceDefinition(BaseModel):
+class DestinyPlaceDefinition(ManifestModel):
     """
     Okay, so Activities (DestinyActivityDefinition) take place in Destinations (DestinyDestinationDefinition). Destinations are part of larger locations known as Places (you're reading its documentation right now). Places are more on the planetary scale, like "Earth" and "Your Mom."
 
@@ -2657,7 +2657,7 @@ class DestinyPlaceDefinition(BaseModel):
 
 
 @attr.define
-class DestinyActivityTypeDefinition(BaseModel):
+class DestinyActivityTypeDefinition(ManifestModel):
     """
     The definition for an Activity Type. In Destiny 2, an Activity Type represents a conceptual categorization of Activities. These are most commonly used in the game for the subtitle under Activities, but BNet uses them extensively to identify and group activities by their common properties. Unfortunately, there has been a movement away from providing the richer data in Destiny 2 that we used to get in Destiny 1 for Activity Types. For instance, Nightfalls are grouped under the same Activity Type as regular Strikes.  For this reason, BNet will eventually migrate toward Activity Modes as a better indicator of activity category. But for the time being, it is still referred to in many places across our codebase.
 
@@ -2740,7 +2740,7 @@ class DestinyVendorGroupReference(BaseModel):
 
 
 @attr.define
-class DestinyVendorGroupDefinition(BaseModel):
+class DestinyVendorGroupDefinition(ManifestModel):
     """
     BNet attempts to group vendors into similar collections. These groups aren't technically game canonical, but they are helpful for filtering vendors or showing them organized into a clean view on a webpage or app. These definitions represent the groups we've built. Unlike in Destiny 1, a Vendors' group may change dynamically as the game state changes: thus, you will want to check DestinyVendorComponent responses to find a vendor's currently active Group (if you care). Using this will let you group your vendors in your UI in a similar manner to how we will do grouping in the Companion.
 
@@ -2761,7 +2761,7 @@ class DestinyVendorGroupDefinition(BaseModel):
 
 
 @attr.define
-class DestinyFactionDefinition(BaseModel):
+class DestinyFactionDefinition(ManifestModel):
     """
     These definitions represent Factions in the game. Factions have ended up unilaterally being related to Vendors that represent them, but that need not necessarily be the case. A Faction is really just an entity that has a related progression for which a character can gain experience. In Destiny 1, Dead Orbit was an example of a Faction: there happens to be a Vendor that represents Dead Orbit (and indeed, DestinyVendorDefinition.factionHash defines to this relationship), but Dead Orbit could theoretically exist without the Vendor that provides rewards.
 
@@ -2835,7 +2835,7 @@ class DestinyFactionVendorDefinition(BaseModel):
 
 
 @attr.define
-class DestinySandboxPatternDefinition(BaseModel):
+class DestinySandboxPatternDefinition(ManifestModel):
     """
     _No description given by bungie._
 
@@ -3026,7 +3026,7 @@ class DestinyItemSourceBlockDefinition(BaseModel):
 
 
 @attr.define
-class DestinyRewardSourceDefinition(BaseModel):
+class DestinyRewardSourceDefinition(ManifestModel):
     """
     Represents a heuristically-determined "item source" according to Bungie.net. These item sources are non-canonical: we apply a combination of special configuration and often-fragile heuristics to attempt to discern whether an item should be part of a given "source," but we have known cases of false positives and negatives due to our imperfect heuristics. Still, they provide a decent approximation for people trying to figure out how an item can be obtained. DestinyInventoryItemDefinition refers to sources in the sourceDatas.sourceHashes property for all sources we determined the item could spawn from. An example in Destiny 1 of a Source would be "Nightfall". If an item has the "Nightfall" source associated with it, it's extremely likely that you can earn that item while playing Nightfall, either during play or as an after-completion reward.
 
@@ -3473,7 +3473,7 @@ class DestinyItemTalentGridBlockDefinition(BaseModel):
 
 
 @attr.define
-class DestinyTalentGridDefinition(BaseModel):
+class DestinyTalentGridDefinition(ManifestModel):
     """
     The time has unfortunately come to talk about Talent Grids. Talent Grids are the most complex and unintuitive part of the Destiny Definition data. Grab a cup of coffee before we begin, I can wait. Talent Grids were the primary way that items could be customized in Destiny 1. In Destiny 2, for now, talent grids have become exclusively used by Subclass/Build items: but the system is still in place for it to be used by items should the direction change back toward talent grids. Talent Grids have Nodes: the visual circles on the talent grid detail screen that have icons and can be activated if you meet certain requirements and pay costs. The actual visual data and effects, however, are driven by the "Steps" on Talent Nodes. Any given node will have 1:M of these steps, and the specific step that will be considered the "current" step (and thus the dictator of all benefits, visual state, and activation requirements on the Node) will almost always not be determined until an instance of the item is created. This is how, in Destiny 1, items were able to have such a wide variety of what users saw as "Perks": they were actually Talent Grids with nodes that had a wide variety of Steps, randomly chosen at the time of item creation. Now that Talent Grids are used exclusively by subclasses and builds, all of the properties within still apply: but there are additional visual elements on the Subclass/Build screens that are superimposed on top of the talent nodes. Unfortunately, BNet doesn't have this data: if you want to build a subclass screen, you will have to provide your own "decorative" assets, such as the visual connectors between nodes and the fancy colored-fire-bathed character standing behind the nodes. DestinyInventoryItem.talentGrid.talentGridHash defines an item's linked Talent Grid, which brings you to this definition that contains enough satic data about talent grids to make your head spin. These *must* be combined with instanced data - found when live data returns DestinyItemTalentGridComponent - in order to derive meaning. The instanced data will reference nodes and steps within these definitions, which you will then have to look up in the definition and combine with the instanced data to give the user the visual representation of their item's talent grid.
 
@@ -3772,7 +3772,7 @@ class DestinyItemPerkEntryDefinition(BaseModel):
 
 
 @attr.define
-class DestinyItemCategoryDefinition(BaseModel):
+class DestinyItemCategoryDefinition(ManifestModel):
     """
     In an attempt to categorize items by type, usage, and other interesting properties, we created DestinyItemCategoryDefinition: information about types that is assembled using a set of heuristics that examine the properties of an item such as what inventory bucket it's in, its item type name, and whether it has or is missing certain blocks of data. This heuristic is imperfect, however. If you find an item miscategorized, let us know on the Bungie API forums! We then populate all of the categories that we think an item belongs to in its DestinyInventoryItemDefinition.itemCategoryHashes property. You can use that to provide your own custom item filtering, sorting, aggregating... go nuts on it! And let us know if you see more categories that you wish would be added!
 
@@ -3858,7 +3858,7 @@ class DestinyProgressionRewardItemQuantity(BaseModel):
 
 
 @attr.define
-class DestinyRaceDefinition(BaseModel):
+class DestinyRaceDefinition(ManifestModel):
     """
     In Destiny, "Races" are really more like "Species". Sort of. I mean, are the Awoken a separate species from humans? I'm not sure. But either way, they're defined here. You'll see Exo, Awoken, and Human as examples of these Species. Players will choose one for their character.
 
@@ -3883,7 +3883,7 @@ class DestinyRaceDefinition(BaseModel):
 
 
 @attr.define
-class DestinyUnlockDefinition(BaseModel):
+class DestinyUnlockDefinition(ManifestModel):
     """
     Unlock Flags are small bits (literally, a bit, as in a boolean value) that the game server uses for an extremely wide range of state checks, progress storage, and other interesting tidbits of information.
 
@@ -3902,7 +3902,7 @@ class DestinyUnlockDefinition(BaseModel):
 
 
 @attr.define
-class DestinyMedalTierDefinition(BaseModel):
+class DestinyMedalTierDefinition(ManifestModel):
     """
     An artificial construct of our own creation, to try and put some order on top of Medals and keep them from being one giant, unmanageable and unsorted blob of stats. Unfortunately, we haven't had time to do this evaluation yet in Destiny 2, so we're short on Medal Tiers. This will hopefully be updated over time, if Medals continue to exist.
 

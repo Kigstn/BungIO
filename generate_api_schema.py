@@ -573,7 +573,7 @@ import datetime
 
 from typing import Optional, Any, TYPE_CHECKING, Union
 
-from bungio.models.base import BaseModel, BaseEnum
+from bungio.models.base import BaseModel, BaseEnum, ManifestModel
 
 %imports%"""
 
@@ -713,11 +713,6 @@ if TYPE_CHECKING:
 
 
 def generate_model(api_schema: dict, model: dict, path: str, file_imports: set) -> str:
-    """
-    Returns:
-        text
-    """
-
     # enums
     if data := model.get("x-enum-values", None):
         text = f"""
@@ -778,7 +773,7 @@ class {model["name"]}(BaseEnum):
 
         text = f"""
 @attr.define
-class {model["name"]}(BaseModel):
+class {model["name"]}({"BaseModel" if "x-mobile-manifest-name" not in model else "ManifestModel"}):
     \"\"\"
     {clean_desc(model)}
 

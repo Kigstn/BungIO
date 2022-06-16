@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING, Optional
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseEnum, ManifestModel
 
 if TYPE_CHECKING:
     from bungio.models import DestinyMedalTierDefinition
@@ -182,7 +182,7 @@ class DestinyActivityModeType(BaseEnum):
 
 
 @attr.define
-class DestinyHistoricalStatsDefinition(BaseModel):
+class DestinyHistoricalStatsDefinition(ManifestModel):
     """
     _No description given by bungie._
 

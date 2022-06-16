@@ -1,17 +1,18 @@
 import asyncio
 import datetime
 import logging
+import os
 from base64 import b64encode
 from copy import copy
 from typing import TYPE_CHECKING, Callable, Optional
 
 import attr
-from aiohttp import ClientSession, DummyCookieJar
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import MetaData
+from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
 from bungio import InvalidAuthentication
 from bungio.api import ApiClient
-from bungio.definitions import LOGGER_NAME
+from bungio.definitions import LOGGER_NAME, ROOT_DIR
 from bungio.http.client import HttpClient
 from bungio.manifest import Manifest
 from bungio.models import BungieMembershipType
@@ -21,7 +22,6 @@ from bungio.utils import get_now_with_tz
 
 if TYPE_CHECKING:
     from aiohttp_client_cache import CacheBackend
-    from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 
 __all__ = ("Client",)
 
@@ -55,18 +55,19 @@ class Client:
         bungie_client_id: The bungie.net client id
         bungie_client_secret: The bungie.net client secret
         bungie_token: The bungie.net token
+        always_return_manifest_information: If manifest information should always be returned.
     """
 
-    bungie_client_id: str = attr.field()
-    bungie_client_secret: str = attr.field()
-    bungie_token: str = attr.field()
+    bungie_client_id: str = attr.field(repr=False)
+    bungie_client_secret: str = attr.field(repr=False)
+    bungie_token: str = attr.field(repr=False)
 
     logger: logging.Logger = attr.field(default=default_logger)
 
     language: BungieLanguage = attr.field(default=BungieLanguage.ENGLISH)
 
     cache: Optional["CacheBackend"] = attr.field(default=None)
-    manifest_storage: bool | AsyncEngine = attr.field(default=False)
+    manifest_storage: bool | AsyncEngine = attr.field(default=True)
     always_return_manifest_information: bool = attr.field(default=False)
 
     json_dumps: Callable = attr.field(init=False, default=json_dumps)
@@ -76,9 +77,11 @@ class Client:
     http: HttpClient = attr.field(init=False)
     manifest: Optional[Manifest] = attr.field(init=False, default=None)
 
+    _metadata: Optional[MetaData] = attr.field(init=False, default=None)
+
     @manifest_storage.validator  # noqa
     def manifest_storage_check(self, attribute, value):
-        if not isinstance(value, AsyncEngine):
+        if not (isinstance(value, AsyncEngine) or isinstance(value, bool)):
             raise ValueError(f"{attribute} obj must be of type `AsyncEngine`")
 
     @language.validator  # noqa
@@ -110,10 +113,14 @@ class Client:
             "Accept": "application/json",
         }
 
-        if self.manifest_storage is True:
-            self.manifest_storage = create_async_engine("sqlite+aiosqlite:///manifest.db")
-            self.manifest = Manifest(_client=self)
-            await self.manifest.synchronise_with_db()
+        if self.manifest_storage:
+            if self.manifest_storage is True:
+                # todo clarify where that is stored
+                self.manifest_storage = create_async_engine(
+                    f"""sqlite+aiosqlite:///{os.path.join(ROOT_DIR, "manifest.db")}"""
+                )
+            self._metadata = MetaData(bind=self.manifest_storage)
+            self.manifest = Manifest(client=self)
 
     def get_auth_url(self, state: str) -> str:
         """

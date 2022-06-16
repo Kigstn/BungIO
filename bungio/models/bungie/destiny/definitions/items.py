@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING, Optional
 
 import attr
 
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, ManifestModel
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 
 
 @attr.define
-class DestinyItemTierTypeDefinition(BaseModel):
+class DestinyItemTierTypeDefinition(ManifestModel):
     """
     Defines the tier type of an item. Mostly this provides human readable properties for types like Common, Rare, etc... It also provides some base data for infusion that could be useful.
 

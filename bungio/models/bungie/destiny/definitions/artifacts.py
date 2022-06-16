@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING, Optional
 
 import attr
 
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, ManifestModel
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 
 @attr.define
-class DestinyArtifactDefinition(BaseModel):
+class DestinyArtifactDefinition(ManifestModel):
     """
     Represents known info about a Destiny Artifact. We cannot guarantee that artifact definitions will be immutable between seasons - in fact, we've been told that they will be replaced between seasons. But this definition is built both to minimize the amount of lookups for related data that have to occur, and is built in hope that, if this plan changes, we will be able to accommodate it more easily.
 

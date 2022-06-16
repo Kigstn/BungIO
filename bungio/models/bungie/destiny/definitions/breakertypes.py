@@ -2,14 +2,14 @@ from typing import TYPE_CHECKING
 
 import attr
 
-from bungio.models.base import BaseModel
+from bungio.models.base import ManifestModel
 
 if TYPE_CHECKING:
     from bungio.models import DestinyBreakerType, DestinyDisplayPropertiesDefinition
 
 
 @attr.define
-class DestinyBreakerTypeDefinition(BaseModel):
+class DestinyBreakerTypeDefinition(ManifestModel):
     """
     _No description given by bungie._
 

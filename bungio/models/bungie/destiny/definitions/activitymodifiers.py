@@ -2,14 +2,14 @@ from typing import TYPE_CHECKING
 
 import attr
 
-from bungio.models.base import BaseModel
+from bungio.models.base import ManifestModel
 
 if TYPE_CHECKING:
     from bungio.models import DestinyDisplayPropertiesDefinition
 
 
 @attr.define
-class DestinyActivityModifierDefinition(BaseModel):
+class DestinyActivityModifierDefinition(ManifestModel):
     """
     Modifiers - in Destiny 1, these were referred to as "Skulls" - are changes that can be applied to an Activity.
 
