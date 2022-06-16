@@ -9,11 +9,11 @@ from bungio.models import (
     TrendingEntryType,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
+from bungio.models.base import ClientMixin
 
 
 @attr.define
-class TrendingRouteInterface(BaseModel):
+class TrendingRouteInterface(ClientMixin):
     async def get_trending_categories(self, auth: Optional[AuthData] = None) -> TrendingCategories:
         """
         Returns trending items for Bungie.net, collapsed into the first page of items per category. For pagination within a category, call GetTrendingCategory.

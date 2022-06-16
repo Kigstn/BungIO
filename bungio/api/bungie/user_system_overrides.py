@@ -4,11 +4,11 @@ import attr
 
 from bungio.models import CoreSystem
 from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
+from bungio.models.base import ClientMixin
 
 
 @attr.define
-class UserSystemOverridesRouteInterface(BaseModel):
+class UserSystemOverridesRouteInterface(ClientMixin):
     async def get_user_system_overrides(self, auth: Optional[AuthData] = None) -> dict[str, CoreSystem]:
         """
         Get the user-specific system overrides that should be respected alongside common systems.

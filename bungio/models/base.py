@@ -18,6 +18,7 @@ __all__ = (
     "BaseEnum",
     "BaseModel",
     "ManifestModel",
+    "ClientMixin",
 )
 
 
@@ -78,13 +79,16 @@ class BaseEnum(Enum):
         return self.value
 
 
+@attr.define
+class ClientMixin:
+    _client: "Client" = attr.field(init=False, repr=False)
+
+
 @attr.define(kw_only=True)
-class BaseModel:
+class BaseModel(ClientMixin):
     """
     Base methods which help to acquire this model from json and export it to json.
     """
-
-    _client: "Client" = attr.field(init=False, repr=False)
 
     @staticmethod
     def process_dict(data: dict, client: "Client", *args, **kwargs) -> dict:

@@ -14,11 +14,11 @@ from bungio.models import (
     UserTheme,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
+from bungio.models.base import ClientMixin
 
 
 @attr.define
-class UserRouteInterface(BaseModel):
+class UserRouteInterface(ClientMixin):
     async def get_bungie_net_user_by_id(self, id: int, auth: Optional[AuthData] = None) -> GeneralUser:
         """
         Loads a bungienet user by membership id.

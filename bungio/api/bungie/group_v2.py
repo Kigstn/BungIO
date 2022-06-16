@@ -35,11 +35,11 @@ from bungio.models import (
     SearchResultOfGroupMemberApplication,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
+from bungio.models.base import ClientMixin
 
 
 @attr.define
-class GroupV2RouteInterface(BaseModel):
+class GroupV2RouteInterface(ClientMixin):
     async def get_available_avatars(self, auth: Optional[AuthData] = None) -> dict[int, str]:
         """
         Returns a list of all available group avatars for the signed-in user.

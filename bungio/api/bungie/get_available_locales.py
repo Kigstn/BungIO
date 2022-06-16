@@ -3,11 +3,11 @@ from typing import Optional
 import attr
 
 from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
+from bungio.models.base import ClientMixin
 
 
 @attr.define
-class GetAvailableLocalesRouteInterface(BaseModel):
+class GetAvailableLocalesRouteInterface(ClientMixin):
     async def get_available_locales(self, auth: Optional[AuthData] = None) -> dict[str, str]:
         """
         List of available localization cultures

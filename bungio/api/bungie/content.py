@@ -8,11 +8,11 @@ from bungio.models import (
     SearchResultOfContentItemPublicContract,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
+from bungio.models.base import ClientMixin
 
 
 @attr.define
-class ContentRouteInterface(BaseModel):
+class ContentRouteInterface(ClientMixin):
     async def get_content_type(self, type: str, auth: Optional[AuthData] = None) -> ContentTypeDescription:
         """
         Gets an object describing a particular variant of content.

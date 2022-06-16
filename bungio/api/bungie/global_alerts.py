@@ -4,11 +4,11 @@ import attr
 
 from bungio.models import GlobalAlert
 from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
+from bungio.models.base import ClientMixin
 
 
 @attr.define
-class GlobalAlertsRouteInterface(BaseModel):
+class GlobalAlertsRouteInterface(ClientMixin):
     async def get_global_alerts(
         self, includestreaming: Optional[bool] = None, auth: Optional[AuthData] = None
     ) -> list[GlobalAlert]:

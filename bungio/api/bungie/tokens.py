@@ -8,11 +8,11 @@ from bungio.models import (
     PartnerOfferSkuHistoryResponse,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
+from bungio.models.base import ClientMixin
 
 
 @attr.define
-class TokensRouteInterface(BaseModel):
+class TokensRouteInterface(ClientMixin):
     async def claim_partner_offer(self, data: PartnerOfferClaimRequest, auth: AuthData) -> bool:
         """
         Claim a partner offer as the authenticated user.

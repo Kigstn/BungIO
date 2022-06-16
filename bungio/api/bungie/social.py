@@ -9,11 +9,11 @@ from bungio.models import (
     PlatformFriendType,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
+from bungio.models.base import ClientMixin
 
 
 @attr.define
-class SocialRouteInterface(BaseModel):
+class SocialRouteInterface(ClientMixin):
     async def get_friend_list(self, auth: AuthData) -> BungieFriendListResponse:
         """
         Returns your Bungie Friend list

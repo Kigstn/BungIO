@@ -8,11 +8,11 @@ from bungio.models import (
     PostSearchResponse,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
+from bungio.models.base import ClientMixin
 
 
 @attr.define
-class CommunityContentRouteInterface(BaseModel):
+class CommunityContentRouteInterface(ClientMixin):
     async def get_community_content(
         self,
         media_filter: ForumTopicsCategoryFiltersEnum,

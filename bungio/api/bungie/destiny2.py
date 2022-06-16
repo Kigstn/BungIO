@@ -51,11 +51,11 @@ from bungio.models import (
     UserInfoCard,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
+from bungio.models.base import ClientMixin
 
 
 @attr.define
-class Destiny2RouteInterface(BaseModel):
+class Destiny2RouteInterface(ClientMixin):
     async def get_destiny_manifest(self, auth: Optional[AuthData] = None) -> DestinyManifest:
         """
         Returns the current version of the manifest as a json object.

@@ -5,11 +5,11 @@ import attr
 
 from bungio.models import ApiUsage, Application
 from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
+from bungio.models.base import ClientMixin
 
 
 @attr.define
-class AppRouteInterface(BaseModel):
+class AppRouteInterface(ClientMixin):
     async def get_application_api_usage(
         self,
         application_id: int,

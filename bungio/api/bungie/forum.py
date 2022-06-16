@@ -12,11 +12,11 @@ from bungio.models import (
     TagResponse,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
+from bungio.models.base import ClientMixin
 
 
 @attr.define
-class ForumRouteInterface(BaseModel):
+class ForumRouteInterface(ClientMixin):
     async def get_topics_paged(
         self,
         category_filter: ForumTopicsCategoryFiltersEnum,

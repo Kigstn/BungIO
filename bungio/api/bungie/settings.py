@@ -4,11 +4,11 @@ import attr
 
 from bungio.models import CoreSettingsConfiguration
 from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
+from bungio.models.base import ClientMixin
 
 
 @attr.define
-class SettingsRouteInterface(BaseModel):
+class SettingsRouteInterface(ClientMixin):
     async def get_common_settings(self, auth: Optional[AuthData] = None) -> CoreSettingsConfiguration:
         """
         Get the common settings used by the Bungie.Net environment.

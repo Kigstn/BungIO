@@ -67,13 +67,13 @@ class {name}:
 import attr
 from typing import Optional, Any, Union
 
-from bungio.models.base import BaseModel
+from bungio.models.base import ClientMixin
 from bungio.models.auth import AuthData
 
 %imports%
 
 @attr.define
-class {name}(BaseModel):
+class {name}(ClientMixin):
     """
 
         for path, data in routes.items():

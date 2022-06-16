@@ -12,11 +12,11 @@ from bungio.models import (
     SearchResultOfFireteamSummary,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import BaseModel
+from bungio.models.base import ClientMixin
 
 
 @attr.define
-class FireteamRouteInterface(BaseModel):
+class FireteamRouteInterface(ClientMixin):
     async def get_active_private_clan_fireteam_count(self, group_id: int, auth: AuthData) -> int:
         """
         Gets a count of all active non-public fireteams for the specified clan. Maximum value returned is 25.
