@@ -20,7 +20,7 @@ __all__ = ("Manifest",)
 
 @attr.define
 class Manifest:
-    client: "Client" = attr.field()
+    client: "Client" = attr.field(repr=False)
     __synchronised: bool = attr.field(init=False, default=False)
     __saved_manifests: dict[str, Table] = attr.field(init=False, factory=dict)
     __manifest_urls: dict[str, str] = attr.field(init=False, factory=dict)
