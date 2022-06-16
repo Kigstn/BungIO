@@ -154,4 +154,4 @@ class ContentRouteInterface(BaseModel):
         """
 
         response = await self._client.http.search_help_articles(searchtext=searchtext, size=size, auth=auth)
-        return await Any.from_dict(data=response, client=self._client)
+        return response["Result"]

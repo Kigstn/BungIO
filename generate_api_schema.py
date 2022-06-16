@@ -376,22 +376,39 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
         response = await self._client.http.{func_name}({", ".join(request_params)})
         """
 
-        if return_model == "dict":
-            text += f"""return response["Result"]
+        text += f"""return {get_return_value_from_typing(return_model=return_model)}
 
-            """
-        else:
-            if "list" not in return_model:
-                text += f"""return await {return_model}.from_dict(data=response, client=self._client)
-
-                """
-            else:
-                clean_return_model = return_model.removesuffix("]").removeprefix("list[")
-                text += f"""return [await {clean_return_model}.from_dict(data=entry, client=self._client) for entry in response["Result"]]
-
-                """
+        """
 
     return text
+
+
+def get_return_value_from_typing(return_model: str) -> str:
+    return_model = return_model.strip()
+
+    if return_model.startswith("list"):
+        clean_return_model = return_model.removesuffix("]").removeprefix("list[")
+        res = get_return_value_from_typing(return_model=clean_return_model)
+
+        res = f'''[{res.replace("data=response", "data=value").replace("""response["Result"]""", "value")} for value in response["Result"]]'''
+
+    elif return_model.startswith("dict") and return_model.endswith("]"):
+        clean_return_model = ", ".join(return_model.removesuffix("]").removeprefix("dict[").split(", ")[1:])
+        res = get_return_value_from_typing(return_model=clean_return_model)
+        if "key" in res and "value" in res:
+            res = res.replace("key", "key2").replace("value", "value2")
+
+        res = f'''{{key: {res.replace("data=response", "data=value").replace("""response["Result"]""", "value")} async for key, value in response["Result"].items()}}'''
+
+    else:
+        if return_model in ["dict", "int", "str", "Any", "float", "bool"]:
+            res = """response["Result"]"""
+        elif return_model == "datetime.datetime":
+            res = """datetime.datetime.strptime(response["Result"], "%Y-%m-%dT%H:%M:%S%z")"""
+        else:
+            res = f"await {return_model}.from_dict(data=response, client=self._client)"
+
+    return res
 
 
 def convert_to_typing(
@@ -806,4 +823,3 @@ main()
 # todo inherited overwrite classes do not display as docs correctly -> https://mkdocstrings.github.io/handlers/overview/#selection-options (inherited members)
 # todo options: members: [] does not work -> config/config.md
 # todo DestinyActivityPlaylistItemDefinition -> directActivityModeType is very unfun. Enum which is defined in a model
-# todo fix int.from_dict | Any.from_dict | dict[int, DestinyPublicMilestone].from_dict

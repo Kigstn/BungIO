@@ -29,7 +29,7 @@ class TokensRouteInterface(BaseModel):
         """
 
         response = await self._client.http.claim_partner_offer(auth=auth, **data.to_dict())
-        return await bool.from_dict(data=response, client=self._client)
+        return response["Result"]
 
     async def apply_missing_partner_offers_without_claim(
         self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData
@@ -54,7 +54,7 @@ class TokensRouteInterface(BaseModel):
             target_bnet_membership_id=target_bnet_membership_id,
             auth=auth,
         )
-        return await bool.from_dict(data=response, client=self._client)
+        return response["Result"]
 
     async def get_partner_offer_sku_history(
         self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData
@@ -80,8 +80,8 @@ class TokensRouteInterface(BaseModel):
             auth=auth,
         )
         return [
-            await PartnerOfferSkuHistoryResponse.from_dict(data=entry, client=self._client)
-            for entry in response["Result"]
+            await PartnerOfferSkuHistoryResponse.from_dict(data=value, client=self._client)
+            for value in response["Result"]
         ]
 
     async def get_bungie_rewards_for_user(self, membership_id: int, auth: AuthData) -> dict[str, BungieRewardDisplay]:
@@ -100,7 +100,10 @@ class TokensRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_bungie_rewards_for_user(membership_id=membership_id, auth=auth)
-        return await dict[str, BungieRewardDisplay].from_dict(data=response, client=self._client)
+        return {
+            key: await BungieRewardDisplay.from_dict(data=value, client=self._client)
+            async for key, value in response["Result"].items()
+        }
 
     async def get_bungie_rewards_list(self, auth: Optional[AuthData] = None) -> dict[str, BungieRewardDisplay]:
         """
@@ -114,4 +117,7 @@ class TokensRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_bungie_rewards_list(auth=auth)
-        return await dict[str, BungieRewardDisplay].from_dict(data=response, client=self._client)
+        return {
+            key: await BungieRewardDisplay.from_dict(data=value, client=self._client)
+            async for key, value in response["Result"].items()
+        }

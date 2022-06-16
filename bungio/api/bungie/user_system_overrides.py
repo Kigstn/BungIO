@@ -21,4 +21,7 @@ class UserSystemOverridesRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_user_system_overrides(auth=auth)
-        return await dict[str, CoreSystem].from_dict(data=response, client=self._client)
+        return {
+            key: await CoreSystem.from_dict(data=value, client=self._client)
+            async for key, value in response["Result"].items()
+        }

@@ -50,4 +50,4 @@ class AppRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_bungie_applications(auth=auth)
-        return [await Application.from_dict(data=entry, client=self._client) for entry in response["Result"]]
+        return [await Application.from_dict(data=value, client=self._client) for value in response["Result"]]

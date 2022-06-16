@@ -108,7 +108,7 @@ class Destiny2RouteInterface(BaseModel):
         response = await self._client.http.search_destiny_player_by_bungie_name(
             membership_type=membership_type.value, auth=auth, **data.to_dict()
         )
-        return [await UserInfoCard.from_dict(data=entry, client=self._client) for entry in response["Result"]]
+        return [await UserInfoCard.from_dict(data=value, client=self._client) for value in response["Result"]]
 
     async def get_linked_profiles(
         self,
@@ -392,7 +392,7 @@ class Destiny2RouteInterface(BaseModel):
         """
 
         response = await self._client.http.transfer_item(auth=auth, **data.to_dict())
-        return await int.from_dict(data=response, client=self._client)
+        return response["Result"]
 
     async def pull_from_postmaster(self, data: DestinyPostmasterTransferRequest, auth: AuthData) -> int:
         """
@@ -410,7 +410,7 @@ class Destiny2RouteInterface(BaseModel):
         """
 
         response = await self._client.http.pull_from_postmaster(auth=auth, **data.to_dict())
-        return await int.from_dict(data=response, client=self._client)
+        return response["Result"]
 
     async def equip_item(self, data: DestinyItemActionRequest, auth: AuthData) -> int:
         """
@@ -428,7 +428,7 @@ class Destiny2RouteInterface(BaseModel):
         """
 
         response = await self._client.http.equip_item(auth=auth, **data.to_dict())
-        return await int.from_dict(data=response, client=self._client)
+        return response["Result"]
 
     async def equip_items(self, data: DestinyItemSetActionRequest, auth: AuthData) -> DestinyEquipItemResults:
         """
@@ -464,7 +464,7 @@ class Destiny2RouteInterface(BaseModel):
         """
 
         response = await self._client.http.set_item_lock_state(auth=auth, **data.to_dict())
-        return await int.from_dict(data=response, client=self._client)
+        return response["Result"]
 
     async def set_quest_tracked_state(self, data: DestinyItemStateRequest, auth: AuthData) -> int:
         """
@@ -482,7 +482,7 @@ class Destiny2RouteInterface(BaseModel):
         """
 
         response = await self._client.http.set_quest_tracked_state(auth=auth, **data.to_dict())
-        return await int.from_dict(data=response, client=self._client)
+        return response["Result"]
 
     async def insert_socket_plug(
         self, data: DestinyInsertPlugsActionRequest, auth: AuthData
@@ -562,7 +562,7 @@ class Destiny2RouteInterface(BaseModel):
         response = await self._client.http.report_offensive_post_game_carnage_report_player(
             activity_id=activity_id, auth=auth, **data.to_dict()
         )
-        return await int.from_dict(data=response, client=self._client)
+        return response["Result"]
 
     async def get_historical_stats_definition(
         self, auth: Optional[AuthData] = None
@@ -578,7 +578,10 @@ class Destiny2RouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_historical_stats_definition(auth=auth)
-        return await dict[str, DestinyHistoricalStatsDefinition].from_dict(data=response, client=self._client)
+        return {
+            key: await DestinyHistoricalStatsDefinition.from_dict(data=value, client=self._client)
+            async for key, value in response["Result"].items()
+        }
 
     async def get_clan_leaderboards(
         self,
@@ -605,7 +608,13 @@ class Destiny2RouteInterface(BaseModel):
         response = await self._client.http.get_clan_leaderboards(
             group_id=group_id, maxtop=maxtop, modes=modes, statid=statid, auth=auth
         )
-        return await dict[str, dict[str, DestinyLeaderboard]].from_dict(data=response, client=self._client)
+        return {
+            key: {
+                key2: await DestinyLeaderboard.from_dict(data=value2, client=self._client)
+                async for key2, value2 in value.items()
+            }
+            async for key, value in response["Result"].items()
+        }
 
     async def get_clan_aggregate_stats(
         self, group_id: int, modes: Optional[str] = None, auth: Optional[AuthData] = None
@@ -624,7 +633,7 @@ class Destiny2RouteInterface(BaseModel):
 
         response = await self._client.http.get_clan_aggregate_stats(group_id=group_id, modes=modes, auth=auth)
         return [
-            await DestinyClanAggregateStat.from_dict(data=entry, client=self._client) for entry in response["Result"]
+            await DestinyClanAggregateStat.from_dict(data=value, client=self._client) for value in response["Result"]
         ]
 
     async def get_leaderboards(
@@ -659,7 +668,13 @@ class Destiny2RouteInterface(BaseModel):
             statid=statid,
             auth=auth,
         )
-        return await dict[str, dict[str, DestinyLeaderboard]].from_dict(data=response, client=self._client)
+        return {
+            key: {
+                key2: await DestinyLeaderboard.from_dict(data=value2, client=self._client)
+                async for key2, value2 in value.items()
+            }
+            async for key, value in response["Result"].items()
+        }
 
     async def get_leaderboards_for_character(
         self,
@@ -696,7 +711,13 @@ class Destiny2RouteInterface(BaseModel):
             statid=statid,
             auth=auth,
         )
-        return await dict[str, dict[str, DestinyLeaderboard]].from_dict(data=response, client=self._client)
+        return {
+            key: {
+                key2: await DestinyLeaderboard.from_dict(data=value2, client=self._client)
+                async for key2, value2 in value.items()
+            }
+            async for key, value in response["Result"].items()
+        }
 
     async def search_destiny_entities(
         self, search_term: str, type: str, page: Optional[int] = None, auth: Optional[AuthData] = None
@@ -760,7 +781,10 @@ class Destiny2RouteInterface(BaseModel):
             period_type=period_type.value,
             auth=auth,
         )
-        return await dict[str, DestinyHistoricalStatsByPeriod].from_dict(data=response, client=self._client)
+        return {
+            key: await DestinyHistoricalStatsByPeriod.from_dict(data=value, client=self._client)
+            async for key, value in response["Result"].items()
+        }
 
     async def get_historical_stats_for_account(
         self,
@@ -912,7 +936,10 @@ class Destiny2RouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_public_milestones(auth=auth)
-        return await dict[int, DestinyPublicMilestone].from_dict(data=response, client=self._client)
+        return {
+            key: await DestinyPublicMilestone.from_dict(data=value, client=self._client)
+            async for key, value in response["Result"].items()
+        }
 
     async def awa_initialize_request(self, data: AwaPermissionRequested, auth: AuthData) -> AwaInitializeResponse:
         """
@@ -945,7 +972,7 @@ class Destiny2RouteInterface(BaseModel):
         """
 
         response = await self._client.http.awa_provide_authorization_result(auth=auth, **data.to_dict())
-        return await int.from_dict(data=response, client=self._client)
+        return response["Result"]
 
     async def awa_get_action_token(self, correlation_id: str, auth: AuthData) -> AwaAuthorizationResult:
         """

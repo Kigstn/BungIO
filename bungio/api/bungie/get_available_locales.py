@@ -20,4 +20,4 @@ class GetAvailableLocalesRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_available_locales(auth=auth)
-        return await dict[str, str].from_dict(data=response, client=self._client)
+        return {key: value async for key, value in response["Result"].items()}

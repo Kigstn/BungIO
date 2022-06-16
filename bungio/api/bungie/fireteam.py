@@ -33,7 +33,7 @@ class FireteamRouteInterface(BaseModel):
         """
 
         response = await self._client.http.get_active_private_clan_fireteam_count(group_id=group_id, auth=auth)
-        return await int.from_dict(data=response, client=self._client)
+        return response["Result"]
 
     async def get_available_clan_fireteams(
         self,
