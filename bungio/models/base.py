@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import datetime
+import inspect
 from enum import Enum
 from typing import TYPE_CHECKING, Any, Optional
 
@@ -247,10 +248,13 @@ class BaseModel:
         for name in self.__dir__():
             value = getattr(self, name)
 
-            if name.startswith("__") or name.startswith("manifest_"):
+            if name.startswith("_") or name.startswith("manifest_"):
                 continue
 
             elif value is MISSING:
+                continue
+
+            if inspect.ismethod(value) or inspect.isfunction(value):
                 continue
 
             elif isinstance(value, dict):
