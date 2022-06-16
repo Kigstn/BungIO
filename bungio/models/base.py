@@ -66,6 +66,16 @@ class BaseEnum(Enum):
         data = cls.process_dict(data=data, client=client)
         return cls(data)
 
+    def to_dict(self) -> str:
+        """
+        Convert the enum into a representation bungie accepts
+
+        Returns:
+            The value which can be sent to bungie
+        """
+
+        return self.value
+
 
 @attr.define(kw_only=True)
 class BaseModel:
@@ -225,15 +235,50 @@ class BaseModel:
             return "".join([split[0], *[s.capitalize() for s in split[1:]]])
 
     def to_dict(self) -> dict:
-        # todo
-        ...
+        """
+        Convert the model into a dict representation bungie accepts
+
+        Returns:
+            A dict which can be sent to bungie
+        """
+
+        result = {}
+
+        for name in self.__dir__():
+            value = getattr(self, name)
+
+            if name.startswith("__") or name.startswith("manifest_"):
+                continue
+
+            elif value is MISSING:
+                continue
+
+            elif isinstance(value, dict):
+                raise NotImplementedError(
+                    "Nested dict conversion is not currently implemented, since bungie does never require that info"
+                )
+
+            elif isinstance(value, list):
+                list_results = []
+                for entry in value:
+                    if hasattr(entry, "to_dict"):
+                        list_results.append(entry.to_dict())
+                    else:
+                        list_results.append(entry)
+
+                result[name] = list_results
+
+            else:
+                if hasattr(value, "to_dict"):
+                    result[name] = value.to_dict()
+                else:
+                    result[name] = value
+
+        return result
 
     async def fetch_manifest_information(self, _cache: Optional[dict] = None):
         """
         Fill the model in-place with information from the manifest.
-
-        Args:
-            _cache: Internal cache to avoid infinite recursion
         """
 
         if not isinstance(self._client.manifest_storage, AsyncEngine):
