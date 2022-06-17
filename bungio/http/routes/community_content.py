@@ -17,7 +17,7 @@ class CommunityContentRouteHttpRequests:
             media_filter: The type of media to get
             page: Zero based page
             sort: The sort mode.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request

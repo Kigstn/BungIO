@@ -69,6 +69,7 @@ from typing import Optional, Any, Union
 
 from bungio.models.base import ClientMixin
 from bungio.models.auth import AuthData
+from bungio.utils import AllowAsyncIteration
 
 %imports%
 
@@ -233,7 +234,7 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
         else:
             arg_type = convert_to_typing(param["schema"], return_class_names=True, file_imports=file_imports).name
 
-            is_optional = False
+            is_optional = info["in"] == "query"
             is_list = False
             clean_arg_type = arg_type
             if "Optional" in arg_type:
@@ -270,7 +271,7 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
     else:
         security_info[
             "description"
-        ] = "Authentication information. Required when users with a private profile are queried."
+        ] = "Authentication information. Required when users with a private profile are queried, or when Bungie feels like it"
         security_info["type"] = "Optional[AuthData] = None"
         security_info["in"] = "query"
     params.append(security_info)
@@ -398,7 +399,7 @@ def get_return_value_from_typing(return_model: str) -> str:
         if "key" in res and "value" in res:
             res = res.replace("key", "key2").replace("value", "value2")
 
-        res = f'''{{key: {res.replace("data=response", "data=value").replace("""response["Response"]""", "value")} async for key, value in response["Response"].items()}}'''
+        res = f'''{{key: {res.replace("data=response", "data=value").replace("""response["Response"]""", "value")} async for key, value in AllowAsyncIteration(response["Response"].items())}}'''
 
     else:
         if return_model in ["dict", "int", "str", "Any", "float", "bool"]:

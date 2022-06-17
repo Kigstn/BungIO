@@ -17,11 +17,13 @@ class GlobalAlertsRouteInterface(ClientMixin):
 
         Args:
             includestreaming: Determines whether Streaming Alerts are included in results
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.get_global_alerts(includestreaming=includestreaming, auth=auth)
+        response = await self._client.http.get_global_alerts(
+            includestreaming=includestreaming if includestreaming else None, auth=auth
+        )
         return [await GlobalAlert.from_dict(data=value, client=self._client) for value in response["Response"]]

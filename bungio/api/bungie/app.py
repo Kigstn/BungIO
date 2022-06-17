@@ -34,7 +34,7 @@ class AppRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_application_api_usage(
-            application_id=application_id, auth=auth, end=end, start=start
+            application_id=application_id, auth=auth, end=end if end else None, start=start if start else None
         )
         return await ApiUsage.from_dict(data=response, client=self._client)
 
@@ -43,7 +43,7 @@ class AppRouteInterface(ClientMixin):
         Get list of applications created by Bungie.
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)

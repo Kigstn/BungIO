@@ -77,7 +77,7 @@ class FireteamRouteInterface(ClientMixin):
             public_only=public_only.value,
             slot_filter=slot_filter.value,
             auth=auth,
-            lang_filter=lang_filter,
+            lang_filter=lang_filter if lang_filter else None,
         )
         return await SearchResultOfFireteamSummary.from_dict(data=response, client=self._client)
 
@@ -117,7 +117,7 @@ class FireteamRouteInterface(ClientMixin):
             platform=platform.value,
             slot_filter=slot_filter.value,
             auth=auth,
-            lang_filter=lang_filter,
+            lang_filter=lang_filter if lang_filter else None,
         )
         return await SearchResultOfFireteamSummary.from_dict(data=response, client=self._client)
 
@@ -156,8 +156,8 @@ class FireteamRouteInterface(ClientMixin):
             page=page,
             platform=platform.value,
             auth=auth,
-            group_filter=group_filter,
-            lang_filter=lang_filter,
+            group_filter=group_filter if group_filter else None,
+            lang_filter=lang_filter if lang_filter else None,
         )
         return await SearchResultOfFireteamResponse.from_dict(data=response, client=self._client)
 

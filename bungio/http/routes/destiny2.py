@@ -13,7 +13,7 @@ class Destiny2RouteHttpRequests:
         Returns the current version of the manifest as a json object.
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -39,7 +39,7 @@ class Destiny2RouteHttpRequests:
         Args:
             entity_type: The type of entity for whom you would like results. These correspond to the entity's definition contract name. For instance, if you are looking for items, this property should be 'DestinyInventoryItemDefinition'. PREVIEW: This endpoint is still in beta, and may experience rough edges. The schema is tentatively in final form, but there may be bugs that prevent desirable operation.
             hash_identifier: The hash identifier for the specific Entity you want returned.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -68,7 +68,7 @@ class Destiny2RouteHttpRequests:
             display_name: _No description given by bungie._
             display_name_code: _No description given by bungie._
             membership_type: A valid non-BungieNet membership type, or All. Indicates which memberships to return. You probably want this set to All.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -111,7 +111,7 @@ class Destiny2RouteHttpRequests:
             membership_id: The ID of the membership whose linked Destiny accounts you want returned. Make sure your membership ID matches its Membership Type: don't pass us a PSN membership ID and the XBox membership type, it's not going to work!
             membership_type: The type for the membership whose linked Destiny accounts you want returned.
             get_all_memberships: (optional) if set to 'true', all memberships regardless of whether they're obscured by overrides will be returned. Normal privacy restrictions on account linking will still apply no matter what.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -149,7 +149,7 @@ class Destiny2RouteHttpRequests:
             destiny_membership_id: Destiny membership ID.
             membership_type: A valid non-BungieNet membership type.
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -189,7 +189,7 @@ class Destiny2RouteHttpRequests:
             destiny_membership_id: Destiny membership ID.
             membership_type: A valid non-BungieNet membership type.
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -219,7 +219,7 @@ class Destiny2RouteHttpRequests:
 
         Args:
             group_id: A valid group id of clan.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -241,7 +241,7 @@ class Destiny2RouteHttpRequests:
         Returns the dictionary of values for the Clan Banner
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -274,7 +274,7 @@ class Destiny2RouteHttpRequests:
             item_instance_id: The Instance ID of the destiny item.
             membership_type: A valid non-BungieNet membership type.
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -316,7 +316,7 @@ class Destiny2RouteHttpRequests:
             membership_type: A valid non-BungieNet membership type.
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
             filter: The filter of what vendors and items to return, if any.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -359,7 +359,7 @@ class Destiny2RouteHttpRequests:
             membership_type: A valid non-BungieNet membership type.
             vendor_hash: The Hash identifier of the Vendor to be returned.
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -389,7 +389,7 @@ class Destiny2RouteHttpRequests:
 
         Args:
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -424,7 +424,7 @@ class Destiny2RouteHttpRequests:
             destiny_membership_id: Destiny membership ID of another user. You may be denied.
             membership_type: A valid non-BungieNet membership type.
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -793,7 +793,7 @@ class Destiny2RouteHttpRequests:
 
         Args:
             activity_id: The ID of the activity whose PGCR is requested.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -863,7 +863,7 @@ class Destiny2RouteHttpRequests:
         Gets historical stats definitions.
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -896,7 +896,7 @@ class Destiny2RouteHttpRequests:
             maxtop: Maximum number of top players to return. Use a large number to get entire leaderboard.
             modes: List of game modes for which to get leaderboards. See the documentation for DestinyActivityModeType for valid values, and pass in string representation, comma delimited.
             statid: ID of stat to return rather than returning all Leaderboard stats.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -931,7 +931,7 @@ class Destiny2RouteHttpRequests:
         Args:
             group_id: Group ID of the clan whose leaderboards you wish to fetch.
             modes: List of game modes for which to get leaderboards. See the documentation for DestinyActivityModeType for valid values, and pass in string representation, comma delimited.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -968,7 +968,7 @@ class Destiny2RouteHttpRequests:
             maxtop: Maximum number of top players to return. Use a large number to get entire leaderboard.
             modes: List of game modes for which to get leaderboards. See the documentation for DestinyActivityModeType for valid values, and pass in string representation, comma delimited.
             statid: ID of stat to return rather than returning all Leaderboard stats.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -1014,7 +1014,7 @@ class Destiny2RouteHttpRequests:
             maxtop: Maximum number of top players to return. Use a large number to get entire leaderboard.
             modes: List of game modes for which to get leaderboards. See the documentation for DestinyActivityModeType for valid values, and pass in string representation, comma delimited.
             statid: ID of stat to return rather than returning all Leaderboard stats.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -1050,7 +1050,7 @@ class Destiny2RouteHttpRequests:
             search_term: The string to use when searching for Destiny entities.
             type: The type of entity for whom you would like results. These correspond to the entity's definition contract name. For instance, if you are looking for items, this property should be 'DestinyInventoryItemDefinition'.
             page: Page number to return, starting with 0.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -1093,7 +1093,7 @@ class Destiny2RouteHttpRequests:
             groups: Group of stats to include, otherwise only general stats are returned. Comma separated list is allowed. Values: General, Weapons, Medals
             modes: Game modes to return. See the documentation for DestinyActivityModeType for valid values, and pass in string representation, comma delimited.
             period_type: Indicates a specific period type to return. Optional. May be: Daily, AllTime, or Activity
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -1135,7 +1135,7 @@ class Destiny2RouteHttpRequests:
             destiny_membership_id: The Destiny membershipId of the user to retrieve.
             membership_type: A valid non-BungieNet membership type.
             groups: Groups of stats to include, otherwise only general stats are returned. Comma separated list is allowed. Values: General, Weapons, Medals.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -1179,7 +1179,7 @@ class Destiny2RouteHttpRequests:
             count: Number of rows to return
             mode: A filter for the activity mode to be returned. None returns all activities. See the documentation for DestinyActivityModeType for valid values, and pass in string representation.
             page: Page number to return, starting with 0.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -1215,7 +1215,7 @@ class Destiny2RouteHttpRequests:
             character_id: The id of the character to retrieve.
             destiny_membership_id: The Destiny membershipId of the user to retrieve.
             membership_type: A valid non-BungieNet membership type.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -1248,7 +1248,7 @@ class Destiny2RouteHttpRequests:
             character_id: The specific character whose activities should be returned.
             destiny_membership_id: The Destiny membershipId of the user to retrieve.
             membership_type: A valid non-BungieNet membership type.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -1277,7 +1277,7 @@ class Destiny2RouteHttpRequests:
 
         Args:
             milestone_hash: The identifier for the milestone to be returned.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -1301,7 +1301,7 @@ class Destiny2RouteHttpRequests:
         Gets public information about currently available Milestones.
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -1366,7 +1366,7 @@ class Destiny2RouteHttpRequests:
             selection: Indication of the selection the user has made (Approving or rejecting the action)
             correlation_id: Correlation ID of the request
             nonce: Secret nonce received via the PUSH notification.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request

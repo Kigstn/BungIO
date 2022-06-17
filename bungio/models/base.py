@@ -3,7 +3,7 @@ from __future__ import annotations
 import datetime
 import inspect
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any, Optional, Type
 
 import attr
 from sqlalchemy.ext.asyncio import AsyncEngine
@@ -19,6 +19,7 @@ __all__ = (
     "BaseModel",
     "ManifestModel",
     "ClientMixin",
+    "UnknownEnumValue",
 )
 
 
@@ -28,6 +29,16 @@ class MISSING:
 
 
 MISSING = MISSING()
+
+
+@attr.define
+class UnknownEnumValue:
+    """
+    Sometimes Bungie returns information that they have not defined anywhere, so this has to do
+    """
+
+    value: int | str = attr.field()
+    enum: Type[BaseEnum] = attr.field()
 
 
 class BaseEnum(Enum):
@@ -50,7 +61,7 @@ class BaseEnum(Enum):
         return data
 
     @classmethod
-    async def from_dict(cls, data: int | str, client: "Client", *args, **kwargs) -> BaseEnum:
+    async def from_dict(cls, data: int | str, client: "Client", *args, **kwargs) -> BaseEnum | UnknownEnumValue:
         """
         Convert data to this enum
 
@@ -66,7 +77,12 @@ class BaseEnum(Enum):
             return data
 
         data = cls.process_dict(data=data, client=client)
-        return cls(data)
+
+        # catch unknown values
+        try:
+            return cls(data)
+        except ValueError:
+            return UnknownEnumValue(value=data, enum=cls)
 
     def to_dict(self) -> str:
         """
@@ -254,15 +270,15 @@ class BaseModel(ClientMixin):
         result = {}
 
         for name in self.__dir__():
-            value = getattr(self, name)
-
             if name.startswith("_") or name.startswith("manifest_"):
                 continue
 
-            elif value is MISSING:
+            value = getattr(self, name)
+
+            if value is MISSING:
                 continue
 
-            if inspect.ismethod(value) or inspect.isfunction(value):
+            elif inspect.ismethod(value) or inspect.isfunction(value):
                 continue
 
             elif isinstance(value, dict):

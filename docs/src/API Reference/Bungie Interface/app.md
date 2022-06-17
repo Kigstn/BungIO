@@ -1,3 +1,3 @@
 # App Routes
 
-::: bungio.api.overwrites.app
+::: bungio.api.bungie.app

@@ -160,6 +160,10 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMeta
                             else {}
                         )
 
+                        # make sure the response is not None
+                        if content["Response"] is None:
+                            content["Response"] = {}
+
                         if not await self._handle_response(
                             route_with_params=route_with_params, response=response, content=content
                         ):
@@ -285,7 +289,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMeta
                 )
                 await asyncio.sleep(60)
 
-            case (_, "AuthorizationRecordRevoked" | "AuthorizationRecordExpired"):
+            case (_, "AuthorizationRecordRevoked" | "AuthorizationRecordExpired" | "WebAuthRequired"):
                 # users tokens are no longer valid
                 raise _InvalidAuthentication()
 

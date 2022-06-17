@@ -1,5 +1,5 @@
-from bungio.api.overwrites.app import AppRouteInterface
+from bungio.api.overwrites.destiny2 import Destiny2RouteInterface
 
 
-class AllRouteInterfacesOverwrites(AppRouteInterface):
+class AllRouteInterfacesOverwrites(Destiny2RouteInterface):
     pass

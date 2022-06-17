@@ -146,7 +146,7 @@ class TokensRouteHttpRequests:
         Returns a list of the current bungie rewards
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request

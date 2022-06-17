@@ -36,6 +36,7 @@ from bungio.models import (
 )
 from bungio.models.auth import AuthData
 from bungio.models.base import ClientMixin
+from bungio.utils import AllowAsyncIteration
 
 
 @attr.define
@@ -45,21 +46,21 @@ class GroupV2RouteInterface(ClientMixin):
         Returns a list of all available group avatars for the signed-in user.
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_available_avatars(auth=auth)
-        return {key: value async for key, value in response["Response"].items()}
+        return {key: value async for key, value in AllowAsyncIteration(response["Response"].items())}
 
     async def get_available_themes(self, auth: Optional[AuthData] = None) -> list[GroupTheme]:
         """
         Returns a list of all available group themes.
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -115,7 +116,7 @@ class GroupV2RouteInterface(ClientMixin):
 
         Args:
             data: The required data for this request.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -130,7 +131,7 @@ class GroupV2RouteInterface(ClientMixin):
 
         Args:
             group_id: Requested group's id.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -148,7 +149,7 @@ class GroupV2RouteInterface(ClientMixin):
         Args:
             group_name: Exact name of the group to find.
             group_type: Type of group to find.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -167,7 +168,7 @@ class GroupV2RouteInterface(ClientMixin):
 
         Args:
             data: The required data for this request.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -184,7 +185,7 @@ class GroupV2RouteInterface(ClientMixin):
 
         Args:
             group_id: Requested group's id.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -313,7 +314,7 @@ class GroupV2RouteInterface(ClientMixin):
             group_id: The ID of the group.
             member_type: Filter out other member types. Use None for all members.
             name_search: The name fragment upon which a search should be executed for members with matching display or unique names.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -322,8 +323,8 @@ class GroupV2RouteInterface(ClientMixin):
         response = await self._client.http.get_members_of_group(
             currentpage=currentpage,
             group_id=group_id,
-            member_type=member_type.value,
-            name_search=name_search,
+            member_type=member_type.value if member_type else None,
+            name_search=name_search if name_search else None,
             auth=auth,
         )
         return await SearchResultOfGroupMember.from_dict(data=response, client=self._client)
@@ -337,7 +338,7 @@ class GroupV2RouteInterface(ClientMixin):
         Args:
             currentpage: Page number (starting with 1). Each page has a fixed size of 50 items per page.
             group_id: The ID of the group.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -497,7 +498,7 @@ class GroupV2RouteInterface(ClientMixin):
             founder_id_new: The new founder for this group. Must already be a group admin.
             group_id: The target group id.
             membership_type: Membership type of the provided founderIdNew.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -688,7 +689,7 @@ class GroupV2RouteInterface(ClientMixin):
             group_type: Type of group the supplied member founded.
             membership_id: Membership ID to for which to find founded groups.
             membership_type: Membership type of the supplied membership ID.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -717,7 +718,7 @@ class GroupV2RouteInterface(ClientMixin):
             group_type: Type of group the supplied member founded.
             membership_id: Membership ID to for which to find founded groups.
             membership_type: Membership type of the supplied membership ID.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -744,7 +745,7 @@ class GroupV2RouteInterface(ClientMixin):
             group_type: Type of group the supplied member applied.
             membership_id: Membership ID to for which to find applied groups.
             membership_type: Membership type of the supplied membership ID.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)

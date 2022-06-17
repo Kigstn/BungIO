@@ -13,7 +13,7 @@ class UserRouteHttpRequests:
 
         Args:
             id: The requested Bungie.net membership id.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -36,7 +36,7 @@ class UserRouteHttpRequests:
 
         Args:
             membership_id: The requested membership id to load.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -63,7 +63,7 @@ class UserRouteHttpRequests:
 
         Args:
             membership_id: The user's membership id
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -87,7 +87,7 @@ class UserRouteHttpRequests:
         Returns a list of all available user themes.
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -113,7 +113,7 @@ class UserRouteHttpRequests:
         Args:
             membership_id: The membership ID of the target user.
             membership_type: Type of the supplied membership ID.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -166,7 +166,7 @@ class UserRouteHttpRequests:
         Args:
             credential: The credential to look up. Must be a valid SteamID64.
             cr_type: The credential type. 'SteamId' is the only valid value at present.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -194,7 +194,7 @@ class UserRouteHttpRequests:
         Args:
             display_name_prefix: The display name prefix you're looking for.
             page: The zero-based page of results you desire.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -222,7 +222,7 @@ class UserRouteHttpRequests:
         Args:
             display_name_prefix: _No description given by bungie._
             page: The zero-based page of results you desire.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request

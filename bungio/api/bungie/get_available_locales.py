@@ -4,6 +4,7 @@ import attr
 
 from bungio.models.auth import AuthData
 from bungio.models.base import ClientMixin
+from bungio.utils import AllowAsyncIteration
 
 
 @attr.define
@@ -13,11 +14,11 @@ class GetAvailableLocalesRouteInterface(ClientMixin):
         List of available localization cultures
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_available_locales(auth=auth)
-        return {key: value async for key, value in response["Response"].items()}
+        return {key: value async for key, value in AllowAsyncIteration(response["Response"].items())}

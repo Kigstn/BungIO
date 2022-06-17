@@ -15,6 +15,7 @@ from bungio.models import (
 )
 from bungio.models.auth import AuthData
 from bungio.models.base import ClientMixin
+from bungio.utils import AllowAsyncIteration
 
 
 @attr.define
@@ -25,7 +26,7 @@ class UserRouteInterface(ClientMixin):
 
         Args:
             id: The requested Bungie.net membership id.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -42,14 +43,14 @@ class UserRouteInterface(ClientMixin):
 
         Args:
             membership_id: The requested membership id to load.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_sanitized_platform_display_names(membership_id=membership_id, auth=auth)
-        return {key: value async for key, value in response["Response"].items()}
+        return {key: value async for key, value in AllowAsyncIteration(response["Response"].items())}
 
     async def get_credential_types_for_target_account(
         self, membership_id: int, auth: Optional[AuthData] = None
@@ -59,7 +60,7 @@ class UserRouteInterface(ClientMixin):
 
         Args:
             membership_id: The user's membership id
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -78,7 +79,7 @@ class UserRouteInterface(ClientMixin):
         Returns a list of all available user themes.
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -96,7 +97,7 @@ class UserRouteInterface(ClientMixin):
         Args:
             membership_id: The membership ID of the target user.
             membership_type: Type of the supplied membership ID.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -133,7 +134,7 @@ class UserRouteInterface(ClientMixin):
         Args:
             credential: The credential to look up. Must be a valid SteamID64.
             cr_type: The credential type. 'SteamId' is the only valid value at present.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -153,7 +154,7 @@ class UserRouteInterface(ClientMixin):
         Args:
             display_name_prefix: The display name prefix you're looking for.
             page: The zero-based page of results you desire.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -173,7 +174,7 @@ class UserRouteInterface(ClientMixin):
         Args:
             data: The required data for this request.
             page: The zero-based page of results you desire.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)

@@ -12,7 +12,7 @@ class SettingsRouteHttpRequests:
         Get the common settings used by the Bungie.Net environment.
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request

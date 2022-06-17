@@ -52,6 +52,7 @@ from bungio.models import (
 )
 from bungio.models.auth import AuthData
 from bungio.models.base import ClientMixin
+from bungio.utils import AllowAsyncIteration
 
 
 @attr.define
@@ -61,7 +62,7 @@ class Destiny2RouteInterface(ClientMixin):
         Returns the current version of the manifest as a json object.
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -79,7 +80,7 @@ class Destiny2RouteInterface(ClientMixin):
         Args:
             entity_type: The type of entity for whom you would like results. These correspond to the entity's definition contract name. For instance, if you are looking for items, this property should be 'DestinyInventoryItemDefinition'. PREVIEW: This endpoint is still in beta, and may experience rough edges. The schema is tentatively in final form, but there may be bugs that prevent desirable operation.
             hash_identifier: The hash identifier for the specific Entity you want returned.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -99,7 +100,7 @@ class Destiny2RouteInterface(ClientMixin):
         Args:
             data: The required data for this request.
             membership_type: A valid non-BungieNet membership type, or All. Indicates which memberships to return. You probably want this set to All.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -124,7 +125,7 @@ class Destiny2RouteInterface(ClientMixin):
             membership_id: The ID of the membership whose linked Destiny accounts you want returned. Make sure your membership ID matches its Membership Type: don't pass us a PSN membership ID and the XBox membership type, it's not going to work!
             membership_type: The type for the membership whose linked Destiny accounts you want returned.
             get_all_memberships: (optional) if set to 'true', all memberships regardless of whether they're obscured by overrides will be returned. Normal privacy restrictions on account linking will still apply no matter what.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -133,7 +134,7 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.get_linked_profiles(
             membership_id=membership_id,
             membership_type=membership_type.value,
-            get_all_memberships=get_all_memberships,
+            get_all_memberships=get_all_memberships if get_all_memberships else None,
             auth=auth,
         )
         return await DestinyLinkedProfilesResponse.from_dict(data=response, client=self._client)
@@ -152,7 +153,7 @@ class Destiny2RouteInterface(ClientMixin):
             destiny_membership_id: Destiny membership ID.
             membership_type: A valid non-BungieNet membership type.
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -161,7 +162,7 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.get_profile(
             destiny_membership_id=destiny_membership_id,
             membership_type=membership_type.value,
-            components=[x.value for x in components],
+            components=[x.value for x in components] if components else None,
             auth=auth,
         )
         return await DestinyProfileResponse.from_dict(data=response, client=self._client)
@@ -182,7 +183,7 @@ class Destiny2RouteInterface(ClientMixin):
             destiny_membership_id: Destiny membership ID.
             membership_type: A valid non-BungieNet membership type.
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -192,7 +193,7 @@ class Destiny2RouteInterface(ClientMixin):
             character_id=character_id,
             destiny_membership_id=destiny_membership_id,
             membership_type=membership_type.value,
-            components=[x.value for x in components],
+            components=[x.value for x in components] if components else None,
             auth=auth,
         )
         return await DestinyCharacterResponse.from_dict(data=response, client=self._client)
@@ -203,7 +204,7 @@ class Destiny2RouteInterface(ClientMixin):
 
         Args:
             group_id: A valid group id of clan.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -217,7 +218,7 @@ class Destiny2RouteInterface(ClientMixin):
         Returns the dictionary of values for the Clan Banner
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -242,7 +243,7 @@ class Destiny2RouteInterface(ClientMixin):
             item_instance_id: The Instance ID of the destiny item.
             membership_type: A valid non-BungieNet membership type.
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -252,7 +253,7 @@ class Destiny2RouteInterface(ClientMixin):
             destiny_membership_id=destiny_membership_id,
             item_instance_id=item_instance_id,
             membership_type=membership_type.value,
-            components=[x.value for x in components],
+            components=[x.value for x in components] if components else None,
             auth=auth,
         )
         return await DestinyItemResponse.from_dict(data=response, client=self._client)
@@ -275,7 +276,7 @@ class Destiny2RouteInterface(ClientMixin):
             membership_type: A valid non-BungieNet membership type.
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
             filter: The filter of what vendors and items to return, if any.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -285,8 +286,8 @@ class Destiny2RouteInterface(ClientMixin):
             character_id=character_id,
             destiny_membership_id=destiny_membership_id,
             membership_type=membership_type.value,
-            components=[x.value for x in components],
-            filter=filter.value,
+            components=[x.value for x in components] if components else None,
+            filter=filter.value if filter else None,
             auth=auth,
         )
         return await DestinyVendorsResponse.from_dict(data=response, client=self._client)
@@ -309,7 +310,7 @@ class Destiny2RouteInterface(ClientMixin):
             membership_type: A valid non-BungieNet membership type.
             vendor_hash: The Hash identifier of the Vendor to be returned.
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -320,7 +321,7 @@ class Destiny2RouteInterface(ClientMixin):
             destiny_membership_id=destiny_membership_id,
             membership_type=membership_type.value,
             vendor_hash=vendor_hash,
-            components=[x.value for x in components],
+            components=[x.value for x in components] if components else None,
             auth=auth,
         )
         return await DestinyVendorResponse.from_dict(data=response, client=self._client)
@@ -333,13 +334,15 @@ class Destiny2RouteInterface(ClientMixin):
 
         Args:
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.get_public_vendors(components=[x.value for x in components], auth=auth)
+        response = await self._client.http.get_public_vendors(
+            components=[x.value for x in components] if components else None, auth=auth
+        )
         return await DestinyPublicVendorsResponse.from_dict(data=response, client=self._client)
 
     async def get_collectible_node_details(
@@ -360,7 +363,7 @@ class Destiny2RouteInterface(ClientMixin):
             destiny_membership_id: Destiny membership ID of another user. You may be denied.
             membership_type: A valid non-BungieNet membership type.
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -371,7 +374,7 @@ class Destiny2RouteInterface(ClientMixin):
             collectible_presentation_node_hash=collectible_presentation_node_hash,
             destiny_membership_id=destiny_membership_id,
             membership_type=membership_type.value,
-            components=[x.value for x in components],
+            components=[x.value for x in components] if components else None,
             auth=auth,
         )
         return await DestinyCollectibleNodeDetailResponse.from_dict(data=response, client=self._client)
@@ -532,7 +535,7 @@ class Destiny2RouteInterface(ClientMixin):
 
         Args:
             activity_id: The ID of the activity whose PGCR is requested.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -571,7 +574,7 @@ class Destiny2RouteInterface(ClientMixin):
         Gets historical stats definitions.
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -580,7 +583,7 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.get_historical_stats_definition(auth=auth)
         return {
             key: await DestinyHistoricalStatsDefinition.from_dict(data=value, client=self._client)
-            async for key, value in response["Response"].items()
+            async for key, value in AllowAsyncIteration(response["Response"].items())
         }
 
     async def get_clan_leaderboards(
@@ -599,21 +602,25 @@ class Destiny2RouteInterface(ClientMixin):
             maxtop: Maximum number of top players to return. Use a large number to get entire leaderboard.
             modes: List of game modes for which to get leaderboards. See the documentation for DestinyActivityModeType for valid values, and pass in string representation, comma delimited.
             statid: ID of stat to return rather than returning all Leaderboard stats.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_clan_leaderboards(
-            group_id=group_id, maxtop=maxtop, modes=modes, statid=statid, auth=auth
+            group_id=group_id,
+            maxtop=maxtop if maxtop else None,
+            modes=modes if modes else None,
+            statid=statid if statid else None,
+            auth=auth,
         )
         return {
             key: {
                 key2: await DestinyLeaderboard.from_dict(data=value2, client=self._client)
-                async for key2, value2 in value.items()
+                async for key2, value2 in AllowAsyncIteration(value.items())
             }
-            async for key, value in response["Response"].items()
+            async for key, value in AllowAsyncIteration(response["Response"].items())
         }
 
     async def get_clan_aggregate_stats(
@@ -625,13 +632,15 @@ class Destiny2RouteInterface(ClientMixin):
         Args:
             group_id: Group ID of the clan whose leaderboards you wish to fetch.
             modes: List of game modes for which to get leaderboards. See the documentation for DestinyActivityModeType for valid values, and pass in string representation, comma delimited.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.get_clan_aggregate_stats(group_id=group_id, modes=modes, auth=auth)
+        response = await self._client.http.get_clan_aggregate_stats(
+            group_id=group_id, modes=modes if modes else None, auth=auth
+        )
         return [
             await DestinyClanAggregateStat.from_dict(data=value, client=self._client) for value in response["Response"]
         ]
@@ -654,7 +663,7 @@ class Destiny2RouteInterface(ClientMixin):
             maxtop: Maximum number of top players to return. Use a large number to get entire leaderboard.
             modes: List of game modes for which to get leaderboards. See the documentation for DestinyActivityModeType for valid values, and pass in string representation, comma delimited.
             statid: ID of stat to return rather than returning all Leaderboard stats.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -663,17 +672,17 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.get_leaderboards(
             destiny_membership_id=destiny_membership_id,
             membership_type=membership_type.value,
-            maxtop=maxtop,
-            modes=modes,
-            statid=statid,
+            maxtop=maxtop if maxtop else None,
+            modes=modes if modes else None,
+            statid=statid if statid else None,
             auth=auth,
         )
         return {
             key: {
                 key2: await DestinyLeaderboard.from_dict(data=value2, client=self._client)
-                async for key2, value2 in value.items()
+                async for key2, value2 in AllowAsyncIteration(value.items())
             }
-            async for key, value in response["Response"].items()
+            async for key, value in AllowAsyncIteration(response["Response"].items())
         }
 
     async def get_leaderboards_for_character(
@@ -696,7 +705,7 @@ class Destiny2RouteInterface(ClientMixin):
             maxtop: Maximum number of top players to return. Use a large number to get entire leaderboard.
             modes: List of game modes for which to get leaderboards. See the documentation for DestinyActivityModeType for valid values, and pass in string representation, comma delimited.
             statid: ID of stat to return rather than returning all Leaderboard stats.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -706,17 +715,17 @@ class Destiny2RouteInterface(ClientMixin):
             character_id=character_id,
             destiny_membership_id=destiny_membership_id,
             membership_type=membership_type.value,
-            maxtop=maxtop,
-            modes=modes,
-            statid=statid,
+            maxtop=maxtop if maxtop else None,
+            modes=modes if modes else None,
+            statid=statid if statid else None,
             auth=auth,
         )
         return {
             key: {
                 key2: await DestinyLeaderboard.from_dict(data=value2, client=self._client)
-                async for key2, value2 in value.items()
+                async for key2, value2 in AllowAsyncIteration(value.items())
             }
-            async for key, value in response["Response"].items()
+            async for key, value in AllowAsyncIteration(response["Response"].items())
         }
 
     async def search_destiny_entities(
@@ -729,14 +738,14 @@ class Destiny2RouteInterface(ClientMixin):
             search_term: The string to use when searching for Destiny entities.
             type: The type of entity for whom you would like results. These correspond to the entity's definition contract name. For instance, if you are looking for items, this property should be 'DestinyInventoryItemDefinition'.
             page: Page number to return, starting with 0.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.search_destiny_entities(
-            search_term=search_term, type=type, page=page, auth=auth
+            search_term=search_term, type=type, page=page if page else None, auth=auth
         )
         return await DestinyEntitySearchResult.from_dict(data=response, client=self._client)
 
@@ -764,7 +773,7 @@ class Destiny2RouteInterface(ClientMixin):
             groups: Group of stats to include, otherwise only general stats are returned. Comma separated list is allowed. Values: General, Weapons, Medals
             modes: Game modes to return. See the documentation for DestinyActivityModeType for valid values, and pass in string representation, comma delimited.
             period_type: Indicates a specific period type to return. Optional. May be: Daily, AllTime, or Activity
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -774,16 +783,16 @@ class Destiny2RouteInterface(ClientMixin):
             character_id=character_id,
             destiny_membership_id=destiny_membership_id,
             membership_type=membership_type.value,
-            dayend=dayend,
-            daystart=daystart,
-            groups=[x.value for x in groups],
-            modes=[x.value for x in modes],
-            period_type=period_type.value,
+            dayend=dayend if dayend else None,
+            daystart=daystart if daystart else None,
+            groups=[x.value for x in groups] if groups else None,
+            modes=[x.value for x in modes] if modes else None,
+            period_type=period_type.value if period_type else None,
             auth=auth,
         )
         return {
             key: await DestinyHistoricalStatsByPeriod.from_dict(data=value, client=self._client)
-            async for key, value in response["Response"].items()
+            async for key, value in AllowAsyncIteration(response["Response"].items())
         }
 
     async def get_historical_stats_for_account(
@@ -800,7 +809,7 @@ class Destiny2RouteInterface(ClientMixin):
             destiny_membership_id: The Destiny membershipId of the user to retrieve.
             membership_type: A valid non-BungieNet membership type.
             groups: Groups of stats to include, otherwise only general stats are returned. Comma separated list is allowed. Values: General, Weapons, Medals.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -809,7 +818,7 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.get_historical_stats_for_account(
             destiny_membership_id=destiny_membership_id,
             membership_type=membership_type.value,
-            groups=[x.value for x in groups],
+            groups=[x.value for x in groups] if groups else None,
             auth=auth,
         )
         return await DestinyHistoricalStatsAccountResult.from_dict(data=response, client=self._client)
@@ -834,7 +843,7 @@ class Destiny2RouteInterface(ClientMixin):
             count: Number of rows to return
             mode: A filter for the activity mode to be returned. None returns all activities. See the documentation for DestinyActivityModeType for valid values, and pass in string representation.
             page: Page number to return, starting with 0.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -844,9 +853,9 @@ class Destiny2RouteInterface(ClientMixin):
             character_id=character_id,
             destiny_membership_id=destiny_membership_id,
             membership_type=membership_type.value,
-            count=count,
-            mode=mode.value,
-            page=page,
+            count=count if count else None,
+            mode=mode.value if mode else None,
+            page=page if page else None,
             auth=auth,
         )
         return await DestinyActivityHistoryResults.from_dict(data=response, client=self._client)
@@ -865,7 +874,7 @@ class Destiny2RouteInterface(ClientMixin):
             character_id: The id of the character to retrieve.
             destiny_membership_id: The Destiny membershipId of the user to retrieve.
             membership_type: A valid non-BungieNet membership type.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -893,7 +902,7 @@ class Destiny2RouteInterface(ClientMixin):
             character_id: The specific character whose activities should be returned.
             destiny_membership_id: The Destiny membershipId of the user to retrieve.
             membership_type: A valid non-BungieNet membership type.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -915,7 +924,7 @@ class Destiny2RouteInterface(ClientMixin):
 
         Args:
             milestone_hash: The identifier for the milestone to be returned.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -929,7 +938,7 @@ class Destiny2RouteInterface(ClientMixin):
         Gets public information about currently available Milestones.
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -938,7 +947,7 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.get_public_milestones(auth=auth)
         return {
             key: await DestinyPublicMilestone.from_dict(data=value, client=self._client)
-            async for key, value in response["Response"].items()
+            async for key, value in AllowAsyncIteration(response["Response"].items())
         }
 
     async def awa_initialize_request(self, data: AwaPermissionRequested, auth: AuthData) -> AwaInitializeResponse:
@@ -965,7 +974,7 @@ class Destiny2RouteInterface(ClientMixin):
 
         Args:
             data: The required data for this request.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)

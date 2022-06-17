@@ -1,3 +1,3 @@
 # Destiny2 Routes
 
-::: bungio.api.bungie.destiny2
+::: bungio.api.overwrites.destiny2

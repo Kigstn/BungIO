@@ -41,7 +41,7 @@ class ForumRouteInterface(ClientMixin):
             sort: The sort mode.
             locales: Comma seperated list of locales posts must match to return in the result list. Default 'en'
             tagstring: The tags to search, if any.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -54,8 +54,8 @@ class ForumRouteInterface(ClientMixin):
             page_size=page_size,
             quick_date=quick_date.value,
             sort=sort.value,
-            locales=locales,
-            tagstring=tagstring,
+            locales=locales if locales else None,
+            tagstring=tagstring if tagstring else None,
             auth=auth,
         )
         return await PostSearchResponse.from_dict(data=response, client=self._client)
@@ -78,7 +78,7 @@ class ForumRouteInterface(ClientMixin):
             quick_date: The date filter.
             sort: The sort mode.
             locales: Comma seperated list of locales posts must match to return in the result list. Default 'en'
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -89,7 +89,7 @@ class ForumRouteInterface(ClientMixin):
             page=page,
             quick_date=quick_date.value,
             sort=sort.value,
-            locales=locales,
+            locales=locales if locales else None,
             auth=auth,
         )
         return await PostSearchResponse.from_dict(data=response, client=self._client)
@@ -118,7 +118,7 @@ class ForumRouteInterface(ClientMixin):
             root_thread_mode:
             sort_mode:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -132,7 +132,7 @@ class ForumRouteInterface(ClientMixin):
             reply_size=reply_size,
             root_thread_mode=root_thread_mode,
             sort_mode=sort_mode.value,
-            showbanned=showbanned,
+            showbanned=showbanned if showbanned else None,
             auth=auth,
         )
         return await PostSearchResponse.from_dict(data=response, client=self._client)
@@ -159,7 +159,7 @@ class ForumRouteInterface(ClientMixin):
             root_thread_mode:
             sort_mode:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -172,7 +172,7 @@ class ForumRouteInterface(ClientMixin):
             reply_size=reply_size,
             root_thread_mode=root_thread_mode,
             sort_mode=sort_mode.value,
-            showbanned=showbanned,
+            showbanned=showbanned if showbanned else None,
             auth=auth,
         )
         return await PostSearchResponse.from_dict(data=response, client=self._client)
@@ -186,14 +186,14 @@ class ForumRouteInterface(ClientMixin):
         Args:
             child_post_id:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_post_and_parent(
-            child_post_id=child_post_id, showbanned=showbanned, auth=auth
+            child_post_id=child_post_id, showbanned=showbanned if showbanned else None, auth=auth
         )
         return await PostSearchResponse.from_dict(data=response, client=self._client)
 
@@ -206,14 +206,14 @@ class ForumRouteInterface(ClientMixin):
         Args:
             child_post_id:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_post_and_parent_awaiting_approval(
-            child_post_id=child_post_id, showbanned=showbanned, auth=auth
+            child_post_id=child_post_id, showbanned=showbanned if showbanned else None, auth=auth
         )
         return await PostSearchResponse.from_dict(data=response, client=self._client)
 
@@ -223,7 +223,7 @@ class ForumRouteInterface(ClientMixin):
 
         Args:
             content_id:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -240,13 +240,15 @@ class ForumRouteInterface(ClientMixin):
 
         Args:
             partialtag: The partial tag input to generate suggestions from.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.get_forum_tag_suggestions(partialtag=partialtag, auth=auth)
+        response = await self._client.http.get_forum_tag_suggestions(
+            partialtag=partialtag if partialtag else None, auth=auth
+        )
         return [await TagResponse.from_dict(data=value, client=self._client) for value in response["Response"]]
 
     async def get_poll(self, topic_id: int, auth: Optional[AuthData] = None) -> PostSearchResponse:
@@ -255,7 +257,7 @@ class ForumRouteInterface(ClientMixin):
 
         Args:
             topic_id: The post id of the topic that has the poll.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -272,7 +274,7 @@ class ForumRouteInterface(ClientMixin):
 
         Args:
             data: The required data for this request.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)

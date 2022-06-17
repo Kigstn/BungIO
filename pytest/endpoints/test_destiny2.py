@@ -1,5 +1,11 @@
 import pytest
 from bungio.client import Client
+from bungio.models import (
+    BungieMembershipType,
+    DestinyComponentType,
+    DestinyInventoryItemDefinition,
+    ExactSearchRequest,
+)
 from bungio.models.auth import UserData
 from bungio.models.base import BaseModel
 
@@ -10,11 +16,9 @@ async def test_get_destiny_manifest(client: Client, user: UserData):
     Test for `Client.api.get_destiny_manifest()`
     """
 
-    # data = await client.api.get_destiny_manifest()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_destiny_manifest()
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -23,11 +27,11 @@ async def test_get_destiny_entity_definition(client: Client, user: UserData):
     Test for `Client.api.get_destiny_entity_definition()`
     """
 
-    # data = await client.api.get_destiny_entity_definition()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_destiny_entity_definition(
+        entity_type=DestinyInventoryItemDefinition, hash_identifier=14194600
+    )
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -36,11 +40,13 @@ async def test_search_destiny_player_by_bungie_name(client: Client, user: UserDa
     Test for `Client.api.search_destiny_player_by_bungie_name()`
     """
 
-    # data = await client.api.search_destiny_player_by_bungie_name()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.search_destiny_player_by_bungie_name(
+        data=ExactSearchRequest(display_name="Kigstn", display_name_code=4459), membership_type=user.membership_type
+    )
+    assert data
+    assert isinstance(data, list)
+    for entry in data:
+        assert isinstance(entry, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -62,11 +68,13 @@ async def test_get_profile(client: Client, user: UserData):
     Test for `Client.api.get_profile()`
     """
 
-    # data = await client.api.get_profile()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_profile(
+        destiny_membership_id=user.destiny_membership_id,
+        membership_type=user.membership_type,
+        components=[DestinyComponentType.METRICS],
+    )
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -75,11 +83,14 @@ async def test_get_character(client: Client, user: UserData):
     Test for `Client.api.get_character()`
     """
 
-    # data = await client.api.get_character()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_character(
+        character_id=2305843009300285667,
+        destiny_membership_id=user.destiny_membership_id,
+        membership_type=user.membership_type,
+        components=[DestinyComponentType.METRICS],
+    )
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -88,11 +99,9 @@ async def test_get_clan_weekly_reward_state(client: Client, user: UserData):
     Test for `Client.api.get_clan_weekly_reward_state()`
     """
 
-    # data = await client.api.get_clan_weekly_reward_state()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_clan_weekly_reward_state(group_id=4107840)
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -101,11 +110,9 @@ async def test_get_clan_banner_source(client: Client, user: UserData):
     Test for `Client.api.get_clan_banner_source()`
     """
 
-    # data = await client.api.get_clan_banner_source()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_clan_banner_source()
+    assert data
+    assert isinstance(data, dict)
 
 
 @pytest.mark.asyncio
@@ -153,11 +160,15 @@ async def test_get_public_vendors(client: Client, user: UserData):
     Test for `Client.api.get_public_vendors()`
     """
 
-    # data = await client.api.get_public_vendors()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_public_vendors(
+        components=[
+            DestinyComponentType.VENDORS,
+            DestinyComponentType.VENDOR_SALES,
+            DestinyComponentType.VENDOR_CATEGORIES,
+        ]
+    )
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -166,11 +177,15 @@ async def test_get_collectible_node_details(client: Client, user: UserData):
     Test for `Client.api.get_collectible_node_details()`
     """
 
-    # data = await client.api.get_collectible_node_details()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_collectible_node_details(
+        character_id=2305843009300285667,
+        destiny_membership_id=user.destiny_membership_id,
+        membership_type=user.membership_type,
+        collectible_presentation_node_hash=329619022,
+        components=[DestinyComponentType.PRESENTATION_NODES],
+    )
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -283,11 +298,9 @@ async def test_get_post_game_carnage_report(client: Client, user: UserData):
     Test for `Client.api.get_post_game_carnage_report()`
     """
 
-    # data = await client.api.get_post_game_carnage_report()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_post_game_carnage_report(4625517138)
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -309,11 +322,11 @@ async def test_get_historical_stats_definition(client: Client, user: UserData):
     Test for `Client.api.get_historical_stats_definition()`
     """
 
-    # data = await client.api.get_historical_stats_definition()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_historical_stats_definition()
+    assert data
+    assert isinstance(data, dict)
+    for entry in data.values():
+        assert isinstance(entry, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -335,11 +348,11 @@ async def test_get_clan_aggregate_stats(client: Client, user: UserData):
     Test for `Client.api.get_clan_aggregate_stats()`
     """
 
-    # data = await client.api.get_clan_aggregate_stats()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_clan_aggregate_stats(group_id=4107840)
+    assert data
+    assert isinstance(data, list)
+    for entry in data:
+        assert isinstance(entry, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -348,11 +361,15 @@ async def test_get_leaderboards(client: Client, user: UserData):
     Test for `Client.api.get_leaderboards()`
     """
 
-    # data = await client.api.get_leaderboards()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_leaderboards(
+        destiny_membership_id=user.destiny_membership_id, membership_type=user.membership_type
+    )
+    assert data is not None
+    assert isinstance(data, dict)
+    for entry in data.values():
+        assert isinstance(entry, dict)
+        for entry2 in entry.values():
+            assert isinstance(entry2, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -361,9 +378,17 @@ async def test_get_leaderboards_for_character(client: Client, user: UserData):
     Test for `Client.api.get_leaderboards_for_character()`
     """
 
-    # data = await client.api.get_leaderboards_for_character()
+    # data = await client.api.get_leaderboards_for_character(
+    #     character_id=2305843009300285667,
+    #     destiny_membership_id=user.destiny_membership_id,
+    #     membership_type=user.membership_type,
+    # )
     # assert data
-    # assert isinstance(data, BaseModel)
+    # assert isinstance(data, dict)
+    # for entry in data.values():
+    #     assert isinstance(entry, dict)
+    #     for entry2 in entry.values():
+    #         assert isinstance(entry2, BaseModel)
 
     raise NotImplementedError
 
@@ -387,11 +412,15 @@ async def test_get_historical_stats(client: Client, user: UserData):
     Test for `Client.api.get_historical_stats()`
     """
 
-    # data = await client.api.get_historical_stats()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_historical_stats(
+        character_id=2305843009300285667,
+        destiny_membership_id=user.destiny_membership_id,
+        membership_type=user.membership_type,
+    )
+    assert data
+    assert isinstance(data, dict)
+    for entry in data.values():
+        assert isinstance(entry, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -400,11 +429,12 @@ async def test_get_historical_stats_for_account(client: Client, user: UserData):
     Test for `Client.api.get_historical_stats_for_account()`
     """
 
-    # data = await client.api.get_historical_stats_for_account()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_historical_stats_for_account(
+        destiny_membership_id=user.destiny_membership_id,
+        membership_type=user.membership_type,
+    )
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -413,11 +443,13 @@ async def test_get_activity_history(client: Client, user: UserData):
     Test for `Client.api.get_activity_history()`
     """
 
-    # data = await client.api.get_activity_history()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_activity_history(
+        character_id=2305843009300285667,
+        destiny_membership_id=user.destiny_membership_id,
+        membership_type=user.membership_type,
+    )
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -426,11 +458,13 @@ async def test_get_unique_weapon_history(client: Client, user: UserData):
     Test for `Client.api.get_unique_weapon_history()`
     """
 
-    # data = await client.api.get_unique_weapon_history()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_unique_weapon_history(
+        character_id=2305843009300285667,
+        destiny_membership_id=user.destiny_membership_id,
+        membership_type=user.membership_type,
+    )
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -439,11 +473,13 @@ async def test_get_destiny_aggregate_activity_stats(client: Client, user: UserDa
     Test for `Client.api.get_destiny_aggregate_activity_stats()`
     """
 
-    # data = await client.api.get_destiny_aggregate_activity_stats()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_destiny_aggregate_activity_stats(
+        character_id=2305843009300285667,
+        destiny_membership_id=user.destiny_membership_id,
+        membership_type=user.membership_type,
+    )
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -465,11 +501,11 @@ async def test_get_public_milestones(client: Client, user: UserData):
     Test for `Client.api.get_public_milestones()`
     """
 
-    # data = await client.api.get_public_milestones()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_public_milestones()
+    assert data
+    assert isinstance(data, dict)
+    for entry in data.values():
+        assert isinstance(entry, BaseModel)
 
 
 @pytest.mark.asyncio

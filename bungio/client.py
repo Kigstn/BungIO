@@ -30,7 +30,7 @@ try:
     import orjson
 
     def json_dumps(x):
-        orjson.dumps(x).decode()
+        return orjson.dumps(x).decode()
 
     json_loads = orjson.loads
 except ModuleNotFoundError:

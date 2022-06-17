@@ -12,7 +12,7 @@ class GroupV2RouteHttpRequests:
         Returns a list of all available group avatars for the signed-in user.
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -34,7 +34,7 @@ class GroupV2RouteHttpRequests:
         Returns a list of all available group themes.
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -134,7 +134,7 @@ class GroupV2RouteHttpRequests:
             items_per_page: _No description given by bungie._
             current_page: _No description given by bungie._
             request_continuation_token: _No description given by bungie._
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -170,7 +170,7 @@ class GroupV2RouteHttpRequests:
 
         Args:
             group_id: Requested group's id.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -194,7 +194,7 @@ class GroupV2RouteHttpRequests:
         Args:
             group_name: Exact name of the group to find.
             group_type: Type of group to find.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -218,7 +218,7 @@ class GroupV2RouteHttpRequests:
         Args:
             group_name: _No description given by bungie._
             group_type: _No description given by bungie._
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -246,7 +246,7 @@ class GroupV2RouteHttpRequests:
 
         Args:
             group_id: Requested group's id.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -554,7 +554,7 @@ class GroupV2RouteHttpRequests:
             group_id: The ID of the group.
             member_type: Filter out other member types. Use None for all members.
             name_search: The name fragment upon which a search should be executed for members with matching display or unique names.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -588,7 +588,7 @@ class GroupV2RouteHttpRequests:
         Args:
             currentpage: Page number (starting with 1). Each page has a fixed size of 50 items per page.
             group_id: The ID of the group.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -785,7 +785,7 @@ class GroupV2RouteHttpRequests:
             founder_id_new: The new founder for this group. Must already be a group admin.
             group_id: The target group id.
             membership_type: Membership type of the provided founderIdNew.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -1055,7 +1055,7 @@ class GroupV2RouteHttpRequests:
             group_type: Type of group the supplied member founded.
             membership_id: Membership ID to for which to find founded groups.
             membership_type: Membership type of the supplied membership ID.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -1086,7 +1086,7 @@ class GroupV2RouteHttpRequests:
             group_type: Type of group the supplied member founded.
             membership_id: Membership ID to for which to find founded groups.
             membership_type: Membership type of the supplied membership ID.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -1116,7 +1116,7 @@ class GroupV2RouteHttpRequests:
             group_type: Type of group the supplied member applied.
             membership_id: Membership ID to for which to find applied groups.
             membership_type: Membership type of the supplied membership ID.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request

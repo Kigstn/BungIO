@@ -147,7 +147,7 @@ class SocialRouteInterface(ClientMixin):
         Args:
             friend_platform: The platform friend type.
             page: The zero based page to return. Page size is 100.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)

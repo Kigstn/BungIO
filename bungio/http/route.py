@@ -32,10 +32,13 @@ class Route:
         if "destiny2_content" in self.path:
             self.path = self.path.replace("/Platform", "")
 
-        if not params:
-            self.params = {}
-        else:
-            for name, value in params.items():
-                if isinstance(value, list):
-                    value = ",".join(value)
-                self.params[name] = value
+        self.params = {}
+        for name, value in params.items():
+            # skip None params
+            if value is None:
+                continue
+
+            # lists need to be comma seperated
+            if isinstance(value, list):
+                value = ",".join([str(v) for v in value])
+            self.params[name] = value

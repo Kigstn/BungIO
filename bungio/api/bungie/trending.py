@@ -19,7 +19,7 @@ class TrendingRouteInterface(ClientMixin):
         Returns trending items for Bungie.net, collapsed into the first page of items per category. For pagination within a category, call GetTrendingCategory.
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -37,7 +37,7 @@ class TrendingRouteInterface(ClientMixin):
         Args:
             category_id: The ID of the category for whom you want additional results.
             page_number: The page # of results to return.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -57,7 +57,7 @@ class TrendingRouteInterface(ClientMixin):
         Args:
             identifier: The identifier for the entity to be returned.
             trending_entry_type: The type of entity to be returned.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)

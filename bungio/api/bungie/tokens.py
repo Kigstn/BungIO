@@ -9,6 +9,7 @@ from bungio.models import (
 )
 from bungio.models.auth import AuthData
 from bungio.models.base import ClientMixin
+from bungio.utils import AllowAsyncIteration
 
 
 @attr.define
@@ -102,7 +103,7 @@ class TokensRouteInterface(ClientMixin):
         response = await self._client.http.get_bungie_rewards_for_user(membership_id=membership_id, auth=auth)
         return {
             key: await BungieRewardDisplay.from_dict(data=value, client=self._client)
-            async for key, value in response["Response"].items()
+            async for key, value in AllowAsyncIteration(response["Response"].items())
         }
 
     async def get_bungie_rewards_list(self, auth: Optional[AuthData] = None) -> dict[str, BungieRewardDisplay]:
@@ -110,7 +111,7 @@ class TokensRouteInterface(ClientMixin):
         Returns a list of the current bungie rewards
 
         Args:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -119,5 +120,5 @@ class TokensRouteInterface(ClientMixin):
         response = await self._client.http.get_bungie_rewards_list(auth=auth)
         return {
             key: await BungieRewardDisplay.from_dict(data=value, client=self._client)
-            async for key, value in response["Response"].items()
+            async for key, value in AllowAsyncIteration(response["Response"].items())
         }

@@ -19,7 +19,7 @@ class ContentRouteInterface(ClientMixin):
 
         Args:
             type:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -38,13 +38,15 @@ class ContentRouteInterface(ClientMixin):
             id:
             locale:
             head: false
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.get_content_by_id(id=id, locale=locale, head=head, auth=auth)
+        response = await self._client.http.get_content_by_id(
+            id=id, locale=locale, head=head if head else None, auth=auth
+        )
         return await ContentItemPublicContract.from_dict(data=response, client=self._client)
 
     async def get_content_by_tag_and_type(
@@ -58,14 +60,14 @@ class ContentRouteInterface(ClientMixin):
             tag:
             type:
             head: Not used.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.get_content_by_tag_and_type(
-            locale=locale, tag=tag, type=type, head=head, auth=auth
+            locale=locale, tag=tag, type=type, head=head if head else None, auth=auth
         )
         return await ContentItemPublicContract.from_dict(data=response, client=self._client)
 
@@ -91,7 +93,7 @@ class ContentRouteInterface(ClientMixin):
             searchtext: Word or phrase for the search.
             source: For analytics, hint at the part of the app that triggered the search. Optional.
             tag: Tag used on the content to be searched.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -99,12 +101,12 @@ class ContentRouteInterface(ClientMixin):
 
         response = await self._client.http.search_content_with_text(
             locale=locale,
-            ctype=ctype,
-            currentpage=currentpage,
-            head=head,
-            searchtext=searchtext,
-            source=source,
-            tag=tag,
+            ctype=ctype if ctype else None,
+            currentpage=currentpage if currentpage else None,
+            head=head if head else None,
+            searchtext=searchtext if searchtext else None,
+            source=source if source else None,
+            tag=tag if tag else None,
             auth=auth,
         )
         return await SearchResultOfContentItemPublicContract.from_dict(data=response, client=self._client)
@@ -129,14 +131,20 @@ class ContentRouteInterface(ClientMixin):
             currentpage: Page number for the search results starting with page 1.
             head: Not used.
             itemsperpage: Not used.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
         response = await self._client.http.search_content_by_tag_and_type(
-            locale=locale, tag=tag, type=type, currentpage=currentpage, head=head, itemsperpage=itemsperpage, auth=auth
+            locale=locale,
+            tag=tag,
+            type=type,
+            currentpage=currentpage if currentpage else None,
+            head=head if head else None,
+            itemsperpage=itemsperpage if itemsperpage else None,
+            auth=auth,
         )
         return await SearchResultOfContentItemPublicContract.from_dict(data=response, client=self._client)
 
@@ -147,7 +155,7 @@ class ContentRouteInterface(ClientMixin):
         Args:
             searchtext:
             size:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)

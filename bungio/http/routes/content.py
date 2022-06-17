@@ -13,7 +13,7 @@ class ContentRouteHttpRequests:
 
         Args:
             type:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -40,7 +40,7 @@ class ContentRouteHttpRequests:
             id:
             locale:
             head: false
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -70,7 +70,7 @@ class ContentRouteHttpRequests:
             tag:
             type:
             head: Not used.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -111,7 +111,7 @@ class ContentRouteHttpRequests:
             searchtext: Word or phrase for the search.
             source: For analytics, hint at the part of the app that triggered the search. Optional.
             tag: Tag used on the content to be searched.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -160,7 +160,7 @@ class ContentRouteHttpRequests:
             currentpage: Page number for the search results starting with page 1.
             head: Not used.
             itemsperpage: Not used.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -193,7 +193,7 @@ class ContentRouteHttpRequests:
         Args:
             searchtext:
             size:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request

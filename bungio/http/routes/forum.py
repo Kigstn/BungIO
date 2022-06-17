@@ -31,7 +31,7 @@ class ForumRouteHttpRequests:
             sort: The sort mode.
             locales: Comma seperated list of locales posts must match to return in the result list. Default 'en'
             tagstring: The tags to search, if any.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -74,7 +74,7 @@ class ForumRouteHttpRequests:
             quick_date: The date filter.
             sort: The sort mode.
             locales: Comma seperated list of locales posts must match to return in the result list. Default 'en'
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -122,7 +122,7 @@ class ForumRouteHttpRequests:
             root_thread_mode:
             sort_mode:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -168,7 +168,7 @@ class ForumRouteHttpRequests:
             root_thread_mode:
             sort_mode:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -201,7 +201,7 @@ class ForumRouteHttpRequests:
         Args:
             child_post_id:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -229,7 +229,7 @@ class ForumRouteHttpRequests:
         Args:
             child_post_id:
             showbanned: If this value is not null or empty, banned posts are requested to be returned
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -259,7 +259,7 @@ class ForumRouteHttpRequests:
 
         Args:
             content_id:
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -284,7 +284,7 @@ class ForumRouteHttpRequests:
 
         Args:
             partialtag: The partial tag input to generate suggestions from.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -309,7 +309,7 @@ class ForumRouteHttpRequests:
 
         Args:
             topic_id: The post id of the topic that has the poll.
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
@@ -332,7 +332,7 @@ class ForumRouteHttpRequests:
 
         Args:
             body_data: _No description given by bungie._
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request

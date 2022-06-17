@@ -13,7 +13,7 @@ class GlobalAlertsRouteHttpRequests:
 
         Args:
             includestreaming: Determines whether Streaming Alerts are included in results
-            auth: Authentication information. Required when users with a private profile are queried.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
             NotFound: 404 request
