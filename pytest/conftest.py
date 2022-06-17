@@ -34,7 +34,7 @@ async def client(event_loop) -> Client:
 
 
 @pytest.fixture(scope="session")
-async def user(event_loop) -> Client:
+async def user(event_loop) -> UserData:
     """
     Get a user which can be used for queries
     """
