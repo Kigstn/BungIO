@@ -178,7 +178,11 @@ class BaseModel(ClientMixin):
 
         # convert datetime
         elif field_type == datetime.datetime:
-            value = datetime.datetime.strptime(value, "%Y-%m-%dT%H:%M:%S%z")
+            # sometimes this includes milliseconds
+            try:
+                value = datetime.datetime.strptime(value, "%Y-%m-%dT%H:%M:%S%z")
+            except ValueError:
+                value = datetime.datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f%z")
 
         # convert lists / dict
         elif field_metadata:

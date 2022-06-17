@@ -29,7 +29,7 @@ class TokensRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.claim_partner_offer(auth=auth, **data.to_dict())
-        return response["Result"]
+        return response["Response"]
 
     async def apply_missing_partner_offers_without_claim(
         self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData
@@ -54,7 +54,7 @@ class TokensRouteInterface(ClientMixin):
             target_bnet_membership_id=target_bnet_membership_id,
             auth=auth,
         )
-        return response["Result"]
+        return response["Response"]
 
     async def get_partner_offer_sku_history(
         self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData
@@ -81,7 +81,7 @@ class TokensRouteInterface(ClientMixin):
         )
         return [
             await PartnerOfferSkuHistoryResponse.from_dict(data=value, client=self._client)
-            for value in response["Result"]
+            for value in response["Response"]
         ]
 
     async def get_bungie_rewards_for_user(self, membership_id: int, auth: AuthData) -> dict[str, BungieRewardDisplay]:
@@ -102,7 +102,7 @@ class TokensRouteInterface(ClientMixin):
         response = await self._client.http.get_bungie_rewards_for_user(membership_id=membership_id, auth=auth)
         return {
             key: await BungieRewardDisplay.from_dict(data=value, client=self._client)
-            async for key, value in response["Result"].items()
+            async for key, value in response["Response"].items()
         }
 
     async def get_bungie_rewards_list(self, auth: Optional[AuthData] = None) -> dict[str, BungieRewardDisplay]:
@@ -119,5 +119,5 @@ class TokensRouteInterface(ClientMixin):
         response = await self._client.http.get_bungie_rewards_list(auth=auth)
         return {
             key: await BungieRewardDisplay.from_dict(data=value, client=self._client)
-            async for key, value in response["Result"].items()
+            async for key, value in response["Response"].items()
         }

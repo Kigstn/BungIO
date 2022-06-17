@@ -20,4 +20,4 @@ class GetAvailableLocalesRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_available_locales(auth=auth)
-        return {key: value async for key, value in response["Result"].items()}
+        return {key: value async for key, value in response["Response"].items()}

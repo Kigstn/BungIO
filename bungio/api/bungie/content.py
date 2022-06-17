@@ -154,4 +154,4 @@ class ContentRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.search_help_articles(searchtext=searchtext, size=size, auth=auth)
-        return response["Result"]
+        return response["Response"]

@@ -64,7 +64,7 @@ class SocialRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.issue_friend_request(membership_id=membership_id, auth=auth)
-        return response["Result"]
+        return response["Response"]
 
     async def accept_friend_request(self, membership_id: str, auth: AuthData) -> bool:
         """
@@ -82,7 +82,7 @@ class SocialRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.accept_friend_request(membership_id=membership_id, auth=auth)
-        return response["Result"]
+        return response["Response"]
 
     async def decline_friend_request(self, membership_id: str, auth: AuthData) -> bool:
         """
@@ -100,7 +100,7 @@ class SocialRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.decline_friend_request(membership_id=membership_id, auth=auth)
-        return response["Result"]
+        return response["Response"]
 
     async def remove_friend(self, membership_id: str, auth: AuthData) -> bool:
         """
@@ -118,7 +118,7 @@ class SocialRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.remove_friend(membership_id=membership_id, auth=auth)
-        return response["Result"]
+        return response["Response"]
 
     async def remove_friend_request(self, membership_id: str, auth: AuthData) -> bool:
         """
@@ -136,7 +136,7 @@ class SocialRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.remove_friend_request(membership_id=membership_id, auth=auth)
-        return response["Result"]
+        return response["Response"]
 
     async def get_platform_friend_list(
         self, friend_platform: PlatformFriendType, page: str, auth: Optional[AuthData] = None

@@ -23,8 +23,6 @@ async def test_get_bungie_applications(client: Client, user: UserData):
     Test for `Client.api.get_bungie_applications()`
     """
 
-    # data = await client.api.get_bungie_applications()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_bungie_applications()
+    assert data
+    assert isinstance(data, BaseModel)

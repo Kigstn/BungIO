@@ -390,7 +390,7 @@ def get_return_value_from_typing(return_model: str) -> str:
         clean_return_model = return_model.removesuffix("]").removeprefix("list[")
         res = get_return_value_from_typing(return_model=clean_return_model)
 
-        res = f'''[{res.replace("data=response", "data=value").replace("""response["Result"]""", "value")} for value in response["Result"]]'''
+        res = f'''[{res.replace("data=response", "data=value").replace("""response["Response"]""", "value")} for value in response["Response"]]'''
 
     elif return_model.startswith("dict") and return_model.endswith("]"):
         clean_return_model = ", ".join(return_model.removesuffix("]").removeprefix("dict[").split(", ")[1:])
@@ -398,13 +398,13 @@ def get_return_value_from_typing(return_model: str) -> str:
         if "key" in res and "value" in res:
             res = res.replace("key", "key2").replace("value", "value2")
 
-        res = f'''{{key: {res.replace("data=response", "data=value").replace("""response["Result"]""", "value")} async for key, value in response["Result"].items()}}'''
+        res = f'''{{key: {res.replace("data=response", "data=value").replace("""response["Response"]""", "value")} async for key, value in response["Response"].items()}}'''
 
     else:
         if return_model in ["dict", "int", "str", "Any", "float", "bool"]:
-            res = """response["Result"]"""
+            res = """response["Response"]"""
         elif return_model == "datetime.datetime":
-            res = """datetime.datetime.strptime(response["Result"], "%Y-%m-%dT%H:%M:%S%z")"""
+            res = """datetime.datetime.strptime(response["Response"], "%Y-%m-%dT%H:%M:%S%z")"""
         else:
             res = f"await {return_model}.from_dict(data=response, client=self._client)"
 

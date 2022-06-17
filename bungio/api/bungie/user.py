@@ -49,7 +49,7 @@ class UserRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_sanitized_platform_display_names(membership_id=membership_id, auth=auth)
-        return {key: value async for key, value in response["Result"].items()}
+        return {key: value async for key, value in response["Response"].items()}
 
     async def get_credential_types_for_target_account(
         self, membership_id: int, auth: Optional[AuthData] = None
@@ -70,7 +70,7 @@ class UserRouteInterface(ClientMixin):
         )
         return [
             await GetCredentialTypesForAccountResponse.from_dict(data=value, client=self._client)
-            for value in response["Result"]
+            for value in response["Response"]
         ]
 
     async def get_available_themes(self, auth: Optional[AuthData] = None) -> list[UserTheme]:
@@ -85,7 +85,7 @@ class UserRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_available_themes(auth=auth)
-        return [await UserTheme.from_dict(data=value, client=self._client) for value in response["Result"]]
+        return [await UserTheme.from_dict(data=value, client=self._client) for value in response["Response"]]
 
     async def get_membership_data_by_id(
         self, membership_id: int, membership_type: BungieMembershipType, auth: Optional[AuthData] = None

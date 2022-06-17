@@ -230,7 +230,7 @@ class ForumRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_topic_for_content(content_id=content_id, auth=auth)
-        return response["Result"]
+        return response["Response"]
 
     async def get_forum_tag_suggestions(
         self, partialtag: Optional[str] = None, auth: Optional[AuthData] = None
@@ -247,7 +247,7 @@ class ForumRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_forum_tag_suggestions(partialtag=partialtag, auth=auth)
-        return [await TagResponse.from_dict(data=value, client=self._client) for value in response["Result"]]
+        return [await TagResponse.from_dict(data=value, client=self._client) for value in response["Response"]]
 
     async def get_poll(self, topic_id: int, auth: Optional[AuthData] = None) -> PostSearchResponse:
         """
@@ -279,4 +279,6 @@ class ForumRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_recruitment_thread_summaries(auth=auth, **data.to_dict())
-        return [await ForumRecruitmentDetail.from_dict(data=value, client=self._client) for value in response["Result"]]
+        return [
+            await ForumRecruitmentDetail.from_dict(data=value, client=self._client) for value in response["Response"]
+        ]
