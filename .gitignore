@@ -123,3 +123,5 @@ dmypy.json
 .pyre/
 
 /tests/
+*/todo*
+*.db
