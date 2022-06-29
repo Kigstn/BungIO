@@ -19,9 +19,7 @@ class Destiny2RouteInterface(destiny2.Destiny2RouteInterface):
         but for simple and one-off accesses this should be handy.
 
         Args:
-            entity_type: The type of entity for whom you would like results. These correspond to the entity's definition contract name. For instance,
-            if you are looking for items, this property should be 'DestinyInventoryItemDefinition'. PREVIEW: This endpoint is still in beta,
-            and may experience rough edges. The schema is tentatively in final form, but there may be bugs that prevent desirable operation.
+            entity_type: The type of entity for whom you would like results. These correspond to the entity's definition contract name. For instance, if you are looking for items, this property should be 'DestinyInventoryItemDefinition'. PREVIEW: This endpoint is still in beta, and may experience rough edges. The schema is tentatively in final form, but there may be bugs that prevent desirable operation.
             hash_identifier: The hash identifier for the specific Entity you want returned.
             auth: Authentication information. Required when users with a private profile are queried.
 
