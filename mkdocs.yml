@@ -6,9 +6,32 @@ copyright: Copyright &copy; 2022 - Present Kigstn
 docs_dir: docs/src
 edit_uri: edit/master/docs/src
 
+
 theme:
   name: material
+  logo: images/favicon.png
+  favicon: images/favicon.png
   locale: en
+  features:
+    - navigation.instant
+    - navigation.indexes
+    - navigation.tracking
+    - navigation.top
+    - navigation.tabs
+    - search.suggest
+    - search.share
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
 
 extra_css:
   - css/extra.css
@@ -24,6 +47,9 @@ plugins:
             - https://docs.python.org/3/objects.inv
           selection:
             docstring_style: google
+          # see https://mkdocstrings.github.io/python/usage/ for options
+          options:
+            show_root_toc_entry: false
 
 markdown_extensions:
   - tables

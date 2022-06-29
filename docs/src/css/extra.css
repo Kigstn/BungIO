@@ -1,8 +1,26 @@
+/* Makes the content wider */
+.md-grid {
+  max-width: 1500px;
+}
+
 /* Indentation. */
 div.doc-contents:not(.first) {
   padding-left: 25px;
-  border-left: .05rem solid var(--md-default-fg-color--lightest);
-  margin-bottom: 80px;
+  padding-right: 25px;
+  border-left: 4px solid rgba(230, 230, 230);
+  margin-bottom: 2.5em;
+}
+
+/* Changes table colours to match theme */
+.md-typeset table th{
+  background-color: var(--md-primary-fg-color);
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+/* Makes negative checkboxes red */
+.md-typeset input[type="checkbox"]:not(:checked) + .task-list-indicator::before {
+  background-color: #E25141;
 }
 
 /* Mark external links as such (also in nav) */
@@ -18,4 +36,21 @@ a.external:hover::after, a.md-nav__link[href^="https:"]:hover::after {
 
 a.autorefs-external:hover::after {
   background-color: var(--md-accent-fg-color);
+}
+
+:root > * {
+  --custom-base-colour:         #71B093;
+  --custom-accent-colour:       #93E2BD;
+
+  /* Base Colours */
+  --md-primary-fg-color:        var(--custom-base-colour);
+  --md-accent-fg-color:         var(--custom-accent-colour);
+
+  /* Code Block Colours */
+  --md-code-hl-constant-color:  var(--custom-base-colour);
+  --md-code-hl-string-color:    var(--custom-accent-colour);
+  --md-code-hl-comment-color:   #637777;
+  --md-code-hl-keyword-color: #C792EA;
+  --md-code-hl-function-color: #82AAFF;
+  --md-code-hl-number-color: #F68B63;
 }
