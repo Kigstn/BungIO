@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING, Optional
 
 import attr
@@ -82,7 +82,7 @@ class DestinyCharacterComponent(BaseModel):
     character_id: int = attr.field()
     class_hash: int = attr.field()
     class_type: "DestinyClass" = attr.field()
-    date_last_played: datetime.datetime = attr.field()
+    date_last_played: datetime = attr.field()
     emblem_background_path: str = attr.field()
     emblem_color: "DestinyColor" = attr.field()
     emblem_hash: int = attr.field()
@@ -196,7 +196,7 @@ class DestinyCharacterActivitiesComponent(BaseModel):
         metadata={"type": """list["DestinyActivityModeType"]"""}
     )
     current_playlist_activity_hash: int = attr.field()
-    date_activity_started: datetime.datetime = attr.field()
+    date_activity_started: datetime = attr.field()
     last_completed_story_hash: int = attr.field()
     manifest_current_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
     manifest_current_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field(default=None)

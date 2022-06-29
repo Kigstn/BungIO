@@ -50,7 +50,7 @@ def generate_functions(api_schema: dict, folder_path: str, docs_path: str, creat
 
         if create_raw_http:
             name = f"{topic}RouteHttpRequests"
-            text = f"""import datetime
+            text = f"""from datetime import datetime
 from typing import Callable, Coroutine, Optional, Any, Union
 
 from bungio.http.route import Route
@@ -63,8 +63,9 @@ class {name}:
 
         else:
             name = f"{topic}RouteInterface"
-            text = f"""import datetime
-import attr
+            text = f"""import attr
+
+from datetime import datetime
 from typing import Optional, Any, Union
 
 from bungio.models.base import ClientMixin
@@ -404,8 +405,8 @@ def get_return_value_from_typing(return_model: str) -> str:
     else:
         if return_model in ["dict", "int", "str", "Any", "float", "bool"]:
             res = """response["Response"]"""
-        elif return_model == "datetime.datetime":
-            res = """datetime.datetime.strptime(response["Response"], "%Y-%m-%dT%H:%M:%S%z")"""
+        elif return_model == "datetime":
+            res = """datetime.strptime(response["Response"], "%Y-%m-%dT%H:%M:%S%z")"""
         else:
             res = f"await {return_model}.from_dict(data=response, client=self._client)"
 
@@ -509,7 +510,7 @@ def convert_to_typing(
             case "boolean":
                 arg_type.append("bool")
             case "date-time":
-                arg_type.append("datetime.datetime")
+                arg_type.append("datetime")
             case "array":
                 array_type = convert_to_typing(
                     data["items"],
@@ -570,8 +571,8 @@ def generate_models(api_schema: dict):
 
     for path, models in by_path.items():
         text = """import attr
-import datetime
 
+from datetime import datetime
 from typing import Optional, Any, TYPE_CHECKING, Union
 
 from bungio.models.base import BaseModel, BaseEnum, ManifestModel

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING, Any, Optional, Union
 
 import attr
@@ -40,10 +40,10 @@ class ContentItemPublicContract(BaseModel):
     cms_path: str = attr.field()
     comment_summary: "CommentSummary" = attr.field()
     content_id: int = attr.field()
-    creation_date: datetime.datetime = attr.field()
+    creation_date: datetime = attr.field()
     has_age_gate: bool = attr.field()
     minimum_age: int = attr.field()
-    modify_date: datetime.datetime = attr.field()
+    modify_date: datetime = attr.field()
     properties: dict[str, Any] = attr.field(metadata={"type": """dict[str, Any]"""})
     rating_image_path: str = attr.field()
     representations: list["ContentRepresentation"] = attr.field(metadata={"type": """list["ContentRepresentation"]"""})

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING, Any, Optional, Union
 
 import attr
@@ -143,16 +143,16 @@ class GeneralUser(BaseModel):
     context: "UserToUserContext" = attr.field()
     display_name: str = attr.field()
     fb_display_name: str = attr.field()
-    first_access: datetime.datetime = attr.field()
+    first_access: datetime = attr.field()
     is_deleted: bool = attr.field()
     last_ban_report_id: int = attr.field()
-    last_update: datetime.datetime = attr.field()
+    last_update: datetime = attr.field()
     legacy_portal_u_i_d: int = attr.field()
     locale: str = attr.field()
     locale_inherit_default: bool = attr.field()
     membership_id: int = attr.field()
     normalized_name: str = attr.field()
-    profile_ban_expire: datetime.datetime = attr.field()
+    profile_ban_expire: datetime = attr.field()
     profile_picture: int = attr.field()
     profile_picture_path: str = attr.field()
     profile_picture_wide_path: str = attr.field()
@@ -162,7 +162,7 @@ class GeneralUser(BaseModel):
     show_activity: bool = attr.field()
     show_group_messaging: bool = attr.field()
     stadia_display_name: str = attr.field()
-    status_date: datetime.datetime = attr.field()
+    status_date: datetime = attr.field()
     status_text: str = attr.field()
     steam_display_name: str = attr.field()
     success_message_flags: int = attr.field()
@@ -185,7 +185,7 @@ class UserToUserContext(BaseModel):
         is_following: _No description given by bungie._
     """
 
-    global_ignore_end_date: datetime.datetime = attr.field()
+    global_ignore_end_date: datetime = attr.field()
     ignore_status: "IgnoreResponse" = attr.field()
     is_following: bool = attr.field()
 

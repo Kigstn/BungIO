@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING
 
 import attr
@@ -122,7 +122,7 @@ class DestinyProfileUserInfoCard(BaseModel):
     bungie_global_display_name: str = attr.field()
     bungie_global_display_name_code: int = attr.field()
     cross_save_override: "BungieMembershipType" = attr.field()
-    date_last_played: datetime.datetime = attr.field()
+    date_last_played: datetime = attr.field()
     display_name: str = attr.field()
     icon_path: str = attr.field()
     is_cross_save_primary: bool = attr.field()

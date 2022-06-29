@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING, Optional
 
 import attr
@@ -50,13 +50,13 @@ class DestinyMilestone(BaseModel):
         metadata={"type": """list["DestinyMilestoneChallengeActivity"]"""}
     )
     available_quests: list["DestinyMilestoneQuest"] = attr.field(metadata={"type": """list["DestinyMilestoneQuest"]"""})
-    end_date: datetime.datetime = attr.field()
+    end_date: datetime = attr.field()
     milestone_hash: int = attr.field()
     order: int = attr.field()
     rewards: list["DestinyMilestoneRewardCategory"] = attr.field(
         metadata={"type": """list["DestinyMilestoneRewardCategory"]"""}
     )
-    start_date: datetime.datetime = attr.field()
+    start_date: datetime = attr.field()
     values: dict[str, float] = attr.field(metadata={"type": """dict[str, float]"""})
     vendor_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     vendors: list["DestinyMilestoneVendor"] = attr.field(metadata={"type": """list["DestinyMilestoneVendor"]"""})
@@ -354,10 +354,10 @@ class DestinyPublicMilestone(BaseModel):
     available_quests: list["DestinyPublicMilestoneQuest"] = attr.field(
         metadata={"type": """list["DestinyPublicMilestoneQuest"]"""}
     )
-    end_date: datetime.datetime = attr.field()
+    end_date: datetime = attr.field()
     milestone_hash: int = attr.field()
     order: int = attr.field()
-    start_date: datetime.datetime = attr.field()
+    start_date: datetime = attr.field()
     vendor_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     vendors: list["DestinyPublicMilestoneVendor"] = attr.field(
         metadata={"type": """list["DestinyPublicMilestoneVendor"]"""}

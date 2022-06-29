@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING, Optional
 
 import attr
@@ -69,7 +69,7 @@ class DestinyItemComponent(BaseModel):
 
     bind_status: "ItemBindStatus" = attr.field()
     bucket_hash: int = attr.field()
-    expiration_date: datetime.datetime = attr.field()
+    expiration_date: datetime = attr.field()
     is_wrapper: bool = attr.field()
     item_hash: int = attr.field()
     item_instance_id: int = attr.field()
@@ -115,7 +115,7 @@ class DestinyItemObjectivesComponent(BaseModel):
         objectives: If the item has a hard association with objectives, your progress on them will be defined here.  Objectives are our standard way to describe a series of tasks that have to be completed for a reward.
     """
 
-    date_completed: datetime.datetime = attr.field()
+    date_completed: datetime = attr.field()
     flavor_objective: "DestinyObjectiveProgress" = attr.field()
     objectives: list["DestinyObjectiveProgress"] = attr.field(metadata={"type": """list["DestinyObjectiveProgress"]"""})
 

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING, Optional
 
 import attr
@@ -44,7 +44,7 @@ class DestinyVendorComponent(BaseModel):
 
     can_purchase: bool = attr.field()
     enabled: bool = attr.field()
-    next_refresh_date: datetime.datetime = attr.field()
+    next_refresh_date: datetime = attr.field()
     progression: "DestinyProgression" = attr.field()
     seasonal_rank: int = attr.field()
     vendor_hash: int = attr.field()
@@ -118,7 +118,7 @@ class DestinyVendorSaleItemComponent(BaseModel):
     failure_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
     item_hash: int = attr.field()
     item_value_visibility: list[bool] = attr.field(metadata={"type": """list[bool]"""})
-    override_next_refresh_date: datetime.datetime = attr.field()
+    override_next_refresh_date: datetime = attr.field()
     override_style_item_hash: int = attr.field()
     quantity: int = attr.field()
     required_unlocks: list[int] = attr.field(metadata={"type": """list[int]"""})

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING
 
 import attr
@@ -88,7 +88,7 @@ class Datapoint(BaseModel):
     """
 
     count: float = attr.field()
-    time: datetime.datetime = attr.field()
+    time: datetime = attr.field()
 
 
 @attr.define
@@ -113,8 +113,8 @@ class Application(BaseModel):
     """
 
     application_id: int = attr.field()
-    creation_date: datetime.datetime = attr.field()
-    first_published: datetime.datetime = attr.field()
+    creation_date: datetime = attr.field()
+    first_published: datetime = attr.field()
     link: str = attr.field()
     name: str = attr.field()
     origin: str = attr.field()
@@ -122,7 +122,7 @@ class Application(BaseModel):
     redirect_url: str = attr.field()
     scope: int = attr.field()
     status: "ApplicationStatus" = attr.field()
-    status_changed: datetime.datetime = attr.field()
+    status_changed: datetime = attr.field()
     team: list["ApplicationDeveloper"] = attr.field(metadata={"type": """list["ApplicationDeveloper"]"""})
 
 

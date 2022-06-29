@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import Any, Callable, Coroutine, Optional
 
 from bungio.http.route import Route
@@ -1074,8 +1074,8 @@ class Destiny2RouteHttpRequests:
         character_id: int,
         destiny_membership_id: int,
         membership_type: Any,
-        dayend: Optional[datetime.datetime] = None,
-        daystart: Optional[datetime.datetime] = None,
+        dayend: Optional[datetime] = None,
+        daystart: Optional[datetime] = None,
         groups: Optional[list[Any]] = None,
         modes: Optional[list[Any]] = None,
         period_type: Optional[Any] = None,

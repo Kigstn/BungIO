@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING, Any, Optional, Union
 
 import attr
@@ -38,7 +38,7 @@ class DestinyPostGameCarnageReportData(BaseModel):
     entries: list["DestinyPostGameCarnageReportEntry"] = attr.field(
         metadata={"type": """list["DestinyPostGameCarnageReportEntry"]"""}
     )
-    period: datetime.datetime = attr.field()
+    period: datetime = attr.field()
     starting_phase_index: int = attr.field()
     teams: list["DestinyPostGameCarnageReportTeamEntry"] = attr.field(
         metadata={"type": """list["DestinyPostGameCarnageReportTeamEntry"]"""}
@@ -371,7 +371,7 @@ class DestinyHistoricalStatsPeriodGroup(BaseModel):
     """
 
     activity_details: "DestinyHistoricalStatsActivity" = attr.field()
-    period: datetime.datetime = attr.field()
+    period: datetime = attr.field()
     values: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
         metadata={"type": """dict[str, "DestinyHistoricalStatsValue"]"""}
     )

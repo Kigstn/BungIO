@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING
 
 import attr
@@ -107,7 +107,7 @@ class PostResponse(BaseModel):
     is_active: bool = attr.field()
     is_announcement: bool = attr.field()
     is_pinned: bool = attr.field()
-    last_reply_timestamp: datetime.datetime = attr.field()
+    last_reply_timestamp: datetime = attr.field()
     latest_reply_author_id: int = attr.field()
     latest_reply_post_id: int = attr.field()
     locale: str = attr.field()
@@ -225,7 +225,7 @@ class PollResult(BaseModel):
 
     answer_slot: int = attr.field()
     answer_text: str = attr.field()
-    last_vote_date: datetime.datetime = attr.field()
+    last_vote_date: datetime = attr.field()
     requesting_user_voted: bool = attr.field()
     votes: int = attr.field()
 

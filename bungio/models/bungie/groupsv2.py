@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING
 
 import attr
@@ -127,17 +127,17 @@ class GroupV2(BaseModel):
     allow_chat: bool = attr.field()
     avatar_image_index: int = attr.field()
     avatar_path: str = attr.field()
-    ban_expire_date: datetime.datetime = attr.field()
+    ban_expire_date: datetime = attr.field()
     banner_path: str = attr.field()
     chat_security: "ChatSecuritySetting" = attr.field()
     clan_info: "GroupV2ClanInfoAndInvestment" = attr.field()
     conversation_id: int = attr.field()
-    creation_date: datetime.datetime = attr.field()
+    creation_date: datetime = attr.field()
     default_publicity: "GroupPostPublicity" = attr.field()
     enable_invitation_messaging_for_admins: bool = attr.field()
     features: "GroupFeatures" = attr.field()
     group_id: int = attr.field()
-    group_type: dict = attr.field(metadata={"type": """dict"""})
+    group_type: "GroupType" = attr.field()
     homepage: "GroupHomepage" = attr.field()
     is_default_post_public: bool = attr.field()
     is_public: bool = attr.field()
@@ -146,7 +146,7 @@ class GroupV2(BaseModel):
     member_count: int = attr.field()
     membership_id_created: int = attr.field()
     membership_option: "MembershipOption" = attr.field()
-    modification_date: datetime.datetime = attr.field()
+    modification_date: datetime = attr.field()
     motto: str = attr.field()
     name: str = attr.field()
     tags: list[str] = attr.field(metadata={"type": """list[str]"""})
@@ -373,7 +373,7 @@ class GroupUserBase(BaseModel):
     bungie_net_user_info: "UserInfoCard" = attr.field()
     destiny_user_info: "GroupUserInfoCard" = attr.field()
     group_id: int = attr.field()
-    join_date: datetime.datetime = attr.field()
+    join_date: datetime = attr.field()
 
 
 @attr.define
@@ -396,7 +396,7 @@ class GroupMember(BaseModel):
     destiny_user_info: "GroupUserInfoCard" = attr.field()
     group_id: int = attr.field()
     is_online: bool = attr.field()
-    join_date: datetime.datetime = attr.field()
+    join_date: datetime = attr.field()
     last_online_status_change: int = attr.field()
     member_type: "RuntimeGroupMemberType" = attr.field()
 
@@ -431,7 +431,7 @@ class GroupPotentialMember(BaseModel):
     bungie_net_user_info: "UserInfoCard" = attr.field()
     destiny_user_info: "GroupUserInfoCard" = attr.field()
     group_id: int = attr.field()
-    join_date: datetime.datetime = attr.field()
+    join_date: datetime = attr.field()
     potential_status: "GroupPotentialMemberStatus" = attr.field()
 
 
@@ -491,9 +491,9 @@ class GroupV2Card(BaseModel):
     avatar_path: str = attr.field()
     capabilities: "Capabilities" = attr.field()
     clan_info: "GroupV2ClanInfo" = attr.field()
-    creation_date: datetime.datetime = attr.field()
+    creation_date: datetime = attr.field()
     group_id: int = attr.field()
-    group_type: dict = attr.field(metadata={"type": """dict"""})
+    group_type: "GroupType" = attr.field()
     locale: str = attr.field()
     member_count: int = attr.field()
     membership_option: "MembershipOption" = attr.field()
@@ -544,15 +544,15 @@ class GroupQuery(BaseModel):
         tag_text: _No description given by bungie._
     """
 
-    creation_date: dict = attr.field(metadata={"type": """dict"""})
+    creation_date: "GroupDateRange" = attr.field()
     current_page: int = attr.field()
     group_member_count_filter: int = attr.field()
-    group_type: dict = attr.field(metadata={"type": """dict"""})
+    group_type: "GroupType" = attr.field()
     items_per_page: int = attr.field()
     locale_filter: str = attr.field()
     name: str = attr.field()
     request_continuation_token: str = attr.field()
-    sort_by: dict = attr.field(metadata={"type": """dict"""})
+    sort_by: "GroupSortBy" = attr.field()
     tag_text: str = attr.field()
 
 
@@ -598,7 +598,7 @@ class GroupNameSearchRequest(BaseModel):
     """
 
     group_name: str = attr.field()
-    group_type: dict = attr.field(metadata={"type": """dict"""})
+    group_type: "GroupType" = attr.field()
 
 
 @attr.define
@@ -768,8 +768,8 @@ class GroupBan(BaseModel):
     bungie_net_user_info: "UserInfoCard" = attr.field()
     comment: str = attr.field()
     created_by: "UserInfoCard" = attr.field()
-    date_banned: datetime.datetime = attr.field()
-    date_expires: datetime.datetime = attr.field()
+    date_banned: datetime = attr.field()
+    date_expires: datetime = attr.field()
     destiny_user_info: "GroupUserInfoCard" = attr.field()
     group_id: int = attr.field()
     last_modified_by: "UserInfoCard" = attr.field()
@@ -794,11 +794,11 @@ class GroupMemberApplication(BaseModel):
     """
 
     bungie_net_user_info: "UserInfoCard" = attr.field()
-    creation_date: datetime.datetime = attr.field()
+    creation_date: datetime = attr.field()
     destiny_user_info: "GroupUserInfoCard" = attr.field()
     group_id: int = attr.field()
     request_message: str = attr.field()
-    resolve_date: datetime.datetime = attr.field()
+    resolve_date: datetime = attr.field()
     resolve_message: str = attr.field()
     resolve_state: "GroupApplicationResolveState" = attr.field()
     resolved_by_membership_id: int = attr.field()

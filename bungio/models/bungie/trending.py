@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING
 
 import attr
@@ -69,9 +69,9 @@ class TrendingEntry(BaseModel):
         weight: The weighted score of this trending item.
     """
 
-    creation_date: datetime.datetime = attr.field()
+    creation_date: datetime = attr.field()
     display_name: str = attr.field()
-    end_date: datetime.datetime = attr.field()
+    end_date: datetime = attr.field()
     entity_type: "TrendingEntryType" = attr.field()
     feature_image: str = attr.field()
     identifier: str = attr.field()
@@ -80,7 +80,7 @@ class TrendingEntry(BaseModel):
     items: list["TrendingEntry"] = attr.field(metadata={"type": """list["TrendingEntry"]"""})
     link: str = attr.field()
     mp4_video: str = attr.field()
-    start_date: datetime.datetime = attr.field()
+    start_date: datetime = attr.field()
     tagline: str = attr.field()
     webm_video: str = attr.field()
     weight: float = attr.field()
@@ -215,8 +215,8 @@ class TrendingEntryDestinyRitual(BaseModel):
         title: _No description given by bungie._
     """
 
-    date_end: datetime.datetime = attr.field()
-    date_start: datetime.datetime = attr.field()
+    date_end: datetime = attr.field()
+    date_start: datetime = attr.field()
     event_content: "DestinyMilestoneContent" = attr.field()
     icon: str = attr.field()
     image: str = attr.field()

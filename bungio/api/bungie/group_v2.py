@@ -11,6 +11,7 @@ from bungio.models import (
     GroupApplicationRequest,
     GroupApplicationResponse,
     GroupBanRequest,
+    GroupDateRange,
     GroupEditAction,
     GroupMemberLeaveResult,
     GroupMembershipSearchResponse,
@@ -26,6 +27,7 @@ from bungio.models import (
     GroupSearchResponse,
     GroupsForMemberFilter,
     GroupTheme,
+    GroupType,
     GroupV2Card,
     RuntimeGroupMemberType,
     SearchResultOfGroupBan,
@@ -86,7 +88,7 @@ class GroupV2RouteInterface(ClientMixin):
         return response["Response"]
 
     async def get_recommended_groups(
-        self, create_date_range: dict, group_type: dict, auth: AuthData
+        self, create_date_range: GroupDateRange, group_type: GroupType, auth: AuthData
     ) -> list[GroupV2Card]:
         """
         Gets groups recommended for you based on the groups to whom those you follow belong.
@@ -104,7 +106,7 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_recommended_groups(
-            create_date_range=create_date_range, group_type=group_type, auth=auth
+            create_date_range=create_date_range.value, group_type=group_type.value, auth=auth
         )
         return [await GroupV2Card.from_dict(data=value, client=self._client) for value in response["Response"]]
 
@@ -139,7 +141,7 @@ class GroupV2RouteInterface(ClientMixin):
         return await GroupResponse.from_dict(data=response, client=self._client)
 
     async def get_group_by_name(
-        self, group_name: str, group_type: dict, auth: Optional[AuthData] = None
+        self, group_name: str, group_type: GroupType, auth: Optional[AuthData] = None
     ) -> GroupResponse:
         """
         Get information about a specific group with the given name and type.
@@ -153,7 +155,9 @@ class GroupV2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.get_group_by_name(group_name=group_name, group_type=group_type, auth=auth)
+        response = await self._client.http.get_group_by_name(
+            group_name=group_name, group_type=group_type.value, auth=auth
+        )
         return await GroupResponse.from_dict(data=response, client=self._client)
 
     async def get_group_by_name_v2(
@@ -672,7 +676,7 @@ class GroupV2RouteInterface(ClientMixin):
     async def get_groups_for_member(
         self,
         filter: GroupsForMemberFilter,
-        group_type: dict,
+        group_type: GroupType,
         membership_id: int,
         membership_type: BungieMembershipType,
         auth: Optional[AuthData] = None,
@@ -693,7 +697,7 @@ class GroupV2RouteInterface(ClientMixin):
 
         response = await self._client.http.get_groups_for_member(
             filter=filter.value,
-            group_type=group_type,
+            group_type=group_type.value,
             membership_id=membership_id,
             membership_type=membership_type.value,
             auth=auth,
@@ -702,7 +706,7 @@ class GroupV2RouteInterface(ClientMixin):
 
     async def recover_group_for_founder(
         self,
-        group_type: dict,
+        group_type: GroupType,
         membership_id: int,
         membership_type: BungieMembershipType,
         auth: Optional[AuthData] = None,
@@ -721,14 +725,14 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.recover_group_for_founder(
-            group_type=group_type, membership_id=membership_id, membership_type=membership_type.value, auth=auth
+            group_type=group_type.value, membership_id=membership_id, membership_type=membership_type.value, auth=auth
         )
         return await GroupMembershipSearchResponse.from_dict(data=response, client=self._client)
 
     async def get_potential_groups_for_member(
         self,
         filter: GroupPotentialMemberStatus,
-        group_type: dict,
+        group_type: GroupType,
         membership_id: int,
         membership_type: BungieMembershipType,
         auth: Optional[AuthData] = None,
@@ -749,7 +753,7 @@ class GroupV2RouteInterface(ClientMixin):
 
         response = await self._client.http.get_potential_groups_for_member(
             filter=filter.value,
-            group_type=group_type,
+            group_type=group_type.value,
             membership_id=membership_id,
             membership_type=membership_type.value,
             auth=auth,

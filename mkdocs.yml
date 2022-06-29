@@ -20,9 +20,16 @@ plugins:
   - mkdocstrings:
       handlers:
         python:
+          import:
+            - https://docs.python.org/3/objects.inv
           selection:
             docstring_style: google
 
 markdown_extensions:
   - tables
   - admonition
+
+extra:
+  social:
+  - icon: fontawesome/brands/github
+    link: https://github.com/kigstn

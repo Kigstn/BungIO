@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING, Optional
 
 import attr
@@ -55,7 +55,7 @@ class DestinyProfileComponent(BaseModel):
     character_ids: list[int] = attr.field(metadata={"type": """list[int]"""})
     current_season_hash: int = attr.field()
     current_season_reward_power_cap: int = attr.field()
-    date_last_played: datetime.datetime = attr.field()
+    date_last_played: datetime = attr.field()
     season_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     user_info: "UserInfoCard" = attr.field()
     versions_owned: "DestinyGameVersions" = attr.field()

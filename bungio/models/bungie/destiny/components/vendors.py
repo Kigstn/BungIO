@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING, Optional
 
 import attr
@@ -74,7 +74,7 @@ class DestinyVendorBaseComponent(BaseModel):
     """
 
     enabled: bool = attr.field()
-    next_refresh_date: datetime.datetime = attr.field()
+    next_refresh_date: datetime = attr.field()
     vendor_hash: int = attr.field()
     manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
 
@@ -108,7 +108,7 @@ class DestinyVendorSaleItemBaseComponent(BaseModel):
     api_purchasable: bool = attr.field()
     costs: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list["DestinyItemQuantity"]"""})
     item_hash: int = attr.field()
-    override_next_refresh_date: datetime.datetime = attr.field()
+    override_next_refresh_date: datetime = attr.field()
     override_style_item_hash: int = attr.field()
     quantity: int = attr.field()
     vendor_item_index: int = attr.field()
@@ -138,7 +138,7 @@ class DestinyPublicVendorComponent(BaseModel):
     """
 
     enabled: bool = attr.field()
-    next_refresh_date: datetime.datetime = attr.field()
+    next_refresh_date: datetime = attr.field()
     vendor_hash: int = attr.field()
     manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
 
@@ -172,7 +172,7 @@ class DestinyPublicVendorSaleItemComponent(BaseModel):
     api_purchasable: bool = attr.field()
     costs: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list["DestinyItemQuantity"]"""})
     item_hash: int = attr.field()
-    override_next_refresh_date: datetime.datetime = attr.field()
+    override_next_refresh_date: datetime = attr.field()
     override_style_item_hash: int = attr.field()
     quantity: int = attr.field()
     vendor_item_index: int = attr.field()

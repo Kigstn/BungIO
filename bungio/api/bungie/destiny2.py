@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import Optional
 
 import attr
@@ -754,8 +754,8 @@ class Destiny2RouteInterface(ClientMixin):
         character_id: int,
         destiny_membership_id: int,
         membership_type: BungieMembershipType,
-        dayend: Optional[datetime.datetime] = None,
-        daystart: Optional[datetime.datetime] = None,
+        dayend: Optional[datetime] = None,
+        daystart: Optional[datetime] = None,
         groups: Optional[list[DestinyStatsGroupType]] = None,
         modes: Optional[list[DestinyActivityModeType]] = None,
         period_type: Optional[PeriodType] = None,

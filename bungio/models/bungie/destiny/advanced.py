@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING
 
 import attr
@@ -108,7 +108,7 @@ class AwaAuthorizationResult(BaseModel):
     response_reason: "AwaResponseReason" = attr.field()
     type: "AwaType" = attr.field()
     user_selection: "AwaUserSelection" = attr.field()
-    valid_until: datetime.datetime = attr.field()
+    valid_until: datetime = attr.field()
 
 
 class AwaResponseReason(BaseEnum):

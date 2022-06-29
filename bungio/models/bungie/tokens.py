@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING
 
 import attr
@@ -47,7 +47,7 @@ class PartnerOfferSkuHistoryResponse(BaseModel):
     """
 
     all_offers_applied: bool = attr.field()
-    claim_date: datetime.datetime = attr.field()
+    claim_date: datetime = attr.field()
     localized_description: str = attr.field()
     localized_name: str = attr.field()
     sku_identifier: str = attr.field()
@@ -74,7 +74,7 @@ class PartnerOfferHistoryResponse(BaseModel):
         quantity_applied: _No description given by bungie._
     """
 
-    apply_date: datetime.datetime = attr.field()
+    apply_date: datetime = attr.field()
     is_consumable: bool = attr.field()
     localized_description: str = attr.field()
     localized_name: str = attr.field()
@@ -142,7 +142,7 @@ class RewardAvailabilityModel(BaseModel):
         metadata={"type": """list["CollectibleDefinitions"]"""}
     )
     decrypted_token: str = attr.field()
-    game_earn_by_date: datetime.datetime = attr.field()
+    game_earn_by_date: datetime = attr.field()
     has_existing_code: bool = attr.field()
     has_offer: bool = attr.field()
     is_loyalty_reward: bool = attr.field()
@@ -151,8 +151,8 @@ class RewardAvailabilityModel(BaseModel):
     record_definitions: list["DestinyRecordDefinition"] = attr.field(
         metadata={"type": """list["DestinyRecordDefinition"]"""}
     )
-    redemption_end_date: datetime.datetime = attr.field()
-    shopify_end_date: datetime.datetime = attr.field()
+    redemption_end_date: datetime = attr.field()
+    shopify_end_date: datetime = attr.field()
 
 
 @attr.define

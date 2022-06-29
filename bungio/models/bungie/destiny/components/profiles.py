@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING, Optional
 
 import attr
@@ -113,12 +113,12 @@ class DestinyProfileTransitoryCurrentActivity(BaseModel):
         start_time: When the activity started.
     """
 
-    end_time: datetime.datetime = attr.field()
+    end_time: datetime = attr.field()
     highest_opposing_faction_score: float = attr.field()
     number_of_opponents: int = attr.field()
     number_of_players: int = attr.field()
     score: float = attr.field()
-    start_time: datetime.datetime = attr.field()
+    start_time: datetime = attr.field()
 
 
 @attr.define
@@ -171,7 +171,7 @@ class DestinyProfileTransitoryTrackingEntry(BaseModel):
     location_hash: int = attr.field()
     objective_hash: int = attr.field()
     questline_item_hash: int = attr.field()
-    tracked_date: datetime.datetime = attr.field()
+    tracked_date: datetime = attr.field()
     manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
     manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
     manifest_location_hash: Optional["DestinyLocationDefinition"] = attr.field(default=None)

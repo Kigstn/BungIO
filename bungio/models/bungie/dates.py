@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 import attr
 
@@ -16,5 +16,5 @@ class DateRange(BaseModel):
         start: _No description given by bungie._
     """
 
-    end: datetime.datetime = attr.field()
-    start: datetime.datetime = attr.field()
+    end: datetime = attr.field()
+    start: datetime = attr.field()

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import Callable, Coroutine, Optional
 
 from bungio.http.route import Route
@@ -9,11 +9,7 @@ class AppRouteHttpRequests:
     request: Callable[..., Coroutine]
 
     async def get_application_api_usage(
-        self,
-        application_id: int,
-        auth: AuthData,
-        end: Optional[datetime.datetime] = None,
-        start: Optional[datetime.datetime] = None,
+        self, application_id: int, auth: AuthData, end: Optional[datetime] = None, start: Optional[datetime] = None
     ) -> dict:
         """
         Get API usage by application for time frame specified. You can go as far back as 30 days ago, and can ask for up to a 48 hour window of time in a single request. You must be authenticated with at least the ReadUserData permission to access this endpoint.

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING
 
 import attr
@@ -2038,7 +2038,7 @@ class GlobalAlert(BaseModel):
     alert_key: str = attr.field()
     alert_level: "GlobalAlertLevel" = attr.field()
     alert_link: str = attr.field()
-    alert_timestamp: datetime.datetime = attr.field()
+    alert_timestamp: datetime = attr.field()
     alert_type: "GlobalAlertType" = attr.field()
     stream_info: "StreamInfo" = attr.field()
 

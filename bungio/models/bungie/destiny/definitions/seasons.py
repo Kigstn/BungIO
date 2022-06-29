@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING, Optional
 
 import attr
@@ -53,7 +53,7 @@ class DestinySeasonDefinition(ManifestModel):
     artifact_item_hash: int = attr.field()
     background_image_path: str = attr.field()
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    end_date: datetime.datetime = attr.field()
+    end_date: datetime = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     preview: "DestinySeasonPreviewDefinition" = attr.field()
@@ -63,7 +63,7 @@ class DestinySeasonDefinition(ManifestModel):
     season_pass_hash: int = attr.field()
     season_pass_progression_hash: int = attr.field()
     seasonal_challenges_presentation_node_hash: int = attr.field()
-    start_date: datetime.datetime = attr.field()
+    start_date: datetime = attr.field()
     manifest_artifact_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
     manifest_seal_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
     manifest_season_pass_hash: Optional["DestinySeasonPassDefinition"] = attr.field(default=None)

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING
 
 import attr
@@ -103,9 +103,9 @@ class FireteamSummary(BaseModel):
     alternate_slot_count: int = attr.field()
     available_alternate_slot_count: int = attr.field()
     available_player_slot_count: int = attr.field()
-    date_created: datetime.datetime = attr.field()
-    date_modified: datetime.datetime = attr.field()
-    date_player_modified: datetime.datetime = attr.field()
+    date_created: datetime = attr.field()
+    date_modified: datetime = attr.field()
+    date_player_modified: datetime = attr.field()
     fireteam_id: int = attr.field()
     group_id: int = attr.field()
     is_immediate: bool = attr.field()
@@ -115,7 +115,7 @@ class FireteamSummary(BaseModel):
     owner_membership_id: int = attr.field()
     platform: "FireteamPlatform" = attr.field()
     player_slot_count: int = attr.field()
-    scheduled_time: datetime.datetime = attr.field()
+    scheduled_time: datetime = attr.field()
     title: str = attr.field()
     title_before_moderation: str = attr.field()
 
@@ -155,10 +155,10 @@ class FireteamMember(BaseModel):
 
     bungie_net_user_info: "UserInfoCard" = attr.field()
     character_id: int = attr.field()
-    date_joined: datetime.datetime = attr.field()
+    date_joined: datetime = attr.field()
     destiny_user_info: "FireteamUserInfoCard" = attr.field()
     has_microphone: bool = attr.field()
-    last_platform_invite_attempt_date: datetime.datetime = attr.field()
+    last_platform_invite_attempt_date: datetime = attr.field()
     last_platform_invite_attempt_result: "FireteamPlatformInviteResult" = attr.field()
 
 

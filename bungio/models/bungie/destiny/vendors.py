@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import TYPE_CHECKING
 
 import attr
@@ -27,7 +27,7 @@ class DestinyVendorReceipt(BaseModel):
     """
 
     currency_paid: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list["DestinyItemQuantity"]"""})
-    expires_on: datetime.datetime = attr.field()
+    expires_on: datetime = attr.field()
     item_received: "DestinyItemQuantity" = attr.field()
     license_unlock_hash: int = attr.field()
     purchased_by_character_id: int = attr.field()
