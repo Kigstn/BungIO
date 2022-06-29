@@ -10,8 +10,8 @@ async def test_get_global_alerts(client: Client, user: UserData):
     Test for `Client.api.get_global_alerts()`
     """
 
-    # data = await client.api.get_global_alerts()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_global_alerts()
+    assert data is not None
+    assert isinstance(data, list)
+    for entry in data:
+        assert isinstance(entry, BaseModel)

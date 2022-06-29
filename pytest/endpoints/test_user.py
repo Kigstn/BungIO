@@ -1,5 +1,6 @@
 import pytest
 from bungio.client import Client
+from bungio.models import UserSearchPrefixRequest
 from bungio.models.auth import UserData
 from bungio.models.base import BaseModel
 
@@ -49,11 +50,11 @@ async def test_get_available_themes(client: Client, user: UserData):
     Test for `Client.api.get_available_themes()`
     """
 
-    # data = await client.api.get_available_themes()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_available_themes()
+    assert data is not None
+    assert isinstance(data, list)
+    for entry in data:
+        assert isinstance(entry, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -62,11 +63,11 @@ async def test_get_membership_data_by_id(client: Client, user: UserData):
     Test for `Client.api.get_membership_data_by_id()`
     """
 
-    # data = await client.api.get_membership_data_by_id()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_membership_data_by_id(
+        membership_id=user.destiny_membership_id, membership_type=user.membership_type
+    )
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -114,8 +115,8 @@ async def test_search_by_global_name_post(client: Client, user: UserData):
     Test for `Client.api.search_by_global_name_post()`
     """
 
-    # data = await client.api.search_by_global_name_post()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.search_by_global_name_post(
+        page=0, data=UserSearchPrefixRequest(display_name_prefix="Kigstn")
+    )
+    assert data
+    assert isinstance(data, BaseModel)

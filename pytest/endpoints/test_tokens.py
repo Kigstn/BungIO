@@ -62,8 +62,8 @@ async def test_get_bungie_rewards_list(client: Client, user: UserData):
     Test for `Client.api.get_bungie_rewards_list()`
     """
 
-    # data = await client.api.get_bungie_rewards_list()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_bungie_rewards_list()
+    assert data
+    assert isinstance(data, dict)
+    for entry in data.values():
+        assert isinstance(entry, BaseModel)

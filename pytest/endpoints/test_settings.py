@@ -10,8 +10,6 @@ async def test_get_common_settings(client: Client, user: UserData):
     Test for `Client.api.get_common_settings()`
     """
 
-    # data = await client.api.get_common_settings()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_common_settings()
+    assert data
+    assert isinstance(data, BaseModel)

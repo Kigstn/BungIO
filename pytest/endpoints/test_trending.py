@@ -10,11 +10,9 @@ async def test_get_trending_categories(client: Client, user: UserData):
     Test for `Client.api.get_trending_categories()`
     """
 
-    # data = await client.api.get_trending_categories()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_trending_categories()
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio

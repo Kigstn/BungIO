@@ -1,5 +1,10 @@
 import pytest
 from bungio.client import Client
+from bungio.models import (
+    ForumTopicsCategoryFiltersEnum,
+    ForumTopicsQuickDateEnum,
+    ForumTopicsSortEnum,
+)
 from bungio.models.auth import UserData
 from bungio.models.base import BaseModel
 
@@ -23,11 +28,14 @@ async def test_get_core_topics_paged(client: Client, user: UserData):
     Test for `Client.api.get_core_topics_paged()`
     """
 
-    # data = await client.api.get_core_topics_paged()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_core_topics_paged(
+        category_filter=ForumTopicsCategoryFiltersEnum.MEDIA,
+        page=0,
+        quick_date=ForumTopicsQuickDateEnum.LAST_DAY,
+        sort=ForumTopicsSortEnum.HIGHEST_RATED,
+    )
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio

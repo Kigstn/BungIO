@@ -28,6 +28,7 @@ from bungio.http.ratelimiting import RateLimiter
 from bungio.http.route import Route
 from bungio.http.routes import AllRouteHttpRequests
 from bungio.models.auth import AuthData
+from bungio.models.base import MISSING
 from bungio.singleton import SingletonMetaclass
 
 if TYPE_CHECKING:
@@ -161,7 +162,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMeta
                         )
 
                         # make sure the response is not None
-                        if content["Response"] is None:
+                        if content.get("Response", MISSING) is None:
                             content["Response"] = {}
 
                         if not await self._handle_response(
@@ -323,7 +324,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMeta
 
             case (status, _):
                 # retry if we didn't get an error message
-                retry = error != "Success"
+                retry = error == "Success"
 
                 # catch the rest
                 self._client.logger.debug(

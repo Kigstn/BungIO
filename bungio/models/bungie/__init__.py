@@ -644,7 +644,6 @@ from bungio.models.bungie.groupsv2 import (
     GroupPotentialMembership,
     GroupPotentialMembershipSearchResponse,
     GroupPotentialMemberStatus,
-    GroupQuery,
     GroupResponse,
     GroupSearchResponse,
     GroupsForMemberFilter,

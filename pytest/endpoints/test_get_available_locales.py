@@ -10,8 +10,9 @@ async def test_get_available_locales(client: Client, user: UserData):
     Test for `Client.api.get_available_locales()`
     """
 
-    # data = await client.api.get_available_locales()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_available_locales()
+    assert data
+    assert isinstance(data, dict)
+    for k, v in data.items():
+        assert isinstance(k, str)
+        assert isinstance(v, str)

@@ -70,14 +70,14 @@ class Client:
     manifest_storage: bool | AsyncEngine = attr.field(default=True)
     always_return_manifest_information: bool = attr.field(default=False)
 
-    json_dumps: Callable = attr.field(init=False, default=json_dumps)
-    json_loads: Callable = attr.field(init=False, default=json_loads)
+    json_dumps: Callable = attr.field(init=False, default=json_dumps, repr=False)
+    json_loads: Callable = attr.field(init=False, default=json_loads, repr=False)
 
-    api: ApiClient = attr.field(init=False)
-    http: HttpClient = attr.field(init=False)
-    manifest: Optional[Manifest] = attr.field(init=False, default=None)
+    api: ApiClient = attr.field(init=False, repr=False)
+    http: HttpClient = attr.field(init=False, repr=False)
+    manifest: Optional[Manifest] = attr.field(init=False, default=None, repr=False)
 
-    _metadata: Optional[MetaData] = attr.field(init=False, default=None)
+    _metadata: Optional[MetaData] = attr.field(init=False, default=None, repr=False)
 
     @manifest_storage.validator  # noqa
     def manifest_storage_check(self, attribute, value):

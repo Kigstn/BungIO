@@ -137,7 +137,7 @@ class GroupV2(BaseModel):
     enable_invitation_messaging_for_admins: bool = attr.field()
     features: "GroupFeatures" = attr.field()
     group_id: int = attr.field()
-    group_type: "GroupType" = attr.field()
+    group_type: dict = attr.field(metadata={"type": """dict"""})
     homepage: "GroupHomepage" = attr.field()
     is_default_post_public: bool = attr.field()
     is_public: bool = attr.field()
@@ -493,7 +493,7 @@ class GroupV2Card(BaseModel):
     clan_info: "GroupV2ClanInfo" = attr.field()
     creation_date: datetime.datetime = attr.field()
     group_id: int = attr.field()
-    group_type: "GroupType" = attr.field()
+    group_type: dict = attr.field(metadata={"type": """dict"""})
     locale: str = attr.field()
     member_count: int = attr.field()
     membership_option: "MembershipOption" = attr.field()
@@ -544,15 +544,15 @@ class GroupQuery(BaseModel):
         tag_text: _No description given by bungie._
     """
 
-    creation_date: "GroupDateRange" = attr.field()
+    creation_date: dict = attr.field(metadata={"type": """dict"""})
     current_page: int = attr.field()
     group_member_count_filter: int = attr.field()
-    group_type: "GroupType" = attr.field()
+    group_type: dict = attr.field(metadata={"type": """dict"""})
     items_per_page: int = attr.field()
     locale_filter: str = attr.field()
     name: str = attr.field()
     request_continuation_token: str = attr.field()
-    sort_by: "GroupSortBy" = attr.field()
+    sort_by: dict = attr.field(metadata={"type": """dict"""})
     tag_text: str = attr.field()
 
 
@@ -598,7 +598,7 @@ class GroupNameSearchRequest(BaseModel):
     """
 
     group_name: str = attr.field()
-    group_type: "GroupType" = attr.field()
+    group_type: dict = attr.field(metadata={"type": """dict"""})
 
 
 @attr.define

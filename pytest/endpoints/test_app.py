@@ -24,7 +24,7 @@ async def test_get_bungie_applications(client: Client, user: UserData):
     """
 
     data = await client.api.get_bungie_applications()
-    assert data
+    assert data is not None
     assert isinstance(data, list)
     for entry in data:
         assert isinstance(entry, BaseModel)

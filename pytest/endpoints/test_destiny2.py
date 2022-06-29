@@ -43,7 +43,7 @@ async def test_search_destiny_player_by_bungie_name(client: Client, user: UserDa
     data = await client.api.search_destiny_player_by_bungie_name(
         data=ExactSearchRequest(display_name="Kigstn", display_name_code=4459), membership_type=user.membership_type
     )
-    assert data
+    assert data is not None
     assert isinstance(data, list)
     for entry in data:
         assert isinstance(entry, BaseModel)
@@ -349,7 +349,7 @@ async def test_get_clan_aggregate_stats(client: Client, user: UserData):
     """
 
     data = await client.api.get_clan_aggregate_stats(group_id=4107840)
-    assert data
+    assert data is not None
     assert isinstance(data, list)
     for entry in data:
         assert isinstance(entry, BaseModel)

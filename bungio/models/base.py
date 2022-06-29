@@ -209,24 +209,29 @@ class BaseModel(ClientMixin):
 
             match split_types[0]:
                 case "dict":
-                    new_field_types = field_type.removeprefix("dict[").removesuffix("]").split(", ")
-                    key_type = new_field_types[0]
-                    value_type = new_field_types[1]
+                    # sometimes unknown dicts are returned
+                    if field_type != "dict":
+                        new_field_types = field_type.removeprefix("dict[").removesuffix("]").split(", ")
+                        key_type = new_field_types[0]
+                        value_type = new_field_types[1]
 
-                    ret = {}
-                    for key, value in value.items():
-                        # they are only our custom models if there are " in it, otherwise
-                        if '"' in key_type:
-                            key = await BaseModel._convert_to_type(
-                                field_type=key_type.replace('"', ""), field_metadata=None, value=key, client=client
-                            )
-                        if '"' in value_type:
-                            value = await BaseModel._convert_to_type(
-                                field_type=value_type.replace('"', ""), field_metadata=None, value=value, client=client
-                            )
+                        ret = {}
+                        for key, value in value.items():
+                            # they are only our custom models if there are " in it, otherwise
+                            if '"' in key_type:
+                                key = await BaseModel._convert_to_type(
+                                    field_type=key_type.replace('"', ""), field_metadata=None, value=key, client=client
+                                )
+                            if '"' in value_type:
+                                value = await BaseModel._convert_to_type(
+                                    field_type=value_type.replace('"', ""),
+                                    field_metadata=None,
+                                    value=value,
+                                    client=client,
+                                )
 
-                        ret[key] = value
-                    value = ret
+                            ret[key] = value
+                        value = ret
 
                 case "list":
                     value = [
@@ -275,10 +280,7 @@ class BaseModel(ClientMixin):
 
             value = getattr(self, name)
 
-            if value is MISSING:
-                continue
-
-            elif inspect.ismethod(value) or inspect.isfunction(value):
+            if inspect.ismethod(value) or inspect.isfunction(value):
                 continue
 
             elif isinstance(value, dict):

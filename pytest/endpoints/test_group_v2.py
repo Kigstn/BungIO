@@ -1,5 +1,6 @@
 import pytest
 from bungio.client import Client
+from bungio.models import GroupNameSearchRequest, GroupQuery, GroupType
 from bungio.models.auth import UserData
 from bungio.models.base import BaseModel
 
@@ -23,11 +24,11 @@ async def test_get_available_themes(client: Client, user: UserData):
     Test for `Client.api.get_available_themes()`
     """
 
-    # data = await client.api.get_available_themes()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_available_themes()
+    assert data is not None
+    assert isinstance(data, list)
+    for entry in data:
+        assert isinstance(entry, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -62,11 +63,9 @@ async def test_group_search(client: Client, user: UserData):
     Test for `Client.api.group_search()`
     """
 
-    # data = await client.api.group_search()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.group_search(data=GroupQuery(name="Descend"))
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -75,11 +74,9 @@ async def test_get_group(client: Client, user: UserData):
     Test for `Client.api.get_group()`
     """
 
-    # data = await client.api.get_group()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_group(group_id=4107840)
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -101,11 +98,11 @@ async def test_get_group_by_name_v2(client: Client, user: UserData):
     Test for `Client.api.get_group_by_name_v2()`
     """
 
-    # data = await client.api.get_group_by_name_v2()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_group_by_name_v2(
+        data=GroupNameSearchRequest(group_name="Descend", group_type=GroupType.CLAN)
+    )
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -114,11 +111,11 @@ async def test_get_group_optional_conversations(client: Client, user: UserData):
     Test for `Client.api.get_group_optional_conversations()`
     """
 
-    # data = await client.api.get_group_optional_conversations()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_group_optional_conversations(group_id=4107840)
+    assert data is not None
+    assert isinstance(data, list)
+    for entry in data:
+        assert isinstance(entry, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -192,11 +189,9 @@ async def test_get_members_of_group(client: Client, user: UserData):
     Test for `Client.api.get_members_of_group()`
     """
 
-    # data = await client.api.get_members_of_group()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_members_of_group(currentpage=1, group_id=4107840)
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
@@ -205,11 +200,9 @@ async def test_get_admins_and_founder_of_group(client: Client, user: UserData):
     Test for `Client.api.get_admins_and_founder_of_group()`
     """
 
-    # data = await client.api.get_admins_and_founder_of_group()
-    # assert data
-    # assert isinstance(data, BaseModel)
-
-    raise NotImplementedError
+    data = await client.api.get_admins_and_founder_of_group(currentpage=1, group_id=4107840)
+    assert data
+    assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
