@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.basic import DestinyClan, DestinyUser
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -17,7 +18,7 @@ if TYPE_CHECKING:
 
 
 @attr.define
-class GroupUserInfoCard(BaseModel):
+class GroupUserInfoCard(BaseModel, DestinyUser):
     """
     _No description given by bungie._
 
@@ -87,7 +88,7 @@ class GroupResponse(BaseModel):
 
 
 @attr.define
-class GroupV2(BaseModel):
+class GroupV2(BaseModel, DestinyClan):
     """
     _No description given by bungie._
 
@@ -358,7 +359,7 @@ class GroupV2ClanInfoAndInvestment(BaseModel):
 
 
 @attr.define
-class GroupUserBase(BaseModel):
+class GroupUserBase(BaseModel, DestinyClan):
     """
     _No description given by bungie._
 
@@ -377,7 +378,7 @@ class GroupUserBase(BaseModel):
 
 
 @attr.define
-class GroupMember(BaseModel):
+class GroupMember(BaseModel, DestinyClan):
     """
     _No description given by bungie._
 
@@ -415,7 +416,7 @@ class GroupAllianceStatus(BaseEnum):
 
 
 @attr.define
-class GroupPotentialMember(BaseModel):
+class GroupPotentialMember(BaseModel, DestinyClan):
     """
     _No description given by bungie._
 
@@ -466,7 +467,7 @@ class GroupDateRange(BaseEnum):
 
 
 @attr.define
-class GroupV2Card(BaseModel):
+class GroupV2Card(BaseModel, DestinyClan):
     """
     A small infocard of group information, usually used for when a list of groups are returned
 
@@ -602,7 +603,7 @@ class GroupNameSearchRequest(BaseModel):
 
 
 @attr.define
-class GroupOptionalConversation(BaseModel):
+class GroupOptionalConversation(BaseModel, DestinyClan):
     """
     _No description given by bungie._
 
@@ -749,7 +750,7 @@ class GroupBanRequest(BaseModel):
 
 
 @attr.define
-class GroupBan(BaseModel):
+class GroupBan(BaseModel, DestinyClan):
     """
     _No description given by bungie._
 
@@ -776,7 +777,7 @@ class GroupBan(BaseModel):
 
 
 @attr.define
-class GroupMemberApplication(BaseModel):
+class GroupMemberApplication(BaseModel, DestinyClan):
     """
     _No description given by bungie._
 

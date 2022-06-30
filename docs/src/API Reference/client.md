@@ -1,3 +1,3 @@
-# BungIO Client
+# Client
 
 ::: bungio.client

@@ -67,7 +67,9 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_available_themes(auth=auth)
-        return [await GroupTheme.from_dict(data=value, client=self._client) for value in response["Response"]]
+        return [
+            await GroupTheme.from_dict(data=value, client=self._client, auth=auth) for value in response["Response"]
+        ]
 
     async def get_user_clan_invite_setting(self, m_type: BungieMembershipType, auth: AuthData) -> bool:
         """
@@ -108,7 +110,12 @@ class GroupV2RouteInterface(ClientMixin):
         response = await self._client.http.get_recommended_groups(
             create_date_range=create_date_range.value, group_type=group_type.value, auth=auth
         )
-        return [await GroupV2Card.from_dict(data=value, client=self._client) for value in response["Response"]]
+        return [
+            await GroupV2Card.from_dict(
+                data=value, client=self._client, create_date_range=create_date_range, group_type=group_type, auth=auth
+            )
+            for value in response["Response"]
+        ]
 
     async def group_search(self, data: GroupQuery, auth: Optional[AuthData] = None) -> GroupSearchResponse:
         """
@@ -123,7 +130,7 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.group_search(auth=auth, **data.to_dict())
-        return await GroupSearchResponse.from_dict(data=response, client=self._client)
+        return await GroupSearchResponse.from_dict(data=response, client=self._client, auth=auth)
 
     async def get_group(self, group_id: int, auth: Optional[AuthData] = None) -> GroupResponse:
         """
@@ -138,7 +145,7 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_group(group_id=group_id, auth=auth)
-        return await GroupResponse.from_dict(data=response, client=self._client)
+        return await GroupResponse.from_dict(data=response, client=self._client, group_id=group_id, auth=auth)
 
     async def get_group_by_name(
         self, group_name: str, group_type: GroupType, auth: Optional[AuthData] = None
@@ -158,7 +165,9 @@ class GroupV2RouteInterface(ClientMixin):
         response = await self._client.http.get_group_by_name(
             group_name=group_name, group_type=group_type.value, auth=auth
         )
-        return await GroupResponse.from_dict(data=response, client=self._client)
+        return await GroupResponse.from_dict(
+            data=response, client=self._client, group_name=group_name, group_type=group_type, auth=auth
+        )
 
     async def get_group_by_name_v2(
         self, data: GroupNameSearchRequest, auth: Optional[AuthData] = None
@@ -175,7 +184,7 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_group_by_name_v2(auth=auth, **data.to_dict())
-        return await GroupResponse.from_dict(data=response, client=self._client)
+        return await GroupResponse.from_dict(data=response, client=self._client, auth=auth)
 
     async def get_group_optional_conversations(
         self, group_id: int, auth: Optional[AuthData] = None
@@ -193,7 +202,8 @@ class GroupV2RouteInterface(ClientMixin):
 
         response = await self._client.http.get_group_optional_conversations(group_id=group_id, auth=auth)
         return [
-            await GroupOptionalConversation.from_dict(data=value, client=self._client) for value in response["Response"]
+            await GroupOptionalConversation.from_dict(data=value, client=self._client, group_id=group_id, auth=auth)
+            for value in response["Response"]
         ]
 
     async def edit_group(self, data: GroupEditAction, group_id: int, auth: AuthData) -> int:
@@ -327,7 +337,15 @@ class GroupV2RouteInterface(ClientMixin):
             name_search=name_search if name_search else None,
             auth=auth,
         )
-        return await SearchResultOfGroupMember.from_dict(data=response, client=self._client)
+        return await SearchResultOfGroupMember.from_dict(
+            data=response,
+            client=self._client,
+            currentpage=currentpage,
+            group_id=group_id,
+            member_type=member_type,
+            name_search=name_search,
+            auth=auth,
+        )
 
     async def get_admins_and_founder_of_group(
         self, currentpage: int, group_id: int, auth: Optional[AuthData] = None
@@ -347,7 +365,9 @@ class GroupV2RouteInterface(ClientMixin):
         response = await self._client.http.get_admins_and_founder_of_group(
             currentpage=currentpage, group_id=group_id, auth=auth
         )
-        return await SearchResultOfGroupMember.from_dict(data=response, client=self._client)
+        return await SearchResultOfGroupMember.from_dict(
+            data=response, client=self._client, currentpage=currentpage, group_id=group_id, auth=auth
+        )
 
     async def edit_group_membership(
         self,
@@ -405,7 +425,14 @@ class GroupV2RouteInterface(ClientMixin):
         response = await self._client.http.kick_member(
             group_id=group_id, membership_id=membership_id, membership_type=membership_type.value, auth=auth
         )
-        return await GroupMemberLeaveResult.from_dict(data=response, client=self._client)
+        return await GroupMemberLeaveResult.from_dict(
+            data=response,
+            client=self._client,
+            group_id=group_id,
+            membership_id=membership_id,
+            membership_type=membership_type,
+            auth=auth,
+        )
 
     async def ban_member(
         self,
@@ -486,7 +513,9 @@ class GroupV2RouteInterface(ClientMixin):
         response = await self._client.http.get_banned_members_of_group(
             currentpage=currentpage, group_id=group_id, auth=auth
         )
-        return await SearchResultOfGroupBan.from_dict(data=response, client=self._client)
+        return await SearchResultOfGroupBan.from_dict(
+            data=response, client=self._client, currentpage=currentpage, group_id=group_id, auth=auth
+        )
 
     async def abdicate_foundership(
         self, founder_id_new: int, group_id: int, membership_type: BungieMembershipType, auth: Optional[AuthData] = None
@@ -530,7 +559,9 @@ class GroupV2RouteInterface(ClientMixin):
         response = await self._client.http.get_pending_memberships(
             currentpage=currentpage, group_id=group_id, auth=auth
         )
-        return await SearchResultOfGroupMemberApplication.from_dict(data=response, client=self._client)
+        return await SearchResultOfGroupMemberApplication.from_dict(
+            data=response, client=self._client, currentpage=currentpage, group_id=group_id, auth=auth
+        )
 
     async def get_invited_individuals(
         self, currentpage: int, group_id: int, auth: AuthData
@@ -553,7 +584,9 @@ class GroupV2RouteInterface(ClientMixin):
         response = await self._client.http.get_invited_individuals(
             currentpage=currentpage, group_id=group_id, auth=auth
         )
-        return await SearchResultOfGroupMemberApplication.from_dict(data=response, client=self._client)
+        return await SearchResultOfGroupMemberApplication.from_dict(
+            data=response, client=self._client, currentpage=currentpage, group_id=group_id, auth=auth
+        )
 
     async def approve_all_pending(
         self, data: GroupApplicationRequest, group_id: int, auth: AuthData
@@ -574,7 +607,10 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.approve_all_pending(group_id=group_id, auth=auth, **data.to_dict())
-        return [await EntityActionResult.from_dict(data=value, client=self._client) for value in response["Response"]]
+        return [
+            await EntityActionResult.from_dict(data=value, client=self._client, group_id=group_id, auth=auth)
+            for value in response["Response"]
+        ]
 
     async def deny_all_pending(
         self, data: GroupApplicationRequest, group_id: int, auth: AuthData
@@ -595,7 +631,10 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.deny_all_pending(group_id=group_id, auth=auth, **data.to_dict())
-        return [await EntityActionResult.from_dict(data=value, client=self._client) for value in response["Response"]]
+        return [
+            await EntityActionResult.from_dict(data=value, client=self._client, group_id=group_id, auth=auth)
+            for value in response["Response"]
+        ]
 
     async def approve_pending_for_list(
         self, data: GroupApplicationListRequest, group_id: int, auth: AuthData
@@ -616,7 +655,10 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.approve_pending_for_list(group_id=group_id, auth=auth, **data.to_dict())
-        return [await EntityActionResult.from_dict(data=value, client=self._client) for value in response["Response"]]
+        return [
+            await EntityActionResult.from_dict(data=value, client=self._client, group_id=group_id, auth=auth)
+            for value in response["Response"]
+        ]
 
     async def approve_pending(
         self,
@@ -671,7 +713,10 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.deny_pending_for_list(group_id=group_id, auth=auth, **data.to_dict())
-        return [await EntityActionResult.from_dict(data=value, client=self._client) for value in response["Response"]]
+        return [
+            await EntityActionResult.from_dict(data=value, client=self._client, group_id=group_id, auth=auth)
+            for value in response["Response"]
+        ]
 
     async def get_groups_for_member(
         self,
@@ -702,7 +747,15 @@ class GroupV2RouteInterface(ClientMixin):
             membership_type=membership_type.value,
             auth=auth,
         )
-        return await GetGroupsForMemberResponse.from_dict(data=response, client=self._client)
+        return await GetGroupsForMemberResponse.from_dict(
+            data=response,
+            client=self._client,
+            filter=filter,
+            group_type=group_type,
+            membership_id=membership_id,
+            membership_type=membership_type,
+            auth=auth,
+        )
 
     async def recover_group_for_founder(
         self,
@@ -727,7 +780,14 @@ class GroupV2RouteInterface(ClientMixin):
         response = await self._client.http.recover_group_for_founder(
             group_type=group_type.value, membership_id=membership_id, membership_type=membership_type.value, auth=auth
         )
-        return await GroupMembershipSearchResponse.from_dict(data=response, client=self._client)
+        return await GroupMembershipSearchResponse.from_dict(
+            data=response,
+            client=self._client,
+            group_type=group_type,
+            membership_id=membership_id,
+            membership_type=membership_type,
+            auth=auth,
+        )
 
     async def get_potential_groups_for_member(
         self,
@@ -758,7 +818,15 @@ class GroupV2RouteInterface(ClientMixin):
             membership_type=membership_type.value,
             auth=auth,
         )
-        return await GroupPotentialMembershipSearchResponse.from_dict(data=response, client=self._client)
+        return await GroupPotentialMembershipSearchResponse.from_dict(
+            data=response,
+            client=self._client,
+            filter=filter,
+            group_type=group_type,
+            membership_id=membership_id,
+            membership_type=membership_type,
+            auth=auth,
+        )
 
     async def individual_group_invite(
         self,
@@ -792,7 +860,14 @@ class GroupV2RouteInterface(ClientMixin):
             auth=auth,
             **data.to_dict()
         )
-        return await GroupApplicationResponse.from_dict(data=response, client=self._client)
+        return await GroupApplicationResponse.from_dict(
+            data=response,
+            client=self._client,
+            group_id=group_id,
+            membership_id=membership_id,
+            membership_type=membership_type,
+            auth=auth,
+        )
 
     async def individual_group_invite_cancel(
         self, group_id: int, membership_id: int, membership_type: BungieMembershipType, auth: AuthData
@@ -816,4 +891,11 @@ class GroupV2RouteInterface(ClientMixin):
         response = await self._client.http.individual_group_invite_cancel(
             group_id=group_id, membership_id=membership_id, membership_type=membership_type.value, auth=auth
         )
-        return await GroupApplicationResponse.from_dict(data=response, client=self._client)
+        return await GroupApplicationResponse.from_dict(
+            data=response,
+            client=self._client,
+            group_id=group_id,
+            membership_id=membership_id,
+            membership_type=membership_type,
+            auth=auth,
+        )

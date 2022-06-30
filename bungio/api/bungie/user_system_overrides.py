@@ -23,6 +23,6 @@ class UserSystemOverridesRouteInterface(ClientMixin):
 
         response = await self._client.http.get_user_system_overrides(auth=auth)
         return {
-            key: await CoreSystem.from_dict(data=value, client=self._client)
+            key: await CoreSystem.from_dict(data=value, client=self._client, auth=auth)
             async for key, value in AllowAsyncIteration(response["Response"].items())
         }

@@ -79,7 +79,19 @@ class FireteamRouteInterface(ClientMixin):
             auth=auth,
             lang_filter=lang_filter if lang_filter else None,
         )
-        return await SearchResultOfFireteamSummary.from_dict(data=response, client=self._client)
+        return await SearchResultOfFireteamSummary.from_dict(
+            data=response,
+            client=self._client,
+            activity_type=activity_type,
+            date_range=date_range,
+            group_id=group_id,
+            page=page,
+            platform=platform,
+            public_only=public_only,
+            slot_filter=slot_filter,
+            auth=auth,
+            lang_filter=lang_filter,
+        )
 
     async def search_public_available_clan_fireteams(
         self,
@@ -119,7 +131,17 @@ class FireteamRouteInterface(ClientMixin):
             auth=auth,
             lang_filter=lang_filter if lang_filter else None,
         )
-        return await SearchResultOfFireteamSummary.from_dict(data=response, client=self._client)
+        return await SearchResultOfFireteamSummary.from_dict(
+            data=response,
+            client=self._client,
+            activity_type=activity_type,
+            date_range=date_range,
+            page=page,
+            platform=platform,
+            slot_filter=slot_filter,
+            auth=auth,
+            lang_filter=lang_filter,
+        )
 
     async def get_my_clan_fireteams(
         self,
@@ -159,7 +181,17 @@ class FireteamRouteInterface(ClientMixin):
             group_filter=group_filter if group_filter else None,
             lang_filter=lang_filter if lang_filter else None,
         )
-        return await SearchResultOfFireteamResponse.from_dict(data=response, client=self._client)
+        return await SearchResultOfFireteamResponse.from_dict(
+            data=response,
+            client=self._client,
+            group_id=group_id,
+            include_closed=include_closed,
+            page=page,
+            platform=platform,
+            auth=auth,
+            group_filter=group_filter,
+            lang_filter=lang_filter,
+        )
 
     async def get_clan_fireteam(self, fireteam_id: int, group_id: int, auth: AuthData) -> FireteamResponse:
         """
@@ -178,4 +210,6 @@ class FireteamRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_clan_fireteam(fireteam_id=fireteam_id, group_id=group_id, auth=auth)
-        return await FireteamResponse.from_dict(data=response, client=self._client)
+        return await FireteamResponse.from_dict(
+            data=response, client=self._client, fireteam_id=fireteam_id, group_id=group_id, auth=auth
+        )

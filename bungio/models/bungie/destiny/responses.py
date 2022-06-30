@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 import attr
 
 from bungio.models.base import BaseModel
+from bungio.models.basic import DestinyUser
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -93,7 +94,7 @@ class DestinyLinkedProfilesResponse(BaseModel):
 
 
 @attr.define
-class DestinyProfileUserInfoCard(BaseModel):
+class DestinyProfileUserInfoCard(BaseModel, DestinyUser):
     """
     _No description given by bungie._
 

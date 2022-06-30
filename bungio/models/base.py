@@ -13,14 +13,7 @@ import bungio.models as models
 if TYPE_CHECKING:
     from bungio.client import Client
 
-__all__ = (
-    "MISSING",
-    "BaseEnum",
-    "BaseModel",
-    "ManifestModel",
-    "ClientMixin",
-    "UnknownEnumValue",
-)
+__all__ = ("MISSING", "BaseEnum", "BaseModel", "ManifestModel", "ClientMixin", "UnknownEnumValue", "FuzzyAttrFinder")
 
 
 class MISSING:
@@ -97,7 +90,33 @@ class BaseEnum(Enum):
 
 @attr.define
 class ClientMixin:
-    _client: "Client" = attr.field(init=False, repr=False)
+    _client: "Client" = attr.field(repr=False)
+
+
+@attr.define
+class FuzzyAttrFinder:
+    def _fuzzy_getattr(self, name: str) -> Any:
+        """
+        Returns the objs attribute that fully matches the name, or if that does not exist, the first attribute that includes the name
+
+        Args:
+            name: The name to match
+
+        Raises:
+            KeyError: If no match is found
+
+        Returns:
+            The attribute value
+        """
+
+        try:
+            found_attr = getattr(self, name)
+            return found_attr
+        except AttributeError:
+            for attr_name in self.__dir__():
+                if name in attr_name:
+                    return getattr(self, attr_name)
+            raise KeyError(f"`{name}` not found in `{self.__dir__()}`")
 
 
 @attr.define(kw_only=True)
@@ -143,6 +162,8 @@ class BaseModel(ClientMixin):
         if "Response" in data:
             data = data["Response"]
 
+        # also use the kwargs as data
+        data = kwargs | data
         data = cls.process_dict(data=data, client=client)
 
         prepared = {}
@@ -169,8 +190,7 @@ class BaseModel(ClientMixin):
                 # set the attr
                 prepared[name] = value
 
-        res = cls(**prepared)  # noqa
-        res._client = client
+        res = cls(client=client, **prepared)  # noqa
 
         # fill the manifest information
         if not recursive and res._client.always_return_manifest_information:

@@ -58,7 +58,19 @@ class ForumRouteInterface(ClientMixin):
             tagstring=tagstring if tagstring else None,
             auth=auth,
         )
-        return await PostSearchResponse.from_dict(data=response, client=self._client)
+        return await PostSearchResponse.from_dict(
+            data=response,
+            client=self._client,
+            category_filter=category_filter,
+            group=group,
+            page=page,
+            page_size=page_size,
+            quick_date=quick_date,
+            sort=sort,
+            locales=locales,
+            tagstring=tagstring,
+            auth=auth,
+        )
 
     async def get_core_topics_paged(
         self,
@@ -92,7 +104,16 @@ class ForumRouteInterface(ClientMixin):
             locales=locales if locales else None,
             auth=auth,
         )
-        return await PostSearchResponse.from_dict(data=response, client=self._client)
+        return await PostSearchResponse.from_dict(
+            data=response,
+            client=self._client,
+            category_filter=category_filter,
+            page=page,
+            quick_date=quick_date,
+            sort=sort,
+            locales=locales,
+            auth=auth,
+        )
 
     async def get_posts_threaded_paged(
         self,
@@ -135,7 +156,19 @@ class ForumRouteInterface(ClientMixin):
             showbanned=showbanned if showbanned else None,
             auth=auth,
         )
-        return await PostSearchResponse.from_dict(data=response, client=self._client)
+        return await PostSearchResponse.from_dict(
+            data=response,
+            client=self._client,
+            get_parent_post=get_parent_post,
+            page=page,
+            page_size=page_size,
+            parent_post_id=parent_post_id,
+            reply_size=reply_size,
+            root_thread_mode=root_thread_mode,
+            sort_mode=sort_mode,
+            showbanned=showbanned,
+            auth=auth,
+        )
 
     async def get_posts_threaded_paged_from_child(
         self,
@@ -175,7 +208,18 @@ class ForumRouteInterface(ClientMixin):
             showbanned=showbanned if showbanned else None,
             auth=auth,
         )
-        return await PostSearchResponse.from_dict(data=response, client=self._client)
+        return await PostSearchResponse.from_dict(
+            data=response,
+            client=self._client,
+            child_post_id=child_post_id,
+            page=page,
+            page_size=page_size,
+            reply_size=reply_size,
+            root_thread_mode=root_thread_mode,
+            sort_mode=sort_mode,
+            showbanned=showbanned,
+            auth=auth,
+        )
 
     async def get_post_and_parent(
         self, child_post_id: int, showbanned: Optional[str] = None, auth: Optional[AuthData] = None
@@ -195,7 +239,9 @@ class ForumRouteInterface(ClientMixin):
         response = await self._client.http.get_post_and_parent(
             child_post_id=child_post_id, showbanned=showbanned if showbanned else None, auth=auth
         )
-        return await PostSearchResponse.from_dict(data=response, client=self._client)
+        return await PostSearchResponse.from_dict(
+            data=response, client=self._client, child_post_id=child_post_id, showbanned=showbanned, auth=auth
+        )
 
     async def get_post_and_parent_awaiting_approval(
         self, child_post_id: int, showbanned: Optional[str] = None, auth: Optional[AuthData] = None
@@ -215,7 +261,9 @@ class ForumRouteInterface(ClientMixin):
         response = await self._client.http.get_post_and_parent_awaiting_approval(
             child_post_id=child_post_id, showbanned=showbanned if showbanned else None, auth=auth
         )
-        return await PostSearchResponse.from_dict(data=response, client=self._client)
+        return await PostSearchResponse.from_dict(
+            data=response, client=self._client, child_post_id=child_post_id, showbanned=showbanned, auth=auth
+        )
 
     async def get_topic_for_content(self, content_id: int, auth: Optional[AuthData] = None) -> int:
         """
@@ -249,7 +297,10 @@ class ForumRouteInterface(ClientMixin):
         response = await self._client.http.get_forum_tag_suggestions(
             partialtag=partialtag if partialtag else None, auth=auth
         )
-        return [await TagResponse.from_dict(data=value, client=self._client) for value in response["Response"]]
+        return [
+            await TagResponse.from_dict(data=value, client=self._client, partialtag=partialtag, auth=auth)
+            for value in response["Response"]
+        ]
 
     async def get_poll(self, topic_id: int, auth: Optional[AuthData] = None) -> PostSearchResponse:
         """
@@ -264,7 +315,7 @@ class ForumRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_poll(topic_id=topic_id, auth=auth)
-        return await PostSearchResponse.from_dict(data=response, client=self._client)
+        return await PostSearchResponse.from_dict(data=response, client=self._client, topic_id=topic_id, auth=auth)
 
     async def get_recruitment_thread_summaries(
         self, data: list[int], auth: Optional[AuthData] = None
@@ -282,5 +333,6 @@ class ForumRouteInterface(ClientMixin):
 
         response = await self._client.http.get_recruitment_thread_summaries(auth=auth, **data.to_dict())
         return [
-            await ForumRecruitmentDetail.from_dict(data=value, client=self._client) for value in response["Response"]
+            await ForumRecruitmentDetail.from_dict(data=value, client=self._client, auth=auth)
+            for value in response["Response"]
         ]

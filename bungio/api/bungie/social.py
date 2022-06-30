@@ -29,7 +29,7 @@ class SocialRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_friend_list(auth=auth)
-        return await BungieFriendListResponse.from_dict(data=response, client=self._client)
+        return await BungieFriendListResponse.from_dict(data=response, client=self._client, auth=auth)
 
     async def get_friend_request_list(self, auth: AuthData) -> BungieFriendRequestListResponse:
         """
@@ -46,7 +46,7 @@ class SocialRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_friend_request_list(auth=auth)
-        return await BungieFriendRequestListResponse.from_dict(data=response, client=self._client)
+        return await BungieFriendRequestListResponse.from_dict(data=response, client=self._client, auth=auth)
 
     async def issue_friend_request(self, membership_id: str, auth: AuthData) -> bool:
         """
@@ -156,4 +156,6 @@ class SocialRouteInterface(ClientMixin):
         response = await self._client.http.get_platform_friend_list(
             friend_platform=friend_platform.value, page=page, auth=auth
         )
-        return await PlatformFriendResponse.from_dict(data=response, client=self._client)
+        return await PlatformFriendResponse.from_dict(
+            data=response, client=self._client, friend_platform=friend_platform, page=page, auth=auth
+        )

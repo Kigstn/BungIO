@@ -95,8 +95,7 @@ class Client:
                 raise ValueError("Client.manifest_storage must be set up to use this")
 
         # set up the api client
-        self.api = ApiClient()
-        self.api._client = self
+        self.api = ApiClient(client=self)
 
         # set up the http client
         self.http = HttpClient()

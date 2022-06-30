@@ -12,15 +12,13 @@ from bungio.http.route import Route
 from bungio.utils import get_now_with_tz
 
 if TYPE_CHECKING:
-    from bungio.client import Client
-    from bungio.models.base import BaseModel, ManifestModel
+    from bungio.models.base import BaseModel, ClientMixin, ManifestModel
 
 __all__ = ("Manifest",)
 
 
 @attr.define
-class Manifest:
-    client: "Client" = attr.field(repr=False)
+class Manifest(ClientMixin):
     __synchronised: bool = attr.field(init=False, default=False)
     __saved_manifests: dict[str, Table] = attr.field(init=False, factory=dict)
     __manifest_urls: dict[str, str] = attr.field(init=False, factory=dict)
@@ -34,7 +32,7 @@ class Manifest:
         # noinspection PyProtectedMember
         self.__version_table = Table(
             "destiny_manifest_version",
-            self.client._metadata,
+            self._client._metadata,
             Column("version", Text, nullable=False, primary_key=True),
         )
 
@@ -48,16 +46,16 @@ class Manifest:
                 return
 
             db: AsyncConnection
-            async with self.client.manifest_storage.begin() as db:
+            async with self._client.manifest_storage.begin() as db:
                 # noinspection PyProtectedMember
-                await db.run_sync(self.client._metadata.reflect)
+                await db.run_sync(self._client._metadata.reflect)
 
                 # create version table if that does not exist
                 await db.execute(CreateTable(self.__version_table, if_not_exists=True))
 
                 # noinspection PyProtectedMember
                 # get all existing db tables
-                for table_name, table in self.client._metadata.tables.items():
+                for table_name, table in self._client._metadata.tables.items():
                     if table_name.startswith("destiny_manifest_") and table_name != "destiny_manifest_version":
                         self.__saved_manifests[table_name.removeprefix("destiny_manifest_")] = table
 
@@ -85,7 +83,7 @@ class Manifest:
         await self.download(manifest_class=manifest_class)
 
         # get the data
-        async with self.client.manifest_storage.begin() as db:
+        async with self._client.manifest_storage.begin() as db:
             query = select(self.__saved_manifests[name].columns.data).filter(
                 self.__saved_manifests[name].columns.reference_id == str(value)
             )
@@ -95,7 +93,7 @@ class Manifest:
             except MultipleResultsFound:
                 return None
 
-            return await manifest_class.from_dict(data=result, client=self.client, recursive=True)
+            return await manifest_class.from_dict(data=result, client=self._client, recursive=True)
 
     async def download(self, manifest_class: Type["ManifestModel"] | str):
         """
@@ -117,18 +115,18 @@ class Manifest:
 
             # create the table if that does not exist yet
             if manifest_class not in self.__saved_manifests:
-                async with self.client.manifest_storage.begin() as db:
+                async with self._client.manifest_storage.begin() as db:
                     # noinspection PyProtectedMember
                     self.__saved_manifests[manifest_class] = Table(
                         f"destiny_manifest_{manifest_class}",
-                        self.client._metadata,
+                        self._client._metadata,
                         Column("reference_id", Text, nullable=False, primary_key=True),
                         Column("data", JSON, nullable=False),
                     )
                     await db.execute(CreateTable(self.__saved_manifests[manifest_class]))
 
                     # fill the table
-                    raw_data = await self.client.http.request(
+                    raw_data = await self._client.http.request(
                         Route(path=self.__manifest_urls[manifest_class], method="GET")
                     )
                     to_insert = [{"reference_id": str(key), "data": data} for key, data in raw_data.items()]
@@ -143,9 +141,9 @@ class Manifest:
         now = get_now_with_tz()
         async with self.__manifest_lock:
             if self.__manifest_last_update is None or self.__manifest_last_update < (now - datetime.timedelta(hours=1)):
-                manifest = await self.client.api.get_destiny_manifest()
+                manifest = await self._client.api.get_destiny_manifest()
 
-                async with self.client.manifest_storage.begin() as db:
+                async with self._client.manifest_storage.begin() as db:
                     res = await db.execute(self.__version_table.select())
                     version = res.scalars().first()
 
@@ -161,7 +159,7 @@ class Manifest:
 
                 # set the urls
                 self.__manifest_urls = {}
-                for name, url in manifest.json_world_component_content_paths[self.client.language.value].items():
+                for name, url in manifest.json_world_component_content_paths[self._client.language.value].items():
                     self.__manifest_urls[name] = url
 
             self.__manifest_last_update = now

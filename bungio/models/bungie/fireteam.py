@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.basic import DestinyClan, DestinyUser
 
 if TYPE_CHECKING:
     from bungio.models import BungieMembershipType, UserInfoCard
@@ -72,7 +73,7 @@ class FireteamSlotSearch(BaseEnum):
 
 
 @attr.define
-class FireteamSummary(BaseModel):
+class FireteamSummary(BaseModel, DestinyClan):
     """
     _No description given by bungie._
 
@@ -163,7 +164,7 @@ class FireteamMember(BaseModel):
 
 
 @attr.define
-class FireteamUserInfoCard(BaseModel):
+class FireteamUserInfoCard(BaseModel, DestinyUser):
     """
     _No description given by bungie._
 

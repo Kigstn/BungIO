@@ -69,7 +69,7 @@ class Destiny2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_destiny_manifest(auth=auth)
-        return await DestinyManifest.from_dict(data=response, client=self._client)
+        return await DestinyManifest.from_dict(data=response, client=self._client, auth=auth)
 
     async def get_destiny_entity_definition(
         self, entity_type: str, hash_identifier: int, auth: Optional[AuthData] = None
@@ -89,7 +89,9 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.get_destiny_entity_definition(
             entity_type=entity_type, hash_identifier=hash_identifier, auth=auth
         )
-        return await DestinyDefinition.from_dict(data=response, client=self._client)
+        return await DestinyDefinition.from_dict(
+            data=response, client=self._client, entity_type=entity_type, hash_identifier=hash_identifier, auth=auth
+        )
 
     async def search_destiny_player_by_bungie_name(
         self, data: ExactSearchRequest, membership_type: BungieMembershipType, auth: Optional[AuthData] = None
@@ -109,7 +111,10 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.search_destiny_player_by_bungie_name(
             membership_type=membership_type.value, auth=auth, **data.to_dict()
         )
-        return [await UserInfoCard.from_dict(data=value, client=self._client) for value in response["Response"]]
+        return [
+            await UserInfoCard.from_dict(data=value, client=self._client, membership_type=membership_type, auth=auth)
+            for value in response["Response"]
+        ]
 
     async def get_linked_profiles(
         self,
@@ -137,7 +142,14 @@ class Destiny2RouteInterface(ClientMixin):
             get_all_memberships=get_all_memberships if get_all_memberships else None,
             auth=auth,
         )
-        return await DestinyLinkedProfilesResponse.from_dict(data=response, client=self._client)
+        return await DestinyLinkedProfilesResponse.from_dict(
+            data=response,
+            client=self._client,
+            membership_id=membership_id,
+            membership_type=membership_type,
+            get_all_memberships=get_all_memberships,
+            auth=auth,
+        )
 
     async def get_profile(
         self,
@@ -165,7 +177,14 @@ class Destiny2RouteInterface(ClientMixin):
             components=[x.value for x in components] if components else None,
             auth=auth,
         )
-        return await DestinyProfileResponse.from_dict(data=response, client=self._client)
+        return await DestinyProfileResponse.from_dict(
+            data=response,
+            client=self._client,
+            destiny_membership_id=destiny_membership_id,
+            membership_type=membership_type,
+            components=components,
+            auth=auth,
+        )
 
     async def get_character(
         self,
@@ -196,7 +215,15 @@ class Destiny2RouteInterface(ClientMixin):
             components=[x.value for x in components] if components else None,
             auth=auth,
         )
-        return await DestinyCharacterResponse.from_dict(data=response, client=self._client)
+        return await DestinyCharacterResponse.from_dict(
+            data=response,
+            client=self._client,
+            character_id=character_id,
+            destiny_membership_id=destiny_membership_id,
+            membership_type=membership_type,
+            components=components,
+            auth=auth,
+        )
 
     async def get_clan_weekly_reward_state(self, group_id: int, auth: Optional[AuthData] = None) -> DestinyMilestone:
         """
@@ -211,7 +238,7 @@ class Destiny2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_clan_weekly_reward_state(group_id=group_id, auth=auth)
-        return await DestinyMilestone.from_dict(data=response, client=self._client)
+        return await DestinyMilestone.from_dict(data=response, client=self._client, group_id=group_id, auth=auth)
 
     async def get_clan_banner_source(self, auth: Optional[AuthData] = None) -> dict:
         """
@@ -256,7 +283,15 @@ class Destiny2RouteInterface(ClientMixin):
             components=[x.value for x in components] if components else None,
             auth=auth,
         )
-        return await DestinyItemResponse.from_dict(data=response, client=self._client)
+        return await DestinyItemResponse.from_dict(
+            data=response,
+            client=self._client,
+            destiny_membership_id=destiny_membership_id,
+            item_instance_id=item_instance_id,
+            membership_type=membership_type,
+            components=components,
+            auth=auth,
+        )
 
     async def get_vendors(
         self,
@@ -290,7 +325,16 @@ class Destiny2RouteInterface(ClientMixin):
             filter=filter.value if filter else None,
             auth=auth,
         )
-        return await DestinyVendorsResponse.from_dict(data=response, client=self._client)
+        return await DestinyVendorsResponse.from_dict(
+            data=response,
+            client=self._client,
+            character_id=character_id,
+            destiny_membership_id=destiny_membership_id,
+            membership_type=membership_type,
+            components=components,
+            filter=filter,
+            auth=auth,
+        )
 
     async def get_vendor(
         self,
@@ -324,7 +368,16 @@ class Destiny2RouteInterface(ClientMixin):
             components=[x.value for x in components] if components else None,
             auth=auth,
         )
-        return await DestinyVendorResponse.from_dict(data=response, client=self._client)
+        return await DestinyVendorResponse.from_dict(
+            data=response,
+            client=self._client,
+            character_id=character_id,
+            destiny_membership_id=destiny_membership_id,
+            membership_type=membership_type,
+            vendor_hash=vendor_hash,
+            components=components,
+            auth=auth,
+        )
 
     async def get_public_vendors(
         self, components: Optional[list[DestinyComponentType]] = None, auth: Optional[AuthData] = None
@@ -343,7 +396,9 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.get_public_vendors(
             components=[x.value for x in components] if components else None, auth=auth
         )
-        return await DestinyPublicVendorsResponse.from_dict(data=response, client=self._client)
+        return await DestinyPublicVendorsResponse.from_dict(
+            data=response, client=self._client, components=components, auth=auth
+        )
 
     async def get_collectible_node_details(
         self,
@@ -377,7 +432,16 @@ class Destiny2RouteInterface(ClientMixin):
             components=[x.value for x in components] if components else None,
             auth=auth,
         )
-        return await DestinyCollectibleNodeDetailResponse.from_dict(data=response, client=self._client)
+        return await DestinyCollectibleNodeDetailResponse.from_dict(
+            data=response,
+            client=self._client,
+            character_id=character_id,
+            collectible_presentation_node_hash=collectible_presentation_node_hash,
+            destiny_membership_id=destiny_membership_id,
+            membership_type=membership_type,
+            components=components,
+            auth=auth,
+        )
 
     async def transfer_item(self, data: DestinyItemTransferRequest, auth: AuthData) -> int:
         """
@@ -449,7 +513,7 @@ class Destiny2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.equip_items(auth=auth, **data.to_dict())
-        return await DestinyEquipItemResults.from_dict(data=response, client=self._client)
+        return await DestinyEquipItemResults.from_dict(data=response, client=self._client, auth=auth)
 
     async def set_item_lock_state(self, data: DestinyItemStateRequest, auth: AuthData) -> int:
         """
@@ -505,7 +569,7 @@ class Destiny2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.insert_socket_plug(auth=auth, **data.to_dict())
-        return await DestinyItemChangeResponse.from_dict(data=response, client=self._client)
+        return await DestinyItemChangeResponse.from_dict(data=response, client=self._client, auth=auth)
 
     async def insert_socket_plug_free(
         self, data: DestinyInsertPlugsFreeActionRequest, auth: AuthData
@@ -525,7 +589,7 @@ class Destiny2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.insert_socket_plug_free(auth=auth, **data.to_dict())
-        return await DestinyItemChangeResponse.from_dict(data=response, client=self._client)
+        return await DestinyItemChangeResponse.from_dict(data=response, client=self._client, auth=auth)
 
     async def get_post_game_carnage_report(
         self, activity_id: int, auth: Optional[AuthData] = None
@@ -542,7 +606,9 @@ class Destiny2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_post_game_carnage_report(activity_id=activity_id, auth=auth)
-        return await DestinyPostGameCarnageReportData.from_dict(data=response, client=self._client)
+        return await DestinyPostGameCarnageReportData.from_dict(
+            data=response, client=self._client, activity_id=activity_id, auth=auth
+        )
 
     async def report_offensive_post_game_carnage_report_player(
         self, data: DestinyReportOffensePgcrRequest, activity_id: int, auth: AuthData
@@ -582,7 +648,7 @@ class Destiny2RouteInterface(ClientMixin):
 
         response = await self._client.http.get_historical_stats_definition(auth=auth)
         return {
-            key: await DestinyHistoricalStatsDefinition.from_dict(data=value, client=self._client)
+            key: await DestinyHistoricalStatsDefinition.from_dict(data=value, client=self._client, auth=auth)
             async for key, value in AllowAsyncIteration(response["Response"].items())
         }
 
@@ -617,7 +683,15 @@ class Destiny2RouteInterface(ClientMixin):
         )
         return {
             key: {
-                key2: await DestinyLeaderboard.from_dict(data=value2, client=self._client)
+                key2: await DestinyLeaderboard.from_dict(
+                    data=value2,
+                    client=self._client,
+                    group_id=group_id,
+                    maxtop=maxtop,
+                    modes=modes,
+                    statid=statid,
+                    auth=auth,
+                )
                 async for key2, value2 in AllowAsyncIteration(value.items())
             }
             async for key, value in AllowAsyncIteration(response["Response"].items())
@@ -642,7 +716,10 @@ class Destiny2RouteInterface(ClientMixin):
             group_id=group_id, modes=modes if modes else None, auth=auth
         )
         return [
-            await DestinyClanAggregateStat.from_dict(data=value, client=self._client) for value in response["Response"]
+            await DestinyClanAggregateStat.from_dict(
+                data=value, client=self._client, group_id=group_id, modes=modes, auth=auth
+            )
+            for value in response["Response"]
         ]
 
     async def get_leaderboards(
@@ -679,7 +756,16 @@ class Destiny2RouteInterface(ClientMixin):
         )
         return {
             key: {
-                key2: await DestinyLeaderboard.from_dict(data=value2, client=self._client)
+                key2: await DestinyLeaderboard.from_dict(
+                    data=value2,
+                    client=self._client,
+                    destiny_membership_id=destiny_membership_id,
+                    membership_type=membership_type,
+                    maxtop=maxtop,
+                    modes=modes,
+                    statid=statid,
+                    auth=auth,
+                )
                 async for key2, value2 in AllowAsyncIteration(value.items())
             }
             async for key, value in AllowAsyncIteration(response["Response"].items())
@@ -722,7 +808,17 @@ class Destiny2RouteInterface(ClientMixin):
         )
         return {
             key: {
-                key2: await DestinyLeaderboard.from_dict(data=value2, client=self._client)
+                key2: await DestinyLeaderboard.from_dict(
+                    data=value2,
+                    client=self._client,
+                    character_id=character_id,
+                    destiny_membership_id=destiny_membership_id,
+                    membership_type=membership_type,
+                    maxtop=maxtop,
+                    modes=modes,
+                    statid=statid,
+                    auth=auth,
+                )
                 async for key2, value2 in AllowAsyncIteration(value.items())
             }
             async for key, value in AllowAsyncIteration(response["Response"].items())
@@ -747,7 +843,9 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.search_destiny_entities(
             search_term=search_term, type=type, page=page if page else None, auth=auth
         )
-        return await DestinyEntitySearchResult.from_dict(data=response, client=self._client)
+        return await DestinyEntitySearchResult.from_dict(
+            data=response, client=self._client, search_term=search_term, type=type, page=page, auth=auth
+        )
 
     async def get_historical_stats(
         self,
@@ -791,7 +889,19 @@ class Destiny2RouteInterface(ClientMixin):
             auth=auth,
         )
         return {
-            key: await DestinyHistoricalStatsByPeriod.from_dict(data=value, client=self._client)
+            key: await DestinyHistoricalStatsByPeriod.from_dict(
+                data=value,
+                client=self._client,
+                character_id=character_id,
+                destiny_membership_id=destiny_membership_id,
+                membership_type=membership_type,
+                dayend=dayend,
+                daystart=daystart,
+                groups=groups,
+                modes=modes,
+                period_type=period_type,
+                auth=auth,
+            )
             async for key, value in AllowAsyncIteration(response["Response"].items())
         }
 
@@ -821,7 +931,14 @@ class Destiny2RouteInterface(ClientMixin):
             groups=[x.value for x in groups] if groups else None,
             auth=auth,
         )
-        return await DestinyHistoricalStatsAccountResult.from_dict(data=response, client=self._client)
+        return await DestinyHistoricalStatsAccountResult.from_dict(
+            data=response,
+            client=self._client,
+            destiny_membership_id=destiny_membership_id,
+            membership_type=membership_type,
+            groups=groups,
+            auth=auth,
+        )
 
     async def get_activity_history(
         self,
@@ -858,7 +975,17 @@ class Destiny2RouteInterface(ClientMixin):
             page=page if page else None,
             auth=auth,
         )
-        return await DestinyActivityHistoryResults.from_dict(data=response, client=self._client)
+        return await DestinyActivityHistoryResults.from_dict(
+            data=response,
+            client=self._client,
+            character_id=character_id,
+            destiny_membership_id=destiny_membership_id,
+            membership_type=membership_type,
+            count=count,
+            mode=mode,
+            page=page,
+            auth=auth,
+        )
 
     async def get_unique_weapon_history(
         self,
@@ -886,7 +1013,14 @@ class Destiny2RouteInterface(ClientMixin):
             membership_type=membership_type.value,
             auth=auth,
         )
-        return await DestinyHistoricalWeaponStatsData.from_dict(data=response, client=self._client)
+        return await DestinyHistoricalWeaponStatsData.from_dict(
+            data=response,
+            client=self._client,
+            character_id=character_id,
+            destiny_membership_id=destiny_membership_id,
+            membership_type=membership_type,
+            auth=auth,
+        )
 
     async def get_destiny_aggregate_activity_stats(
         self,
@@ -914,7 +1048,14 @@ class Destiny2RouteInterface(ClientMixin):
             membership_type=membership_type.value,
             auth=auth,
         )
-        return await DestinyAggregateActivityResults.from_dict(data=response, client=self._client)
+        return await DestinyAggregateActivityResults.from_dict(
+            data=response,
+            client=self._client,
+            character_id=character_id,
+            destiny_membership_id=destiny_membership_id,
+            membership_type=membership_type,
+            auth=auth,
+        )
 
     async def get_public_milestone_content(
         self, milestone_hash: int, auth: Optional[AuthData] = None
@@ -931,7 +1072,9 @@ class Destiny2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_public_milestone_content(milestone_hash=milestone_hash, auth=auth)
-        return await DestinyMilestoneContent.from_dict(data=response, client=self._client)
+        return await DestinyMilestoneContent.from_dict(
+            data=response, client=self._client, milestone_hash=milestone_hash, auth=auth
+        )
 
     async def get_public_milestones(self, auth: Optional[AuthData] = None) -> dict[int, DestinyPublicMilestone]:
         """
@@ -946,7 +1089,7 @@ class Destiny2RouteInterface(ClientMixin):
 
         response = await self._client.http.get_public_milestones(auth=auth)
         return {
-            key: await DestinyPublicMilestone.from_dict(data=value, client=self._client)
+            key: await DestinyPublicMilestone.from_dict(data=value, client=self._client, auth=auth)
             async for key, value in AllowAsyncIteration(response["Response"].items())
         }
 
@@ -966,7 +1109,7 @@ class Destiny2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.awa_initialize_request(auth=auth, **data.to_dict())
-        return await AwaInitializeResponse.from_dict(data=response, client=self._client)
+        return await AwaInitializeResponse.from_dict(data=response, client=self._client, auth=auth)
 
     async def awa_provide_authorization_result(self, data: AwaUserResponse, auth: Optional[AuthData] = None) -> int:
         """
@@ -999,4 +1142,6 @@ class Destiny2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.awa_get_action_token(correlation_id=correlation_id, auth=auth)
-        return await AwaAuthorizationResult.from_dict(data=response, client=self._client)
+        return await AwaAuthorizationResult.from_dict(
+            data=response, client=self._client, correlation_id=correlation_id, auth=auth
+        )

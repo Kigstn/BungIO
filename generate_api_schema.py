@@ -12,6 +12,25 @@ from bungio.definitions import ROOT_DIR
 
 Typing = namedtuple("Typing", "name manifest")
 
+mixin_params = {
+    "DestinyCharacter": [
+        "character_id",
+        "membership_id",
+        "membership_type",
+    ],
+    "DestinyUser": [
+        "membership_id",
+        "membership_type",
+    ],
+    "DestinyClan": [
+        "group_id",
+    ],
+    "DestinyActivity": [
+        "group_id",
+    ],
+}
+mixins: dict[str, dict[str, list[str] | set]] = {}
+
 
 def main():
     resp = requests.get(url="https://raw.githubusercontent.com/Bungie-net/api/master/openapi.json")
@@ -31,10 +50,52 @@ def main():
         folder_path="bungio/api/bungie",
         docs_path="docs/src/API Reference/Bungie Interface",
         create_raw_http=False,
+        mixins=mixins,
     )
 
+    generate_mixins(folder_path="bungio/models/basic")
 
-def generate_functions(api_schema: dict, folder_path: str, docs_path: str, create_raw_http: bool = True):
+    # regen models to include mixins
+    generate_models(api_schema)
+
+
+def generate_mixins(folder_path: str):
+    base_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), folder_path)
+
+    for name, data in mixins.items():
+        path_name = name.removeprefix("Destiny").lower()
+        file_path = os.path.join(base_path, f"{path_name}.py")
+
+        skip_line = False
+        with open(file_path, "r", encoding="utf-8") as file:
+            text = ""
+            for line in file.readlines():
+                if not skip_line:
+                    text += line
+                if "AUTOMATIC IMPORTS START" in line:
+                    text += "%imports%\n"
+                    skip_line = True
+                elif "AUTOMATIC IMPORTS END" in line:
+                    text += line
+                    skip_line = False
+                elif "DO NOT CHANGE ANY CODE BELOW" in line:
+                    break
+            text += "\n".join(data["functions"])
+            text = text.replace("%imports%", "\n".join(data["imports"]))
+        with open(file_path, "w", encoding="utf-8") as file:
+            file.write(text)
+
+    os.system(f"""black "{base_path}\"""")
+    os.system(f"""git add "{base_path}\"""")
+
+
+def generate_functions(
+    api_schema: dict,
+    folder_path: str,
+    docs_path: str,
+    create_raw_http: bool = True,
+    mixins: Optional[dict] = None,
+):
     # paths
     base_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), folder_path)
     topics = {}
@@ -80,7 +141,12 @@ class {name}(ClientMixin):
 
         for path, data in routes.items():
             text += generate_function(
-                path, data, api_schema, create_raw_http=create_raw_http, file_imports=file_imports
+                path,
+                data,
+                api_schema,
+                create_raw_http=create_raw_http,
+                file_imports=file_imports,
+                mixins=mixins,
             )
 
         if not create_raw_http:
@@ -167,11 +233,20 @@ class AllRouteInterfacesOverwrites({", ".join(overwrite_names)}):
     os.system(f"""git add "{base_path}\"""")
 
 
-def generate_function(path: str, data: dict, full_data: dict, file_imports: set, create_raw_http: bool) -> str:
+def generate_function(
+    path: str,
+    data: dict,
+    full_data: dict,
+    file_imports: set,
+    create_raw_http: bool,
+    mixins: Optional[dict] = None,
+) -> str:
     # make the class text
     func_name = capital_case_to_snake_case(data["summary"].split(".")[1])
     text = f"""
     async def {func_name}(self"""
+    mixin_text = text
+    mixin_imports = set()
 
     method = "get" if "get" in data else "post"
 
@@ -181,6 +256,7 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
 
     # json body info
     body = []
+    m_body = []
     if "requestBody" in data[method]:
         schema_data = data[method]["requestBody"]["content"]["application/json"]["schema"]
 
@@ -214,10 +290,16 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
                 )
         else:
             arg_type = convert_to_typing(data=schema_data, return_class_names=True, file_imports=file_imports).name
+            m_arg_type = convert_to_typing(
+                data=schema_data, return_class_names=True, type_checking_imports=True, mixin_imports=mixin_imports
+            ).name
+
             body.append({"name": "data", "description": "The required data for this request.", "type": arg_type})
+            m_body.append({"name": "data", "description": "The required data for this request.", "type": m_arg_type})
 
     # path / query params
     params = []
+    m_params = []
     for param in data[method]["parameters"]:
         new_name = capital_case_to_snake_case(param["name"])
         if (string := f"""{{{param["name"]}}}""") in path:
@@ -232,8 +314,12 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
 
         if create_raw_http:
             arg_type = convert_to_typing(param["schema"]).name
+            m_arg_type = None
         else:
             arg_type = convert_to_typing(param["schema"], return_class_names=True, file_imports=file_imports).name
+            m_arg_type = convert_to_typing(
+                param["schema"], return_class_names=True, type_checking_imports=True, mixin_imports=mixin_imports
+            ).name
 
             is_optional = info["in"] == "query"
             is_list = False
@@ -257,9 +343,12 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
 
         if info["in"] == "query":
             arg_type = f"Optional[{arg_type}] = None"
+        m_info = copy.copy(info)
         info["type"] = arg_type
+        m_info["type"] = m_arg_type
 
         params.append(info)
+        m_params.append(m_info)
 
     security_info = {
         "name": "auth",
@@ -276,14 +365,43 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
         security_info["type"] = "Optional[AuthData] = None"
         security_info["in"] = "query"
     params.append(security_info)
-
     params = sorted(params, key=lambda x: x["in"])
+
+    m_security_info = copy.copy(security_info)
+    m_security_info["type"] = m_security_info["type"].replace("AuthData", '"AuthData"')
+    m_params.append(m_security_info)
+    m_params = sorted(m_params, key=lambda x: x["in"])
+
+    # does the mixin need this function
+    found_mixin_name = None
+    if mixins is not None:
+        param_names = [item["name"] for item in body + params]
+        for mixin_name, mixin_required in mixin_params.items():
+            all_found = []
+            for mixin_required_name in mixin_required:
+                found = False
+                for param_name in param_names:
+                    if mixin_required_name in param_name:
+                        found = True
+                        break
+                all_found.append(found)
+            if all(all_found):
+                found_mixin_name = mixin_name
+                if found_mixin_name not in mixins:
+                    mixins[found_mixin_name] = {"functions": [], "imports": set()}
+                break
 
     for item in body + params:  # noqa
         text += f""", {item["name"]}: {item["type"]}"""
 
+    for item in m_body + m_params:  # noqa
+        if found_mixin_name:
+            if item["name"] not in mixin_params[found_mixin_name]:
+                mixin_text += f""", {item["name"]}: {item["type"]}"""
+
     if create_raw_http:
         return_model = "dict"
+        m_return_model = None
     else:
         return_schema = data[method]["responses"]["200"]["$ref"]
         return_info = full_data["components"]["responses"][return_schema.split("/")[-1]]["content"]["application/json"][
@@ -292,24 +410,39 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
 
         # try to get the overwrite path if that exists and add that to the imports
         return_model = convert_to_typing(data=return_info, return_class_names=True, file_imports=file_imports).name
+        m_return_model = convert_to_typing(
+            data=return_info, return_class_names=True, type_checking_imports=True, mixin_imports=mixin_imports
+        ).name
 
     text += f""") -> {return_model}:
         \"\"\"
         {data["description"]}
         """
+    mixin_text += f""") -> {m_return_model}:
+        \"\"\"
+        {data["description"]}
+        """
 
     if security:
-        text += f"""
+        t = f"""
         Warning: Requires Authentication.
             {security}
         """
+        text += t
+        mixin_text += t
 
-    text += """
+    t = """
         Args:"""
+    text += t
+    mixin_text += t
 
     for item in body + params:  # noqa
-        text += f"""
+        t = f"""
             {item["name"]}: {item["description"]}"""
+        text += t
+        if found_mixin_name:
+            if item["name"] not in mixin_params[found_mixin_name]:
+                mixin_text += t
 
     if create_raw_http:
         text += """
@@ -329,13 +462,31 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
 
         """
     else:
-        text += f"""
+        t = f"""
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         \"\"\"
 
         """
+        text += t
+        mixin_text += t
+
+        if found_mixin_name:
+            p = []
+            for item in body + params:  # noqa
+                if item["name"] not in mixin_params[found_mixin_name]:
+                    p.append(f"""{item["name"]}={item["name"]}""")
+                else:
+                    p.append(f"""{item["name"]}=self._fuzzy_getattr(\"{item["name"]}\")""")
+
+            mixin_text += f"""
+        return await self._client.api.{func_name}({", ".join(p)})
+
+                """
+
+            mixins[found_mixin_name]["functions"].append(mixin_text)
+            mixins[found_mixin_name]["imports"].update(mixin_imports)
 
     if create_raw_http:
         if body:
@@ -378,25 +529,25 @@ def generate_function(path: str, data: dict, full_data: dict, file_imports: set,
         response = await self._client.http.{func_name}({", ".join(request_params)})
         """
 
-        text += f"""return {get_return_value_from_typing(return_model=return_model)}
+        text += f"""return {get_return_value_from_typing(return_model=return_model, params=params)}
 
         """
 
     return text
 
 
-def get_return_value_from_typing(return_model: str) -> str:
+def get_return_value_from_typing(return_model: str, params: list[dict]) -> str:
     return_model = return_model.strip()
 
     if return_model.startswith("list"):
         clean_return_model = return_model.removesuffix("]").removeprefix("list[")
-        res = get_return_value_from_typing(return_model=clean_return_model)
+        res = get_return_value_from_typing(return_model=clean_return_model, params=params)
 
         res = f'''[{res.replace("data=response", "data=value").replace("""response["Response"]""", "value")} for value in response["Response"]]'''
 
     elif return_model.startswith("dict") and return_model.endswith("]"):
         clean_return_model = ", ".join(return_model.removesuffix("]").removeprefix("dict[").split(", ")[1:])
-        res = get_return_value_from_typing(return_model=clean_return_model)
+        res = get_return_value_from_typing(return_model=clean_return_model, params=params)
         if "key" in res and "value" in res:
             res = res.replace("key", "key2").replace("value", "value2")
 
@@ -408,7 +559,10 @@ def get_return_value_from_typing(return_model: str) -> str:
         elif return_model == "datetime":
             res = """datetime.strptime(response["Response"], "%Y-%m-%dT%H:%M:%S%z")"""
         else:
-            res = f"await {return_model}.from_dict(data=response, client=self._client)"
+            extra = ", ".join([f"""{item["name"]}={item["name"]}""" for item in params])
+            res = (
+                f"""await {return_model}.from_dict(data=response, client=self._client{f", {extra}" if extra else ""})"""
+            )
 
     return res
 
@@ -418,6 +572,7 @@ def convert_to_typing(
     return_class_names: bool = False,
     file_imports: Optional[set] = None,
     type_checking_imports: bool = False,
+    mixin_imports: Optional[set] = None,
 ) -> Typing:
     arg_type = []
     is_list = False
@@ -431,6 +586,7 @@ def convert_to_typing(
             return_class_names=return_class_names,
             file_imports=file_imports,
             type_checking_imports=type_checking_imports,
+            mixin_imports=mixin_imports,
         )
 
     if (dict_data := data.get("x-dictionary-key", None)) and (new_data := data.get("additionalProperties", None)):
@@ -439,6 +595,7 @@ def convert_to_typing(
             return_class_names=return_class_names,
             file_imports=file_imports,
             type_checking_imports=type_checking_imports,
+            mixin_imports=mixin_imports,
         )
         return Typing(
             f"""dict[{convert_to_typing(
@@ -446,6 +603,7 @@ def convert_to_typing(
                 return_class_names=return_class_names,
                 file_imports=file_imports,
                 type_checking_imports=type_checking_imports,
+                mixin_imports=mixin_imports,
             ).name}, {data_type.name}]""",
             data_type.manifest,
         )
@@ -461,10 +619,12 @@ def convert_to_typing(
                 if not hasattr(imp, import_name):
                     raise ModuleNotFoundError
 
+                import_text = f"""{"    " if type_checking_imports else ""}from {import_path} import {import_name}"""
+
                 if isinstance(file_imports, set):
-                    file_imports.add(
-                        f"""{"    " if type_checking_imports else ""}from {import_path} import {import_name}"""
-                    )
+                    file_imports.add(import_text)
+                if isinstance(mixin_imports, set):
+                    mixin_imports.add(import_text)
                 if type_checking_imports:
                     import_name = f'"{import_name}"'
 
@@ -482,6 +642,7 @@ def convert_to_typing(
             return_class_names=return_class_names,
             file_imports=file_imports,
             type_checking_imports=type_checking_imports,
+            mixin_imports=mixin_imports,
         )
         arg_type.append(ref_arg_type.name)
 
@@ -492,6 +653,7 @@ def convert_to_typing(
                 return_class_names=return_class_names,
                 file_imports=file_imports,
                 type_checking_imports=type_checking_imports,
+                mixin_imports=mixin_imports,
             )
             manifest_name = ref_arg_type.name
 
@@ -517,6 +679,7 @@ def convert_to_typing(
                     return_class_names=return_class_names,
                     file_imports=file_imports,
                     type_checking_imports=type_checking_imports,
+                    mixin_imports=mixin_imports,
                 )
                 manifest_name = array_type.manifest
                 arg_type.append(array_type.name)
@@ -570,21 +733,27 @@ def generate_models(api_schema: dict):
     by_path = {k: v for k, v in sorted(by_path.items(), key=lambda x: x[0].count("."), reverse=True)}
 
     for path, models in by_path.items():
-        text = """import attr
+        text = f"""import attr
 
 from datetime import datetime
 from typing import Optional, Any, TYPE_CHECKING, Union
 
 from bungio.models.base import BaseModel, BaseEnum, ManifestModel
 
+{"%mixin_imports%" if mixins else ""}
+
 %imports%"""
 
         file_imports = set()
+        mixin_imports = set()
         for model in models:
-            model_text = generate_model(api_schema, model, path, file_imports)
+            model_text = generate_model(api_schema, model, path, file_imports, mixin_imports)
             text += f"""
 {model_text}
             """
+
+        if mixins:
+            text = text.replace("%mixin_imports%", "\n".join(mixin_imports))
 
         clean_file_imports = set()
         for import_string in file_imports:
@@ -714,7 +883,7 @@ if TYPE_CHECKING:
     os.system(f"""git add "{base_path}\"""")
 
 
-def generate_model(api_schema: dict, model: dict, path: str, file_imports: set) -> str:
+def generate_model(api_schema: dict, model: dict, path: str, file_imports: set, mixin_imports: set = None) -> str:
     # enums
     if data := model.get("x-enum-values", None):
         text = f"""
@@ -773,9 +942,26 @@ class {model["name"]}(BaseEnum):
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
             """
 
+        # check if mixins can be inherited (if params match)
+        mixin_extra = ""
+        if mixins:
+            for mixin_name, mixin_required in mixin_params.items():
+                all_found = []
+                for mixin_required_name in mixin_required:
+                    found = False
+                    for param_name in properties:
+                        if mixin_required_name in param_name:
+                            found = True
+                            break
+                    all_found.append(found)
+                if all(all_found):
+                    mixin_extra = f", {mixin_name}"
+                    mixin_imports.add(f"""from bungio.models.basic import {mixin_name}""")
+                    break
+
         text = f"""
 @attr.define
-class {model["name"]}({"BaseModel" if "x-mobile-manifest-name" not in model else "ManifestModel"}):
+class {model["name"]}({"BaseModel" if "x-mobile-manifest-name" not in model else "ManifestModel"}{mixin_extra}):
     \"\"\"
     {clean_desc(model)}
 

@@ -26,4 +26,7 @@ class GlobalAlertsRouteInterface(ClientMixin):
         response = await self._client.http.get_global_alerts(
             includestreaming=includestreaming if includestreaming else None, auth=auth
         )
-        return [await GlobalAlert.from_dict(data=value, client=self._client) for value in response["Response"]]
+        return [
+            await GlobalAlert.from_dict(data=value, client=self._client, includestreaming=includestreaming, auth=auth)
+            for value in response["Response"]
+        ]

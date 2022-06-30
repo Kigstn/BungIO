@@ -36,4 +36,6 @@ class CommunityContentRouteInterface(ClientMixin):
         response = await self._client.http.get_community_content(
             media_filter=media_filter.value, page=page, sort=sort.value, auth=auth
         )
-        return await PostSearchResponse.from_dict(data=response, client=self._client)
+        return await PostSearchResponse.from_dict(
+            data=response, client=self._client, media_filter=media_filter, page=page, sort=sort, auth=auth
+        )

@@ -26,7 +26,7 @@ class ContentRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_content_type(type=type, auth=auth)
-        return await ContentTypeDescription.from_dict(data=response, client=self._client)
+        return await ContentTypeDescription.from_dict(data=response, client=self._client, type=type, auth=auth)
 
     async def get_content_by_id(
         self, id: int, locale: str, head: Optional[bool] = None, auth: Optional[AuthData] = None
@@ -47,7 +47,9 @@ class ContentRouteInterface(ClientMixin):
         response = await self._client.http.get_content_by_id(
             id=id, locale=locale, head=head if head else None, auth=auth
         )
-        return await ContentItemPublicContract.from_dict(data=response, client=self._client)
+        return await ContentItemPublicContract.from_dict(
+            data=response, client=self._client, id=id, locale=locale, head=head, auth=auth
+        )
 
     async def get_content_by_tag_and_type(
         self, locale: str, tag: str, type: str, head: Optional[bool] = None, auth: Optional[AuthData] = None
@@ -69,7 +71,9 @@ class ContentRouteInterface(ClientMixin):
         response = await self._client.http.get_content_by_tag_and_type(
             locale=locale, tag=tag, type=type, head=head if head else None, auth=auth
         )
-        return await ContentItemPublicContract.from_dict(data=response, client=self._client)
+        return await ContentItemPublicContract.from_dict(
+            data=response, client=self._client, locale=locale, tag=tag, type=type, head=head, auth=auth
+        )
 
     async def search_content_with_text(
         self,
@@ -109,7 +113,18 @@ class ContentRouteInterface(ClientMixin):
             tag=tag if tag else None,
             auth=auth,
         )
-        return await SearchResultOfContentItemPublicContract.from_dict(data=response, client=self._client)
+        return await SearchResultOfContentItemPublicContract.from_dict(
+            data=response,
+            client=self._client,
+            locale=locale,
+            ctype=ctype,
+            currentpage=currentpage,
+            head=head,
+            searchtext=searchtext,
+            source=source,
+            tag=tag,
+            auth=auth,
+        )
 
     async def search_content_by_tag_and_type(
         self,
@@ -146,7 +161,17 @@ class ContentRouteInterface(ClientMixin):
             itemsperpage=itemsperpage if itemsperpage else None,
             auth=auth,
         )
-        return await SearchResultOfContentItemPublicContract.from_dict(data=response, client=self._client)
+        return await SearchResultOfContentItemPublicContract.from_dict(
+            data=response,
+            client=self._client,
+            locale=locale,
+            tag=tag,
+            type=type,
+            currentpage=currentpage,
+            head=head,
+            itemsperpage=itemsperpage,
+            auth=auth,
+        )
 
     async def search_help_articles(self, searchtext: str, size: str, auth: Optional[AuthData] = None) -> Any:
         """

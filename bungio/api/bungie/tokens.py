@@ -81,7 +81,13 @@ class TokensRouteInterface(ClientMixin):
             auth=auth,
         )
         return [
-            await PartnerOfferSkuHistoryResponse.from_dict(data=value, client=self._client)
+            await PartnerOfferSkuHistoryResponse.from_dict(
+                data=value,
+                client=self._client,
+                partner_application_id=partner_application_id,
+                target_bnet_membership_id=target_bnet_membership_id,
+                auth=auth,
+            )
             for value in response["Response"]
         ]
 
@@ -102,7 +108,9 @@ class TokensRouteInterface(ClientMixin):
 
         response = await self._client.http.get_bungie_rewards_for_user(membership_id=membership_id, auth=auth)
         return {
-            key: await BungieRewardDisplay.from_dict(data=value, client=self._client)
+            key: await BungieRewardDisplay.from_dict(
+                data=value, client=self._client, membership_id=membership_id, auth=auth
+            )
             async for key, value in AllowAsyncIteration(response["Response"].items())
         }
 
@@ -119,6 +127,6 @@ class TokensRouteInterface(ClientMixin):
 
         response = await self._client.http.get_bungie_rewards_list(auth=auth)
         return {
-            key: await BungieRewardDisplay.from_dict(data=value, client=self._client)
+            key: await BungieRewardDisplay.from_dict(data=value, client=self._client, auth=auth)
             async for key, value in AllowAsyncIteration(response["Response"].items())
         }

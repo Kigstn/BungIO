@@ -21,4 +21,4 @@ class SettingsRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_common_settings(auth=auth)
-        return await CoreSettingsConfiguration.from_dict(data=response, client=self._client)
+        return await CoreSettingsConfiguration.from_dict(data=response, client=self._client, auth=auth)
