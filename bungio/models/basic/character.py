@@ -24,7 +24,6 @@ if TYPE_CHECKING:
         DestinyVendorsResponse,
         PeriodType,
     )
-    from bungio.models.auth import AuthData
 
     # AUTOMATIC IMPORTS END
 

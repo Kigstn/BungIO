@@ -29,7 +29,6 @@ if TYPE_CHECKING:
         RuntimeGroupMemberType,
         UserMembershipData,
     )
-    from bungio.models.auth import AuthData
 
     # AUTOMATIC IMPORTS END
 

@@ -124,7 +124,11 @@ class {name}:
 
         else:
             name = f"{topic}RouteInterface"
-            text = f"""import attr
+            text = f"""# DO NOT CHANGE ANY CODE BELOW
+# This file is generated automatically by `generate_api_schema.py` and will be overwritten
+# Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
+
+import attr
 
 from datetime import datetime
 from typing import Optional, Any, Union
@@ -733,7 +737,11 @@ def generate_models(api_schema: dict):
     by_path = {k: v for k, v in sorted(by_path.items(), key=lambda x: x[0].count("."), reverse=True)}
 
     for path, models in by_path.items():
-        text = f"""import attr
+        text = f"""# DO NOT CHANGE ANY CODE BELOW
+# This file is generated automatically by `generate_api_schema.py` and will be overwritten
+# Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
+
+import attr
 
 from datetime import datetime
 from typing import Optional, Any, TYPE_CHECKING, Union

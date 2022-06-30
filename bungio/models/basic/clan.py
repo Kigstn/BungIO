@@ -34,7 +34,6 @@ if TYPE_CHECKING:
         SearchResultOfGroupMember,
         SearchResultOfGroupMemberApplication,
     )
-    from bungio.models.auth import AuthData
 
     # AUTOMATIC IMPORTS END
 
