@@ -4,6 +4,7 @@ from copy import copy
 from typing import TYPE_CHECKING, Optional
 from urllib.parse import urlencode
 
+import attr
 from aiohttp import (
     ClientConnectorCertificateError,
     ClientOSError,
@@ -28,7 +29,7 @@ from bungio.http.ratelimiting import RateLimiter
 from bungio.http.route import Route
 from bungio.http.routes import AllRouteHttpRequests
 from bungio.models.auth import AuthData
-from bungio.models.base import MISSING
+from bungio.models.base import MISSING, ClientMixin
 from bungio.singleton import SingletonMetaclass
 
 if TYPE_CHECKING:
@@ -37,22 +38,19 @@ if TYPE_CHECKING:
 __all__ = ("HttpClient",)
 
 
-class HttpClient(AllRouteHttpRequests, AuthHttpRequests, metaclass=SingletonMetaclass):
+@attr.define
+class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, metaclass=SingletonMetaclass):
     """
     The singleton http client doing all communication with bungie
     """
 
-    ratelimiter: RateLimiter = RateLimiter()
-    semaphore: Semaphore = Semaphore(100)
+    _bungie_headers: dict[str, str] = attr.field()
+    _bungie_auth_headers: dict[str, str] = attr.field()
+    _max_attempts: int = attr.field(default=5)
 
-    _client: "Client"
-
-    _bungie_headers: dict[str, str]
-    _bungie_auth_headers: dict[str, str]
-
-    _max_attempts: int = 5
-
-    __session: ClientSession = None
+    ratelimiter: RateLimiter = attr.field(init=False, default=RateLimiter())
+    semaphore: Semaphore = attr.field(init=False, default=Semaphore(100))
+    __session: ClientSession = attr.field(init=False, default=None)
 
     async def request(self, route: Route) -> dict:
         """

@@ -9,10 +9,11 @@ from sqlalchemy.ext.asyncio import AsyncConnection
 from sqlalchemy.sql.ddl import CreateTable, DropTable
 
 from bungio.http.route import Route
+from bungio.models.base import ClientMixin
 from bungio.utils import get_now_with_tz
 
 if TYPE_CHECKING:
-    from bungio.models.base import BaseModel, ClientMixin, ManifestModel
+    from bungio.models.base import BaseModel, ManifestModel
 
 __all__ = ("Manifest",)
 

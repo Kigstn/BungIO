@@ -90,7 +90,15 @@ class BaseEnum(Enum):
 
 @attr.define
 class ClientMixin:
-    _client: "Client" = attr.field(repr=False)
+    _client: "Client" = attr.field(repr=False, init=False)
+
+    @_client.default
+    def __client_factory(self) -> "Client":
+        from bungio.singleton import client
+
+        if client is MISSING:
+            raise ValueError("You have to set-up your 'Client' first")
+        return client
 
 
 @attr.define
@@ -190,7 +198,7 @@ class BaseModel(ClientMixin):
                 # set the attr
                 prepared[name] = value
 
-        res = cls(client=client, **prepared)  # noqa
+        res = cls(**prepared)  # noqa
 
         # fill the manifest information
         if not recursive and res._client.always_return_manifest_information:

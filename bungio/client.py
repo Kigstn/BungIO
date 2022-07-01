@@ -10,9 +10,10 @@ import attr
 from sqlalchemy import MetaData
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
-from bungio import InvalidAuthentication
+import bungio.singleton as singleton
+from bungio import MISSING, InvalidAuthentication
 from bungio.api import ApiClient
-from bungio.definitions import LOGGER_NAME, ROOT_DIR
+from bungio.definitions import DEFAULT_LOGGER, LOGGER_NAME, ROOT_DIR
 from bungio.http.client import HttpClient
 from bungio.manifest import Manifest
 from bungio.models import BungieMembershipType
@@ -40,16 +41,13 @@ except ModuleNotFoundError:
     json_loads = json.loads
 
 
-default_logger = logging.getLogger(LOGGER_NAME)
-default_logger.setLevel(logging.ERROR)
-
 token_update_lock: dict[int, asyncio.Lock] = {}
 
 
 @attr.define
-class Client:
+class Client(metaclass=singleton.SingletonMetaclass):
     """
-    The api client
+    The singleton api client
 
     Attributes:
         bungie_client_id: The bungie.net client id
@@ -62,7 +60,7 @@ class Client:
     bungie_client_secret: str = attr.field(repr=False)
     bungie_token: str = attr.field(repr=False)
 
-    logger: logging.Logger = attr.field(default=default_logger)
+    logger: logging.Logger = attr.field(default=DEFAULT_LOGGER)
 
     language: BungieLanguage = attr.field(default=BungieLanguage.ENGLISH)
 
@@ -79,6 +77,12 @@ class Client:
 
     _metadata: Optional[MetaData] = attr.field(init=False, default=None, repr=False)
 
+    # def __new__(cls, *args, **kwargs):
+    #     if singleton.client is not MISSING:
+    #         default_logger.warning("The client can only be defined once, ignoring your inputs and returning the first defined client")
+    #         return singleton.client
+    #     return super().__new__(cls)
+
     @manifest_storage.validator  # noqa
     def manifest_storage_check(self, attribute, value):
         if not (isinstance(value, AsyncEngine) or isinstance(value, bool)):
@@ -94,23 +98,30 @@ class Client:
             if not isinstance(self.manifest_storage, AsyncEngine):
                 raise ValueError("Client.manifest_storage must be set up to use this")
 
+        if self.always_return_manifest_information:
+            if not isinstance(self.manifest_storage, AsyncEngine):
+                raise ValueError("Client.manifest_storage must be set up to use this")
+
+        # save a reference to the client
+        singleton.client = self
+
         # set up the api client
-        self.api = ApiClient(client=self)
+        self.api = ApiClient()
 
         # set up the http client
-        self.http = HttpClient()
-        self.http._client = self
-        self.http._bungie_auth_headers = {
-            "User-Agent": "BungIO",
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Authorization": f"""Basic {b64encode(f"{self.bungie_client_id}:{self.bungie_client_secret}".encode()).decode()}""",
-            "Accept": "application/json",
-        }
-        self.http._bungie_headers = {
-            "User-Agent": "BungIO",
-            "X-API-Key": self.bungie_token,
-            "Accept": "application/json",
-        }
+        self.http = HttpClient(
+            bungie_headers={
+                "User-Agent": "BungIO",
+                "X-API-Key": self.bungie_token,
+                "Accept": "application/json",
+            },
+            bungie_auth_headers={
+                "User-Agent": "BungIO",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": f"""Basic {b64encode(f"{self.bungie_client_id}:{self.bungie_client_secret}".encode()).decode()}""",
+                "Accept": "application/json",
+            },
+        )
 
         if self.manifest_storage:
             if self.manifest_storage is True:
@@ -119,7 +130,7 @@ class Client:
                     f"""sqlite+aiosqlite:///{os.path.join(ROOT_DIR, "manifest.db")}"""
                 )
             self._metadata = MetaData(bind=self.manifest_storage)
-            self.manifest = Manifest(client=self)
+            self.manifest = Manifest()
 
     def get_auth_url(self, state: str) -> str:
         """
