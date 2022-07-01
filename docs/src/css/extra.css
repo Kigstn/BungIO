@@ -3,6 +3,12 @@
   max-width: 1500px;
 }
 
+/* Fixes nav overflow */
+.md-nav__item .md-nav__link {
+  display: block;
+  width: 100%;
+}
+
 /* Indentation. */
 div.doc-contents:not(.first) {
   padding-left: 25px;
