@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 import attr
 
 from bungio.models.base import BaseModel
-from bungio.models.basic import DestinyUser
+from bungio.models.mixins import DestinyUserMixin
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -63,7 +63,7 @@ class PartnerOfferSkuHistoryResponse(BaseModel):
 
 
 @attr.define
-class PartnerOfferHistoryResponse(BaseModel, DestinyUser):
+class PartnerOfferHistoryResponse(BaseModel, DestinyUserMixin):
     """
     _No description given by bungie._
 

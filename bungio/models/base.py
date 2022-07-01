@@ -168,7 +168,7 @@ class BaseModel(ClientMixin):
 
         prepared = {}
         for name, field in attr.fields_dict(cls).items():
-            if field.init:
+            if field.init and name != "_client":
                 # todo optional[]
 
                 # get the value we want. This also skips the manifest_... entries since they have no value and a default

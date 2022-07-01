@@ -13,19 +13,16 @@ from bungio.definitions import ROOT_DIR
 Typing = namedtuple("Typing", "name manifest")
 
 mixin_params = {
-    "DestinyCharacter": [
+    "DestinyCharacterMixin": [
         "character_id",
         "membership_id",
         "membership_type",
     ],
-    "DestinyUser": [
+    "DestinyUserMixin": [
         "membership_id",
         "membership_type",
     ],
-    "DestinyClan": [
-        "group_id",
-    ],
-    "DestinyActivity": [
+    "DestinyClanMixin": [
         "group_id",
     ],
 }
@@ -53,7 +50,7 @@ def main():
         mixins=mixins,
     )
 
-    generate_mixins(folder_path="bungio/models/basic")
+    generate_mixins(folder_path="bungio/models/mixins")
 
     # regen models to include mixins
     generate_models(api_schema)
@@ -63,7 +60,7 @@ def generate_mixins(folder_path: str):
     base_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), folder_path)
 
     for name, data in mixins.items():
-        path_name = name.removeprefix("Destiny").lower()
+        path_name = name.removeprefix("Destiny").removesuffix("Mixin").lower()
         file_path = os.path.join(base_path, f"{path_name}.py")
 
         skip_line = False
@@ -964,7 +961,7 @@ class {model["name"]}(BaseEnum):
                     all_found.append(found)
                 if all(all_found):
                     mixin_extra = f", {mixin_name}"
-                    mixin_imports.add(f"""from bungio.models.basic import {mixin_name}""")
+                    mixin_imports.add(f"""from bungio.models.mixins import {mixin_name}""")
                     break
 
         text = f"""

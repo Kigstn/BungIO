@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 import attr
 
 from bungio.models.base import BaseModel
-from bungio.models.basic import DestinyUser
+from bungio.models.mixins import DestinyUserMixin
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -98,7 +98,7 @@ class DestinyLinkedProfilesResponse(BaseModel):
 
 
 @attr.define
-class DestinyProfileUserInfoCard(BaseModel, DestinyUser):
+class DestinyProfileUserInfoCard(BaseModel, DestinyUserMixin):
     """
     _No description given by bungie._
 

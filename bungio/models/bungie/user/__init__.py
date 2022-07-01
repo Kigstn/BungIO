@@ -8,14 +8,14 @@ from typing import TYPE_CHECKING, Any, Optional, Union
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel, ManifestModel
-from bungio.models.basic import DestinyUser
+from bungio.models.mixins import DestinyUserMixin
 
 if TYPE_CHECKING:
     from bungio.models import BungieMembershipType, GroupUserInfoCard, IgnoreResponse
 
 
 @attr.define
-class UserMembership(BaseModel, DestinyUser):
+class UserMembership(BaseModel, DestinyUserMixin):
     """
     Very basic info about a user as returned by the Account server.
 
@@ -36,7 +36,7 @@ class UserMembership(BaseModel, DestinyUser):
 
 
 @attr.define
-class CrossSaveUserMembership(BaseModel, DestinyUser):
+class CrossSaveUserMembership(BaseModel, DestinyUserMixin):
     """
     Very basic info about a user as returned by the Account server, but including CrossSave information. Do NOT use as a request contract.
 
@@ -65,7 +65,7 @@ class CrossSaveUserMembership(BaseModel, DestinyUser):
 
 
 @attr.define
-class UserInfoCard(BaseModel, DestinyUser):
+class UserInfoCard(BaseModel, DestinyUserMixin):
     """
     This contract supplies basic information commonly used to display a minimal amount of information about a user. Take care to not add more properties here unless the property applies in all (or at least the majority) of the situations where UserInfoCard is used. Avoid adding game specific or platform specific details here. In cases where UserInfoCard is a subset of the data needed in a contract, use UserInfoCard as a property of other contracts.
 
@@ -213,7 +213,7 @@ class UserMembershipData(BaseModel):
 
 
 @attr.define
-class HardLinkedUserMembership(BaseModel, DestinyUser):
+class HardLinkedUserMembership(BaseModel, DestinyUserMixin):
     """
     _No description given by bungie._
 

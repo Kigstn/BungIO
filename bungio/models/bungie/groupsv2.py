@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
-from bungio.models.basic import DestinyClan, DestinyUser
+from bungio.models.mixins import DestinyClanMixin, DestinyUserMixin
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -22,7 +22,7 @@ if TYPE_CHECKING:
 
 
 @attr.define
-class GroupUserInfoCard(BaseModel, DestinyUser):
+class GroupUserInfoCard(BaseModel, DestinyUserMixin):
     """
     _No description given by bungie._
 
@@ -92,7 +92,7 @@ class GroupResponse(BaseModel):
 
 
 @attr.define
-class GroupV2(BaseModel, DestinyClan):
+class GroupV2(BaseModel, DestinyClanMixin):
     """
     _No description given by bungie._
 
@@ -363,7 +363,7 @@ class GroupV2ClanInfoAndInvestment(BaseModel):
 
 
 @attr.define
-class GroupUserBase(BaseModel, DestinyClan):
+class GroupUserBase(BaseModel, DestinyClanMixin):
     """
     _No description given by bungie._
 
@@ -382,7 +382,7 @@ class GroupUserBase(BaseModel, DestinyClan):
 
 
 @attr.define
-class GroupMember(BaseModel, DestinyClan):
+class GroupMember(BaseModel, DestinyClanMixin):
     """
     _No description given by bungie._
 
@@ -420,7 +420,7 @@ class GroupAllianceStatus(BaseEnum):
 
 
 @attr.define
-class GroupPotentialMember(BaseModel, DestinyClan):
+class GroupPotentialMember(BaseModel, DestinyClanMixin):
     """
     _No description given by bungie._
 
@@ -471,7 +471,7 @@ class GroupDateRange(BaseEnum):
 
 
 @attr.define
-class GroupV2Card(BaseModel, DestinyClan):
+class GroupV2Card(BaseModel, DestinyClanMixin):
     """
     A small infocard of group information, usually used for when a list of groups are returned
 
@@ -607,7 +607,7 @@ class GroupNameSearchRequest(BaseModel):
 
 
 @attr.define
-class GroupOptionalConversation(BaseModel, DestinyClan):
+class GroupOptionalConversation(BaseModel, DestinyClanMixin):
     """
     _No description given by bungie._
 
@@ -754,7 +754,7 @@ class GroupBanRequest(BaseModel):
 
 
 @attr.define
-class GroupBan(BaseModel, DestinyClan):
+class GroupBan(BaseModel, DestinyClanMixin):
     """
     _No description given by bungie._
 
@@ -781,7 +781,7 @@ class GroupBan(BaseModel, DestinyClan):
 
 
 @attr.define
-class GroupMemberApplication(BaseModel, DestinyClan):
+class GroupMemberApplication(BaseModel, DestinyClanMixin):
     """
     _No description given by bungie._
 

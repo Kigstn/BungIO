@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
-from bungio.models.basic import DestinyUser
+from bungio.models.mixins import DestinyUserMixin
 
 if TYPE_CHECKING:
     from bungio.models import BungieMembershipType, GeneralUser
@@ -27,7 +27,7 @@ class BungieFriendListResponse(BaseModel):
 
 
 @attr.define
-class BungieFriend(BaseModel, DestinyUser):
+class BungieFriend(BaseModel, DestinyUserMixin):
     """
     _No description given by bungie._
 
@@ -142,7 +142,7 @@ class PlatformFriendResponse(BaseModel):
 
 
 @attr.define
-class PlatformFriend(BaseModel, DestinyUser):
+class PlatformFriend(BaseModel, DestinyUserMixin):
     """
     _No description given by bungie._
 

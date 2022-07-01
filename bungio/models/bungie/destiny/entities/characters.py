@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Optional
 import attr
 
 from bungio.models.base import BaseModel
-from bungio.models.basic import DestinyCharacter
+from bungio.models.mixins import DestinyCharacterMixin
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -40,7 +40,7 @@ if TYPE_CHECKING:
 
 
 @attr.define
-class DestinyCharacterComponent(BaseModel, DestinyCharacter):
+class DestinyCharacterComponent(BaseModel, DestinyCharacterMixin):
     """
     This component contains base properties of the character. You'll probably want to always request this component, but hey you do you.
 
