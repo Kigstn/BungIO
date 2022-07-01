@@ -5,12 +5,12 @@ from bungio.models import (
     ForumTopicsQuickDateEnum,
     ForumTopicsSortEnum,
 )
-from bungio.models.auth import UserData
 from bungio.models.base import BaseModel
+from bungio.models.basic.user import DestinyUser
 
 
 @pytest.mark.asyncio
-async def test_get_topics_paged(client: Client, user: UserData):
+async def test_get_topics_paged(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_topics_paged()`
     """
@@ -23,7 +23,7 @@ async def test_get_topics_paged(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_core_topics_paged(client: Client, user: UserData):
+async def test_get_core_topics_paged(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_core_topics_paged()`
     """
@@ -39,7 +39,7 @@ async def test_get_core_topics_paged(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_posts_threaded_paged(client: Client, user: UserData):
+async def test_get_posts_threaded_paged(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_posts_threaded_paged()`
     """
@@ -52,7 +52,7 @@ async def test_get_posts_threaded_paged(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_posts_threaded_paged_from_child(client: Client, user: UserData):
+async def test_get_posts_threaded_paged_from_child(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_posts_threaded_paged_from_child()`
     """
@@ -65,7 +65,7 @@ async def test_get_posts_threaded_paged_from_child(client: Client, user: UserDat
 
 
 @pytest.mark.asyncio
-async def test_get_post_and_parent(client: Client, user: UserData):
+async def test_get_post_and_parent(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_post_and_parent()`
     """
@@ -78,7 +78,7 @@ async def test_get_post_and_parent(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_post_and_parent_awaiting_approval(client: Client, user: UserData):
+async def test_get_post_and_parent_awaiting_approval(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_post_and_parent_awaiting_approval()`
     """
@@ -91,7 +91,7 @@ async def test_get_post_and_parent_awaiting_approval(client: Client, user: UserD
 
 
 @pytest.mark.asyncio
-async def test_get_topic_for_content(client: Client, user: UserData):
+async def test_get_topic_for_content(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_topic_for_content()`
     """
@@ -104,7 +104,7 @@ async def test_get_topic_for_content(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_forum_tag_suggestions(client: Client, user: UserData):
+async def test_get_forum_tag_suggestions(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_forum_tag_suggestions()`
     """
@@ -117,7 +117,7 @@ async def test_get_forum_tag_suggestions(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_poll(client: Client, user: UserData):
+async def test_get_poll(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_poll()`
     """
@@ -130,7 +130,7 @@ async def test_get_poll(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_recruitment_thread_summaries(client: Client, user: UserData):
+async def test_get_recruitment_thread_summaries(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_recruitment_thread_summaries()`
     """

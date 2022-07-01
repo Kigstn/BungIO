@@ -4,7 +4,7 @@ import os
 import pytest
 from bungio.client import Client
 from bungio.models import BungieMembershipType
-from bungio.models.auth import UserData
+from bungio.models.basic.user import DestinyUser
 
 
 @pytest.fixture(scope="session")
@@ -34,12 +34,12 @@ async def client(event_loop) -> Client:
 
 
 @pytest.fixture(scope="session")
-async def user(event_loop) -> UserData:
+async def user(client) -> DestinyUser:
     """
     Get a user which can be used for queries
     """
 
-    user = UserData(membership_type=BungieMembershipType.TIGER_STEAM, destiny_membership_id=4611686018467765462)
+    user = DestinyUser(membership_type=BungieMembershipType.TIGER_STEAM, membership_id=4611686018467765462)
 
     yield user
 

@@ -1,11 +1,11 @@
 import pytest
 from bungio.client import Client
-from bungio.models.auth import UserData
 from bungio.models.base import BaseModel
+from bungio.models.basic.user import DestinyUser
 
 
 @pytest.mark.asyncio
-async def test_get_friend_list(client: Client, user: UserData):
+async def test_get_friend_list(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_friend_list()`
     """
@@ -18,7 +18,7 @@ async def test_get_friend_list(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_friend_request_list(client: Client, user: UserData):
+async def test_get_friend_request_list(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_friend_request_list()`
     """
@@ -31,7 +31,7 @@ async def test_get_friend_request_list(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_issue_friend_request(client: Client, user: UserData):
+async def test_issue_friend_request(client: Client, user: DestinyUser):
     """
     Test for `Client.api.issue_friend_request()`
     """
@@ -44,7 +44,7 @@ async def test_issue_friend_request(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_accept_friend_request(client: Client, user: UserData):
+async def test_accept_friend_request(client: Client, user: DestinyUser):
     """
     Test for `Client.api.accept_friend_request()`
     """
@@ -57,7 +57,7 @@ async def test_accept_friend_request(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_decline_friend_request(client: Client, user: UserData):
+async def test_decline_friend_request(client: Client, user: DestinyUser):
     """
     Test for `Client.api.decline_friend_request()`
     """
@@ -70,7 +70,7 @@ async def test_decline_friend_request(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_remove_friend(client: Client, user: UserData):
+async def test_remove_friend(client: Client, user: DestinyUser):
     """
     Test for `Client.api.remove_friend()`
     """
@@ -83,7 +83,7 @@ async def test_remove_friend(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_remove_friend_request(client: Client, user: UserData):
+async def test_remove_friend_request(client: Client, user: DestinyUser):
     """
     Test for `Client.api.remove_friend_request()`
     """
@@ -96,7 +96,7 @@ async def test_remove_friend_request(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_platform_friend_list(client: Client, user: UserData):
+async def test_get_platform_friend_list(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_platform_friend_list()`
     """

@@ -1,11 +1,11 @@
 import pytest
 from bungio.client import Client
-from bungio.models.auth import UserData
 from bungio.models.base import BaseModel
+from bungio.models.basic.user import DestinyUser
 
 
 @pytest.mark.asyncio
-async def test_claim_partner_offer(client: Client, user: UserData):
+async def test_claim_partner_offer(client: Client, user: DestinyUser):
     """
     Test for `Client.api.claim_partner_offer()`
     """
@@ -18,7 +18,7 @@ async def test_claim_partner_offer(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_apply_missing_partner_offers_without_claim(client: Client, user: UserData):
+async def test_apply_missing_partner_offers_without_claim(client: Client, user: DestinyUser):
     """
     Test for `Client.api.apply_missing_partner_offers_without_claim()`
     """
@@ -31,7 +31,7 @@ async def test_apply_missing_partner_offers_without_claim(client: Client, user: 
 
 
 @pytest.mark.asyncio
-async def test_get_partner_offer_sku_history(client: Client, user: UserData):
+async def test_get_partner_offer_sku_history(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_partner_offer_sku_history()`
     """
@@ -44,7 +44,7 @@ async def test_get_partner_offer_sku_history(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_bungie_rewards_for_user(client: Client, user: UserData):
+async def test_get_bungie_rewards_for_user(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_bungie_rewards_for_user()`
     """
@@ -57,7 +57,7 @@ async def test_get_bungie_rewards_for_user(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_bungie_rewards_list(client: Client, user: UserData):
+async def test_get_bungie_rewards_list(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_bungie_rewards_list()`
     """

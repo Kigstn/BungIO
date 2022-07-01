@@ -1,11 +1,11 @@
 import pytest
 from bungio.client import Client
-from bungio.models.auth import UserData
 from bungio.models.base import BaseModel
+from bungio.models.basic.user import DestinyUser
 
 
 @pytest.mark.asyncio
-async def test_get_content_type(client: Client, user: UserData):
+async def test_get_content_type(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_content_type()`
     """
@@ -18,7 +18,7 @@ async def test_get_content_type(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_content_by_id(client: Client, user: UserData):
+async def test_get_content_by_id(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_content_by_id()`
     """
@@ -31,7 +31,7 @@ async def test_get_content_by_id(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_content_by_tag_and_type(client: Client, user: UserData):
+async def test_get_content_by_tag_and_type(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_content_by_tag_and_type()`
     """
@@ -44,7 +44,7 @@ async def test_get_content_by_tag_and_type(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_search_content_with_text(client: Client, user: UserData):
+async def test_search_content_with_text(client: Client, user: DestinyUser):
     """
     Test for `Client.api.search_content_with_text()`
     """
@@ -57,7 +57,7 @@ async def test_search_content_with_text(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_search_content_by_tag_and_type(client: Client, user: UserData):
+async def test_search_content_by_tag_and_type(client: Client, user: DestinyUser):
     """
     Test for `Client.api.search_content_by_tag_and_type()`
     """
@@ -70,7 +70,7 @@ async def test_search_content_by_tag_and_type(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_search_help_articles(client: Client, user: UserData):
+async def test_search_help_articles(client: Client, user: DestinyUser):
     """
     Test for `Client.api.search_help_articles()`
     """

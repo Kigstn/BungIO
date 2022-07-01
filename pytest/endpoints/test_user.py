@@ -1,12 +1,12 @@
 import pytest
 from bungio.client import Client
 from bungio.models import UserSearchPrefixRequest
-from bungio.models.auth import UserData
 from bungio.models.base import BaseModel
+from bungio.models.basic.user import DestinyUser
 
 
 @pytest.mark.asyncio
-async def test_get_bungie_net_user_by_id(client: Client, user: UserData):
+async def test_get_bungie_net_user_by_id(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_bungie_net_user_by_id()`
     """
@@ -19,7 +19,7 @@ async def test_get_bungie_net_user_by_id(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_sanitized_platform_display_names(client: Client, user: UserData):
+async def test_get_sanitized_platform_display_names(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_sanitized_platform_display_names()`
     """
@@ -32,7 +32,7 @@ async def test_get_sanitized_platform_display_names(client: Client, user: UserDa
 
 
 @pytest.mark.asyncio
-async def test_get_credential_types_for_target_account(client: Client, user: UserData):
+async def test_get_credential_types_for_target_account(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_credential_types_for_target_account()`
     """
@@ -45,7 +45,7 @@ async def test_get_credential_types_for_target_account(client: Client, user: Use
 
 
 @pytest.mark.asyncio
-async def test_get_available_themes(client: Client, user: UserData):
+async def test_get_available_themes(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_available_themes()`
     """
@@ -58,20 +58,20 @@ async def test_get_available_themes(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_membership_data_by_id(client: Client, user: UserData):
+async def test_get_membership_data_by_id(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_membership_data_by_id()`
     """
 
     data = await client.api.get_membership_data_by_id(
-        membership_id=user.destiny_membership_id, membership_type=user.membership_type
+        membership_id=user.membership_id, membership_type=user.membership_type
     )
     assert data
     assert isinstance(data, BaseModel)
 
 
 @pytest.mark.asyncio
-async def test_get_membership_data_for_current_user(client: Client, user: UserData):
+async def test_get_membership_data_for_current_user(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_membership_data_for_current_user()`
     """
@@ -84,7 +84,7 @@ async def test_get_membership_data_for_current_user(client: Client, user: UserDa
 
 
 @pytest.mark.asyncio
-async def test_get_membership_from_hard_linked_credential(client: Client, user: UserData):
+async def test_get_membership_from_hard_linked_credential(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_membership_from_hard_linked_credential()`
     """
@@ -97,7 +97,7 @@ async def test_get_membership_from_hard_linked_credential(client: Client, user: 
 
 
 @pytest.mark.asyncio
-async def test_search_by_global_name_prefix(client: Client, user: UserData):
+async def test_search_by_global_name_prefix(client: Client, user: DestinyUser):
     """
     Test for `Client.api.search_by_global_name_prefix()`
     """
@@ -110,7 +110,7 @@ async def test_search_by_global_name_prefix(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_search_by_global_name_post(client: Client, user: UserData):
+async def test_search_by_global_name_post(client: Client, user: DestinyUser):
     """
     Test for `Client.api.search_by_global_name_post()`
     """

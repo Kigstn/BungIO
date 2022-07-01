@@ -1,12 +1,12 @@
 import pytest
 from bungio.client import Client
 from bungio.models import GroupNameSearchRequest, GroupQuery, GroupType
-from bungio.models.auth import UserData
 from bungio.models.base import BaseModel
+from bungio.models.basic.user import DestinyUser
 
 
 @pytest.mark.asyncio
-async def test_get_available_avatars(client: Client, user: UserData):
+async def test_get_available_avatars(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_available_avatars()`
     """
@@ -19,7 +19,7 @@ async def test_get_available_avatars(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_available_themes(client: Client, user: UserData):
+async def test_get_available_themes(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_available_themes()`
     """
@@ -32,7 +32,7 @@ async def test_get_available_themes(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_user_clan_invite_setting(client: Client, user: UserData):
+async def test_get_user_clan_invite_setting(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_user_clan_invite_setting()`
     """
@@ -45,7 +45,7 @@ async def test_get_user_clan_invite_setting(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_recommended_groups(client: Client, user: UserData):
+async def test_get_recommended_groups(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_recommended_groups()`
     """
@@ -58,7 +58,7 @@ async def test_get_recommended_groups(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_group_search(client: Client, user: UserData):
+async def test_group_search(client: Client, user: DestinyUser):
     """
     Test for `Client.api.group_search()`
     """
@@ -69,7 +69,7 @@ async def test_group_search(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_group(client: Client, user: UserData):
+async def test_get_group(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_group()`
     """
@@ -80,7 +80,7 @@ async def test_get_group(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_group_by_name(client: Client, user: UserData):
+async def test_get_group_by_name(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_group_by_name()`
     """
@@ -93,7 +93,7 @@ async def test_get_group_by_name(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_group_by_name_v2(client: Client, user: UserData):
+async def test_get_group_by_name_v2(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_group_by_name_v2()`
     """
@@ -106,7 +106,7 @@ async def test_get_group_by_name_v2(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_group_optional_conversations(client: Client, user: UserData):
+async def test_get_group_optional_conversations(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_group_optional_conversations()`
     """
@@ -119,7 +119,7 @@ async def test_get_group_optional_conversations(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_edit_group(client: Client, user: UserData):
+async def test_edit_group(client: Client, user: DestinyUser):
     """
     Test for `Client.api.edit_group()`
     """
@@ -132,7 +132,7 @@ async def test_edit_group(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_edit_clan_banner(client: Client, user: UserData):
+async def test_edit_clan_banner(client: Client, user: DestinyUser):
     """
     Test for `Client.api.edit_clan_banner()`
     """
@@ -145,7 +145,7 @@ async def test_edit_clan_banner(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_edit_founder_options(client: Client, user: UserData):
+async def test_edit_founder_options(client: Client, user: DestinyUser):
     """
     Test for `Client.api.edit_founder_options()`
     """
@@ -158,7 +158,7 @@ async def test_edit_founder_options(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_add_optional_conversation(client: Client, user: UserData):
+async def test_add_optional_conversation(client: Client, user: DestinyUser):
     """
     Test for `Client.api.add_optional_conversation()`
     """
@@ -171,7 +171,7 @@ async def test_add_optional_conversation(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_edit_optional_conversation(client: Client, user: UserData):
+async def test_edit_optional_conversation(client: Client, user: DestinyUser):
     """
     Test for `Client.api.edit_optional_conversation()`
     """
@@ -184,7 +184,7 @@ async def test_edit_optional_conversation(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_members_of_group(client: Client, user: UserData):
+async def test_get_members_of_group(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_members_of_group()`
     """
@@ -195,7 +195,7 @@ async def test_get_members_of_group(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_admins_and_founder_of_group(client: Client, user: UserData):
+async def test_get_admins_and_founder_of_group(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_admins_and_founder_of_group()`
     """
@@ -206,7 +206,7 @@ async def test_get_admins_and_founder_of_group(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_edit_group_membership(client: Client, user: UserData):
+async def test_edit_group_membership(client: Client, user: DestinyUser):
     """
     Test for `Client.api.edit_group_membership()`
     """
@@ -219,7 +219,7 @@ async def test_edit_group_membership(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_kick_member(client: Client, user: UserData):
+async def test_kick_member(client: Client, user: DestinyUser):
     """
     Test for `Client.api.kick_member()`
     """
@@ -232,7 +232,7 @@ async def test_kick_member(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_ban_member(client: Client, user: UserData):
+async def test_ban_member(client: Client, user: DestinyUser):
     """
     Test for `Client.api.ban_member()`
     """
@@ -245,7 +245,7 @@ async def test_ban_member(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_unban_member(client: Client, user: UserData):
+async def test_unban_member(client: Client, user: DestinyUser):
     """
     Test for `Client.api.unban_member()`
     """
@@ -258,7 +258,7 @@ async def test_unban_member(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_banned_members_of_group(client: Client, user: UserData):
+async def test_get_banned_members_of_group(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_banned_members_of_group()`
     """
@@ -271,7 +271,7 @@ async def test_get_banned_members_of_group(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_abdicate_foundership(client: Client, user: UserData):
+async def test_abdicate_foundership(client: Client, user: DestinyUser):
     """
     Test for `Client.api.abdicate_foundership()`
     """
@@ -284,7 +284,7 @@ async def test_abdicate_foundership(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_pending_memberships(client: Client, user: UserData):
+async def test_get_pending_memberships(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_pending_memberships()`
     """
@@ -297,7 +297,7 @@ async def test_get_pending_memberships(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_invited_individuals(client: Client, user: UserData):
+async def test_get_invited_individuals(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_invited_individuals()`
     """
@@ -310,7 +310,7 @@ async def test_get_invited_individuals(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_approve_all_pending(client: Client, user: UserData):
+async def test_approve_all_pending(client: Client, user: DestinyUser):
     """
     Test for `Client.api.approve_all_pending()`
     """
@@ -323,7 +323,7 @@ async def test_approve_all_pending(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_deny_all_pending(client: Client, user: UserData):
+async def test_deny_all_pending(client: Client, user: DestinyUser):
     """
     Test for `Client.api.deny_all_pending()`
     """
@@ -336,7 +336,7 @@ async def test_deny_all_pending(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_approve_pending_for_list(client: Client, user: UserData):
+async def test_approve_pending_for_list(client: Client, user: DestinyUser):
     """
     Test for `Client.api.approve_pending_for_list()`
     """
@@ -349,7 +349,7 @@ async def test_approve_pending_for_list(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_approve_pending(client: Client, user: UserData):
+async def test_approve_pending(client: Client, user: DestinyUser):
     """
     Test for `Client.api.approve_pending()`
     """
@@ -362,7 +362,7 @@ async def test_approve_pending(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_deny_pending_for_list(client: Client, user: UserData):
+async def test_deny_pending_for_list(client: Client, user: DestinyUser):
     """
     Test for `Client.api.deny_pending_for_list()`
     """
@@ -375,7 +375,7 @@ async def test_deny_pending_for_list(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_groups_for_member(client: Client, user: UserData):
+async def test_get_groups_for_member(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_groups_for_member()`
     """
@@ -388,7 +388,7 @@ async def test_get_groups_for_member(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_recover_group_for_founder(client: Client, user: UserData):
+async def test_recover_group_for_founder(client: Client, user: DestinyUser):
     """
     Test for `Client.api.recover_group_for_founder()`
     """
@@ -401,7 +401,7 @@ async def test_recover_group_for_founder(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_potential_groups_for_member(client: Client, user: UserData):
+async def test_get_potential_groups_for_member(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_potential_groups_for_member()`
     """
@@ -414,7 +414,7 @@ async def test_get_potential_groups_for_member(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_individual_group_invite(client: Client, user: UserData):
+async def test_individual_group_invite(client: Client, user: DestinyUser):
     """
     Test for `Client.api.individual_group_invite()`
     """
@@ -427,7 +427,7 @@ async def test_individual_group_invite(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_individual_group_invite_cancel(client: Client, user: UserData):
+async def test_individual_group_invite_cancel(client: Client, user: DestinyUser):
     """
     Test for `Client.api.individual_group_invite_cancel()`
     """

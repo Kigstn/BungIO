@@ -1,11 +1,11 @@
 import pytest
 from bungio.client import Client
-from bungio.models.auth import UserData
 from bungio.models.base import BaseModel
+from bungio.models.basic.user import DestinyUser
 
 
 @pytest.mark.asyncio
-async def test_get_application_api_usage(client: Client, user: UserData):
+async def test_get_application_api_usage(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_application_api_usage()`
     """
@@ -18,7 +18,7 @@ async def test_get_application_api_usage(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_bungie_applications(client: Client, user: UserData):
+async def test_get_bungie_applications(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_bungie_applications()`
     """

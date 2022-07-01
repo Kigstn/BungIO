@@ -1,11 +1,11 @@
 import pytest
 from bungio.client import Client
-from bungio.models.auth import UserData
 from bungio.models.base import BaseModel
+from bungio.models.basic.user import DestinyUser
 
 
 @pytest.mark.asyncio
-async def test_get_trending_categories(client: Client, user: UserData):
+async def test_get_trending_categories(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_trending_categories()`
     """
@@ -16,7 +16,7 @@ async def test_get_trending_categories(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_trending_category(client: Client, user: UserData):
+async def test_get_trending_category(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_trending_category()`
     """
@@ -29,7 +29,7 @@ async def test_get_trending_category(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_trending_entry_detail(client: Client, user: UserData):
+async def test_get_trending_entry_detail(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_trending_entry_detail()`
     """

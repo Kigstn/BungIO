@@ -6,12 +6,12 @@ from bungio.models import (
     DestinyInventoryItemDefinition,
     ExactSearchRequest,
 )
-from bungio.models.auth import UserData
 from bungio.models.base import BaseModel
+from bungio.models.basic.user import DestinyUser
 
 
 @pytest.mark.asyncio
-async def test_get_destiny_manifest(client: Client, user: UserData):
+async def test_get_destiny_manifest(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_destiny_manifest()`
     """
@@ -22,7 +22,7 @@ async def test_get_destiny_manifest(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_destiny_entity_definition(client: Client, user: UserData):
+async def test_get_destiny_entity_definition(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_destiny_entity_definition()`
     """
@@ -35,7 +35,7 @@ async def test_get_destiny_entity_definition(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_search_destiny_player_by_bungie_name(client: Client, user: UserData):
+async def test_search_destiny_player_by_bungie_name(client: Client, user: DestinyUser):
     """
     Test for `Client.api.search_destiny_player_by_bungie_name()`
     """
@@ -50,7 +50,7 @@ async def test_search_destiny_player_by_bungie_name(client: Client, user: UserDa
 
 
 @pytest.mark.asyncio
-async def test_get_linked_profiles(client: Client, user: UserData):
+async def test_get_linked_profiles(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_linked_profiles()`
     """
@@ -63,13 +63,13 @@ async def test_get_linked_profiles(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_profile(client: Client, user: UserData):
+async def test_get_profile(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_profile()`
     """
 
     data = await client.api.get_profile(
-        destiny_membership_id=user.destiny_membership_id,
+        destiny_membership_id=user.membership_id,
         membership_type=user.membership_type,
         components=[DestinyComponentType.METRICS],
     )
@@ -78,14 +78,14 @@ async def test_get_profile(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_character(client: Client, user: UserData):
+async def test_get_character(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_character()`
     """
 
     data = await client.api.get_character(
         character_id=2305843009300285667,
-        destiny_membership_id=user.destiny_membership_id,
+        destiny_membership_id=user.membership_id,
         membership_type=user.membership_type,
         components=[DestinyComponentType.METRICS],
     )
@@ -94,7 +94,7 @@ async def test_get_character(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_clan_weekly_reward_state(client: Client, user: UserData):
+async def test_get_clan_weekly_reward_state(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_clan_weekly_reward_state()`
     """
@@ -105,7 +105,7 @@ async def test_get_clan_weekly_reward_state(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_clan_banner_source(client: Client, user: UserData):
+async def test_get_clan_banner_source(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_clan_banner_source()`
     """
@@ -116,7 +116,7 @@ async def test_get_clan_banner_source(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_item(client: Client, user: UserData):
+async def test_get_item(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_item()`
     """
@@ -129,7 +129,7 @@ async def test_get_item(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_vendors(client: Client, user: UserData):
+async def test_get_vendors(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_vendors()`
     """
@@ -142,7 +142,7 @@ async def test_get_vendors(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_vendor(client: Client, user: UserData):
+async def test_get_vendor(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_vendor()`
     """
@@ -155,7 +155,7 @@ async def test_get_vendor(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_public_vendors(client: Client, user: UserData):
+async def test_get_public_vendors(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_public_vendors()`
     """
@@ -172,14 +172,14 @@ async def test_get_public_vendors(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_collectible_node_details(client: Client, user: UserData):
+async def test_get_collectible_node_details(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_collectible_node_details()`
     """
 
     data = await client.api.get_collectible_node_details(
         character_id=2305843009300285667,
-        destiny_membership_id=user.destiny_membership_id,
+        destiny_membership_id=user.membership_id,
         membership_type=user.membership_type,
         collectible_presentation_node_hash=329619022,
         components=[DestinyComponentType.PRESENTATION_NODES],
@@ -189,7 +189,7 @@ async def test_get_collectible_node_details(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_transfer_item(client: Client, user: UserData):
+async def test_transfer_item(client: Client, user: DestinyUser):
     """
     Test for `Client.api.transfer_item()`
     """
@@ -202,7 +202,7 @@ async def test_transfer_item(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_pull_from_postmaster(client: Client, user: UserData):
+async def test_pull_from_postmaster(client: Client, user: DestinyUser):
     """
     Test for `Client.api.pull_from_postmaster()`
     """
@@ -215,7 +215,7 @@ async def test_pull_from_postmaster(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_equip_item(client: Client, user: UserData):
+async def test_equip_item(client: Client, user: DestinyUser):
     """
     Test for `Client.api.equip_item()`
     """
@@ -228,7 +228,7 @@ async def test_equip_item(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_equip_items(client: Client, user: UserData):
+async def test_equip_items(client: Client, user: DestinyUser):
     """
     Test for `Client.api.equip_items()`
     """
@@ -241,7 +241,7 @@ async def test_equip_items(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_set_item_lock_state(client: Client, user: UserData):
+async def test_set_item_lock_state(client: Client, user: DestinyUser):
     """
     Test for `Client.api.set_item_lock_state()`
     """
@@ -254,7 +254,7 @@ async def test_set_item_lock_state(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_set_quest_tracked_state(client: Client, user: UserData):
+async def test_set_quest_tracked_state(client: Client, user: DestinyUser):
     """
     Test for `Client.api.set_quest_tracked_state()`
     """
@@ -267,7 +267,7 @@ async def test_set_quest_tracked_state(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_insert_socket_plug(client: Client, user: UserData):
+async def test_insert_socket_plug(client: Client, user: DestinyUser):
     """
     Test for `Client.api.insert_socket_plug()`
     """
@@ -280,7 +280,7 @@ async def test_insert_socket_plug(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_insert_socket_plug_free(client: Client, user: UserData):
+async def test_insert_socket_plug_free(client: Client, user: DestinyUser):
     """
     Test for `Client.api.insert_socket_plug_free()`
     """
@@ -293,7 +293,7 @@ async def test_insert_socket_plug_free(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_post_game_carnage_report(client: Client, user: UserData):
+async def test_get_post_game_carnage_report(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_post_game_carnage_report()`
     """
@@ -304,7 +304,7 @@ async def test_get_post_game_carnage_report(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_report_offensive_post_game_carnage_report_player(client: Client, user: UserData):
+async def test_report_offensive_post_game_carnage_report_player(client: Client, user: DestinyUser):
     """
     Test for `Client.api.report_offensive_post_game_carnage_report_player()`
     """
@@ -317,7 +317,7 @@ async def test_report_offensive_post_game_carnage_report_player(client: Client, 
 
 
 @pytest.mark.asyncio
-async def test_get_historical_stats_definition(client: Client, user: UserData):
+async def test_get_historical_stats_definition(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_historical_stats_definition()`
     """
@@ -330,7 +330,7 @@ async def test_get_historical_stats_definition(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_clan_leaderboards(client: Client, user: UserData):
+async def test_get_clan_leaderboards(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_clan_leaderboards()`
     """
@@ -343,7 +343,7 @@ async def test_get_clan_leaderboards(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_clan_aggregate_stats(client: Client, user: UserData):
+async def test_get_clan_aggregate_stats(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_clan_aggregate_stats()`
     """
@@ -356,13 +356,13 @@ async def test_get_clan_aggregate_stats(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_leaderboards(client: Client, user: UserData):
+async def test_get_leaderboards(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_leaderboards()`
     """
 
     data = await client.api.get_leaderboards(
-        destiny_membership_id=user.destiny_membership_id, membership_type=user.membership_type
+        destiny_membership_id=user.membership_id, membership_type=user.membership_type
     )
     assert data is not None
     assert isinstance(data, dict)
@@ -373,14 +373,14 @@ async def test_get_leaderboards(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_leaderboards_for_character(client: Client, user: UserData):
+async def test_get_leaderboards_for_character(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_leaderboards_for_character()`
     """
 
     # data = await client.api.get_leaderboards_for_character(
     #     character_id=2305843009300285667,
-    #     destiny_membership_id=user.destiny_membership_id,
+    #     destiny_membership_id=user.membership_id,
     #     membership_type=user.membership_type,
     # )
     # assert data
@@ -394,7 +394,7 @@ async def test_get_leaderboards_for_character(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_search_destiny_entities(client: Client, user: UserData):
+async def test_search_destiny_entities(client: Client, user: DestinyUser):
     """
     Test for `Client.api.search_destiny_entities()`
     """
@@ -407,14 +407,14 @@ async def test_search_destiny_entities(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_historical_stats(client: Client, user: UserData):
+async def test_get_historical_stats(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_historical_stats()`
     """
 
     data = await client.api.get_historical_stats(
         character_id=2305843009300285667,
-        destiny_membership_id=user.destiny_membership_id,
+        destiny_membership_id=user.membership_id,
         membership_type=user.membership_type,
     )
     assert data
@@ -424,13 +424,13 @@ async def test_get_historical_stats(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_historical_stats_for_account(client: Client, user: UserData):
+async def test_get_historical_stats_for_account(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_historical_stats_for_account()`
     """
 
     data = await client.api.get_historical_stats_for_account(
-        destiny_membership_id=user.destiny_membership_id,
+        destiny_membership_id=user.membership_id,
         membership_type=user.membership_type,
     )
     assert data
@@ -438,14 +438,14 @@ async def test_get_historical_stats_for_account(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_activity_history(client: Client, user: UserData):
+async def test_get_activity_history(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_activity_history()`
     """
 
     data = await client.api.get_activity_history(
         character_id=2305843009300285667,
-        destiny_membership_id=user.destiny_membership_id,
+        destiny_membership_id=user.membership_id,
         membership_type=user.membership_type,
     )
     assert data
@@ -453,14 +453,14 @@ async def test_get_activity_history(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_unique_weapon_history(client: Client, user: UserData):
+async def test_get_unique_weapon_history(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_unique_weapon_history()`
     """
 
     data = await client.api.get_unique_weapon_history(
         character_id=2305843009300285667,
-        destiny_membership_id=user.destiny_membership_id,
+        destiny_membership_id=user.membership_id,
         membership_type=user.membership_type,
     )
     assert data
@@ -468,14 +468,14 @@ async def test_get_unique_weapon_history(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_destiny_aggregate_activity_stats(client: Client, user: UserData):
+async def test_get_destiny_aggregate_activity_stats(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_destiny_aggregate_activity_stats()`
     """
 
     data = await client.api.get_destiny_aggregate_activity_stats(
         character_id=2305843009300285667,
-        destiny_membership_id=user.destiny_membership_id,
+        destiny_membership_id=user.membership_id,
         membership_type=user.membership_type,
     )
     assert data
@@ -483,7 +483,7 @@ async def test_get_destiny_aggregate_activity_stats(client: Client, user: UserDa
 
 
 @pytest.mark.asyncio
-async def test_get_public_milestone_content(client: Client, user: UserData):
+async def test_get_public_milestone_content(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_public_milestone_content()`
     """
@@ -496,7 +496,7 @@ async def test_get_public_milestone_content(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_get_public_milestones(client: Client, user: UserData):
+async def test_get_public_milestones(client: Client, user: DestinyUser):
     """
     Test for `Client.api.get_public_milestones()`
     """
@@ -509,7 +509,7 @@ async def test_get_public_milestones(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_awa_initialize_request(client: Client, user: UserData):
+async def test_awa_initialize_request(client: Client, user: DestinyUser):
     """
     Test for `Client.api.awa_initialize_request()`
     """
@@ -522,7 +522,7 @@ async def test_awa_initialize_request(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_awa_provide_authorization_result(client: Client, user: UserData):
+async def test_awa_provide_authorization_result(client: Client, user: DestinyUser):
     """
     Test for `Client.api.awa_provide_authorization_result()`
     """
@@ -535,7 +535,7 @@ async def test_awa_provide_authorization_result(client: Client, user: UserData):
 
 
 @pytest.mark.asyncio
-async def test_awa_get_action_token(client: Client, user: UserData):
+async def test_awa_get_action_token(client: Client, user: DestinyUser):
     """
     Test for `Client.api.awa_get_action_token()`
     """
