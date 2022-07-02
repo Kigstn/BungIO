@@ -2,9 +2,12 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
+from typing import Union
+
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
+from bungio.utils import enum_converter
 
 
 @attr.define
@@ -19,7 +22,9 @@ class ComponentResponse(BaseModel):
     """
 
     disabled: bool = attr.field()
-    privacy: "ComponentPrivacySetting" = attr.field()
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(
+        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
+    )
 
 
 class ComponentPrivacySetting(BaseEnum):

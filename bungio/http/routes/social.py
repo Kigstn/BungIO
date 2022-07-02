@@ -1,4 +1,4 @@
-from typing import Any, Callable, Coroutine, Optional
+from typing import Callable, Coroutine, Optional
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -193,7 +193,7 @@ class SocialRouteHttpRequests:
             Route(path=f"/Social/Friends/Requests/Remove/{membership_id}/", method="POST", auth=auth)
         )
 
-    async def get_platform_friend_list(self, friend_platform: Any, page: str, auth: Optional[AuthData] = None) -> dict:
+    async def get_platform_friend_list(self, friend_platform: int, page: str, auth: Optional[AuthData] = None) -> dict:
         """
         Gets the platform friend of the requested type, with additional information if they have Bungie accounts. Must have a recent login session with said platform.
 

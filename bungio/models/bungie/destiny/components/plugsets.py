@@ -22,4 +22,4 @@ class DestinyPlugSetsComponent(BaseModel):
         plugs: The shared list of plugs for each relevant PlugSet, keyed by the hash identifier of the PlugSet (DestinyPlugSetDefinition).
     """
 
-    plugs: dict[int, list["DestinyItemPlug"]] = attr.field(metadata={"type": """dict[int, list["DestinyItemPlug"]]"""})
+    plugs: dict[int, list["DestinyItemPlug"]] = attr.field(metadata={"type": """dict[int, list[DestinyItemPlug]]"""})

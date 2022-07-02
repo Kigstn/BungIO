@@ -3,11 +3,12 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 import attr
 
 from bungio.models.base import BaseModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import DestinyItemQuantity, DestinyVendorItemRefundPolicy
@@ -30,11 +31,13 @@ class DestinyVendorReceipt(BaseModel):
         time_to_expiration: The seconds since epoch at which this receipt is rendered invalid.
     """
 
-    currency_paid: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list["DestinyItemQuantity"]"""})
+    currency_paid: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})
     expires_on: datetime = attr.field()
     item_received: "DestinyItemQuantity" = attr.field()
     license_unlock_hash: int = attr.field()
     purchased_by_character_id: int = attr.field()
-    refund_policy: "DestinyVendorItemRefundPolicy" = attr.field()
+    refund_policy: Union["DestinyVendorItemRefundPolicy", int] = attr.field(
+        converter=enum_converter("DestinyVendorItemRefundPolicy"), metadata={"type": "DestinyVendorItemRefundPolicy"}
+    )
     sequence_number: int = attr.field()
     time_to_expiration: int = attr.field()

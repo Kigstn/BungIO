@@ -2,11 +2,12 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 import attr
 
 from bungio.models.base import BaseModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import DestinyObjectiveProgress, DestinyPresentationNodeState
@@ -23,7 +24,7 @@ class DestinyPresentationNodesComponent(BaseModel):
     """
 
     nodes: dict[int, "DestinyPresentationNodeComponent"] = attr.field(
-        metadata={"type": """dict[int, "DestinyPresentationNodeComponent"]"""}
+        metadata={"type": """dict[int, DestinyPresentationNodeComponent]"""}
     )
 
 
@@ -45,4 +46,6 @@ class DestinyPresentationNodeComponent(BaseModel):
     objective: "DestinyObjectiveProgress" = attr.field()
     progress_value: int = attr.field()
     record_category_score: int = attr.field()
-    state: "DestinyPresentationNodeState" = attr.field()
+    state: Union["DestinyPresentationNodeState", int] = attr.field(
+        converter=enum_converter("DestinyPresentationNodeState"), metadata={"type": "DestinyPresentationNodeState"}
+    )

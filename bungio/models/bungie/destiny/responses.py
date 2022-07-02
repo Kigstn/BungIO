@@ -3,12 +3,13 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 import attr
 
 from bungio.models.base import BaseModel
 from bungio.models.mixins import DestinyUserMixin
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -91,10 +92,8 @@ class DestinyLinkedProfilesResponse(BaseModel):
     """
 
     bnet_membership: "UserInfoCard" = attr.field()
-    profiles: list["DestinyProfileUserInfoCard"] = attr.field(
-        metadata={"type": """list["DestinyProfileUserInfoCard"]"""}
-    )
-    profiles_with_errors: list["DestinyErrorProfile"] = attr.field(metadata={"type": """list["DestinyErrorProfile"]"""})
+    profiles: list["DestinyProfileUserInfoCard"] = attr.field(metadata={"type": """list[DestinyProfileUserInfoCard]"""})
+    profiles_with_errors: list["DestinyErrorProfile"] = attr.field(metadata={"type": """list[DestinyErrorProfile]"""})
 
 
 @attr.define
@@ -121,12 +120,14 @@ class DestinyProfileUserInfoCard(BaseModel, DestinyUserMixin):
         unpaired_game_versions: If this profile is not in a cross save pairing, this will return the game versions that we believe this profile has access to.  For the time being, we will not return this information for any membership that is in a cross save pairing. The gist is that, once the pairing occurs, we do not currently have a consistent way to get that information for the profile's original Platform, and thus gameVersions would be too inconsistent (based on the last platform they happened to play on) for the info to be useful.  If we ever can get this data, this field will be deprecated and replaced with data on the DestinyLinkedProfileResponse itself, with game versions per linked Platform. But since we can't get that, we have this as a stop-gap measure for getting the data in the only situation that we currently need it.
     """
 
-    applicable_membership_types: list["BungieMembershipType"] = attr.field(
-        metadata={"type": """list["BungieMembershipType"]"""}
+    applicable_membership_types: list[Union["BungieMembershipType", int]] = attr.field(
+        metadata={"type": """list[Union[BungieMembershipType, int]]"""}
     )
     bungie_global_display_name: str = attr.field()
     bungie_global_display_name_code: int = attr.field()
-    cross_save_override: "BungieMembershipType" = attr.field()
+    cross_save_override: Union["BungieMembershipType", int] = attr.field(
+        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+    )
     date_last_played: datetime = attr.field()
     display_name: str = attr.field()
     icon_path: str = attr.field()
@@ -134,7 +135,9 @@ class DestinyProfileUserInfoCard(BaseModel, DestinyUserMixin):
     is_overridden: bool = attr.field()
     is_public: bool = attr.field()
     membership_id: int = attr.field()
-    membership_type: "BungieMembershipType" = attr.field()
+    membership_type: Union["BungieMembershipType", int] = attr.field(
+        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+    )
     platform_silver: "DestinyPlatformSilverComponent" = attr.field()
     supplemental_display_name: str = attr.field()
     unpaired_game_versions: int = attr.field()
@@ -151,7 +154,9 @@ class DestinyErrorProfile(BaseModel):
         info_card: Basic info about the account that failed. Don't expect anything other than membership ID, Membership Type, and displayName to be populated.
     """
 
-    error_code: "PlatformErrorCodes" = attr.field()
+    error_code: Union["PlatformErrorCodes", int] = attr.field(
+        converter=enum_converter("PlatformErrorCodes"), metadata={"type": "PlatformErrorCodes"}
+    )
     info_card: "UserInfoCard" = attr.field()
 
 
@@ -210,7 +215,7 @@ class DestinyProfileResponse(BaseModel):
     character_render_data: "DictionaryComponentResponseOfint64AndDestinyCharacterRenderComponent" = attr.field()
     character_string_variables: "DictionaryComponentResponseOfint64AndDestinyStringVariablesComponent" = attr.field()
     character_uninstanced_item_components: dict[int, "DestinyBaseItemComponentSetOfuint32"] = attr.field(
-        metadata={"type": """dict[int, "DestinyBaseItemComponentSetOfuint32"]"""}
+        metadata={"type": """dict[int, DestinyBaseItemComponentSetOfuint32]"""}
     )
     characters: "DictionaryComponentResponseOfint64AndDestinyCharacterComponent" = attr.field()
     item_components: "DestinyItemComponentSetOfint64" = attr.field()
@@ -321,7 +326,7 @@ class DestinyVendorsResponse(BaseModel):
     categories: "DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent" = attr.field()
     currency_lookups: "SingleComponentResponseOfDestinyCurrenciesComponent" = attr.field()
     item_components: dict[int, "DestinyItemComponentSetOfint32"] = attr.field(
-        metadata={"type": """dict[int, "DestinyItemComponentSetOfint32"]"""}
+        metadata={"type": """dict[int, DestinyItemComponentSetOfint32]"""}
     )
     sales: "DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComponent" = attr.field()
     string_variables: "SingleComponentResponseOfDestinyStringVariablesComponent" = attr.field()
@@ -340,7 +345,7 @@ class PersonalDestinyVendorSaleItemSetComponent(BaseModel):
     """
 
     sale_items: dict[int, "DestinyVendorSaleItemComponent"] = attr.field(
-        metadata={"type": """dict[int, "DestinyVendorSaleItemComponent"]"""}
+        metadata={"type": """dict[int, DestinyVendorSaleItemComponent]"""}
     )
 
 
@@ -399,7 +404,7 @@ class PublicDestinyVendorSaleItemSetComponent(BaseModel):
     """
 
     sale_items: dict[int, "DestinyPublicVendorSaleItemComponent"] = attr.field(
-        metadata={"type": """dict[int, "DestinyPublicVendorSaleItemComponent"]"""}
+        metadata={"type": """dict[int, DestinyPublicVendorSaleItemComponent]"""}
     )
 
 
@@ -430,10 +435,10 @@ class InventoryChangedResponse(BaseModel):
     """
 
     added_inventory_items: list["DestinyItemComponent"] = attr.field(
-        metadata={"type": """list["DestinyItemComponent"]"""}
+        metadata={"type": """list[DestinyItemComponent]"""}
     )
     removed_inventory_items: list["DestinyItemComponent"] = attr.field(
-        metadata={"type": """list["DestinyItemComponent"]"""}
+        metadata={"type": """list[DestinyItemComponent]"""}
     )
 
 
@@ -450,9 +455,9 @@ class DestinyItemChangeResponse(BaseModel):
     """
 
     added_inventory_items: list["DestinyItemComponent"] = attr.field(
-        metadata={"type": """list["DestinyItemComponent"]"""}
+        metadata={"type": """list[DestinyItemComponent]"""}
     )
     item: "DestinyItemResponse" = attr.field()
     removed_inventory_items: list["DestinyItemComponent"] = attr.field(
-        metadata={"type": """list["DestinyItemComponent"]"""}
+        metadata={"type": """list[DestinyItemComponent]"""}
     )

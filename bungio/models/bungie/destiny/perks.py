@@ -38,4 +38,4 @@ class DestinyPerkReference(BaseModel):
     is_active: bool = attr.field()
     perk_hash: int = attr.field()
     visible: bool = attr.field()
-    manifest_perk_hash: Optional["DestinySandboxPerkDefinition"] = attr.field(default=None)
+    manifest_perk_hash: Optional["DestinySandboxPerkDefinition"] = attr.field()

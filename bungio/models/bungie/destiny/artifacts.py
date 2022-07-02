@@ -44,7 +44,7 @@ class DestinyArtifactProfileScoped(BaseModel):
     points_acquired: int = attr.field()
     power_bonus: int = attr.field()
     power_bonus_progression: "DestinyProgression" = attr.field()
-    manifest_artifact_hash: Optional["DestinyArtifactDefinition"] = attr.field(default=None)
+    manifest_artifact_hash: Optional["DestinyArtifactDefinition"] = attr.field()
 
 
 @attr.define
@@ -72,8 +72,8 @@ class DestinyArtifactCharacterScoped(BaseModel):
     artifact_hash: int = attr.field()
     points_used: int = attr.field()
     reset_count: int = attr.field()
-    tiers: list["DestinyArtifactTier"] = attr.field(metadata={"type": """list["DestinyArtifactTier"]"""})
-    manifest_artifact_hash: Optional["DestinyArtifactDefinition"] = attr.field(default=None)
+    tiers: list["DestinyArtifactTier"] = attr.field(metadata={"type": """list[DestinyArtifactTier]"""})
+    manifest_artifact_hash: Optional["DestinyArtifactDefinition"] = attr.field()
 
 
 @attr.define
@@ -90,7 +90,7 @@ class DestinyArtifactTier(BaseModel):
     """
 
     is_unlocked: bool = attr.field()
-    items: list["DestinyArtifactTierItem"] = attr.field(metadata={"type": """list["DestinyArtifactTierItem"]"""})
+    items: list["DestinyArtifactTierItem"] = attr.field(metadata={"type": """list[DestinyArtifactTierItem]"""})
     points_to_unlock: int = attr.field()
     tier_hash: int = attr.field()
 
@@ -117,4 +117,4 @@ class DestinyArtifactTierItem(BaseModel):
 
     is_active: bool = attr.field()
     item_hash: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()

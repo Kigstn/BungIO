@@ -2,11 +2,12 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
 from bungio.models.base import BaseModel, ManifestModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -54,7 +55,7 @@ class DestinySocketTypeDefinition(ManifestModel):
     always_randomize_sockets: bool = attr.field()
     avoid_duplicates_on_initialization: bool = attr.field()
     currency_scalars: list["DestinySocketTypeScalarMaterialRequirementEntry"] = attr.field(
-        metadata={"type": """list["DestinySocketTypeScalarMaterialRequirementEntry"]"""}
+        metadata={"type": """list[DestinySocketTypeScalarMaterialRequirementEntry]"""}
     )
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     hash: int = attr.field()
@@ -64,12 +65,14 @@ class DestinySocketTypeDefinition(ManifestModel):
     is_preview_enabled: bool = attr.field()
     overrides_ui_appearance: bool = attr.field()
     plug_whitelist: list["DestinyPlugWhitelistEntryDefinition"] = attr.field(
-        metadata={"type": """list["DestinyPlugWhitelistEntryDefinition"]"""}
+        metadata={"type": """list[DestinyPlugWhitelistEntryDefinition]"""}
     )
     redacted: bool = attr.field()
     socket_category_hash: int = attr.field()
-    visibility: "DestinySocketVisibility" = attr.field()
-    manifest_socket_category_hash: Optional["DestinySocketCategoryDefinition"] = attr.field(default=None)
+    visibility: Union["DestinySocketVisibility", int] = attr.field(
+        converter=enum_converter("DestinySocketVisibility"), metadata={"type": "DestinySocketVisibility"}
+    )
+    manifest_socket_category_hash: Optional["DestinySocketCategoryDefinition"] = attr.field()
 
 
 @attr.define
@@ -84,7 +87,9 @@ class DestinyInsertPlugActionDefinition(BaseModel):
     """
 
     action_execute_seconds: int = attr.field()
-    action_type: "SocketTypeActionType" = attr.field()
+    action_type: Union["SocketTypeActionType", int] = attr.field(
+        converter=enum_converter("SocketTypeActionType"), metadata={"type": "SocketTypeActionType"}
+    )
 
 
 @attr.define
@@ -126,7 +131,7 @@ class DestinySocketTypeScalarMaterialRequirementEntry(BaseModel):
 
     currency_item_hash: int = attr.field()
     scalar_value: int = attr.field()
-    manifest_currency_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_currency_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
 
 
 @attr.define
@@ -144,7 +149,9 @@ class DestinySocketCategoryDefinition(ManifestModel):
         ui_category_style: A string hinting to the game's UI system about how the sockets in this category should be displayed. BNet doesn't use it: it's up to you to find valid values and make your own special UI if you want to honor this category style.
     """
 
-    category_style: "DestinySocketCategoryStyle" = attr.field()
+    category_style: Union["DestinySocketCategoryStyle", int] = attr.field(
+        converter=enum_converter("DestinySocketCategoryStyle"), metadata={"type": "DestinySocketCategoryStyle"}
+    )
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
@@ -173,5 +180,5 @@ class DestinyPlugSetDefinition(ManifestModel):
     is_fake_plug_set: bool = attr.field()
     redacted: bool = attr.field()
     reusable_plug_items: list["DestinyItemSocketEntryPlugItemRandomizedDefinition"] = attr.field(
-        metadata={"type": """list["DestinyItemSocketEntryPlugItemRandomizedDefinition"]"""}
+        metadata={"type": """list[DestinyItemSocketEntryPlugItemRandomizedDefinition]"""}
     )

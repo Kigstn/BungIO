@@ -39,7 +39,7 @@ async def user(client) -> DestinyUser:
     Get a user which can be used for queries
     """
 
-    user = DestinyUser(membership_type=BungieMembershipType.TIGER_STEAM, membership_id=4611686018467765462)
+    user = DestinyUser(membership_type=3, membership_id=4611686018467765462)
 
     yield user
 

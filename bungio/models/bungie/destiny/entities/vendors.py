@@ -3,11 +3,12 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
 from bungio.models.base import BaseModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -53,7 +54,7 @@ class DestinyVendorComponent(BaseModel):
     seasonal_rank: int = attr.field()
     vendor_hash: int = attr.field()
     vendor_location_index: int = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()
 
 
 @attr.define
@@ -66,7 +67,7 @@ class DestinyVendorCategoriesComponent(BaseModel):
         categories: The list of categories for items that the vendor sells, in rendering order. These categories each point to a "display category" in the displayCategories property of the DestinyVendorDefinition, as opposed to the other categories.
     """
 
-    categories: list["DestinyVendorCategory"] = attr.field(metadata={"type": """list["DestinyVendorCategory"]"""})
+    categories: list["DestinyVendorCategory"] = attr.field(metadata={"type": """list[DestinyVendorCategory]"""})
 
 
 @attr.define
@@ -117,8 +118,10 @@ class DestinyVendorSaleItemComponent(BaseModel):
     """
 
     api_purchasable: bool = attr.field()
-    augments: "DestinyVendorItemState" = attr.field()
-    costs: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list["DestinyItemQuantity"]"""})
+    augments: Union["DestinyVendorItemState", int] = attr.field(
+        converter=enum_converter("DestinyVendorItemState"), metadata={"type": "DestinyVendorItemState"}
+    )
+    costs: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})
     failure_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
     item_hash: int = attr.field()
     item_value_visibility: list[bool] = attr.field(metadata={"type": """list[bool]"""})
@@ -126,8 +129,10 @@ class DestinyVendorSaleItemComponent(BaseModel):
     override_style_item_hash: int = attr.field()
     quantity: int = attr.field()
     required_unlocks: list[int] = attr.field(metadata={"type": """list[int]"""})
-    sale_status: "VendorItemStatus" = attr.field()
-    unlock_statuses: list["DestinyUnlockStatus"] = attr.field(metadata={"type": """list["DestinyUnlockStatus"]"""})
+    sale_status: Union["VendorItemStatus", int] = attr.field(
+        converter=enum_converter("VendorItemStatus"), metadata={"type": "VendorItemStatus"}
+    )
+    unlock_statuses: list["DestinyUnlockStatus"] = attr.field(metadata={"type": """list[DestinyUnlockStatus]"""})
     vendor_item_index: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()

@@ -10,7 +10,7 @@ import requests
 
 from bungio.definitions import ROOT_DIR
 
-Typing = namedtuple("Typing", "name manifest")
+Typing = namedtuple("Typing", "name manifest enum_type")
 
 mixin_params = {
     "DestinyCharacterMixin": [
@@ -314,7 +314,8 @@ def generate_function(
         }
 
         if create_raw_http:
-            arg_type = convert_to_typing(param["schema"]).name
+            arg_type = convert_to_typing(param["schema"])
+            arg_type = arg_type.name if not arg_type.enum_type else "int"
             m_arg_type = None
         else:
             arg_type = convert_to_typing(param["schema"], return_class_names=True, file_imports=file_imports).name
@@ -325,19 +326,22 @@ def generate_function(
             is_optional = info["in"] == "query"
             is_list = False
             clean_arg_type = arg_type
-            if "Optional" in arg_type:
+            if "Optional[" in arg_type:
                 clean_arg_type = clean_arg_type.removesuffix("]").removeprefix("Optional[")
                 is_optional = True
 
-            if "list" in arg_type:
+            if "list[" in arg_type:
                 clean_arg_type = clean_arg_type.removesuffix("]").removeprefix("list[")
                 is_list = True
 
+            if "Union[" in arg_type:
+                clean_arg_type = clean_arg_type.removesuffix(", int]").removeprefix("Union[")
+
             if any(clean_arg_type in imports for imports in file_imports):
                 if is_list:
-                    info["format"] = "[x.value for x in {name}]"
+                    info["format"] = """[getattr(x, "value", x) for x in {name}]"""
                 else:
-                    info["format"] = "{name}.value"
+                    info["format"] = """getattr({name}, "value", {name})"""
 
             if is_optional:
                 info["format"] = f"""{info["format"]} if {info["name"]} else None"""
@@ -410,10 +414,22 @@ def generate_function(
         ]["properties"]["Response"]
 
         # try to get the overwrite path if that exists and add that to the imports
-        return_model = convert_to_typing(data=return_info, return_class_names=True, file_imports=file_imports).name
+        return_model = convert_to_typing(data=return_info, return_class_names=True, file_imports=file_imports)
         m_return_model = convert_to_typing(
             data=return_info, return_class_names=True, type_checking_imports=True, mixin_imports=mixin_imports
-        ).name
+        )
+
+        # catch enums
+        if enum_type := return_model.enum_type:
+            enum_type = enum_type.replace('"', "")
+            return_model = return_model.name.replace(f"""Union[{enum_type}, int]""", enum_type)
+        else:
+            return_model = return_model.name
+        if enum_type := m_return_model.enum_type:
+            enum_type = enum_type.replace('"', "")
+            m_return_model = m_return_model.name.replace(f"""Union[{enum_type}, int]""", enum_type)
+        else:
+            m_return_model = m_return_model.name
 
     text += f""") -> {return_model}:
         \"\"\"
@@ -573,7 +589,9 @@ def convert_to_typing(
     return_class_names: bool = False,
     file_imports: Optional[set] = None,
     type_checking_imports: bool = False,
+    model_imports: bool = False,
     mixin_imports: Optional[set] = None,
+    enum_type: Optional[str] = None,
 ) -> Typing:
     arg_type = []
     is_list = False
@@ -587,7 +605,9 @@ def convert_to_typing(
             return_class_names=return_class_names,
             file_imports=file_imports,
             type_checking_imports=type_checking_imports,
+            model_imports=model_imports,
             mixin_imports=mixin_imports,
+            enum_type=enum_type,
         )
 
     if (dict_data := data.get("x-dictionary-key", None)) and (new_data := data.get("additionalProperties", None)):
@@ -596,18 +616,20 @@ def convert_to_typing(
             return_class_names=return_class_names,
             file_imports=file_imports,
             type_checking_imports=type_checking_imports,
+            model_imports=model_imports,
             mixin_imports=mixin_imports,
+            enum_type=enum_type,
         )
-        return Typing(
-            f"""dict[{convert_to_typing(
-                data=dict_data,
-                return_class_names=return_class_names,
-                file_imports=file_imports,
-                type_checking_imports=type_checking_imports,
-                mixin_imports=mixin_imports,
-            ).name}, {data_type.name}]""",
-            data_type.manifest,
+        res = convert_to_typing(
+            data=dict_data,
+            return_class_names=return_class_names,
+            file_imports=file_imports,
+            type_checking_imports=type_checking_imports,
+            model_imports=model_imports,
+            mixin_imports=mixin_imports,
+            enum_type=enum_type,
         )
+        return Typing(f"""dict[{res.name}, {data_type.name}]""", data_type.manifest, res.enum_type)
 
     if new_data := data.get("$ref", None):
         if return_class_names:
@@ -626,6 +648,8 @@ def convert_to_typing(
                     file_imports.add(import_text)
                 if isinstance(mixin_imports, set):
                     mixin_imports.add(import_text)
+                if model_imports:
+                    import_name = f"models.{import_name}"
                 if type_checking_imports:
                     import_name = f'"{import_name}"'
 
@@ -633,9 +657,9 @@ def convert_to_typing(
             except ModuleNotFoundError:
                 import_name = "dict"
 
-            return Typing(import_name, None)
+            return Typing(import_name, None, enum_type)
         else:
-            return Typing("Any", None)
+            return Typing("Any", None, enum_type)
 
     if new_data := data.get("x-enum-reference", None):
         ref_arg_type = convert_to_typing(
@@ -643,9 +667,12 @@ def convert_to_typing(
             return_class_names=return_class_names,
             file_imports=file_imports,
             type_checking_imports=type_checking_imports,
+            model_imports=model_imports,
             mixin_imports=mixin_imports,
+            enum_type=enum_type,
         )
-        arg_type.append(ref_arg_type.name)
+        arg_type.append(f"Union[{ref_arg_type.name}, int]")
+        enum_type = f"""\"{ref_arg_type.name.replace("models.", "").replace('"', "")}\""""
 
     else:
         if new_data := data.get("x-mapped-definition", None):
@@ -654,7 +681,9 @@ def convert_to_typing(
                 return_class_names=return_class_names,
                 file_imports=file_imports,
                 type_checking_imports=type_checking_imports,
+                model_imports=model_imports,
                 mixin_imports=mixin_imports,
+                enum_type=enum_type,
             )
             manifest_name = ref_arg_type.name
 
@@ -680,7 +709,9 @@ def convert_to_typing(
                     return_class_names=return_class_names,
                     file_imports=file_imports,
                     type_checking_imports=type_checking_imports,
+                    model_imports=model_imports,
                     mixin_imports=mixin_imports,
+                    enum_type=enum_type,
                 )
                 manifest_name = array_type.manifest
                 arg_type.append(array_type.name)
@@ -696,7 +727,7 @@ def convert_to_typing(
         return_text = f"""Union[{", ".join(arg_type)}]"""
     if is_list:
         return_text = f"list[{return_text}]"
-    return Typing(return_text, manifest_name)
+    return Typing(return_text, manifest_name, enum_type)
 
 
 def capital_case_to_snake_case(string: str) -> str:
@@ -741,18 +772,18 @@ def generate_models(api_schema: dict):
 import attr
 
 from datetime import datetime
-from typing import Optional, Any, TYPE_CHECKING, Union
+from typing import Optional, Any, Union, TYPE_CHECKING
 
+from bungio.utils import enum_converter
 from bungio.models.base import BaseModel, BaseEnum, ManifestModel
 
 {"%mixin_imports%" if mixins else ""}
-
 %imports%"""
 
         file_imports = set()
         mixin_imports = set()
         for model in models:
-            model_text = generate_model(api_schema, model, path, file_imports, mixin_imports)
+            model_text = generate_model(api_schema, model, models, path, file_imports, mixin_imports)
             text += f"""
 {model_text}
             """
@@ -772,9 +803,9 @@ from bungio.models.base import BaseModel, BaseEnum, ManifestModel
 if TYPE_CHECKING:
 {formatted_imports}"""
         text = text.replace("%imports%", formatted_imports)
-        file_path = os.path.join(base_path, path.replace(".", "/"))
 
         # put files that are also folders in init file
+        file_path = os.path.join(base_path, path.replace(".", "/"))
         if os.path.isdir(file_path):
             file_path = os.path.join(file_path, "__init__.py")
         else:
@@ -888,7 +919,9 @@ if TYPE_CHECKING:
     os.system(f"""git add "{base_path}\"""")
 
 
-def generate_model(api_schema: dict, model: dict, path: str, file_imports: set, mixin_imports: set = None) -> str:
+def generate_model(
+    api_schema: dict, model: dict, models: list[dict], path: str, file_imports: set, mixin_imports: set = None
+) -> str:
     # enums
     if data := model.get("x-enum-values", None):
         text = f"""
@@ -915,6 +948,7 @@ class {model["name"]}(BaseEnum):
                 data, return_class_names=True, file_imports=file_imports, type_checking_imports=True
             )
             data["param_type"] = param_type.name
+            data["enum_type"] = param_type.enum_type
             data["description"] = clean_desc(data)
 
             # write the manifest data as a new attr
@@ -923,6 +957,7 @@ class {model["name"]}(BaseEnum):
                 new_data = {
                     "param_type": f"Optional[{param_type.manifest}]",
                     "default": "default=None",
+                    "enum_type": None,
                     "description": f"Manifest information for `{capital_case_to_snake_case(name)}`",
                 }
                 properties[new_name] = new_data
@@ -980,16 +1015,20 @@ class {model["name"]}({"BaseModel" if "x-mobile-manifest-name" not in model else
         text += """
     \"\"\"
 """
-
         for name, data in properties.items():
-            default = default_val = data.get("default", "")
+            field_extras = []
             if "list" in data["param_type"] or "dict" in data["param_type"]:
-                default = f"""metadata = {{"type": \"\"\"{data["param_type"]}\"\"\"}}"""
-                if default_val:
-                    default = f"{default}, {default_val}"
+                field_extras.append(f"""metadata={{"type": \"\"\"{data["param_type"].replace('"', "")}\"\"\"}}""")
+                if default_val := data.get("default", None):
+                    field_extras.append(default_val)
 
+            elif data["enum_type"]:
+                field_extras.insert(0, f"""converter=enum_converter({data["enum_type"]})""")
+                field_extras.append(f"""metadata={{"type": {data["enum_type"]}}}""")
+
+            field_extras = ", ".join(field_extras)
             text += f"""
-    {name}: {data["param_type"]} = attr.field({default})"""
+    {name}: {data["param_type"]} = attr.field({field_extras})"""
 
     # arrays
     elif model["type"] == "array":

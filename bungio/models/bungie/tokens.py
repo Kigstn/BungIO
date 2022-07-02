@@ -57,7 +57,7 @@ class PartnerOfferSkuHistoryResponse(BaseModel):
     localized_name: str = attr.field()
     sku_identifier: str = attr.field()
     sku_offers: list["PartnerOfferHistoryResponse"] = attr.field(
-        metadata={"type": """list["PartnerOfferHistoryResponse"]"""}
+        metadata={"type": """list[PartnerOfferHistoryResponse]"""}
     )
     transaction_id: str = attr.field()
 
@@ -144,7 +144,7 @@ class RewardAvailabilityModel(BaseModel):
     """
 
     collectible_definitions: list["CollectibleDefinitions"] = attr.field(
-        metadata={"type": """list["CollectibleDefinitions"]"""}
+        metadata={"type": """list[CollectibleDefinitions]"""}
     )
     decrypted_token: str = attr.field()
     game_earn_by_date: datetime = attr.field()
@@ -154,7 +154,7 @@ class RewardAvailabilityModel(BaseModel):
     is_offer: bool = attr.field()
     offer_applied: bool = attr.field()
     record_definitions: list["DestinyRecordDefinition"] = attr.field(
-        metadata={"type": """list["DestinyRecordDefinition"]"""}
+        metadata={"type": """list[DestinyRecordDefinition]"""}
     )
     redemption_end_date: datetime = attr.field()
     shopify_end_date: datetime = attr.field()

@@ -2,11 +2,12 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
 from bungio.models.base import BaseModel, ManifestModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -61,15 +62,19 @@ class DestinyCollectibleDefinition(ManifestModel):
     item_hash: int = attr.field()
     parent_node_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     presentation_info: "DestinyPresentationChildBlock" = attr.field()
-    presentation_node_type: "DestinyPresentationNodeType" = attr.field()
+    presentation_node_type: Union["DestinyPresentationNodeType", int] = attr.field(
+        converter=enum_converter("DestinyPresentationNodeType"), metadata={"type": "DestinyPresentationNodeType"}
+    )
     redacted: bool = attr.field()
-    scope: "DestinyScope" = attr.field()
+    scope: Union["DestinyScope", int] = attr.field(
+        converter=enum_converter("DestinyScope"), metadata={"type": "DestinyScope"}
+    )
     source_hash: int = attr.field()
     source_string: str = attr.field()
     state_info: "DestinyCollectibleStateBlock" = attr.field()
     trait_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     trait_ids: list[str] = attr.field(metadata={"type": """list[str]"""})
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
 
 
 @attr.define
@@ -95,10 +100,8 @@ class DestinyCollectibleAcquisitionBlock(BaseModel):
 
     acquire_material_requirement_hash: int = attr.field()
     acquire_timestamp_unlock_value_hash: int = attr.field()
-    manifest_acquire_material_requirement_hash: Optional["DestinyMaterialRequirementSetDefinition"] = attr.field(
-        default=None
-    )
-    manifest_acquire_timestamp_unlock_value_hash: Optional["DestinyUnlockValueDefinition"] = attr.field(default=None)
+    manifest_acquire_material_requirement_hash: Optional["DestinyMaterialRequirementSetDefinition"] = attr.field()
+    manifest_acquire_timestamp_unlock_value_hash: Optional["DestinyUnlockValueDefinition"] = attr.field()
 
 
 @attr.define
@@ -123,4 +126,4 @@ class DestinyCollectibleStateBlock(BaseModel):
 
     obscured_override_item_hash: int = attr.field()
     requirements: "DestinyPresentationNodeRequirementsBlock" = attr.field()
-    manifest_obscured_override_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_obscured_override_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()

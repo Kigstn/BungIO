@@ -2,9 +2,12 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
+from typing import Union
+
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
+from bungio.utils import enum_converter
 
 
 @attr.define
@@ -47,17 +50,17 @@ class ContentTypeDescription(BaseModel):
     force_identifier_binding: bool = attr.field()
     name: str = attr.field()
     preview_image: str = attr.field()
-    previews: list["ContentPreview"] = attr.field(metadata={"type": """list["ContentPreview"]"""})
+    previews: list["ContentPreview"] = attr.field(metadata={"type": """list[ContentPreview]"""})
     priority: int = attr.field()
-    properties: list["ContentTypeProperty"] = attr.field(metadata={"type": """list["ContentTypeProperty"]"""})
+    properties: list["ContentTypeProperty"] = attr.field(metadata={"type": """list[ContentTypeProperty]"""})
     property_sections: list["ContentTypePropertySection"] = attr.field(
-        metadata={"type": """list["ContentTypePropertySection"]"""}
+        metadata={"type": """list[ContentTypePropertySection]"""}
     )
     reminder: str = attr.field()
     show_in_content_editor: bool = attr.field()
     suppress_cms_path: bool = attr.field()
-    tag_metadata: list["TagMetadataDefinition"] = attr.field(metadata={"type": """list["TagMetadataDefinition"]"""})
-    tag_metadata_items: dict[str, "TagMetadataItem"] = attr.field(metadata={"type": """dict[str, "TagMetadataItem"]"""})
+    tag_metadata: list["TagMetadataDefinition"] = attr.field(metadata={"type": """list[TagMetadataDefinition]"""})
+    tag_metadata_items: dict[str, "TagMetadataItem"] = attr.field(metadata={"type": """dict[str, TagMetadataItem]"""})
     type_of: str = attr.field()
     usage_examples: list[str] = attr.field(metadata={"type": """list[str]"""})
 
@@ -116,12 +119,12 @@ class ContentTypeProperty(BaseModel):
     attributes: dict[str, str] = attr.field(metadata={"type": """dict[str, str]"""})
     bind_to_property: str = attr.field()
     bound_regex: str = attr.field()
-    child_properties: list["ContentTypeProperty"] = attr.field(metadata={"type": """list["ContentTypeProperty"]"""})
+    child_properties: list["ContentTypeProperty"] = attr.field(metadata={"type": """list[ContentTypeProperty]"""})
     content_type_allowed: str = attr.field()
-    datatype: "ContentPropertyDataTypeEnum" = attr.field()
-    default_values: list["ContentTypeDefaultValue"] = attr.field(
-        metadata={"type": """list["ContentTypeDefaultValue"]"""}
+    datatype: Union["ContentPropertyDataTypeEnum", int] = attr.field(
+        converter=enum_converter("ContentPropertyDataTypeEnum"), metadata={"type": "ContentPropertyDataTypeEnum"}
     )
+    default_values: list["ContentTypeDefaultValue"] = attr.field(metadata={"type": """list[ContentTypeDefaultValue]"""})
     enabled: bool = attr.field()
     entitytype: str = attr.field()
     fallback: bool = attr.field()
@@ -231,7 +234,7 @@ class TagMetadataDefinition(BaseModel):
     datatype: str = attr.field()
     description: str = attr.field()
     is_required: bool = attr.field()
-    items: list["TagMetadataItem"] = attr.field(metadata={"type": """list["TagMetadataItem"]"""})
+    items: list["TagMetadataItem"] = attr.field(metadata={"type": """list[TagMetadataItem]"""})
     name: str = attr.field()
     order: int = attr.field()
 

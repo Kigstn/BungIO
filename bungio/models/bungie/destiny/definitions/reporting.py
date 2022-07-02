@@ -30,7 +30,7 @@ class DestinyReportReasonCategoryDefinition(ManifestModel):
     hash: int = attr.field()
     index: int = attr.field()
     reasons: dict[int, "DestinyReportReasonDefinition"] = attr.field(
-        metadata={"type": """dict[int, "DestinyReportReasonDefinition"]"""}
+        metadata={"type": """dict[int, DestinyReportReasonDefinition]"""}
     )
     redacted: bool = attr.field()
 

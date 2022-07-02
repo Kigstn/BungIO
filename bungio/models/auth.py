@@ -1,10 +1,13 @@
 import datetime
-from typing import Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
-from bungio.models import BungieMembershipType
 from bungio.models.base import MISSING, BaseModel
+from bungio.utils import enum_converter
+
+if TYPE_CHECKING:
+    from bungio.models import BungieMembershipType
 
 
 @attr.define
@@ -25,5 +28,5 @@ class AuthData(BaseModel):
     token_expiry: datetime.datetime = attr.field()
     refresh_token: str = attr.field()
     refresh_token_expiry: datetime.datetime = attr.field()
-    membership_type: BungieMembershipType = attr.field(default=MISSING)
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
     destiny_membership_id: int = attr.field(default=MISSING)

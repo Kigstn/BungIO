@@ -3,11 +3,12 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
 from bungio.models.base import BaseModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -71,27 +72,33 @@ class DestinyItemComponent(BaseModel):
         manifest_override_style_item_hash: Manifest information for `override_style_item_hash`
     """
 
-    bind_status: "ItemBindStatus" = attr.field()
+    bind_status: Union["ItemBindStatus", int] = attr.field(
+        converter=enum_converter("ItemBindStatus"), metadata={"type": "ItemBindStatus"}
+    )
     bucket_hash: int = attr.field()
     expiration_date: datetime = attr.field()
     is_wrapper: bool = attr.field()
     item_hash: int = attr.field()
     item_instance_id: int = attr.field()
     item_value_visibility: list[bool] = attr.field(metadata={"type": """list[bool]"""})
-    location: "ItemLocation" = attr.field()
+    location: Union["ItemLocation", int] = attr.field(
+        converter=enum_converter("ItemLocation"), metadata={"type": "ItemLocation"}
+    )
     lockable: bool = attr.field()
     metric_hash: int = attr.field()
     metric_objective: "DestinyObjectiveProgress" = attr.field()
     override_style_item_hash: int = attr.field()
     quantity: int = attr.field()
-    state: "ItemState" = attr.field()
+    state: Union["ItemState", int] = attr.field(converter=enum_converter("ItemState"), metadata={"type": "ItemState"})
     tooltip_notification_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    transfer_status: "TransferStatuses" = attr.field()
+    transfer_status: Union["TransferStatuses", int] = attr.field(
+        converter=enum_converter("TransferStatuses"), metadata={"type": "TransferStatuses"}
+    )
     version_number: int = attr.field()
-    manifest_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field(default=None)
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_metric_hash: Optional["DestinyMetricDefinition"] = attr.field(default=None)
-    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_metric_hash: Optional["DestinyMetricDefinition"] = attr.field()
+    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
 
 
 @attr.define
@@ -104,7 +111,7 @@ class DestinyItemPerksComponent(BaseModel):
         perks: The list of perks to display in an item tooltip - and whether or not they have been activated.
     """
 
-    perks: list["DestinyPerkReference"] = attr.field(metadata={"type": """list["DestinyPerkReference"]"""})
+    perks: list["DestinyPerkReference"] = attr.field(metadata={"type": """list[DestinyPerkReference]"""})
 
 
 @attr.define
@@ -121,7 +128,7 @@ class DestinyItemObjectivesComponent(BaseModel):
 
     date_completed: datetime = attr.field()
     flavor_objective: "DestinyObjectiveProgress" = attr.field()
-    objectives: list["DestinyObjectiveProgress"] = attr.field(metadata={"type": """list["DestinyObjectiveProgress"]"""})
+    objectives: list["DestinyObjectiveProgress"] = attr.field(metadata={"type": """list[DestinyObjectiveProgress]"""})
 
 
 @attr.define
@@ -159,8 +166,12 @@ class DestinyItemInstanceComponent(BaseModel):
     breaker_type: int = attr.field()
     breaker_type_hash: int = attr.field()
     can_equip: bool = attr.field()
-    cannot_equip_reason: "EquipFailureReason" = attr.field()
-    damage_type: "DamageType" = attr.field()
+    cannot_equip_reason: Union["EquipFailureReason", int] = attr.field(
+        converter=enum_converter("EquipFailureReason"), metadata={"type": "EquipFailureReason"}
+    )
+    damage_type: Union["DamageType", int] = attr.field(
+        converter=enum_converter("DamageType"), metadata={"type": "DamageType"}
+    )
     damage_type_hash: int = attr.field()
     energy: "DestinyItemInstanceEnergy" = attr.field()
     equip_required_level: int = attr.field()
@@ -169,8 +180,8 @@ class DestinyItemInstanceComponent(BaseModel):
     primary_stat: "DestinyStat" = attr.field()
     quality: int = attr.field()
     unlock_hashes_required_to_equip: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_breaker_type_hash: Optional["DestinyBreakerTypeDefinition"] = attr.field(default=None)
-    manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = attr.field(default=None)
+    manifest_breaker_type_hash: Optional["DestinyBreakerTypeDefinition"] = attr.field()
+    manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = attr.field()
 
 
 @attr.define
@@ -197,11 +208,13 @@ class DestinyItemInstanceEnergy(BaseModel):
     """
 
     energy_capacity: int = attr.field()
-    energy_type: "DestinyEnergyType" = attr.field()
+    energy_type: Union["DestinyEnergyType", int] = attr.field(
+        converter=enum_converter("DestinyEnergyType"), metadata={"type": "DestinyEnergyType"}
+    )
     energy_type_hash: int = attr.field()
     energy_unused: int = attr.field()
     energy_used: int = attr.field()
-    manifest_energy_type_hash: Optional["DestinyEnergyTypeDefinition"] = attr.field(default=None)
+    manifest_energy_type_hash: Optional["DestinyEnergyTypeDefinition"] = attr.field()
 
 
 @attr.define
@@ -229,7 +242,7 @@ class DestinyItemStatsComponent(BaseModel):
         stats: If the item has stats that it provides (damage, defense, etc...), it will be given here.
     """
 
-    stats: dict[int, "DestinyStat"] = attr.field(metadata={"type": """dict[int, "DestinyStat"]"""})
+    stats: dict[int, "DestinyStat"] = attr.field(metadata={"type": """dict[int, DestinyStat]"""})
 
 
 @attr.define
@@ -242,7 +255,7 @@ class DestinyItemSocketsComponent(BaseModel):
         sockets: The list of all sockets on the item, and their status information.
     """
 
-    sockets: list["DestinyItemSocketState"] = attr.field(metadata={"type": """list["DestinyItemSocketState"]"""})
+    sockets: list["DestinyItemSocketState"] = attr.field(metadata={"type": """list[DestinyItemSocketState]"""})
 
 
 @attr.define
@@ -271,7 +284,7 @@ class DestinyItemSocketState(BaseModel):
     is_enabled: bool = attr.field()
     is_visible: bool = attr.field()
     plug_hash: int = attr.field()
-    manifest_plug_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_plug_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
 
 
 @attr.define
@@ -298,6 +311,6 @@ class DestinyItemTalentGridComponent(BaseModel):
 
     grid_progression: "DestinyProgression" = attr.field()
     is_grid_complete: bool = attr.field()
-    nodes: list["DestinyTalentNode"] = attr.field(metadata={"type": """list["DestinyTalentNode"]"""})
+    nodes: list["DestinyTalentNode"] = attr.field(metadata={"type": """list[DestinyTalentNode]"""})
     talent_grid_hash: int = attr.field()
-    manifest_talent_grid_hash: Optional["DestinyTalentGridDefinition"] = attr.field(default=None)
+    manifest_talent_grid_hash: Optional["DestinyTalentGridDefinition"] = attr.field()

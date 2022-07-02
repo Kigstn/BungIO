@@ -2,11 +2,12 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 import attr
 
 from bungio.models.base import ManifestModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import DestinyBreakerType, DestinyDisplayPropertiesDefinition
@@ -27,7 +28,9 @@ class DestinyBreakerTypeDefinition(ManifestModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    enum_value: "DestinyBreakerType" = attr.field()
+    enum_value: Union["DestinyBreakerType", int] = attr.field(
+        converter=enum_converter("DestinyBreakerType"), metadata={"type": "DestinyBreakerType"}
+    )
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()

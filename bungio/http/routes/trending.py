@@ -1,4 +1,4 @@
-from typing import Any, Callable, Coroutine, Optional
+from typing import Callable, Coroutine, Optional
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -56,7 +56,7 @@ class TrendingRouteHttpRequests:
         )
 
     async def get_trending_entry_detail(
-        self, identifier: str, trending_entry_type: Any, auth: Optional[AuthData] = None
+        self, identifier: str, trending_entry_type: int, auth: Optional[AuthData] = None
     ) -> dict:
         """
         Returns the detailed results for a specific trending entry. Note that trending entries are uniquely identified by a combination of *both* the TrendingEntryType *and* the identifier: the identifier alone is not guaranteed to be globally unique.

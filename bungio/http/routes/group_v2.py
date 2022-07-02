@@ -1,4 +1,4 @@
-from typing import Any, Callable, Coroutine, Optional
+from typing import Any, Callable, Coroutine, Optional, Union
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -51,7 +51,7 @@ class GroupV2RouteHttpRequests:
 
         return await self.request(Route(path=f"/GroupV2/GetAvailableThemes/", method="GET", auth=auth))
 
-    async def get_user_clan_invite_setting(self, m_type: Any, auth: AuthData) -> dict:
+    async def get_user_clan_invite_setting(self, m_type: int, auth: AuthData) -> dict:
         """
         Gets the state of the user's clan invite preferences for a particular membership type - true if they wish to be invited to clans, false otherwise.
 
@@ -77,7 +77,7 @@ class GroupV2RouteHttpRequests:
 
         return await self.request(Route(path=f"/GroupV2/GetUserClanInviteSetting/{m_type}/", method="GET", auth=auth))
 
-    async def get_recommended_groups(self, create_date_range: Any, group_type: Any, auth: AuthData) -> dict:
+    async def get_recommended_groups(self, create_date_range: int, group_type: int, auth: AuthData) -> dict:
         """
         Gets groups recommended for you based on the groups to whom those you follow belong.
 
@@ -109,9 +109,9 @@ class GroupV2RouteHttpRequests:
     async def group_search(
         self,
         name: str,
-        group_type: Any,
-        creation_date: Any,
-        sort_by: Any,
+        group_type: Union[Any, int],
+        creation_date: Union[Any, int],
+        sort_by: Union[Any, int],
         group_member_count_filter: int,
         locale_filter: str,
         tag_text: str,
@@ -187,7 +187,7 @@ class GroupV2RouteHttpRequests:
 
         return await self.request(Route(path=f"/GroupV2/{group_id}/", method="GET", auth=auth))
 
-    async def get_group_by_name(self, group_name: str, group_type: Any, auth: Optional[AuthData] = None) -> dict:
+    async def get_group_by_name(self, group_name: str, group_type: int, auth: Optional[AuthData] = None) -> dict:
         """
         Get information about a specific group with the given name and type.
 
@@ -211,7 +211,9 @@ class GroupV2RouteHttpRequests:
 
         return await self.request(Route(path=f"/GroupV2/Name/{group_name}/{group_type}/", method="GET", auth=auth))
 
-    async def get_group_by_name_v2(self, group_name: str, group_type: Any, auth: Optional[AuthData] = None) -> dict:
+    async def get_group_by_name_v2(
+        self, group_name: str, group_type: Union[Any, int], auth: Optional[AuthData] = None
+    ) -> dict:
         """
         Get information about a specific group with the given name and type. The POST version.
 
@@ -451,7 +453,7 @@ class GroupV2RouteHttpRequests:
         )
 
     async def add_optional_conversation(
-        self, chat_name: str, chat_security: Any, group_id: int, auth: AuthData
+        self, chat_name: str, chat_security: Union[Any, int], group_id: int, auth: AuthData
     ) -> dict:
         """
         Add a new optional conversation/chat channel. Requires admin permissions to the group.
@@ -542,7 +544,7 @@ class GroupV2RouteHttpRequests:
         self,
         currentpage: int,
         group_id: int,
-        member_type: Optional[Any] = None,
+        member_type: Optional[int] = None,
         name_search: Optional[str] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
@@ -606,7 +608,7 @@ class GroupV2RouteHttpRequests:
         return await self.request(Route(path=f"/GroupV2/{group_id}/AdminsAndFounder/", method="GET", auth=auth))
 
     async def edit_group_membership(
-        self, group_id: int, membership_id: int, membership_type: Any, member_type: Any, auth: AuthData
+        self, group_id: int, membership_id: int, membership_type: int, member_type: int, auth: AuthData
     ) -> dict:
         """
         Edit the membership type of a given member. You must have suitable permissions in the group to perform this operation.
@@ -642,7 +644,7 @@ class GroupV2RouteHttpRequests:
             )
         )
 
-    async def kick_member(self, group_id: int, membership_id: int, membership_type: Any, auth: AuthData) -> dict:
+    async def kick_member(self, group_id: int, membership_id: int, membership_type: int, auth: AuthData) -> dict:
         """
         Kick a member from the given group, forcing them to reapply if they wish to re-join the group. You must have suitable permissions in the group to perform this operation.
 
@@ -673,7 +675,13 @@ class GroupV2RouteHttpRequests:
         )
 
     async def ban_member(
-        self, comment: str, length: Any, group_id: int, membership_id: int, membership_type: Any, auth: AuthData
+        self,
+        comment: str,
+        length: Union[Any, int],
+        group_id: int,
+        membership_id: int,
+        membership_type: int,
+        auth: AuthData,
     ) -> dict:
         """
         Bans the requested member from the requested group for the specified period of time.
@@ -716,7 +724,7 @@ class GroupV2RouteHttpRequests:
             )
         )
 
-    async def unban_member(self, group_id: int, membership_id: int, membership_type: Any, auth: AuthData) -> dict:
+    async def unban_member(self, group_id: int, membership_id: int, membership_type: int, auth: AuthData) -> dict:
         """
         Unbans the requested member, allowing them to re-apply for membership.
 
@@ -776,7 +784,7 @@ class GroupV2RouteHttpRequests:
         return await self.request(Route(path=f"/GroupV2/{group_id}/Banned/", method="GET", auth=auth))
 
     async def abdicate_foundership(
-        self, founder_id_new: int, group_id: int, membership_type: Any, auth: Optional[AuthData] = None
+        self, founder_id_new: int, group_id: int, membership_type: int, auth: Optional[AuthData] = None
     ) -> dict:
         """
         An administrative method to allow the founder of a group or clan to give up their position to another admin permanently.
@@ -968,7 +976,7 @@ class GroupV2RouteHttpRequests:
         )
 
     async def approve_pending(
-        self, message: str, group_id: int, membership_id: int, membership_type: Any, auth: AuthData
+        self, message: str, group_id: int, membership_id: int, membership_type: int, auth: AuthData
     ) -> dict:
         """
         Approve the given membershipId to join the group/clan as long as they have applied.
@@ -1045,7 +1053,7 @@ class GroupV2RouteHttpRequests:
         )
 
     async def get_groups_for_member(
-        self, filter: Any, group_type: Any, membership_id: int, membership_type: Any, auth: Optional[AuthData] = None
+        self, filter: int, group_type: int, membership_id: int, membership_type: int, auth: Optional[AuthData] = None
     ) -> dict:
         """
         Get information about the groups that a given member has joined.
@@ -1077,7 +1085,7 @@ class GroupV2RouteHttpRequests:
         )
 
     async def recover_group_for_founder(
-        self, group_type: Any, membership_id: int, membership_type: Any, auth: Optional[AuthData] = None
+        self, group_type: int, membership_id: int, membership_type: int, auth: Optional[AuthData] = None
     ) -> dict:
         """
         Allows a founder to manually recover a group they can see in game but not on bungie.net
@@ -1106,7 +1114,7 @@ class GroupV2RouteHttpRequests:
         )
 
     async def get_potential_groups_for_member(
-        self, filter: Any, group_type: Any, membership_id: int, membership_type: Any, auth: Optional[AuthData] = None
+        self, filter: int, group_type: int, membership_id: int, membership_type: int, auth: Optional[AuthData] = None
     ) -> dict:
         """
         Get information about the groups that a given member has applied to or been invited to.
@@ -1140,7 +1148,7 @@ class GroupV2RouteHttpRequests:
         )
 
     async def individual_group_invite(
-        self, message: str, group_id: int, membership_id: int, membership_type: Any, auth: AuthData
+        self, message: str, group_id: int, membership_id: int, membership_type: int, auth: AuthData
     ) -> dict:
         """
         Invite a user to join this group.
@@ -1182,7 +1190,7 @@ class GroupV2RouteHttpRequests:
         )
 
     async def individual_group_invite_cancel(
-        self, group_id: int, membership_id: int, membership_type: Any, auth: AuthData
+        self, group_id: int, membership_id: int, membership_type: int, auth: AuthData
     ) -> dict:
         """
         Cancels a pending invitation to join a group.

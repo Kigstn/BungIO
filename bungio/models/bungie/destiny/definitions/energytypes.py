@@ -2,11 +2,12 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
 from bungio.models.base import ManifestModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -47,11 +48,13 @@ class DestinyEnergyTypeDefinition(ManifestModel):
     capacity_stat_hash: int = attr.field()
     cost_stat_hash: int = attr.field()
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    enum_value: "DestinyEnergyType" = attr.field()
+    enum_value: Union["DestinyEnergyType", int] = attr.field(
+        converter=enum_converter("DestinyEnergyType"), metadata={"type": "DestinyEnergyType"}
+    )
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
     show_icon: bool = attr.field()
     transparent_icon_path: str = attr.field()
-    manifest_capacity_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
-    manifest_cost_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
+    manifest_capacity_stat_hash: Optional["DestinyStatDefinition"] = attr.field()
+    manifest_cost_stat_hash: Optional["DestinyStatDefinition"] = attr.field()

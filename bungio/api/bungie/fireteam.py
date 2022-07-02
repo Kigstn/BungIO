@@ -2,7 +2,7 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import Optional
+from typing import Optional, Union
 
 import attr
 
@@ -42,12 +42,12 @@ class FireteamRouteInterface(ClientMixin):
     async def get_available_clan_fireteams(
         self,
         activity_type: int,
-        date_range: FireteamDateRange,
+        date_range: Union[FireteamDateRange, int],
         group_id: int,
         page: int,
-        platform: FireteamPlatform,
-        public_only: FireteamPublicSearchOption,
-        slot_filter: FireteamSlotSearch,
+        platform: Union[FireteamPlatform, int],
+        public_only: Union[FireteamPublicSearchOption, int],
+        slot_filter: Union[FireteamSlotSearch, int],
         auth: AuthData,
         lang_filter: Optional[str] = None,
     ) -> SearchResultOfFireteamSummary:
@@ -74,12 +74,12 @@ class FireteamRouteInterface(ClientMixin):
 
         response = await self._client.http.get_available_clan_fireteams(
             activity_type=activity_type,
-            date_range=date_range.value,
+            date_range=getattr(date_range, "value", date_range),
             group_id=group_id,
             page=page,
-            platform=platform.value,
-            public_only=public_only.value,
-            slot_filter=slot_filter.value,
+            platform=getattr(platform, "value", platform),
+            public_only=getattr(public_only, "value", public_only),
+            slot_filter=getattr(slot_filter, "value", slot_filter),
             auth=auth,
             lang_filter=lang_filter if lang_filter else None,
         )
@@ -100,10 +100,10 @@ class FireteamRouteInterface(ClientMixin):
     async def search_public_available_clan_fireteams(
         self,
         activity_type: int,
-        date_range: FireteamDateRange,
+        date_range: Union[FireteamDateRange, int],
         page: int,
-        platform: FireteamPlatform,
-        slot_filter: FireteamSlotSearch,
+        platform: Union[FireteamPlatform, int],
+        slot_filter: Union[FireteamSlotSearch, int],
         auth: AuthData,
         lang_filter: Optional[str] = None,
     ) -> SearchResultOfFireteamSummary:
@@ -128,10 +128,10 @@ class FireteamRouteInterface(ClientMixin):
 
         response = await self._client.http.search_public_available_clan_fireteams(
             activity_type=activity_type,
-            date_range=date_range.value,
+            date_range=getattr(date_range, "value", date_range),
             page=page,
-            platform=platform.value,
-            slot_filter=slot_filter.value,
+            platform=getattr(platform, "value", platform),
+            slot_filter=getattr(slot_filter, "value", slot_filter),
             auth=auth,
             lang_filter=lang_filter if lang_filter else None,
         )
@@ -152,7 +152,7 @@ class FireteamRouteInterface(ClientMixin):
         group_id: int,
         include_closed: bool,
         page: int,
-        platform: FireteamPlatform,
+        platform: Union[FireteamPlatform, int],
         auth: AuthData,
         group_filter: Optional[bool] = None,
         lang_filter: Optional[str] = None,
@@ -180,7 +180,7 @@ class FireteamRouteInterface(ClientMixin):
             group_id=group_id,
             include_closed=include_closed,
             page=page,
-            platform=platform.value,
+            platform=getattr(platform, "value", platform),
             auth=auth,
             group_filter=group_filter if group_filter else None,
             lang_filter=lang_filter if lang_filter else None,

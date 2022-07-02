@@ -2,11 +2,12 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 import attr
 
 from bungio.models.base import BaseModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import BungieCredentialType
@@ -27,5 +28,7 @@ class GetCredentialTypesForAccountResponse(BaseModel):
 
     credential_as_string: str = attr.field()
     credential_display_name: str = attr.field()
-    credential_type: "BungieCredentialType" = attr.field()
+    credential_type: Union["BungieCredentialType", int] = attr.field(
+        converter=enum_converter("BungieCredentialType"), metadata={"type": "BungieCredentialType"}
+    )
     is_public: bool = attr.field()

@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING, Any, Optional, Union
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel, ManifestModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import GeneralUser
@@ -50,7 +51,7 @@ class ContentItemPublicContract(BaseModel):
     modify_date: datetime = attr.field()
     properties: dict[str, Any] = attr.field(metadata={"type": """dict[str, Any]"""})
     rating_image_path: str = attr.field()
-    representations: list["ContentRepresentation"] = attr.field(metadata={"type": """list["ContentRepresentation"]"""})
+    representations: list["ContentRepresentation"] = attr.field(metadata={"type": """list[ContentRepresentation]"""})
     tags: list[str] = attr.field(metadata={"type": """list[str]"""})
 
 

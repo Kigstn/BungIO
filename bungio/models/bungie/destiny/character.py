@@ -57,7 +57,7 @@ class DestinyCharacterPeerView(BaseModel):
         equipment: _No description given by bungie._
     """
 
-    equipment: list["DestinyItemPeerView"] = attr.field(metadata={"type": """list["DestinyItemPeerView"]"""})
+    equipment: list["DestinyItemPeerView"] = attr.field(metadata={"type": """list[DestinyItemPeerView]"""})
 
 
 @attr.define
@@ -80,6 +80,6 @@ class DestinyItemPeerView(BaseModel):
         manifest_item_hash: Manifest information for `item_hash`
     """
 
-    dyes: list["DyeReference"] = attr.field(metadata={"type": """list["DyeReference"]"""})
+    dyes: list["DyeReference"] = attr.field(metadata={"type": """list[DyeReference]"""})
     item_hash: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()

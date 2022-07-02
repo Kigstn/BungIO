@@ -2,7 +2,7 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import Optional
+from typing import Optional, Union
 
 import attr
 
@@ -95,7 +95,7 @@ class UserRouteInterface(ClientMixin):
         return [await UserTheme.from_dict(data=value, client=self._client, auth=auth) for value in response["Response"]]
 
     async def get_membership_data_by_id(
-        self, membership_id: int, membership_type: BungieMembershipType, auth: Optional[AuthData] = None
+        self, membership_id: int, membership_type: Union[BungieMembershipType, int], auth: Optional[AuthData] = None
     ) -> UserMembershipData:
         """
         Returns a list of accounts associated with the supplied membership ID and membership type. This will include all linked accounts (even when hidden) if supplied credentials permit it.
@@ -110,7 +110,7 @@ class UserRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_membership_data_by_id(
-            membership_id=membership_id, membership_type=membership_type.value, auth=auth
+            membership_id=membership_id, membership_type=getattr(membership_type, "value", membership_type), auth=auth
         )
         return await UserMembershipData.from_dict(
             data=response, client=self._client, membership_id=membership_id, membership_type=membership_type, auth=auth
@@ -134,7 +134,7 @@ class UserRouteInterface(ClientMixin):
         return await UserMembershipData.from_dict(data=response, client=self._client, auth=auth)
 
     async def get_membership_from_hard_linked_credential(
-        self, credential: str, cr_type: BungieCredentialType, auth: Optional[AuthData] = None
+        self, credential: str, cr_type: Union[BungieCredentialType, int], auth: Optional[AuthData] = None
     ) -> HardLinkedUserMembership:
         """
         Gets any hard linked membership given a credential. Only works for credentials that are public (just SteamID64 right now). Cross Save aware.
@@ -149,7 +149,7 @@ class UserRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_membership_from_hard_linked_credential(
-            credential=credential, cr_type=cr_type.value, auth=auth
+            credential=credential, cr_type=getattr(cr_type, "value", cr_type), auth=auth
         )
         return await HardLinkedUserMembership.from_dict(
             data=response, client=self._client, credential=credential, cr_type=cr_type, auth=auth

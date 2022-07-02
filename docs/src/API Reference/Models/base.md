@@ -1,3 +1,3 @@
-# Base Models
+# Base
 
 ::: bungio.models.base

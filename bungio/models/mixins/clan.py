@@ -1,11 +1,13 @@
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
 from bungio.models.base import ClientMixin, FuzzyAttrFinder
 
 if TYPE_CHECKING:
+    from bungio import AuthData
+
     # AUTOMATIC IMPORTS START
     from bungio.models import (
         BungieMembershipType,
@@ -169,7 +171,7 @@ class DestinyClanMixin(ClientMixin, FuzzyAttrFinder):
     async def get_members_of_group(
         self,
         currentpage: int,
-        member_type: "RuntimeGroupMemberType",
+        member_type: Union["RuntimeGroupMemberType", int],
         name_search: str,
         auth: Optional["AuthData"] = None,
     ) -> "SearchResultOfGroupMember":
@@ -232,7 +234,10 @@ class DestinyClanMixin(ClientMixin, FuzzyAttrFinder):
         )
 
     async def abdicate_foundership(
-        self, founder_id_new: int, membership_type: "BungieMembershipType", auth: Optional["AuthData"] = None
+        self,
+        founder_id_new: int,
+        membership_type: Union["BungieMembershipType", int],
+        auth: Optional["AuthData"] = None,
     ) -> bool:
         """
         An administrative method to allow the founder of a group or clan to give up their position to another admin permanently.
@@ -447,11 +452,11 @@ class DestinyClanMixin(ClientMixin, FuzzyAttrFinder):
     async def get_available_clan_fireteams(
         self,
         activity_type: int,
-        date_range: "FireteamDateRange",
+        date_range: Union["FireteamDateRange", int],
         page: int,
-        platform: "FireteamPlatform",
-        public_only: "FireteamPublicSearchOption",
-        slot_filter: "FireteamSlotSearch",
+        platform: Union["FireteamPlatform", int],
+        public_only: Union["FireteamPublicSearchOption", int],
+        slot_filter: Union["FireteamSlotSearch", int],
         auth: "AuthData",
         lang_filter: str,
     ) -> "SearchResultOfFireteamSummary":
@@ -491,7 +496,7 @@ class DestinyClanMixin(ClientMixin, FuzzyAttrFinder):
         self,
         include_closed: bool,
         page: int,
-        platform: "FireteamPlatform",
+        platform: Union["FireteamPlatform", int],
         auth: "AuthData",
         group_filter: bool,
         lang_filter: str,

@@ -3,11 +3,12 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import BungieMembershipType
@@ -43,8 +44,10 @@ class AwaPermissionRequested(BaseModel):
 
     affected_item_id: int = attr.field()
     character_id: int = attr.field()
-    membership_type: "BungieMembershipType" = attr.field()
-    type: "AwaType" = attr.field()
+    membership_type: Union["BungieMembershipType", int] = attr.field(
+        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+    )
+    type: Union["AwaType", int] = attr.field(converter=enum_converter("AwaType"), metadata={"type": "AwaType"})
 
 
 class AwaType(BaseEnum):
@@ -72,7 +75,9 @@ class AwaUserResponse(BaseModel):
 
     correlation_id: str = attr.field()
     nonce: list[int] = attr.field(metadata={"type": """list[int]"""})
-    selection: "AwaUserSelection" = attr.field()
+    selection: Union["AwaUserSelection", int] = attr.field(
+        converter=enum_converter("AwaUserSelection"), metadata={"type": "AwaUserSelection"}
+    )
 
 
 class AwaUserSelection(BaseEnum):
@@ -108,10 +113,16 @@ class AwaAuthorizationResult(BaseModel):
     action_token: str = attr.field()
     developer_note: str = attr.field()
     maximum_number_of_uses: int = attr.field()
-    membership_type: "BungieMembershipType" = attr.field()
-    response_reason: "AwaResponseReason" = attr.field()
-    type: "AwaType" = attr.field()
-    user_selection: "AwaUserSelection" = attr.field()
+    membership_type: Union["BungieMembershipType", int] = attr.field(
+        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+    )
+    response_reason: Union["AwaResponseReason", int] = attr.field(
+        converter=enum_converter("AwaResponseReason"), metadata={"type": "AwaResponseReason"}
+    )
+    type: Union["AwaType", int] = attr.field(converter=enum_converter("AwaType"), metadata={"type": "AwaType"})
+    user_selection: Union["AwaUserSelection", int] = attr.field(
+        converter=enum_converter("AwaUserSelection"), metadata={"type": "AwaUserSelection"}
+    )
     valid_until: datetime = attr.field()
 
 

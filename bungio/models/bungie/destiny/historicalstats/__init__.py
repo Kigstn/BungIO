@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING, Any, Optional, Union
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel, ManifestModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -40,12 +41,12 @@ class DestinyPostGameCarnageReportData(BaseModel):
     activity_details: "DestinyHistoricalStatsActivity" = attr.field()
     activity_was_started_from_beginning: bool = attr.field()
     entries: list["DestinyPostGameCarnageReportEntry"] = attr.field(
-        metadata={"type": """list["DestinyPostGameCarnageReportEntry"]"""}
+        metadata={"type": """list[DestinyPostGameCarnageReportEntry]"""}
     )
     period: datetime = attr.field()
     starting_phase_index: int = attr.field()
     teams: list["DestinyPostGameCarnageReportTeamEntry"] = attr.field(
-        metadata={"type": """list["DestinyPostGameCarnageReportTeamEntry"]"""}
+        metadata={"type": """list[DestinyPostGameCarnageReportTeamEntry]"""}
     )
 
 
@@ -78,12 +79,18 @@ class DestinyHistoricalStatsActivity(BaseModel):
     director_activity_hash: int = attr.field()
     instance_id: int = attr.field()
     is_private: bool = attr.field()
-    membership_type: "BungieMembershipType" = attr.field()
-    mode: "DestinyActivityModeType" = attr.field()
-    modes: list["DestinyActivityModeType"] = attr.field(metadata={"type": """list["DestinyActivityModeType"]"""})
+    membership_type: Union["BungieMembershipType", int] = attr.field(
+        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+    )
+    mode: Union["DestinyActivityModeType", int] = attr.field(
+        converter=enum_converter("DestinyActivityModeType"), metadata={"type": "DestinyActivityModeType"}
+    )
+    modes: list[Union["DestinyActivityModeType", int]] = attr.field(
+        metadata={"type": """list[Union[DestinyActivityModeType, int]]"""}
+    )
     reference_id: int = attr.field()
-    manifest_director_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_reference_id: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_director_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
+    manifest_reference_id: Optional["DestinyActivityDefinition"] = attr.field()
 
 
 @attr.define
@@ -107,7 +114,7 @@ class DestinyPostGameCarnageReportEntry(BaseModel):
     score: "DestinyHistoricalStatsValue" = attr.field()
     standing: int = attr.field()
     values: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
-        metadata={"type": """dict[str, "DestinyHistoricalStatsValue"]"""}
+        metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
 
 
@@ -190,10 +197,10 @@ class DestinyPlayer(BaseModel):
     gender_hash: int = attr.field()
     light_level: int = attr.field()
     race_hash: int = attr.field()
-    manifest_class_hash: Optional["DestinyClassDefinition"] = attr.field(default=None)
-    manifest_emblem_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_gender_hash: Optional["DestinyGenderDefinition"] = attr.field(default=None)
-    manifest_race_hash: Optional["DestinyRaceDefinition"] = attr.field(default=None)
+    manifest_class_hash: Optional["DestinyClassDefinition"] = attr.field()
+    manifest_emblem_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_gender_hash: Optional["DestinyGenderDefinition"] = attr.field()
+    manifest_race_hash: Optional["DestinyRaceDefinition"] = attr.field()
 
 
 @attr.define
@@ -208,10 +215,10 @@ class DestinyPostGameCarnageReportExtendedData(BaseModel):
     """
 
     values: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
-        metadata={"type": """dict[str, "DestinyHistoricalStatsValue"]"""}
+        metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
     weapons: list["DestinyHistoricalWeaponStats"] = attr.field(
-        metadata={"type": """list["DestinyHistoricalWeaponStats"]"""}
+        metadata={"type": """list[DestinyHistoricalWeaponStats]"""}
     )
 
 
@@ -237,9 +244,9 @@ class DestinyHistoricalWeaponStats(BaseModel):
 
     reference_id: int = attr.field()
     values: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
-        metadata={"type": """dict[str, "DestinyHistoricalStatsValue"]"""}
+        metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
-    manifest_reference_id: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_reference_id: Optional["DestinyInventoryItemDefinition"] = attr.field()
 
 
 @attr.define
@@ -272,7 +279,7 @@ class DestinyLeaderboard(BaseModel):
         stat_id: _No description given by bungie._
     """
 
-    entries: list["DestinyLeaderboardEntry"] = attr.field(metadata={"type": """list["DestinyLeaderboardEntry"]"""})
+    entries: list["DestinyLeaderboardEntry"] = attr.field(metadata={"type": """list[DestinyLeaderboardEntry]"""})
     stat_id: str = attr.field()
 
 
@@ -322,7 +329,9 @@ class DestinyClanAggregateStat(BaseModel):
         value: Value of the stat for this player
     """
 
-    mode: "DestinyActivityModeType" = attr.field()
+    mode: Union["DestinyActivityModeType", int] = attr.field(
+        converter=enum_converter("DestinyActivityModeType"), metadata={"type": "DestinyActivityModeType"}
+    )
     stat_id: str = attr.field()
     value: "DestinyHistoricalStatsValue" = attr.field()
 
@@ -343,22 +352,22 @@ class DestinyHistoricalStatsByPeriod(BaseModel):
     """
 
     all_time: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
-        metadata={"type": """dict[str, "DestinyHistoricalStatsValue"]"""}
+        metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
     all_time_tier1: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
-        metadata={"type": """dict[str, "DestinyHistoricalStatsValue"]"""}
+        metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
     all_time_tier2: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
-        metadata={"type": """dict[str, "DestinyHistoricalStatsValue"]"""}
+        metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
     all_time_tier3: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
-        metadata={"type": """dict[str, "DestinyHistoricalStatsValue"]"""}
+        metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
     daily: list["DestinyHistoricalStatsPeriodGroup"] = attr.field(
-        metadata={"type": """list["DestinyHistoricalStatsPeriodGroup"]"""}
+        metadata={"type": """list[DestinyHistoricalStatsPeriodGroup]"""}
     )
     monthly: list["DestinyHistoricalStatsPeriodGroup"] = attr.field(
-        metadata={"type": """list["DestinyHistoricalStatsPeriodGroup"]"""}
+        metadata={"type": """list[DestinyHistoricalStatsPeriodGroup]"""}
     )
 
 
@@ -377,7 +386,7 @@ class DestinyHistoricalStatsPeriodGroup(BaseModel):
     activity_details: "DestinyHistoricalStatsActivity" = attr.field()
     period: datetime = attr.field()
     values: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
-        metadata={"type": """dict[str, "DestinyHistoricalStatsValue"]"""}
+        metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
 
 
@@ -394,7 +403,7 @@ class DestinyHistoricalStatsAccountResult(BaseModel):
     """
 
     characters: list["DestinyHistoricalStatsPerCharacter"] = attr.field(
-        metadata={"type": """list["DestinyHistoricalStatsPerCharacter"]"""}
+        metadata={"type": """list[DestinyHistoricalStatsPerCharacter]"""}
     )
     merged_all_characters: "DestinyHistoricalStatsWithMerged" = attr.field()
     merged_deleted_characters: "DestinyHistoricalStatsWithMerged" = attr.field()
@@ -413,7 +422,7 @@ class DestinyHistoricalStatsWithMerged(BaseModel):
 
     merged: "DestinyHistoricalStatsByPeriod" = attr.field()
     results: dict[str, "DestinyHistoricalStatsByPeriod"] = attr.field(
-        metadata={"type": """dict[str, "DestinyHistoricalStatsByPeriod"]"""}
+        metadata={"type": """dict[str, DestinyHistoricalStatsByPeriod]"""}
     )
 
 
@@ -434,7 +443,7 @@ class DestinyHistoricalStatsPerCharacter(BaseModel):
     deleted: bool = attr.field()
     merged: "DestinyHistoricalStatsByPeriod" = attr.field()
     results: dict[str, "DestinyHistoricalStatsByPeriod"] = attr.field(
-        metadata={"type": """dict[str, "DestinyHistoricalStatsByPeriod"]"""}
+        metadata={"type": """dict[str, DestinyHistoricalStatsByPeriod]"""}
     )
 
 
@@ -449,7 +458,7 @@ class DestinyActivityHistoryResults(BaseModel):
     """
 
     activities: list["DestinyHistoricalStatsPeriodGroup"] = attr.field(
-        metadata={"type": """list["DestinyHistoricalStatsPeriodGroup"]"""}
+        metadata={"type": """list[DestinyHistoricalStatsPeriodGroup]"""}
     )
 
 
@@ -464,7 +473,7 @@ class DestinyHistoricalWeaponStatsData(BaseModel):
     """
 
     weapons: list["DestinyHistoricalWeaponStats"] = attr.field(
-        metadata={"type": """list["DestinyHistoricalWeaponStats"]"""}
+        metadata={"type": """list[DestinyHistoricalWeaponStats]"""}
     )
 
 
@@ -479,7 +488,7 @@ class DestinyAggregateActivityResults(BaseModel):
     """
 
     activities: list["DestinyAggregateActivityStats"] = attr.field(
-        metadata={"type": """list["DestinyAggregateActivityStats"]"""}
+        metadata={"type": """list[DestinyAggregateActivityStats]"""}
     )
 
 
@@ -505,6 +514,6 @@ class DestinyAggregateActivityStats(BaseModel):
 
     activity_hash: int = attr.field()
     values: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
-        metadata={"type": """dict[str, "DestinyHistoricalStatsValue"]"""}
+        metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()

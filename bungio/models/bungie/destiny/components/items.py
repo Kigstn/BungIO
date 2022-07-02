@@ -27,7 +27,7 @@ class DestinyItemReusablePlugsComponent(BaseModel):
     """
 
     plugs: dict[int, list["DestinyItemPlugBase"]] = attr.field(
-        metadata={"type": """dict[int, list["DestinyItemPlugBase"]]"""}
+        metadata={"type": """dict[int, list[DestinyItemPlugBase]]"""}
     )
 
 
@@ -42,7 +42,7 @@ class DestinyItemPlugObjectivesComponent(BaseModel):
     """
 
     objectives_per_plug: dict[int, list["DestinyObjectiveProgress"]] = attr.field(
-        metadata={"type": """dict[int, list["DestinyObjectiveProgress"]]"""}
+        metadata={"type": """dict[int, list[DestinyObjectiveProgress]]"""}
     )
 
 
@@ -76,6 +76,6 @@ class DestinyItemPlugComponent(BaseModel):
     insert_fail_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
     plug_item_hash: int = attr.field()
     plug_objectives: list["DestinyObjectiveProgress"] = attr.field(
-        metadata={"type": """list["DestinyObjectiveProgress"]"""}
+        metadata={"type": """list[DestinyObjectiveProgress]"""}
     )
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()

@@ -36,7 +36,7 @@ class DestinyArtifactDefinition(ManifestModel):
     index: int = attr.field()
     redacted: bool = attr.field()
     tiers: list["DestinyArtifactTierDefinition"] = attr.field(
-        metadata={"type": """list["DestinyArtifactTierDefinition"]"""}
+        metadata={"type": """list[DestinyArtifactTierDefinition]"""}
     )
     translation_block: "DestinyItemTranslationBlockDefinition" = attr.field()
 
@@ -57,7 +57,7 @@ class DestinyArtifactTierDefinition(BaseModel):
 
     display_title: str = attr.field()
     items: list["DestinyArtifactTierItemDefinition"] = attr.field(
-        metadata={"type": """list["DestinyArtifactTierItemDefinition"]"""}
+        metadata={"type": """list[DestinyArtifactTierItemDefinition]"""}
     )
     minimum_unlock_points_used_requirement: int = attr.field()
     progress_requirement_message: str = attr.field()
@@ -84,4 +84,4 @@ class DestinyArtifactTierItemDefinition(BaseModel):
     """
 
     item_hash: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()

@@ -2,11 +2,12 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
 from bungio.models.base import BaseModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import DestinyCollectibleState, DestinyPresentationNodeDefinition
@@ -35,14 +36,12 @@ class DestinyCollectiblesComponent(BaseModel):
     """
 
     collectibles: dict[int, "DestinyCollectibleComponent"] = attr.field(
-        metadata={"type": """dict[int, "DestinyCollectibleComponent"]"""}
+        metadata={"type": """dict[int, DestinyCollectibleComponent]"""}
     )
     collection_badges_root_node_hash: int = attr.field()
     collection_categories_root_node_hash: int = attr.field()
-    manifest_collection_badges_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
-    manifest_collection_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(
-        default=None
-    )
+    manifest_collection_badges_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
+    manifest_collection_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
 
 
 @attr.define
@@ -55,7 +54,9 @@ class DestinyCollectibleComponent(BaseModel):
         state: _No description given by bungie._
     """
 
-    state: "DestinyCollectibleState" = attr.field()
+    state: Union["DestinyCollectibleState", int] = attr.field(
+        converter=enum_converter("DestinyCollectibleState"), metadata={"type": "DestinyCollectibleState"}
+    )
 
 
 @attr.define
@@ -83,13 +84,11 @@ class DestinyProfileCollectiblesComponent(BaseModel):
     """
 
     collectibles: dict[int, "DestinyCollectibleComponent"] = attr.field(
-        metadata={"type": """dict[int, "DestinyCollectibleComponent"]"""}
+        metadata={"type": """dict[int, DestinyCollectibleComponent]"""}
     )
     collection_badges_root_node_hash: int = attr.field()
     collection_categories_root_node_hash: int = attr.field()
     newness_flagged_collectible_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     recent_collectible_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_collection_badges_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
-    manifest_collection_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(
-        default=None
-    )
+    manifest_collection_badges_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
+    manifest_collection_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()

@@ -2,7 +2,7 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import Optional
+from typing import Optional, Union
 
 import attr
 
@@ -143,7 +143,7 @@ class SocialRouteInterface(ClientMixin):
         return response["Response"]
 
     async def get_platform_friend_list(
-        self, friend_platform: PlatformFriendType, page: str, auth: Optional[AuthData] = None
+        self, friend_platform: Union[PlatformFriendType, int], page: str, auth: Optional[AuthData] = None
     ) -> PlatformFriendResponse:
         """
         Gets the platform friend of the requested type, with additional information if they have Bungie accounts. Must have a recent login session with said platform.
@@ -158,7 +158,7 @@ class SocialRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_platform_friend_list(
-            friend_platform=friend_platform.value, page=page, auth=auth
+            friend_platform=getattr(friend_platform, "value", friend_platform), page=page, auth=auth
         )
         return await PlatformFriendResponse.from_dict(
             data=response, client=self._client, friend_platform=friend_platform, page=page, auth=auth

@@ -1,4 +1,8 @@
 import datetime
+import importlib
+from typing import Callable, Type
+
+from bungio.models.base import MISSING, BaseEnum, UnknownEnumValue
 
 
 def get_now_with_tz() -> datetime.datetime:
@@ -10,6 +14,28 @@ def get_now_with_tz() -> datetime.datetime:
     """
 
     return datetime.datetime.now(tz=datetime.timezone.utc)
+
+
+def enum_converter(enum_name: str) -> Callable:
+    """
+    Return a callable that can be used in attr converters to convert values to enums
+
+    Args:
+        enum_name: The name of the enum the value has
+
+    Returns:
+        A callable converter
+    """
+
+    def converter(value: int | str) -> BaseEnum | UnknownEnumValue:
+        if isinstance(value, BaseEnum | UnknownEnumValue | type(MISSING)):
+            return value
+
+        imp = importlib.import_module("bungio.models")
+        enum_class = getattr(imp, enum_name)
+        return enum_class(value)
+
+    return converter
 
 
 class AllowAsyncIteration:

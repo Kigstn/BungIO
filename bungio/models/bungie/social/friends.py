@@ -2,12 +2,13 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
 from bungio.models.mixins import DestinyUserMixin
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import BungieMembershipType, GeneralUser
@@ -23,7 +24,7 @@ class BungieFriendListResponse(BaseModel):
         friends: _No description given by bungie._
     """
 
-    friends: list["BungieFriend"] = attr.field(metadata={"type": """list["BungieFriend"]"""})
+    friends: list["BungieFriend"] = attr.field(metadata={"type": """list[BungieFriend]"""})
 
 
 @attr.define
@@ -46,11 +47,19 @@ class BungieFriend(BaseModel, DestinyUserMixin):
     bungie_global_display_name: str = attr.field()
     bungie_global_display_name_code: int = attr.field()
     bungie_net_user: "GeneralUser" = attr.field()
-    last_seen_as_bungie_membership_type: "BungieMembershipType" = attr.field()
+    last_seen_as_bungie_membership_type: Union["BungieMembershipType", int] = attr.field(
+        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+    )
     last_seen_as_membership_id: int = attr.field()
-    online_status: "PresenceStatus" = attr.field()
-    online_title: "PresenceOnlineStateFlags" = attr.field()
-    relationship: "FriendRelationshipState" = attr.field()
+    online_status: Union["PresenceStatus", int] = attr.field(
+        converter=enum_converter("PresenceStatus"), metadata={"type": "PresenceStatus"}
+    )
+    online_title: Union["PresenceOnlineStateFlags", int] = attr.field(
+        converter=enum_converter("PresenceOnlineStateFlags"), metadata={"type": "PresenceOnlineStateFlags"}
+    )
+    relationship: Union["FriendRelationshipState", int] = attr.field(
+        converter=enum_converter("FriendRelationshipState"), metadata={"type": "FriendRelationshipState"}
+    )
 
 
 class PresenceStatus(BaseEnum):
@@ -103,8 +112,8 @@ class BungieFriendRequestListResponse(BaseModel):
         outgoing_requests: _No description given by bungie._
     """
 
-    incoming_requests: list["BungieFriend"] = attr.field(metadata={"type": """list["BungieFriend"]"""})
-    outgoing_requests: list["BungieFriend"] = attr.field(metadata={"type": """list["BungieFriend"]"""})
+    incoming_requests: list["BungieFriend"] = attr.field(metadata={"type": """list[BungieFriend]"""})
+    outgoing_requests: list["BungieFriend"] = attr.field(metadata={"type": """list[BungieFriend]"""})
 
 
 class PlatformFriendType(BaseEnum):
@@ -138,7 +147,7 @@ class PlatformFriendResponse(BaseModel):
     current_page: int = attr.field()
     has_more: bool = attr.field()
     items_per_page: int = attr.field()
-    platform_friends: list["PlatformFriend"] = attr.field(metadata={"type": """list["PlatformFriend"]"""})
+    platform_friends: list["PlatformFriend"] = attr.field(metadata={"type": """list[PlatformFriend]"""})
 
 
 @attr.define
@@ -162,5 +171,7 @@ class PlatformFriend(BaseModel, DestinyUserMixin):
     bungie_net_membership_id: int = attr.field()
     destiny_membership_id: int = attr.field()
     destiny_membership_type: int = attr.field()
-    friend_platform: "PlatformFriendType" = attr.field()
+    friend_platform: Union["PlatformFriendType", int] = attr.field(
+        converter=enum_converter("PlatformFriendType"), metadata={"type": "PlatformFriendType"}
+    )
     platform_display_name: str = attr.field()

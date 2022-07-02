@@ -29,7 +29,7 @@ class DestinyItemSourceDefinition(BaseModel):
     """
 
     computed_stats: dict[int, "DestinyInventoryItemStatDefinition"] = attr.field(
-        metadata={"type": """dict[int, "DestinyInventoryItemStatDefinition"]"""}
+        metadata={"type": """dict[int, DestinyInventoryItemStatDefinition]"""}
     )
     level: int = attr.field()
     max_level_required: int = attr.field()

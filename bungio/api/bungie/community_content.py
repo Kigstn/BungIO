@@ -2,7 +2,7 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import Optional
+from typing import Optional, Union
 
 import attr
 
@@ -19,9 +19,9 @@ from bungio.models.base import ClientMixin
 class CommunityContentRouteInterface(ClientMixin):
     async def get_community_content(
         self,
-        media_filter: ForumTopicsCategoryFiltersEnum,
+        media_filter: Union[ForumTopicsCategoryFiltersEnum, int],
         page: int,
-        sort: CommunityContentSortMode,
+        sort: Union[CommunityContentSortMode, int],
         auth: Optional[AuthData] = None,
     ) -> PostSearchResponse:
         """
@@ -38,7 +38,10 @@ class CommunityContentRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_community_content(
-            media_filter=media_filter.value, page=page, sort=sort.value, auth=auth
+            media_filter=getattr(media_filter, "value", media_filter),
+            page=page,
+            sort=getattr(sort, "value", sort),
+            auth=auth,
         )
         return await PostSearchResponse.from_dict(
             data=response, client=self._client, media_filter=media_filter, page=page, sort=sort, auth=auth

@@ -1,11 +1,13 @@
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
 from bungio.models.base import ClientMixin, FuzzyAttrFinder
 
 if TYPE_CHECKING:
+    from bungio import AuthData
+
     # AUTOMATIC IMPORTS START
     from bungio.models import (
         BungieMembershipType,
@@ -33,7 +35,10 @@ class DestinyCharacterMixin(ClientMixin, FuzzyAttrFinder):
     # DO NOT CHANGE ANY CODE BELOW. Automatically generated and overwritten
 
     async def get_character(
-        self, destiny_membership_id: int, components: list["DestinyComponentType"], auth: Optional["AuthData"] = None
+        self,
+        destiny_membership_id: int,
+        components: list[Union["DestinyComponentType", int]],
+        auth: Optional["AuthData"] = None,
     ) -> "DestinyCharacterResponse":
         """
         Returns character information for the supplied character.
@@ -58,8 +63,8 @@ class DestinyCharacterMixin(ClientMixin, FuzzyAttrFinder):
     async def get_vendors(
         self,
         destiny_membership_id: int,
-        components: list["DestinyComponentType"],
-        filter: "DestinyVendorFilter",
+        components: list[Union["DestinyComponentType", int]],
+        filter: Union["DestinyVendorFilter", int],
         auth: Optional["AuthData"] = None,
     ) -> "DestinyVendorsResponse":
         """
@@ -88,7 +93,7 @@ class DestinyCharacterMixin(ClientMixin, FuzzyAttrFinder):
         self,
         destiny_membership_id: int,
         vendor_hash: int,
-        components: list["DestinyComponentType"],
+        components: list[Union["DestinyComponentType", int]],
         auth: Optional["AuthData"] = None,
     ) -> "DestinyVendorResponse":
         """
@@ -117,7 +122,7 @@ class DestinyCharacterMixin(ClientMixin, FuzzyAttrFinder):
         self,
         collectible_presentation_node_hash: int,
         destiny_membership_id: int,
-        components: list["DestinyComponentType"],
+        components: list[Union["DestinyComponentType", int]],
         auth: Optional["AuthData"] = None,
     ) -> "DestinyCollectibleNodeDetailResponse":
         """
@@ -174,9 +179,9 @@ class DestinyCharacterMixin(ClientMixin, FuzzyAttrFinder):
         destiny_membership_id: int,
         dayend: datetime,
         daystart: datetime,
-        groups: list["DestinyStatsGroupType"],
-        modes: list["DestinyActivityModeType"],
-        period_type: "PeriodType",
+        groups: list[Union["DestinyStatsGroupType", int]],
+        modes: list[Union["DestinyActivityModeType", int]],
+        period_type: Union["PeriodType", int],
         auth: Optional["AuthData"] = None,
     ) -> dict[str, "DestinyHistoricalStatsByPeriod"]:
         """
@@ -211,7 +216,7 @@ class DestinyCharacterMixin(ClientMixin, FuzzyAttrFinder):
         self,
         destiny_membership_id: int,
         count: int,
-        mode: "DestinyActivityModeType",
+        mode: Union["DestinyActivityModeType", int],
         page: int,
         auth: Optional["AuthData"] = None,
     ) -> "DestinyActivityHistoryResults":

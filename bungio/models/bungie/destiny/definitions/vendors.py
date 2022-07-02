@@ -34,4 +34,4 @@ class DestinyVendorLocationDefinition(BaseModel):
 
     background_image_path: str = attr.field()
     destination_hash: int = attr.field()
-    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
+    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field()

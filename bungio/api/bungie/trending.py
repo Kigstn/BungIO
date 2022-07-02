@@ -2,7 +2,7 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import Optional
+from typing import Optional, Union
 
 import attr
 
@@ -55,7 +55,7 @@ class TrendingRouteInterface(ClientMixin):
         )
 
     async def get_trending_entry_detail(
-        self, identifier: str, trending_entry_type: TrendingEntryType, auth: Optional[AuthData] = None
+        self, identifier: str, trending_entry_type: Union[TrendingEntryType, int], auth: Optional[AuthData] = None
     ) -> TrendingDetail:
         """
         Returns the detailed results for a specific trending entry. Note that trending entries are uniquely identified by a combination of *both* the TrendingEntryType *and* the identifier: the identifier alone is not guaranteed to be globally unique.
@@ -70,7 +70,9 @@ class TrendingRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_trending_entry_detail(
-            identifier=identifier, trending_entry_type=trending_entry_type.value, auth=auth
+            identifier=identifier,
+            trending_entry_type=getattr(trending_entry_type, "value", trending_entry_type),
+            auth=auth,
         )
         return await TrendingDetail.from_dict(
             data=response,

@@ -2,9 +2,12 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
+from typing import Union
+
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
+from bungio.utils import enum_converter
 
 
 @attr.define
@@ -18,7 +21,9 @@ class IgnoreResponse(BaseModel):
         is_ignored: _No description given by bungie._
     """
 
-    ignore_flags: "IgnoreStatus" = attr.field()
+    ignore_flags: Union["IgnoreStatus", int] = attr.field(
+        converter=enum_converter("IgnoreStatus"), metadata={"type": "IgnoreStatus"}
+    )
     is_ignored: bool = attr.field()
 
 

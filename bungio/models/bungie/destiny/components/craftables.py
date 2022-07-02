@@ -37,10 +37,10 @@ class DestinyCraftablesComponent(BaseModel):
     """
 
     craftables: dict[int, "DestinyCraftableComponent"] = attr.field(
-        metadata={"type": """dict[int, "DestinyCraftableComponent"]"""}
+        metadata={"type": """dict[int, DestinyCraftableComponent]"""}
     )
     crafting_root_node_hash: int = attr.field()
-    manifest_crafting_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+    manifest_crafting_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
 
 
 @attr.define
@@ -57,7 +57,7 @@ class DestinyCraftableComponent(BaseModel):
 
     failed_requirement_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
     sockets: list["DestinyCraftableSocketComponent"] = attr.field(
-        metadata={"type": """list["DestinyCraftableSocketComponent"]"""}
+        metadata={"type": """list[DestinyCraftableSocketComponent]"""}
     )
     visible: bool = attr.field()
 
@@ -84,9 +84,9 @@ class DestinyCraftableSocketComponent(BaseModel):
 
     plug_set_hash: int = attr.field()
     plugs: list["DestinyCraftableSocketPlugComponent"] = attr.field(
-        metadata={"type": """list["DestinyCraftableSocketPlugComponent"]"""}
+        metadata={"type": """list[DestinyCraftableSocketPlugComponent]"""}
     )
-    manifest_plug_set_hash: Optional["DestinyPlugSetDefinition"] = attr.field(default=None)
+    manifest_plug_set_hash: Optional["DestinyPlugSetDefinition"] = attr.field()
 
 
 @attr.define
@@ -111,4 +111,4 @@ class DestinyCraftableSocketPlugComponent(BaseModel):
 
     failed_requirement_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
     plug_item_hash: int = attr.field()
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()

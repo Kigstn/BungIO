@@ -77,7 +77,7 @@ class BaseEnum(Enum):
         except ValueError:
             return UnknownEnumValue(value=data, enum=cls)
 
-    def to_dict(self) -> str:
+    def to_dict(self) -> Any:
         """
         Convert the enum into a representation bungie accepts
 
@@ -232,45 +232,59 @@ class BaseModel(ClientMixin):
         elif field_metadata:
             field_type = field_metadata["type"]
 
-            # split the type into the subtypes
-            split_types = field_metadata["type"].replace("]", "").replace('"', "").split("[")
+            # iterables:
+            if "dict" in field_metadata["type"] or "list" in field_metadata["type"]:
+                # split the type into the subtypes
+                split_types = field_metadata["type"].replace("]", "").split("[")
 
-            match split_types[0]:
-                case "dict":
-                    # sometimes unknown dicts are returned
-                    if field_type != "dict":
-                        new_field_types = field_type.removeprefix("dict[").removesuffix("]").split(", ")
-                        key_type = new_field_types[0]
-                        value_type = new_field_types[1]
+                match split_types[0]:
+                    case "dict":
+                        # sometimes unknown dicts are returned
+                        if field_type != "dict":
+                            new_field_types = field_type.removeprefix("dict[").removesuffix("]").split(", ")
+                            key_type = new_field_types[0]
+                            value_type = new_field_types[1]
 
-                        ret = {}
-                        for key, value in value.items():
-                            # they are only our custom models if there are " in it, otherwise
-                            if '"' in key_type:
-                                key = await BaseModel._convert_to_type(
-                                    field_type=key_type.replace('"', ""), field_metadata=None, value=key, client=client
-                                )
-                            if '"' in value_type:
-                                value = await BaseModel._convert_to_type(
-                                    field_type=value_type.replace('"', ""),
-                                    field_metadata=None,
-                                    value=value,
-                                    client=client,
-                                )
+                            ret = {}
+                            for key, value in value.items():
+                                # they are only our custom models if there are " in it, otherwise
+                                if '"' in key_type:
+                                    key = await BaseModel._convert_to_type(
+                                        field_type=key_type.replace('"', ""),
+                                        field_metadata=None,
+                                        value=key,
+                                        client=client,
+                                    )
+                                if '"' in value_type:
+                                    value = await BaseModel._convert_to_type(
+                                        field_type=value_type.replace('"', ""),
+                                        field_metadata=None,
+                                        value=value,
+                                        client=client,
+                                    )
 
-                            ret[key] = value
-                        value = ret
+                                ret[key] = value
+                            value = ret
 
-                case "list":
-                    value = [
-                        await BaseModel._convert_to_type(
-                            field_type=split_types[1], field_metadata=None, value=entry, client=client
-                        )
-                        for entry in value
-                    ]
+                    case "list":
+                        value = [
+                            await BaseModel._convert_to_type(
+                                field_type=split_types[1], field_metadata=None, value=entry, client=client
+                            )
+                            for entry in value
+                        ]
 
-                case _:
-                    raise ValueError(f"Unexpected type {split_types[0]} in {split_types}")
+                    case _:
+                        raise ValueError(f"Unexpected type {split_types[0]} in {split_types}")
+
+            # enums
+            else:
+                value = await BaseModel._convert_to_type(
+                    field_type=field_metadata["type"].replace('"', ""),
+                    field_metadata=None,
+                    value=value,
+                    client=client,
+                )
 
         return value
 

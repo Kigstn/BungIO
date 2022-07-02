@@ -68,13 +68,11 @@ class DestinySeasonDefinition(ManifestModel):
     season_pass_progression_hash: int = attr.field()
     seasonal_challenges_presentation_node_hash: int = attr.field()
     start_date: datetime = attr.field()
-    manifest_artifact_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_seal_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
-    manifest_season_pass_hash: Optional["DestinySeasonPassDefinition"] = attr.field(default=None)
-    manifest_season_pass_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
-    manifest_seasonal_challenges_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(
-        default=None
-    )
+    manifest_artifact_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_seal_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
+    manifest_season_pass_hash: Optional["DestinySeasonPassDefinition"] = attr.field()
+    manifest_season_pass_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field()
+    manifest_seasonal_challenges_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
 
 
 @attr.define
@@ -92,7 +90,7 @@ class DestinySeasonPreviewDefinition(BaseModel):
 
     description: str = attr.field()
     images: list["DestinySeasonPreviewImageDefinition"] = attr.field(
-        metadata={"type": """list["DestinySeasonPreviewImageDefinition"]"""}
+        metadata={"type": """list[DestinySeasonPreviewImageDefinition]"""}
     )
     link_path: str = attr.field()
     video_link: str = attr.field()
@@ -144,5 +142,5 @@ class DestinySeasonPassDefinition(ManifestModel):
     prestige_progression_hash: int = attr.field()
     redacted: bool = attr.field()
     reward_progression_hash: int = attr.field()
-    manifest_prestige_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
-    manifest_reward_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
+    manifest_prestige_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field()
+    manifest_reward_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field()

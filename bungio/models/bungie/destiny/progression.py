@@ -2,7 +2,7 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
@@ -63,14 +63,14 @@ class DestinyFactionProgression(BaseModel):
     next_level_at: int = attr.field()
     progress_to_next_level: int = attr.field()
     progression_hash: int = attr.field()
-    reward_item_states: list["DestinyProgressionRewardItemState"] = attr.field(
-        metadata={"type": """list["DestinyProgressionRewardItemState"]"""}
+    reward_item_states: list[Union["DestinyProgressionRewardItemState", int]] = attr.field(
+        metadata={"type": """list[Union[DestinyProgressionRewardItemState, int]]"""}
     )
     season_resets: list["DestinyProgressionResetEntry"] = attr.field(
-        metadata={"type": """list["DestinyProgressionResetEntry"]"""}
+        metadata={"type": """list[DestinyProgressionResetEntry]"""}
     )
     step_index: int = attr.field()
     weekly_limit: int = attr.field()
     weekly_progress: int = attr.field()
-    manifest_faction_hash: Optional["DestinyFactionDefinition"] = attr.field(default=None)
-    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
+    manifest_faction_hash: Optional["DestinyFactionDefinition"] = attr.field()
+    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field()

@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING, Any, Optional, Union
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel, ManifestModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -64,16 +65,16 @@ class DestinyProgression(BaseModel):
     next_level_at: int = attr.field()
     progress_to_next_level: int = attr.field()
     progression_hash: int = attr.field()
-    reward_item_states: list["DestinyProgressionRewardItemState"] = attr.field(
-        metadata={"type": """list["DestinyProgressionRewardItemState"]"""}
+    reward_item_states: list[Union["DestinyProgressionRewardItemState", int]] = attr.field(
+        metadata={"type": """list[Union[DestinyProgressionRewardItemState, int]]"""}
     )
     season_resets: list["DestinyProgressionResetEntry"] = attr.field(
-        metadata={"type": """list["DestinyProgressionResetEntry"]"""}
+        metadata={"type": """list[DestinyProgressionResetEntry]"""}
     )
     step_index: int = attr.field()
     weekly_limit: int = attr.field()
     weekly_progress: int = attr.field()
-    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
+    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field()
 
 
 @attr.define
@@ -172,7 +173,7 @@ class DestinyItemQuantity(BaseModel):
     item_hash: int = attr.field()
     item_instance_id: int = attr.field()
     quantity: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
 
 
 class SocketTypeActionType(BaseEnum):
@@ -1380,8 +1381,10 @@ class DestinyActivity(BaseModel):
     boolean_activity_options: dict[int, bool] = attr.field(metadata={"type": """dict[int, bool]"""})
     can_join: bool = attr.field()
     can_lead: bool = attr.field()
-    challenges: list["DestinyChallengeStatus"] = attr.field(metadata={"type": """list["DestinyChallengeStatus"]"""})
-    difficulty_tier: "DestinyActivityDifficultyTier" = attr.field()
+    challenges: list["DestinyChallengeStatus"] = attr.field(metadata={"type": """list[DestinyChallengeStatus]"""})
+    difficulty_tier: Union["DestinyActivityDifficultyTier", int] = attr.field(
+        converter=enum_converter("DestinyActivityDifficultyTier"), metadata={"type": "DestinyActivityDifficultyTier"}
+    )
     display_level: int = attr.field()
     is_completed: bool = attr.field()
     is_new: bool = attr.field()
@@ -1389,7 +1392,7 @@ class DestinyActivity(BaseModel):
     loadout_requirement_index: int = attr.field()
     modifier_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     recommended_light: int = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
 
 
 class DestinyActivityDifficultyTier(BaseEnum):
@@ -1437,7 +1440,7 @@ class DestinyStat(BaseModel):
 
     stat_hash: int = attr.field()
     value: int = attr.field()
-    manifest_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
+    manifest_stat_hash: Optional["DestinyStatDefinition"] = attr.field()
 
 
 class EquipFailureReason(BaseEnum):
@@ -1482,13 +1485,15 @@ class DestinyTalentNode(BaseModel):
     hidden: bool = attr.field()
     is_activated: bool = attr.field()
     materials_to_upgrade: list["DestinyMaterialRequirement"] = attr.field(
-        metadata={"type": """list["DestinyMaterialRequirement"]"""}
+        metadata={"type": """list[DestinyMaterialRequirement]"""}
     )
     node_hash: int = attr.field()
     node_index: int = attr.field()
     node_stats_block: "DestinyTalentNodeStatBlock" = attr.field()
     progress_percent: float = attr.field()
-    state: "DestinyTalentNodeState" = attr.field()
+    state: Union["DestinyTalentNodeState", int] = attr.field(
+        converter=enum_converter("DestinyTalentNodeState"), metadata={"type": "DestinyTalentNodeState"}
+    )
     step_index: int = attr.field()
 
 
@@ -1538,8 +1543,8 @@ class DestinyTalentNodeStatBlock(BaseModel):
         next_step_stats: This is a holdover from the old days of Destiny 1, when a node could be activated multiple times, conferring multiple steps worth of benefits: you would use this property to show what activating the "next" step on the node would provide vs. what the current step is providing. While Nodes are currently not being used this way, the underlying system for this functionality still exists. I hesitate to remove this property while the ability for designers to make such a talent grid still exists. Whether you want to show it is up to you.
     """
 
-    current_step_stats: list["DestinyStat"] = attr.field(metadata={"type": """list["DestinyStat"]"""})
-    next_step_stats: list["DestinyStat"] = attr.field(metadata={"type": """list["DestinyStat"]"""})
+    current_step_stats: list["DestinyStat"] = attr.field(metadata={"type": """list[DestinyStat]"""})
+    next_step_stats: list["DestinyStat"] = attr.field(metadata={"type": """list[DestinyStat]"""})
 
 
 class DestinyVendorFilter(BaseEnum):
@@ -1612,7 +1617,7 @@ class DestinyUnlockStatus(BaseModel):
 
     is_set: bool = attr.field()
     unlock_hash: int = attr.field()
-    manifest_unlock_hash: Optional["DestinyUnlockDefinition"] = attr.field(default=None)
+    manifest_unlock_hash: Optional["DestinyUnlockDefinition"] = attr.field()
 
 
 class DestinyVendorItemState(BaseEnum):
@@ -1672,7 +1677,7 @@ class DestinyEquipItemResults(BaseModel):
         equip_results: _No description given by bungie._
     """
 
-    equip_results: list["DestinyEquipItemResult"] = attr.field(metadata={"type": """list["DestinyEquipItemResult"]"""})
+    equip_results: list["DestinyEquipItemResult"] = attr.field(metadata={"type": """list[DestinyEquipItemResult]"""})
 
 
 @attr.define
@@ -1686,5 +1691,7 @@ class DestinyEquipItemResult(BaseModel):
         item_instance_id: The instance ID of the item in question (all items that can be equipped must, but definition, be Instanced and thus have an Instance ID that you can use to refer to them)
     """
 
-    equip_status: "PlatformErrorCodes" = attr.field()
+    equip_status: Union["PlatformErrorCodes", int] = attr.field(
+        converter=enum_converter("PlatformErrorCodes"), metadata={"type": "PlatformErrorCodes"}
+    )
     item_instance_id: int = attr.field()

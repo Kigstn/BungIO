@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Callable, Coroutine, Optional
+from typing import Any, Callable, Coroutine, Optional, Union
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -59,7 +59,7 @@ class Destiny2RouteHttpRequests:
         )
 
     async def search_destiny_player_by_bungie_name(
-        self, display_name: str, display_name_code: int, membership_type: Any, auth: Optional[AuthData] = None
+        self, display_name: str, display_name_code: int, membership_type: int, auth: Optional[AuthData] = None
     ) -> dict:
         """
         Returns a list of Destiny memberships given a global Bungie Display Name. This method will hide overridden memberships due to cross save.
@@ -100,7 +100,7 @@ class Destiny2RouteHttpRequests:
     async def get_linked_profiles(
         self,
         membership_id: int,
-        membership_type: Any,
+        membership_type: int,
         get_all_memberships: Optional[bool] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
@@ -138,8 +138,8 @@ class Destiny2RouteHttpRequests:
     async def get_profile(
         self,
         destiny_membership_id: int,
-        membership_type: Any,
-        components: Optional[list[Any]] = None,
+        membership_type: int,
+        components: Optional[list[Union[Any, int]]] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
         """
@@ -177,8 +177,8 @@ class Destiny2RouteHttpRequests:
         self,
         character_id: int,
         destiny_membership_id: int,
-        membership_type: Any,
-        components: Optional[list[Any]] = None,
+        membership_type: int,
+        components: Optional[list[Union[Any, int]]] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
         """
@@ -262,8 +262,8 @@ class Destiny2RouteHttpRequests:
         self,
         destiny_membership_id: int,
         item_instance_id: int,
-        membership_type: Any,
-        components: Optional[list[Any]] = None,
+        membership_type: int,
+        components: Optional[list[Union[Any, int]]] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
         """
@@ -302,9 +302,9 @@ class Destiny2RouteHttpRequests:
         self,
         character_id: int,
         destiny_membership_id: int,
-        membership_type: Any,
-        components: Optional[list[Any]] = None,
-        filter: Optional[Any] = None,
+        membership_type: int,
+        components: Optional[list[Union[Any, int]]] = None,
+        filter: Optional[int] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
         """
@@ -345,9 +345,9 @@ class Destiny2RouteHttpRequests:
         self,
         character_id: int,
         destiny_membership_id: int,
-        membership_type: Any,
+        membership_type: int,
         vendor_hash: int,
-        components: Optional[list[Any]] = None,
+        components: Optional[list[Union[Any, int]]] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
         """
@@ -383,7 +383,9 @@ class Destiny2RouteHttpRequests:
             )
         )
 
-    async def get_public_vendors(self, components: Optional[list[Any]] = None, auth: Optional[AuthData] = None) -> dict:
+    async def get_public_vendors(
+        self, components: Optional[list[Union[Any, int]]] = None, auth: Optional[AuthData] = None
+    ) -> dict:
         """
         Get items available from vendors where the vendors have items for sale that are common for everyone. If any portion of the Vendor's available inventory is character or account specific, we will be unable to return their data from this endpoint due to the way that available inventory is computed. As I am often guilty of saying: 'It's a long story...'
 
@@ -411,8 +413,8 @@ class Destiny2RouteHttpRequests:
         character_id: int,
         collectible_presentation_node_hash: int,
         destiny_membership_id: int,
-        membership_type: Any,
-        components: Optional[list[Any]] = None,
+        membership_type: int,
+        components: Optional[list[Union[Any, int]]] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
         """
@@ -455,7 +457,7 @@ class Destiny2RouteHttpRequests:
         transfer_to_vault: bool,
         item_id: int,
         character_id: int,
-        membership_type: Any,
+        membership_type: Union[Any, int],
         auth: AuthData,
     ) -> dict:
         """
@@ -505,7 +507,7 @@ class Destiny2RouteHttpRequests:
         stack_size: int,
         item_id: int,
         character_id: int,
-        membership_type: Any,
+        membership_type: Union[Any, int],
         auth: AuthData,
     ) -> dict:
         """
@@ -547,7 +549,9 @@ class Destiny2RouteHttpRequests:
             Route(path=f"/Destiny2/Actions/Items/PullFromPostmaster/", method="POST", data=data, auth=auth)
         )
 
-    async def equip_item(self, item_id: int, character_id: int, membership_type: Any, auth: AuthData) -> dict:
+    async def equip_item(
+        self, item_id: int, character_id: int, membership_type: Union[Any, int], auth: AuthData
+    ) -> dict:
         """
         Equip an item. You must have a valid Destiny Account, and either be in a social space, in orbit, or offline.
 
@@ -583,7 +587,9 @@ class Destiny2RouteHttpRequests:
             Route(path=f"/Destiny2/Actions/Items/EquipItem/", method="POST", data=data, auth=auth)
         )
 
-    async def equip_items(self, item_ids: list[int], character_id: int, membership_type: Any, auth: AuthData) -> dict:
+    async def equip_items(
+        self, item_ids: list[int], character_id: int, membership_type: Union[Any, int], auth: AuthData
+    ) -> dict:
         """
         Equip a list of items by itemInstanceIds. You must have a valid Destiny Account, and either be in a social space, in orbit, or offline. Any items not found on your character will be ignored.
 
@@ -620,7 +626,7 @@ class Destiny2RouteHttpRequests:
         )
 
     async def set_item_lock_state(
-        self, state: bool, item_id: int, character_id: int, membership_type: Any, auth: AuthData
+        self, state: bool, item_id: int, character_id: int, membership_type: Union[Any, int], auth: AuthData
     ) -> dict:
         """
         Set the Lock State for an instanced item. You must have a valid Destiny Account.
@@ -660,7 +666,7 @@ class Destiny2RouteHttpRequests:
         )
 
     async def set_quest_tracked_state(
-        self, state: bool, item_id: int, character_id: int, membership_type: Any, auth: AuthData
+        self, state: bool, item_id: int, character_id: int, membership_type: Union[Any, int], auth: AuthData
     ) -> dict:
         """
         Set the Tracking State for an instanced item, if that item is a Quest or Bounty. You must have a valid Destiny Account. Yeah, it's an item.
@@ -705,7 +711,7 @@ class Destiny2RouteHttpRequests:
         item_instance_id: int,
         plug: Any,
         character_id: int,
-        membership_type: Any,
+        membership_type: Union[Any, int],
         auth: AuthData,
     ) -> dict:
         """
@@ -748,7 +754,7 @@ class Destiny2RouteHttpRequests:
         )
 
     async def insert_socket_plug_free(
-        self, plug: Any, item_id: int, character_id: int, membership_type: Any, auth: AuthData
+        self, plug: Any, item_id: int, character_id: int, membership_type: Union[Any, int], auth: AuthData
     ) -> dict:
         """
         Insert a 'free' plug into an item's socket. This does not require 'Advanced Write Action' authorization and is available to 3rd-party apps, but will only work on 'free and reversible' socket actions (Perks, Armor Mods, Shaders, Ornaments, etc.). You must have a valid Destiny Account, and the character must either be in a social space, in orbit, or offline.
@@ -953,7 +959,7 @@ class Destiny2RouteHttpRequests:
     async def get_leaderboards(
         self,
         destiny_membership_id: int,
-        membership_type: Any,
+        membership_type: int,
         maxtop: Optional[int] = None,
         modes: Optional[str] = None,
         statid: Optional[str] = None,
@@ -998,7 +1004,7 @@ class Destiny2RouteHttpRequests:
         self,
         character_id: int,
         destiny_membership_id: int,
-        membership_type: Any,
+        membership_type: int,
         maxtop: Optional[int] = None,
         modes: Optional[str] = None,
         statid: Optional[str] = None,
@@ -1073,12 +1079,12 @@ class Destiny2RouteHttpRequests:
         self,
         character_id: int,
         destiny_membership_id: int,
-        membership_type: Any,
+        membership_type: int,
         dayend: Optional[datetime] = None,
         daystart: Optional[datetime] = None,
-        groups: Optional[list[Any]] = None,
-        modes: Optional[list[Any]] = None,
-        period_type: Optional[Any] = None,
+        groups: Optional[list[Union[Any, int]]] = None,
+        modes: Optional[list[Union[Any, int]]] = None,
+        period_type: Optional[int] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
         """
@@ -1124,8 +1130,8 @@ class Destiny2RouteHttpRequests:
     async def get_historical_stats_for_account(
         self,
         destiny_membership_id: int,
-        membership_type: Any,
-        groups: Optional[list[Any]] = None,
+        membership_type: int,
+        groups: Optional[list[Union[Any, int]]] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
         """
@@ -1163,9 +1169,9 @@ class Destiny2RouteHttpRequests:
         self,
         character_id: int,
         destiny_membership_id: int,
-        membership_type: Any,
+        membership_type: int,
         count: Optional[int] = None,
-        mode: Optional[Any] = None,
+        mode: Optional[int] = None,
         page: Optional[int] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
@@ -1206,7 +1212,7 @@ class Destiny2RouteHttpRequests:
         )
 
     async def get_unique_weapon_history(
-        self, character_id: int, destiny_membership_id: int, membership_type: Any, auth: Optional[AuthData] = None
+        self, character_id: int, destiny_membership_id: int, membership_type: int, auth: Optional[AuthData] = None
     ) -> dict:
         """
         Gets details about unique weapon usage, including all exotic weapons.
@@ -1239,7 +1245,7 @@ class Destiny2RouteHttpRequests:
         )
 
     async def get_destiny_aggregate_activity_stats(
-        self, character_id: int, destiny_membership_id: int, membership_type: Any, auth: Optional[AuthData] = None
+        self, character_id: int, destiny_membership_id: int, membership_type: int, auth: Optional[AuthData] = None
     ) -> dict:
         """
         Gets all activities the character has participated in together with aggregate statistics for those activities.
@@ -1319,7 +1325,12 @@ class Destiny2RouteHttpRequests:
         return await self.request(Route(path=f"/Destiny2/Milestones/", method="GET", auth=auth))
 
     async def awa_initialize_request(
-        self, type: Any, affected_item_id: int, membership_type: Any, character_id: int, auth: AuthData
+        self,
+        type: Union[Any, int],
+        affected_item_id: int,
+        membership_type: Union[Any, int],
+        character_id: int,
+        auth: AuthData,
     ) -> dict:
         """
         Initialize a request to perform an advanced write action.
@@ -1357,7 +1368,7 @@ class Destiny2RouteHttpRequests:
         return await self.request(Route(path=f"/Destiny2/Awa/Initialize/", method="POST", data=data, auth=auth))
 
     async def awa_provide_authorization_result(
-        self, selection: Any, correlation_id: str, nonce: list[int], auth: Optional[AuthData] = None
+        self, selection: Union[Any, int], correlation_id: str, nonce: list[int], auth: Optional[AuthData] = None
     ) -> dict:
         """
         Provide the result of the user interaction. Called by the Bungie Destiny App to approve or reject a request.

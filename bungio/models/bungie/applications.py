@@ -3,11 +3,12 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import UserInfoCard
@@ -61,8 +62,8 @@ class ApiUsage(BaseModel):
         throttled_requests: Instances of blocked requests or requests that crossed the warn threshold during the time range.
     """
 
-    api_calls: list["Series"] = attr.field(metadata={"type": """list["Series"]"""})
-    throttled_requests: list["Series"] = attr.field(metadata={"type": """list["Series"]"""})
+    api_calls: list["Series"] = attr.field(metadata={"type": """list[Series]"""})
+    throttled_requests: list["Series"] = attr.field(metadata={"type": """list[Series]"""})
 
 
 @attr.define
@@ -76,7 +77,7 @@ class Series(BaseModel):
         target: Target to which to datapoints apply.
     """
 
-    datapoints: list["Datapoint"] = attr.field(metadata={"type": """list["Datapoint"]"""})
+    datapoints: list["Datapoint"] = attr.field(metadata={"type": """list[Datapoint]"""})
     target: str = attr.field()
 
 
@@ -125,9 +126,11 @@ class Application(BaseModel):
     override_authorize_view_name: str = attr.field()
     redirect_url: str = attr.field()
     scope: int = attr.field()
-    status: "ApplicationStatus" = attr.field()
+    status: Union["ApplicationStatus", int] = attr.field(
+        converter=enum_converter("ApplicationStatus"), metadata={"type": "ApplicationStatus"}
+    )
     status_changed: datetime = attr.field()
-    team: list["ApplicationDeveloper"] = attr.field(metadata={"type": """list["ApplicationDeveloper"]"""})
+    team: list["ApplicationDeveloper"] = attr.field(metadata={"type": """list[ApplicationDeveloper]"""})
 
 
 class ApplicationStatus(BaseEnum):
@@ -160,7 +163,9 @@ class ApplicationDeveloper(BaseModel):
     """
 
     api_eula_version: int = attr.field()
-    role: "DeveloperRole" = attr.field()
+    role: Union["DeveloperRole", int] = attr.field(
+        converter=enum_converter("DeveloperRole"), metadata={"type": "DeveloperRole"}
+    )
     user: "UserInfoCard" = attr.field()
 
 

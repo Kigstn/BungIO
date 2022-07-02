@@ -3,11 +3,12 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -115,9 +116,13 @@ class PostResponse(BaseModel):
     latest_reply_author_id: int = attr.field()
     latest_reply_post_id: int = attr.field()
     locale: str = attr.field()
-    popularity: "ForumPostPopularity" = attr.field()
+    popularity: Union["ForumPostPopularity", int] = attr.field(
+        converter=enum_converter("ForumPostPopularity"), metadata={"type": "ForumPostPopularity"}
+    )
     thumbnail: str = attr.field()
-    url_media_type: "ForumMediaType" = attr.field()
+    url_media_type: Union["ForumMediaType", int] = attr.field(
+        converter=enum_converter("ForumMediaType"), metadata={"type": "ForumMediaType"}
+    )
     user_has_muted_post: bool = attr.field()
     user_has_rated: bool = attr.field()
     user_rating: int = attr.field()
@@ -179,19 +184,19 @@ class PostSearchResponse(BaseModel):
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
-    authors: list["GeneralUser"] = attr.field(metadata={"type": """list["GeneralUser"]"""})
+    authors: list["GeneralUser"] = attr.field(metadata={"type": """list[GeneralUser]"""})
     available_pages: int = attr.field()
-    groups: list["GroupResponse"] = attr.field(metadata={"type": """list["GroupResponse"]"""})
+    groups: list["GroupResponse"] = attr.field(metadata={"type": """list[GroupResponse]"""})
     has_more: bool = attr.field()
-    polls: list["PollResponse"] = attr.field(metadata={"type": """list["PollResponse"]"""})
+    polls: list["PollResponse"] = attr.field(metadata={"type": """list[PollResponse]"""})
     query: "PagedQuery" = attr.field()
     recruitment_details: list["ForumRecruitmentDetail"] = attr.field(
-        metadata={"type": """list["ForumRecruitmentDetail"]"""}
+        metadata={"type": """list[ForumRecruitmentDetail]"""}
     )
-    related_posts: list["PostResponse"] = attr.field(metadata={"type": """list["PostResponse"]"""})
+    related_posts: list["PostResponse"] = attr.field(metadata={"type": """list[PostResponse]"""})
     replacement_continuation_token: str = attr.field()
-    results: list["PostResponse"] = attr.field(metadata={"type": """list["PostResponse"]"""})
-    searched_tags: list["TagResponse"] = attr.field(metadata={"type": """list["TagResponse"]"""})
+    results: list["PostResponse"] = attr.field(metadata={"type": """list[PostResponse]"""})
+    searched_tags: list["TagResponse"] = attr.field(metadata={"type": """list[TagResponse]"""})
     total_results: int = attr.field()
     use_total_results: bool = attr.field()
 
@@ -208,7 +213,7 @@ class PollResponse(BaseModel):
         total_votes: _No description given by bungie._
     """
 
-    results: list["PollResult"] = attr.field(metadata={"type": """list["PollResult"]"""})
+    results: list["PollResult"] = attr.field(metadata={"type": """list[PollResult]"""})
     topic_id: int = attr.field()
     total_votes: int = attr.field()
 
@@ -255,13 +260,17 @@ class ForumRecruitmentDetail(BaseModel):
 
     approved: bool = attr.field()
     conversation_id: int = attr.field()
-    fireteam: list["GeneralUser"] = attr.field(metadata={"type": """list["GeneralUser"]"""})
-    intensity: "ForumRecruitmentIntensityLabel" = attr.field()
+    fireteam: list["GeneralUser"] = attr.field(metadata={"type": """list[GeneralUser]"""})
+    intensity: Union["ForumRecruitmentIntensityLabel", int] = attr.field(
+        converter=enum_converter("ForumRecruitmentIntensityLabel"), metadata={"type": "ForumRecruitmentIntensityLabel"}
+    )
     kicked_player_ids: list[int] = attr.field(metadata={"type": """list[int]"""})
     microphone_required: bool = attr.field()
     player_slots_remaining: int = attr.field()
     player_slots_total: int = attr.field()
-    tone: "ForumRecruitmentToneLabel" = attr.field()
+    tone: Union["ForumRecruitmentToneLabel", int] = attr.field(
+        converter=enum_converter("ForumRecruitmentToneLabel"), metadata={"type": "ForumRecruitmentToneLabel"}
+    )
     topic_id: int = attr.field()
 
 

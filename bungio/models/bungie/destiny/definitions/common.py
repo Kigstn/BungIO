@@ -27,7 +27,7 @@ class DestinyDisplayPropertiesDefinition(BaseModel):
     high_res_icon: str = attr.field()
     icon: str = attr.field()
     icon_sequences: list["DestinyIconSequenceDefinition"] = attr.field(
-        metadata={"type": """list["DestinyIconSequenceDefinition"]"""}
+        metadata={"type": """list[DestinyIconSequenceDefinition]"""}
     )
     name: str = attr.field()
 

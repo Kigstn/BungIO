@@ -3,11 +3,12 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
 from bungio.models.base import BaseModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -65,12 +66,12 @@ class DestinyProfileTransitoryComponent(BaseModel):
     joinability: "DestinyProfileTransitoryJoinability" = attr.field()
     last_orbited_destination_hash: int = attr.field()
     party_members: list["DestinyProfileTransitoryPartyMember"] = attr.field(
-        metadata={"type": """list["DestinyProfileTransitoryPartyMember"]"""}
+        metadata={"type": """list[DestinyProfileTransitoryPartyMember]"""}
     )
     tracking: list["DestinyProfileTransitoryTrackingEntry"] = attr.field(
-        metadata={"type": """list["DestinyProfileTransitoryTrackingEntry"]"""}
+        metadata={"type": """list[DestinyProfileTransitoryTrackingEntry]"""}
     )
-    manifest_last_orbited_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
+    manifest_last_orbited_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field()
 
 
 @attr.define
@@ -98,8 +99,10 @@ class DestinyProfileTransitoryPartyMember(BaseModel):
     display_name: str = attr.field()
     emblem_hash: int = attr.field()
     membership_id: int = attr.field()
-    status: "DestinyPartyMemberStates" = attr.field()
-    manifest_emblem_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    status: Union["DestinyPartyMemberStates", int] = attr.field(
+        converter=enum_converter("DestinyPartyMemberStates"), metadata={"type": "DestinyPartyMemberStates"}
+    )
+    manifest_emblem_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
 
 
 @attr.define
@@ -137,9 +140,13 @@ class DestinyProfileTransitoryJoinability(BaseModel):
         privacy_setting: Who the person is currently allowing invites from.
     """
 
-    closed_reasons: "DestinyJoinClosedReasons" = attr.field()
+    closed_reasons: Union["DestinyJoinClosedReasons", int] = attr.field(
+        converter=enum_converter("DestinyJoinClosedReasons"), metadata={"type": "DestinyJoinClosedReasons"}
+    )
     open_slots: int = attr.field()
-    privacy_setting: "DestinyGamePrivacySetting" = attr.field()
+    privacy_setting: Union["DestinyGamePrivacySetting", int] = attr.field(
+        converter=enum_converter("DestinyGamePrivacySetting"), metadata={"type": "DestinyGamePrivacySetting"}
+    )
 
 
 @attr.define
@@ -176,8 +183,8 @@ class DestinyProfileTransitoryTrackingEntry(BaseModel):
     objective_hash: int = attr.field()
     questline_item_hash: int = attr.field()
     tracked_date: datetime = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_location_hash: Optional["DestinyLocationDefinition"] = attr.field(default=None)
-    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
-    manifest_questline_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_location_hash: Optional["DestinyLocationDefinition"] = attr.field()
+    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field()
+    manifest_questline_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()

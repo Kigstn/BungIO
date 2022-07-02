@@ -26,4 +26,4 @@ class DestinyPublicActivityStatus(BaseModel):
 
     challenge_objective_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     modifier_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    reward_tooltip_items: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list["DestinyItemQuantity"]"""})
+    reward_tooltip_items: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})

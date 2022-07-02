@@ -3,12 +3,13 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
 from bungio.models.mixins import DestinyClanMixin, DestinyUserMixin
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import BungieMembershipType, UserInfoCard
@@ -118,7 +119,9 @@ class FireteamSummary(BaseModel, DestinyClanMixin):
     is_valid: bool = attr.field()
     locale: str = attr.field()
     owner_membership_id: int = attr.field()
-    platform: "FireteamPlatform" = attr.field()
+    platform: Union["FireteamPlatform", int] = attr.field(
+        converter=enum_converter("FireteamPlatform"), metadata={"type": "FireteamPlatform"}
+    )
     player_slot_count: int = attr.field()
     scheduled_time: datetime = attr.field()
     title: str = attr.field()
@@ -137,8 +140,8 @@ class FireteamResponse(BaseModel):
         summary: _No description given by bungie._
     """
 
-    alternates: list["FireteamMember"] = attr.field(metadata={"type": """list["FireteamMember"]"""})
-    members: list["FireteamMember"] = attr.field(metadata={"type": """list["FireteamMember"]"""})
+    alternates: list["FireteamMember"] = attr.field(metadata={"type": """list[FireteamMember]"""})
+    members: list["FireteamMember"] = attr.field(metadata={"type": """list[FireteamMember]"""})
     summary: "FireteamSummary" = attr.field()
 
 
@@ -164,7 +167,9 @@ class FireteamMember(BaseModel):
     destiny_user_info: "FireteamUserInfoCard" = attr.field()
     has_microphone: bool = attr.field()
     last_platform_invite_attempt_date: datetime = attr.field()
-    last_platform_invite_attempt_result: "FireteamPlatformInviteResult" = attr.field()
+    last_platform_invite_attempt_result: Union["FireteamPlatformInviteResult", int] = attr.field(
+        converter=enum_converter("FireteamPlatformInviteResult"), metadata={"type": "FireteamPlatformInviteResult"}
+    )
 
 
 @attr.define
@@ -188,19 +193,25 @@ class FireteamUserInfoCard(BaseModel, DestinyUserMixin):
         supplemental_display_name: A platform specific additional display name - ex: psn Real Name, bnet Unique Name, etc.
     """
 
-    applicable_membership_types: list["BungieMembershipType"] = attr.field(
-        metadata={"type": """list["BungieMembershipType"]"""}
+    applicable_membership_types: list[Union["BungieMembershipType", int]] = attr.field(
+        metadata={"type": """list[Union[BungieMembershipType, int]]"""}
     )
     bungie_global_display_name: str = attr.field()
     bungie_global_display_name_code: int = attr.field()
-    cross_save_override: "BungieMembershipType" = attr.field()
+    cross_save_override: Union["BungieMembershipType", int] = attr.field(
+        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+    )
     display_name: str = attr.field()
     fireteam_display_name: str = attr.field()
-    fireteam_membership_type: "BungieMembershipType" = attr.field()
+    fireteam_membership_type: Union["BungieMembershipType", int] = attr.field(
+        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+    )
     icon_path: str = attr.field()
     is_public: bool = attr.field()
     membership_id: int = attr.field()
-    membership_type: "BungieMembershipType" = attr.field()
+    membership_type: Union["BungieMembershipType", int] = attr.field(
+        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+    )
     supplemental_display_name: str = attr.field()
 
 

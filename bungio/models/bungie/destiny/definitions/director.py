@@ -2,11 +2,12 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
 from bungio.models.base import BaseModel, ManifestModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -39,24 +40,24 @@ class DestinyActivityGraphDefinition(ManifestModel):
     """
 
     art_elements: list["DestinyActivityGraphArtElementDefinition"] = attr.field(
-        metadata={"type": """list["DestinyActivityGraphArtElementDefinition"]"""}
+        metadata={"type": """list[DestinyActivityGraphArtElementDefinition]"""}
     )
     connections: list["DestinyActivityGraphConnectionDefinition"] = attr.field(
-        metadata={"type": """list["DestinyActivityGraphConnectionDefinition"]"""}
+        metadata={"type": """list[DestinyActivityGraphConnectionDefinition]"""}
     )
     display_objectives: list["DestinyActivityGraphDisplayObjectiveDefinition"] = attr.field(
-        metadata={"type": """list["DestinyActivityGraphDisplayObjectiveDefinition"]"""}
+        metadata={"type": """list[DestinyActivityGraphDisplayObjectiveDefinition]"""}
     )
     display_progressions: list["DestinyActivityGraphDisplayProgressionDefinition"] = attr.field(
-        metadata={"type": """list["DestinyActivityGraphDisplayProgressionDefinition"]"""}
+        metadata={"type": """list[DestinyActivityGraphDisplayProgressionDefinition]"""}
     )
     hash: int = attr.field()
     index: int = attr.field()
     linked_graphs: list["DestinyLinkedGraphDefinition"] = attr.field(
-        metadata={"type": """list["DestinyLinkedGraphDefinition"]"""}
+        metadata={"type": """list[DestinyLinkedGraphDefinition]"""}
     )
     nodes: list["DestinyActivityGraphNodeDefinition"] = attr.field(
-        metadata={"type": """list["DestinyActivityGraphNodeDefinition"]"""}
+        metadata={"type": """list[DestinyActivityGraphNodeDefinition]"""}
     )
     redacted: bool = attr.field()
 
@@ -77,16 +78,16 @@ class DestinyActivityGraphNodeDefinition(BaseModel):
     """
 
     activities: list["DestinyActivityGraphNodeActivityDefinition"] = attr.field(
-        metadata={"type": """list["DestinyActivityGraphNodeActivityDefinition"]"""}
+        metadata={"type": """list[DestinyActivityGraphNodeActivityDefinition]"""}
     )
     featuring_states: list["DestinyActivityGraphNodeFeaturingStateDefinition"] = attr.field(
-        metadata={"type": """list["DestinyActivityGraphNodeFeaturingStateDefinition"]"""}
+        metadata={"type": """list[DestinyActivityGraphNodeFeaturingStateDefinition]"""}
     )
     node_id: int = attr.field()
     override_display: "DestinyDisplayPropertiesDefinition" = attr.field()
     position: "DestinyPositionDefinition" = attr.field()
     states: list["DestinyActivityGraphNodeStateEntry"] = attr.field(
-        metadata={"type": """list["DestinyActivityGraphNodeStateEntry"]"""}
+        metadata={"type": """list[DestinyActivityGraphNodeStateEntry]"""}
     )
 
 
@@ -100,7 +101,9 @@ class DestinyActivityGraphNodeFeaturingStateDefinition(BaseModel):
         highlight_type: The node can be highlighted in a variety of ways - the game iterates through these and finds the first FeaturingState that is valid at the present moment given the Game, Account, and Character state, and renders the node in that state. See the ActivityGraphNodeHighlightType enum for possible values.
     """
 
-    highlight_type: "ActivityGraphNodeHighlightType" = attr.field()
+    highlight_type: Union["ActivityGraphNodeHighlightType", int] = attr.field(
+        converter=enum_converter("ActivityGraphNodeHighlightType"), metadata={"type": "ActivityGraphNodeHighlightType"}
+    )
 
 
 @attr.define
@@ -125,7 +128,7 @@ class DestinyActivityGraphNodeActivityDefinition(BaseModel):
 
     activity_hash: int = attr.field()
     node_activity_id: int = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
 
 
 @attr.define
@@ -138,7 +141,9 @@ class DestinyActivityGraphNodeStateEntry(BaseModel):
         state: _No description given by bungie._
     """
 
-    state: "DestinyGraphNodeState" = attr.field()
+    state: Union["DestinyGraphNodeState", int] = attr.field(
+        converter=enum_converter("DestinyGraphNodeState"), metadata={"type": "DestinyGraphNodeState"}
+    )
 
 
 @attr.define
@@ -191,7 +196,7 @@ class DestinyActivityGraphDisplayObjectiveDefinition(BaseModel):
 
     id: int = attr.field()
     objective_hash: int = attr.field()
-    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
+    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field()
 
 
 @attr.define
@@ -227,7 +232,7 @@ class DestinyLinkedGraphDefinition(BaseModel):
     description: str = attr.field()
     linked_graph_id: int = attr.field()
     linked_graphs: list["DestinyLinkedGraphEntryDefinition"] = attr.field(
-        metadata={"type": """list["DestinyLinkedGraphEntryDefinition"]"""}
+        metadata={"type": """list[DestinyLinkedGraphEntryDefinition]"""}
     )
     name: str = attr.field()
     overview: str = attr.field()

@@ -2,7 +2,7 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 import attr
 
@@ -22,8 +22,8 @@ class DestinyPlatformSilverComponent(BaseModel):
         platform_silver: If a Profile is played on multiple platforms, this is the silver they have for each platform, keyed by Membership Type.
     """
 
-    platform_silver: dict["BungieMembershipType", "DestinyItemComponent"] = attr.field(
-        metadata={"type": """dict["BungieMembershipType", "DestinyItemComponent"]"""}
+    platform_silver: dict[Union["BungieMembershipType", int], "DestinyItemComponent"] = attr.field(
+        metadata={"type": """dict[Union[BungieMembershipType, int], DestinyItemComponent]"""}
     )
 
 

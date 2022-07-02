@@ -28,7 +28,7 @@ class DestinyVendorGroupComponent(BaseModel):
         groups: The ordered list of groups being returned.
     """
 
-    groups: list["DestinyVendorGroup"] = attr.field(metadata={"type": """list["DestinyVendorGroup"]"""})
+    groups: list["DestinyVendorGroup"] = attr.field(metadata={"type": """list[DestinyVendorGroup]"""})
 
 
 @attr.define
@@ -53,7 +53,7 @@ class DestinyVendorGroup(BaseModel):
 
     vendor_group_hash: int = attr.field()
     vendor_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_vendor_group_hash: Optional["DestinyVendorGroupDefinition"] = attr.field(default=None)
+    manifest_vendor_group_hash: Optional["DestinyVendorGroupDefinition"] = attr.field()
 
 
 @attr.define
@@ -80,7 +80,7 @@ class DestinyVendorBaseComponent(BaseModel):
     enabled: bool = attr.field()
     next_refresh_date: datetime = attr.field()
     vendor_hash: int = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()
 
 
 @attr.define
@@ -110,14 +110,14 @@ class DestinyVendorSaleItemBaseComponent(BaseModel):
     """
 
     api_purchasable: bool = attr.field()
-    costs: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list["DestinyItemQuantity"]"""})
+    costs: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})
     item_hash: int = attr.field()
     override_next_refresh_date: datetime = attr.field()
     override_style_item_hash: int = attr.field()
     quantity: int = attr.field()
     vendor_item_index: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
 
 
 @attr.define
@@ -144,7 +144,7 @@ class DestinyPublicVendorComponent(BaseModel):
     enabled: bool = attr.field()
     next_refresh_date: datetime = attr.field()
     vendor_hash: int = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()
 
 
 @attr.define
@@ -174,11 +174,11 @@ class DestinyPublicVendorSaleItemComponent(BaseModel):
     """
 
     api_purchasable: bool = attr.field()
-    costs: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list["DestinyItemQuantity"]"""})
+    costs: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})
     item_hash: int = attr.field()
     override_next_refresh_date: datetime = attr.field()
     override_style_item_hash: int = attr.field()
     quantity: int = attr.field()
     vendor_item_index: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()

@@ -3,11 +3,12 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
 from bungio.models.base import BaseModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -28,7 +29,7 @@ class DestinyVendorReceiptsComponent(BaseModel):
         receipts: The receipts for refundable purchases made at a vendor.
     """
 
-    receipts: list["DestinyVendorReceipt"] = attr.field(metadata={"type": """list["DestinyVendorReceipt"]"""})
+    receipts: list["DestinyVendorReceipt"] = attr.field(metadata={"type": """list[DestinyVendorReceipt]"""})
 
 
 @attr.define
@@ -62,5 +63,7 @@ class DestinyProfileComponent(BaseModel):
     date_last_played: datetime = attr.field()
     season_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     user_info: "UserInfoCard" = attr.field()
-    versions_owned: "DestinyGameVersions" = attr.field()
-    manifest_current_season_hash: Optional["DestinySeasonDefinition"] = attr.field(default=None)
+    versions_owned: Union["DestinyGameVersions", int] = attr.field(
+        converter=enum_converter("DestinyGameVersions"), metadata={"type": "DestinyGameVersions"}
+    )
+    manifest_current_season_hash: Optional["DestinySeasonDefinition"] = attr.field()

@@ -40,6 +40,6 @@ class DestinyProgressionLevelRequirementDefinition(ManifestModel):
     progression_hash: int = attr.field()
     redacted: bool = attr.field()
     requirement_curve: list["InterpolationPointFloat"] = attr.field(
-        metadata={"type": """list["InterpolationPointFloat"]"""}
+        metadata={"type": """list[InterpolationPointFloat]"""}
     )
-    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
+    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field()

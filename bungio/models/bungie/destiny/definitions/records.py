@@ -2,11 +2,12 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
 from bungio.models.base import BaseModel, ManifestModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -75,18 +76,24 @@ class DestinyRecordDefinition(ManifestModel):
     objective_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     parent_node_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     presentation_info: "DestinyPresentationChildBlock" = attr.field()
-    presentation_node_type: "DestinyPresentationNodeType" = attr.field()
-    record_value_style: "DestinyRecordValueStyle" = attr.field()
+    presentation_node_type: Union["DestinyPresentationNodeType", int] = attr.field(
+        converter=enum_converter("DestinyPresentationNodeType"), metadata={"type": "DestinyPresentationNodeType"}
+    )
+    record_value_style: Union["DestinyRecordValueStyle", int] = attr.field(
+        converter=enum_converter("DestinyRecordValueStyle"), metadata={"type": "DestinyRecordValueStyle"}
+    )
     redacted: bool = attr.field()
     requirements: "DestinyPresentationNodeRequirementsBlock" = attr.field()
-    reward_items: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list["DestinyItemQuantity"]"""})
-    scope: "DestinyScope" = attr.field()
+    reward_items: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})
+    scope: Union["DestinyScope", int] = attr.field(
+        converter=enum_converter("DestinyScope"), metadata={"type": "DestinyScope"}
+    )
     should_show_large_icons: bool = attr.field()
     state_info: "SchemaRecordStateBlock" = attr.field()
     title_info: "DestinyRecordTitleBlock" = attr.field()
     trait_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     trait_ids: list[str] = attr.field(metadata={"type": """list[str]"""})
-    manifest_lore_hash: Optional["DestinyLoreDefinition"] = attr.field(default=None)
+    manifest_lore_hash: Optional["DestinyLoreDefinition"] = attr.field()
 
 
 @attr.define
@@ -113,9 +120,11 @@ class DestinyRecordTitleBlock(BaseModel):
 
     gilding_tracking_record_hash: int = attr.field()
     has_title: bool = attr.field()
-    titles_by_gender: dict["DestinyGender", str] = attr.field(metadata={"type": """dict["DestinyGender", str]"""})
+    titles_by_gender: dict[Union["DestinyGender", int], str] = attr.field(
+        metadata={"type": """dict[Union[DestinyGender, int], str]"""}
+    )
     titles_by_gender_hash: dict[int, str] = attr.field(metadata={"type": """dict[int, str]"""})
-    manifest_gilding_tracking_record_hash: Optional["DestinyRecordDefinition"] = attr.field(default=None)
+    manifest_gilding_tracking_record_hash: Optional["DestinyRecordDefinition"] = attr.field()
 
 
 @attr.define
@@ -134,7 +143,9 @@ class DestinyRecordCompletionBlock(BaseModel):
     partial_completion_objective_count_threshold: int = attr.field()
     score_value: int = attr.field()
     should_fire_toast: bool = attr.field()
-    toast_style: "DestinyRecordToastStyle" = attr.field()
+    toast_style: Union["DestinyRecordToastStyle", int] = attr.field(
+        converter=enum_converter("DestinyRecordToastStyle"), metadata={"type": "DestinyRecordToastStyle"}
+    )
 
 
 @attr.define
@@ -182,10 +193,10 @@ class DestinyRecordIntervalBlock(BaseModel):
     """
 
     interval_objectives: list["DestinyRecordIntervalObjective"] = attr.field(
-        metadata={"type": """list["DestinyRecordIntervalObjective"]"""}
+        metadata={"type": """list[DestinyRecordIntervalObjective]"""}
     )
     interval_rewards: list["DestinyRecordIntervalRewards"] = attr.field(
-        metadata={"type": """list["DestinyRecordIntervalRewards"]"""}
+        metadata={"type": """list[DestinyRecordIntervalRewards]"""}
     )
     original_objective_array_insertion_index: int = attr.field()
 
@@ -212,7 +223,7 @@ class DestinyRecordIntervalObjective(BaseModel):
 
     interval_objective_hash: int = attr.field()
     interval_score_value: int = attr.field()
-    manifest_interval_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
+    manifest_interval_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field()
 
 
 @attr.define
@@ -225,6 +236,4 @@ class DestinyRecordIntervalRewards(BaseModel):
         interval_reward_items: _No description given by bungie._
     """
 
-    interval_reward_items: list["DestinyItemQuantity"] = attr.field(
-        metadata={"type": """list["DestinyItemQuantity"]"""}
-    )
+    interval_reward_items: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})

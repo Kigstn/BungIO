@@ -22,4 +22,4 @@ class DestinyInventoryComponent(BaseModel):
         items: The items in this inventory. If you care to bucket them, use the item's bucketHash property to group them.
     """
 
-    items: list["DestinyItemComponent"] = attr.field(metadata={"type": """list["DestinyItemComponent"]"""})
+    items: list["DestinyItemComponent"] = attr.field(metadata={"type": """list[DestinyItemComponent]"""})

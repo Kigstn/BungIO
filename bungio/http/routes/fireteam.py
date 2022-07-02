@@ -1,4 +1,4 @@
-from typing import Any, Callable, Coroutine, Optional
+from typing import Callable, Coroutine, Optional
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -36,12 +36,12 @@ class FireteamRouteHttpRequests:
     async def get_available_clan_fireteams(
         self,
         activity_type: int,
-        date_range: Any,
+        date_range: int,
         group_id: int,
         page: int,
-        platform: Any,
-        public_only: Any,
-        slot_filter: Any,
+        platform: int,
+        public_only: int,
+        slot_filter: int,
         auth: AuthData,
         lang_filter: Optional[str] = None,
     ) -> dict:
@@ -87,10 +87,10 @@ class FireteamRouteHttpRequests:
     async def search_public_available_clan_fireteams(
         self,
         activity_type: int,
-        date_range: Any,
+        date_range: int,
         page: int,
-        platform: Any,
-        slot_filter: Any,
+        platform: int,
+        slot_filter: int,
         auth: AuthData,
         lang_filter: Optional[str] = None,
     ) -> dict:
@@ -136,7 +136,7 @@ class FireteamRouteHttpRequests:
         group_id: int,
         include_closed: bool,
         page: int,
-        platform: Any,
+        platform: int,
         auth: AuthData,
         group_filter: Optional[bool] = None,
         lang_filter: Optional[str] = None,

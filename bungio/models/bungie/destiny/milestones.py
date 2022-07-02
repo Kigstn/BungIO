@@ -51,20 +51,20 @@ class DestinyMilestone(BaseModel):
     """
 
     activities: list["DestinyMilestoneChallengeActivity"] = attr.field(
-        metadata={"type": """list["DestinyMilestoneChallengeActivity"]"""}
+        metadata={"type": """list[DestinyMilestoneChallengeActivity]"""}
     )
-    available_quests: list["DestinyMilestoneQuest"] = attr.field(metadata={"type": """list["DestinyMilestoneQuest"]"""})
+    available_quests: list["DestinyMilestoneQuest"] = attr.field(metadata={"type": """list[DestinyMilestoneQuest]"""})
     end_date: datetime = attr.field()
     milestone_hash: int = attr.field()
     order: int = attr.field()
     rewards: list["DestinyMilestoneRewardCategory"] = attr.field(
-        metadata={"type": """list["DestinyMilestoneRewardCategory"]"""}
+        metadata={"type": """list[DestinyMilestoneRewardCategory]"""}
     )
     start_date: datetime = attr.field()
     values: dict[str, float] = attr.field(metadata={"type": """dict[str, float]"""})
     vendor_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    vendors: list["DestinyMilestoneVendor"] = attr.field(metadata={"type": """list["DestinyMilestoneVendor"]"""})
-    manifest_milestone_hash: Optional["DestinyMilestoneDefinition"] = attr.field(default=None)
+    vendors: list["DestinyMilestoneVendor"] = attr.field(metadata={"type": """list[DestinyMilestoneVendor]"""})
+    manifest_milestone_hash: Optional["DestinyMilestoneDefinition"] = attr.field()
 
 
 @attr.define
@@ -90,10 +90,10 @@ class DestinyMilestoneQuest(BaseModel):
     """
 
     activity: "DestinyMilestoneActivity" = attr.field()
-    challenges: list["DestinyChallengeStatus"] = attr.field(metadata={"type": """list["DestinyChallengeStatus"]"""})
+    challenges: list["DestinyChallengeStatus"] = attr.field(metadata={"type": """list[DestinyChallengeStatus]"""})
     quest_item_hash: int = attr.field()
     status: "DestinyQuestStatus" = attr.field()
-    manifest_quest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_quest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
 
 
 @attr.define
@@ -125,10 +125,10 @@ class DestinyMilestoneActivity(BaseModel):
     activity_mode_type: int = attr.field()
     modifier_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     variants: list["DestinyMilestoneActivityVariant"] = attr.field(
-        metadata={"type": """list["DestinyMilestoneActivityVariant"]"""}
+        metadata={"type": """list[DestinyMilestoneActivityVariant]"""}
     )
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field(default=None)
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
+    manifest_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field()
 
 
 @attr.define
@@ -158,8 +158,8 @@ class DestinyMilestoneActivityVariant(BaseModel):
     activity_mode_hash: int = attr.field()
     activity_mode_type: int = attr.field()
     completion_status: "DestinyMilestoneActivityCompletionStatus" = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field(default=None)
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
+    manifest_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field()
 
 
 @attr.define
@@ -175,7 +175,7 @@ class DestinyMilestoneActivityCompletionStatus(BaseModel):
 
     completed: bool = attr.field()
     phases: list["DestinyMilestoneActivityPhase"] = attr.field(
-        metadata={"type": """list["DestinyMilestoneActivityPhase"]"""}
+        metadata={"type": """list[DestinyMilestoneActivityPhase]"""}
     )
 
 
@@ -220,13 +220,13 @@ class DestinyMilestoneChallengeActivity(BaseModel):
 
     activity_hash: int = attr.field()
     boolean_activity_options: dict[int, bool] = attr.field(metadata={"type": """dict[int, bool]"""})
-    challenges: list["DestinyChallengeStatus"] = attr.field(metadata={"type": """list["DestinyChallengeStatus"]"""})
+    challenges: list["DestinyChallengeStatus"] = attr.field(metadata={"type": """list[DestinyChallengeStatus]"""})
     loadout_requirement_index: int = attr.field()
     modifier_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     phases: list["DestinyMilestoneActivityPhase"] = attr.field(
-        metadata={"type": """list["DestinyMilestoneActivityPhase"]"""}
+        metadata={"type": """list[DestinyMilestoneActivityPhase]"""}
     )
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
 
 
 @attr.define
@@ -252,8 +252,8 @@ class DestinyMilestoneVendor(BaseModel):
 
     preview_item_hash: int = attr.field()
     vendor_hash: int = attr.field()
-    manifest_preview_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    manifest_preview_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()
 
 
 @attr.define
@@ -268,7 +268,7 @@ class DestinyMilestoneRewardCategory(BaseModel):
     """
 
     entries: list["DestinyMilestoneRewardEntry"] = attr.field(
-        metadata={"type": """list["DestinyMilestoneRewardEntry"]"""}
+        metadata={"type": """list[DestinyMilestoneRewardEntry]"""}
     )
     reward_category_hash: int = attr.field()
 
@@ -305,7 +305,7 @@ class DestinyMilestoneContent(BaseModel):
 
     about: str = attr.field()
     item_categories: list["DestinyMilestoneContentItemCategory"] = attr.field(
-        metadata={"type": """list["DestinyMilestoneContentItemCategory"]"""}
+        metadata={"type": """list[DestinyMilestoneContentItemCategory]"""}
     )
     status: str = attr.field()
     tips: list[str] = attr.field(metadata={"type": """list[str]"""})
@@ -353,10 +353,10 @@ class DestinyPublicMilestone(BaseModel):
     """
 
     activities: list["DestinyPublicMilestoneChallengeActivity"] = attr.field(
-        metadata={"type": """list["DestinyPublicMilestoneChallengeActivity"]"""}
+        metadata={"type": """list[DestinyPublicMilestoneChallengeActivity]"""}
     )
     available_quests: list["DestinyPublicMilestoneQuest"] = attr.field(
-        metadata={"type": """list["DestinyPublicMilestoneQuest"]"""}
+        metadata={"type": """list[DestinyPublicMilestoneQuest]"""}
     )
     end_date: datetime = attr.field()
     milestone_hash: int = attr.field()
@@ -364,9 +364,9 @@ class DestinyPublicMilestone(BaseModel):
     start_date: datetime = attr.field()
     vendor_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     vendors: list["DestinyPublicMilestoneVendor"] = attr.field(
-        metadata={"type": """list["DestinyPublicMilestoneVendor"]"""}
+        metadata={"type": """list[DestinyPublicMilestoneVendor]"""}
     )
-    manifest_milestone_hash: Optional["DestinyMilestoneDefinition"] = attr.field(default=None)
+    manifest_milestone_hash: Optional["DestinyMilestoneDefinition"] = attr.field()
 
 
 @attr.define
@@ -392,10 +392,10 @@ class DestinyPublicMilestoneQuest(BaseModel):
 
     activity: "DestinyPublicMilestoneActivity" = attr.field()
     challenges: list["DestinyPublicMilestoneChallenge"] = attr.field(
-        metadata={"type": """list["DestinyPublicMilestoneChallenge"]"""}
+        metadata={"type": """list[DestinyPublicMilestoneChallenge]"""}
     )
     quest_item_hash: int = attr.field()
-    manifest_quest_item_hash: Optional["DestinyMilestoneDefinition"] = attr.field(default=None)
+    manifest_quest_item_hash: Optional["DestinyMilestoneDefinition"] = attr.field()
 
 
 @attr.define
@@ -427,10 +427,10 @@ class DestinyPublicMilestoneActivity(BaseModel):
     activity_mode_type: int = attr.field()
     modifier_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     variants: list["DestinyPublicMilestoneActivityVariant"] = attr.field(
-        metadata={"type": """list["DestinyPublicMilestoneActivityVariant"]"""}
+        metadata={"type": """list[DestinyPublicMilestoneActivityVariant]"""}
     )
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field(default=None)
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
+    manifest_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field()
 
 
 @attr.define
@@ -458,8 +458,8 @@ class DestinyPublicMilestoneActivityVariant(BaseModel):
     activity_hash: int = attr.field()
     activity_mode_hash: int = attr.field()
     activity_mode_type: int = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field(default=None)
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
+    manifest_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field()
 
 
 @attr.define
@@ -485,8 +485,8 @@ class DestinyPublicMilestoneChallenge(BaseModel):
 
     activity_hash: int = attr.field()
     objective_hash: int = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
+    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field()
 
 
 @attr.define
@@ -519,7 +519,7 @@ class DestinyPublicMilestoneChallengeActivity(BaseModel):
     loadout_requirement_index: int = attr.field()
     modifier_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     phase_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
 
 
 @attr.define
@@ -545,5 +545,5 @@ class DestinyPublicMilestoneVendor(BaseModel):
 
     preview_item_hash: int = attr.field()
     vendor_hash: int = attr.field()
-    manifest_preview_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    manifest_preview_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()

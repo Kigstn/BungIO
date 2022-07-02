@@ -2,7 +2,7 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import Optional
+from typing import Optional, Union
 
 import attr
 
@@ -23,12 +23,12 @@ from bungio.models.base import ClientMixin
 class ForumRouteInterface(ClientMixin):
     async def get_topics_paged(
         self,
-        category_filter: ForumTopicsCategoryFiltersEnum,
+        category_filter: Union[ForumTopicsCategoryFiltersEnum, int],
         group: int,
         page: int,
         page_size: int,
-        quick_date: ForumTopicsQuickDateEnum,
-        sort: ForumTopicsSortEnum,
+        quick_date: Union[ForumTopicsQuickDateEnum, int],
+        sort: Union[ForumTopicsSortEnum, int],
         locales: Optional[str] = None,
         tagstring: Optional[str] = None,
         auth: Optional[AuthData] = None,
@@ -52,12 +52,12 @@ class ForumRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_topics_paged(
-            category_filter=category_filter.value,
+            category_filter=getattr(category_filter, "value", category_filter),
             group=group,
             page=page,
             page_size=page_size,
-            quick_date=quick_date.value,
-            sort=sort.value,
+            quick_date=getattr(quick_date, "value", quick_date),
+            sort=getattr(sort, "value", sort),
             locales=locales if locales else None,
             tagstring=tagstring if tagstring else None,
             auth=auth,
@@ -78,10 +78,10 @@ class ForumRouteInterface(ClientMixin):
 
     async def get_core_topics_paged(
         self,
-        category_filter: ForumTopicsCategoryFiltersEnum,
+        category_filter: Union[ForumTopicsCategoryFiltersEnum, int],
         page: int,
-        quick_date: ForumTopicsQuickDateEnum,
-        sort: ForumTopicsSortEnum,
+        quick_date: Union[ForumTopicsQuickDateEnum, int],
+        sort: Union[ForumTopicsSortEnum, int],
         locales: Optional[str] = None,
         auth: Optional[AuthData] = None,
     ) -> PostSearchResponse:
@@ -101,10 +101,10 @@ class ForumRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_core_topics_paged(
-            category_filter=category_filter.value,
+            category_filter=getattr(category_filter, "value", category_filter),
             page=page,
-            quick_date=quick_date.value,
-            sort=sort.value,
+            quick_date=getattr(quick_date, "value", quick_date),
+            sort=getattr(sort, "value", sort),
             locales=locales if locales else None,
             auth=auth,
         )
@@ -127,7 +127,7 @@ class ForumRouteInterface(ClientMixin):
         parent_post_id: int,
         reply_size: int,
         root_thread_mode: bool,
-        sort_mode: ForumPostSortEnum,
+        sort_mode: Union[ForumPostSortEnum, int],
         showbanned: Optional[str] = None,
         auth: Optional[AuthData] = None,
     ) -> PostSearchResponse:
@@ -156,7 +156,7 @@ class ForumRouteInterface(ClientMixin):
             parent_post_id=parent_post_id,
             reply_size=reply_size,
             root_thread_mode=root_thread_mode,
-            sort_mode=sort_mode.value,
+            sort_mode=getattr(sort_mode, "value", sort_mode),
             showbanned=showbanned if showbanned else None,
             auth=auth,
         )
@@ -181,7 +181,7 @@ class ForumRouteInterface(ClientMixin):
         page_size: int,
         reply_size: int,
         root_thread_mode: bool,
-        sort_mode: ForumPostSortEnum,
+        sort_mode: Union[ForumPostSortEnum, int],
         showbanned: Optional[str] = None,
         auth: Optional[AuthData] = None,
     ) -> PostSearchResponse:
@@ -208,7 +208,7 @@ class ForumRouteInterface(ClientMixin):
             page_size=page_size,
             reply_size=reply_size,
             root_thread_mode=root_thread_mode,
-            sort_mode=sort_mode.value,
+            sort_mode=getattr(sort_mode, "value", sort_mode),
             showbanned=showbanned if showbanned else None,
             auth=auth,
         )

@@ -25,7 +25,7 @@ class DestinyManifest(BaseModel):
         version: _No description given by bungie._
     """
 
-    icon_image_pyramid_info: list["ImagePyramidEntry"] = attr.field(metadata={"type": """list["ImagePyramidEntry"]"""})
+    icon_image_pyramid_info: list["ImagePyramidEntry"] = attr.field(metadata={"type": """list[ImagePyramidEntry]"""})
     json_world_component_content_paths: dict[str, dict[str, str]] = attr.field(
         metadata={"type": """dict[str, dict[str, str]]"""}
     )
@@ -33,7 +33,7 @@ class DestinyManifest(BaseModel):
     mobile_asset_content_path: str = attr.field()
     mobile_clan_banner_database_path: str = attr.field()
     mobile_gear_asset_data_bases: list["GearAssetDataBaseDefinition"] = attr.field(
-        metadata={"type": """list["GearAssetDataBaseDefinition"]"""}
+        metadata={"type": """list[GearAssetDataBaseDefinition]"""}
     )
     mobile_gear_c_d_n: dict[str, str] = attr.field(metadata={"type": """dict[str, str]"""})
     mobile_world_content_paths: dict[str, str] = attr.field(metadata={"type": """dict[str, str]"""})

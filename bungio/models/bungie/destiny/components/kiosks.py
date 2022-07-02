@@ -23,7 +23,7 @@ class DestinyKiosksComponent(BaseModel):
     """
 
     kiosk_items: dict[int, list["DestinyKioskItem"]] = attr.field(
-        metadata={"type": """dict[int, list["DestinyKioskItem"]]"""}
+        metadata={"type": """dict[int, list[DestinyKioskItem]]"""}
     )
 
 

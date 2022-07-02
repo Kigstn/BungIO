@@ -51,9 +51,9 @@ class DestinyObjectiveProgress(BaseModel):
     objective_hash: int = attr.field()
     progress: int = attr.field()
     visible: bool = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
-    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
+    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field()
+    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field()
 
 
 @attr.define
@@ -91,9 +91,9 @@ class DestinyQuestStatus(BaseModel):
     started: bool = attr.field()
     step_hash: int = attr.field()
     step_objectives: list["DestinyObjectiveProgress"] = attr.field(
-        metadata={"type": """list["DestinyObjectiveProgress"]"""}
+        metadata={"type": """list[DestinyObjectiveProgress]"""}
     )
     tracked: bool = attr.field()
     vendor_hash: int = attr.field()
-    manifest_quest_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_step_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_quest_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_step_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()

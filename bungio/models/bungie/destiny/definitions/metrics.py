@@ -2,11 +2,12 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
 from bungio.models.base import ManifestModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -49,9 +50,11 @@ class DestinyMetricDefinition(ManifestModel):
     index: int = attr.field()
     lower_value_is_better: bool = attr.field()
     parent_node_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    presentation_node_type: "DestinyPresentationNodeType" = attr.field()
+    presentation_node_type: Union["DestinyPresentationNodeType", int] = attr.field(
+        converter=enum_converter("DestinyPresentationNodeType"), metadata={"type": "DestinyPresentationNodeType"}
+    )
     redacted: bool = attr.field()
     tracking_objective_hash: int = attr.field()
     trait_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     trait_ids: list[str] = attr.field(metadata={"type": """list[str]"""})
-    manifest_tracking_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
+    manifest_tracking_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field()

@@ -2,11 +2,12 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
 from bungio.models.base import BaseEnum, ManifestModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import DestinyMedalTierDefinition
@@ -217,21 +218,27 @@ class DestinyHistoricalStatsDefinition(ManifestModel):
         manifest_medal_tier_hash: Manifest information for `medal_tier_hash`
     """
 
-    category: "DestinyStatsCategoryType" = attr.field()
-    group: "DestinyStatsGroupType" = attr.field()
+    category: Union["DestinyStatsCategoryType", int] = attr.field(
+        converter=enum_converter("DestinyStatsCategoryType"), metadata={"type": "DestinyStatsCategoryType"}
+    )
+    group: Union["DestinyStatsGroupType", int] = attr.field(
+        converter=enum_converter("DestinyStatsGroupType"), metadata={"type": "DestinyStatsGroupType"}
+    )
     icon_image: str = attr.field()
     medal_tier_hash: int = attr.field()
     merge_method: int = attr.field()
-    modes: list["DestinyActivityModeType"] = attr.field(metadata={"type": """list["DestinyActivityModeType"]"""})
-    period_types: list["PeriodType"] = attr.field(metadata={"type": """list["PeriodType"]"""})
+    modes: list[Union["DestinyActivityModeType", int]] = attr.field(
+        metadata={"type": """list[Union[DestinyActivityModeType, int]]"""}
+    )
+    period_types: list[Union["PeriodType", int]] = attr.field(metadata={"type": """list[Union[PeriodType, int]]"""})
     stat_description: str = attr.field()
     stat_id: str = attr.field()
     stat_name: str = attr.field()
     stat_name_abbr: str = attr.field()
     unit_label: str = attr.field()
-    unit_type: "UnitType" = attr.field()
+    unit_type: Union["UnitType", int] = attr.field(converter=enum_converter("UnitType"), metadata={"type": "UnitType"})
     weight: int = attr.field()
-    manifest_medal_tier_hash: Optional["DestinyMedalTierDefinition"] = attr.field(default=None)
+    manifest_medal_tier_hash: Optional["DestinyMedalTierDefinition"] = attr.field()
 
 
 class DestinyStatsGroupType(BaseEnum):

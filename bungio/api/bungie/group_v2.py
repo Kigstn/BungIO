@@ -2,7 +2,7 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import Optional
+from typing import Optional, Union
 
 import attr
 
@@ -75,7 +75,7 @@ class GroupV2RouteInterface(ClientMixin):
             await GroupTheme.from_dict(data=value, client=self._client, auth=auth) for value in response["Response"]
         ]
 
-    async def get_user_clan_invite_setting(self, m_type: BungieMembershipType, auth: AuthData) -> bool:
+    async def get_user_clan_invite_setting(self, m_type: Union[BungieMembershipType, int], auth: AuthData) -> bool:
         """
         Gets the state of the user's clan invite preferences for a particular membership type - true if they wish to be invited to clans, false otherwise.
 
@@ -90,11 +90,13 @@ class GroupV2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.get_user_clan_invite_setting(m_type=m_type.value, auth=auth)
+        response = await self._client.http.get_user_clan_invite_setting(
+            m_type=getattr(m_type, "value", m_type), auth=auth
+        )
         return response["Response"]
 
     async def get_recommended_groups(
-        self, create_date_range: GroupDateRange, group_type: GroupType, auth: AuthData
+        self, create_date_range: Union[GroupDateRange, int], group_type: Union[GroupType, int], auth: AuthData
     ) -> list[GroupV2Card]:
         """
         Gets groups recommended for you based on the groups to whom those you follow belong.
@@ -112,7 +114,9 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_recommended_groups(
-            create_date_range=create_date_range.value, group_type=group_type.value, auth=auth
+            create_date_range=getattr(create_date_range, "value", create_date_range),
+            group_type=getattr(group_type, "value", group_type),
+            auth=auth,
         )
         return [
             await GroupV2Card.from_dict(
@@ -152,7 +156,7 @@ class GroupV2RouteInterface(ClientMixin):
         return await GroupResponse.from_dict(data=response, client=self._client, group_id=group_id, auth=auth)
 
     async def get_group_by_name(
-        self, group_name: str, group_type: GroupType, auth: Optional[AuthData] = None
+        self, group_name: str, group_type: Union[GroupType, int], auth: Optional[AuthData] = None
     ) -> GroupResponse:
         """
         Get information about a specific group with the given name and type.
@@ -167,7 +171,7 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_group_by_name(
-            group_name=group_name, group_type=group_type.value, auth=auth
+            group_name=group_name, group_type=getattr(group_type, "value", group_type), auth=auth
         )
         return await GroupResponse.from_dict(
             data=response, client=self._client, group_name=group_name, group_type=group_type, auth=auth
@@ -316,7 +320,7 @@ class GroupV2RouteInterface(ClientMixin):
         self,
         currentpage: int,
         group_id: int,
-        member_type: Optional[RuntimeGroupMemberType] = None,
+        member_type: Optional[Union[RuntimeGroupMemberType, int]] = None,
         name_search: Optional[str] = None,
         auth: Optional[AuthData] = None,
     ) -> SearchResultOfGroupMember:
@@ -337,7 +341,7 @@ class GroupV2RouteInterface(ClientMixin):
         response = await self._client.http.get_members_of_group(
             currentpage=currentpage,
             group_id=group_id,
-            member_type=member_type.value if member_type else None,
+            member_type=getattr(member_type, "value", member_type) if member_type else None,
             name_search=name_search if name_search else None,
             auth=auth,
         )
@@ -377,8 +381,8 @@ class GroupV2RouteInterface(ClientMixin):
         self,
         group_id: int,
         membership_id: int,
-        membership_type: BungieMembershipType,
-        member_type: RuntimeGroupMemberType,
+        membership_type: Union[BungieMembershipType, int],
+        member_type: Union[RuntimeGroupMemberType, int],
         auth: AuthData,
     ) -> int:
         """
@@ -401,14 +405,14 @@ class GroupV2RouteInterface(ClientMixin):
         response = await self._client.http.edit_group_membership(
             group_id=group_id,
             membership_id=membership_id,
-            membership_type=membership_type.value,
-            member_type=member_type.value,
+            membership_type=getattr(membership_type, "value", membership_type),
+            member_type=getattr(member_type, "value", member_type),
             auth=auth,
         )
         return response["Response"]
 
     async def kick_member(
-        self, group_id: int, membership_id: int, membership_type: BungieMembershipType, auth: AuthData
+        self, group_id: int, membership_id: int, membership_type: Union[BungieMembershipType, int], auth: AuthData
     ) -> GroupMemberLeaveResult:
         """
         Kick a member from the given group, forcing them to reapply if they wish to re-join the group. You must have suitable permissions in the group to perform this operation.
@@ -427,7 +431,10 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.kick_member(
-            group_id=group_id, membership_id=membership_id, membership_type=membership_type.value, auth=auth
+            group_id=group_id,
+            membership_id=membership_id,
+            membership_type=getattr(membership_type, "value", membership_type),
+            auth=auth,
         )
         return await GroupMemberLeaveResult.from_dict(
             data=response,
@@ -443,7 +450,7 @@ class GroupV2RouteInterface(ClientMixin):
         data: GroupBanRequest,
         group_id: int,
         membership_id: int,
-        membership_type: BungieMembershipType,
+        membership_type: Union[BungieMembershipType, int],
         auth: AuthData,
     ) -> int:
         """
@@ -466,14 +473,14 @@ class GroupV2RouteInterface(ClientMixin):
         response = await self._client.http.ban_member(
             group_id=group_id,
             membership_id=membership_id,
-            membership_type=membership_type.value,
+            membership_type=getattr(membership_type, "value", membership_type),
             auth=auth,
             **data.to_dict()
         )
         return response["Response"]
 
     async def unban_member(
-        self, group_id: int, membership_id: int, membership_type: BungieMembershipType, auth: AuthData
+        self, group_id: int, membership_id: int, membership_type: Union[BungieMembershipType, int], auth: AuthData
     ) -> int:
         """
         Unbans the requested member, allowing them to re-apply for membership.
@@ -492,7 +499,10 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.unban_member(
-            group_id=group_id, membership_id=membership_id, membership_type=membership_type.value, auth=auth
+            group_id=group_id,
+            membership_id=membership_id,
+            membership_type=getattr(membership_type, "value", membership_type),
+            auth=auth,
         )
         return response["Response"]
 
@@ -522,7 +532,11 @@ class GroupV2RouteInterface(ClientMixin):
         )
 
     async def abdicate_foundership(
-        self, founder_id_new: int, group_id: int, membership_type: BungieMembershipType, auth: Optional[AuthData] = None
+        self,
+        founder_id_new: int,
+        group_id: int,
+        membership_type: Union[BungieMembershipType, int],
+        auth: Optional[AuthData] = None,
     ) -> bool:
         """
         An administrative method to allow the founder of a group or clan to give up their position to another admin permanently.
@@ -538,7 +552,10 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.abdicate_foundership(
-            founder_id_new=founder_id_new, group_id=group_id, membership_type=membership_type.value, auth=auth
+            founder_id_new=founder_id_new,
+            group_id=group_id,
+            membership_type=getattr(membership_type, "value", membership_type),
+            auth=auth,
         )
         return response["Response"]
 
@@ -669,7 +686,7 @@ class GroupV2RouteInterface(ClientMixin):
         data: GroupApplicationRequest,
         group_id: int,
         membership_id: int,
-        membership_type: BungieMembershipType,
+        membership_type: Union[BungieMembershipType, int],
         auth: AuthData,
     ) -> bool:
         """
@@ -692,7 +709,7 @@ class GroupV2RouteInterface(ClientMixin):
         response = await self._client.http.approve_pending(
             group_id=group_id,
             membership_id=membership_id,
-            membership_type=membership_type.value,
+            membership_type=getattr(membership_type, "value", membership_type),
             auth=auth,
             **data.to_dict()
         )
@@ -724,10 +741,10 @@ class GroupV2RouteInterface(ClientMixin):
 
     async def get_groups_for_member(
         self,
-        filter: GroupsForMemberFilter,
-        group_type: GroupType,
+        filter: Union[GroupsForMemberFilter, int],
+        group_type: Union[GroupType, int],
         membership_id: int,
-        membership_type: BungieMembershipType,
+        membership_type: Union[BungieMembershipType, int],
         auth: Optional[AuthData] = None,
     ) -> GetGroupsForMemberResponse:
         """
@@ -745,10 +762,10 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_groups_for_member(
-            filter=filter.value,
-            group_type=group_type.value,
+            filter=getattr(filter, "value", filter),
+            group_type=getattr(group_type, "value", group_type),
             membership_id=membership_id,
-            membership_type=membership_type.value,
+            membership_type=getattr(membership_type, "value", membership_type),
             auth=auth,
         )
         return await GetGroupsForMemberResponse.from_dict(
@@ -763,9 +780,9 @@ class GroupV2RouteInterface(ClientMixin):
 
     async def recover_group_for_founder(
         self,
-        group_type: GroupType,
+        group_type: Union[GroupType, int],
         membership_id: int,
-        membership_type: BungieMembershipType,
+        membership_type: Union[BungieMembershipType, int],
         auth: Optional[AuthData] = None,
     ) -> GroupMembershipSearchResponse:
         """
@@ -782,7 +799,10 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.recover_group_for_founder(
-            group_type=group_type.value, membership_id=membership_id, membership_type=membership_type.value, auth=auth
+            group_type=getattr(group_type, "value", group_type),
+            membership_id=membership_id,
+            membership_type=getattr(membership_type, "value", membership_type),
+            auth=auth,
         )
         return await GroupMembershipSearchResponse.from_dict(
             data=response,
@@ -795,10 +815,10 @@ class GroupV2RouteInterface(ClientMixin):
 
     async def get_potential_groups_for_member(
         self,
-        filter: GroupPotentialMemberStatus,
-        group_type: GroupType,
+        filter: Union[GroupPotentialMemberStatus, int],
+        group_type: Union[GroupType, int],
         membership_id: int,
-        membership_type: BungieMembershipType,
+        membership_type: Union[BungieMembershipType, int],
         auth: Optional[AuthData] = None,
     ) -> GroupPotentialMembershipSearchResponse:
         """
@@ -816,10 +836,10 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_potential_groups_for_member(
-            filter=filter.value,
-            group_type=group_type.value,
+            filter=getattr(filter, "value", filter),
+            group_type=getattr(group_type, "value", group_type),
             membership_id=membership_id,
-            membership_type=membership_type.value,
+            membership_type=getattr(membership_type, "value", membership_type),
             auth=auth,
         )
         return await GroupPotentialMembershipSearchResponse.from_dict(
@@ -837,7 +857,7 @@ class GroupV2RouteInterface(ClientMixin):
         data: GroupApplicationRequest,
         group_id: int,
         membership_id: int,
-        membership_type: BungieMembershipType,
+        membership_type: Union[BungieMembershipType, int],
         auth: AuthData,
     ) -> GroupApplicationResponse:
         """
@@ -860,7 +880,7 @@ class GroupV2RouteInterface(ClientMixin):
         response = await self._client.http.individual_group_invite(
             group_id=group_id,
             membership_id=membership_id,
-            membership_type=membership_type.value,
+            membership_type=getattr(membership_type, "value", membership_type),
             auth=auth,
             **data.to_dict()
         )
@@ -874,7 +894,7 @@ class GroupV2RouteInterface(ClientMixin):
         )
 
     async def individual_group_invite_cancel(
-        self, group_id: int, membership_id: int, membership_type: BungieMembershipType, auth: AuthData
+        self, group_id: int, membership_id: int, membership_type: Union[BungieMembershipType, int], auth: AuthData
     ) -> GroupApplicationResponse:
         """
         Cancels a pending invitation to join a group.
@@ -893,7 +913,10 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.individual_group_invite_cancel(
-            group_id=group_id, membership_id=membership_id, membership_type=membership_type.value, auth=auth
+            group_id=group_id,
+            membership_id=membership_id,
+            membership_type=getattr(membership_type, "value", membership_type),
+            auth=auth,
         )
         return await GroupApplicationResponse.from_dict(
             data=response,

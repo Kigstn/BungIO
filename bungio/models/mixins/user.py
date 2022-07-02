@@ -1,11 +1,13 @@
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
 from bungio.models.base import ClientMixin, FuzzyAttrFinder
 
 if TYPE_CHECKING:
+    from bungio import AuthData
+
     # AUTOMATIC IMPORTS START
     from bungio.models import (
         BungieMembershipType,
@@ -55,7 +57,7 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
         )
 
     async def edit_group_membership(
-        self, group_id: int, member_type: "RuntimeGroupMemberType", auth: "AuthData"
+        self, group_id: int, member_type: Union["RuntimeGroupMemberType", int], auth: "AuthData"
     ) -> int:
         """
         Edit the membership type of a given member. You must have suitable permissions in the group to perform this operation.
@@ -173,7 +175,10 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
         )
 
     async def get_groups_for_member(
-        self, filter: "GroupsForMemberFilter", group_type: "GroupType", auth: Optional["AuthData"] = None
+        self,
+        filter: Union["GroupsForMemberFilter", int],
+        group_type: Union["GroupType", int],
+        auth: Optional["AuthData"] = None,
     ) -> "GetGroupsForMemberResponse":
         """
         Get information about the groups that a given member has joined.
@@ -196,7 +201,7 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
         )
 
     async def recover_group_for_founder(
-        self, group_type: "GroupType", auth: Optional["AuthData"] = None
+        self, group_type: Union["GroupType", int], auth: Optional["AuthData"] = None
     ) -> "GroupMembershipSearchResponse":
         """
         Allows a founder to manually recover a group they can see in game but not on bungie.net
@@ -217,7 +222,10 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
         )
 
     async def get_potential_groups_for_member(
-        self, filter: "GroupPotentialMemberStatus", group_type: "GroupType", auth: Optional["AuthData"] = None
+        self,
+        filter: Union["GroupPotentialMemberStatus", int],
+        group_type: Union["GroupType", int],
+        auth: Optional["AuthData"] = None,
     ) -> "GroupPotentialMembershipSearchResponse":
         """
         Get information about the groups that a given member has applied to or been invited to.
@@ -309,7 +317,10 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
         )
 
     async def get_profile(
-        self, destiny_membership_id: int, components: list["DestinyComponentType"], auth: Optional["AuthData"] = None
+        self,
+        destiny_membership_id: int,
+        components: list[Union["DestinyComponentType", int]],
+        auth: Optional["AuthData"] = None,
     ) -> "DestinyProfileResponse":
         """
         Returns Destiny Profile information for the supplied membership.
@@ -334,7 +345,7 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
         self,
         destiny_membership_id: int,
         item_instance_id: int,
-        components: list["DestinyComponentType"],
+        components: list[Union["DestinyComponentType", int]],
         auth: Optional["AuthData"] = None,
     ) -> "DestinyItemResponse":
         """
@@ -385,7 +396,10 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
         )
 
     async def get_historical_stats_for_account(
-        self, destiny_membership_id: int, groups: list["DestinyStatsGroupType"], auth: Optional["AuthData"] = None
+        self,
+        destiny_membership_id: int,
+        groups: list[Union["DestinyStatsGroupType", int]],
+        auth: Optional["AuthData"] = None,
     ) -> "DestinyHistoricalStatsAccountResult":
         """
         Gets aggregate historical stats organized around each character for a given account.

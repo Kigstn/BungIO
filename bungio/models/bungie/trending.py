@@ -3,11 +3,12 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 import attr
 
 from bungio.models.base import BaseEnum, BaseModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -29,7 +30,7 @@ class TrendingCategories(BaseModel):
         categories: _No description given by bungie._
     """
 
-    categories: list["TrendingCategory"] = attr.field(metadata={"type": """list["TrendingCategory"]"""})
+    categories: list["TrendingCategory"] = attr.field(metadata={"type": """list[TrendingCategory]"""})
 
 
 @attr.define
@@ -76,12 +77,14 @@ class TrendingEntry(BaseModel):
     creation_date: datetime = attr.field()
     display_name: str = attr.field()
     end_date: datetime = attr.field()
-    entity_type: "TrendingEntryType" = attr.field()
+    entity_type: Union["TrendingEntryType", int] = attr.field(
+        converter=enum_converter("TrendingEntryType"), metadata={"type": "TrendingEntryType"}
+    )
     feature_image: str = attr.field()
     identifier: str = attr.field()
     image: str = attr.field()
     is_featured: bool = attr.field()
-    items: list["TrendingEntry"] = attr.field(metadata={"type": """list["TrendingEntry"]"""})
+    items: list["TrendingEntry"] = attr.field(metadata={"type": """list[TrendingEntry]"""})
     link: str = attr.field()
     mp4_video: str = attr.field()
     start_date: datetime = attr.field()
@@ -142,7 +145,9 @@ class TrendingDetail(BaseModel):
     destiny_activity: "TrendingEntryDestinyActivity" = attr.field()
     destiny_item: "TrendingEntryDestinyItem" = attr.field()
     destiny_ritual: "TrendingEntryDestinyRitual" = attr.field()
-    entity_type: "TrendingEntryType" = attr.field()
+    entity_type: Union["TrendingEntryType", int] = attr.field(
+        converter=enum_converter("TrendingEntryType"), metadata={"type": "TrendingEntryType"}
+    )
     identifier: str = attr.field()
     news: "TrendingEntryNews" = attr.field()
     support: "TrendingEntrySupportArticle" = attr.field()

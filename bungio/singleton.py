@@ -1,7 +1,6 @@
-import logging
 from typing import TYPE_CHECKING
 
-from bungio.definitions import DEFAULT_LOGGER, LOGGER_NAME
+from bungio.definitions import DEFAULT_LOGGER
 from bungio.models.base import MISSING
 
 if TYPE_CHECKING:

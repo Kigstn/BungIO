@@ -2,11 +2,12 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
 from bungio.models.base import BaseModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -42,10 +43,10 @@ class DestinyRecordsComponent(BaseModel):
     record_categories_root_node_hash: int = attr.field()
     record_seals_root_node_hash: int = attr.field()
     records: dict[int, "DestinyRecordComponent"] = attr.field(
-        metadata={"type": """dict[int, "DestinyRecordComponent"]"""}
+        metadata={"type": """dict[int, DestinyRecordComponent]"""}
     )
-    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
-    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
+    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
 
 
 @attr.define
@@ -65,12 +66,14 @@ class DestinyRecordComponent(BaseModel):
 
     completed_count: int = attr.field()
     interval_objectives: list["DestinyObjectiveProgress"] = attr.field(
-        metadata={"type": """list["DestinyObjectiveProgress"]"""}
+        metadata={"type": """list[DestinyObjectiveProgress]"""}
     )
     intervals_redeemed_count: int = attr.field()
-    objectives: list["DestinyObjectiveProgress"] = attr.field(metadata={"type": """list["DestinyObjectiveProgress"]"""})
+    objectives: list["DestinyObjectiveProgress"] = attr.field(metadata={"type": """list[DestinyObjectiveProgress]"""})
     reward_visibilty: list[bool] = attr.field(metadata={"type": """list[bool]"""})
-    state: "DestinyRecordState" = attr.field()
+    state: Union["DestinyRecordState", int] = attr.field(
+        converter=enum_converter("DestinyRecordState"), metadata={"type": "DestinyRecordState"}
+    )
 
 
 @attr.define
@@ -107,13 +110,13 @@ class DestinyProfileRecordsComponent(BaseModel):
     record_categories_root_node_hash: int = attr.field()
     record_seals_root_node_hash: int = attr.field()
     records: dict[int, "DestinyRecordComponent"] = attr.field(
-        metadata={"type": """dict[int, "DestinyRecordComponent"]"""}
+        metadata={"type": """dict[int, DestinyRecordComponent]"""}
     )
     score: int = attr.field()
     tracked_record_hash: int = attr.field()
-    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
-    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
-    manifest_tracked_record_hash: Optional["DestinyRecordDefinition"] = attr.field(default=None)
+    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
+    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
+    manifest_tracked_record_hash: Optional["DestinyRecordDefinition"] = attr.field()
 
 
 @attr.define
@@ -143,7 +146,7 @@ class DestinyCharacterRecordsComponent(BaseModel):
     record_categories_root_node_hash: int = attr.field()
     record_seals_root_node_hash: int = attr.field()
     records: dict[int, "DestinyRecordComponent"] = attr.field(
-        metadata={"type": """dict[int, "DestinyRecordComponent"]"""}
+        metadata={"type": """dict[int, DestinyRecordComponent]"""}
     )
-    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
-    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
+    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()

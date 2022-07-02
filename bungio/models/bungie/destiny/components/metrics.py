@@ -36,10 +36,10 @@ class DestinyMetricsComponent(BaseModel):
     """
 
     metrics: dict[int, "DestinyMetricComponent"] = attr.field(
-        metadata={"type": """dict[int, "DestinyMetricComponent"]"""}
+        metadata={"type": """dict[int, DestinyMetricComponent]"""}
     )
     metrics_root_node_hash: int = attr.field()
-    manifest_metrics_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+    manifest_metrics_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
 
 
 @attr.define
