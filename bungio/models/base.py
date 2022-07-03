@@ -3,7 +3,7 @@ from __future__ import annotations
 import datetime
 import inspect
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Optional, Type
+from typing import TYPE_CHECKING, Any, Optional, Type, _UnionGenericAlias
 
 import attr
 from sqlalchemy.ext.asyncio import AsyncEngine
@@ -177,8 +177,6 @@ class BaseModel(ClientMixin):
         prepared = {}
         for name, field in attr.fields_dict(cls).items():
             if field.init and name != "_client":
-                # todo optional[]
-
                 # get the value we want. This also skips the manifest_... entries since they have no value and a default
                 value = data.get(cls._convert_to_bungie_case(name), attr.NOTHING)
                 default = field.default
@@ -208,6 +206,12 @@ class BaseModel(ClientMixin):
 
     @staticmethod
     async def _convert_to_type(field_type: Any, field_metadata: Optional[dict], value: Any, client: Client) -> Any:
+        # catch optional
+        if isinstance(field_type, _UnionGenericAlias) and "Optional" in str(field_type):
+            if value is None:
+                return value
+            field_type = str(field_type).removeprefix("typing.Optional[").removesuffix("]")
+
         # sometimes the field type is the attr as a string
         if isinstance(field_type, str):
             # catch build-ins
