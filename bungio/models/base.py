@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import datetime
 import inspect
-from enum import Enum
+from enum import Enum, IntEnum, IntFlag
 from typing import TYPE_CHECKING, Any, Optional, Type, _UnionGenericAlias
 
 import attr
@@ -13,7 +13,16 @@ import bungio.models as models
 if TYPE_CHECKING:
     from bungio.client import Client
 
-__all__ = ("MISSING", "BaseEnum", "BaseModel", "ManifestModel", "ClientMixin", "UnknownEnumValue", "FuzzyAttrFinder")
+__all__ = (
+    "MISSING",
+    "BaseEnum",
+    "BaseFlagEnum",
+    "BaseModel",
+    "ManifestModel",
+    "ClientMixin",
+    "UnknownEnumValue",
+    "FuzzyAttrFinder",
+)
 
 
 class MISSING:
@@ -34,11 +43,7 @@ class UnknownEnumValue:
     enum: Type[BaseEnum] = attr.field()
 
 
-class BaseEnum(Enum):
-    """
-    Base methods which help to acquire this model from json and export it to json.
-    """
-
+class _EnumMixin(Enum):
     @staticmethod
     def process_dict(data: int | str, client: "Client", *args, **kwargs) -> int | str:
         """
@@ -54,7 +59,7 @@ class BaseEnum(Enum):
         return data
 
     @classmethod
-    async def from_dict(cls, data: int | str, client: "Client", *args, **kwargs) -> BaseEnum | UnknownEnumValue:
+    async def from_dict(cls, data: int | str, client: "Client", *args, **kwargs) -> _EnumMixin | UnknownEnumValue:
         """
         Convert data to this enum
 
@@ -86,6 +91,22 @@ class BaseEnum(Enum):
         """
 
         return self.value
+
+
+class BaseEnum(_EnumMixin, Enum):
+    """
+    Base methods which help to acquire this model from json and export it to json.
+    """
+
+    pass
+
+
+class BaseFlagEnum(_EnumMixin, IntFlag):
+    """
+    Base methods which help to acquire this model from json and export it to json.
+    """
+
+    pass
 
 
 @attr.define

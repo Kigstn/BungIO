@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any, Optional, Union
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel, ManifestModel
+from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel, ManifestModel
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:

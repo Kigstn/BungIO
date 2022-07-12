@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any, Optional, Union
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel, ManifestModel
+from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel, ManifestModel
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -2257,7 +2257,7 @@ class DestinyTalentNodeStepGroups(BaseModel):
     )
 
 
-class DestinyTalentNodeStepWeaponPerformances(BaseEnum):
+class DestinyTalentNodeStepWeaponPerformances(BaseFlagEnum):
     """
     _No description given by bungie._
     """
@@ -2294,7 +2294,7 @@ class DestinyTalentNodeStepWeaponPerformances(BaseEnum):
     """_No description given by bungie._ """
 
 
-class DestinyTalentNodeStepImpactEffects(BaseEnum):
+class DestinyTalentNodeStepImpactEffects(BaseFlagEnum):
     """
     _No description given by bungie._
     """
@@ -2317,7 +2317,7 @@ class DestinyTalentNodeStepImpactEffects(BaseEnum):
     """_No description given by bungie._ """
 
 
-class DestinyTalentNodeStepGuardianAttributes(BaseEnum):
+class DestinyTalentNodeStepGuardianAttributes(BaseFlagEnum):
     """
     _No description given by bungie._
     """
@@ -2344,7 +2344,7 @@ class DestinyTalentNodeStepGuardianAttributes(BaseEnum):
     """_No description given by bungie._ """
 
 
-class DestinyTalentNodeStepLightAbilities(BaseEnum):
+class DestinyTalentNodeStepLightAbilities(BaseFlagEnum):
     """
     _No description given by bungie._
     """
@@ -2367,7 +2367,7 @@ class DestinyTalentNodeStepLightAbilities(BaseEnum):
     """_No description given by bungie._ """
 
 
-class DestinyTalentNodeStepDamageTypes(BaseEnum):
+class DestinyTalentNodeStepDamageTypes(BaseFlagEnum):
     """
     _No description given by bungie._
     """

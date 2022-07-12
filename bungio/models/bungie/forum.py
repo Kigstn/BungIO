@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Union
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -20,7 +20,7 @@ if TYPE_CHECKING:
     )
 
 
-class ForumTopicsCategoryFiltersEnum(BaseEnum):
+class ForumTopicsCategoryFiltersEnum(BaseFlagEnum):
     """
     _No description given by bungie._
     """

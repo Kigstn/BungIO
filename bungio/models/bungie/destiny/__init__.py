@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any, Optional, Union
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel, ManifestModel
+from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel, ManifestModel
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -92,7 +92,7 @@ class DestinyProgressionResetEntry(BaseModel):
     season: int = attr.field()
 
 
-class DestinyProgressionRewardItemState(BaseEnum):
+class DestinyProgressionRewardItemState(BaseFlagEnum):
     """
     Represents the different states a progression reward item can be in.
     """
@@ -323,7 +323,7 @@ class DestinyStatCategory(BaseEnum):
     """_No description given by bungie._ """
 
 
-class EquippingItemBlockAttributes(BaseEnum):
+class EquippingItemBlockAttributes(BaseFlagEnum):
     """
     _No description given by bungie._
     """
@@ -873,7 +873,7 @@ class DestinyPresentationScreenStyle(BaseEnum):
     """Show sub-items as Badges. (I know, I know. We don't need no stinkin' badges har har har) """
 
 
-class PlugUiStyles(BaseEnum):
+class PlugUiStyles(BaseFlagEnum):
     """
     If the plug has a specific custom style, this enumeration will represent that style/those styles.
     """
@@ -918,7 +918,7 @@ class DestinyEnergyType(BaseEnum):
     """_No description given by bungie._ """
 
 
-class SocketPlugSources(BaseEnum):
+class SocketPlugSources(BaseFlagEnum):
     """
     Indicates how a socket is populated, and where you should look for valid plug data.  This is a flags enumeration/bitmask field, as you may have to look in multiple sources across multiple components for valid plugs.  For instance, a socket could have plugs that are sourced from its own definition, as well as plugs that are sourced from Character-scoped AND profile-scoped Plug Sets. Only by combining plug data for every indicated source will you be able to know all of the plugs available for a socket.
     """
@@ -1077,7 +1077,7 @@ class ItemBindStatus(BaseEnum):
     """_No description given by bungie._ """
 
 
-class TransferStatuses(BaseEnum):
+class TransferStatuses(BaseFlagEnum):
     """
     Whether you can transfer an item, and why not if you can't.
     """
@@ -1092,7 +1092,7 @@ class TransferStatuses(BaseEnum):
     """You could transfer the item, but the place you're trying to put it has run out of room! Check your remaining Vault and/or character space. """
 
 
-class ItemState(BaseEnum):
+class ItemState(BaseFlagEnum):
     """
     A flags enumeration/bitmask where each bit represents a different possible state that the item can be in that may effect how the item is displayed to the user and what actions can be performed against it.
     """
@@ -1111,7 +1111,7 @@ class ItemState(BaseEnum):
     """If this bit is set, the item has a 'highlighted' objective. You may want to represent this with an orange-red icon border color. """
 
 
-class DestinyGameVersions(BaseEnum):
+class DestinyGameVersions(BaseFlagEnum):
     """
     A flags enumeration/bitmask indicating the versions of the game that a given user has purchased.
     """
@@ -1217,7 +1217,7 @@ class DestinyComponentType(BaseEnum):
     """Returns summary status information about all "Craftables" aka crafting recipe items. """
 
 
-class DestinyPresentationNodeState(BaseEnum):
+class DestinyPresentationNodeState(BaseFlagEnum):
     """
     I know this doesn't look like a Flags Enumeration/bitmask right now, but I assure you it is. This is the possible states that a Presentation Node can be in, and it is almost certain that its potential states will increase in the future. So don't treat it like a straight up enumeration.
     """
@@ -1230,7 +1230,7 @@ class DestinyPresentationNodeState(BaseEnum):
     """Turns out Presentation Nodes can also be obscured. If they are, this is set. """
 
 
-class DestinyRecordState(BaseEnum):
+class DestinyRecordState(BaseFlagEnum):
     """
     A Flags enumeration/bitmask where each bit represents a possible state that a Record/Triumph can be in.
     """
@@ -1253,7 +1253,7 @@ class DestinyRecordState(BaseEnum):
     """If this is set, the record has a title (check DestinyRecordDefinition for title info) and you can equip it. """
 
 
-class DestinyCollectibleState(BaseEnum):
+class DestinyCollectibleState(BaseFlagEnum):
     """
     A Flags Enumeration/bitmask where each bit represents a different state that the Collectible can be in. A collectible can be in any number of these states, and you can choose to use or ignore any or all of them when making your own UI that shows Collectible info. Our displays are going to honor them, but we're also the kind of people who only pretend to inhale before quickly passing it to the left. So, you know, do what you got to do. (All joking aside, please note the caveat I mention around the Invisible flag: there are cases where it is in the best interest of your users to honor these flags even if you're a "show all the data" person. Collector-oriented compulsion is a very unfortunate and real thing, and I would hate to instill that compulsion in others through showing them items that they cannot earn. Please consider this when you are making your own apps/sites.)
     """
@@ -1276,7 +1276,7 @@ class DestinyCollectibleState(BaseEnum):
     """If this flag is set, the ability to pull this item out of your collection has been disabled. """
 
 
-class DestinyPartyMemberStates(BaseEnum):
+class DestinyPartyMemberStates(BaseFlagEnum):
     """
     A flags enumeration that represents a Fireteam Member's status.
     """
@@ -1310,7 +1310,7 @@ class DestinyGamePrivacySetting(BaseEnum):
     """_No description given by bungie._ """
 
 
-class DestinyJoinClosedReasons(BaseEnum):
+class DestinyJoinClosedReasons(BaseFlagEnum):
     """
     A Flags enumeration representing the reasons why a person can't join this user's fireteam.
     """
@@ -1443,7 +1443,7 @@ class DestinyStat(BaseModel):
     manifest_stat_hash: Optional["DestinyStatDefinition"] = attr.field()
 
 
-class EquipFailureReason(BaseEnum):
+class EquipFailureReason(BaseFlagEnum):
     """
     The reasons why an item cannot be equipped, if any. Many flags can be set, or "None" if
     """
@@ -1558,7 +1558,7 @@ class DestinyVendorFilter(BaseEnum):
     """_No description given by bungie._ """
 
 
-class VendorItemStatus(BaseEnum):
+class VendorItemStatus(BaseFlagEnum):
     """
     _No description given by bungie._
     """
@@ -1620,7 +1620,7 @@ class DestinyUnlockStatus(BaseModel):
     manifest_unlock_hash: Optional["DestinyUnlockDefinition"] = attr.field()
 
 
-class DestinyVendorItemState(BaseEnum):
+class DestinyVendorItemState(BaseFlagEnum):
     """
     The possible states of Destiny Profile Records. IMPORTANT: Any given item can theoretically have many of these states simultaneously: as a result, this was altered to be a flags enumeration/bitmask for v3.2.0.
     """

@@ -3,10 +3,10 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 
-from bungio.models.base import BaseEnum
+from bungio.models.base import BaseFlagEnum
 
 
-class ForumPostCategoryEnums(BaseEnum):
+class ForumPostCategoryEnums(BaseFlagEnum):
     """
     _No description given by bungie._
     """
@@ -37,7 +37,7 @@ class ForumPostCategoryEnums(BaseEnum):
     """_No description given by bungie._ """
 
 
-class ForumFlagsEnum(BaseEnum):
+class ForumFlagsEnum(BaseFlagEnum):
     """
     _No description given by bungie._
     """

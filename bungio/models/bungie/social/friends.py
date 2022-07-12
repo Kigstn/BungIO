@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Union
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel
 from bungio.models.mixins import DestinyUserMixin
 from bungio.utils import enum_converter
 
@@ -73,7 +73,7 @@ class PresenceStatus(BaseEnum):
     """_No description given by bungie._ """
 
 
-class PresenceOnlineStateFlags(BaseEnum):
+class PresenceOnlineStateFlags(BaseFlagEnum):
     """
     _No description given by bungie._
     """

@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Union
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel
 from bungio.models.mixins import DestinyClanMixin, DestinyUserMixin
 from bungio.utils import enum_converter
 
@@ -275,7 +275,7 @@ class GroupFeatures(BaseModel):
     update_culture_permission_override: bool = attr.field()
 
 
-class Capabilities(BaseEnum):
+class Capabilities(BaseFlagEnum):
     """
     _No description given by bungie._
     """

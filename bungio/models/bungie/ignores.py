@@ -6,7 +6,7 @@ from typing import Union
 
 import attr
 
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel
 from bungio.utils import enum_converter
 
 
@@ -27,7 +27,7 @@ class IgnoreResponse(BaseModel):
     is_ignored: bool = attr.field()
 
 
-class IgnoreStatus(BaseEnum):
+class IgnoreStatus(BaseFlagEnum):
     """
     _No description given by bungie._
     """

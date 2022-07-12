@@ -775,7 +775,7 @@ from datetime import datetime
 from typing import Optional, Any, Union, TYPE_CHECKING
 
 from bungio.utils import enum_converter
-from bungio.models.base import BaseModel, BaseEnum, ManifestModel
+from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, ManifestModel
 
 {"%mixin_imports%" if mixins else ""}
 %imports%"""
@@ -924,8 +924,15 @@ def generate_model(
 ) -> str:
     # enums
     if data := model.get("x-enum-values", None):
-        text = f"""
-class {model["name"]}(BaseEnum):
+        # bitmask or not
+        if model["x-enum-is-bitmask"] is True:
+            text = f"""
+class {model["name"]}(BaseFlagEnum):"""
+        else:
+            text = f"""
+class {model["name"]}(BaseEnum):"""
+
+        text += f"""
     \"\"\"
     {clean_desc(model)}
     \"\"\"
