@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional, Union
+from typing import TYPE_CHECKING, AsyncGenerator, Optional, Union
 
 import attr
 
@@ -31,12 +31,69 @@ if TYPE_CHECKING:
         RuntimeGroupMemberType,
         UserMembershipData,
     )
+    from bungio.models.bungie import (
+        DestinyActivityModeType,
+        DestinyHistoricalStatsPeriodGroup,
+    )
 
     # AUTOMATIC IMPORTS END
 
 
 @attr.define
 class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
+    async def yield_activity_history(
+        self,
+        mode: Union["DestinyActivityModeType", int],
+        earliest_allowed_datetime: Optional[datetime] = None,
+        latest_allowed_datetime: Optional[datetime] = None,
+        auth: Optional["AuthData"] = None,
+    ) -> AsyncGenerator["DestinyHistoricalStatsPeriodGroup", None]:
+        """
+        Yields account activity history, no matter the character. Sorted by date descending, the latest one first.
+
+        Args:
+            mode: A filter for the activity mode to be returned. None returns all activities. See the documentation for DestinyActivityModeType for valid values, and pass in string representation.
+            earliest_allowed_datetime: The earliest time the activity is allowed to have, fe. only entries after the 1/1/2020.
+            latest_allowed_datetime: The latest time the activity is allowed to have, fe. only entries before the 1/1/2020.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
+
+        Returns:
+            A generator for the model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
+        """
+
+        # get character ids and gen functions
+        characters = await self.get_profile(components=[200], auth=auth)
+        funcs = {
+            i: character.yield_activity_history(
+                mode=mode,
+                earliest_allowed_datetime=earliest_allowed_datetime,
+                latest_allowed_datetime=latest_allowed_datetime,
+                auth=auth,
+            )  # noqa
+            for i, character in enumerate(characters.characters.data.values())
+        }
+
+        # gen the first values
+        entries = {i: await anext(func, None) for i, func in funcs.items()}
+
+        # loop through all generators and return the newest values
+        while True:
+            # calculate the newest entry
+            newest: Optional["DestinyHistoricalStatsPeriodGroup"] = None
+            newest_index: int = 0
+            for i, entry in entries.items():
+                if entry is not None and (newest is None or entry.period > newest.period):
+                    newest = entry
+                    newest_index = i
+
+            if newest:
+                yield newest
+
+                # get a new value from the func that just yielded
+                entries[newest_index] = await anext(funcs[newest_index], None)
+            else:
+                break
+
     # DO NOT CHANGE ANY CODE BELOW. Automatically generated and overwritten
 
     async def get_membership_data_by_id(self, auth: Optional["AuthData"] = None) -> "UserMembershipData":

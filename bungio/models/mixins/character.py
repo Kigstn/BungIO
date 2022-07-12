@@ -1,9 +1,9 @@
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional, Union
+from typing import TYPE_CHECKING, AsyncGenerator, ForwardRef, Optional, Union
 
 import attr
 
-from bungio.models.base import ClientMixin, FuzzyAttrFinder
+from bungio.models.base import MISSING, ClientMixin, FuzzyAttrFinder
 
 if TYPE_CHECKING:
     from bungio import AuthData
@@ -26,12 +26,64 @@ if TYPE_CHECKING:
         DestinyVendorsResponse,
         PeriodType,
     )
+    from bungio.models.bungie import DestinyHistoricalStatsPeriodGroup
 
     # AUTOMATIC IMPORTS END
 
 
 @attr.define
 class DestinyCharacterMixin(ClientMixin, FuzzyAttrFinder):
+    async def yield_activity_history(
+        self,
+        mode: Union["DestinyActivityModeType", int],
+        earliest_allowed_datetime: Optional[datetime] = None,
+        latest_allowed_datetime: Optional[datetime] = None,
+        auth: Optional["AuthData"] = None,
+    ) -> AsyncGenerator["DestinyHistoricalStatsPeriodGroup", None]:
+        """
+        Yields character activity history. Sorted by date descending, the latest one first.
+
+        Args:
+            mode: A filter for the activity mode to be returned. None returns all activities. See the documentation for DestinyActivityModeType for valid values, and pass in string representation.
+            earliest_allowed_datetime: The earliest time the activity is allowed to have, fe. only entries after the 1/1/2020.
+            latest_allowed_datetime: The latest time the activity is allowed to have, fe. only entries before the 1/1/2020.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
+
+        Returns:
+            A generator for the model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
+        """
+
+        stop = False
+        page = 0
+        while True:
+            if stop:
+                break
+
+            activities = await self.get_activity_history(count=250, mode=mode, page=page, auth=auth)
+
+            # break if empty, fe. when pages are over
+            if activities.activities is MISSING:
+                break
+
+            # yield the activities
+            for activity in activities.activities:
+                # check times if wanted
+                if earliest_allowed_datetime or latest_allowed_datetime:
+                    # check if the activity started later than the earliest allowed, else pass this one and do the next
+                    # This works bc Bungie sorts the api with the newest entry on top
+                    if earliest_allowed_datetime:
+                        if activity.period < earliest_allowed_datetime:
+                            stop = True
+                            break
+
+                    # check if the time is still in the timeframe, else break
+                    if latest_allowed_datetime:
+                        if activity.period > latest_allowed_datetime:
+                            continue
+
+                yield activity
+            page += 1
+
     # DO NOT CHANGE ANY CODE BELOW. Automatically generated and overwritten
 
     async def get_character(
