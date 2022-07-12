@@ -379,14 +379,17 @@ def generate_function(
 
     # does the mixin need this function
     found_mixin_name = None
+    found_mixin_params = {}
     if mixins is not None:
         param_names = [item["name"] for item in body + params]
         for mixin_name, mixin_required in mixin_params.items():
+            found_mixin_params = {}
             all_found = []
             for mixin_required_name in mixin_required:
                 found = False
                 for param_name in param_names:
                     if mixin_required_name in param_name:
+                        found_mixin_params[param_name] = mixin_required_name
                         found = True
                         break
                 all_found.append(found)
@@ -401,7 +404,7 @@ def generate_function(
 
     for item in m_body + m_params:  # noqa
         if found_mixin_name:
-            if item["name"] not in mixin_params[found_mixin_name]:
+            if item["name"] not in found_mixin_params:
                 mixin_text += f""", {item["name"]}: {item["type"]}"""
 
     if create_raw_http:
@@ -458,7 +461,7 @@ def generate_function(
             {item["name"]}: {item["description"]}"""
         text += t
         if found_mixin_name:
-            if item["name"] not in mixin_params[found_mixin_name]:
+            if item["name"] not in found_mixin_params:
                 mixin_text += t
 
     if create_raw_http:
@@ -492,10 +495,10 @@ def generate_function(
         if found_mixin_name:
             p = []
             for item in body + params:  # noqa
-                if item["name"] not in mixin_params[found_mixin_name]:
+                if item["name"] not in found_mixin_params:
                     p.append(f"""{item["name"]}={item["name"]}""")
                 else:
-                    p.append(f"""{item["name"]}=self._fuzzy_getattr(\"{item["name"]}\")""")
+                    p.append(f"""{item["name"]}=self._fuzzy_getattr(\"{found_mixin_params[item["name"]]}\")""")
 
             mixin_text += f"""
         return await self._client.api.{func_name}({", ".join(p)})
@@ -1056,4 +1059,3 @@ main()
 
 # todo inherited overwrite classes do not display as docs correctly -> https://mkdocstrings.github.io/handlers/overview/#selection-options (inherited members)
 # todo options: members: [] does not work -> config/config.md
-# todo DestinyActivityPlaylistItemDefinition -> directActivityModeType is very unfun. Enum which is defined in a model

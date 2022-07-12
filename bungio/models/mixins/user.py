@@ -317,16 +317,12 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
         )
 
     async def get_profile(
-        self,
-        destiny_membership_id: int,
-        components: list[Union["DestinyComponentType", int]],
-        auth: Optional["AuthData"] = None,
+        self, components: list[Union["DestinyComponentType", int]], auth: Optional["AuthData"] = None
     ) -> "DestinyProfileResponse":
         """
         Returns Destiny Profile information for the supplied membership.
 
         Args:
-            destiny_membership_id: Destiny membership ID.
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
             auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
@@ -335,7 +331,7 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
         """
 
         return await self._client.api.get_profile(
-            destiny_membership_id=destiny_membership_id,
+            destiny_membership_id=self._fuzzy_getattr("membership_id"),
             membership_type=self._fuzzy_getattr("membership_type"),
             components=components,
             auth=auth,
@@ -343,7 +339,6 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
 
     async def get_item(
         self,
-        destiny_membership_id: int,
         item_instance_id: int,
         components: list[Union["DestinyComponentType", int]],
         auth: Optional["AuthData"] = None,
@@ -352,7 +347,6 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
         Retrieve the details of an instanced Destiny Item. An instanced Destiny item is one with an ItemInstanceId. Non-instanced items, such as materials, have no useful instance-specific details and thus are not queryable here.
 
         Args:
-            destiny_membership_id: The membership ID of the destiny profile.
             item_instance_id: The Instance ID of the destiny item.
             components: A comma separated list of components to return (as strings or numeric values). See the DestinyComponentType enum for valid components to request. You must request at least one component to receive results.
             auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
@@ -362,7 +356,7 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
         """
 
         return await self._client.api.get_item(
-            destiny_membership_id=destiny_membership_id,
+            destiny_membership_id=self._fuzzy_getattr("membership_id"),
             item_instance_id=item_instance_id,
             membership_type=self._fuzzy_getattr("membership_type"),
             components=components,
@@ -370,13 +364,12 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
         )
 
     async def get_leaderboards(
-        self, destiny_membership_id: int, maxtop: int, modes: str, statid: str, auth: Optional["AuthData"] = None
+        self, maxtop: int, modes: str, statid: str, auth: Optional["AuthData"] = None
     ) -> dict[str, dict[str, "DestinyLeaderboard"]]:
         """
         Gets leaderboards with the signed in user's friends and the supplied destinyMembershipId as the focus. PREVIEW: This endpoint has not yet been implemented. It is being returned for a preview of future functionality, and for public comment/suggestion/preparation.
 
         Args:
-            destiny_membership_id: The Destiny membershipId of the user to retrieve.
             maxtop: Maximum number of top players to return. Use a large number to get entire leaderboard.
             modes: List of game modes for which to get leaderboards. See the documentation for DestinyActivityModeType for valid values, and pass in string representation, comma delimited.
             statid: ID of stat to return rather than returning all Leaderboard stats.
@@ -387,7 +380,7 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
         """
 
         return await self._client.api.get_leaderboards(
-            destiny_membership_id=destiny_membership_id,
+            destiny_membership_id=self._fuzzy_getattr("membership_id"),
             membership_type=self._fuzzy_getattr("membership_type"),
             maxtop=maxtop,
             modes=modes,
@@ -396,16 +389,12 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
         )
 
     async def get_historical_stats_for_account(
-        self,
-        destiny_membership_id: int,
-        groups: list[Union["DestinyStatsGroupType", int]],
-        auth: Optional["AuthData"] = None,
+        self, groups: list[Union["DestinyStatsGroupType", int]], auth: Optional["AuthData"] = None
     ) -> "DestinyHistoricalStatsAccountResult":
         """
         Gets aggregate historical stats organized around each character for a given account.
 
         Args:
-            destiny_membership_id: The Destiny membershipId of the user to retrieve.
             groups: Groups of stats to include, otherwise only general stats are returned. Comma separated list is allowed. Values: General, Weapons, Medals.
             auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
@@ -414,7 +403,7 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
         """
 
         return await self._client.api.get_historical_stats_for_account(
-            destiny_membership_id=destiny_membership_id,
+            destiny_membership_id=self._fuzzy_getattr("membership_id"),
             membership_type=self._fuzzy_getattr("membership_type"),
             groups=groups,
             auth=auth,
