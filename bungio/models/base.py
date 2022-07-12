@@ -272,21 +272,18 @@ class BaseModel(ClientMixin):
 
                             ret = {}
                             for key, value in value.items():
-                                # they are only our custom models if there are " in it, otherwise
-                                if '"' in key_type:
-                                    key = await BaseModel._convert_to_type(
-                                        field_type=key_type.replace('"', ""),
-                                        field_metadata=None,
-                                        value=key,
-                                        client=client,
-                                    )
-                                if '"' in value_type:
-                                    value = await BaseModel._convert_to_type(
-                                        field_type=value_type.replace('"', ""),
-                                        field_metadata=None,
-                                        value=value,
-                                        client=client,
-                                    )
+                                key = await BaseModel._convert_to_type(
+                                    field_type=key_type,
+                                    field_metadata=None,
+                                    value=key,
+                                    client=client,
+                                )
+                                value = await BaseModel._convert_to_type(
+                                    field_type=value_type,
+                                    field_metadata=None,
+                                    value=value,
+                                    client=client,
+                                )
 
                                 ret[key] = value
                             value = ret
