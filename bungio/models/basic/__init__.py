@@ -1,3 +1,3 @@
-from bungio.models.basic.character import *
-from bungio.models.basic.clan import *
-from bungio.models.basic.user import *
+from .character import *
+from .clan import *
+from .user import *
