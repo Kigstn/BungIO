@@ -77,12 +77,6 @@ class Client(metaclass=singleton.SingletonMetaclass):
 
     _metadata: Optional[MetaData] = attr.field(init=False, default=None, repr=False)
 
-    # def __new__(cls, *args, **kwargs):
-    #     if singleton.client is not MISSING:
-    #         default_logger.warning("The client can only be defined once, ignoring your inputs and returning the first defined client")
-    #         return singleton.client
-    #     return super().__new__(cls)
-
     @manifest_storage.validator  # noqa
     def manifest_storage_check(self, attribute, value):
         if not (isinstance(value, AsyncEngine) or isinstance(value, bool)):

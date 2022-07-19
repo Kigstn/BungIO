@@ -52,6 +52,12 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, metaclass=
     semaphore: Semaphore = attr.field(init=False, default=Semaphore(100))
     __session: ClientSession = attr.field(init=False, default=None)
 
+    def __del__(self):
+        # clean up the session
+        if self.__session is not None:
+            # noinspection PyProtectedMember
+            self.__session._connector.close()
+
     async def request(self, route: Route) -> dict:
         """
         Handle all web requests.
