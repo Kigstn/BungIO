@@ -22,6 +22,7 @@ __all__ = (
     "ClientMixin",
     "UnknownEnumValue",
     "FuzzyAttrFinder",
+    "EnumMixin",
 )
 
 
@@ -47,7 +48,11 @@ class UnknownEnumValue:
     enum: Type[BaseEnum] = attr.field()
 
 
-class _EnumMixin(Enum):
+class EnumMixin(Enum):
+    """
+    Mixin for enums
+    """
+
     @staticmethod
     def process_dict(data: int | str, client: "Client", *args, **kwargs) -> int | str:
         """
@@ -97,7 +102,7 @@ class _EnumMixin(Enum):
         return self.value
 
 
-class BaseEnum(_EnumMixin, Enum):
+class BaseEnum(EnumMixin, Enum):
     """
     Base methods which help to acquire this model from json and export it to json.
     """
@@ -105,7 +110,7 @@ class BaseEnum(_EnumMixin, Enum):
     pass
 
 
-class BaseFlagEnum(_EnumMixin, IntFlag):
+class BaseFlagEnum(EnumMixin, IntFlag):
     """
     Base methods which help to acquire this model from json and export it to json.
     """
@@ -115,6 +120,10 @@ class BaseFlagEnum(_EnumMixin, IntFlag):
 
 @attr.define
 class ClientMixin:
+    """
+    Mixin that give models access to the client obj
+    """
+
     _client: "Client" = attr.field(repr=False, init=False)
 
     @_client.default
