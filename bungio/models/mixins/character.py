@@ -28,6 +28,7 @@ if TYPE_CHECKING:
     )
 
     # AUTOMATIC IMPORTS END
+    from bungio.models.overwrites import DestinyHistoricalStatsPeriodGroup
 
 
 @attr.define
