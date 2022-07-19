@@ -1,10 +1,13 @@
 from typing import Optional
 
+import attr
+
 from bungio.definitions import BASE_ROUTE
 from bungio.models.auth import AuthData
 from bungio.models.base import MISSING
 
 
+@attr.define(init=False)
 class Route:
     """
     Bungie http route
@@ -16,6 +19,12 @@ class Route:
         data: Body data to send
         **params: All query parameters
     """
+
+    path: str
+    method: str
+    data: Optional[dict | list]
+    auth: Optional[AuthData]
+    params: dict
 
     def __init__(
         self, path: str, method: str, data: Optional[dict | list] = None, auth: Optional[AuthData] = None, **params

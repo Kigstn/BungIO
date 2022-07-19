@@ -42,6 +42,11 @@ __all__ = ("HttpClient",)
 class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, metaclass=SingletonMetaclass):
     """
     The singleton http client doing all communication with bungie
+
+    Attributes:
+        bungie_headers: Headers to use for bungie requests
+        bungie_auth_headers: Headers to use for bungie auth requests
+        max_attempts: Max retries before failure
     """
 
     _bungie_headers: dict[str, str] = attr.field()

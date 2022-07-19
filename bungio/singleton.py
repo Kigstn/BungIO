@@ -12,7 +12,7 @@ client: "Client" = MISSING
 
 class SingletonMetaclass(type):
     """
-    Singleton Metaclass
+    Singleton metaclass used to only create one instance
     """
 
     _instances: dict = {}

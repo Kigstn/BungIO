@@ -53,7 +53,11 @@ class Client(metaclass=singleton.SingletonMetaclass):
         bungie_client_id: The bungie.net client id
         bungie_client_secret: The bungie.net client secret
         bungie_token: The bungie.net token
-        always_return_manifest_information: If manifest information should always be returned.
+        logger: If a custom logger should be used
+        language: The language the manifest entries should be in
+        cache: If http requests should be cached. It is recommended that you make use of this to not ratelimit yourself as quickly.
+        manifest_storage: If manifest entires should be stored, and how. Disabling this stops you from querying the manifest.
+        always_return_manifest_information: If manifest information should always be returned on every request. Keep in mind that this will increase requests performed / storage for an increased ease of use.
     """
 
     bungie_client_id: str = attr.field(repr=False)

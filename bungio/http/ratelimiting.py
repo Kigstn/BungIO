@@ -8,10 +8,14 @@ import attr
 class RateLimiter:
     """
     Gives out x tokens for network operations every y seconds
+
+    Attributes:
+        max_tokens: How many requests can we save up - bungie limits after 250 in 10s, so the default is 240
+        seconds: In how many seconds those requests are allowed
     """
 
-    max_tokens: int = 240  # how many requests can we save up - bungie limits after 250 in 10s, so will put that to 240
-    seconds: int = 10  # in how many seconds those requests are allowed
+    max_tokens: int = attr.field(default=240)
+    seconds: int = attr.field(default=10)
 
     tokens: float = attr.field(init=False)
     updated_at: float = attr.field(init=False)

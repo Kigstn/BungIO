@@ -38,11 +38,8 @@ def enum_converter(enum_name: str) -> Callable:
     return converter
 
 
+# all this does is allow objs to be asynchronously iterable, which does "fix" this bug https://bugs.python.org/issue33346
 class AllowAsyncIteration:
-    """
-    All this does is allow objs to be asynchronously iterable, which does "fix" this bug https://bugs.python.org/issue33346
-    """
-
     def __init__(self, obj):
         self._it = iter(obj)
 

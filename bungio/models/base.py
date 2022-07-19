@@ -26,6 +26,10 @@ __all__ = (
 
 
 class MISSING:
+    """
+    A missing entry which was not returned by bungie whatsoever.
+    """
+
     def __bool__(self) -> bool:
         return False
 
