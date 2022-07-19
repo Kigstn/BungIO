@@ -33,6 +33,8 @@ if TYPE_CHECKING:
     )
 
     # AUTOMATIC IMPORTS END
+    from bungio.models.bungie import DestinyActivityModeType
+    from bungio.models.overwrites import DestinyHistoricalStatsPeriodGroup
 
 
 @attr.define

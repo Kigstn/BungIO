@@ -18,7 +18,6 @@ if TYPE_CHECKING:
         DestinyCollectibleNodeDetailResponse,
         DestinyComponentType,
         DestinyHistoricalStatsByPeriod,
-        DestinyHistoricalStatsPeriodGroup,
         DestinyHistoricalWeaponStatsData,
         DestinyLeaderboard,
         DestinyStatsGroupType,
