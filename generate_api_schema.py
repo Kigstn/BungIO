@@ -1008,10 +1008,18 @@ class {model["name"]}(BaseEnum):"""
                     mixin_extra = f", {mixin_name}"
                     mixin_imports.add(f"""from bungio.models.mixins import {mixin_name}""")
                     break
+        model_name = model["name"]
+        try:
+            imp = importlib.import_module("bungio.models.overwrites")
+            if not hasattr(imp, model_name):
+                raise ModuleNotFoundError
+            model_name = f"Overwritten{model_name}"
+        except ModuleNotFoundError:
+            pass
 
         text = f"""
 @attr.define
-class {model["name"]}({"BaseModel" if "x-mobile-manifest-name" not in model else "ManifestModel"}{mixin_extra}):
+class {model_name}({"BaseModel" if "x-mobile-manifest-name" not in model else "ManifestModel"}{mixin_extra}):
     \"\"\"
     {clean_desc(model)}
 

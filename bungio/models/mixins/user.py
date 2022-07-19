@@ -31,10 +31,6 @@ if TYPE_CHECKING:
         RuntimeGroupMemberType,
         UserMembershipData,
     )
-    from bungio.models.bungie import (
-        DestinyActivityModeType,
-        DestinyHistoricalStatsPeriodGroup,
-    )
 
     # AUTOMATIC IMPORTS END
 

@@ -17,6 +17,7 @@ if TYPE_CHECKING:
         DestinyActivityModeType,
         DestinyClassDefinition,
         DestinyGenderDefinition,
+        DestinyHistoricalStatsPeriodGroup,
         DestinyInventoryItemDefinition,
         DestinyRaceDefinition,
         UserInfoCard,
@@ -372,7 +373,7 @@ class DestinyHistoricalStatsByPeriod(BaseModel):
 
 
 @attr.define
-class DestinyHistoricalStatsPeriodGroup(BaseModel):
+class OverwrittenDestinyHistoricalStatsPeriodGroup(BaseModel):
     """
     _No description given by bungie._
 

@@ -496,7 +496,6 @@ from bungio.models.bungie.destiny.historicalstats import (
     DestinyHistoricalStatsActivity,
     DestinyHistoricalStatsByPeriod,
     DestinyHistoricalStatsPerCharacter,
-    DestinyHistoricalStatsPeriodGroup,
     DestinyHistoricalStatsValue,
     DestinyHistoricalStatsValuePair,
     DestinyHistoricalStatsWithMerged,
@@ -592,6 +591,7 @@ from bungio.models.bungie.fireteam import (
     FireteamPublicSearchOption,
     FireteamResponse,
     FireteamSlotSearch,
+    FireteamSummary,
     FireteamUserInfoCard,
 )
 from bungio.models.bungie.forum import (

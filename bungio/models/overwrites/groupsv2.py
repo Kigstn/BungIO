@@ -1,9 +1,9 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 import attr
 
 from bungio.models.base import MISSING, BaseModel
-from bungio.models.bungie import groupsv2
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import GroupDateRange, GroupSortBy, GroupType
@@ -28,13 +28,19 @@ class GroupQuery(BaseModel):
         tag_text: _No description given by bungie._
     """
 
-    creation_date: "GroupDateRange" = attr.field(default=MISSING)
+    creation_date: Union["GroupDateRange", int] = attr.field(
+        converter=enum_converter("GroupDateRange"), metadata={"type": "GroupDateRange"}, default=MISSING
+    )
     current_page: int = attr.field(default=MISSING)
     group_member_count_filter: int = attr.field(default=MISSING)
-    group_type: "GroupType" = attr.field(default=MISSING)
+    group_type: Union["GroupType", int] = attr.field(
+        converter=enum_converter("GroupType"), metadata={"type": "GroupType"}, default=MISSING
+    )
     items_per_page: int = attr.field(default=MISSING)
     locale_filter: str = attr.field(default=MISSING)
     name: str = attr.field(default=MISSING)
     request_continuation_token: str = attr.field(default=MISSING)
-    sort_by: "GroupSortBy" = attr.field(default=MISSING)
+    sort_by: Union["GroupSortBy", int] = attr.field(
+        converter=enum_converter("GroupSortBy"), metadata={"type": "GroupSortBy"}, default=MISSING
+    )
     tag_text: str = attr.field(default=MISSING)

@@ -18,6 +18,7 @@ if TYPE_CHECKING:
         DestinyCollectibleNodeDetailResponse,
         DestinyComponentType,
         DestinyHistoricalStatsByPeriod,
+        DestinyHistoricalStatsPeriodGroup,
         DestinyHistoricalWeaponStatsData,
         DestinyLeaderboard,
         DestinyStatsGroupType,
@@ -26,7 +27,6 @@ if TYPE_CHECKING:
         DestinyVendorsResponse,
         PeriodType,
     )
-    from bungio.models.bungie import DestinyHistoricalStatsPeriodGroup
 
     # AUTOMATIC IMPORTS END
 
