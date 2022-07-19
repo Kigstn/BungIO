@@ -1,0 +1,4 @@
+nav:
+  - Basic Example: basic.md
+  - Manifest Example: manifest.md
+  - Authentication Example: auth.md

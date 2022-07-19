@@ -11,7 +11,7 @@ from sqlalchemy import MetaData
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
 import bungio.singleton as singleton
-from bungio import MISSING, InvalidAuthentication
+from bungio import InvalidAuthentication
 from bungio.api import ApiClient
 from bungio.definitions import DEFAULT_LOGGER, LOGGER_NAME, ROOT_DIR
 from bungio.http.client import HttpClient

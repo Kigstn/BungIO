@@ -205,7 +205,7 @@ class AllRouteHttpRequests({", ".join(list(names))}):
             # overwrite exists?
             try:
                 overwrite_import_path = path.replace("bungie", "overwrites")
-                importlib.import_module(overwrite_import_path, name)  # todo test
+                importlib.import_module(overwrite_import_path, name)
                 overwrite_init_text += f"from {overwrite_import_path} import {name}\n"
                 overwrite_names.append(name)
             except ModuleNotFoundError:

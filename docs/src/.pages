@@ -1,0 +1,8 @@
+nav:
+  - Home:
+    - Home: index.md
+    - Contributing: contributing.md
+    - License: license.md
+  - Getting Started
+  - Examples
+  - API Reference

@@ -344,7 +344,7 @@ name = "markdown"
 version = "3.3.7"
 description = "Python implementation of Markdown."
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.6"
 
 [package.extras]
@@ -626,7 +626,7 @@ name = "pymdown-extensions"
 version = "9.5"
 description = "Extension pack for Python Markdown."
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.7"
 
 [package.dependencies]
@@ -883,7 +883,7 @@ test = ["pytest", "pytest-asyncio"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "3e37182e031a3f219a43356361c789ed337671ae1e47a423c073c0f68a3b0e12"
+content-hash = "294945d1ea3a6f05e3c8f200a63022abec58655ead0ebe20af07bc11bf2ddd8f"
 
 [metadata.files]
 aiodns = [
