@@ -30,6 +30,8 @@ if TYPE_CHECKING:
     # AUTOMATIC IMPORTS END
     from bungio.models.overwrites import DestinyHistoricalStatsPeriodGroup
 
+__all__ = ("DestinyCharacterMixin",)
+
 
 @attr.define
 class DestinyCharacterMixin(ClientMixin, FuzzyAttrFinder):

@@ -36,6 +36,8 @@ if TYPE_CHECKING:
     from bungio.models.bungie import DestinyActivityModeType
     from bungio.models.overwrites import DestinyHistoricalStatsPeriodGroup
 
+__all__ = ("DestinyUserMixin",)
+
 
 @attr.define
 class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):

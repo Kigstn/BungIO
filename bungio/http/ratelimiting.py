@@ -3,6 +3,8 @@ import time
 
 import attr
 
+__all__ = ("RateLimiter",)
+
 
 @attr.define
 class RateLimiter:

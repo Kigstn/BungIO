@@ -2,6 +2,8 @@ import attr
 
 from bungio.models.mixins import DestinyClanMixin
 
+__all__ = ("DestinyClan",)
+
 
 @attr.define
 class DestinyClan(DestinyClanMixin):

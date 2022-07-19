@@ -4,6 +4,8 @@ from typing import Callable, Coroutine, Optional
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
 
+__all__ = ("AuthHttpRequests",)
+
 
 class AuthHttpRequests:
     _request: Callable[..., Coroutine]

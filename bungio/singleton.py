@@ -7,6 +7,11 @@ if TYPE_CHECKING:
     from bungio.client import Client
 
 
+__all__ = (
+    "client",
+    "SingletonMetaclass",
+)
+
 client: "Client" = MISSING
 
 

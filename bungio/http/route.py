@@ -6,6 +6,8 @@ from bungio.definitions import BASE_ROUTE
 from bungio.models.auth import AuthData
 from bungio.models.base import MISSING
 
+__all__ = ("Route",)
+
 
 @attr.define(init=False)
 class Route:

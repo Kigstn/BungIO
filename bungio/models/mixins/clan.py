@@ -39,6 +39,8 @@ if TYPE_CHECKING:
 
     # AUTOMATIC IMPORTS END
 
+__all__ = ("DestinyClanMixin",)
+
 
 @attr.define
 class DestinyClanMixin(ClientMixin, FuzzyAttrFinder):

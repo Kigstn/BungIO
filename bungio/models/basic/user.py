@@ -8,6 +8,8 @@ from bungio.utils import enum_converter
 if TYPE_CHECKING:
     from bungio.models import BungieMembershipType
 
+__all__ = ("DestinyUser",)
+
 
 @attr.define
 class DestinyUser(DestinyUserMixin):

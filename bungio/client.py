@@ -43,6 +43,8 @@ except ModuleNotFoundError:
 
 token_update_lock: dict[int, asyncio.Lock] = {}
 
+__all__ = ("Client",)
+
 
 @attr.define
 class Client(metaclass=singleton.SingletonMetaclass):
