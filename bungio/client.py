@@ -150,11 +150,10 @@ class Client(metaclass=singleton.SingletonMetaclass):
         return f"https://www.bungie.net/en/oauth/authorize?client_id={self.bungie_client_id}&response_type=code&state={state}"
 
     async def generate_auth(
-        self, membership_type: BungieMembershipType, destiny_membership_id: int, code: str
+        self, membership_type: BungieMembershipType | int, destiny_membership_id: int, code: str
     ) -> AuthData:
         """
-        Generate authentication information from a bungie code. For information on how to get that code, visit the [official documentation](
-        https://github.com/Bungie-net/api/wiki/OAuth-Documentation)
+        Generate authentication information from a bungie code. For information on how to get that code, visit the [official documentation](https://github.com/Bungie-net/api/wiki/OAuth-Documentation)
 
         Tip: Staying up to date
             This dispatches the Client.on_token_update()
@@ -170,6 +169,9 @@ class Client(metaclass=singleton.SingletonMetaclass):
         Returns:
             The working authentication info.
         """
+
+        if not isinstance(membership_type, BungieMembershipType):
+            membership_type = BungieMembershipType(membership_type)
 
         now = get_now_with_tz()
         data = await self.request_access_token(code=code)
