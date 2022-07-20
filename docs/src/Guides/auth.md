@@ -75,3 +75,5 @@ async def get_friend_list(membership_id: int):
     # return the bungie names
     return {"names": [f"{f.bungie_global_display_name}#{f.bungie_global_display_name_code}" for f in friends.friends]}
 ```
+
+[//]: # "todo test"

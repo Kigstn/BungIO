@@ -55,9 +55,10 @@ plugins:
 markdown_extensions:
   - tables
   - admonition
-  - pymdownx.tasklist
   - pymdownx.progressbar
   - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.emoji:

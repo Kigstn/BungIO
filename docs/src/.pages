@@ -1,8 +1,8 @@
 nav:
   - Home:
     - Home: index.md
+    - Getting Started: installation.md
     - Contributing: contributing.md
     - License: license.md
-  - Getting Started
   - Guides
   - API Reference
