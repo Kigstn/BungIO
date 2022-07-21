@@ -2,8 +2,8 @@
 ![](https://img.shields.io/pypi/dm/bungio?label=Downloads)
 ![](https://img.shields.io/readthedocs/bungio?label=Docs)
 ![](https://img.shields.io/badge/Python-3.10+-1081c1?logo=python)
-[![](https://img.shields.io/github/workflow/status/Kigstn/BungIO/black/master?label=Black%20Formatting&logo=github)](https://github.com/Kigstn/BungIO/actions/workflows/black.yml)
-[![](https://img.shields.io/github/workflow/status/Kigstn/BungIO/flake/master?label=Flake%20Styling&logo=github)](https://github.com/Kigstn/BungIO/actions/workflows/flake.yml)
+[![](https://img.shields.io/github/workflow/status/Kigstn/BungIO/Black%20Formatting/master?label=Black%20Formatting&logo=github)](https://github.com/Kigstn/BungIO/actions/workflows/black.yml)
+[![](https://img.shields.io/github/workflow/status/Kigstn/BungIO/Flake8%20Styling/master?label=Flake%20Styling&logo=github)](https://github.com/Kigstn/BungIO/actions/workflows/flake.yml)
 
 
 <h1 align="center">
