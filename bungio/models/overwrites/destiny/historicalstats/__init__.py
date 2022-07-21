@@ -5,8 +5,7 @@ import attr
 from bungio.models.bungie.destiny import historicalstats
 
 if TYPE_CHECKING:
-    from bungio import AuthData
-    from bungio.models import DestinyPostGameCarnageReportData
+    from bungio.models import AuthData, DestinyPostGameCarnageReportData
 
 
 @attr.define

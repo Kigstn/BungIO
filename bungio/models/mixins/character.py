@@ -6,10 +6,9 @@ import attr
 from bungio.models.base import MISSING, ClientMixin, FuzzyAttrFinder
 
 if TYPE_CHECKING:
-    from bungio import AuthData
-
     # AUTOMATIC IMPORTS START
     from bungio.models import (
+        AuthData,
         BungieMembershipType,
         DestinyActivityHistoryResults,
         DestinyActivityModeType,

@@ -1,7 +1,7 @@
 import asyncio
 from asyncio import Semaphore
 from copy import copy
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
 from urllib.parse import urlencode
 
 import attr
@@ -14,11 +14,12 @@ from aiohttp import (
     ServerDisconnectedError,
 )
 
-from bungio import BungieDead, InvalidAuthentication
 from bungio.error import (
     AuthenticationTooSlow,
     BadRequest,
+    BungieDead,
     BungieException,
+    InvalidAuthentication,
     NotFound,
     TimeoutException,
     _InvalidAuthentication,
@@ -31,9 +32,6 @@ from bungio.http.routes import AllRouteHttpRequests
 from bungio.models.auth import AuthData
 from bungio.models.base import MISSING, ClientMixin
 from bungio.singleton import SingletonMetaclass
-
-if TYPE_CHECKING:
-    from bungio.client import Client
 
 __all__ = ("HttpClient",)
 
