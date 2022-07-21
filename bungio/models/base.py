@@ -68,7 +68,7 @@ class EnumMixin(Enum):
         return data
 
     @classmethod
-    async def from_dict(cls, data: int | str, client: "Client", *args, **kwargs) -> _EnumMixin | UnknownEnumValue:
+    async def from_dict(cls, data: int | str, client: "Client", *args, **kwargs) -> EnumMixin | UnknownEnumValue:
         """
         Convert data to this enum
 
