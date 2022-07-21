@@ -5,28 +5,15 @@
 [![](https://img.shields.io/github/workflow/status/Kigstn/BungIO/black/master?label=Black%20Formatting&logo=github)](https://github.com/Kigstn/BungIO/actions/workflows/black.yml)
 [![](https://img.shields.io/github/workflow/status/Kigstn/BungIO/flake/master?label=Flake%20Styling&logo=github)](https://github.com/Kigstn/BungIO/actions/workflows/flake.yml)
 
-<style>
-.align {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 2px solid;
-    border-top: 2px solid;
-    padding: 10px;
-    margin-bottom: 40px;
-    margin-top: 40px;
-}
-</style>
 
+<h1 align="center">
+    <p>
+        <img src="https://raw.githubusercontent.com/Kigstn/BungIO/master/docs/src/images/favicon.png" alt="BungIO Logo">
+    </p>
+    BungIO
+</h1>
 
-<div class="align">
-    <img src="https://raw.githubusercontent.com/Kigstn/BungIO/master/docs/src/images/favicon.png" alt="BungIO Logo">
-    <h1>
-        BungIO
-    </h1>
-</div>
-
-
+---
 
 BungIO is a modern and pythonic wrapper for Bungies Destiny 2 API.
 
