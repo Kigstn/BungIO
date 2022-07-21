@@ -4,6 +4,7 @@ BungIO is a modern and pythonic wrapper for Bungies Destiny 2 API.
 
 - [X] Python 3.10+
 - [X] Asynchronous
+- [X] 100% typed and raw api coverage
 - [X] Ratelimit compliant
 - [X] Manifest support
 - [X] OAuth2 support
