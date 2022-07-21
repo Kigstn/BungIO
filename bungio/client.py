@@ -193,6 +193,7 @@ class Client(metaclass=singleton.SingletonMetaclass):
     async def get_working_auth(self, auth: AuthData) -> AuthData:
         """
         Check if tokens need to be refreshed and then do that.
+        Gets called automatically when doing requests with AuthData.
 
         Tip: Staying up to date
             This dispatches the Client.on_token_update()

@@ -4,9 +4,10 @@ To get access to a protected resources, or access to any data for users which ha
 
 This is a bit more tricky, but there are some good tutorials on how this process works [here](https://github.com/Bungie-net/api/wiki/OAuth-Documentation) and [here](https://lowlidev.com.au/destiny/authentication-2).
 
-BungIO helps you by once you have acquired the `code`, anything before that needs to be set up by yourself.
+BungIO helps you by creating an auth url your users can use and then again once you have acquired the `code`. Handling the redirect you set up with bungie needs to be done by yourself, sadly bungIO cannot help you with that.
 
 ## BungIO and Bungie Authentication
+- [X] Create a valid bungie authentication url
 - [ ] Let the user authenticate with your app to get a code
 - [X] Get authentication from a code
 - [ ] Store authentication information
@@ -21,9 +22,10 @@ For this example [FastApi](https://fastapi.tiangolo.com/) is used to demonstrate
 ```py
 import json
 import os
-from typing import Optional
-
+import secrets
 import fastapi
+
+from typing import Optional
 
 from bungio import Client
 from bungio.models import AuthData
@@ -47,8 +49,16 @@ client = MyClient(
 )
 app = fastapi.FastAPI()
 
-# saving the auth in a file for this example, in reality this should be replaced by a database
-user_auths: dict[int, AuthData]
+
+# generate an auth url with a different state for each request
+@app.get("/auth/get_url")
+async def auth_url():
+    """Generate an auth url"""
+
+    # use a random state which the website can verify after the fact
+    state = secrets.token_urlsafe(20)
+    url = client.get_auth_url(state=state)
+    return {"state": state, "url": url}
 
 # call this from your website
 @app.get("/auth/{membership_id}/{membership_type}/{code}")
