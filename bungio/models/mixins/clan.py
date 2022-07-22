@@ -36,6 +36,7 @@ if TYPE_CHECKING:
     )
 
     # AUTOMATIC IMPORTS END
+    from bungio.models.auth import AuthData
 
 __all__ = ("DestinyClanMixin",)
 
