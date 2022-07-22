@@ -30,9 +30,9 @@ if TYPE_CHECKING:
         RuntimeGroupMemberType,
         UserMembershipData,
     )
-    from bungio.models.auth import AuthData
 
     # AUTOMATIC IMPORTS END
+    from bungio.models.auth import AuthData
     from bungio.models.bungie import DestinyActivityModeType
     from bungio.models.overwrites import DestinyHistoricalStatsPeriodGroup
 
