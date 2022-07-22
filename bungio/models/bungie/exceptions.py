@@ -303,6 +303,18 @@ class PlatformErrorCodes(BaseEnum):
     """_No description given by bungie._ """
     CONTENT_LOCALE_EDIT_PERMISSION_DENIED = 175
     """_No description given by bungie._ """
+    CONTENT_STACK_UNKNOWN_ERROR = 176
+    """_No description given by bungie._ """
+    CONTENT_STACK_NOT_FOUND = 177
+    """_No description given by bungie._ """
+    CONTENT_STACK_RATE_LIMITED = 178
+    """_No description given by bungie._ """
+    CONTENT_STACK_TIMEOUT = 179
+    """_No description given by bungie._ """
+    CONTENT_STACK_SERVICE_ERROR = 180
+    """_No description given by bungie._ """
+    CONTENT_STACK_DESERIALIZATION_FAILURE = 181
+    """_No description given by bungie._ """
     USER_NON_UNIQUE_NAME = 200
     """_No description given by bungie._ """
     USER_MANUAL_LINKING_STEP_REQUIRED = 201

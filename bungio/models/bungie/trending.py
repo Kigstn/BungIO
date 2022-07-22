@@ -77,9 +77,7 @@ class TrendingEntry(BaseModel):
     creation_date: datetime = attr.field()
     display_name: str = attr.field()
     end_date: datetime = attr.field()
-    entity_type: Union["TrendingEntryType", int] = attr.field(
-        converter=enum_converter("TrendingEntryType"), metadata={"type": "TrendingEntryType"}
-    )
+    entity_type: Union["TrendingEntryType", int] = attr.field(converter=enum_converter("TrendingEntryType"))
     feature_image: str = attr.field()
     identifier: str = attr.field()
     image: str = attr.field()
@@ -145,9 +143,7 @@ class TrendingDetail(BaseModel):
     destiny_activity: "TrendingEntryDestinyActivity" = attr.field()
     destiny_item: "TrendingEntryDestinyItem" = attr.field()
     destiny_ritual: "TrendingEntryDestinyRitual" = attr.field()
-    entity_type: Union["TrendingEntryType", int] = attr.field(
-        converter=enum_converter("TrendingEntryType"), metadata={"type": "TrendingEntryType"}
-    )
+    entity_type: Union["TrendingEntryType", int] = attr.field(converter=enum_converter("TrendingEntryType"))
     identifier: str = attr.field()
     news: "TrendingEntryNews" = attr.field()
     support: "TrendingEntrySupportArticle" = attr.field()

@@ -33,9 +33,7 @@ class UserMembership(BaseModel, DestinyUserMixin):
     bungie_global_display_name_code: int = attr.field()
     display_name: str = attr.field()
     membership_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
 
 
 @attr.define
@@ -56,19 +54,17 @@ class CrossSaveUserMembership(BaseModel, DestinyUserMixin):
     """
 
     applicable_membership_types: list[Union["BungieMembershipType", int]] = attr.field(
-        metadata={"type": """list[Union[BungieMembershipType, int]]"""}
+        converter=enum_converter("BungieMembershipType")
     )
     bungie_global_display_name: str = attr.field()
     bungie_global_display_name_code: int = attr.field()
     cross_save_override: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+        converter=enum_converter("BungieMembershipType")
     )
     display_name: str = attr.field()
     is_public: bool = attr.field()
     membership_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
 
 
 @attr.define
@@ -91,20 +87,18 @@ class UserInfoCard(BaseModel, DestinyUserMixin):
     """
 
     applicable_membership_types: list[Union["BungieMembershipType", int]] = attr.field(
-        metadata={"type": """list[Union[BungieMembershipType, int]]"""}
+        converter=enum_converter("BungieMembershipType")
     )
     bungie_global_display_name: str = attr.field()
     bungie_global_display_name_code: int = attr.field()
     cross_save_override: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+        converter=enum_converter("BungieMembershipType")
     )
     display_name: str = attr.field()
     icon_path: str = attr.field()
     is_public: bool = attr.field()
     membership_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
     supplemental_display_name: str = attr.field()
 
 
@@ -238,12 +232,10 @@ class HardLinkedUserMembership(BaseModel, DestinyUserMixin):
 
     cross_save_overridden_membership_id: int = attr.field()
     cross_save_overridden_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+        converter=enum_converter("BungieMembershipType")
     )
     membership_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
 
 
 @attr.define
@@ -351,9 +343,7 @@ class EmailOptInDefinition(BaseModel):
     )
     name: str = attr.field()
     set_by_default: bool = attr.field()
-    value: Union["OptInFlags", int] = attr.field(
-        converter=enum_converter("OptInFlags"), metadata={"type": "OptInFlags"}
-    )
+    value: Union["OptInFlags", int] = attr.field(converter=enum_converter("OptInFlags"))
 
 
 class OptInFlags(BaseFlagEnum):
@@ -477,9 +467,7 @@ class EmailViewDefinitionSetting(BaseModel):
         metadata={"type": """dict[str, EMailSettingLocalization]"""}
     )
     name: str = attr.field()
-    opt_in_aggregate_value: Union["OptInFlags", int] = attr.field(
-        converter=enum_converter("OptInFlags"), metadata={"type": "OptInFlags"}
-    )
+    opt_in_aggregate_value: Union["OptInFlags", int] = attr.field(converter=enum_converter("OptInFlags"))
     set_by_default: bool = attr.field()
     subscriptions: list["EmailSubscriptionDefinition"] = attr.field(
         metadata={"type": """list[EmailSubscriptionDefinition]"""}

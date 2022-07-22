@@ -44,10 +44,8 @@ class AwaPermissionRequested(BaseModel):
 
     affected_item_id: int = attr.field()
     character_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
-    type: Union["AwaType", int] = attr.field(converter=enum_converter("AwaType"), metadata={"type": "AwaType"})
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
+    type: Union["AwaType", int] = attr.field(converter=enum_converter("AwaType"))
 
 
 class AwaType(BaseEnum):
@@ -75,9 +73,7 @@ class AwaUserResponse(BaseModel):
 
     correlation_id: str = attr.field()
     nonce: list[int] = attr.field(metadata={"type": """list[int]"""})
-    selection: Union["AwaUserSelection", int] = attr.field(
-        converter=enum_converter("AwaUserSelection"), metadata={"type": "AwaUserSelection"}
-    )
+    selection: Union["AwaUserSelection", int] = attr.field(converter=enum_converter("AwaUserSelection"))
 
 
 class AwaUserSelection(BaseEnum):
@@ -113,16 +109,10 @@ class AwaAuthorizationResult(BaseModel):
     action_token: str = attr.field()
     developer_note: str = attr.field()
     maximum_number_of_uses: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
-    response_reason: Union["AwaResponseReason", int] = attr.field(
-        converter=enum_converter("AwaResponseReason"), metadata={"type": "AwaResponseReason"}
-    )
-    type: Union["AwaType", int] = attr.field(converter=enum_converter("AwaType"), metadata={"type": "AwaType"})
-    user_selection: Union["AwaUserSelection", int] = attr.field(
-        converter=enum_converter("AwaUserSelection"), metadata={"type": "AwaUserSelection"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
+    response_reason: Union["AwaResponseReason", int] = attr.field(converter=enum_converter("AwaResponseReason"))
+    type: Union["AwaType", int] = attr.field(converter=enum_converter("AwaType"))
+    user_selection: Union["AwaUserSelection", int] = attr.field(converter=enum_converter("AwaUserSelection"))
     valid_until: datetime = attr.field()
 
 

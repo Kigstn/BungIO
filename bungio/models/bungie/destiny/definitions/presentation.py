@@ -44,7 +44,7 @@ class DestinyPresentationNodeBaseDefinition(BaseModel):
     index: int = attr.field()
     parent_node_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     presentation_node_type: Union["DestinyPresentationNodeType", int] = attr.field(
-        converter=enum_converter("DestinyPresentationNodeType"), metadata={"type": "DestinyPresentationNodeType"}
+        converter=enum_converter("DestinyPresentationNodeType")
     )
     redacted: bool = attr.field()
     trait_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
@@ -73,7 +73,7 @@ class DestinyScoredPresentationNodeBaseDefinition(BaseModel):
     max_category_record_score: int = attr.field()
     parent_node_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     presentation_node_type: Union["DestinyPresentationNodeType", int] = attr.field(
-        converter=enum_converter("DestinyPresentationNodeType"), metadata={"type": "DestinyPresentationNodeType"}
+        converter=enum_converter("DestinyPresentationNodeType")
     )
     redacted: bool = attr.field()
     trait_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
@@ -124,34 +124,31 @@ class DestinyPresentationNodeDefinition(ManifestModel):
     disable_child_subscreen_navigation: bool = attr.field()
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     display_style: Union["DestinyPresentationDisplayStyle", int] = attr.field(
-        converter=enum_converter("DestinyPresentationDisplayStyle"),
-        metadata={"type": "DestinyPresentationDisplayStyle"},
+        converter=enum_converter("DestinyPresentationDisplayStyle")
     )
     hash: int = attr.field()
     index: int = attr.field()
     max_category_record_score: int = attr.field()
     node_type: Union["DestinyPresentationNodeType", int] = attr.field(
-        converter=enum_converter("DestinyPresentationNodeType"), metadata={"type": "DestinyPresentationNodeType"}
+        converter=enum_converter("DestinyPresentationNodeType")
     )
     objective_hash: int = attr.field()
     original_icon: str = attr.field()
     parent_node_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     presentation_node_type: Union["DestinyPresentationNodeType", int] = attr.field(
-        converter=enum_converter("DestinyPresentationNodeType"), metadata={"type": "DestinyPresentationNodeType"}
+        converter=enum_converter("DestinyPresentationNodeType")
     )
     redacted: bool = attr.field()
     requirements: "DestinyPresentationNodeRequirementsBlock" = attr.field()
     root_view_icon: str = attr.field()
-    scope: Union["DestinyScope", int] = attr.field(
-        converter=enum_converter("DestinyScope"), metadata={"type": "DestinyScope"}
-    )
+    scope: Union["DestinyScope", int] = attr.field(converter=enum_converter("DestinyScope"))
     screen_style: Union["DestinyPresentationScreenStyle", int] = attr.field(
-        converter=enum_converter("DestinyPresentationScreenStyle"), metadata={"type": "DestinyPresentationScreenStyle"}
+        converter=enum_converter("DestinyPresentationScreenStyle")
     )
     trait_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     trait_ids: list[str] = attr.field(metadata={"type": """list[str]"""})
-    manifest_completion_record_hash: Optional["DestinyRecordDefinition"] = attr.field()
-    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field()
+    manifest_completion_record_hash: Optional["DestinyRecordDefinition"] = attr.field(default=None)
+    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -220,7 +217,7 @@ class DestinyPresentationNodeChildEntry(BaseModel):
 
     node_display_priority: int = attr.field()
     presentation_node_hash: int = attr.field()
-    manifest_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
+    manifest_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -245,7 +242,7 @@ class DestinyPresentationNodeCollectibleChildEntry(BaseModel):
 
     collectible_hash: int = attr.field()
     node_display_priority: int = attr.field()
-    manifest_collectible_hash: Optional["DestinyCollectibleDefinition"] = attr.field()
+    manifest_collectible_hash: Optional["DestinyCollectibleDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -274,12 +271,11 @@ class DestinyPresentationChildBlock(BaseModel):
     """
 
     display_style: Union["DestinyPresentationDisplayStyle", int] = attr.field(
-        converter=enum_converter("DestinyPresentationDisplayStyle"),
-        metadata={"type": "DestinyPresentationDisplayStyle"},
+        converter=enum_converter("DestinyPresentationDisplayStyle")
     )
     parent_presentation_node_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     presentation_node_type: Union["DestinyPresentationNodeType", int] = attr.field(
-        converter=enum_converter("DestinyPresentationNodeType"), metadata={"type": "DestinyPresentationNodeType"}
+        converter=enum_converter("DestinyPresentationNodeType")
     )
 
 
@@ -305,7 +301,7 @@ class DestinyPresentationNodeRecordChildEntry(BaseModel):
 
     node_display_priority: int = attr.field()
     record_hash: int = attr.field()
-    manifest_record_hash: Optional["DestinyRecordDefinition"] = attr.field()
+    manifest_record_hash: Optional["DestinyRecordDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -330,7 +326,7 @@ class DestinyPresentationNodeMetricChildEntry(BaseModel):
 
     metric_hash: int = attr.field()
     node_display_priority: int = attr.field()
-    manifest_metric_hash: Optional["DestinyMetricDefinition"] = attr.field()
+    manifest_metric_hash: Optional["DestinyMetricDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -355,4 +351,4 @@ class DestinyPresentationNodeCraftableChildEntry(BaseModel):
 
     craftable_item_hash: int = attr.field()
     node_display_priority: int = attr.field()
-    manifest_craftable_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_craftable_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)

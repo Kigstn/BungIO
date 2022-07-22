@@ -77,23 +77,21 @@ class DestinyRecordDefinition(ManifestModel):
     parent_node_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     presentation_info: "DestinyPresentationChildBlock" = attr.field()
     presentation_node_type: Union["DestinyPresentationNodeType", int] = attr.field(
-        converter=enum_converter("DestinyPresentationNodeType"), metadata={"type": "DestinyPresentationNodeType"}
+        converter=enum_converter("DestinyPresentationNodeType")
     )
     record_value_style: Union["DestinyRecordValueStyle", int] = attr.field(
-        converter=enum_converter("DestinyRecordValueStyle"), metadata={"type": "DestinyRecordValueStyle"}
+        converter=enum_converter("DestinyRecordValueStyle")
     )
     redacted: bool = attr.field()
     requirements: "DestinyPresentationNodeRequirementsBlock" = attr.field()
     reward_items: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})
-    scope: Union["DestinyScope", int] = attr.field(
-        converter=enum_converter("DestinyScope"), metadata={"type": "DestinyScope"}
-    )
+    scope: Union["DestinyScope", int] = attr.field(converter=enum_converter("DestinyScope"))
     should_show_large_icons: bool = attr.field()
     state_info: "SchemaRecordStateBlock" = attr.field()
     title_info: "DestinyRecordTitleBlock" = attr.field()
     trait_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     trait_ids: list[str] = attr.field(metadata={"type": """list[str]"""})
-    manifest_lore_hash: Optional["DestinyLoreDefinition"] = attr.field()
+    manifest_lore_hash: Optional["DestinyLoreDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -121,10 +119,10 @@ class DestinyRecordTitleBlock(BaseModel):
     gilding_tracking_record_hash: int = attr.field()
     has_title: bool = attr.field()
     titles_by_gender: dict[Union["DestinyGender", int], str] = attr.field(
-        metadata={"type": """dict[Union[DestinyGender, int], str]"""}
+        metadata={"type": """dict[DestinyGender, str]"""}
     )
     titles_by_gender_hash: dict[int, str] = attr.field(metadata={"type": """dict[int, str]"""})
-    manifest_gilding_tracking_record_hash: Optional["DestinyRecordDefinition"] = attr.field()
+    manifest_gilding_tracking_record_hash: Optional["DestinyRecordDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -143,9 +141,7 @@ class DestinyRecordCompletionBlock(BaseModel):
     partial_completion_objective_count_threshold: int = attr.field()
     score_value: int = attr.field()
     should_fire_toast: bool = attr.field()
-    toast_style: Union["DestinyRecordToastStyle", int] = attr.field(
-        converter=enum_converter("DestinyRecordToastStyle"), metadata={"type": "DestinyRecordToastStyle"}
-    )
+    toast_style: Union["DestinyRecordToastStyle", int] = attr.field(converter=enum_converter("DestinyRecordToastStyle"))
 
 
 @attr.define
@@ -223,7 +219,7 @@ class DestinyRecordIntervalObjective(BaseModel):
 
     interval_objective_hash: int = attr.field()
     interval_score_value: int = attr.field()
-    manifest_interval_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field()
+    manifest_interval_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
 
 
 @attr.define

@@ -8,7 +8,6 @@ from bungio.models.base import MISSING, ClientMixin, FuzzyAttrFinder
 if TYPE_CHECKING:
     # AUTOMATIC IMPORTS START
     from bungio.models import (
-        AuthData,
         BungieMembershipType,
         DestinyActivityHistoryResults,
         DestinyActivityModeType,

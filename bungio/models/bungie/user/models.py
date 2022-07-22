@@ -28,7 +28,5 @@ class GetCredentialTypesForAccountResponse(BaseModel):
 
     credential_as_string: str = attr.field()
     credential_display_name: str = attr.field()
-    credential_type: Union["BungieCredentialType", int] = attr.field(
-        converter=enum_converter("BungieCredentialType"), metadata={"type": "BungieCredentialType"}
-    )
+    credential_type: Union["BungieCredentialType", int] = attr.field(converter=enum_converter("BungieCredentialType"))
     is_public: bool = attr.field()

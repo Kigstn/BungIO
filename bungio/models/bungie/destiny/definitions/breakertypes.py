@@ -28,9 +28,7 @@ class DestinyBreakerTypeDefinition(ManifestModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    enum_value: Union["DestinyBreakerType", int] = attr.field(
-        converter=enum_converter("DestinyBreakerType"), metadata={"type": "DestinyBreakerType"}
-    )
+    enum_value: Union["DestinyBreakerType", int] = attr.field(converter=enum_converter("DestinyBreakerType"))
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()

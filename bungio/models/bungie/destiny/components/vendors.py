@@ -53,7 +53,7 @@ class DestinyVendorGroup(BaseModel):
 
     vendor_group_hash: int = attr.field()
     vendor_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_vendor_group_hash: Optional["DestinyVendorGroupDefinition"] = attr.field()
+    manifest_vendor_group_hash: Optional["DestinyVendorGroupDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -80,7 +80,7 @@ class DestinyVendorBaseComponent(BaseModel):
     enabled: bool = attr.field()
     next_refresh_date: datetime = attr.field()
     vendor_hash: int = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -116,8 +116,8 @@ class DestinyVendorSaleItemBaseComponent(BaseModel):
     override_style_item_hash: int = attr.field()
     quantity: int = attr.field()
     vendor_item_index: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -144,7 +144,7 @@ class DestinyPublicVendorComponent(BaseModel):
     enabled: bool = attr.field()
     next_refresh_date: datetime = attr.field()
     vendor_hash: int = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -180,5 +180,5 @@ class DestinyPublicVendorSaleItemComponent(BaseModel):
     override_style_item_hash: int = attr.field()
     quantity: int = attr.field()
     vendor_item_index: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)

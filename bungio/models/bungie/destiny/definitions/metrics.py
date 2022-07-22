@@ -51,10 +51,10 @@ class DestinyMetricDefinition(ManifestModel):
     lower_value_is_better: bool = attr.field()
     parent_node_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     presentation_node_type: Union["DestinyPresentationNodeType", int] = attr.field(
-        converter=enum_converter("DestinyPresentationNodeType"), metadata={"type": "DestinyPresentationNodeType"}
+        converter=enum_converter("DestinyPresentationNodeType")
     )
     redacted: bool = attr.field()
     tracking_objective_hash: int = attr.field()
     trait_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     trait_ids: list[str] = attr.field(metadata={"type": """list[str]"""})
-    manifest_tracking_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field()
+    manifest_tracking_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)

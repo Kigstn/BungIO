@@ -37,7 +37,7 @@ class DestinyVendorReceipt(BaseModel):
     license_unlock_hash: int = attr.field()
     purchased_by_character_id: int = attr.field()
     refund_policy: Union["DestinyVendorItemRefundPolicy", int] = attr.field(
-        converter=enum_converter("DestinyVendorItemRefundPolicy"), metadata={"type": "DestinyVendorItemRefundPolicy"}
+        converter=enum_converter("DestinyVendorItemRefundPolicy")
     )
     sequence_number: int = attr.field()
     time_to_expiration: int = attr.field()

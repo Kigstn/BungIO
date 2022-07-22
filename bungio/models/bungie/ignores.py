@@ -21,9 +21,7 @@ class IgnoreResponse(BaseModel):
         is_ignored: _No description given by bungie._
     """
 
-    ignore_flags: Union["IgnoreStatus", int] = attr.field(
-        converter=enum_converter("IgnoreStatus"), metadata={"type": "IgnoreStatus"}
-    )
+    ignore_flags: Union["IgnoreStatus", int] = attr.field(converter=enum_converter("IgnoreStatus"))
     is_ignored: bool = attr.field()
 
 

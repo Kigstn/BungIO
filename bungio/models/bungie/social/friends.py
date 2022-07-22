@@ -48,17 +48,15 @@ class BungieFriend(BaseModel, DestinyUserMixin):
     bungie_global_display_name_code: int = attr.field()
     bungie_net_user: "GeneralUser" = attr.field()
     last_seen_as_bungie_membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+        converter=enum_converter("BungieMembershipType")
     )
     last_seen_as_membership_id: int = attr.field()
-    online_status: Union["PresenceStatus", int] = attr.field(
-        converter=enum_converter("PresenceStatus"), metadata={"type": "PresenceStatus"}
-    )
+    online_status: Union["PresenceStatus", int] = attr.field(converter=enum_converter("PresenceStatus"))
     online_title: Union["PresenceOnlineStateFlags", int] = attr.field(
-        converter=enum_converter("PresenceOnlineStateFlags"), metadata={"type": "PresenceOnlineStateFlags"}
+        converter=enum_converter("PresenceOnlineStateFlags")
     )
     relationship: Union["FriendRelationshipState", int] = attr.field(
-        converter=enum_converter("FriendRelationshipState"), metadata={"type": "FriendRelationshipState"}
+        converter=enum_converter("FriendRelationshipState")
     )
 
 
@@ -171,7 +169,5 @@ class PlatformFriend(BaseModel, DestinyUserMixin):
     bungie_net_membership_id: int = attr.field()
     destiny_membership_id: int = attr.field()
     destiny_membership_type: int = attr.field()
-    friend_platform: Union["PlatformFriendType", int] = attr.field(
-        converter=enum_converter("PlatformFriendType"), metadata={"type": "PlatformFriendType"}
-    )
+    friend_platform: Union["PlatformFriendType", int] = attr.field(converter=enum_converter("PlatformFriendType"))
     platform_display_name: str = attr.field()

@@ -8,8 +8,8 @@ from bungio.models.base import ClientMixin, FuzzyAttrFinder
 if TYPE_CHECKING:
     # AUTOMATIC IMPORTS START
     from bungio.models import (
-        AuthData,
         BungieMembershipType,
+        BungieRewardDisplay,
         DestinyComponentType,
         DestinyHistoricalStatsAccountResult,
         DestinyItemResponse,
@@ -346,6 +346,26 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
 
         return await self._client.api.individual_group_invite_cancel(
             group_id=group_id,
+            membership_id=self._fuzzy_getattr("membership_id"),
+            membership_type=self._fuzzy_getattr("membership_type"),
+            auth=auth,
+        )
+
+    async def get_bungie_rewards_for_platform_user(self, auth: "AuthData") -> dict[str, "BungieRewardDisplay"]:
+        """
+        Returns the bungie rewards for the targeted user when a platform membership Id and Type are used.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: ReadAndApplyTokens
+
+        Args:
+            auth: Authentication information.
+
+        Returns:
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
+        """
+
+        return await self._client.api.get_bungie_rewards_for_platform_user(
             membership_id=self._fuzzy_getattr("membership_id"),
             membership_type=self._fuzzy_getattr("membership_type"),
             auth=auth,

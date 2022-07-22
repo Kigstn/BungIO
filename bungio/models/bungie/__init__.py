@@ -21,6 +21,8 @@ from bungio.models.bungie.content import (
     CommentSummary,
     ContentItemPublicContract,
     ContentRepresentation,
+    NewsArticleRssItem,
+    NewsArticleRssResponse,
 )
 from bungio.models.bungie.content.models import (
     ContentPreview,
@@ -437,6 +439,8 @@ from bungio.models.bungie.destiny.definitions.reporting import (
     DestinyReportReasonDefinition,
 )
 from bungio.models.bungie.destiny.definitions.seasons import (
+    DestinyEventCardDefinition,
+    DestinyEventCardImages,
     DestinySeasonDefinition,
     DestinySeasonPassDefinition,
     DestinySeasonPreviewDefinition,

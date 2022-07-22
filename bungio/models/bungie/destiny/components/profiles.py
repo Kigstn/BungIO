@@ -71,7 +71,7 @@ class DestinyProfileTransitoryComponent(BaseModel):
     tracking: list["DestinyProfileTransitoryTrackingEntry"] = attr.field(
         metadata={"type": """list[DestinyProfileTransitoryTrackingEntry]"""}
     )
-    manifest_last_orbited_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field()
+    manifest_last_orbited_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -99,10 +99,8 @@ class DestinyProfileTransitoryPartyMember(BaseModel):
     display_name: str = attr.field()
     emblem_hash: int = attr.field()
     membership_id: int = attr.field()
-    status: Union["DestinyPartyMemberStates", int] = attr.field(
-        converter=enum_converter("DestinyPartyMemberStates"), metadata={"type": "DestinyPartyMemberStates"}
-    )
-    manifest_emblem_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    status: Union["DestinyPartyMemberStates", int] = attr.field(converter=enum_converter("DestinyPartyMemberStates"))
+    manifest_emblem_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -141,11 +139,11 @@ class DestinyProfileTransitoryJoinability(BaseModel):
     """
 
     closed_reasons: Union["DestinyJoinClosedReasons", int] = attr.field(
-        converter=enum_converter("DestinyJoinClosedReasons"), metadata={"type": "DestinyJoinClosedReasons"}
+        converter=enum_converter("DestinyJoinClosedReasons")
     )
     open_slots: int = attr.field()
     privacy_setting: Union["DestinyGamePrivacySetting", int] = attr.field(
-        converter=enum_converter("DestinyGamePrivacySetting"), metadata={"type": "DestinyGamePrivacySetting"}
+        converter=enum_converter("DestinyGamePrivacySetting")
     )
 
 
@@ -183,8 +181,8 @@ class DestinyProfileTransitoryTrackingEntry(BaseModel):
     objective_hash: int = attr.field()
     questline_item_hash: int = attr.field()
     tracked_date: datetime = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_location_hash: Optional["DestinyLocationDefinition"] = attr.field()
-    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field()
-    manifest_questline_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_location_hash: Optional["DestinyLocationDefinition"] = attr.field(default=None)
+    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
+    manifest_questline_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)

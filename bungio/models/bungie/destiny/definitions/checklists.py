@@ -44,9 +44,7 @@ class DestinyChecklistDefinition(ManifestModel):
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
-    scope: Union["DestinyScope", int] = attr.field(
-        converter=enum_converter("DestinyScope"), metadata={"type": "DestinyScope"}
-    )
+    scope: Union["DestinyScope", int] = attr.field(converter=enum_converter("DestinyScope"))
     view_action_string: str = attr.field()
 
 
@@ -89,13 +87,11 @@ class DestinyChecklistEntryDefinition(BaseModel):
     hash: int = attr.field()
     item_hash: int = attr.field()
     location_hash: int = attr.field()
-    scope: Union["DestinyScope", int] = attr.field(
-        converter=enum_converter("DestinyScope"), metadata={"type": "DestinyScope"}
-    )
+    scope: Union["DestinyScope", int] = attr.field(converter=enum_converter("DestinyScope"))
     vendor_hash: int = attr.field()
     vendor_interaction_index: int = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
-    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_location_hash: Optional["DestinyLocationDefinition"] = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_location_hash: Optional["DestinyLocationDefinition"] = attr.field(default=None)
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)

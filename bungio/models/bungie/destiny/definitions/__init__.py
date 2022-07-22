@@ -139,15 +139,13 @@ class DestinyProgressionDefinition(ManifestModel):
     reward_items: list["DestinyProgressionRewardItemQuantity"] = attr.field(
         metadata={"type": """list[DestinyProgressionRewardItemQuantity]"""}
     )
-    scope: Union["DestinyProgressionScope", int] = attr.field(
-        converter=enum_converter("DestinyProgressionScope"), metadata={"type": "DestinyProgressionScope"}
-    )
+    scope: Union["DestinyProgressionScope", int] = attr.field(converter=enum_converter("DestinyProgressionScope"))
     source: str = attr.field()
     steps: list["DestinyProgressionStepDefinition"] = attr.field(
         metadata={"type": """list[DestinyProgressionStepDefinition]"""}
     )
     visible: bool = attr.field()
-    manifest_faction_hash: Optional["DestinyFactionDefinition"] = attr.field()
+    manifest_faction_hash: Optional["DestinyFactionDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -192,8 +190,7 @@ class DestinyProgressionStepDefinition(BaseModel):
     """
 
     display_effect_type: Union["DestinyProgressionStepDisplayEffect", int] = attr.field(
-        converter=enum_converter("DestinyProgressionStepDisplayEffect"),
-        metadata={"type": "DestinyProgressionStepDisplayEffect"},
+        converter=enum_converter("DestinyProgressionStepDisplayEffect")
     )
     icon: str = attr.field()
     progress_total: int = attr.field()
@@ -292,20 +289,14 @@ class DestinyInventoryItemDefinition(ManifestModel):
     allow_actions: bool = attr.field()
     animations: list["DestinyAnimationReference"] = attr.field(metadata={"type": """list[DestinyAnimationReference]"""})
     background_color: "DestinyColor" = attr.field()
-    breaker_type: Union["DestinyBreakerType", int] = attr.field(
-        converter=enum_converter("DestinyBreakerType"), metadata={"type": "DestinyBreakerType"}
-    )
+    breaker_type: Union["DestinyBreakerType", int] = attr.field(converter=enum_converter("DestinyBreakerType"))
     breaker_type_hash: int = attr.field()
-    class_type: Union["DestinyClass", int] = attr.field(
-        converter=enum_converter("DestinyClass"), metadata={"type": "DestinyClass"}
-    )
+    class_type: Union["DestinyClass", int] = attr.field(converter=enum_converter("DestinyClass"))
     collectible_hash: int = attr.field()
     crafting: "DestinyItemCraftingBlockDefinition" = attr.field()
     damage_type_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    damage_types: list[Union["DamageType", int]] = attr.field(metadata={"type": """list[Union[DamageType, int]]"""})
-    default_damage_type: Union["DamageType", int] = attr.field(
-        converter=enum_converter("DamageType"), metadata={"type": "DamageType"}
-    )
+    damage_types: list[Union["DamageType", int]] = attr.field(converter=enum_converter("DamageType"))
+    default_damage_type: Union["DamageType", int] = attr.field(converter=enum_converter("DamageType"))
     default_damage_type_hash: int = attr.field()
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     display_source: str = attr.field()
@@ -325,12 +316,8 @@ class DestinyInventoryItemDefinition(ManifestModel):
     )
     is_wrapper: bool = attr.field()
     item_category_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    item_sub_type: Union["DestinyItemSubType", int] = attr.field(
-        converter=enum_converter("DestinyItemSubType"), metadata={"type": "DestinyItemSubType"}
-    )
-    item_type: Union["DestinyItemType", int] = attr.field(
-        converter=enum_converter("DestinyItemType"), metadata={"type": "DestinyItemType"}
-    )
+    item_sub_type: Union["DestinyItemSubType", int] = attr.field(converter=enum_converter("DestinyItemSubType"))
+    item_type: Union["DestinyItemType", int] = attr.field(converter=enum_converter("DestinyItemType"))
     item_type_and_tier_display_name: str = attr.field()
     item_type_display_name: str = attr.field()
     links: list["HyperlinkReference"] = attr.field(metadata={"type": """list[HyperlinkReference]"""})
@@ -354,9 +341,7 @@ class DestinyInventoryItemDefinition(ManifestModel):
     set_data: "DestinyItemSetBlockDefinition" = attr.field()
     sockets: "DestinyItemSocketBlockDefinition" = attr.field()
     source_data: "DestinyItemSourceBlockDefinition" = attr.field()
-    special_item_type: Union["SpecialItemType", int] = attr.field(
-        converter=enum_converter("SpecialItemType"), metadata={"type": "SpecialItemType"}
-    )
+    special_item_type: Union["SpecialItemType", int] = attr.field(converter=enum_converter("SpecialItemType"))
     stats: "DestinyItemStatBlockDefinition" = attr.field()
     summary: "DestinyItemSummaryBlockDefinition" = attr.field()
     summary_item_hash: int = attr.field()
@@ -370,12 +355,12 @@ class DestinyInventoryItemDefinition(ManifestModel):
     translation_block: "DestinyItemTranslationBlockDefinition" = attr.field()
     ui_item_display_style: str = attr.field()
     value: "DestinyItemValueBlockDefinition" = attr.field()
-    manifest_breaker_type_hash: Optional["DestinyBreakerTypeDefinition"] = attr.field()
-    manifest_collectible_hash: Optional["DestinyCollectibleDefinition"] = attr.field()
-    manifest_default_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = attr.field()
-    manifest_lore_hash: Optional["DestinyLoreDefinition"] = attr.field()
-    manifest_season_hash: Optional["DestinySeasonDefinition"] = attr.field()
-    manifest_summary_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_breaker_type_hash: Optional["DestinyBreakerTypeDefinition"] = attr.field(default=None)
+    manifest_collectible_hash: Optional["DestinyCollectibleDefinition"] = attr.field(default=None)
+    manifest_default_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = attr.field(default=None)
+    manifest_lore_hash: Optional["DestinyLoreDefinition"] = attr.field(default=None)
+    manifest_season_hash: Optional["DestinySeasonDefinition"] = attr.field(default=None)
+    manifest_summary_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -460,7 +445,7 @@ class DestinyItemActionRequiredItemDefinition(BaseModel):
     count: int = attr.field()
     delete_on_action: bool = attr.field()
     item_hash: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -487,7 +472,7 @@ class DestinyProgressionRewardDefinition(BaseModel):
     amount: int = attr.field()
     apply_throttles: bool = attr.field()
     progression_mapping_hash: int = attr.field()
-    manifest_progression_mapping_hash: Optional["DestinyProgressionMappingDefinition"] = attr.field()
+    manifest_progression_mapping_hash: Optional["DestinyProgressionMappingDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -542,8 +527,8 @@ class DestinyItemCraftingBlockDefinition(BaseModel):
     failed_requirement_strings: list[str] = attr.field(metadata={"type": """list[str]"""})
     output_item_hash: int = attr.field()
     required_socket_type_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_base_material_requirements: Optional["DestinyMaterialRequirementSetDefinition"] = attr.field()
-    manifest_output_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_base_material_requirements: Optional["DestinyMaterialRequirementSetDefinition"] = attr.field(default=None)
+    manifest_output_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -569,8 +554,8 @@ class DestinyItemCraftingBlockBonusPlugDefinition(BaseModel):
 
     plug_item_hash: int = attr.field()
     socket_type_hash: int = attr.field()
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = attr.field()
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -622,7 +607,7 @@ class DestinyMaterialRequirement(BaseModel):
     delete_on_action: bool = attr.field()
     item_hash: int = attr.field()
     omit_from_requirements: bool = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -669,13 +654,13 @@ class DestinyItemInventoryBlockDefinition(BaseModel):
     recovery_bucket_type_hash: int = attr.field()
     stack_unique_label: str = attr.field()
     suppress_expiration_when_objectives_complete: bool = attr.field()
-    tier_type: Union["TierType", int] = attr.field(converter=enum_converter("TierType"), metadata={"type": "TierType"})
+    tier_type: Union["TierType", int] = attr.field(converter=enum_converter("TierType"))
     tier_type_hash: int = attr.field()
     tier_type_name: str = attr.field()
-    manifest_bucket_type_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field()
-    manifest_recipe_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_recovery_bucket_type_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field()
-    manifest_tier_type_hash: Optional["DestinyItemTierTypeDefinition"] = attr.field()
+    manifest_bucket_type_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field(default=None)
+    manifest_recipe_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_recovery_bucket_type_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field(default=None)
+    manifest_tier_type_hash: Optional["DestinyItemTierTypeDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -700,9 +685,7 @@ class DestinyInventoryBucketDefinition(ManifestModel):
     """
 
     bucket_order: int = attr.field()
-    category: Union["BucketCategory", int] = attr.field(
-        converter=enum_converter("BucketCategory"), metadata={"type": "BucketCategory"}
-    )
+    category: Union["BucketCategory", int] = attr.field(converter=enum_converter("BucketCategory"))
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     enabled: bool = attr.field()
     fifo: bool = attr.field()
@@ -710,13 +693,9 @@ class DestinyInventoryBucketDefinition(ManifestModel):
     hash: int = attr.field()
     index: int = attr.field()
     item_count: int = attr.field()
-    location: Union["ItemLocation", int] = attr.field(
-        converter=enum_converter("ItemLocation"), metadata={"type": "ItemLocation"}
-    )
+    location: Union["ItemLocation", int] = attr.field(converter=enum_converter("ItemLocation"))
     redacted: bool = attr.field()
-    scope: Union["BucketScope", int] = attr.field(
-        converter=enum_converter("BucketScope"), metadata={"type": "BucketScope"}
-    )
+    scope: Union["BucketScope", int] = attr.field(converter=enum_converter("BucketScope"))
 
 
 @attr.define
@@ -768,7 +747,7 @@ class DestinyItemSetBlockEntryDefinition(BaseModel):
 
     item_hash: int = attr.field()
     tracking_value: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -802,8 +781,8 @@ class DestinyItemStatBlockDefinition(BaseModel):
     stats: dict[int, "DestinyInventoryItemStatDefinition"] = attr.field(
         metadata={"type": """dict[int, DestinyInventoryItemStatDefinition]"""}
     )
-    manifest_primary_base_stat_hash: Optional["DestinyStatDefinition"] = attr.field()
-    manifest_stat_group_hash: Optional["DestinyStatGroupDefinition"] = attr.field()
+    manifest_primary_base_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
+    manifest_stat_group_hash: Optional["DestinyStatGroupDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -834,7 +813,7 @@ class DestinyInventoryItemStatDefinition(BaseModel):
     minimum: int = attr.field()
     stat_hash: int = attr.field()
     value: int = attr.field()
-    manifest_stat_hash: Optional["DestinyStatDefinition"] = attr.field()
+    manifest_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -854,16 +833,14 @@ class DestinyStatDefinition(ManifestModel):
     """
 
     aggregation_type: Union["DestinyStatAggregationType", int] = attr.field(
-        converter=enum_converter("DestinyStatAggregationType"), metadata={"type": "DestinyStatAggregationType"}
+        converter=enum_converter("DestinyStatAggregationType")
     )
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     has_computed_block: bool = attr.field()
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
-    stat_category: Union["DestinyStatCategory", int] = attr.field(
-        converter=enum_converter("DestinyStatCategory"), metadata={"type": "DestinyStatCategory"}
-    )
+    stat_category: Union["DestinyStatCategory", int] = attr.field(converter=enum_converter("DestinyStatCategory"))
 
 
 @attr.define
@@ -921,7 +898,7 @@ class DestinyStatDisplayDefinition(BaseModel):
     display_interpolation: list["InterpolationPoint"] = attr.field(metadata={"type": """list[InterpolationPoint]"""})
     maximum_value: int = attr.field()
     stat_hash: int = attr.field()
-    manifest_stat_hash: Optional["DestinyStatDefinition"] = attr.field()
+    manifest_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -946,7 +923,7 @@ class DestinyStatOverrideDefinition(BaseModel):
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     stat_hash: int = attr.field()
-    manifest_stat_hash: Optional["DestinyStatDefinition"] = attr.field()
+    manifest_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -975,19 +952,17 @@ class DestinyEquippingBlockDefinition(BaseModel):
         manifest_gearset_item_hash: Manifest information for `gearset_item_hash`
     """
 
-    ammo_type: Union["DestinyAmmunitionType", int] = attr.field(
-        converter=enum_converter("DestinyAmmunitionType"), metadata={"type": "DestinyAmmunitionType"}
-    )
+    ammo_type: Union["DestinyAmmunitionType", int] = attr.field(converter=enum_converter("DestinyAmmunitionType"))
     attributes: Union["EquippingItemBlockAttributes", int] = attr.field(
-        converter=enum_converter("EquippingItemBlockAttributes"), metadata={"type": "EquippingItemBlockAttributes"}
+        converter=enum_converter("EquippingItemBlockAttributes")
     )
     display_strings: list[str] = attr.field(metadata={"type": """list[str]"""})
     equipment_slot_type_hash: int = attr.field()
     gearset_item_hash: int = attr.field()
     unique_label: str = attr.field()
     unique_label_hash: int = attr.field()
-    manifest_equipment_slot_type_hash: Optional["DestinyEquipmentSlotDefinition"] = attr.field()
-    manifest_gearset_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_equipment_slot_type_hash: Optional["DestinyEquipmentSlotDefinition"] = attr.field(default=None)
+    manifest_gearset_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -1024,7 +999,7 @@ class DestinyEquipmentSlotDefinition(ManifestModel):
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
-    manifest_bucket_type_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field()
+    manifest_bucket_type_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -1074,7 +1049,7 @@ class DestinyItemTranslationBlockDefinition(BaseModel):
     locked_dyes: list["DyeReference"] = attr.field(metadata={"type": """list[DyeReference]"""})
     weapon_pattern_hash: int = attr.field()
     weapon_pattern_identifier: str = attr.field()
-    manifest_weapon_pattern_hash: Optional["DestinySandboxPatternDefinition"] = attr.field()
+    manifest_weapon_pattern_hash: Optional["DestinySandboxPatternDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -1099,7 +1074,7 @@ class DestinyGearArtArrangementReference(BaseModel):
 
     art_arrangement_hash: int = attr.field()
     class_hash: int = attr.field()
-    manifest_class_hash: Optional["DestinyClassDefinition"] = attr.field()
+    manifest_class_hash: Optional["DestinyClassDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -1128,19 +1103,17 @@ class DestinyClassDefinition(ManifestModel):
         manifest_mentor_vendor_hash: Manifest information for `mentor_vendor_hash`
     """
 
-    class_type: Union["DestinyClass", int] = attr.field(
-        converter=enum_converter("DestinyClass"), metadata={"type": "DestinyClass"}
-    )
+    class_type: Union["DestinyClass", int] = attr.field(converter=enum_converter("DestinyClass"))
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     gendered_class_names: dict[Union["DestinyGender", int], str] = attr.field(
-        metadata={"type": """dict[Union[DestinyGender, int], str]"""}
+        metadata={"type": """dict[DestinyGender, str]"""}
     )
     gendered_class_names_by_gender_hash: dict[int, str] = attr.field(metadata={"type": """dict[int, str]"""})
     hash: int = attr.field()
     index: int = attr.field()
     mentor_vendor_hash: int = attr.field()
     redacted: bool = attr.field()
-    manifest_mentor_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()
+    manifest_mentor_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -1158,9 +1131,7 @@ class DestinyGenderDefinition(ManifestModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    gender_type: Union["DestinyGender", int] = attr.field(
-        converter=enum_converter("DestinyGender"), metadata={"type": "DestinyGender"}
-    )
+    gender_type: Union["DestinyGender", int] = attr.field(converter=enum_converter("DestinyGender"))
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
@@ -1273,12 +1244,12 @@ class DestinyVendorDefinition(ManifestModel):
     vendor_identifier: str = attr.field()
     vendor_portrait: str = attr.field()
     vendor_progression_type: Union["DestinyVendorProgressionType", int] = attr.field(
-        converter=enum_converter("DestinyVendorProgressionType"), metadata={"type": "DestinyVendorProgressionType"}
+        converter=enum_converter("DestinyVendorProgressionType")
     )
     vendor_subcategory_identifier: str = attr.field()
     visible: bool = attr.field()
-    manifest_display_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_faction_hash: Optional["DestinyFactionDefinition"] = attr.field()
+    manifest_display_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_faction_hash: Optional["DestinyFactionDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -1441,7 +1412,7 @@ class DestinyVendorCategoryOverlayDefinition(BaseModel):
     description: str = attr.field()
     icon: str = attr.field()
     title: str = attr.field()
-    manifest_currency_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_currency_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -1480,9 +1451,9 @@ class DestinyDisplayCategoryDefinition(BaseModel):
     index: int = attr.field()
     progression_hash: int = attr.field()
     sort_order: Union["VendorDisplayCategorySortOrder", int] = attr.field(
-        converter=enum_converter("VendorDisplayCategorySortOrder"), metadata={"type": "VendorDisplayCategorySortOrder"}
+        converter=enum_converter("VendorDisplayCategorySortOrder")
     )
-    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field()
+    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -1522,7 +1493,7 @@ class DestinyVendorInteractionDefinition(BaseModel):
     instructions: str = attr.field()
     interaction_index: int = attr.field()
     interaction_type: Union["VendorInteractionType", int] = attr.field(
-        converter=enum_converter("VendorInteractionType"), metadata={"type": "VendorInteractionType"}
+        converter=enum_converter("VendorInteractionType")
     )
     questline_item_hash: int = attr.field()
     replies: list["DestinyVendorInteractionReplyDefinition"] = attr.field(
@@ -1535,7 +1506,7 @@ class DestinyVendorInteractionDefinition(BaseModel):
     )
     ui_interaction_type: int = attr.field()
     vendor_category_index: int = attr.field()
-    manifest_questline_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_questline_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -1551,13 +1522,10 @@ class DestinyVendorInteractionReplyDefinition(BaseModel):
     """
 
     item_rewards_selection: Union["DestinyVendorInteractionRewardSelection", int] = attr.field(
-        converter=enum_converter("DestinyVendorInteractionRewardSelection"),
-        metadata={"type": "DestinyVendorInteractionRewardSelection"},
+        converter=enum_converter("DestinyVendorInteractionRewardSelection")
     )
     reply: str = attr.field()
-    reply_type: Union["DestinyVendorReplyType", int] = attr.field(
-        converter=enum_converter("DestinyVendorReplyType"), metadata={"type": "DestinyVendorReplyType"}
-    )
+    reply_type: Union["DestinyVendorReplyType", int] = attr.field(converter=enum_converter("DestinyVendorReplyType"))
 
 
 @attr.define
@@ -1621,10 +1589,8 @@ class DestinyVendorInventoryFlyoutBucketDefinition(BaseModel):
 
     collapsible: bool = attr.field()
     inventory_bucket_hash: int = attr.field()
-    sort_items_by: Union["DestinyItemSortType", int] = attr.field(
-        converter=enum_converter("DestinyItemSortType"), metadata={"type": "DestinyItemSortType"}
-    )
-    manifest_inventory_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field()
+    sort_items_by: Union["DestinyItemSortType", int] = attr.field(converter=enum_converter("DestinyItemSortType"))
+    manifest_inventory_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -1680,9 +1646,7 @@ class DestinyVendorItemDefinition(BaseModel):
     currencies: list["DestinyVendorItemQuantity"] = attr.field(metadata={"type": """list[DestinyVendorItemQuantity]"""})
     display_category: str = attr.field()
     display_category_index: int = attr.field()
-    exclusivity: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    exclusivity: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
     expiration_tooltip: str = attr.field()
     failure_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
     inventory_bucket_hash: int = attr.field()
@@ -1692,13 +1656,11 @@ class DestinyVendorItemDefinition(BaseModel):
     maximum_level: int = attr.field()
     minimum_level: int = attr.field()
     original_category_index: int = attr.field()
-    purchasable_scope: Union["DestinyGatingScope", int] = attr.field(
-        converter=enum_converter("DestinyGatingScope"), metadata={"type": "DestinyGatingScope"}
-    )
+    purchasable_scope: Union["DestinyGatingScope", int] = attr.field(converter=enum_converter("DestinyGatingScope"))
     quantity: int = attr.field()
     redirect_to_sale_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
     refund_policy: Union["DestinyVendorItemRefundPolicy", int] = attr.field(
-        converter=enum_converter("DestinyVendorItemRefundPolicy"), metadata={"type": "DestinyVendorItemRefundPolicy"}
+        converter=enum_converter("DestinyVendorItemRefundPolicy")
     )
     refund_time_limit: int = attr.field()
     socket_overrides: list["DestinyVendorItemSocketOverride"] = attr.field(
@@ -1707,11 +1669,9 @@ class DestinyVendorItemDefinition(BaseModel):
     sort_value: int = attr.field()
     unpurchasable: bool = attr.field()
     vendor_item_index: int = attr.field()
-    visibility_scope: Union["DestinyGatingScope", int] = attr.field(
-        converter=enum_converter("DestinyGatingScope"), metadata={"type": "DestinyGatingScope"}
-    )
-    manifest_inventory_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    visibility_scope: Union["DestinyGatingScope", int] = attr.field(converter=enum_converter("DestinyGatingScope"))
+    manifest_inventory_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -1740,7 +1700,7 @@ class DestinyVendorItemQuantity(BaseModel):
     item_hash: int = attr.field()
     item_instance_id: int = attr.field()
     quantity: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -1796,8 +1756,8 @@ class DestinyVendorItemSocketOverride(BaseModel):
     randomized_options_count: int = attr.field()
     single_item_hash: int = attr.field()
     socket_type_hash: int = attr.field()
-    manifest_single_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = attr.field()
+    manifest_single_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -1836,8 +1796,8 @@ class DestinyVendorAcceptedItemDefinition(BaseModel):
 
     accepted_inventory_bucket_hash: int = attr.field()
     destination_inventory_bucket_hash: int = attr.field()
-    manifest_accepted_inventory_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field()
-    manifest_destination_inventory_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field()
+    manifest_accepted_inventory_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field(default=None)
+    manifest_destination_inventory_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -1881,8 +1841,8 @@ class DestinyDestinationDefinition(ManifestModel):
     index: int = attr.field()
     place_hash: int = attr.field()
     redacted: bool = attr.field()
-    manifest_default_freeroam_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
-    manifest_place_hash: Optional["DestinyPlaceDefinition"] = attr.field()
+    manifest_default_freeroam_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_place_hash: Optional["DestinyPlaceDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -1905,7 +1865,7 @@ class DestinyActivityGraphListEntryDefinition(BaseModel):
     """
 
     activity_graph_hash: int = attr.field()
-    manifest_activity_graph_hash: Optional["DestinyActivityGraphDefinition"] = attr.field()
+    manifest_activity_graph_hash: Optional["DestinyActivityGraphDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -1969,7 +1929,7 @@ class DestinyActivityDefinition(ManifestModel):
     )
     activity_mode_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     activity_mode_types: list[Union["DestinyActivityModeType", int]] = attr.field(
-        metadata={"type": """list[Union[DestinyActivityModeType, int]]"""}
+        converter=enum_converter("DestinyActivityModeType")
     )
     activity_type_hash: int = attr.field()
     challenges: list["DestinyActivityChallengeDefinition"] = attr.field(
@@ -2011,10 +1971,10 @@ class DestinyActivityDefinition(ManifestModel):
     )
     selection_screen_display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     tier: int = attr.field()
-    manifest_activity_type_hash: Optional["DestinyActivityTypeDefinition"] = attr.field()
-    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field()
-    manifest_direct_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field()
-    manifest_place_hash: Optional["DestinyPlaceDefinition"] = attr.field()
+    manifest_activity_type_hash: Optional["DestinyActivityTypeDefinition"] = attr.field(default=None)
+    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
+    manifest_direct_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field(default=None)
+    manifest_place_hash: Optional["DestinyPlaceDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -2052,7 +2012,7 @@ class DestinyActivityModifierReferenceDefinition(BaseModel):
     """
 
     activity_modifier_hash: int = attr.field()
-    manifest_activity_modifier_hash: Optional["DestinyActivityModifierDefinition"] = attr.field()
+    manifest_activity_modifier_hash: Optional["DestinyActivityModifierDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -2077,7 +2037,7 @@ class DestinyActivityChallengeDefinition(BaseModel):
 
     dummy_rewards: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})
     objective_hash: int = attr.field()
-    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field()
+    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -2115,7 +2075,7 @@ class DestinyObjectiveDefinition(ManifestModel):
         stats: If this objective enables modifications on a player's stats intrinsically, the conditions are defined here.
         ui_label: Objectives can have arbitrary UI-defined identifiers that define the style applied to objectives. For convenience, known UI labels will be defined in the uiStyle enum value.
         ui_style: If the objective has a known UI label value, this property will represent it.
-        value_style: The UI style applied to the objective. It's an enum, take a look at DestinyUnlockValueUIStyle for details of the possible styles. Use this info as you wish to customize your UI. DEPRECATED: This is no longer populated by Destiny 2 game content. Please use inProgressValueStyle and completedValueStyle instead.
+        value_style: The UI style applied to the objective. It's an enum, take a look at DestinyUnlockValueUIStyle for details of the possible styles. Use this info as you wish to customize your UI.
         manifest_location_hash: Manifest information for `location_hash`
     """
 
@@ -2123,13 +2083,13 @@ class DestinyObjectiveDefinition(ManifestModel):
     allow_overcompletion: bool = attr.field()
     allow_value_change_when_completed: bool = attr.field()
     completed_value_style: Union["DestinyUnlockValueUIStyle", int] = attr.field(
-        converter=enum_converter("DestinyUnlockValueUIStyle"), metadata={"type": "DestinyUnlockValueUIStyle"}
+        converter=enum_converter("DestinyUnlockValueUIStyle")
     )
     completion_value: int = attr.field()
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     hash: int = attr.field()
     in_progress_value_style: Union["DestinyUnlockValueUIStyle", int] = attr.field(
-        converter=enum_converter("DestinyUnlockValueUIStyle"), metadata={"type": "DestinyUnlockValueUIStyle"}
+        converter=enum_converter("DestinyUnlockValueUIStyle")
     )
     index: int = attr.field()
     is_counting_downward: bool = attr.field()
@@ -2138,19 +2098,15 @@ class DestinyObjectiveDefinition(ManifestModel):
     perks: "DestinyObjectivePerkEntryDefinition" = attr.field()
     progress_description: str = attr.field()
     redacted: bool = attr.field()
-    scope: Union["DestinyGatingScope", int] = attr.field(
-        converter=enum_converter("DestinyGatingScope"), metadata={"type": "DestinyGatingScope"}
-    )
+    scope: Union["DestinyGatingScope", int] = attr.field(converter=enum_converter("DestinyGatingScope"))
     show_value_on_complete: bool = attr.field()
     stats: "DestinyObjectiveStatEntryDefinition" = attr.field()
     ui_label: str = attr.field()
-    ui_style: Union["DestinyObjectiveUiStyle", int] = attr.field(
-        converter=enum_converter("DestinyObjectiveUiStyle"), metadata={"type": "DestinyObjectiveUiStyle"}
-    )
+    ui_style: Union["DestinyObjectiveUiStyle", int] = attr.field(converter=enum_converter("DestinyObjectiveUiStyle"))
     value_style: Union["DestinyUnlockValueUIStyle", int] = attr.field(
-        converter=enum_converter("DestinyUnlockValueUIStyle"), metadata={"type": "DestinyUnlockValueUIStyle"}
+        converter=enum_converter("DestinyUnlockValueUIStyle")
     )
-    manifest_location_hash: Optional["DestinyLocationDefinition"] = attr.field()
+    manifest_location_hash: Optional["DestinyLocationDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -2174,10 +2130,8 @@ class DestinyObjectivePerkEntryDefinition(BaseModel):
     """
 
     perk_hash: int = attr.field()
-    style: Union["DestinyObjectiveGrantStyle", int] = attr.field(
-        converter=enum_converter("DestinyObjectiveGrantStyle"), metadata={"type": "DestinyObjectiveGrantStyle"}
-    )
-    manifest_perk_hash: Optional["DestinySandboxPerkDefinition"] = attr.field()
+    style: Union["DestinyObjectiveGrantStyle", int] = attr.field(converter=enum_converter("DestinyObjectiveGrantStyle"))
+    manifest_perk_hash: Optional["DestinySandboxPerkDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -2207,9 +2161,7 @@ class DestinySandboxPerkDefinition(ManifestModel):
         manifest_damage_type_hash: Manifest information for `damage_type_hash`
     """
 
-    damage_type: Union["DamageType", int] = attr.field(
-        converter=enum_converter("DamageType"), metadata={"type": "DamageType"}
-    )
+    damage_type: Union["DamageType", int] = attr.field(converter=enum_converter("DamageType"))
     damage_type_hash: int = attr.field()
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     hash: int = attr.field()
@@ -2218,7 +2170,7 @@ class DestinySandboxPerkDefinition(ManifestModel):
     perk_groups: "DestinyTalentNodeStepGroups" = attr.field()
     perk_identifier: str = attr.field()
     redacted: bool = attr.field()
-    manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = attr.field()
+    manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -2236,24 +2188,19 @@ class DestinyTalentNodeStepGroups(BaseModel):
     """
 
     damage_types: Union["DestinyTalentNodeStepDamageTypes", int] = attr.field(
-        converter=enum_converter("DestinyTalentNodeStepDamageTypes"),
-        metadata={"type": "DestinyTalentNodeStepDamageTypes"},
+        converter=enum_converter("DestinyTalentNodeStepDamageTypes")
     )
     guardian_attributes: Union["DestinyTalentNodeStepGuardianAttributes", int] = attr.field(
-        converter=enum_converter("DestinyTalentNodeStepGuardianAttributes"),
-        metadata={"type": "DestinyTalentNodeStepGuardianAttributes"},
+        converter=enum_converter("DestinyTalentNodeStepGuardianAttributes")
     )
     impact_effects: Union["DestinyTalentNodeStepImpactEffects", int] = attr.field(
-        converter=enum_converter("DestinyTalentNodeStepImpactEffects"),
-        metadata={"type": "DestinyTalentNodeStepImpactEffects"},
+        converter=enum_converter("DestinyTalentNodeStepImpactEffects")
     )
     light_abilities: Union["DestinyTalentNodeStepLightAbilities", int] = attr.field(
-        converter=enum_converter("DestinyTalentNodeStepLightAbilities"),
-        metadata={"type": "DestinyTalentNodeStepLightAbilities"},
+        converter=enum_converter("DestinyTalentNodeStepLightAbilities")
     )
     weapon_performance: Union["DestinyTalentNodeStepWeaponPerformances", int] = attr.field(
-        converter=enum_converter("DestinyTalentNodeStepWeaponPerformances"),
-        metadata={"type": "DestinyTalentNodeStepWeaponPerformances"},
+        converter=enum_converter("DestinyTalentNodeStepWeaponPerformances")
     )
 
 
@@ -2403,9 +2350,7 @@ class DestinyDamageTypeDefinition(ManifestModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    enum_value: Union["DamageType", int] = attr.field(
-        converter=enum_converter("DamageType"), metadata={"type": "DamageType"}
-    )
+    enum_value: Union["DamageType", int] = attr.field(converter=enum_converter("DamageType"))
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
@@ -2425,9 +2370,7 @@ class DestinyObjectiveStatEntryDefinition(BaseModel):
     """
 
     stat: "DestinyItemInvestmentStatDefinition" = attr.field()
-    style: Union["DestinyObjectiveGrantStyle", int] = attr.field(
-        converter=enum_converter("DestinyObjectiveGrantStyle"), metadata={"type": "DestinyObjectiveGrantStyle"}
-    )
+    style: Union["DestinyObjectiveGrantStyle", int] = attr.field(converter=enum_converter("DestinyObjectiveGrantStyle"))
 
 
 @attr.define
@@ -2454,7 +2397,7 @@ class DestinyItemInvestmentStatDefinition(BaseModel):
     is_conditionally_active: bool = attr.field()
     stat_type_hash: int = attr.field()
     value: int = attr.field()
-    manifest_stat_type_hash: Optional["DestinyStatDefinition"] = attr.field()
+    manifest_stat_type_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -2487,7 +2430,7 @@ class DestinyLocationDefinition(ManifestModel):
     )
     redacted: bool = attr.field()
     vendor_hash: int = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -2534,13 +2477,13 @@ class DestinyLocationReleaseDefinition(BaseModel):
     large_transparent_icon: str = attr.field()
     map_icon: str = attr.field()
     nav_point_type: Union["DestinyActivityNavPointType", int] = attr.field(
-        converter=enum_converter("DestinyActivityNavPointType"), metadata={"type": "DestinyActivityNavPointType"}
+        converter=enum_converter("DestinyActivityNavPointType")
     )
     small_transparent_icon: str = attr.field()
     spawn_point: int = attr.field()
     world_position: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
-    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -2583,12 +2526,12 @@ class DestinyActivityPlaylistItemDefinition(BaseModel):
     activity_hash: int = attr.field()
     activity_mode_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     activity_mode_types: list[Union["DestinyActivityModeType", int]] = attr.field(
-        metadata={"type": """list[Union[DestinyActivityModeType, int]]"""}
+        converter=enum_converter("DestinyActivityModeType")
     )
     direct_activity_mode_hash: int = attr.field()
     direct_activity_mode_type: int = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
-    manifest_direct_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_direct_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -2615,10 +2558,10 @@ class DestinyActivityModeDefinition(ManifestModel):
     """
 
     activity_mode_category: Union["DestinyActivityModeCategory", int] = attr.field(
-        converter=enum_converter("DestinyActivityModeCategory"), metadata={"type": "DestinyActivityModeCategory"}
+        converter=enum_converter("DestinyActivityModeCategory")
     )
     activity_mode_mappings: dict[int, Union["DestinyActivityModeType", int]] = attr.field(
-        metadata={"type": """dict[int, Union[DestinyActivityModeType, int]]"""}
+        metadata={"type": """dict[int, DestinyActivityModeType]"""}
     )
     display: bool = attr.field()
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
@@ -2627,9 +2570,7 @@ class DestinyActivityModeDefinition(ManifestModel):
     index: int = attr.field()
     is_aggregate_mode: bool = attr.field()
     is_team_based: bool = attr.field()
-    mode_type: Union["DestinyActivityModeType", int] = attr.field(
-        converter=enum_converter("DestinyActivityModeType"), metadata={"type": "DestinyActivityModeType"}
-    )
+    mode_type: Union["DestinyActivityModeType", int] = attr.field(converter=enum_converter("DestinyActivityModeType"))
     order: int = attr.field()
     parent_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     pgcr_image: str = attr.field()
@@ -2712,10 +2653,10 @@ class DestinyActivityLoadoutRequirement(BaseModel):
 
     allowed_equipped_item_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     allowed_weapon_sub_types: list[Union["DestinyItemSubType", int]] = attr.field(
-        metadata={"type": """list[Union[DestinyItemSubType, int]]"""}
+        converter=enum_converter("DestinyItemSubType")
     )
     equipment_slot_hash: int = attr.field()
-    manifest_equipment_slot_hash: Optional["DestinyEquipmentSlotDefinition"] = attr.field()
+    manifest_equipment_slot_hash: Optional["DestinyEquipmentSlotDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -2779,9 +2720,7 @@ class DestinyUnlockExpressionDefinition(BaseModel):
         scope: A shortcut for determining the most restrictive gating that this expression performs. See the DestinyGatingScope enum's documentation for more details.
     """
 
-    scope: Union["DestinyGatingScope", int] = attr.field(
-        converter=enum_converter("DestinyGatingScope"), metadata={"type": "DestinyGatingScope"}
-    )
+    scope: Union["DestinyGatingScope", int] = attr.field(converter=enum_converter("DestinyGatingScope"))
 
 
 @attr.define
@@ -2832,7 +2771,7 @@ class DestinyVendorGroupReference(BaseModel):
     """
 
     vendor_group_hash: int = attr.field()
-    manifest_vendor_group_hash: Optional["DestinyVendorGroupDefinition"] = attr.field()
+    manifest_vendor_group_hash: Optional["DestinyVendorGroupDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -2896,9 +2835,9 @@ class DestinyFactionDefinition(ManifestModel):
     vendors: list["DestinyFactionVendorDefinition"] = attr.field(
         metadata={"type": """list[DestinyFactionVendorDefinition]"""}
     )
-    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field()
-    manifest_reward_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_reward_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()
+    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
+    manifest_reward_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_reward_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -2926,8 +2865,8 @@ class DestinyFactionVendorDefinition(BaseModel):
     background_image_path: str = attr.field()
     destination_hash: int = attr.field()
     vendor_hash: int = attr.field()
-    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()
+    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -2959,9 +2898,7 @@ class DestinySandboxPatternDefinition(ManifestModel):
     redacted: bool = attr.field()
     weapon_content_group_hash: int = attr.field()
     weapon_translation_group_hash: int = attr.field()
-    weapon_type: Union["DestinyItemSubType", int] = attr.field(
-        converter=enum_converter("DestinyItemSubType"), metadata={"type": "DestinyItemSubType"}
-    )
+    weapon_type: Union["DestinyItemSubType", int] = attr.field(converter=enum_converter("DestinyItemSubType"))
     weapon_type_hash: int = attr.field()
 
 
@@ -3015,8 +2952,8 @@ class DestinyItemPreviewBlockDefinition(BaseModel):
     preview_action_string: str = attr.field()
     preview_vendor_hash: int = attr.field()
     screen_style: str = attr.field()
-    manifest_artifact_hash: Optional["DestinyArtifactDefinition"] = attr.field()
-    manifest_preview_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()
+    manifest_artifact_hash: Optional["DestinyArtifactDefinition"] = attr.field(default=None)
+    manifest_preview_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3057,7 +2994,9 @@ class DestinyItemQualityBlockDefinition(BaseModel):
     versions: list["DestinyItemVersionDefinition"] = attr.field(
         metadata={"type": """list[DestinyItemVersionDefinition]"""}
     )
-    manifest_progression_level_requirement_hash: Optional["DestinyProgressionLevelRequirementDefinition"] = attr.field()
+    manifest_progression_level_requirement_hash: Optional["DestinyProgressionLevelRequirementDefinition"] = attr.field(
+        default=None
+    )
 
 
 @attr.define
@@ -3080,7 +3019,7 @@ class DestinyItemVersionDefinition(BaseModel):
     """
 
     power_cap_hash: int = attr.field()
-    manifest_power_cap_hash: Optional["DestinyPowerCapDefinition"] = attr.field()
+    manifest_power_cap_hash: Optional["DestinyPowerCapDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3111,9 +3050,7 @@ class DestinyItemSourceBlockDefinition(BaseModel):
         vendor_sources: A denormalized reference back to vendors that potentially sell this item.
     """
 
-    exclusive: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    exclusive: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
     source_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     sources: list["DestinyItemSourceDefinition"] = attr.field(
         metadata={"type": """list[DestinyItemSourceDefinition]"""}
@@ -3138,7 +3075,7 @@ class DestinyRewardSourceDefinition(ManifestModel):
     """
 
     category: Union["DestinyRewardSourceCategory", int] = attr.field(
-        converter=enum_converter("DestinyRewardSourceCategory"), metadata={"type": "DestinyRewardSourceCategory"}
+        converter=enum_converter("DestinyRewardSourceCategory")
     )
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     hash: int = attr.field()
@@ -3183,7 +3120,7 @@ class DestinyItemVendorSourceReference(BaseModel):
 
     vendor_hash: int = attr.field()
     vendor_item_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3226,7 +3163,7 @@ class DestinyItemObjectiveBlockDefinition(BaseModel):
     quest_type_identifier: str = attr.field()
     questline_item_hash: int = attr.field()
     require_full_objective_completion: bool = attr.field()
-    manifest_questline_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_questline_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3251,7 +3188,7 @@ class DestinyObjectiveDisplayProperties(BaseModel):
 
     activity_hash: int = attr.field()
     display_on_item_preview_screen: bool = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3377,9 +3314,7 @@ class DestinyItemSocketEntryDefinition(BaseModel):
 
     default_visible: bool = attr.field()
     hide_perks_in_item_tooltip: bool = attr.field()
-    plug_sources: Union["SocketPlugSources", int] = attr.field(
-        converter=enum_converter("SocketPlugSources"), metadata={"type": "SocketPlugSources"}
-    )
+    plug_sources: Union["SocketPlugSources", int] = attr.field(converter=enum_converter("SocketPlugSources"))
     prevent_initialization_on_vendor_purchase: bool = attr.field()
     randomized_plug_set_hash: int = attr.field()
     reusable_plug_items: list["DestinyItemSocketEntryPlugItemDefinition"] = attr.field(
@@ -3388,10 +3323,10 @@ class DestinyItemSocketEntryDefinition(BaseModel):
     reusable_plug_set_hash: int = attr.field()
     single_initial_item_hash: int = attr.field()
     socket_type_hash: int = attr.field()
-    manifest_randomized_plug_set_hash: Optional["DestinyPlugSetDefinition"] = attr.field()
-    manifest_reusable_plug_set_hash: Optional["DestinyPlugSetDefinition"] = attr.field()
-    manifest_single_initial_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = attr.field()
+    manifest_randomized_plug_set_hash: Optional["DestinyPlugSetDefinition"] = attr.field(default=None)
+    manifest_reusable_plug_set_hash: Optional["DestinyPlugSetDefinition"] = attr.field(default=None)
+    manifest_single_initial_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3414,7 +3349,7 @@ class DestinyItemSocketEntryPlugItemDefinition(BaseModel):
     """
 
     plug_item_hash: int = attr.field()
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3441,7 +3376,7 @@ class DestinyItemSocketEntryPlugItemRandomizedDefinition(BaseModel):
     crafting_requirements: "DestinyPlugItemCraftingRequirements" = attr.field()
     currently_can_roll: bool = attr.field()
     plug_item_hash: int = attr.field()
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3501,8 +3436,8 @@ class DestinyItemIntrinsicSocketEntryDefinition(BaseModel):
     default_visible: bool = attr.field()
     plug_item_hash: int = attr.field()
     socket_type_hash: int = attr.field()
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = attr.field()
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3527,7 +3462,7 @@ class DestinyItemSocketCategoryDefinition(BaseModel):
 
     socket_category_hash: int = attr.field()
     socket_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_socket_category_hash: Optional["DestinySocketCategoryDefinition"] = attr.field()
+    manifest_socket_category_hash: Optional["DestinySocketCategoryDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3567,13 +3502,11 @@ class DestinyItemTalentGridBlockDefinition(BaseModel):
     """
 
     build_name: str = attr.field()
-    hud_damage_type: Union["DamageType", int] = attr.field(
-        converter=enum_converter("DamageType"), metadata={"type": "DamageType"}
-    )
+    hud_damage_type: Union["DamageType", int] = attr.field(converter=enum_converter("DamageType"))
     hud_icon: str = attr.field()
     item_detail_string: str = attr.field()
     talent_grid_hash: int = attr.field()
-    manifest_talent_grid_hash: Optional["DestinyTalentGridDefinition"] = attr.field()
+    manifest_talent_grid_hash: Optional["DestinyTalentGridDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3622,7 +3555,7 @@ class DestinyTalentGridDefinition(ManifestModel):
     nodes: list["DestinyTalentNodeDefinition"] = attr.field(metadata={"type": """list[DestinyTalentNodeDefinition]"""})
     progression_hash: int = attr.field()
     redacted: bool = attr.field()
-    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field()
+    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3681,7 +3614,7 @@ class DestinyTalentNodeDefinition(BaseModel):
     random_start_progression_bar_at_progression: int = attr.field()
     row: int = attr.field()
     steps: list["DestinyNodeStepDefinition"] = attr.field(metadata={"type": """list[DestinyNodeStepDefinition]"""})
-    manifest_lore_hash: Optional["DestinyLoreDefinition"] = attr.field()
+    manifest_lore_hash: Optional["DestinyLoreDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3738,9 +3671,7 @@ class DestinyNodeStepDefinition(BaseModel):
     affects_level: bool = attr.field()
     affects_quality: bool = attr.field()
     can_activate_next_step: bool = attr.field()
-    damage_type: Union["DamageType", int] = attr.field(
-        converter=enum_converter("DamageType"), metadata={"type": "DamageType"}
-    )
+    damage_type: Union["DamageType", int] = attr.field(converter=enum_converter("DamageType"))
     damage_type_hash: int = attr.field()
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     interaction_description: str = attr.field()
@@ -3755,7 +3686,7 @@ class DestinyNodeStepDefinition(BaseModel):
     stat_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     step_groups: "DestinyTalentNodeStepGroups" = attr.field()
     step_index: int = attr.field()
-    manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = attr.field()
+    manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3781,8 +3712,8 @@ class DestinyNodeSocketReplaceResponse(BaseModel):
 
     plug_item_hash: int = attr.field()
     socket_type_hash: int = attr.field()
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = attr.field()
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3826,7 +3757,7 @@ class DestinyTalentExclusiveGroup(BaseModel):
     node_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     opposing_group_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     opposing_node_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_lore_hash: Optional["DestinyLoreDefinition"] = attr.field()
+    manifest_lore_hash: Optional["DestinyLoreDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3870,11 +3801,9 @@ class DestinyItemPerkEntryDefinition(BaseModel):
     """
 
     perk_hash: int = attr.field()
-    perk_visibility: Union["ItemPerkVisibility", int] = attr.field(
-        converter=enum_converter("ItemPerkVisibility"), metadata={"type": "ItemPerkVisibility"}
-    )
+    perk_visibility: Union["ItemPerkVisibility", int] = attr.field(converter=enum_converter("ItemPerkVisibility"))
     requirement_display_string: str = attr.field()
-    manifest_perk_hash: Optional["DestinySandboxPerkDefinition"] = attr.field()
+    manifest_perk_hash: Optional["DestinySandboxPerkDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3908,16 +3837,12 @@ class DestinyItemCategoryDefinition(ManifestModel):
     deprecated: bool = attr.field()
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     grant_destiny_breaker_type: Union["DestinyBreakerType", int] = attr.field(
-        converter=enum_converter("DestinyBreakerType"), metadata={"type": "DestinyBreakerType"}
+        converter=enum_converter("DestinyBreakerType")
     )
-    grant_destiny_class: Union["DestinyClass", int] = attr.field(
-        converter=enum_converter("DestinyClass"), metadata={"type": "DestinyClass"}
-    )
-    grant_destiny_item_type: Union["DestinyItemType", int] = attr.field(
-        converter=enum_converter("DestinyItemType"), metadata={"type": "DestinyItemType"}
-    )
+    grant_destiny_class: Union["DestinyClass", int] = attr.field(converter=enum_converter("DestinyClass"))
+    grant_destiny_item_type: Union["DestinyItemType", int] = attr.field(converter=enum_converter("DestinyItemType"))
     grant_destiny_sub_type: Union["DestinyItemSubType", int] = attr.field(
-        converter=enum_converter("DestinyItemSubType"), metadata={"type": "DestinyItemSubType"}
+        converter=enum_converter("DestinyItemSubType")
     )
     group_category_only: bool = attr.field()
     grouped_category_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
@@ -3961,8 +3886,7 @@ class DestinyProgressionRewardItemQuantity(BaseModel):
     """
 
     acquisition_behavior: Union["DestinyProgressionRewardItemAcquisitionBehavior", int] = attr.field(
-        converter=enum_converter("DestinyProgressionRewardItemAcquisitionBehavior"),
-        metadata={"type": "DestinyProgressionRewardItemAcquisitionBehavior"},
+        converter=enum_converter("DestinyProgressionRewardItemAcquisitionBehavior")
     )
     claim_unlock_display_strings: list[str] = attr.field(metadata={"type": """list[str]"""})
     has_conditional_visibility: bool = attr.field()
@@ -3971,7 +3895,7 @@ class DestinyProgressionRewardItemQuantity(BaseModel):
     quantity: int = attr.field()
     rewarded_at_progression_level: int = attr.field()
     ui_display_style: str = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -3992,14 +3916,12 @@ class DestinyRaceDefinition(ManifestModel):
 
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     gendered_race_names: dict[Union["DestinyGender", int], str] = attr.field(
-        metadata={"type": """dict[Union[DestinyGender, int], str]"""}
+        metadata={"type": """dict[DestinyGender, str]"""}
     )
     gendered_race_names_by_gender_hash: dict[int, str] = attr.field(metadata={"type": """dict[int, str]"""})
     hash: int = attr.field()
     index: int = attr.field()
-    race_type: Union["DestinyRace", int] = attr.field(
-        converter=enum_converter("DestinyRace"), metadata={"type": "DestinyRace"}
-    )
+    race_type: Union["DestinyRace", int] = attr.field(converter=enum_converter("DestinyRace"))
     redacted: bool = attr.field()
 
 

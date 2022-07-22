@@ -54,7 +54,7 @@ class DestinyVendorComponent(BaseModel):
     seasonal_rank: int = attr.field()
     vendor_hash: int = attr.field()
     vendor_location_index: int = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -118,9 +118,7 @@ class DestinyVendorSaleItemComponent(BaseModel):
     """
 
     api_purchasable: bool = attr.field()
-    augments: Union["DestinyVendorItemState", int] = attr.field(
-        converter=enum_converter("DestinyVendorItemState"), metadata={"type": "DestinyVendorItemState"}
-    )
+    augments: Union["DestinyVendorItemState", int] = attr.field(converter=enum_converter("DestinyVendorItemState"))
     costs: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})
     failure_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
     item_hash: int = attr.field()
@@ -129,10 +127,8 @@ class DestinyVendorSaleItemComponent(BaseModel):
     override_style_item_hash: int = attr.field()
     quantity: int = attr.field()
     required_unlocks: list[int] = attr.field(metadata={"type": """list[int]"""})
-    sale_status: Union["VendorItemStatus", int] = attr.field(
-        converter=enum_converter("VendorItemStatus"), metadata={"type": "VendorItemStatus"}
-    )
+    sale_status: Union["VendorItemStatus", int] = attr.field(converter=enum_converter("VendorItemStatus"))
     unlock_statuses: list["DestinyUnlockStatus"] = attr.field(metadata={"type": """list[DestinyUnlockStatus]"""})
     vendor_item_index: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)

@@ -56,8 +56,7 @@ class DestinyMilestoneDefinition(ManifestModel):
     )
     default_order: int = attr.field()
     display_preference: Union["DestinyMilestoneDisplayPreference", int] = attr.field(
-        converter=enum_converter("DestinyMilestoneDisplayPreference"),
-        metadata={"type": "DestinyMilestoneDisplayPreference"},
+        converter=enum_converter("DestinyMilestoneDisplayPreference")
     )
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     explore_prioritizes_activity_image: bool = attr.field()
@@ -67,9 +66,7 @@ class DestinyMilestoneDefinition(ManifestModel):
     image: str = attr.field()
     index: int = attr.field()
     is_in_game_milestone: bool = attr.field()
-    milestone_type: Union["DestinyMilestoneType", int] = attr.field(
-        converter=enum_converter("DestinyMilestoneType"), metadata={"type": "DestinyMilestoneType"}
-    )
+    milestone_type: Union["DestinyMilestoneType", int] = attr.field(converter=enum_converter("DestinyMilestoneType"))
     quests: dict[int, "DestinyMilestoneQuestDefinition"] = attr.field(
         metadata={"type": """dict[int, DestinyMilestoneQuestDefinition]"""}
     )
@@ -154,8 +151,8 @@ class DestinyMilestoneQuestDefinition(BaseModel):
     override_image: str = attr.field()
     quest_item_hash: int = attr.field()
     quest_rewards: "DestinyMilestoneQuestRewardsDefinition" = attr.field()
-    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field()
-    manifest_quest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
+    manifest_quest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -204,8 +201,8 @@ class DestinyMilestoneQuestRewardItem(BaseModel):
     quantity: int = attr.field()
     vendor_hash: int = attr.field()
     vendor_item_index: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -232,7 +229,7 @@ class DestinyMilestoneActivityDefinition(BaseModel):
     variants: dict[int, "DestinyMilestoneActivityVariantDefinition"] = attr.field(
         metadata={"type": """dict[int, DestinyMilestoneActivityVariantDefinition]"""}
     )
-    manifest_conceptual_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
+    manifest_conceptual_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -257,7 +254,7 @@ class DestinyMilestoneActivityVariantDefinition(BaseModel):
 
     activity_hash: int = attr.field()
     order: int = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -313,7 +310,7 @@ class DestinyMilestoneRewardEntryDefinition(BaseModel):
     reward_entry_hash: int = attr.field()
     reward_entry_identifier: str = attr.field()
     vendor_hash: int = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -336,7 +333,7 @@ class DestinyMilestoneVendorDefinition(BaseModel):
     """
 
     vendor_hash: int = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field()
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -386,7 +383,7 @@ class DestinyMilestoneChallengeActivityDefinition(BaseModel):
     phases: list["DestinyMilestoneChallengeActivityPhase"] = attr.field(
         metadata={"type": """list[DestinyMilestoneChallengeActivityPhase]"""}
     )
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -409,7 +406,7 @@ class DestinyMilestoneChallengeDefinition(BaseModel):
     """
 
     challenge_objective_hash: int = attr.field()
-    manifest_challenge_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field()
+    manifest_challenge_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
 
 
 @attr.define

@@ -141,6 +141,41 @@ class TokensRouteHttpRequests:
             Route(path=f"/Tokens/Rewards/GetRewardsForUser/{membership_id}/", method="GET", auth=auth)
         )
 
+    async def get_bungie_rewards_for_platform_user(
+        self, membership_id: int, membership_type: int, auth: AuthData
+    ) -> dict:
+        """
+        Returns the bungie rewards for the targeted user when a platform membership Id and Type are used.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: ReadAndApplyTokens
+
+        Args:
+            membership_id: users platform membershipId for requested user rewards. If not self, elevated permissions are required.
+            membership_type: The target Destiny 2 membership type.
+            auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
+        Returns:
+            The json response
+        """
+
+        return await self.request(
+            Route(
+                path=f"/Tokens/Rewards/GetRewardsForPlatformUser/{membership_id}/{membership_type}/",
+                method="GET",
+                auth=auth,
+            )
+        )
+
     async def get_bungie_rewards_list(self, auth: Optional[AuthData] = None) -> dict:
         """
         Returns a list of the current bungie rewards

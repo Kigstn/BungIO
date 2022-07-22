@@ -29,8 +29,13 @@ def enum_converter(enum_name: str) -> Callable:
         A callable converter
     """
 
-    def converter(value: int | str) -> BaseEnum | UnknownEnumValue:
-        if isinstance(value, BaseEnum | UnknownEnumValue | type(MISSING)):
+    def converter(
+        value: int | str | list[int | str],
+    ) -> BaseEnum | UnknownEnumValue | list[BaseEnum | UnknownEnumValue]:
+        if isinstance(value, list):
+            return [converter(v) for v in value]
+
+        elif isinstance(value, BaseEnum | UnknownEnumValue | type(MISSING)):
             return value
 
         imp = importlib.import_module("bungio.models")

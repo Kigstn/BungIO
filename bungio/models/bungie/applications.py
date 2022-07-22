@@ -126,9 +126,7 @@ class Application(BaseModel):
     override_authorize_view_name: str = attr.field()
     redirect_url: str = attr.field()
     scope: int = attr.field()
-    status: Union["ApplicationStatus", int] = attr.field(
-        converter=enum_converter("ApplicationStatus"), metadata={"type": "ApplicationStatus"}
-    )
+    status: Union["ApplicationStatus", int] = attr.field(converter=enum_converter("ApplicationStatus"))
     status_changed: datetime = attr.field()
     team: list["ApplicationDeveloper"] = attr.field(metadata={"type": """list[ApplicationDeveloper]"""})
 
@@ -163,9 +161,7 @@ class ApplicationDeveloper(BaseModel):
     """
 
     api_eula_version: int = attr.field()
-    role: Union["DeveloperRole", int] = attr.field(
-        converter=enum_converter("DeveloperRole"), metadata={"type": "DeveloperRole"}
-    )
+    role: Union["DeveloperRole", int] = attr.field(converter=enum_converter("DeveloperRole"))
     user: "UserInfoCard" = attr.field()
 
 

@@ -218,27 +218,21 @@ class DestinyHistoricalStatsDefinition(ManifestModel):
         manifest_medal_tier_hash: Manifest information for `medal_tier_hash`
     """
 
-    category: Union["DestinyStatsCategoryType", int] = attr.field(
-        converter=enum_converter("DestinyStatsCategoryType"), metadata={"type": "DestinyStatsCategoryType"}
-    )
-    group: Union["DestinyStatsGroupType", int] = attr.field(
-        converter=enum_converter("DestinyStatsGroupType"), metadata={"type": "DestinyStatsGroupType"}
-    )
+    category: Union["DestinyStatsCategoryType", int] = attr.field(converter=enum_converter("DestinyStatsCategoryType"))
+    group: Union["DestinyStatsGroupType", int] = attr.field(converter=enum_converter("DestinyStatsGroupType"))
     icon_image: str = attr.field()
     medal_tier_hash: int = attr.field()
     merge_method: int = attr.field()
-    modes: list[Union["DestinyActivityModeType", int]] = attr.field(
-        metadata={"type": """list[Union[DestinyActivityModeType, int]]"""}
-    )
-    period_types: list[Union["PeriodType", int]] = attr.field(metadata={"type": """list[Union[PeriodType, int]]"""})
+    modes: list[Union["DestinyActivityModeType", int]] = attr.field(converter=enum_converter("DestinyActivityModeType"))
+    period_types: list[Union["PeriodType", int]] = attr.field(converter=enum_converter("PeriodType"))
     stat_description: str = attr.field()
     stat_id: str = attr.field()
     stat_name: str = attr.field()
     stat_name_abbr: str = attr.field()
     unit_label: str = attr.field()
-    unit_type: Union["UnitType", int] = attr.field(converter=enum_converter("UnitType"), metadata={"type": "UnitType"})
+    unit_type: Union["UnitType", int] = attr.field(converter=enum_converter("UnitType"))
     weight: int = attr.field()
-    manifest_medal_tier_hash: Optional["DestinyMedalTierDefinition"] = attr.field()
+    manifest_medal_tier_hash: Optional["DestinyMedalTierDefinition"] = attr.field(default=None)
 
 
 class DestinyStatsGroupType(BaseEnum):

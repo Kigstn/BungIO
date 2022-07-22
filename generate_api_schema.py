@@ -417,9 +417,15 @@ def generate_function(
         ]["properties"]["Response"]
 
         # try to get the overwrite path if that exists and add that to the imports
-        return_model = convert_to_typing(data=return_info, return_class_names=True, file_imports=file_imports)
+        return_model = convert_to_typing(
+            data=return_info, return_class_names=True, file_imports=file_imports, return_enum_as_union=False
+        )
         m_return_model = convert_to_typing(
-            data=return_info, return_class_names=True, type_checking_imports=True, mixin_imports=mixin_imports
+            data=return_info,
+            return_class_names=True,
+            type_checking_imports=True,
+            mixin_imports=mixin_imports,
+            return_enum_as_union=False,
         )
 
         # catch enums
@@ -595,6 +601,7 @@ def convert_to_typing(
     model_imports: bool = False,
     mixin_imports: Optional[set] = None,
     enum_type: Optional[str] = None,
+    return_enum_as_union: bool = True,
 ) -> Typing:
     arg_type = []
     is_list = False
@@ -611,6 +618,7 @@ def convert_to_typing(
             model_imports=model_imports,
             mixin_imports=mixin_imports,
             enum_type=enum_type,
+            return_enum_as_union=return_enum_as_union,
         )
 
     if (dict_data := data.get("x-dictionary-key", None)) and (new_data := data.get("additionalProperties", None)):
@@ -622,6 +630,7 @@ def convert_to_typing(
             model_imports=model_imports,
             mixin_imports=mixin_imports,
             enum_type=enum_type,
+            return_enum_as_union=return_enum_as_union,
         )
         res = convert_to_typing(
             data=dict_data,
@@ -631,8 +640,9 @@ def convert_to_typing(
             model_imports=model_imports,
             mixin_imports=mixin_imports,
             enum_type=enum_type,
+            return_enum_as_union=return_enum_as_union,
         )
-        return Typing(f"""dict[{res.name}, {data_type.name}]""", data_type.manifest, res.enum_type)
+        return Typing(f"""dict[{res.name}, {data_type.name}]""", data_type.manifest, None)
 
     if new_data := data.get("$ref", None):
         if return_class_names:
@@ -673,8 +683,12 @@ def convert_to_typing(
             model_imports=model_imports,
             mixin_imports=mixin_imports,
             enum_type=enum_type,
+            return_enum_as_union=return_enum_as_union,
         )
-        arg_type.append(f"Union[{ref_arg_type.name}, int]")
+        if return_enum_as_union:
+            arg_type.append(f"Union[{ref_arg_type.name}, int]")
+        else:
+            arg_type.append(ref_arg_type.name)
         enum_type = f"""\"{ref_arg_type.name.replace("models.", "").replace('"', "")}\""""
 
     else:
@@ -687,6 +701,7 @@ def convert_to_typing(
                 model_imports=model_imports,
                 mixin_imports=mixin_imports,
                 enum_type=enum_type,
+                return_enum_as_union=return_enum_as_union,
             )
             manifest_name = ref_arg_type.name
 
@@ -715,9 +730,11 @@ def convert_to_typing(
                     model_imports=model_imports,
                     mixin_imports=mixin_imports,
                     enum_type=enum_type,
+                    return_enum_as_union=return_enum_as_union,
                 )
                 manifest_name = array_type.manifest
                 arg_type.append(array_type.name)
+                enum_type = array_type.enum_type
                 is_list = True
             case "object":
                 arg_type.append("Any")
@@ -955,7 +972,10 @@ class {model["name"]}(BaseEnum):"""
         for name, data in model["properties"].items():
             name = capital_case_to_snake_case(name)
             param_type = convert_to_typing(
-                data, return_class_names=True, file_imports=file_imports, type_checking_imports=True
+                data,
+                return_class_names=True,
+                file_imports=file_imports,
+                type_checking_imports=True,
             )
             data["param_type"] = param_type.name
             data["enum_type"] = param_type.enum_type
@@ -1035,14 +1055,16 @@ class {model_name}({"BaseModel" if "x-mobile-manifest-name" not in model else "M
 """
         for name, data in properties.items():
             field_extras = []
-            if "list" in data["param_type"] or "dict" in data["param_type"]:
-                field_extras.append(f"""metadata={{"type": \"\"\"{data["param_type"].replace('"', "")}\"\"\"}}""")
-                if default_val := data.get("default", None):
-                    field_extras.append(default_val)
-
-            elif data["enum_type"]:
+            if data["enum_type"]:
                 field_extras.insert(0, f"""converter=enum_converter({data["enum_type"]})""")
-                field_extras.append(f"""metadata={{"type": {data["enum_type"]}}}""")
+
+            elif "list" in data["param_type"] or "dict" in data["param_type"]:
+                list_type = data["param_type"].replace('"', "")
+                list_type = re.sub(r"Union\[ *(.+), int\]", r"\1", list_type)
+                field_extras.append(f"""metadata={{"type": \"\"\"{list_type}\"\"\"}}""")
+
+            if default_val := data.get("default", None):
+                field_extras.append(default_val)
 
             field_extras = ", ".join(field_extras)
             text += f"""

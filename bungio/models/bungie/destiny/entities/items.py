@@ -72,33 +72,27 @@ class DestinyItemComponent(BaseModel):
         manifest_override_style_item_hash: Manifest information for `override_style_item_hash`
     """
 
-    bind_status: Union["ItemBindStatus", int] = attr.field(
-        converter=enum_converter("ItemBindStatus"), metadata={"type": "ItemBindStatus"}
-    )
+    bind_status: Union["ItemBindStatus", int] = attr.field(converter=enum_converter("ItemBindStatus"))
     bucket_hash: int = attr.field()
     expiration_date: datetime = attr.field()
     is_wrapper: bool = attr.field()
     item_hash: int = attr.field()
     item_instance_id: int = attr.field()
     item_value_visibility: list[bool] = attr.field(metadata={"type": """list[bool]"""})
-    location: Union["ItemLocation", int] = attr.field(
-        converter=enum_converter("ItemLocation"), metadata={"type": "ItemLocation"}
-    )
+    location: Union["ItemLocation", int] = attr.field(converter=enum_converter("ItemLocation"))
     lockable: bool = attr.field()
     metric_hash: int = attr.field()
     metric_objective: "DestinyObjectiveProgress" = attr.field()
     override_style_item_hash: int = attr.field()
     quantity: int = attr.field()
-    state: Union["ItemState", int] = attr.field(converter=enum_converter("ItemState"), metadata={"type": "ItemState"})
+    state: Union["ItemState", int] = attr.field(converter=enum_converter("ItemState"))
     tooltip_notification_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    transfer_status: Union["TransferStatuses", int] = attr.field(
-        converter=enum_converter("TransferStatuses"), metadata={"type": "TransferStatuses"}
-    )
+    transfer_status: Union["TransferStatuses", int] = attr.field(converter=enum_converter("TransferStatuses"))
     version_number: int = attr.field()
-    manifest_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_metric_hash: Optional["DestinyMetricDefinition"] = attr.field()
-    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_metric_hash: Optional["DestinyMetricDefinition"] = attr.field(default=None)
+    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -166,12 +160,8 @@ class DestinyItemInstanceComponent(BaseModel):
     breaker_type: int = attr.field()
     breaker_type_hash: int = attr.field()
     can_equip: bool = attr.field()
-    cannot_equip_reason: Union["EquipFailureReason", int] = attr.field(
-        converter=enum_converter("EquipFailureReason"), metadata={"type": "EquipFailureReason"}
-    )
-    damage_type: Union["DamageType", int] = attr.field(
-        converter=enum_converter("DamageType"), metadata={"type": "DamageType"}
-    )
+    cannot_equip_reason: Union["EquipFailureReason", int] = attr.field(converter=enum_converter("EquipFailureReason"))
+    damage_type: Union["DamageType", int] = attr.field(converter=enum_converter("DamageType"))
     damage_type_hash: int = attr.field()
     energy: "DestinyItemInstanceEnergy" = attr.field()
     equip_required_level: int = attr.field()
@@ -180,8 +170,8 @@ class DestinyItemInstanceComponent(BaseModel):
     primary_stat: "DestinyStat" = attr.field()
     quality: int = attr.field()
     unlock_hashes_required_to_equip: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_breaker_type_hash: Optional["DestinyBreakerTypeDefinition"] = attr.field()
-    manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = attr.field()
+    manifest_breaker_type_hash: Optional["DestinyBreakerTypeDefinition"] = attr.field(default=None)
+    manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -208,13 +198,11 @@ class DestinyItemInstanceEnergy(BaseModel):
     """
 
     energy_capacity: int = attr.field()
-    energy_type: Union["DestinyEnergyType", int] = attr.field(
-        converter=enum_converter("DestinyEnergyType"), metadata={"type": "DestinyEnergyType"}
-    )
+    energy_type: Union["DestinyEnergyType", int] = attr.field(converter=enum_converter("DestinyEnergyType"))
     energy_type_hash: int = attr.field()
     energy_unused: int = attr.field()
     energy_used: int = attr.field()
-    manifest_energy_type_hash: Optional["DestinyEnergyTypeDefinition"] = attr.field()
+    manifest_energy_type_hash: Optional["DestinyEnergyTypeDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -284,7 +272,7 @@ class DestinyItemSocketState(BaseModel):
     is_enabled: bool = attr.field()
     is_visible: bool = attr.field()
     plug_hash: int = attr.field()
-    manifest_plug_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_plug_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -313,4 +301,4 @@ class DestinyItemTalentGridComponent(BaseModel):
     is_grid_complete: bool = attr.field()
     nodes: list["DestinyTalentNode"] = attr.field(metadata={"type": """list[DestinyTalentNode]"""})
     talent_grid_hash: int = attr.field()
-    manifest_talent_grid_hash: Optional["DestinyTalentGridDefinition"] = attr.field()
+    manifest_talent_grid_hash: Optional["DestinyTalentGridDefinition"] = attr.field(default=None)

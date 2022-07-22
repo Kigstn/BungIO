@@ -23,7 +23,7 @@ class DestinyPlatformSilverComponent(BaseModel):
     """
 
     platform_silver: dict[Union["BungieMembershipType", int], "DestinyItemComponent"] = attr.field(
-        metadata={"type": """dict[Union[BungieMembershipType, int], DestinyItemComponent]"""}
+        metadata={"type": """dict[BungieMembershipType, DestinyItemComponent]"""}
     )
 
 

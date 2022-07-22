@@ -11,10 +11,12 @@ from bungio.models.base import BaseModel, ManifestModel
 
 if TYPE_CHECKING:
     from bungio.models import (
+        DestinyColor,
         DestinyDisplayPropertiesDefinition,
         DestinyInventoryItemDefinition,
         DestinyPresentationNodeDefinition,
         DestinyProgressionDefinition,
+        DestinyVendorDefinition,
     )
 
 
@@ -68,11 +70,13 @@ class DestinySeasonDefinition(ManifestModel):
     season_pass_progression_hash: int = attr.field()
     seasonal_challenges_presentation_node_hash: int = attr.field()
     start_date: datetime = attr.field()
-    manifest_artifact_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_seal_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
-    manifest_season_pass_hash: Optional["DestinySeasonPassDefinition"] = attr.field()
-    manifest_season_pass_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field()
-    manifest_seasonal_challenges_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
+    manifest_artifact_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_seal_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+    manifest_season_pass_hash: Optional["DestinySeasonPassDefinition"] = attr.field(default=None)
+    manifest_season_pass_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
+    manifest_seasonal_challenges_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(
+        default=None
+    )
 
 
 @attr.define
@@ -142,5 +146,83 @@ class DestinySeasonPassDefinition(ManifestModel):
     prestige_progression_hash: int = attr.field()
     redacted: bool = attr.field()
     reward_progression_hash: int = attr.field()
-    manifest_prestige_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field()
-    manifest_reward_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field()
+    manifest_prestige_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
+    manifest_reward_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
+
+
+@attr.define
+class DestinyEventCardDefinition(ManifestModel):
+    """
+    Defines the properties of an 'Event Card' in Destiny 2, to coincide with a seasonal event for additional challenges, premium rewards, a new seal, and a special title. For example: Solstice of Heroes 2022.
+
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
+    Attributes:
+        color: _No description given by bungie._
+        display_properties: _No description given by bungie._
+        end_time: _No description given by bungie._
+        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
+        images: _No description given by bungie._
+        index: The index of the entity as it was found in the investment tables.
+        link_redirect_path: _No description given by bungie._
+        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+        seal_presentation_node_hash: _No description given by bungie._
+        ticket_currency_item_hash: _No description given by bungie._
+        ticket_vendor_category_hash: _No description given by bungie._
+        ticket_vendor_hash: _No description given by bungie._
+        triumphs_presentation_node_hash: _No description given by bungie._
+        manifest_seal_presentation_node_hash: Manifest information for `seal_presentation_node_hash`
+        manifest_ticket_currency_item_hash: Manifest information for `ticket_currency_item_hash`
+        manifest_ticket_vendor_hash: Manifest information for `ticket_vendor_hash`
+        manifest_triumphs_presentation_node_hash: Manifest information for `triumphs_presentation_node_hash`
+    """
+
+    color: "DestinyColor" = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
+    end_time: int = attr.field()
+    hash: int = attr.field()
+    images: "DestinyEventCardImages" = attr.field()
+    index: int = attr.field()
+    link_redirect_path: str = attr.field()
+    redacted: bool = attr.field()
+    seal_presentation_node_hash: int = attr.field()
+    ticket_currency_item_hash: int = attr.field()
+    ticket_vendor_category_hash: int = attr.field()
+    ticket_vendor_hash: int = attr.field()
+    triumphs_presentation_node_hash: int = attr.field()
+    manifest_seal_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+    manifest_ticket_currency_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_ticket_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    manifest_triumphs_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+
+
+@attr.define
+class DestinyEventCardImages(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        card_complete_image_path: _No description given by bungie._
+        card_complete_wrap_image_path: _No description given by bungie._
+        card_incomplete_image_path: _No description given by bungie._
+        progress_icon_image_path: _No description given by bungie._
+        theme_background_image_path: _No description given by bungie._
+        unowned_card_sleeve_image_path: _No description given by bungie._
+        unowned_card_sleeve_wrap_image_path: _No description given by bungie._
+    """
+
+    card_complete_image_path: str = attr.field()
+    card_complete_wrap_image_path: str = attr.field()
+    card_incomplete_image_path: str = attr.field()
+    progress_icon_image_path: str = attr.field()
+    theme_background_image_path: str = attr.field()
+    unowned_card_sleeve_image_path: str = attr.field()
+    unowned_card_sleeve_wrap_image_path: str = attr.field()

@@ -139,7 +139,7 @@ class Destiny2RouteHttpRequests:
         self,
         destiny_membership_id: int,
         membership_type: int,
-        components: Optional[list[Union[Any, int]]] = None,
+        components: Optional[int] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
         """
@@ -178,7 +178,7 @@ class Destiny2RouteHttpRequests:
         character_id: int,
         destiny_membership_id: int,
         membership_type: int,
-        components: Optional[list[Union[Any, int]]] = None,
+        components: Optional[int] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
         """
@@ -263,7 +263,7 @@ class Destiny2RouteHttpRequests:
         destiny_membership_id: int,
         item_instance_id: int,
         membership_type: int,
-        components: Optional[list[Union[Any, int]]] = None,
+        components: Optional[int] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
         """
@@ -303,7 +303,7 @@ class Destiny2RouteHttpRequests:
         character_id: int,
         destiny_membership_id: int,
         membership_type: int,
-        components: Optional[list[Union[Any, int]]] = None,
+        components: Optional[int] = None,
         filter: Optional[int] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
@@ -347,7 +347,7 @@ class Destiny2RouteHttpRequests:
         destiny_membership_id: int,
         membership_type: int,
         vendor_hash: int,
-        components: Optional[list[Union[Any, int]]] = None,
+        components: Optional[int] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
         """
@@ -383,9 +383,7 @@ class Destiny2RouteHttpRequests:
             )
         )
 
-    async def get_public_vendors(
-        self, components: Optional[list[Union[Any, int]]] = None, auth: Optional[AuthData] = None
-    ) -> dict:
+    async def get_public_vendors(self, components: Optional[int] = None, auth: Optional[AuthData] = None) -> dict:
         """
         Get items available from vendors where the vendors have items for sale that are common for everyone. If any portion of the Vendor's available inventory is character or account specific, we will be unable to return their data from this endpoint due to the way that available inventory is computed. As I am often guilty of saying: 'It's a long story...'
 
@@ -414,7 +412,7 @@ class Destiny2RouteHttpRequests:
         collectible_presentation_node_hash: int,
         destiny_membership_id: int,
         membership_type: int,
-        components: Optional[list[Union[Any, int]]] = None,
+        components: Optional[int] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
         """
@@ -1082,8 +1080,8 @@ class Destiny2RouteHttpRequests:
         membership_type: int,
         dayend: Optional[datetime] = None,
         daystart: Optional[datetime] = None,
-        groups: Optional[list[Union[Any, int]]] = None,
-        modes: Optional[list[Union[Any, int]]] = None,
+        groups: Optional[int] = None,
+        modes: Optional[int] = None,
         period_type: Optional[int] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
@@ -1131,7 +1129,7 @@ class Destiny2RouteHttpRequests:
         self,
         destiny_membership_id: int,
         membership_type: int,
-        groups: Optional[list[Union[Any, int]]] = None,
+        groups: Optional[int] = None,
         auth: Optional[AuthData] = None,
     ) -> dict:
         """

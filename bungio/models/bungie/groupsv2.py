@@ -44,24 +44,22 @@ class GroupUserInfoCard(BaseModel, DestinyUserMixin):
     """
 
     applicable_membership_types: list[Union["BungieMembershipType", int]] = attr.field(
-        metadata={"type": """list[Union[BungieMembershipType, int]]"""}
+        converter=enum_converter("BungieMembershipType")
     )
     bungie_global_display_name: str = attr.field()
     bungie_global_display_name_code: int = attr.field()
     cross_save_override: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+        converter=enum_converter("BungieMembershipType")
     )
     display_name: str = attr.field()
     icon_path: str = attr.field()
     is_public: bool = attr.field()
     last_seen_display_name: str = attr.field()
     last_seen_display_name_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+        converter=enum_converter("BungieMembershipType")
     )
     membership_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
     supplemental_display_name: str = attr.field()
 
 
@@ -83,16 +81,14 @@ class GroupResponse(BaseModel):
         parent_group: _No description given by bungie._
     """
 
-    alliance_status: Union["GroupAllianceStatus", int] = attr.field(
-        converter=enum_converter("GroupAllianceStatus"), metadata={"type": "GroupAllianceStatus"}
-    )
+    alliance_status: Union["GroupAllianceStatus", int] = attr.field(converter=enum_converter("GroupAllianceStatus"))
     allied_ids: list[int] = attr.field(metadata={"type": """list[int]"""})
     current_user_member_map: dict[Union["BungieMembershipType", int], "GroupMember"] = attr.field(
-        metadata={"type": """dict[Union[BungieMembershipType, int], GroupMember]"""}
+        metadata={"type": """dict[BungieMembershipType, GroupMember]"""}
     )
     current_user_memberships_inactive_for_destiny: bool = attr.field()
     current_user_potential_member_map: dict[Union["BungieMembershipType", int], "GroupPotentialMember"] = attr.field(
-        metadata={"type": """dict[Union[BungieMembershipType, int], GroupPotentialMember]"""}
+        metadata={"type": """dict[BungieMembershipType, GroupPotentialMember]"""}
     )
     detail: "GroupV2" = attr.field()
     founder: "GroupMember" = attr.field()
@@ -143,33 +139,23 @@ class GroupV2(BaseModel, DestinyClanMixin):
     avatar_path: str = attr.field()
     ban_expire_date: datetime = attr.field()
     banner_path: str = attr.field()
-    chat_security: Union["ChatSecuritySetting", int] = attr.field(
-        converter=enum_converter("ChatSecuritySetting"), metadata={"type": "ChatSecuritySetting"}
-    )
+    chat_security: Union["ChatSecuritySetting", int] = attr.field(converter=enum_converter("ChatSecuritySetting"))
     clan_info: "GroupV2ClanInfoAndInvestment" = attr.field()
     conversation_id: int = attr.field()
     creation_date: datetime = attr.field()
-    default_publicity: Union["GroupPostPublicity", int] = attr.field(
-        converter=enum_converter("GroupPostPublicity"), metadata={"type": "GroupPostPublicity"}
-    )
+    default_publicity: Union["GroupPostPublicity", int] = attr.field(converter=enum_converter("GroupPostPublicity"))
     enable_invitation_messaging_for_admins: bool = attr.field()
     features: "GroupFeatures" = attr.field()
     group_id: int = attr.field()
-    group_type: Union["GroupType", int] = attr.field(
-        converter=enum_converter("GroupType"), metadata={"type": "GroupType"}
-    )
-    homepage: Union["GroupHomepage", int] = attr.field(
-        converter=enum_converter("GroupHomepage"), metadata={"type": "GroupHomepage"}
-    )
+    group_type: Union["GroupType", int] = attr.field(converter=enum_converter("GroupType"))
+    homepage: Union["GroupHomepage", int] = attr.field(converter=enum_converter("GroupHomepage"))
     is_default_post_public: bool = attr.field()
     is_public: bool = attr.field()
     is_public_topic_admin_only: bool = attr.field()
     locale: str = attr.field()
     member_count: int = attr.field()
     membership_id_created: int = attr.field()
-    membership_option: Union["MembershipOption", int] = attr.field(
-        converter=enum_converter("MembershipOption"), metadata={"type": "MembershipOption"}
-    )
+    membership_option: Union["MembershipOption", int] = attr.field(converter=enum_converter("MembershipOption"))
     modification_date: datetime = attr.field()
     motto: str = attr.field()
     name: str = attr.field()
@@ -256,20 +242,16 @@ class GroupFeatures(BaseModel):
         update_culture_permission_override: Minimum Member Level allowed to update group culture Always Allowed: Founder, Acting Founder True means admins have this power, false means they don't Default is false for clans, true for groups.
     """
 
-    capabilities: Union["Capabilities", int] = attr.field(
-        converter=enum_converter("Capabilities"), metadata={"type": "Capabilities"}
-    )
+    capabilities: Union["Capabilities", int] = attr.field(converter=enum_converter("Capabilities"))
     host_guided_game_permission_override: Union["HostGuidedGamesPermissionLevel", int] = attr.field(
-        converter=enum_converter("HostGuidedGamesPermissionLevel"), metadata={"type": "HostGuidedGamesPermissionLevel"}
+        converter=enum_converter("HostGuidedGamesPermissionLevel")
     )
     invite_permission_override: bool = attr.field()
-    join_level: Union["RuntimeGroupMemberType", int] = attr.field(
-        converter=enum_converter("RuntimeGroupMemberType"), metadata={"type": "RuntimeGroupMemberType"}
-    )
+    join_level: Union["RuntimeGroupMemberType", int] = attr.field(converter=enum_converter("RuntimeGroupMemberType"))
     maximum_members: int = attr.field()
     maximum_memberships_of_group_type: int = attr.field()
     membership_types: list[Union["BungieMembershipType", int]] = attr.field(
-        metadata={"type": """list[Union[BungieMembershipType, int]]"""}
+        converter=enum_converter("BungieMembershipType")
     )
     update_banner_permission_override: bool = attr.field()
     update_culture_permission_override: bool = attr.field()
@@ -430,9 +412,7 @@ class GroupMember(BaseModel, DestinyClanMixin):
     is_online: bool = attr.field()
     join_date: datetime = attr.field()
     last_online_status_change: int = attr.field()
-    member_type: Union["RuntimeGroupMemberType", int] = attr.field(
-        converter=enum_converter("RuntimeGroupMemberType"), metadata={"type": "RuntimeGroupMemberType"}
-    )
+    member_type: Union["RuntimeGroupMemberType", int] = attr.field(converter=enum_converter("RuntimeGroupMemberType"))
 
 
 class GroupAllianceStatus(BaseEnum):
@@ -467,7 +447,7 @@ class GroupPotentialMember(BaseModel, DestinyClanMixin):
     group_id: int = attr.field()
     join_date: datetime = attr.field()
     potential_status: Union["GroupPotentialMemberStatus", int] = attr.field(
-        converter=enum_converter("GroupPotentialMemberStatus"), metadata={"type": "GroupPotentialMemberStatus"}
+        converter=enum_converter("GroupPotentialMemberStatus")
     )
 
 
@@ -525,20 +505,14 @@ class GroupV2Card(BaseModel, DestinyClanMixin):
 
     about: str = attr.field()
     avatar_path: str = attr.field()
-    capabilities: Union["Capabilities", int] = attr.field(
-        converter=enum_converter("Capabilities"), metadata={"type": "Capabilities"}
-    )
+    capabilities: Union["Capabilities", int] = attr.field(converter=enum_converter("Capabilities"))
     clan_info: "GroupV2ClanInfo" = attr.field()
     creation_date: datetime = attr.field()
     group_id: int = attr.field()
-    group_type: Union["GroupType", int] = attr.field(
-        converter=enum_converter("GroupType"), metadata={"type": "GroupType"}
-    )
+    group_type: Union["GroupType", int] = attr.field(converter=enum_converter("GroupType"))
     locale: str = attr.field()
     member_count: int = attr.field()
-    membership_option: Union["MembershipOption", int] = attr.field(
-        converter=enum_converter("MembershipOption"), metadata={"type": "MembershipOption"}
-    )
+    membership_option: Union["MembershipOption", int] = attr.field(converter=enum_converter("MembershipOption"))
     motto: str = attr.field()
     name: str = attr.field()
     theme: str = attr.field()
@@ -586,21 +560,15 @@ class OverwrittenGroupQuery(BaseModel):
         tag_text: _No description given by bungie._
     """
 
-    creation_date: Union["GroupDateRange", int] = attr.field(
-        converter=enum_converter("GroupDateRange"), metadata={"type": "GroupDateRange"}
-    )
+    creation_date: Union["GroupDateRange", int] = attr.field(converter=enum_converter("GroupDateRange"))
     current_page: int = attr.field()
     group_member_count_filter: int = attr.field()
-    group_type: Union["GroupType", int] = attr.field(
-        converter=enum_converter("GroupType"), metadata={"type": "GroupType"}
-    )
+    group_type: Union["GroupType", int] = attr.field(converter=enum_converter("GroupType"))
     items_per_page: int = attr.field()
     locale_filter: str = attr.field()
     name: str = attr.field()
     request_continuation_token: str = attr.field()
-    sort_by: Union["GroupSortBy", int] = attr.field(
-        converter=enum_converter("GroupSortBy"), metadata={"type": "GroupSortBy"}
-    )
+    sort_by: Union["GroupSortBy", int] = attr.field(converter=enum_converter("GroupSortBy"))
     tag_text: str = attr.field()
 
 
@@ -646,9 +614,7 @@ class GroupNameSearchRequest(BaseModel):
     """
 
     group_name: str = attr.field()
-    group_type: Union["GroupType", int] = attr.field(
-        converter=enum_converter("GroupType"), metadata={"type": "GroupType"}
-    )
+    group_type: Union["GroupType", int] = attr.field(converter=enum_converter("GroupType"))
 
 
 @attr.define
@@ -667,9 +633,7 @@ class GroupOptionalConversation(BaseModel, DestinyClanMixin):
 
     chat_enabled: bool = attr.field()
     chat_name: str = attr.field()
-    chat_security: Union["ChatSecuritySetting", int] = attr.field(
-        converter=enum_converter("ChatSecuritySetting"), metadata={"type": "ChatSecuritySetting"}
-    )
+    chat_security: Union["ChatSecuritySetting", int] = attr.field(converter=enum_converter("ChatSecuritySetting"))
     conversation_id: int = attr.field()
     group_id: int = attr.field()
 
@@ -750,9 +714,7 @@ class GroupOptionalConversationAddRequest(BaseModel):
     """
 
     chat_name: str = attr.field()
-    chat_security: Union["ChatSecuritySetting", int] = attr.field(
-        converter=enum_converter("ChatSecuritySetting"), metadata={"type": "ChatSecuritySetting"}
-    )
+    chat_security: Union["ChatSecuritySetting", int] = attr.field(converter=enum_converter("ChatSecuritySetting"))
 
 
 @attr.define
@@ -799,9 +761,7 @@ class GroupBanRequest(BaseModel):
     """
 
     comment: str = attr.field()
-    length: Union["IgnoreLength", int] = attr.field(
-        converter=enum_converter("IgnoreLength"), metadata={"type": "IgnoreLength"}
-    )
+    length: Union["IgnoreLength", int] = attr.field(converter=enum_converter("IgnoreLength"))
 
 
 @attr.define
@@ -857,7 +817,7 @@ class GroupMemberApplication(BaseModel, DestinyClanMixin):
     resolve_date: datetime = attr.field()
     resolve_message: str = attr.field()
     resolve_state: Union["GroupApplicationResolveState", int] = attr.field(
-        converter=enum_converter("GroupApplicationResolveState"), metadata={"type": "GroupApplicationResolveState"}
+        converter=enum_converter("GroupApplicationResolveState")
     )
     resolved_by_membership_id: int = attr.field()
 
@@ -1043,5 +1003,5 @@ class GroupApplicationResponse(BaseModel):
     """
 
     resolution: Union["GroupApplicationResolveState", int] = attr.field(
-        converter=enum_converter("GroupApplicationResolveState"), metadata={"type": "GroupApplicationResolveState"}
+        converter=enum_converter("GroupApplicationResolveState")
     )

@@ -40,8 +40,10 @@ class DestinyCollectiblesComponent(BaseModel):
     )
     collection_badges_root_node_hash: int = attr.field()
     collection_categories_root_node_hash: int = attr.field()
-    manifest_collection_badges_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
-    manifest_collection_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
+    manifest_collection_badges_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+    manifest_collection_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(
+        default=None
+    )
 
 
 @attr.define
@@ -54,9 +56,7 @@ class DestinyCollectibleComponent(BaseModel):
         state: _No description given by bungie._
     """
 
-    state: Union["DestinyCollectibleState", int] = attr.field(
-        converter=enum_converter("DestinyCollectibleState"), metadata={"type": "DestinyCollectibleState"}
-    )
+    state: Union["DestinyCollectibleState", int] = attr.field(converter=enum_converter("DestinyCollectibleState"))
 
 
 @attr.define
@@ -90,5 +90,7 @@ class DestinyProfileCollectiblesComponent(BaseModel):
     collection_categories_root_node_hash: int = attr.field()
     newness_flagged_collectible_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     recent_collectible_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_collection_badges_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
-    manifest_collection_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
+    manifest_collection_badges_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+    manifest_collection_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(
+        default=None
+    )

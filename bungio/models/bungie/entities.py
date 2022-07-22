@@ -25,6 +25,4 @@ class EntityActionResult(BaseModel):
     """
 
     entity_id: int = attr.field()
-    result: Union["PlatformErrorCodes", int] = attr.field(
-        converter=enum_converter("PlatformErrorCodes"), metadata={"type": "PlatformErrorCodes"}
-    )
+    result: Union["PlatformErrorCodes", int] = attr.field(converter=enum_converter("PlatformErrorCodes"))

@@ -40,7 +40,7 @@ class DestinyItemPlugBase(BaseModel):
     enabled: bool = attr.field()
     insert_fail_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
     plug_item_hash: int = attr.field()
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -75,4 +75,4 @@ class DestinyItemPlug(BaseModel):
     plug_objectives: list["DestinyObjectiveProgress"] = attr.field(
         metadata={"type": """list[DestinyObjectiveProgress]"""}
     )
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)

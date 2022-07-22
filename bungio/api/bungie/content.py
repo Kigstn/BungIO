@@ -9,6 +9,7 @@ import attr
 from bungio.models import (
     ContentItemPublicContract,
     ContentTypeDescription,
+    NewsArticleRssResponse,
     SearchResultOfContentItemPublicContract,
 )
 from bungio.models.auth import AuthData
@@ -192,3 +193,20 @@ class ContentRouteInterface(ClientMixin):
 
         response = await self._client.http.search_help_articles(searchtext=searchtext, size=size, auth=auth)
         return response["Response"]
+
+    async def rss_news_articles(self, page_token: str, auth: Optional[AuthData] = None) -> NewsArticleRssResponse:
+        """
+        Returns a JSON string response that is the RSS feed for news articles.
+
+        Args:
+            page_token: Zero-based pagination token for paging through result sets.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
+
+        Returns:
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
+        """
+
+        response = await self._client.http.rss_news_articles(page_token=page_token, auth=auth)
+        return await NewsArticleRssResponse.from_dict(
+            data=response, client=self._client, page_token=page_token, auth=auth
+        )

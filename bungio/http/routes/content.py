@@ -211,3 +211,26 @@ class ContentRouteHttpRequests:
         return await self.request(
             Route(path=f"/Content/SearchHelpArticles/{searchtext}/{size}/", method="GET", auth=auth)
         )
+
+    async def rss_news_articles(self, page_token: str, auth: Optional[AuthData] = None) -> dict:
+        """
+        Returns a JSON string response that is the RSS feed for news articles.
+
+        Args:
+            page_token: Zero-based pagination token for paging through result sets.
+            auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
+        Returns:
+            The json response
+        """
+
+        return await self.request(Route(path=f"/Content/Rss/NewsArticles/{page_token}/", method="GET", auth=auth))

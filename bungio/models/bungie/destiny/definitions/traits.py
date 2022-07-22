@@ -44,7 +44,7 @@ class DestinyTraitDefinition(ManifestModel):
     redacted: bool = attr.field()
     trait_category_hash: int = attr.field()
     trait_category_id: str = attr.field()
-    manifest_trait_category_hash: Optional["DestinyTraitCategoryDefinition"] = attr.field()
+    manifest_trait_category_hash: Optional["DestinyTraitCategoryDefinition"] = attr.field(default=None)
 
 
 @attr.define

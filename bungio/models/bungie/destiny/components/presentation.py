@@ -47,5 +47,5 @@ class DestinyPresentationNodeComponent(BaseModel):
     progress_value: int = attr.field()
     record_category_score: int = attr.field()
     state: Union["DestinyPresentationNodeState", int] = attr.field(
-        converter=enum_converter("DestinyPresentationNodeState"), metadata={"type": "DestinyPresentationNodeState"}
+        converter=enum_converter("DestinyPresentationNodeState")
     )

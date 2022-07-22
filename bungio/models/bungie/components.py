@@ -22,9 +22,7 @@ class ComponentResponse(BaseModel):
     """
 
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 class ComponentPrivacySetting(BaseEnum):

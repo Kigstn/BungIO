@@ -119,9 +119,7 @@ class FireteamSummary(BaseModel, DestinyClanMixin):
     is_valid: bool = attr.field()
     locale: str = attr.field()
     owner_membership_id: int = attr.field()
-    platform: Union["FireteamPlatform", int] = attr.field(
-        converter=enum_converter("FireteamPlatform"), metadata={"type": "FireteamPlatform"}
-    )
+    platform: Union["FireteamPlatform", int] = attr.field(converter=enum_converter("FireteamPlatform"))
     player_slot_count: int = attr.field()
     scheduled_time: datetime = attr.field()
     title: str = attr.field()
@@ -168,7 +166,7 @@ class FireteamMember(BaseModel):
     has_microphone: bool = attr.field()
     last_platform_invite_attempt_date: datetime = attr.field()
     last_platform_invite_attempt_result: Union["FireteamPlatformInviteResult", int] = attr.field(
-        converter=enum_converter("FireteamPlatformInviteResult"), metadata={"type": "FireteamPlatformInviteResult"}
+        converter=enum_converter("FireteamPlatformInviteResult")
     )
 
 
@@ -194,24 +192,22 @@ class FireteamUserInfoCard(BaseModel, DestinyUserMixin):
     """
 
     applicable_membership_types: list[Union["BungieMembershipType", int]] = attr.field(
-        metadata={"type": """list[Union[BungieMembershipType, int]]"""}
+        converter=enum_converter("BungieMembershipType")
     )
     bungie_global_display_name: str = attr.field()
     bungie_global_display_name_code: int = attr.field()
     cross_save_override: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+        converter=enum_converter("BungieMembershipType")
     )
     display_name: str = attr.field()
     fireteam_display_name: str = attr.field()
     fireteam_membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+        converter=enum_converter("BungieMembershipType")
     )
     icon_path: str = attr.field()
     is_public: bool = attr.field()
     membership_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
     supplemental_display_name: str = attr.field()
 
 

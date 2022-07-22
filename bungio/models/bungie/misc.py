@@ -325,9 +325,7 @@ class SingleComponentResponseOfDestinyVendorReceiptsComponent(BaseModel):
 
     data: "DestinyVendorReceiptsComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -344,9 +342,7 @@ class SingleComponentResponseOfDestinyInventoryComponent(BaseModel):
 
     data: "DestinyInventoryComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -363,9 +359,7 @@ class SingleComponentResponseOfDestinyProfileComponent(BaseModel):
 
     data: "DestinyProfileComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -382,9 +376,7 @@ class SingleComponentResponseOfDestinyPlatformSilverComponent(BaseModel):
 
     data: "DestinyPlatformSilverComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -401,9 +393,7 @@ class SingleComponentResponseOfDestinyKiosksComponent(BaseModel):
 
     data: "DestinyKiosksComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -420,9 +410,7 @@ class SingleComponentResponseOfDestinyPlugSetsComponent(BaseModel):
 
     data: "DestinyPlugSetsComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -439,9 +427,7 @@ class SingleComponentResponseOfDestinyProfileProgressionComponent(BaseModel):
 
     data: "DestinyProfileProgressionComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -458,9 +444,7 @@ class SingleComponentResponseOfDestinyPresentationNodesComponent(BaseModel):
 
     data: "DestinyPresentationNodesComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -477,9 +461,7 @@ class SingleComponentResponseOfDestinyProfileRecordsComponent(BaseModel):
 
     data: "DestinyProfileRecordsComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -496,9 +478,7 @@ class SingleComponentResponseOfDestinyProfileCollectiblesComponent(BaseModel):
 
     data: "DestinyProfileCollectiblesComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -515,9 +495,7 @@ class SingleComponentResponseOfDestinyProfileTransitoryComponent(BaseModel):
 
     data: "DestinyProfileTransitoryComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -534,9 +512,7 @@ class SingleComponentResponseOfDestinyMetricsComponent(BaseModel):
 
     data: "DestinyMetricsComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -553,9 +529,7 @@ class SingleComponentResponseOfDestinyStringVariablesComponent(BaseModel):
 
     data: "DestinyStringVariablesComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -574,9 +548,7 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterComponent(BaseModel):
         metadata={"type": """dict[int, DestinyCharacterComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -595,9 +567,7 @@ class DictionaryComponentResponseOfint64AndDestinyInventoryComponent(BaseModel):
         metadata={"type": """dict[int, DestinyInventoryComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -616,9 +586,7 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent(
         metadata={"type": """dict[int, DestinyCharacterProgressionComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -637,9 +605,7 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterRenderComponent(BaseM
         metadata={"type": """dict[int, DestinyCharacterRenderComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -658,9 +624,7 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent(B
         metadata={"type": """dict[int, DestinyCharacterActivitiesComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -677,9 +641,7 @@ class DictionaryComponentResponseOfint64AndDestinyKiosksComponent(BaseModel):
 
     data: dict[int, "DestinyKiosksComponent"] = attr.field(metadata={"type": """dict[int, DestinyKiosksComponent]"""})
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -698,9 +660,7 @@ class DictionaryComponentResponseOfint64AndDestinyPlugSetsComponent(BaseModel):
         metadata={"type": """dict[int, DestinyPlugSetsComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -734,9 +694,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemObjectivesComponent(BaseM
         metadata={"type": """dict[int, DestinyItemObjectivesComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -755,9 +713,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemPerksComponent(BaseModel)
         metadata={"type": """dict[int, DestinyItemPerksComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -776,9 +732,7 @@ class DictionaryComponentResponseOfint64AndDestinyPresentationNodesComponent(Bas
         metadata={"type": """dict[int, DestinyPresentationNodesComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -797,9 +751,7 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterRecordsComponent(Base
         metadata={"type": """dict[int, DestinyCharacterRecordsComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -818,9 +770,7 @@ class DictionaryComponentResponseOfint64AndDestinyCollectiblesComponent(BaseMode
         metadata={"type": """dict[int, DestinyCollectiblesComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -839,9 +789,7 @@ class DictionaryComponentResponseOfint64AndDestinyStringVariablesComponent(BaseM
         metadata={"type": """dict[int, DestinyStringVariablesComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -860,9 +808,7 @@ class DictionaryComponentResponseOfint64AndDestinyCraftablesComponent(BaseModel)
         metadata={"type": """dict[int, DestinyCraftablesComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -896,9 +842,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemObjectivesComponent(BaseMo
         metadata={"type": """dict[int, DestinyItemObjectivesComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -917,9 +861,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemPerksComponent(BaseModel):
         metadata={"type": """dict[int, DestinyItemPerksComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -969,9 +911,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemInstanceComponent(BaseMode
         metadata={"type": """dict[int, DestinyItemInstanceComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -990,9 +930,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemRenderComponent(BaseModel)
         metadata={"type": """dict[int, DestinyItemRenderComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1011,9 +949,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemStatsComponent(BaseModel):
         metadata={"type": """dict[int, DestinyItemStatsComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1032,9 +968,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemSocketsComponent(BaseModel
         metadata={"type": """dict[int, DestinyItemSocketsComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1053,9 +987,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemReusablePlugsComponent(Bas
         metadata={"type": """dict[int, DestinyItemReusablePlugsComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1074,9 +1006,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemPlugObjectivesComponent(Ba
         metadata={"type": """dict[int, DestinyItemPlugObjectivesComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1095,9 +1025,7 @@ class DictionaryComponentResponseOfint64AndDestinyItemTalentGridComponent(BaseMo
         metadata={"type": """dict[int, DestinyItemTalentGridComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1116,9 +1044,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemPlugComponent(BaseModel):
         metadata={"type": """dict[int, DestinyItemPlugComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1137,9 +1063,7 @@ class DictionaryComponentResponseOfint64AndDestinyCurrenciesComponent(BaseModel)
         metadata={"type": """dict[int, DestinyCurrenciesComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1156,9 +1080,7 @@ class SingleComponentResponseOfDestinyCharacterComponent(BaseModel):
 
     data: "DestinyCharacterComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1175,9 +1097,7 @@ class SingleComponentResponseOfDestinyCharacterProgressionComponent(BaseModel):
 
     data: "DestinyCharacterProgressionComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1194,9 +1114,7 @@ class SingleComponentResponseOfDestinyCharacterRenderComponent(BaseModel):
 
     data: "DestinyCharacterRenderComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1213,9 +1131,7 @@ class SingleComponentResponseOfDestinyCharacterActivitiesComponent(BaseModel):
 
     data: "DestinyCharacterActivitiesComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1232,9 +1148,7 @@ class SingleComponentResponseOfDestinyCharacterRecordsComponent(BaseModel):
 
     data: "DestinyCharacterRecordsComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1251,9 +1165,7 @@ class SingleComponentResponseOfDestinyCollectiblesComponent(BaseModel):
 
     data: "DestinyCollectiblesComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1270,9 +1182,7 @@ class SingleComponentResponseOfDestinyCurrenciesComponent(BaseModel):
 
     data: "DestinyCurrenciesComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1289,9 +1199,7 @@ class SingleComponentResponseOfDestinyItemComponent(BaseModel):
 
     data: "DestinyItemComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1308,9 +1216,7 @@ class SingleComponentResponseOfDestinyItemInstanceComponent(BaseModel):
 
     data: "DestinyItemInstanceComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1327,9 +1233,7 @@ class SingleComponentResponseOfDestinyItemObjectivesComponent(BaseModel):
 
     data: "DestinyItemObjectivesComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1346,9 +1250,7 @@ class SingleComponentResponseOfDestinyItemPerksComponent(BaseModel):
 
     data: "DestinyItemPerksComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1365,9 +1267,7 @@ class SingleComponentResponseOfDestinyItemRenderComponent(BaseModel):
 
     data: "DestinyItemRenderComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1384,9 +1284,7 @@ class SingleComponentResponseOfDestinyItemStatsComponent(BaseModel):
 
     data: "DestinyItemStatsComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1403,9 +1301,7 @@ class SingleComponentResponseOfDestinyItemTalentGridComponent(BaseModel):
 
     data: "DestinyItemTalentGridComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1422,9 +1318,7 @@ class SingleComponentResponseOfDestinyItemSocketsComponent(BaseModel):
 
     data: "DestinyItemSocketsComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1441,9 +1335,7 @@ class SingleComponentResponseOfDestinyItemReusablePlugsComponent(BaseModel):
 
     data: "DestinyItemReusablePlugsComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1460,9 +1352,7 @@ class SingleComponentResponseOfDestinyItemPlugObjectivesComponent(BaseModel):
 
     data: "DestinyItemPlugObjectivesComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1479,9 +1369,7 @@ class SingleComponentResponseOfDestinyVendorGroupComponent(BaseModel):
 
     data: "DestinyVendorGroupComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1498,9 +1386,7 @@ class DictionaryComponentResponseOfuint32AndDestinyVendorComponent(BaseModel):
 
     data: dict[int, "DestinyVendorComponent"] = attr.field(metadata={"type": """dict[int, DestinyVendorComponent]"""})
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1519,9 +1405,7 @@ class DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent(Bas
         metadata={"type": """dict[int, DestinyVendorCategoriesComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1555,9 +1439,7 @@ class DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComp
         metadata={"type": """dict[int, PersonalDestinyVendorSaleItemSetComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1591,9 +1473,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent(BaseMo
         metadata={"type": """dict[int, DestinyItemObjectivesComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1612,9 +1492,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemPerksComponent(BaseModel):
         metadata={"type": """dict[int, DestinyItemPerksComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1664,9 +1542,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemInstanceComponent(BaseMode
         metadata={"type": """dict[int, DestinyItemInstanceComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1685,9 +1561,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemRenderComponent(BaseModel)
         metadata={"type": """dict[int, DestinyItemRenderComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1706,9 +1580,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemStatsComponent(BaseModel):
         metadata={"type": """dict[int, DestinyItemStatsComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1727,9 +1599,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemSocketsComponent(BaseModel
         metadata={"type": """dict[int, DestinyItemSocketsComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1748,9 +1618,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemReusablePlugsComponent(Bas
         metadata={"type": """dict[int, DestinyItemReusablePlugsComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1769,9 +1637,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemPlugObjectivesComponent(Ba
         metadata={"type": """dict[int, DestinyItemPlugObjectivesComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1790,9 +1656,7 @@ class DictionaryComponentResponseOfint32AndDestinyItemTalentGridComponent(BaseMo
         metadata={"type": """dict[int, DestinyItemTalentGridComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1809,9 +1673,7 @@ class SingleComponentResponseOfDestinyVendorComponent(BaseModel):
 
     data: "DestinyVendorComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1828,9 +1690,7 @@ class SingleComponentResponseOfDestinyVendorCategoriesComponent(BaseModel):
 
     data: "DestinyVendorCategoriesComponent" = attr.field()
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1849,9 +1709,7 @@ class DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent(BaseMo
         metadata={"type": """dict[int, DestinyVendorSaleItemComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1870,9 +1728,7 @@ class DictionaryComponentResponseOfuint32AndDestinyPublicVendorComponent(BaseMod
         metadata={"type": """dict[int, DestinyPublicVendorComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1906,9 +1762,7 @@ class DictionaryComponentResponseOfuint32AndPublicDestinyVendorSaleItemSetCompon
         metadata={"type": """dict[int, PublicDestinyVendorSaleItemSetComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1958,9 +1812,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemInstanceComponent(BaseMod
         metadata={"type": """dict[int, DestinyItemInstanceComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -1979,9 +1831,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemRenderComponent(BaseModel
         metadata={"type": """dict[int, DestinyItemRenderComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -2000,9 +1850,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemStatsComponent(BaseModel)
         metadata={"type": """dict[int, DestinyItemStatsComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -2021,9 +1869,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemSocketsComponent(BaseMode
         metadata={"type": """dict[int, DestinyItemSocketsComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -2042,9 +1888,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemReusablePlugsComponent(Ba
         metadata={"type": """dict[int, DestinyItemReusablePlugsComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -2063,9 +1907,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemPlugObjectivesComponent(B
         metadata={"type": """dict[int, DestinyItemPlugObjectivesComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -2084,9 +1926,7 @@ class DictionaryComponentResponseOfuint32AndDestinyItemTalentGridComponent(BaseM
         metadata={"type": """dict[int, DestinyItemTalentGridComponent]"""}
     )
     disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(
-        converter=enum_converter("ComponentPrivacySetting"), metadata={"type": "ComponentPrivacySetting"}
-    )
+    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 @attr.define
@@ -2201,14 +2041,10 @@ class GlobalAlert(BaseModel):
 
     alert_html: str = attr.field()
     alert_key: str = attr.field()
-    alert_level: Union["GlobalAlertLevel", int] = attr.field(
-        converter=enum_converter("GlobalAlertLevel"), metadata={"type": "GlobalAlertLevel"}
-    )
+    alert_level: Union["GlobalAlertLevel", int] = attr.field(converter=enum_converter("GlobalAlertLevel"))
     alert_link: str = attr.field()
     alert_timestamp: datetime = attr.field()
-    alert_type: Union["GlobalAlertType", int] = attr.field(
-        converter=enum_converter("GlobalAlertType"), metadata={"type": "GlobalAlertType"}
-    )
+    alert_type: Union["GlobalAlertType", int] = attr.field(converter=enum_converter("GlobalAlertType"))
     stream_info: "StreamInfo" = attr.field()
 
 

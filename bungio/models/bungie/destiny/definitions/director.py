@@ -102,7 +102,7 @@ class DestinyActivityGraphNodeFeaturingStateDefinition(BaseModel):
     """
 
     highlight_type: Union["ActivityGraphNodeHighlightType", int] = attr.field(
-        converter=enum_converter("ActivityGraphNodeHighlightType"), metadata={"type": "ActivityGraphNodeHighlightType"}
+        converter=enum_converter("ActivityGraphNodeHighlightType")
     )
 
 
@@ -128,7 +128,7 @@ class DestinyActivityGraphNodeActivityDefinition(BaseModel):
 
     activity_hash: int = attr.field()
     node_activity_id: int = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -141,9 +141,7 @@ class DestinyActivityGraphNodeStateEntry(BaseModel):
         state: _No description given by bungie._
     """
 
-    state: Union["DestinyGraphNodeState", int] = attr.field(
-        converter=enum_converter("DestinyGraphNodeState"), metadata={"type": "DestinyGraphNodeState"}
-    )
+    state: Union["DestinyGraphNodeState", int] = attr.field(converter=enum_converter("DestinyGraphNodeState"))
 
 
 @attr.define
@@ -196,7 +194,7 @@ class DestinyActivityGraphDisplayObjectiveDefinition(BaseModel):
 
     id: int = attr.field()
     objective_hash: int = attr.field()
-    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field()
+    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
 
 
 @attr.define

@@ -116,13 +116,9 @@ class PostResponse(BaseModel):
     latest_reply_author_id: int = attr.field()
     latest_reply_post_id: int = attr.field()
     locale: str = attr.field()
-    popularity: Union["ForumPostPopularity", int] = attr.field(
-        converter=enum_converter("ForumPostPopularity"), metadata={"type": "ForumPostPopularity"}
-    )
+    popularity: Union["ForumPostPopularity", int] = attr.field(converter=enum_converter("ForumPostPopularity"))
     thumbnail: str = attr.field()
-    url_media_type: Union["ForumMediaType", int] = attr.field(
-        converter=enum_converter("ForumMediaType"), metadata={"type": "ForumMediaType"}
-    )
+    url_media_type: Union["ForumMediaType", int] = attr.field(converter=enum_converter("ForumMediaType"))
     user_has_muted_post: bool = attr.field()
     user_has_rated: bool = attr.field()
     user_rating: int = attr.field()
@@ -262,15 +258,13 @@ class ForumRecruitmentDetail(BaseModel):
     conversation_id: int = attr.field()
     fireteam: list["GeneralUser"] = attr.field(metadata={"type": """list[GeneralUser]"""})
     intensity: Union["ForumRecruitmentIntensityLabel", int] = attr.field(
-        converter=enum_converter("ForumRecruitmentIntensityLabel"), metadata={"type": "ForumRecruitmentIntensityLabel"}
+        converter=enum_converter("ForumRecruitmentIntensityLabel")
     )
     kicked_player_ids: list[int] = attr.field(metadata={"type": """list[int]"""})
     microphone_required: bool = attr.field()
     player_slots_remaining: int = attr.field()
     player_slots_total: int = attr.field()
-    tone: Union["ForumRecruitmentToneLabel", int] = attr.field(
-        converter=enum_converter("ForumRecruitmentToneLabel"), metadata={"type": "ForumRecruitmentToneLabel"}
-    )
+    tone: Union["ForumRecruitmentToneLabel", int] = attr.field(converter=enum_converter("ForumRecruitmentToneLabel"))
     topic_id: int = attr.field()
 
 

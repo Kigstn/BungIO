@@ -85,3 +85,43 @@ class CommentSummary(BaseModel):
 
     comment_count: int = attr.field()
     topic_id: int = attr.field()
+
+
+@attr.define
+class NewsArticleRssResponse(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        current_pagination_token: _No description given by bungie._
+        news_articles: _No description given by bungie._
+        next_pagination_token: _No description given by bungie._
+        result_count_this_page: _No description given by bungie._
+    """
+
+    current_pagination_token: int = attr.field()
+    news_articles: list["NewsArticleRssItem"] = attr.field(metadata={"type": """list[NewsArticleRssItem]"""})
+    next_pagination_token: int = attr.field()
+    result_count_this_page: int = attr.field()
+
+
+@attr.define
+class NewsArticleRssItem(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        description: _No description given by bungie._
+        link: _No description given by bungie._
+        pub_date: _No description given by bungie._
+        title: _No description given by bungie._
+        unique_identifier: _No description given by bungie._
+    """
+
+    description: str = attr.field()
+    link: str = attr.field()
+    pub_date: datetime = attr.field()
+    title: str = attr.field()
+    unique_identifier: str = attr.field()

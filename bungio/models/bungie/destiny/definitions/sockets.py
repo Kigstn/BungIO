@@ -69,10 +69,8 @@ class DestinySocketTypeDefinition(ManifestModel):
     )
     redacted: bool = attr.field()
     socket_category_hash: int = attr.field()
-    visibility: Union["DestinySocketVisibility", int] = attr.field(
-        converter=enum_converter("DestinySocketVisibility"), metadata={"type": "DestinySocketVisibility"}
-    )
-    manifest_socket_category_hash: Optional["DestinySocketCategoryDefinition"] = attr.field()
+    visibility: Union["DestinySocketVisibility", int] = attr.field(converter=enum_converter("DestinySocketVisibility"))
+    manifest_socket_category_hash: Optional["DestinySocketCategoryDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -87,9 +85,7 @@ class DestinyInsertPlugActionDefinition(BaseModel):
     """
 
     action_execute_seconds: int = attr.field()
-    action_type: Union["SocketTypeActionType", int] = attr.field(
-        converter=enum_converter("SocketTypeActionType"), metadata={"type": "SocketTypeActionType"}
-    )
+    action_type: Union["SocketTypeActionType", int] = attr.field(converter=enum_converter("SocketTypeActionType"))
 
 
 @attr.define
@@ -131,7 +127,7 @@ class DestinySocketTypeScalarMaterialRequirementEntry(BaseModel):
 
     currency_item_hash: int = attr.field()
     scalar_value: int = attr.field()
-    manifest_currency_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_currency_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -150,7 +146,7 @@ class DestinySocketCategoryDefinition(ManifestModel):
     """
 
     category_style: Union["DestinySocketCategoryStyle", int] = attr.field(
-        converter=enum_converter("DestinySocketCategoryStyle"), metadata={"type": "DestinySocketCategoryStyle"}
+        converter=enum_converter("DestinySocketCategoryStyle")
     )
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
     hash: int = attr.field()

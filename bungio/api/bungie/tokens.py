@@ -2,11 +2,12 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import Optional
+from typing import Optional, Union
 
 import attr
 
 from bungio.models import (
+    BungieMembershipType,
     BungieRewardDisplay,
     PartnerOfferClaimRequest,
     PartnerOfferSkuHistoryResponse,
@@ -114,6 +115,34 @@ class TokensRouteInterface(ClientMixin):
         return {
             key: await BungieRewardDisplay.from_dict(
                 data=value, client=self._client, membership_id=membership_id, auth=auth
+            )
+            async for key, value in AllowAsyncIteration(response["Response"].items())
+        }
+
+    async def get_bungie_rewards_for_platform_user(
+        self, membership_id: int, membership_type: Union[BungieMembershipType, int], auth: AuthData
+    ) -> dict[str, BungieRewardDisplay]:
+        """
+        Returns the bungie rewards for the targeted user when a platform membership Id and Type are used.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: ReadAndApplyTokens
+
+        Args:
+            membership_id: users platform membershipId for requested user rewards. If not self, elevated permissions are required.
+            membership_type: The target Destiny 2 membership type.
+            auth: Authentication information.
+
+        Returns:
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
+        """
+
+        response = await self._client.http.get_bungie_rewards_for_platform_user(
+            membership_id=membership_id, membership_type=getattr(membership_type, "value", membership_type), auth=auth
+        )
+        return {
+            key: await BungieRewardDisplay.from_dict(
+                data=value, client=self._client, membership_id=membership_id, membership_type=membership_type, auth=auth
             )
             async for key, value in AllowAsyncIteration(response["Response"].items())
         }

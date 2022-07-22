@@ -134,9 +134,7 @@ class DestinyItemPlugDefinition(BaseModel):
         manifest_preview_item_override_hash: Manifest information for `preview_item_override_hash`
     """
 
-    alternate_plug_style: Union["PlugUiStyles", int] = attr.field(
-        converter=enum_converter("PlugUiStyles"), metadata={"type": "PlugUiStyles"}
-    )
+    alternate_plug_style: Union["PlugUiStyles", int] = attr.field(converter=enum_converter("PlugUiStyles"))
     alternate_ui_plug_label: str = attr.field()
     enabled_material_requirement_hash: int = attr.field()
     enabled_rules: list["DestinyPlugRuleDefinition"] = attr.field(
@@ -151,19 +149,19 @@ class DestinyItemPlugDefinition(BaseModel):
     is_dummy_plug: bool = attr.field()
     on_action_recreate_self: bool = attr.field()
     parent_item_override: "DestinyParentItemOverride" = attr.field()
-    plug_availability: Union["PlugAvailabilityMode", int] = attr.field(
-        converter=enum_converter("PlugAvailabilityMode"), metadata={"type": "PlugAvailabilityMode"}
-    )
+    plug_availability: Union["PlugAvailabilityMode", int] = attr.field(converter=enum_converter("PlugAvailabilityMode"))
     plug_category_hash: int = attr.field()
     plug_category_identifier: str = attr.field()
-    plug_style: Union["PlugUiStyles", int] = attr.field(
-        converter=enum_converter("PlugUiStyles"), metadata={"type": "PlugUiStyles"}
-    )
+    plug_style: Union["PlugUiStyles", int] = attr.field(converter=enum_converter("PlugUiStyles"))
     preview_item_override_hash: int = attr.field()
     ui_plug_label: str = attr.field()
-    manifest_enabled_material_requirement_hash: Optional["DestinyMaterialRequirementSetDefinition"] = attr.field()
-    manifest_insertion_material_requirement_hash: Optional["DestinyMaterialRequirementSetDefinition"] = attr.field()
-    manifest_preview_item_override_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_enabled_material_requirement_hash: Optional["DestinyMaterialRequirementSetDefinition"] = attr.field(
+        default=None
+    )
+    manifest_insertion_material_requirement_hash: Optional["DestinyMaterialRequirementSetDefinition"] = attr.field(
+        default=None
+    )
+    manifest_preview_item_override_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -216,11 +214,9 @@ class DestinyEnergyCapacityEntry(BaseModel):
     """
 
     capacity_value: int = attr.field()
-    energy_type: Union["DestinyEnergyType", int] = attr.field(
-        converter=enum_converter("DestinyEnergyType"), metadata={"type": "DestinyEnergyType"}
-    )
+    energy_type: Union["DestinyEnergyType", int] = attr.field(converter=enum_converter("DestinyEnergyType"))
     energy_type_hash: int = attr.field()
-    manifest_energy_type_hash: Optional["DestinyEnergyTypeDefinition"] = attr.field()
+    manifest_energy_type_hash: Optional["DestinyEnergyTypeDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -245,8 +241,6 @@ class DestinyEnergyCostEntry(BaseModel):
     """
 
     energy_cost: int = attr.field()
-    energy_type: Union["DestinyEnergyType", int] = attr.field(
-        converter=enum_converter("DestinyEnergyType"), metadata={"type": "DestinyEnergyType"}
-    )
+    energy_type: Union["DestinyEnergyType", int] = attr.field(converter=enum_converter("DestinyEnergyType"))
     energy_type_hash: int = attr.field()
-    manifest_energy_type_hash: Optional["DestinyEnergyTypeDefinition"] = attr.field()
+    manifest_energy_type_hash: Optional["DestinyEnergyTypeDefinition"] = attr.field(default=None)

@@ -37,7 +37,7 @@ class DestinyObjectiveProgress(BaseModel):
         completion_value: As of Forsaken, objectives' completion value is determined dynamically at runtime. This value represents the threshold of progress you need to surpass in order for this objective to be considered "complete". If you were using objective data, switch from using the DestinyObjectiveDefinition's "completionValue" to this value.
         destination_hash: If the Objective has a Destination associated with it, this is the unique identifier of the Destination being referred to. Use to look up the DestinyDestinationDefinition in static data. This will give localized data about *where* in the universe the objective should be achieved.
         objective_hash: The unique identifier of the Objective being referred to. Use to look up the DestinyObjectiveDefinition in static data.
-        progress: If progress has been made, and the progress can be measured numerically, this will be the value of that progress. You can compare it to the DestinyObjectiveDefinition.completionValue property for current vs. upper bounds, and use DestinyObjectiveDefinition.inProgressValueStyle or completedValueStyle to determine how this should be rendered. Note that progress, in Destiny 2, need not be a literal numeric progression. It could be one of a number of possible values, even a Timestamp. Always examine DestinyObjectiveDefinition.inProgressValueStyle or completedValueStyle before rendering progress.
+        progress: If progress has been made, and the progress can be measured numerically, this will be the value of that progress. You can compare it to the DestinyObjectiveDefinition.completionValue property for current vs. upper bounds, and use DestinyObjectiveDefinition.valueStyle to determine how this should be rendered. Note that progress, in Destiny 2, need not be a literal numeric progression. It could be one of a number of possible values, even a Timestamp. Always examine DestinyObjectiveDefinition.valueStyle before rendering progress.
         visible: If this is true, the objective is visible in-game. Otherwise, it's not yet visible to the player. Up to you if you want to honor this property.
         manifest_activity_hash: Manifest information for `activity_hash`
         manifest_destination_hash: Manifest information for `destination_hash`
@@ -51,9 +51,9 @@ class DestinyObjectiveProgress(BaseModel):
     objective_hash: int = attr.field()
     progress: int = attr.field()
     visible: bool = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
-    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field()
-    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
+    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -95,5 +95,5 @@ class DestinyQuestStatus(BaseModel):
     )
     tracked: bool = attr.field()
     vendor_hash: int = attr.field()
-    manifest_quest_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_step_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_quest_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_step_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)

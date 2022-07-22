@@ -66,7 +66,7 @@ class DestinyProgression(BaseModel):
     progress_to_next_level: int = attr.field()
     progression_hash: int = attr.field()
     reward_item_states: list[Union["DestinyProgressionRewardItemState", int]] = attr.field(
-        metadata={"type": """list[Union[DestinyProgressionRewardItemState, int]]"""}
+        converter=enum_converter("DestinyProgressionRewardItemState")
     )
     season_resets: list["DestinyProgressionResetEntry"] = attr.field(
         metadata={"type": """list[DestinyProgressionResetEntry]"""}
@@ -74,7 +74,7 @@ class DestinyProgression(BaseModel):
     step_index: int = attr.field()
     weekly_limit: int = attr.field()
     weekly_progress: int = attr.field()
-    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field()
+    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -173,7 +173,7 @@ class DestinyItemQuantity(BaseModel):
     item_hash: int = attr.field()
     item_instance_id: int = attr.field()
     quantity: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 class SocketTypeActionType(BaseEnum):
@@ -1383,7 +1383,7 @@ class DestinyActivity(BaseModel):
     can_lead: bool = attr.field()
     challenges: list["DestinyChallengeStatus"] = attr.field(metadata={"type": """list[DestinyChallengeStatus]"""})
     difficulty_tier: Union["DestinyActivityDifficultyTier", int] = attr.field(
-        converter=enum_converter("DestinyActivityDifficultyTier"), metadata={"type": "DestinyActivityDifficultyTier"}
+        converter=enum_converter("DestinyActivityDifficultyTier")
     )
     display_level: int = attr.field()
     is_completed: bool = attr.field()
@@ -1392,7 +1392,7 @@ class DestinyActivity(BaseModel):
     loadout_requirement_index: int = attr.field()
     modifier_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     recommended_light: int = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
 
 
 class DestinyActivityDifficultyTier(BaseEnum):
@@ -1440,7 +1440,7 @@ class DestinyStat(BaseModel):
 
     stat_hash: int = attr.field()
     value: int = attr.field()
-    manifest_stat_hash: Optional["DestinyStatDefinition"] = attr.field()
+    manifest_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
 
 
 class EquipFailureReason(BaseFlagEnum):
@@ -1491,9 +1491,7 @@ class DestinyTalentNode(BaseModel):
     node_index: int = attr.field()
     node_stats_block: "DestinyTalentNodeStatBlock" = attr.field()
     progress_percent: float = attr.field()
-    state: Union["DestinyTalentNodeState", int] = attr.field(
-        converter=enum_converter("DestinyTalentNodeState"), metadata={"type": "DestinyTalentNodeState"}
-    )
+    state: Union["DestinyTalentNodeState", int] = attr.field(converter=enum_converter("DestinyTalentNodeState"))
     step_index: int = attr.field()
 
 
@@ -1617,7 +1615,7 @@ class DestinyUnlockStatus(BaseModel):
 
     is_set: bool = attr.field()
     unlock_hash: int = attr.field()
-    manifest_unlock_hash: Optional["DestinyUnlockDefinition"] = attr.field()
+    manifest_unlock_hash: Optional["DestinyUnlockDefinition"] = attr.field(default=None)
 
 
 class DestinyVendorItemState(BaseFlagEnum):
@@ -1691,7 +1689,5 @@ class DestinyEquipItemResult(BaseModel):
         item_instance_id: The instance ID of the item in question (all items that can be equipped must, but definition, be Instanced and thus have an Instance ID that you can use to refer to them)
     """
 
-    equip_status: Union["PlatformErrorCodes", int] = attr.field(
-        converter=enum_converter("PlatformErrorCodes"), metadata={"type": "PlatformErrorCodes"}
-    )
+    equip_status: Union["PlatformErrorCodes", int] = attr.field(converter=enum_converter("PlatformErrorCodes"))
     item_instance_id: int = attr.field()

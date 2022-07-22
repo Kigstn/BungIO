@@ -48,13 +48,11 @@ class DestinyEnergyTypeDefinition(ManifestModel):
     capacity_stat_hash: int = attr.field()
     cost_stat_hash: int = attr.field()
     display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    enum_value: Union["DestinyEnergyType", int] = attr.field(
-        converter=enum_converter("DestinyEnergyType"), metadata={"type": "DestinyEnergyType"}
-    )
+    enum_value: Union["DestinyEnergyType", int] = attr.field(converter=enum_converter("DestinyEnergyType"))
     hash: int = attr.field()
     index: int = attr.field()
     redacted: bool = attr.field()
     show_icon: bool = attr.field()
     transparent_icon_path: str = attr.field()
-    manifest_capacity_stat_hash: Optional["DestinyStatDefinition"] = attr.field()
-    manifest_cost_stat_hash: Optional["DestinyStatDefinition"] = attr.field()
+    manifest_capacity_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
+    manifest_cost_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)

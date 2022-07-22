@@ -41,9 +41,7 @@ class DestinyItemTransferRequest(BaseModel):
     character_id: int = attr.field()
     item_id: int = attr.field()
     item_reference_hash: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
     stack_size: int = attr.field()
     transfer_to_vault: bool = attr.field()
-    manifest_item_reference_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_item_reference_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)

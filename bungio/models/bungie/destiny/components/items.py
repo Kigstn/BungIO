@@ -78,4 +78,4 @@ class DestinyItemPlugComponent(BaseModel):
     plug_objectives: list["DestinyObjectiveProgress"] = attr.field(
         metadata={"type": """list[DestinyObjectiveProgress]"""}
     )
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)

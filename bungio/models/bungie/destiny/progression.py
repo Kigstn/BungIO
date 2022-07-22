@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Optional, Union
 import attr
 
 from bungio.models.base import BaseModel
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -64,7 +65,7 @@ class DestinyFactionProgression(BaseModel):
     progress_to_next_level: int = attr.field()
     progression_hash: int = attr.field()
     reward_item_states: list[Union["DestinyProgressionRewardItemState", int]] = attr.field(
-        metadata={"type": """list[Union[DestinyProgressionRewardItemState, int]]"""}
+        converter=enum_converter("DestinyProgressionRewardItemState")
     )
     season_resets: list["DestinyProgressionResetEntry"] = attr.field(
         metadata={"type": """list[DestinyProgressionResetEntry]"""}
@@ -72,5 +73,5 @@ class DestinyFactionProgression(BaseModel):
     step_index: int = attr.field()
     weekly_limit: int = attr.field()
     weekly_progress: int = attr.field()
-    manifest_faction_hash: Optional["DestinyFactionDefinition"] = attr.field()
-    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field()
+    manifest_faction_hash: Optional["DestinyFactionDefinition"] = attr.field(default=None)
+    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)

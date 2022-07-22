@@ -45,8 +45,8 @@ class DestinyRecordsComponent(BaseModel):
     records: dict[int, "DestinyRecordComponent"] = attr.field(
         metadata={"type": """dict[int, DestinyRecordComponent]"""}
     )
-    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
-    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
+    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -71,9 +71,7 @@ class DestinyRecordComponent(BaseModel):
     intervals_redeemed_count: int = attr.field()
     objectives: list["DestinyObjectiveProgress"] = attr.field(metadata={"type": """list[DestinyObjectiveProgress]"""})
     reward_visibilty: list[bool] = attr.field(metadata={"type": """list[bool]"""})
-    state: Union["DestinyRecordState", int] = attr.field(
-        converter=enum_converter("DestinyRecordState"), metadata={"type": "DestinyRecordState"}
-    )
+    state: Union["DestinyRecordState", int] = attr.field(converter=enum_converter("DestinyRecordState"))
 
 
 @attr.define
@@ -114,9 +112,9 @@ class DestinyProfileRecordsComponent(BaseModel):
     )
     score: int = attr.field()
     tracked_record_hash: int = attr.field()
-    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
-    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
-    manifest_tracked_record_hash: Optional["DestinyRecordDefinition"] = attr.field()
+    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+    manifest_tracked_record_hash: Optional["DestinyRecordDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -148,5 +146,5 @@ class DestinyCharacterRecordsComponent(BaseModel):
     records: dict[int, "DestinyRecordComponent"] = attr.field(
         metadata={"type": """dict[int, DestinyRecordComponent]"""}
     )
-    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
-    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field()
+    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)

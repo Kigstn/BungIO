@@ -23,9 +23,7 @@ class DestinyActionRequest(BaseModel):
         membership_type: _No description given by bungie._
     """
 
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
 
 
 @attr.define
@@ -40,9 +38,7 @@ class DestinyCharacterActionRequest(BaseModel):
     """
 
     character_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
 
 
 @attr.define
@@ -59,9 +55,7 @@ class DestinyItemActionRequest(BaseModel):
 
     character_id: int = attr.field()
     item_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
 
 
 @attr.define
@@ -90,11 +84,9 @@ class DestinyPostmasterTransferRequest(BaseModel):
     character_id: int = attr.field()
     item_id: int = attr.field()
     item_reference_hash: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
     stack_size: int = attr.field()
-    manifest_item_reference_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_item_reference_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -111,9 +103,7 @@ class DestinyItemSetActionRequest(BaseModel):
 
     character_id: int = attr.field()
     item_ids: list[int] = attr.field(metadata={"type": """list[int]"""})
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
 
 
 @attr.define
@@ -131,9 +121,7 @@ class DestinyItemStateRequest(BaseModel):
 
     character_id: int = attr.field()
     item_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
     state: bool = attr.field()
 
 
@@ -154,9 +142,7 @@ class DestinyInsertPlugsActionRequest(BaseModel):
     action_token: str = attr.field()
     character_id: int = attr.field()
     item_instance_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
     plug: "DestinyInsertPlugsRequestEntry" = attr.field()
 
 
@@ -174,7 +160,7 @@ class DestinyInsertPlugsRequestEntry(BaseModel):
 
     plug_item_hash: int = attr.field()
     socket_array_type: Union["DestinySocketArrayType", int] = attr.field(
-        converter=enum_converter("DestinySocketArrayType"), metadata={"type": "DestinySocketArrayType"}
+        converter=enum_converter("DestinySocketArrayType")
     )
     socket_index: int = attr.field()
 
@@ -205,7 +191,5 @@ class DestinyInsertPlugsFreeActionRequest(BaseModel):
 
     character_id: int = attr.field()
     item_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
     plug: "DestinyInsertPlugsRequestEntry" = attr.field()

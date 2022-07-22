@@ -122,7 +122,7 @@ class ContentTypeProperty(BaseModel):
     child_properties: list["ContentTypeProperty"] = attr.field(metadata={"type": """list[ContentTypeProperty]"""})
     content_type_allowed: str = attr.field()
     datatype: Union["ContentPropertyDataTypeEnum", int] = attr.field(
-        converter=enum_converter("ContentPropertyDataTypeEnum"), metadata={"type": "ContentPropertyDataTypeEnum"}
+        converter=enum_converter("ContentPropertyDataTypeEnum")
     )
     default_values: list["ContentTypeDefaultValue"] = attr.field(metadata={"type": """list[ContentTypeDefaultValue]"""})
     enabled: bool = attr.field()

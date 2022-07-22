@@ -279,21 +279,27 @@ class BaseModel(ClientMixin):
                     case "dict":
                         # sometimes unknown dicts are returned
                         if field_type != "dict":
+                            new_field_metadata = None
                             new_field_types = field_type.removeprefix("dict[").removesuffix("]").split(", ")
                             key_type = new_field_types[0]
-                            value_type = new_field_types[1]
+                            value_type = ", ".join(new_field_types[1:])
+
+                            # catch nested dicts
+                            if "dict[" in value_type:
+                                new_field_metadata = {"type": value_type}
+                                value_type = None
 
                             ret = {}
                             for key, value in value.items():
                                 key = await BaseModel._convert_to_type(
                                     field_type=key_type,
-                                    field_metadata=None,
+                                    field_metadata=new_field_metadata,
                                     value=key,
                                     client=client,
                                 )
                                 value = await BaseModel._convert_to_type(
                                     field_type=value_type,
-                                    field_metadata=None,
+                                    field_metadata=new_field_metadata,
                                     value=value,
                                     client=client,
                                 )

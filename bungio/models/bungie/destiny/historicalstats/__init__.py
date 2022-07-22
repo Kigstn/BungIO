@@ -80,18 +80,12 @@ class DestinyHistoricalStatsActivity(BaseModel):
     director_activity_hash: int = attr.field()
     instance_id: int = attr.field()
     is_private: bool = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
-    mode: Union["DestinyActivityModeType", int] = attr.field(
-        converter=enum_converter("DestinyActivityModeType"), metadata={"type": "DestinyActivityModeType"}
-    )
-    modes: list[Union["DestinyActivityModeType", int]] = attr.field(
-        metadata={"type": """list[Union[DestinyActivityModeType, int]]"""}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
+    mode: Union["DestinyActivityModeType", int] = attr.field(converter=enum_converter("DestinyActivityModeType"))
+    modes: list[Union["DestinyActivityModeType", int]] = attr.field(converter=enum_converter("DestinyActivityModeType"))
     reference_id: int = attr.field()
-    manifest_director_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
-    manifest_reference_id: Optional["DestinyActivityDefinition"] = attr.field()
+    manifest_director_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_reference_id: Optional["DestinyActivityDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -198,10 +192,10 @@ class DestinyPlayer(BaseModel):
     gender_hash: int = attr.field()
     light_level: int = attr.field()
     race_hash: int = attr.field()
-    manifest_class_hash: Optional["DestinyClassDefinition"] = attr.field()
-    manifest_emblem_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_gender_hash: Optional["DestinyGenderDefinition"] = attr.field()
-    manifest_race_hash: Optional["DestinyRaceDefinition"] = attr.field()
+    manifest_class_hash: Optional["DestinyClassDefinition"] = attr.field(default=None)
+    manifest_emblem_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_gender_hash: Optional["DestinyGenderDefinition"] = attr.field(default=None)
+    manifest_race_hash: Optional["DestinyRaceDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -247,7 +241,7 @@ class DestinyHistoricalWeaponStats(BaseModel):
     values: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
         metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
-    manifest_reference_id: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_reference_id: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -330,9 +324,7 @@ class DestinyClanAggregateStat(BaseModel):
         value: Value of the stat for this player
     """
 
-    mode: Union["DestinyActivityModeType", int] = attr.field(
-        converter=enum_converter("DestinyActivityModeType"), metadata={"type": "DestinyActivityModeType"}
-    )
+    mode: Union["DestinyActivityModeType", int] = attr.field(converter=enum_converter("DestinyActivityModeType"))
     stat_id: str = attr.field()
     value: "DestinyHistoricalStatsValue" = attr.field()
 
@@ -517,4 +509,4 @@ class DestinyAggregateActivityStats(BaseModel):
     values: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
         metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)

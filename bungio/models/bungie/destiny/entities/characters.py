@@ -87,38 +87,30 @@ class DestinyCharacterComponent(BaseModel, DestinyCharacterMixin):
     base_character_level: int = attr.field()
     character_id: int = attr.field()
     class_hash: int = attr.field()
-    class_type: Union["DestinyClass", int] = attr.field(
-        converter=enum_converter("DestinyClass"), metadata={"type": "DestinyClass"}
-    )
+    class_type: Union["DestinyClass", int] = attr.field(converter=enum_converter("DestinyClass"))
     date_last_played: datetime = attr.field()
     emblem_background_path: str = attr.field()
     emblem_color: "DestinyColor" = attr.field()
     emblem_hash: int = attr.field()
     emblem_path: str = attr.field()
     gender_hash: int = attr.field()
-    gender_type: Union["DestinyGender", int] = attr.field(
-        converter=enum_converter("DestinyGender"), metadata={"type": "DestinyGender"}
-    )
+    gender_type: Union["DestinyGender", int] = attr.field(converter=enum_converter("DestinyGender"))
     level_progression: "DestinyProgression" = attr.field()
     light: int = attr.field()
     membership_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
     minutes_played_this_session: int = attr.field()
     minutes_played_total: int = attr.field()
     percent_to_next_level: float = attr.field()
     race_hash: int = attr.field()
-    race_type: Union["DestinyRace", int] = attr.field(
-        converter=enum_converter("DestinyRace"), metadata={"type": "DestinyRace"}
-    )
+    race_type: Union["DestinyRace", int] = attr.field(converter=enum_converter("DestinyRace"))
     stats: dict[int, int] = attr.field(metadata={"type": """dict[int, int]"""})
     title_record_hash: int = attr.field()
-    manifest_class_hash: Optional["DestinyClassDefinition"] = attr.field()
-    manifest_emblem_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
-    manifest_gender_hash: Optional["DestinyGenderDefinition"] = attr.field()
-    manifest_race_hash: Optional["DestinyRaceDefinition"] = attr.field()
-    manifest_title_record_hash: Optional["DestinyRecordDefinition"] = attr.field()
+    manifest_class_hash: Optional["DestinyClassDefinition"] = attr.field(default=None)
+    manifest_emblem_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_gender_hash: Optional["DestinyGenderDefinition"] = attr.field(default=None)
+    manifest_race_hash: Optional["DestinyRaceDefinition"] = attr.field(default=None)
+    manifest_title_record_hash: Optional["DestinyRecordDefinition"] = attr.field(default=None)
 
 
 @attr.define
@@ -207,12 +199,12 @@ class DestinyCharacterActivitiesComponent(BaseModel):
     current_activity_mode_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
     current_activity_mode_type: int = attr.field()
     current_activity_mode_types: list[Union["DestinyActivityModeType", int]] = attr.field(
-        metadata={"type": """list[Union[DestinyActivityModeType, int]]"""}
+        converter=enum_converter("DestinyActivityModeType")
     )
     current_playlist_activity_hash: int = attr.field()
     date_activity_started: datetime = attr.field()
     last_completed_story_hash: int = attr.field()
-    manifest_current_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
-    manifest_current_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field()
-    manifest_current_playlist_activity_hash: Optional["DestinyActivityDefinition"] = attr.field()
-    manifest_last_completed_story_hash: Optional["DestinyActivityDefinition"] = attr.field()
+    manifest_current_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_current_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field(default=None)
+    manifest_current_playlist_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_last_completed_story_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)

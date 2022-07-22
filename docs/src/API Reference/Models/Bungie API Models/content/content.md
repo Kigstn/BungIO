@@ -7,3 +7,5 @@
             - ContentItemPublicContract
             - ContentRepresentation
             - CommentSummary
+            - NewsArticleRssResponse
+            - NewsArticleRssItem

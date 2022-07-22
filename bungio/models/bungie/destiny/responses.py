@@ -121,12 +121,12 @@ class DestinyProfileUserInfoCard(BaseModel, DestinyUserMixin):
     """
 
     applicable_membership_types: list[Union["BungieMembershipType", int]] = attr.field(
-        metadata={"type": """list[Union[BungieMembershipType, int]]"""}
+        converter=enum_converter("BungieMembershipType")
     )
     bungie_global_display_name: str = attr.field()
     bungie_global_display_name_code: int = attr.field()
     cross_save_override: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
+        converter=enum_converter("BungieMembershipType")
     )
     date_last_played: datetime = attr.field()
     display_name: str = attr.field()
@@ -135,9 +135,7 @@ class DestinyProfileUserInfoCard(BaseModel, DestinyUserMixin):
     is_overridden: bool = attr.field()
     is_public: bool = attr.field()
     membership_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(
-        converter=enum_converter("BungieMembershipType"), metadata={"type": "BungieMembershipType"}
-    )
+    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
     platform_silver: "DestinyPlatformSilverComponent" = attr.field()
     supplemental_display_name: str = attr.field()
     unpaired_game_versions: int = attr.field()
@@ -154,9 +152,7 @@ class DestinyErrorProfile(BaseModel):
         info_card: Basic info about the account that failed. Don't expect anything other than membership ID, Membership Type, and displayName to be populated.
     """
 
-    error_code: Union["PlatformErrorCodes", int] = attr.field(
-        converter=enum_converter("PlatformErrorCodes"), metadata={"type": "PlatformErrorCodes"}
-    )
+    error_code: Union["PlatformErrorCodes", int] = attr.field(converter=enum_converter("PlatformErrorCodes"))
     info_card: "UserInfoCard" = attr.field()
 
 

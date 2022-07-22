@@ -82,4 +82,4 @@ class DestinyItemPeerView(BaseModel):
 
     dyes: list["DyeReference"] = attr.field(metadata={"type": """list[DyeReference]"""})
     item_hash: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)

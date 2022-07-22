@@ -84,4 +84,4 @@ class DestinyArtifactTierItemDefinition(BaseModel):
     """
 
     item_hash: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
