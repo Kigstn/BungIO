@@ -8,7 +8,6 @@ from bungio.models.base import ClientMixin, FuzzyAttrFinder
 if TYPE_CHECKING:
     # AUTOMATIC IMPORTS START
     from bungio.models import (
-        BungieMembershipType,
         BungieRewardDisplay,
         DestinyComponentType,
         DestinyHistoricalStatsAccountResult,
