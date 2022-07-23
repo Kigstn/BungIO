@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+import attr
+
 from bungio.definitions import DEFAULT_LOGGER
 from bungio.models.base import MISSING
 
@@ -9,25 +11,27 @@ if TYPE_CHECKING:
 
 __all__ = (
     "client",
-    "SingletonMetaclass",
+    "Singleton",
 )
 
 client: "Client" = MISSING
 
 
-class SingletonMetaclass(type):
+_instances: dict = {}
+
+
+@attr.define()
+class Singleton:
     """
-    Singleton metaclass used to only create one instance
+    Singleton class used to only create one instance
     """
 
-    _instances: dict = {}
-
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(SingletonMetaclass, cls).__call__(*args, **kwargs)
-            return cls._instances[cls]
+    def __new__(cls, *args, **kwargs):
+        if cls not in _instances:
+            _instances[cls] = super().__new__(cls)
+            return _instances[cls]
         else:
-            found_cls = cls._instances[cls]
+            found_cls = _instances[cls]
             if client is not MISSING:
                 logger = client.logger
             else:

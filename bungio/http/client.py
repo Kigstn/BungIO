@@ -31,13 +31,13 @@ from bungio.http.route import Route
 from bungio.http.routes import AllRouteHttpRequests
 from bungio.models.auth import AuthData
 from bungio.models.base import MISSING, ClientMixin
-from bungio.singleton import SingletonMetaclass
+from bungio.singleton import Singleton, SingletonMetaclass
 
 __all__ = ("HttpClient",)
 
 
-@attr.define
-class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, metaclass=SingletonMetaclass):
+@attr.define(init=False)
+class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton):
     """
     The singleton http client doing all communication with bungie
 
@@ -54,6 +54,11 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, metaclass=
     ratelimiter: RateLimiter = attr.field(init=False, default=RateLimiter())
     semaphore: Semaphore = attr.field(init=False, default=Semaphore(100))
     __session: ClientSession = attr.field(init=False, default=None)
+
+    def __init__(self, *args, **kwargs):
+        if not getattr(self, "_initialised", False):
+            self.__attrs_init__(*args, **kwargs)
+        self._initialised = True
 
     def __del__(self):
         # clean up the session

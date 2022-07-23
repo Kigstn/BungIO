@@ -46,8 +46,8 @@ token_update_lock: dict[int, asyncio.Lock] = {}
 __all__ = ("Client",)
 
 
-@attr.define
-class Client(metaclass=singleton.SingletonMetaclass):
+@attr.define(init=False)
+class Client(singleton.Singleton):
     """
     The singleton api client
 
@@ -82,6 +82,11 @@ class Client(metaclass=singleton.SingletonMetaclass):
     manifest: Optional[Manifest] = attr.field(init=False, default=None, repr=False)
 
     _metadata: Optional[MetaData] = attr.field(init=False, default=None, repr=False)
+
+    def __init__(self, *args, **kwargs):
+        if not getattr(self, "_initialised", False):
+            self.__attrs_init__(*args, **kwargs)
+        self._initialised = True
 
     @manifest_storage.validator  # noqa
     def manifest_storage_check(self, attribute, value):
