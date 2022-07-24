@@ -31,4 +31,4 @@ class AuthData(BaseModel):
     refresh_token: str = attr.field(repr=False)
     refresh_token_expiry: datetime.datetime = attr.field()
     membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
-    destiny_membership_id: int = attr.field(default=MISSING)
+    destiny_membership_id: int = attr.field()
