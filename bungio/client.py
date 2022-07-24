@@ -199,6 +199,7 @@ class Client(singleton.Singleton):
                 self.logger.warning(
                     f"User with destiny id `auth.destiny_membership_id` should set up cross save. Had to guess which one to use, since they have multiple accounts -> `{destiny_info.destiny_memberships}`"
                 )
+                auth.cross_save_setup = False
 
         # get the correct membership type
         for entry in destiny_info.destiny_memberships:
