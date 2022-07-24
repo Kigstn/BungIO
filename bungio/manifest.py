@@ -24,6 +24,8 @@ class Manifest(ClientMixin):
     The connector to all manifest data
     """
 
+    prefix: str = attr.field(init=False, default="destiny_manifest_")
+
     __synchronised: bool = attr.field(init=False, default=False)
     __saved_manifests: dict[str, Table] = attr.field(init=False, factory=dict)
     __manifest_urls: dict[str, str] = attr.field(init=False, factory=dict)
@@ -36,7 +38,7 @@ class Manifest(ClientMixin):
     def __attrs_post_init__(self):
         # noinspection PyProtectedMember
         self.__version_table = Table(
-            "destiny_manifest_version",
+            f"{self.prefix}version",
             self._client._metadata,
             Column("version", Text, nullable=False, primary_key=True),
         )
@@ -61,8 +63,8 @@ class Manifest(ClientMixin):
                 # noinspection PyProtectedMember
                 # get all existing db tables
                 for table_name, table in self._client._metadata.tables.items():
-                    if table_name.startswith("destiny_manifest_") and table_name != "destiny_manifest_version":
-                        self.__saved_manifests[table_name.removeprefix("destiny_manifest_")] = table
+                    if table_name.startswith(self.prefix) and table_name != f"{self.prefix}version":
+                        self.__saved_manifests[table_name.removeprefix(self.prefix)] = table
 
             await self._check_for_updates()
             self.__synchronised = True
@@ -123,7 +125,7 @@ class Manifest(ClientMixin):
                 async with self._client.manifest_storage.begin() as db:
                     # noinspection PyProtectedMember
                     self.__saved_manifests[manifest_class] = Table(
-                        f"destiny_manifest_{manifest_class}",
+                        f"{self.prefix}{manifest_class}",
                         self._client._metadata,
                         Column("reference_id", Text, nullable=False, primary_key=True),
                         Column("data", JSON, nullable=False),
