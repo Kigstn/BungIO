@@ -30,6 +30,7 @@ from typing import Optional
 from bungio import Client
 from bungio.models import AuthData
 
+
 # overwrite the client to make use of the token events
 class MyClient(Client):
     # this gets called when a token gets created / updated
@@ -38,8 +39,9 @@ class MyClient(Client):
         # saving the auth in a file for this example, in reality this should be replaced by a database
         with open("user_auths.json", "r+") as file:
             data = json.load(file)
-            data[after.destiny_membership_id] = after
+            data[after.membership_id] = after
             json.dump(data, file)
+
 
 # instantiate and use both bungio and fastapi
 client = MyClient(
@@ -60,14 +62,18 @@ async def auth_url():
     url = client.get_auth_url(state=state)
     return {"state": state, "url": url}
 
+
 # call this from your website
-@app.get("/auth/{membership_id}/{membership_type}/{code}")
-async def authenticate(membership_id: int, membership_type: int, code: str):
+@app.get("/auth/{code}")
+async def authenticate(code: str):
     """Receive information from bungie authentication"""
 
     # generate an access token with the code
     # this will call `Client.on_token_update` we defined above
-    await client.generate_auth(membership_type=membership_type, destiny_membership_id=membership_id, code=code)
+    auth = await client.generate_auth(code=code)
+
+    return {"membership_id": auth.membership_id}
+
 
 # example use of the auth data to access a protected route
 @app.get("friend_list/{membership_id}/")

@@ -18,6 +18,7 @@ from bungio.http.client import HttpClient
 from bungio.manifest import Manifest
 from bungio.models import BungieMembershipType
 from bungio.models.auth import AuthData
+from bungio.models.base import MISSING
 from bungio.models.enums import BungieLanguage
 from bungio.utils import get_now_with_tz
 
@@ -82,6 +83,8 @@ class Client(singleton.Singleton):
     manifest: Optional[Manifest] = attr.field(init=False, default=None, repr=False)
 
     _metadata: Optional[MetaData] = attr.field(init=False, default=None, repr=False)
+
+    _initialised: bool = attr.field(init=False, default=False)
 
     def __init__(self, *args, **kwargs):
         if not getattr(self, "_initialised", False):
@@ -154,9 +157,7 @@ class Client(singleton.Singleton):
 
         return f"https://www.bungie.net/en/oauth/authorize?client_id={self.bungie_client_id}&response_type=code&state={state}"
 
-    async def generate_auth(
-        self, membership_type: BungieMembershipType | int, destiny_membership_id: int, code: str
-    ) -> AuthData:
+    async def generate_auth(self, code: str) -> AuthData:
         """
         Generate authentication information from a bungie code. For information on how to get that code, visit the [official documentation](https://github.com/Bungie-net/api/wiki/OAuth-Documentation)
 
@@ -164,8 +165,6 @@ class Client(singleton.Singleton):
             This dispatches the Client.on_token_update()
 
         Args:
-            membership_type: The `membership_type` of the user this data belongs to
-            destiny_membership_id: The `destiny_membership_id` of the user this data belongs to
             code: The code bungie sent
 
         Raises:
@@ -175,20 +174,37 @@ class Client(singleton.Singleton):
             The working authentication info.
         """
 
-        if not isinstance(membership_type, BungieMembershipType):
-            membership_type = BungieMembershipType(membership_type)
-
         now = get_now_with_tz()
         data = await self.request_access_token(code=code)
 
         auth = AuthData(
-            membership_type=membership_type,
-            destiny_membership_id=destiny_membership_id,
+            membership_type=MISSING,
+            destiny_membership_id=MISSING,
             token=data["access_token"],
             token_expiry=now + datetime.timedelta(seconds=data["expires_in"]),
             refresh_token=data["refresh_token"],
             refresh_token_expiry=now + datetime.timedelta(seconds=data["refresh_expires_in"]),
         )
+        destiny_info = await self.api.get_membership_data_for_current_user(auth=auth)
+
+        # get the user's destiny info
+        # this is not set if the user has no cross save
+        auth.membership_id = destiny_info.primary_membership_id or MISSING
+        if auth.membership_id is MISSING:
+            # if primary is not defined, use the first one and dispatch a info that the user should set up cross save
+            auth.membership_id = destiny_info.destiny_memberships[0].membership_id
+
+            # sometimes they don't have cross save set up yet have multiple entries
+            if len(destiny_info.destiny_memberships) > 1:
+                self.logger.warning(
+                    f"User with destiny id `auth.destiny_membership_id` should set up cross save. Had to guess which one to use, since they have multiple accounts -> `{destiny_info.destiny_memberships}`"
+                )
+
+        # get the correct membership type
+        for entry in destiny_info.destiny_memberships:
+            if entry.membership_id == auth.membership_id:
+                auth.membership_type = BungieMembershipType(entry.membership_type)
+        assert auth.membership_type is not MISSING
 
         # dispatch the update event
         asyncio.create_task(self._client.on_token_update(before=None, after=auth))
@@ -214,9 +230,9 @@ class Client(singleton.Singleton):
         """
 
         # locked this on a per-user basis
-        if auth.destiny_membership_id not in token_update_lock:
-            token_update_lock.update({auth.destiny_membership_id: asyncio.Lock()})
-        async with token_update_lock[auth.destiny_membership_id]:
+        if auth.membership_id not in token_update_lock:
+            token_update_lock.update({auth.membership_id: asyncio.Lock()})
+        async with token_update_lock[auth.membership_id]:
 
             # check that token exists
             if auth.token is None:
@@ -265,4 +281,4 @@ class Client(singleton.Singleton):
             after: The new auth info
         """
 
-        self.logger.info(f"Updated token for {before.destiny_membership_id=}: {before.token=} -> {after.token=}")
+        self.logger.info(f"Updated token for {before.membership_id=}: {before.token=} -> {after.token=}")

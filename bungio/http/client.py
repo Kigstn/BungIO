@@ -31,7 +31,7 @@ from bungio.http.route import Route
 from bungio.http.routes import AllRouteHttpRequests
 from bungio.models.auth import AuthData
 from bungio.models.base import MISSING, ClientMixin
-from bungio.singleton import Singleton, SingletonMetaclass
+from bungio.singleton import Singleton
 
 __all__ = ("HttpClient",)
 
@@ -54,6 +54,8 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
     ratelimiter: RateLimiter = attr.field(init=False, default=RateLimiter())
     semaphore: Semaphore = attr.field(init=False, default=Semaphore(100))
     __session: ClientSession = attr.field(init=False, default=None)
+
+    _initialised: bool = attr.field(init=False, default=False)
 
     def __init__(self, *args, **kwargs):
         if not getattr(self, "_initialised", False):
