@@ -69,9 +69,9 @@ class Manifest(ClientMixin):
             await self._check_for_updates()
             self.__synchronised = True
 
-    async def fetch(self, manifest_class: Type["ManifestModel"], value: str) -> Optional["BaseModel"]:
+    async def fetch(self, manifest_class: Type["ManifestModel"], value: str) -> Optional["ManifestModel"]:
         """
-        Convert raw bungie data to the information defined in the manifest
+        Find a manifest model in the database by the reference, usually an id
 
         Args:
             manifest_class: The class the value should be converted to
@@ -101,6 +101,35 @@ class Manifest(ClientMixin):
                 return None
 
             return await manifest_class.from_dict(data=result, client=self._client, recursive=True)
+
+    async def fetch_all(self, manifest_class: Type["ManifestModel"]) -> list["ManifestModel"]:
+        """
+        Return all models for a specific manifest entry
+
+        Args:
+            manifest_class: The classes to find in the manifest
+
+        Returns:
+            The manifest information, if found
+        """
+
+        db: AsyncConnection
+        name = manifest_class.__name__
+
+        if not self.__synchronised:
+            await self._synchronise_with_db()
+
+        await self.download(manifest_class=manifest_class)
+
+        # get the data
+        async with self._client.manifest_storage.begin() as db:
+            query = select(self.__saved_manifests[name].columns.data)
+            results = await db.execute(query)
+            results = results.scalars().all()
+
+            return [
+                await manifest_class.from_dict(data=result, client=self._client, recursive=True) for result in results
+            ]
 
     async def download(self, manifest_class: Type["ManifestModel"] | str):
         """
