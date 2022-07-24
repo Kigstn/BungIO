@@ -180,6 +180,7 @@ class Client(singleton.Singleton):
         auth = AuthData(
             membership_type=MISSING,
             destiny_membership_id=MISSING,
+            bungie_name=MISSING,
             token=data["access_token"],
             token_expiry=now + datetime.timedelta(seconds=data["expires_in"]),
             refresh_token=data["refresh_token"],
@@ -200,11 +201,18 @@ class Client(singleton.Singleton):
                     f"User with destiny id `auth.destiny_membership_id` should set up cross save. Had to guess which one to use, since they have multiple accounts -> `{destiny_info.destiny_memberships}`"
                 )
                 auth.cross_save_setup = False
+        auth.membership_id = int(auth.membership_id)
 
-        # get the correct membership type
+        # get the correct membership type and bungie name
         for entry in destiny_info.destiny_memberships:
             if entry.membership_id == auth.membership_id:
-                auth.membership_type = BungieMembershipType(entry.membership_type)
+                auth.membership_type = BungieMembershipType(int(entry.membership_type))
+                if not entry.bungie_global_display_name or not entry.bungie_global_display_name_code:
+                    auth.bungie_name = None
+                else:
+                    auth.bungie_name = (
+                        f"{entry.bungie_global_display_name}#{str(entry.bungie_global_display_name_code).zfill(4)}"
+                    )
         assert auth.membership_type is not MISSING
 
         # dispatch the update event

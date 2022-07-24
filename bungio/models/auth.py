@@ -24,6 +24,7 @@ class AuthData(BaseModel):
         refresh_token_expiry: The refresh token expiry date
         membership_type: The `membership_type` of the user this data belongs to
         membership_id: The `membership_id` of the user this data belongs to
+        bungie_name: The bungie name of the user this data belongs to. Can be `None` if the user has not launched the game after they got introduced
         cross_save_setup: If the user has cross save set up. If this is `False`, the membership information may be for an unwanted system
     """
 
@@ -33,4 +34,5 @@ class AuthData(BaseModel):
     refresh_token_expiry: datetime.datetime = attr.field()
     membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
     membership_id: int = attr.field()
+    bungie_name: Optional[str] = attr.field()
     cross_save_setup: bool = attr.field(default=True)
