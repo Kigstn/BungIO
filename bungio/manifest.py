@@ -99,6 +99,8 @@ class Manifest(ClientMixin):
                 result = result.scalars().one_or_none()
             except MultipleResultsFound:
                 return None
+            if not result:
+                return None
 
             return await manifest_class.from_dict(data=result, client=self._client, recursive=True)
 
@@ -172,6 +174,9 @@ class Manifest(ClientMixin):
     async def _check_for_updates(self):
         """
         Checks if there is an updated version of the manifest available (hourly)
+
+        Tip: Staying up to date
+            This dispatches the `Client.on_manifest_update()` event
         """
 
         now = get_now_with_tz()
@@ -193,9 +198,14 @@ class Manifest(ClientMixin):
                         await db.execute(self.__version_table.delete())
                         await db.execute(self.__version_table.insert().values(version=manifest.version))
 
-                # set the urls
-                self.__manifest_urls = {}
-                for name, url in manifest.json_world_component_content_paths[self._client.language.value].items():
-                    self.__manifest_urls[name] = url
+                        # set the urls
+                        self.__manifest_urls = {}
+                        for name, url in manifest.json_world_component_content_paths[
+                            self._client.language.value
+                        ].items():
+                            self.__manifest_urls[name] = url
+
+                        # dispatch the update event
+                        asyncio.create_task(self._client.on_manifest_update())
 
             self.__manifest_last_update = now

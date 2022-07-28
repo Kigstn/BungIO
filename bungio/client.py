@@ -162,7 +162,7 @@ class Client(singleton.Singleton):
         Generate authentication information from a bungie code. For information on how to get that code, visit the [official documentation](https://github.com/Bungie-net/api/wiki/OAuth-Documentation)
 
         Tip: Staying up to date
-            This dispatches the Client.on_token_update()
+            This dispatches the `Client.on_token_update()` event
 
         Args:
             code: The code bungie sent
@@ -226,7 +226,7 @@ class Client(singleton.Singleton):
         Gets called automatically when doing requests with AuthData.
 
         Tip: Staying up to date
-            This dispatches the Client.on_token_update()
+            This dispatches the `Client.on_token_update()` event
 
         Args:
             auth: The potentially old authentication info.
@@ -291,3 +291,14 @@ class Client(singleton.Singleton):
         """
 
         self.logger.info(f"Updated token for {before.membership_id=}: {before.token=} -> {after.token=}")
+
+    async def on_manifest_update(self) -> None:
+        """
+        Dispatched whenever the manifest receives an update by bungie.
+        This is checked for periodically when doing manifest dependant request.
+
+        Tip: Subclassing
+            It is highly recommended to subclass the Client and overwrite this function to suite your own needs
+        """
+
+        self.logger.info(f"Destiny manifest was updated by bungie")
