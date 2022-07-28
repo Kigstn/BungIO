@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 import datetime
 from typing import TYPE_CHECKING, Optional, Union
 
 import attr
 
-from bungio.models.base import MISSING, BaseModel
+from bungio.models.base import BaseModel
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -36,3 +38,23 @@ class AuthData(BaseModel):
     membership_id: int = attr.field()
     bungie_name: Optional[str] = attr.field()
     cross_save_setup: bool = attr.field(default=True)
+
+    async def refresh(self) -> AuthData:
+        """
+        Check if tokens need to be refreshed and then do that.
+        Gets called automatically when doing requests with AuthData.
+
+        Tip: Staying up to date
+            This dispatches the `Client.on_token_update()` event
+
+        Args:
+            auth: The potentially old authentication info.
+
+        Raises:
+            InvalidAuthentication: If authentication is invalid
+
+        Returns:
+            The working authentication info.
+        """
+
+        await self._client.get_working_auth(auth=self)

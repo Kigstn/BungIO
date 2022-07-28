@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     # AUTOMATIC IMPORTS START
     from bungio.models import (
         BungieRewardDisplay,
+        DestinyCharacter,
         DestinyComponentType,
         DestinyHistoricalStatsAccountResult,
         DestinyItemResponse,
@@ -40,6 +41,17 @@ __all__ = ("DestinyUserMixin",)
 
 @attr.define
 class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
+    @property
+    def full_bungie_name(self) -> str:
+        """
+        Return the formatted bungie name like it is seen in-game. This includes the four numbers
+
+        Returns:
+            The full bungie name
+        """
+
+        return f"""{self.bungie_global_display_name}#{str(self.bungie_global_display_name_code).zfill(4)}"""
+
     async def yield_activity_history(
         self,
         mode: Union["DestinyActivityModeType", int],
@@ -61,15 +73,26 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
         """
 
         # get character ids and gen functions
-        characters = await self.get_profile(components=[200], auth=auth)
+        # use the stats page to also get deleted chars
+        data = await self.get_historical_stats_for_account(groups=[DestinyStatsGroupType.NONE], auth=auth)
+
+        characters = [
+            DestinyCharacter(
+                membership_id=self._fuzzy_getattr("membership_id"),
+                membership_type=self._fuzzy_getattr("membership_type"),
+                character_id=character.character_id,
+            )
+            for character in data.characters
+        ]
+
         funcs = {
             i: character.yield_activity_history(
                 mode=mode,
                 earliest_allowed_datetime=earliest_allowed_datetime,
                 latest_allowed_datetime=latest_allowed_datetime,
                 auth=auth,
-            )  # noqa
-            for i, character in enumerate(characters.characters.data.values())
+            )
+            for i, character in enumerate(characters)
         }
 
         # gen the first values

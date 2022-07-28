@@ -19,7 +19,7 @@ class DestinyCharacter(DestinyCharacterMixin):
     Attributes:
         membership_id: The user's id
         membership_type: The user's type, aka platform
-        membership_type: The character's id
+        character_id: The character's id
     """
 
     membership_id: int = attr.field()
