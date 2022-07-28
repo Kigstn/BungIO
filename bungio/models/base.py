@@ -107,7 +107,19 @@ class BaseEnum(EnumMixin, Enum):
     Base methods which help to acquire this model from json and export it to json.
     """
 
-    pass
+    @property
+    def display_name(self) -> str:
+        """
+        Format the instance name so that it looks like in-game.
+
+        Example:
+            `name="HAND_CANNON"` -> `"Hand Cannon"`
+
+        Returns:
+            THe formatted name
+        """
+
+        return " ".join([part.capitalize() for part in self.name.split("_")])
 
 
 class BaseFlagEnum(EnumMixin, IntFlag):
