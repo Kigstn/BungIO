@@ -4,15 +4,13 @@
 
 from typing import TYPE_CHECKING
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import IgnoreResponse
 
 
-@attr.define
+@custom_define()
 class TagResponse(BaseModel):
     """
     _No description given by bungie._
@@ -23,5 +21,5 @@ class TagResponse(BaseModel):
         tag_text: _No description given by bungie._
     """
 
-    ignore_status: "IgnoreResponse" = attr.field()
-    tag_text: str = attr.field()
+    ignore_status: "IgnoreResponse" = custom_field()
+    tag_text: str = custom_field()

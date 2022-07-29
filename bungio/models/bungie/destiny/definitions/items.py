@@ -4,9 +4,7 @@
 
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseModel, ManifestModel
+from bungio.models.base import BaseModel, ManifestModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -21,7 +19,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyItemTierTypeDefinition(ManifestModel):
     """
     Defines the tier type of an item. Mostly this provides human readable properties for types like Common, Rare, etc... It also provides some base data for infusion that could be useful.
@@ -35,14 +33,14 @@ class DestinyItemTierTypeDefinition(ManifestModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    infusion_process: "DestinyItemTierTypeInfusionBlock" = attr.field()
-    redacted: bool = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    infusion_process: "DestinyItemTierTypeInfusionBlock" = custom_field()
+    redacted: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyItemTierTypeInfusionBlock(BaseModel):
     """
     _No description given by bungie._
@@ -53,11 +51,11 @@ class DestinyItemTierTypeInfusionBlock(BaseModel):
         minimum_quality_increment: As long as InfuserQuality > InfuseeQuality, the amount of quality bestowed is guaranteed to be at least this value, even if the transferRatio would dictate that it should be less. The total amount of quality that ends up in the Infusee cannot exceed the Infuser's quality however (for instance, if you infuse a 300 item with a 301 item and the minimum quality increment is 10, the infused item will not end up with 310 quality)
     """
 
-    base_quality_transfer_ratio: float = attr.field()
-    minimum_quality_increment: int = attr.field()
+    base_quality_transfer_ratio: float = custom_field()
+    minimum_quality_increment: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyDerivedItemCategoryDefinition(BaseModel):
     """
     A shortcut for the fact that some items have a "Preview Vendor" - See DestinyInventoryItemDefinition.preview.previewVendorHash - that is intended to be used to show what items you can get as a result of acquiring or using this item. A common example of this in Destiny 1 was Eververse "Boxes," which could have many possible items. This "Preview Vendor" is not a vendor you can actually see in the game, but it defines categories and sale items for all of the possible items you could get from the Box so that the game can show them to you. We summarize that info here so that you don't have to do that Vendor lookup and aggregation manually.
@@ -68,13 +66,13 @@ class DestinyDerivedItemCategoryDefinition(BaseModel):
         items: This is the list of all of the items for this category and the basic properties we'll know about them.
     """
 
-    category_description: str = attr.field()
-    items: list["DestinyDerivedItemDefinition"] = attr.field(
+    category_description: str = custom_field()
+    items: list["DestinyDerivedItemDefinition"] = custom_field(
         metadata={"type": """list[DestinyDerivedItemDefinition]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyDerivedItemDefinition(BaseModel):
     """
     This is a reference to, and summary data for, a specific item that you can get as a result of Using or Acquiring some other Item (For example, this could be summary information for an Emote that you can get by opening an an Eververse Box) See DestinyDerivedItemCategoryDefinition for more information.
@@ -89,15 +87,15 @@ class DestinyDerivedItemDefinition(BaseModel):
         vendor_item_index: If the item was derived from a "Preview Vendor", this will be an index into the DestinyVendorDefinition's itemList property. Otherwise, -1.
     """
 
-    icon_path: str = attr.field()
-    item_description: str = attr.field()
-    item_detail: str = attr.field()
-    item_hash: int = attr.field()
-    item_name: str = attr.field()
-    vendor_item_index: int = attr.field()
+    icon_path: str = custom_field()
+    item_description: str = custom_field()
+    item_detail: str = custom_field()
+    item_hash: int = custom_field()
+    item_name: str = custom_field()
+    vendor_item_index: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyItemPlugDefinition(BaseModel):
     """
     If an item is a Plug, its DestinyInventoryItemDefinition.plug property will be populated with an instance of one of these bad boys. This gives information about when it can be inserted, what the plug's category is (and thus whether it is compatible with a socket... see DestinySocketTypeDefinition for information about Plug Categories and socket compatibility), whether it is enabled and other Plug info.
@@ -134,37 +132,39 @@ class DestinyItemPlugDefinition(BaseModel):
         manifest_preview_item_override_hash: Manifest information for `preview_item_override_hash`
     """
 
-    alternate_plug_style: Union["PlugUiStyles", int] = attr.field(converter=enum_converter("PlugUiStyles"))
-    alternate_ui_plug_label: str = attr.field()
-    enabled_material_requirement_hash: int = attr.field()
-    enabled_rules: list["DestinyPlugRuleDefinition"] = attr.field(
+    alternate_plug_style: Union["PlugUiStyles", int] = custom_field(converter=enum_converter("PlugUiStyles"))
+    alternate_ui_plug_label: str = custom_field()
+    enabled_material_requirement_hash: int = custom_field()
+    enabled_rules: list["DestinyPlugRuleDefinition"] = custom_field(
         metadata={"type": """list[DestinyPlugRuleDefinition]"""}
     )
-    energy_capacity: "DestinyEnergyCapacityEntry" = attr.field()
-    energy_cost: "DestinyEnergyCostEntry" = attr.field()
-    insertion_material_requirement_hash: int = attr.field()
-    insertion_rules: list["DestinyPlugRuleDefinition"] = attr.field(
+    energy_capacity: "DestinyEnergyCapacityEntry" = custom_field()
+    energy_cost: "DestinyEnergyCostEntry" = custom_field()
+    insertion_material_requirement_hash: int = custom_field()
+    insertion_rules: list["DestinyPlugRuleDefinition"] = custom_field(
         metadata={"type": """list[DestinyPlugRuleDefinition]"""}
     )
-    is_dummy_plug: bool = attr.field()
-    on_action_recreate_self: bool = attr.field()
-    parent_item_override: "DestinyParentItemOverride" = attr.field()
-    plug_availability: Union["PlugAvailabilityMode", int] = attr.field(converter=enum_converter("PlugAvailabilityMode"))
-    plug_category_hash: int = attr.field()
-    plug_category_identifier: str = attr.field()
-    plug_style: Union["PlugUiStyles", int] = attr.field(converter=enum_converter("PlugUiStyles"))
-    preview_item_override_hash: int = attr.field()
-    ui_plug_label: str = attr.field()
-    manifest_enabled_material_requirement_hash: Optional["DestinyMaterialRequirementSetDefinition"] = attr.field(
+    is_dummy_plug: bool = custom_field()
+    on_action_recreate_self: bool = custom_field()
+    parent_item_override: "DestinyParentItemOverride" = custom_field()
+    plug_availability: Union["PlugAvailabilityMode", int] = custom_field(
+        converter=enum_converter("PlugAvailabilityMode")
+    )
+    plug_category_hash: int = custom_field()
+    plug_category_identifier: str = custom_field()
+    plug_style: Union["PlugUiStyles", int] = custom_field(converter=enum_converter("PlugUiStyles"))
+    preview_item_override_hash: int = custom_field()
+    ui_plug_label: str = custom_field()
+    manifest_enabled_material_requirement_hash: Optional["DestinyMaterialRequirementSetDefinition"] = custom_field(
         default=None
     )
-    manifest_insertion_material_requirement_hash: Optional["DestinyMaterialRequirementSetDefinition"] = attr.field(
+    manifest_insertion_material_requirement_hash: Optional["DestinyMaterialRequirementSetDefinition"] = custom_field(
         default=None
     )
-    manifest_preview_item_override_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_preview_item_override_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyPlugRuleDefinition(BaseModel):
     """
     Dictates a rule around whether the plug is enabled or insertable. In practice, the live Destiny data will refer to these entries by index. You can then look up that index in the appropriate property (enabledRules or insertionRules) to get the localized string for the failure message if it failed.
@@ -174,10 +174,10 @@ class DestinyPlugRuleDefinition(BaseModel):
         failure_message: The localized string to show if this rule fails.
     """
 
-    failure_message: str = attr.field()
+    failure_message: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyParentItemOverride(BaseModel):
     """
     _No description given by bungie._
@@ -188,11 +188,11 @@ class DestinyParentItemOverride(BaseModel):
         pip_icon: _No description given by bungie._
     """
 
-    additional_equip_requirements_display_strings: list[str] = attr.field(metadata={"type": """list[str]"""})
-    pip_icon: str = attr.field()
+    additional_equip_requirements_display_strings: list[str] = custom_field(metadata={"type": """list[str]"""})
+    pip_icon: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyEnergyCapacityEntry(BaseModel):
     """
     Items can have Energy Capacity, and plugs can provide that capacity such as on a piece of Armor in Armor 2.0. This is how much "Energy" can be spent on activating plugs for this item.
@@ -213,13 +213,13 @@ class DestinyEnergyCapacityEntry(BaseModel):
         manifest_energy_type_hash: Manifest information for `energy_type_hash`
     """
 
-    capacity_value: int = attr.field()
-    energy_type: Union["DestinyEnergyType", int] = attr.field(converter=enum_converter("DestinyEnergyType"))
-    energy_type_hash: int = attr.field()
-    manifest_energy_type_hash: Optional["DestinyEnergyTypeDefinition"] = attr.field(default=None)
+    capacity_value: int = custom_field()
+    energy_type: Union["DestinyEnergyType", int] = custom_field(converter=enum_converter("DestinyEnergyType"))
+    energy_type_hash: int = custom_field()
+    manifest_energy_type_hash: Optional["DestinyEnergyTypeDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyEnergyCostEntry(BaseModel):
     """
     Some plugs cost Energy, which is a stat on the item that can be increased by other plugs (that, at least in Armor 2.0, have a "masterworks-like" mechanic for upgrading). If a plug has costs, the details of that cost are defined here.
@@ -240,7 +240,7 @@ class DestinyEnergyCostEntry(BaseModel):
         manifest_energy_type_hash: Manifest information for `energy_type_hash`
     """
 
-    energy_cost: int = attr.field()
-    energy_type: Union["DestinyEnergyType", int] = attr.field(converter=enum_converter("DestinyEnergyType"))
-    energy_type_hash: int = attr.field()
-    manifest_energy_type_hash: Optional["DestinyEnergyTypeDefinition"] = attr.field(default=None)
+    energy_cost: int = custom_field()
+    energy_type: Union["DestinyEnergyType", int] = custom_field(converter=enum_converter("DestinyEnergyType"))
+    energy_type_hash: int = custom_field()
+    manifest_energy_type_hash: Optional["DestinyEnergyTypeDefinition"] = custom_field(default=None)

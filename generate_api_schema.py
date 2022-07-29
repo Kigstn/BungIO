@@ -125,18 +125,16 @@ class {name}:
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-import attr
-
 from datetime import datetime
 from typing import Optional, Any, Union
 
-from bungio.models.base import ClientMixin
+from bungio.models.base import ClientMixin, custom_define, custom_field
 from bungio.models.auth import AuthData
 from bungio.utils import AllowAsyncIteration
 
 %imports%
 
-@attr.define
+@custom_define()
 class {name}(ClientMixin):
     """
 
@@ -789,13 +787,11 @@ def generate_models(api_schema: dict):
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-import attr
-
 from datetime import datetime
 from typing import Optional, Any, Union, TYPE_CHECKING
 
 from bungio.utils import enum_converter
-from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, ManifestModel
+from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, ManifestModel, custom_define, custom_field
 
 {"%mixin_imports%" if mixins else ""}
 %imports%"""
@@ -1038,7 +1034,7 @@ class {model["name"]}(BaseEnum):"""
             pass
 
         text = f"""
-@attr.define
+@custom_define()
 class {model_name}({"BaseModel" if "x-mobile-manifest-name" not in model else "ManifestModel"}{mixin_extra}):
     \"\"\"
     {clean_desc(model)}
@@ -1068,7 +1064,7 @@ class {model_name}({"BaseModel" if "x-mobile-manifest-name" not in model else "M
 
             field_extras = ", ".join(field_extras)
             text += f"""
-    {name}: {data["param_type"]} = attr.field({field_extras})"""
+    {name}: {data["param_type"]} = custom_field({field_extras})"""
 
     # arrays
     elif model["type"] == "array":

@@ -4,8 +4,6 @@
 
 from typing import Optional, Union
 
-import attr
-
 from bungio.models import (
     BungieMembershipType,
     BungieRewardDisplay,
@@ -13,11 +11,11 @@ from bungio.models import (
     PartnerOfferSkuHistoryResponse,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import ClientMixin
+from bungio.models.base import ClientMixin, custom_define
 from bungio.utils import AllowAsyncIteration
 
 
-@attr.define
+@custom_define()
 class TokensRouteInterface(ClientMixin):
     async def claim_partner_offer(self, data: PartnerOfferClaimRequest, auth: AuthData) -> bool:
         """

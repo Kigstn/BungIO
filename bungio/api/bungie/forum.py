@@ -4,8 +4,6 @@
 
 from typing import Optional, Union
 
-import attr
-
 from bungio.models import (
     ForumPostSortEnum,
     ForumRecruitmentDetail,
@@ -16,10 +14,10 @@ from bungio.models import (
     TagResponse,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import ClientMixin
+from bungio.models.base import ClientMixin, custom_define
 
 
-@attr.define
+@custom_define()
 class ForumRouteInterface(ClientMixin):
     async def get_topics_paged(
         self,

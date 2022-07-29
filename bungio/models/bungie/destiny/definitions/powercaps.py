@@ -2,12 +2,11 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-import attr
 
-from bungio.models.base import ManifestModel
+from bungio.models.base import ManifestModel, custom_define, custom_field
 
 
-@attr.define
+@custom_define()
 class DestinyPowerCapDefinition(ManifestModel):
     """
     Defines a 'power cap' (limit) for gear items, based on the rarity tier and season of release.
@@ -20,7 +19,7 @@ class DestinyPowerCapDefinition(ManifestModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    hash: int = attr.field()
-    index: int = attr.field()
-    power_cap: int = attr.field()
-    redacted: bool = attr.field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    power_cap: int = custom_field()
+    redacted: bool = custom_field()

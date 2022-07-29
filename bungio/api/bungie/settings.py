@@ -4,14 +4,12 @@
 
 from typing import Optional
 
-import attr
-
 from bungio.models import CoreSettingsConfiguration
 from bungio.models.auth import AuthData
-from bungio.models.base import ClientMixin
+from bungio.models.base import ClientMixin, custom_define
 
 
-@attr.define
+@custom_define()
 class SettingsRouteInterface(ClientMixin):
     async def get_common_settings(self, auth: Optional[AuthData] = None) -> CoreSettingsConfiguration:
         """

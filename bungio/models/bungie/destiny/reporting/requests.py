@@ -4,15 +4,13 @@
 
 from typing import TYPE_CHECKING
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     pass
 
 
-@attr.define
+@custom_define()
 class DestinyReportOffensePgcrRequest(BaseModel):
     """
     If you want to report a player causing trouble in a game, this request will let you report that player and the specific PGCR in which the trouble was caused, along with why. Please don't do this just because you dislike the person! I mean, I know people will do it anyways, but can you like take a good walk, or put a curse on them or something? Do me a solid and reconsider. Note that this request object doesn't have the actual PGCR ID nor your Account/Character ID in it. We will infer that information from your authentication information and the PGCR ID that you pass into the URL of the reporting endpoint itself.
@@ -24,6 +22,6 @@ class DestinyReportOffensePgcrRequest(BaseModel):
         reason_hashes: If applicable, provide a more specific reason(s) within the general category of problems provided by the reasonHash. This is also an identifier for a reason. All reasonHashes provided must be children of at least one the reasonCategoryHashes provided.
     """
 
-    offending_character_id: int = attr.field()
-    reason_category_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    reason_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
+    offending_character_id: int = custom_field()
+    reason_category_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    reason_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})

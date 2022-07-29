@@ -4,8 +4,6 @@
 
 from typing import Optional, Union
 
-import attr
-
 from bungio.models import (
     BungieFriendListResponse,
     BungieFriendRequestListResponse,
@@ -13,10 +11,10 @@ from bungio.models import (
     PlatformFriendType,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import ClientMixin
+from bungio.models.base import ClientMixin, custom_define
 
 
-@attr.define
+@custom_define()
 class SocialRouteInterface(ClientMixin):
     async def get_friend_list(self, auth: AuthData) -> BungieFriendListResponse:
         """

@@ -4,14 +4,12 @@
 
 from typing import Optional
 
-import attr
-
 from bungio.models.auth import AuthData
-from bungio.models.base import ClientMixin
+from bungio.models.base import ClientMixin, custom_define
 from bungio.utils import AllowAsyncIteration
 
 
-@attr.define
+@custom_define()
 class GetAvailableLocalesRouteInterface(ClientMixin):
     async def get_available_locales(self, auth: Optional[AuthData] = None) -> dict[str, str]:
         """

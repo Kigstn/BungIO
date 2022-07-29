@@ -4,15 +4,13 @@
 
 from typing import TYPE_CHECKING
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import DestinyObjectiveProgress
 
 
-@attr.define
+@custom_define()
 class DestinyKiosksComponent(BaseModel):
     """
     A Kiosk is a Vendor (DestinyVendorDefinition) that sells items based on whether you have already acquired that item before. This component returns information about what Kiosk items are available to you on a *Profile* level. It is theoretically possible for Kiosks to have items gated by specific Character as well. If you ever have those, you will find them on the individual character's DestinyCharacterKiosksComponent. Note that, because this component returns vendorItemIndexes (that is to say, indexes into the Kiosk Vendor's itemList property), these results are necessarily content version dependent. Make sure that you have the latest version of the content manifest databases before using this data.
@@ -22,12 +20,12 @@ class DestinyKiosksComponent(BaseModel):
         kiosk_items: A dictionary keyed by the Kiosk Vendor's hash identifier (use it to look up the DestinyVendorDefinition for the relevant kiosk vendor), and whose value is a list of all the items that the user can "see" in the Kiosk, and any other interesting metadata.
     """
 
-    kiosk_items: dict[int, list["DestinyKioskItem"]] = attr.field(
+    kiosk_items: dict[int, list["DestinyKioskItem"]] = custom_field(
         metadata={"type": """dict[int, list[DestinyKioskItem]]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyKioskItem(BaseModel):
     """
     _No description given by bungie._
@@ -40,7 +38,7 @@ class DestinyKioskItem(BaseModel):
         index: The index of the item in the related DestinyVendorDefintion's itemList property, representing the sale.
     """
 
-    can_acquire: bool = attr.field()
-    failure_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    flavor_objective: "DestinyObjectiveProgress" = attr.field()
-    index: int = attr.field()
+    can_acquire: bool = custom_field()
+    failure_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    flavor_objective: "DestinyObjectiveProgress" = custom_field()
+    index: int = custom_field()

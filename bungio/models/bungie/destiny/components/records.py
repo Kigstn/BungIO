@@ -4,9 +4,7 @@
 
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -18,7 +16,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyRecordsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -40,16 +38,18 @@ class DestinyRecordsComponent(BaseModel):
         manifest_record_seals_root_node_hash: Manifest information for `record_seals_root_node_hash`
     """
 
-    record_categories_root_node_hash: int = attr.field()
-    record_seals_root_node_hash: int = attr.field()
-    records: dict[int, "DestinyRecordComponent"] = attr.field(
+    record_categories_root_node_hash: int = custom_field()
+    record_seals_root_node_hash: int = custom_field()
+    records: dict[int, "DestinyRecordComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyRecordComponent]"""}
     )
-    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
-    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(
+        default=None
+    )
+    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyRecordComponent(BaseModel):
     """
     _No description given by bungie._
@@ -64,17 +64,17 @@ class DestinyRecordComponent(BaseModel):
         state: _No description given by bungie._
     """
 
-    completed_count: int = attr.field()
-    interval_objectives: list["DestinyObjectiveProgress"] = attr.field(
+    completed_count: int = custom_field()
+    interval_objectives: list["DestinyObjectiveProgress"] = custom_field(
         metadata={"type": """list[DestinyObjectiveProgress]"""}
     )
-    intervals_redeemed_count: int = attr.field()
-    objectives: list["DestinyObjectiveProgress"] = attr.field(metadata={"type": """list[DestinyObjectiveProgress]"""})
-    reward_visibilty: list[bool] = attr.field(metadata={"type": """list[bool]"""})
-    state: Union["DestinyRecordState", int] = attr.field(converter=enum_converter("DestinyRecordState"))
+    intervals_redeemed_count: int = custom_field()
+    objectives: list["DestinyObjectiveProgress"] = custom_field(metadata={"type": """list[DestinyObjectiveProgress]"""})
+    reward_visibilty: list[bool] = custom_field(metadata={"type": """list[bool]"""})
+    state: Union["DestinyRecordState", int] = custom_field(converter=enum_converter("DestinyRecordState"))
 
 
-@attr.define
+@custom_define()
 class DestinyProfileRecordsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -102,22 +102,24 @@ class DestinyProfileRecordsComponent(BaseModel):
         manifest_tracked_record_hash: Manifest information for `tracked_record_hash`
     """
 
-    active_score: int = attr.field()
-    legacy_score: int = attr.field()
-    lifetime_score: int = attr.field()
-    record_categories_root_node_hash: int = attr.field()
-    record_seals_root_node_hash: int = attr.field()
-    records: dict[int, "DestinyRecordComponent"] = attr.field(
+    active_score: int = custom_field()
+    legacy_score: int = custom_field()
+    lifetime_score: int = custom_field()
+    record_categories_root_node_hash: int = custom_field()
+    record_seals_root_node_hash: int = custom_field()
+    records: dict[int, "DestinyRecordComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyRecordComponent]"""}
     )
-    score: int = attr.field()
-    tracked_record_hash: int = attr.field()
-    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
-    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
-    manifest_tracked_record_hash: Optional["DestinyRecordDefinition"] = attr.field(default=None)
+    score: int = custom_field()
+    tracked_record_hash: int = custom_field()
+    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(
+        default=None
+    )
+    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
+    manifest_tracked_record_hash: Optional["DestinyRecordDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyCharacterRecordsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -140,11 +142,13 @@ class DestinyCharacterRecordsComponent(BaseModel):
         manifest_record_seals_root_node_hash: Manifest information for `record_seals_root_node_hash`
     """
 
-    featured_record_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    record_categories_root_node_hash: int = attr.field()
-    record_seals_root_node_hash: int = attr.field()
-    records: dict[int, "DestinyRecordComponent"] = attr.field(
+    featured_record_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    record_categories_root_node_hash: int = custom_field()
+    record_seals_root_node_hash: int = custom_field()
+    records: dict[int, "DestinyRecordComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyRecordComponent]"""}
     )
-    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
-    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+    manifest_record_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(
+        default=None
+    )
+    manifest_record_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)

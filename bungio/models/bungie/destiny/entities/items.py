@@ -5,9 +5,7 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -34,7 +32,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyItemComponent(BaseModel):
     """
     The base item component, filled with properties that are generally useful to know in any item request or that don't feel worthwhile to put in their own component.
@@ -72,30 +70,30 @@ class DestinyItemComponent(BaseModel):
         manifest_override_style_item_hash: Manifest information for `override_style_item_hash`
     """
 
-    bind_status: Union["ItemBindStatus", int] = attr.field(converter=enum_converter("ItemBindStatus"))
-    bucket_hash: int = attr.field()
-    expiration_date: datetime = attr.field()
-    is_wrapper: bool = attr.field()
-    item_hash: int = attr.field()
-    item_instance_id: int = attr.field()
-    item_value_visibility: list[bool] = attr.field(metadata={"type": """list[bool]"""})
-    location: Union["ItemLocation", int] = attr.field(converter=enum_converter("ItemLocation"))
-    lockable: bool = attr.field()
-    metric_hash: int = attr.field()
-    metric_objective: "DestinyObjectiveProgress" = attr.field()
-    override_style_item_hash: int = attr.field()
-    quantity: int = attr.field()
-    state: Union["ItemState", int] = attr.field(converter=enum_converter("ItemState"))
-    tooltip_notification_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    transfer_status: Union["TransferStatuses", int] = attr.field(converter=enum_converter("TransferStatuses"))
-    version_number: int = attr.field()
-    manifest_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field(default=None)
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_metric_hash: Optional["DestinyMetricDefinition"] = attr.field(default=None)
-    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    bind_status: Union["ItemBindStatus", int] = custom_field(converter=enum_converter("ItemBindStatus"))
+    bucket_hash: int = custom_field()
+    expiration_date: datetime = custom_field()
+    is_wrapper: bool = custom_field()
+    item_hash: int = custom_field()
+    item_instance_id: int = custom_field()
+    item_value_visibility: list[bool] = custom_field(metadata={"type": """list[bool]"""})
+    location: Union["ItemLocation", int] = custom_field(converter=enum_converter("ItemLocation"))
+    lockable: bool = custom_field()
+    metric_hash: int = custom_field()
+    metric_objective: "DestinyObjectiveProgress" = custom_field()
+    override_style_item_hash: int = custom_field()
+    quantity: int = custom_field()
+    state: Union["ItemState", int] = custom_field(converter=enum_converter("ItemState"))
+    tooltip_notification_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    transfer_status: Union["TransferStatuses", int] = custom_field(converter=enum_converter("TransferStatuses"))
+    version_number: int = custom_field()
+    manifest_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = custom_field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_metric_hash: Optional["DestinyMetricDefinition"] = custom_field(default=None)
+    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemPerksComponent(BaseModel):
     """
     Instanced items can have perks: benefits that the item bestows. These are related to DestinySandboxPerkDefinition, and sometimes - but not always - have human readable info. When they do, they are the icons and text that you see in an item's tooltip. Talent Grids, Sockets, and the item itself can apply Perks, which are then summarized here for your convenience.
@@ -105,10 +103,10 @@ class DestinyItemPerksComponent(BaseModel):
         perks: The list of perks to display in an item tooltip - and whether or not they have been activated.
     """
 
-    perks: list["DestinyPerkReference"] = attr.field(metadata={"type": """list[DestinyPerkReference]"""})
+    perks: list["DestinyPerkReference"] = custom_field(metadata={"type": """list[DestinyPerkReference]"""})
 
 
-@attr.define
+@custom_define()
 class DestinyItemObjectivesComponent(BaseModel):
     """
     Items can have objectives and progression. When you request this block, you will obtain information about any Objectives and progression tied to this item.
@@ -120,12 +118,12 @@ class DestinyItemObjectivesComponent(BaseModel):
         objectives: If the item has a hard association with objectives, your progress on them will be defined here.  Objectives are our standard way to describe a series of tasks that have to be completed for a reward.
     """
 
-    date_completed: datetime = attr.field()
-    flavor_objective: "DestinyObjectiveProgress" = attr.field()
-    objectives: list["DestinyObjectiveProgress"] = attr.field(metadata={"type": """list[DestinyObjectiveProgress]"""})
+    date_completed: datetime = custom_field()
+    flavor_objective: "DestinyObjectiveProgress" = custom_field()
+    objectives: list["DestinyObjectiveProgress"] = custom_field(metadata={"type": """list[DestinyObjectiveProgress]"""})
 
 
-@attr.define
+@custom_define()
 class DestinyItemInstanceComponent(BaseModel):
     """
     If an item is "instanced", this will contain information about the item's instance that doesn't fit easily into other components. One might say this is the "essential" instance data for the item. Items are instanced if they require information or state that can vary. For instance, weapons are Instanced: they are given a unique identifier, uniquely generated stats, and can have their properties altered. Non-instanced items have none of these things: for instance, Glimmer has no unique properties aside from how much of it you own. You can tell from an item's definition whether it will be instanced or not by looking at the DestinyInventoryItemDefinition's definition.inventory.isInstanceItem property.
@@ -157,24 +155,24 @@ class DestinyItemInstanceComponent(BaseModel):
         manifest_damage_type_hash: Manifest information for `damage_type_hash`
     """
 
-    breaker_type: int = attr.field()
-    breaker_type_hash: int = attr.field()
-    can_equip: bool = attr.field()
-    cannot_equip_reason: Union["EquipFailureReason", int] = attr.field(converter=enum_converter("EquipFailureReason"))
-    damage_type: Union["DamageType", int] = attr.field(converter=enum_converter("DamageType"))
-    damage_type_hash: int = attr.field()
-    energy: "DestinyItemInstanceEnergy" = attr.field()
-    equip_required_level: int = attr.field()
-    is_equipped: bool = attr.field()
-    item_level: int = attr.field()
-    primary_stat: "DestinyStat" = attr.field()
-    quality: int = attr.field()
-    unlock_hashes_required_to_equip: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_breaker_type_hash: Optional["DestinyBreakerTypeDefinition"] = attr.field(default=None)
-    manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = attr.field(default=None)
+    breaker_type: int = custom_field()
+    breaker_type_hash: int = custom_field()
+    can_equip: bool = custom_field()
+    cannot_equip_reason: Union["EquipFailureReason", int] = custom_field(converter=enum_converter("EquipFailureReason"))
+    damage_type: Union["DamageType", int] = custom_field(converter=enum_converter("DamageType"))
+    damage_type_hash: int = custom_field()
+    energy: "DestinyItemInstanceEnergy" = custom_field()
+    equip_required_level: int = custom_field()
+    is_equipped: bool = custom_field()
+    item_level: int = custom_field()
+    primary_stat: "DestinyStat" = custom_field()
+    quality: int = custom_field()
+    unlock_hashes_required_to_equip: list[int] = custom_field(metadata={"type": """list[int]"""})
+    manifest_breaker_type_hash: Optional["DestinyBreakerTypeDefinition"] = custom_field(default=None)
+    manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemInstanceEnergy(BaseModel):
     """
     _No description given by bungie._
@@ -197,15 +195,15 @@ class DestinyItemInstanceEnergy(BaseModel):
         manifest_energy_type_hash: Manifest information for `energy_type_hash`
     """
 
-    energy_capacity: int = attr.field()
-    energy_type: Union["DestinyEnergyType", int] = attr.field(converter=enum_converter("DestinyEnergyType"))
-    energy_type_hash: int = attr.field()
-    energy_unused: int = attr.field()
-    energy_used: int = attr.field()
-    manifest_energy_type_hash: Optional["DestinyEnergyTypeDefinition"] = attr.field(default=None)
+    energy_capacity: int = custom_field()
+    energy_type: Union["DestinyEnergyType", int] = custom_field(converter=enum_converter("DestinyEnergyType"))
+    energy_type_hash: int = custom_field()
+    energy_unused: int = custom_field()
+    energy_used: int = custom_field()
+    manifest_energy_type_hash: Optional["DestinyEnergyTypeDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemRenderComponent(BaseModel):
     """
     Many items can be rendered in 3D. When you request this block, you will obtain the custom data needed to render this specific instance of the item.
@@ -216,11 +214,11 @@ class DestinyItemRenderComponent(BaseModel):
         use_custom_dyes: If you should use custom dyes on this item, it will be indicated here.
     """
 
-    art_regions: dict[int, int] = attr.field(metadata={"type": """dict[int, int]"""})
-    use_custom_dyes: bool = attr.field()
+    art_regions: dict[int, int] = custom_field(metadata={"type": """dict[int, int]"""})
+    use_custom_dyes: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyItemStatsComponent(BaseModel):
     """
     If you want the stats on an item's instanced data, get this component. These are stats like Attack, Defense etc... and *not* historical stats. Note that some stats have additional computation in-game at runtime - for instance, Magazine Size - and thus these stats might not be 100% accurate compared to what you see in-game for some stats. I know, it sucks. I hate it too.
@@ -230,10 +228,10 @@ class DestinyItemStatsComponent(BaseModel):
         stats: If the item has stats that it provides (damage, defense, etc...), it will be given here.
     """
 
-    stats: dict[int, "DestinyStat"] = attr.field(metadata={"type": """dict[int, DestinyStat]"""})
+    stats: dict[int, "DestinyStat"] = custom_field(metadata={"type": """dict[int, DestinyStat]"""})
 
 
-@attr.define
+@custom_define()
 class DestinyItemSocketsComponent(BaseModel):
     """
     Instanced items can have sockets, which are slots on the item where plugs can be inserted. Sockets are a bit complex: be sure to examine the documentation on the DestinyInventoryItemDefinition's "socket" block and elsewhere on these objects for more details.
@@ -243,10 +241,10 @@ class DestinyItemSocketsComponent(BaseModel):
         sockets: The list of all sockets on the item, and their status information.
     """
 
-    sockets: list["DestinyItemSocketState"] = attr.field(metadata={"type": """list[DestinyItemSocketState]"""})
+    sockets: list["DestinyItemSocketState"] = custom_field(metadata={"type": """list[DestinyItemSocketState]"""})
 
 
-@attr.define
+@custom_define()
 class DestinyItemSocketState(BaseModel):
     """
     The status of a given item's socket. (which plug is inserted, if any: whether it is enabled, what "reusable" plugs can be inserted, etc...) If I had it to do over, this would probably have a DestinyItemPlug representing the inserted item instead of most of these properties. :shrug:
@@ -268,14 +266,14 @@ class DestinyItemSocketState(BaseModel):
         manifest_plug_hash: Manifest information for `plug_hash`
     """
 
-    enable_fail_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    is_enabled: bool = attr.field()
-    is_visible: bool = attr.field()
-    plug_hash: int = attr.field()
-    manifest_plug_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    enable_fail_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    is_enabled: bool = custom_field()
+    is_visible: bool = custom_field()
+    plug_hash: int = custom_field()
+    manifest_plug_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemTalentGridComponent(BaseModel):
     """
     Well, we're here in Destiny 2, and Talent Grids are unfortunately still around. The good news is that they're pretty much only being used for certain base information on items and for Builds/Subclasses. The bad news is that they still suck. If you really want this information, grab this component. An important note is that talent grids are defined as such: A Grid has 1:M Nodes, which has 1:M Steps. Any given node can only have a single step active at one time, which represents the actual visual contents and effects of the Node (for instance, if you see a "Super Cool Bonus" node, the actual icon and text for the node is coming from the current Step of that node). Nodes can be grouped into exclusivity sets *and* as of D2, exclusivity groups (which are collections of exclusivity sets that affect each other). See DestinyTalentGridDefinition for more information. Brace yourself, the water's cold out there in the deep end.
@@ -297,8 +295,8 @@ class DestinyItemTalentGridComponent(BaseModel):
         manifest_talent_grid_hash: Manifest information for `talent_grid_hash`
     """
 
-    grid_progression: "DestinyProgression" = attr.field()
-    is_grid_complete: bool = attr.field()
-    nodes: list["DestinyTalentNode"] = attr.field(metadata={"type": """list[DestinyTalentNode]"""})
-    talent_grid_hash: int = attr.field()
-    manifest_talent_grid_hash: Optional["DestinyTalentGridDefinition"] = attr.field(default=None)
+    grid_progression: "DestinyProgression" = custom_field()
+    is_grid_complete: bool = custom_field()
+    nodes: list["DestinyTalentNode"] = custom_field(metadata={"type": """list[DestinyTalentNode]"""})
+    talent_grid_hash: int = custom_field()
+    manifest_talent_grid_hash: Optional["DestinyTalentGridDefinition"] = custom_field(default=None)

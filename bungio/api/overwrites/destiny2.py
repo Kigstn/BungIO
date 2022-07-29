@@ -1,13 +1,11 @@
 from typing import Optional, Type
 
-import attr
-
 from bungio.api.bungie import destiny2
 from bungio.models.auth import AuthData
-from bungio.models.base import ManifestModel
+from bungio.models.base import ManifestModel, custom_define
 
 
-@attr.define
+@custom_define()
 class Destiny2RouteInterface(destiny2.Destiny2RouteInterface):
     async def get_destiny_entity_definition(
         self, entity_type: Type[ManifestModel], hash_identifier: int, auth: Optional[AuthData] = None

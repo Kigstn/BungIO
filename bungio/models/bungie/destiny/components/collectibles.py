@@ -4,16 +4,14 @@
 
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import DestinyCollectibleState, DestinyPresentationNodeDefinition
 
 
-@attr.define
+@custom_define()
 class DestinyCollectiblesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -35,18 +33,20 @@ class DestinyCollectiblesComponent(BaseModel):
         manifest_collection_categories_root_node_hash: Manifest information for `collection_categories_root_node_hash`
     """
 
-    collectibles: dict[int, "DestinyCollectibleComponent"] = attr.field(
+    collectibles: dict[int, "DestinyCollectibleComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyCollectibleComponent]"""}
     )
-    collection_badges_root_node_hash: int = attr.field()
-    collection_categories_root_node_hash: int = attr.field()
-    manifest_collection_badges_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
-    manifest_collection_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(
+    collection_badges_root_node_hash: int = custom_field()
+    collection_categories_root_node_hash: int = custom_field()
+    manifest_collection_badges_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(
+        default=None
+    )
+    manifest_collection_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(
         default=None
     )
 
 
-@attr.define
+@custom_define()
 class DestinyCollectibleComponent(BaseModel):
     """
     _No description given by bungie._
@@ -56,10 +56,10 @@ class DestinyCollectibleComponent(BaseModel):
         state: _No description given by bungie._
     """
 
-    state: Union["DestinyCollectibleState", int] = attr.field(converter=enum_converter("DestinyCollectibleState"))
+    state: Union["DestinyCollectibleState", int] = custom_field(converter=enum_converter("DestinyCollectibleState"))
 
 
-@attr.define
+@custom_define()
 class DestinyProfileCollectiblesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -83,14 +83,16 @@ class DestinyProfileCollectiblesComponent(BaseModel):
         manifest_collection_categories_root_node_hash: Manifest information for `collection_categories_root_node_hash`
     """
 
-    collectibles: dict[int, "DestinyCollectibleComponent"] = attr.field(
+    collectibles: dict[int, "DestinyCollectibleComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyCollectibleComponent]"""}
     )
-    collection_badges_root_node_hash: int = attr.field()
-    collection_categories_root_node_hash: int = attr.field()
-    newness_flagged_collectible_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    recent_collectible_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_collection_badges_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
-    manifest_collection_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(
+    collection_badges_root_node_hash: int = custom_field()
+    collection_categories_root_node_hash: int = custom_field()
+    newness_flagged_collectible_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    recent_collectible_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    manifest_collection_badges_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(
+        default=None
+    )
+    manifest_collection_categories_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(
         default=None
     )

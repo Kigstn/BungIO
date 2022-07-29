@@ -2,12 +2,11 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-import attr
 
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 
-@attr.define
+@custom_define()
 class HyperlinkReference(BaseModel):
     """
     _No description given by bungie._
@@ -18,5 +17,5 @@ class HyperlinkReference(BaseModel):
         url: _No description given by bungie._
     """
 
-    title: str = attr.field()
-    url: str = attr.field()
+    title: str = custom_field()
+    url: str = custom_field()

@@ -5,9 +5,13 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    custom_define,
+    custom_field,
+)
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -51,7 +55,7 @@ class ApplicationScopes(BaseFlagEnum):
     """Allows an app to query sensitive user PII, most notably email information. """
 
 
-@attr.define
+@custom_define()
 class ApiUsage(BaseModel):
     """
     _No description given by bungie._
@@ -62,11 +66,11 @@ class ApiUsage(BaseModel):
         throttled_requests: Instances of blocked requests or requests that crossed the warn threshold during the time range.
     """
 
-    api_calls: list["Series"] = attr.field(metadata={"type": """list[Series]"""})
-    throttled_requests: list["Series"] = attr.field(metadata={"type": """list[Series]"""})
+    api_calls: list["Series"] = custom_field(metadata={"type": """list[Series]"""})
+    throttled_requests: list["Series"] = custom_field(metadata={"type": """list[Series]"""})
 
 
-@attr.define
+@custom_define()
 class Series(BaseModel):
     """
     _No description given by bungie._
@@ -77,11 +81,11 @@ class Series(BaseModel):
         target: Target to which to datapoints apply.
     """
 
-    datapoints: list["Datapoint"] = attr.field(metadata={"type": """list[Datapoint]"""})
-    target: str = attr.field()
+    datapoints: list["Datapoint"] = custom_field(metadata={"type": """list[Datapoint]"""})
+    target: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class Datapoint(BaseModel):
     """
     _No description given by bungie._
@@ -92,11 +96,11 @@ class Datapoint(BaseModel):
         time: Timestamp for the related count.
     """
 
-    count: float = attr.field()
-    time: datetime = attr.field()
+    count: float = custom_field()
+    time: datetime = custom_field()
 
 
-@attr.define
+@custom_define()
 class Application(BaseModel):
     """
     _No description given by bungie._
@@ -117,18 +121,18 @@ class Application(BaseModel):
         team: List of team members who manage this application on Bungie.net. Will always consist of at least the application owner.
     """
 
-    application_id: int = attr.field()
-    creation_date: datetime = attr.field()
-    first_published: datetime = attr.field()
-    link: str = attr.field()
-    name: str = attr.field()
-    origin: str = attr.field()
-    override_authorize_view_name: str = attr.field()
-    redirect_url: str = attr.field()
-    scope: int = attr.field()
-    status: Union["ApplicationStatus", int] = attr.field(converter=enum_converter("ApplicationStatus"))
-    status_changed: datetime = attr.field()
-    team: list["ApplicationDeveloper"] = attr.field(metadata={"type": """list[ApplicationDeveloper]"""})
+    application_id: int = custom_field()
+    creation_date: datetime = custom_field()
+    first_published: datetime = custom_field()
+    link: str = custom_field()
+    name: str = custom_field()
+    origin: str = custom_field()
+    override_authorize_view_name: str = custom_field()
+    redirect_url: str = custom_field()
+    scope: int = custom_field()
+    status: Union["ApplicationStatus", int] = custom_field(converter=enum_converter("ApplicationStatus"))
+    status_changed: datetime = custom_field()
+    team: list["ApplicationDeveloper"] = custom_field(metadata={"type": """list[ApplicationDeveloper]"""})
 
 
 class ApplicationStatus(BaseEnum):
@@ -148,7 +152,7 @@ class ApplicationStatus(BaseEnum):
     """Application has been blocked by Bungie. It cannot be transitioned out of this state by the owner. Authorizations are terminated when an application is in this state. """
 
 
-@attr.define
+@custom_define()
 class ApplicationDeveloper(BaseModel):
     """
     _No description given by bungie._
@@ -160,9 +164,9 @@ class ApplicationDeveloper(BaseModel):
         user: _No description given by bungie._
     """
 
-    api_eula_version: int = attr.field()
-    role: Union["DeveloperRole", int] = attr.field(converter=enum_converter("DeveloperRole"))
-    user: "UserInfoCard" = attr.field()
+    api_eula_version: int = custom_field()
+    role: Union["DeveloperRole", int] = custom_field(converter=enum_converter("DeveloperRole"))
+    user: "UserInfoCard" = custom_field()
 
 
 class DeveloperRole(BaseEnum):

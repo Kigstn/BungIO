@@ -4,9 +4,13 @@
 
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseModel, ManifestModel
+from bungio.models.base import (
+    BaseEnum,
+    BaseModel,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -21,7 +25,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyMilestoneDefinition(ManifestModel):
     """
     Milestones are an in-game concept where they're attempting to tell you what you can do next in-game. If that sounds a lot like Advisors in Destiny 1, it is! So we threw out Advisors in the Destiny 2 API and tacked all of the data we would have put on Advisors onto Milestones instead. Each Milestone represents something going on in the game right now: - A "ritual activity" you can perform, like nightfall - A "special event" that may have activities related to it, like Taco Tuesday (there's no Taco Tuesday in Destiny 2) - A checklist you can fulfill, like helping your Clan complete all of its weekly objectives - A tutorial quest you can play through, like the introduction to the Crucible. Most of these milestones appear in game as well. Some of them are BNet only, because we're so extra. You're welcome. There are some important caveats to understand about how we currently render Milestones and their deficiencies. The game currently doesn't have any content that actually tells you oughtright *what* the Milestone is: that is to say, what you'll be doing. The best we get is either a description of the overall Milestone, or of the Quest that the Milestone is having you partake in: which is usually something that assumes you already know what it's talking about, like "Complete 5 Challenges". 5 Challenges for what? What's a challenge? These are not questions that the Milestone data will answer for you unfortunately. This isn't great, and in the future I'd like to add some custom text to give you more contextual information to pass on to your users. But for now, you can do what we do to render what little display info we do have: Start by looking at the currently active quest (ideally, you've fetched DestinyMilestone or DestinyPublicMilestone data from the API, so you know the currently active quest for the Milestone in question). Look up the Quests property in the Milestone Definition, and check if it has display properties. If it does, show that as the description of the Milestone. If it doesn't, fall back on the Milestone's description. This approach will let you avoid, whenever possible, the even less useful (and sometimes nonexistant) milestone-level names and descriptions.
@@ -51,39 +55,39 @@ class DestinyMilestoneDefinition(ManifestModel):
         vendors_display_title: If you're going to show Vendors for the Milestone, you can use this as a localized "header" for the section where you show that vendor data. It'll provide a more context-relevant clue about what the vendor's role is in the Milestone.
     """
 
-    activities: list["DestinyMilestoneChallengeActivityDefinition"] = attr.field(
+    activities: list["DestinyMilestoneChallengeActivityDefinition"] = custom_field(
         metadata={"type": """list[DestinyMilestoneChallengeActivityDefinition]"""}
     )
-    default_order: int = attr.field()
-    display_preference: Union["DestinyMilestoneDisplayPreference", int] = attr.field(
+    default_order: int = custom_field()
+    display_preference: Union["DestinyMilestoneDisplayPreference", int] = custom_field(
         converter=enum_converter("DestinyMilestoneDisplayPreference")
     )
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    explore_prioritizes_activity_image: bool = attr.field()
-    friendly_name: str = attr.field()
-    has_predictable_dates: bool = attr.field()
-    hash: int = attr.field()
-    image: str = attr.field()
-    index: int = attr.field()
-    is_in_game_milestone: bool = attr.field()
-    milestone_type: Union["DestinyMilestoneType", int] = attr.field(converter=enum_converter("DestinyMilestoneType"))
-    quests: dict[int, "DestinyMilestoneQuestDefinition"] = attr.field(
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    explore_prioritizes_activity_image: bool = custom_field()
+    friendly_name: str = custom_field()
+    has_predictable_dates: bool = custom_field()
+    hash: int = custom_field()
+    image: str = custom_field()
+    index: int = custom_field()
+    is_in_game_milestone: bool = custom_field()
+    milestone_type: Union["DestinyMilestoneType", int] = custom_field(converter=enum_converter("DestinyMilestoneType"))
+    quests: dict[int, "DestinyMilestoneQuestDefinition"] = custom_field(
         metadata={"type": """dict[int, DestinyMilestoneQuestDefinition]"""}
     )
-    recruitable: bool = attr.field()
-    redacted: bool = attr.field()
-    rewards: dict[int, "DestinyMilestoneRewardCategoryDefinition"] = attr.field(
+    recruitable: bool = custom_field()
+    redacted: bool = custom_field()
+    rewards: dict[int, "DestinyMilestoneRewardCategoryDefinition"] = custom_field(
         metadata={"type": """dict[int, DestinyMilestoneRewardCategoryDefinition]"""}
     )
-    show_in_explorer: bool = attr.field()
-    show_in_milestones: bool = attr.field()
-    values: dict[str, "DestinyMilestoneValueDefinition"] = attr.field(
+    show_in_explorer: bool = custom_field()
+    show_in_milestones: bool = custom_field()
+    values: dict[str, "DestinyMilestoneValueDefinition"] = custom_field(
         metadata={"type": """dict[str, DestinyMilestoneValueDefinition]"""}
     )
-    vendors: list["DestinyMilestoneVendorDefinition"] = attr.field(
+    vendors: list["DestinyMilestoneVendorDefinition"] = custom_field(
         metadata={"type": """list[DestinyMilestoneVendorDefinition]"""}
     )
-    vendors_display_title: str = attr.field()
+    vendors_display_title: str = custom_field()
 
 
 class DestinyMilestoneDisplayPreference(BaseEnum):
@@ -118,7 +122,7 @@ class DestinyMilestoneType(BaseEnum):
     """Special indicates that the event is not on a daily/weekly cadence, but does occur more than once. For instance, Iron Banner in Destiny 1 or the Dawning were examples of what could be termed "Special" events. """
 
 
-@attr.define
+@custom_define()
 class DestinyMilestoneQuestDefinition(BaseModel):
     """
     Any data we need to figure out whether this Quest Item is the currently active one for the conceptual Milestone. Even just typing this description, I already regret it.
@@ -143,19 +147,19 @@ class DestinyMilestoneQuestDefinition(BaseModel):
         manifest_quest_item_hash: Manifest information for `quest_item_hash`
     """
 
-    activities: dict[int, "DestinyMilestoneActivityDefinition"] = attr.field(
+    activities: dict[int, "DestinyMilestoneActivityDefinition"] = custom_field(
         metadata={"type": """dict[int, DestinyMilestoneActivityDefinition]"""}
     )
-    destination_hash: int = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    override_image: str = attr.field()
-    quest_item_hash: int = attr.field()
-    quest_rewards: "DestinyMilestoneQuestRewardsDefinition" = attr.field()
-    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
-    manifest_quest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    destination_hash: int = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    override_image: str = custom_field()
+    quest_item_hash: int = custom_field()
+    quest_rewards: "DestinyMilestoneQuestRewardsDefinition" = custom_field()
+    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = custom_field(default=None)
+    manifest_quest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyMilestoneQuestRewardsDefinition(BaseModel):
     """
     If rewards are given in a quest - as opposed to overall in the entire Milestone - there's way less to track. We're going to simplify this contract as a result. However, this also gives us the opportunity to potentially put more than just item information into the reward data if we're able to mine it out in the future. Remember this if you come back and ask "why are quest reward items nested inside of their own class?"
@@ -165,12 +169,12 @@ class DestinyMilestoneQuestRewardsDefinition(BaseModel):
         items: The items that represent your reward for completing the quest. Be warned, these could be "dummy" items: items that are only used to render a good-looking in-game tooltip, but aren't the actual items themselves. For instance, when experience is given there's often a dummy item representing "experience", with quantity being the amount of experience you got. We don't have a programmatic association between those and whatever Progression is actually getting that experience... yet.
     """
 
-    items: list["DestinyMilestoneQuestRewardItem"] = attr.field(
+    items: list["DestinyMilestoneQuestRewardItem"] = custom_field(
         metadata={"type": """list[DestinyMilestoneQuestRewardItem]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyMilestoneQuestRewardItem(BaseModel):
     """
     A subclass of DestinyItemQuantity, that provides not just the item and its quantity but also information that BNet can - at some point - use internally to provide more robust runtime information about the item's qualities. If you want it, please ask! We're just out of time to wire it up right now. Or a clever person just may do it with our existing endpoints.
@@ -195,17 +199,17 @@ class DestinyMilestoneQuestRewardItem(BaseModel):
         manifest_vendor_hash: Manifest information for `vendor_hash`
     """
 
-    has_conditional_visibility: bool = attr.field()
-    item_hash: int = attr.field()
-    item_instance_id: int = attr.field()
-    quantity: int = attr.field()
-    vendor_hash: int = attr.field()
-    vendor_item_index: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    has_conditional_visibility: bool = custom_field()
+    item_hash: int = custom_field()
+    item_instance_id: int = custom_field()
+    quantity: int = custom_field()
+    vendor_hash: int = custom_field()
+    vendor_item_index: int = custom_field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyMilestoneActivityDefinition(BaseModel):
     """
     Milestones can have associated activities which provide additional information about the context, challenges, modifiers, state etc... related to this Milestone.  Information we need to be able to return that data is defined here, along with Tier data to establish a relationship between a conceptual Activity and its difficulty levels and variants.
@@ -225,14 +229,14 @@ class DestinyMilestoneActivityDefinition(BaseModel):
         manifest_conceptual_activity_hash: Manifest information for `conceptual_activity_hash`
     """
 
-    conceptual_activity_hash: int = attr.field()
-    variants: dict[int, "DestinyMilestoneActivityVariantDefinition"] = attr.field(
+    conceptual_activity_hash: int = custom_field()
+    variants: dict[int, "DestinyMilestoneActivityVariantDefinition"] = custom_field(
         metadata={"type": """dict[int, DestinyMilestoneActivityVariantDefinition]"""}
     )
-    manifest_conceptual_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_conceptual_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyMilestoneActivityVariantDefinition(BaseModel):
     """
     Represents a variant on an activity for a Milestone: a specific difficulty tier, or a specific activity variant for example. These will often have more specific details, such as an associated Guided Game, progression steps, tier-specific rewards, and custom values.
@@ -252,12 +256,12 @@ class DestinyMilestoneActivityVariantDefinition(BaseModel):
         manifest_activity_hash: Manifest information for `activity_hash`
     """
 
-    activity_hash: int = attr.field()
-    order: int = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    activity_hash: int = custom_field()
+    order: int = custom_field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyMilestoneRewardCategoryDefinition(BaseModel):
     """
     The definition of a category of rewards, that contains many individual rewards.
@@ -271,16 +275,16 @@ class DestinyMilestoneRewardCategoryDefinition(BaseModel):
         reward_entries: If this milestone can provide rewards, this will define the sets of rewards that can be earned, the conditions under which they can be acquired, internal data that we'll use at runtime to determine whether you've already earned or redeemed this set of rewards, and the category that this reward should be placed under.
     """
 
-    category_hash: int = attr.field()
-    category_identifier: str = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    order: int = attr.field()
-    reward_entries: dict[int, "DestinyMilestoneRewardEntryDefinition"] = attr.field(
+    category_hash: int = custom_field()
+    category_identifier: str = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    order: int = custom_field()
+    reward_entries: dict[int, "DestinyMilestoneRewardEntryDefinition"] = custom_field(
         metadata={"type": """dict[int, DestinyMilestoneRewardEntryDefinition]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyMilestoneRewardEntryDefinition(BaseModel):
     """
     The definition of a specific reward, which may be contained in a category of rewards and that has optional information about how it is obtained.
@@ -304,16 +308,16 @@ class DestinyMilestoneRewardEntryDefinition(BaseModel):
         manifest_vendor_hash: Manifest information for `vendor_hash`
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    items: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})
-    order: int = attr.field()
-    reward_entry_hash: int = attr.field()
-    reward_entry_identifier: str = attr.field()
-    vendor_hash: int = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    items: list["DestinyItemQuantity"] = custom_field(metadata={"type": """list[DestinyItemQuantity]"""})
+    order: int = custom_field()
+    reward_entry_hash: int = custom_field()
+    reward_entry_identifier: str = custom_field()
+    vendor_hash: int = custom_field()
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyMilestoneVendorDefinition(BaseModel):
     """
     If the Milestone or a component has vendors whose inventories could/should be displayed that are relevant to it, this will return the vendor in question.  It also contains information we need to determine whether that vendor is actually relevant at the moment, given the user's current state.
@@ -332,11 +336,11 @@ class DestinyMilestoneVendorDefinition(BaseModel):
         manifest_vendor_hash: Manifest information for `vendor_hash`
     """
 
-    vendor_hash: int = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    vendor_hash: int = custom_field()
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyMilestoneValueDefinition(BaseModel):
     """
     The definition for information related to a key/value pair that is relevant for a particular Milestone or component within the Milestone.  This lets us more flexibly pass up information that's useful to someone, even if it's not necessarily us.
@@ -347,11 +351,11 @@ class DestinyMilestoneValueDefinition(BaseModel):
         key: _No description given by bungie._
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    key: str = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    key: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyMilestoneChallengeActivityDefinition(BaseModel):
     """
     _No description given by bungie._
@@ -373,20 +377,20 @@ class DestinyMilestoneChallengeActivityDefinition(BaseModel):
         manifest_activity_hash: Manifest information for `activity_hash`
     """
 
-    activity_graph_nodes: list["DestinyMilestoneChallengeActivityGraphNodeEntry"] = attr.field(
+    activity_graph_nodes: list["DestinyMilestoneChallengeActivityGraphNodeEntry"] = custom_field(
         metadata={"type": """list[DestinyMilestoneChallengeActivityGraphNodeEntry]"""}
     )
-    activity_hash: int = attr.field()
-    challenges: list["DestinyMilestoneChallengeDefinition"] = attr.field(
+    activity_hash: int = custom_field()
+    challenges: list["DestinyMilestoneChallengeDefinition"] = custom_field(
         metadata={"type": """list[DestinyMilestoneChallengeDefinition]"""}
     )
-    phases: list["DestinyMilestoneChallengeActivityPhase"] = attr.field(
+    phases: list["DestinyMilestoneChallengeActivityPhase"] = custom_field(
         metadata={"type": """list[DestinyMilestoneChallengeActivityPhase]"""}
     )
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyMilestoneChallengeDefinition(BaseModel):
     """
     _No description given by bungie._
@@ -405,11 +409,11 @@ class DestinyMilestoneChallengeDefinition(BaseModel):
         manifest_challenge_objective_hash: Manifest information for `challenge_objective_hash`
     """
 
-    challenge_objective_hash: int = attr.field()
-    manifest_challenge_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
+    challenge_objective_hash: int = custom_field()
+    manifest_challenge_objective_hash: Optional["DestinyObjectiveDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyMilestoneChallengeActivityGraphNodeEntry(BaseModel):
     """
     _No description given by bungie._
@@ -420,11 +424,11 @@ class DestinyMilestoneChallengeActivityGraphNodeEntry(BaseModel):
         activity_graph_node_hash: _No description given by bungie._
     """
 
-    activity_graph_hash: int = attr.field()
-    activity_graph_node_hash: int = attr.field()
+    activity_graph_hash: int = custom_field()
+    activity_graph_node_hash: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyMilestoneChallengeActivityPhase(BaseModel):
     """
     _No description given by bungie._
@@ -434,4 +438,4 @@ class DestinyMilestoneChallengeActivityPhase(BaseModel):
         phase_hash: The hash identifier of the activity's phase.
     """
 
-    phase_hash: int = attr.field()
+    phase_hash: int = custom_field()

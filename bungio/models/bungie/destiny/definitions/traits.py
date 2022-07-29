@@ -4,15 +4,13 @@
 
 from typing import TYPE_CHECKING, Optional
 
-import attr
-
-from bungio.models.base import ManifestModel
+from bungio.models.base import ManifestModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import DestinyDisplayPropertiesDefinition
 
 
-@attr.define
+@custom_define()
 class DestinyTraitDefinition(ManifestModel):
     """
     _No description given by bungie._
@@ -37,17 +35,17 @@ class DestinyTraitDefinition(ManifestModel):
         manifest_trait_category_hash: Manifest information for `trait_category_hash`
     """
 
-    display_hint: str = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
-    trait_category_hash: int = attr.field()
-    trait_category_id: str = attr.field()
-    manifest_trait_category_hash: Optional["DestinyTraitCategoryDefinition"] = attr.field(default=None)
+    display_hint: str = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()
+    trait_category_hash: int = custom_field()
+    trait_category_id: str = custom_field()
+    manifest_trait_category_hash: Optional["DestinyTraitCategoryDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyTraitCategoryDefinition(ManifestModel):
     """
     _No description given by bungie._
@@ -62,9 +60,9 @@ class DestinyTraitCategoryDefinition(ManifestModel):
         trait_ids: _No description given by bungie._
     """
 
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
-    trait_category_id: str = attr.field()
-    trait_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    trait_ids: list[str] = attr.field(metadata={"type": """list[str]"""})
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()
+    trait_category_id: str = custom_field()
+    trait_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    trait_ids: list[str] = custom_field(metadata={"type": """list[str]"""})

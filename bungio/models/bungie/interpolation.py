@@ -2,12 +2,11 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-import attr
 
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 
-@attr.define
+@custom_define()
 class InterpolationPoint(BaseModel):
     """
     _No description given by bungie._
@@ -18,11 +17,11 @@ class InterpolationPoint(BaseModel):
         weight: _No description given by bungie._
     """
 
-    value: int = attr.field()
-    weight: int = attr.field()
+    value: int = custom_field()
+    weight: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class InterpolationPointFloat(BaseModel):
     """
     _No description given by bungie._
@@ -33,5 +32,5 @@ class InterpolationPointFloat(BaseModel):
         weight: _No description given by bungie._
     """
 
-    value: float = attr.field()
-    weight: float = attr.field()
+    value: float = custom_field()
+    weight: float = custom_field()

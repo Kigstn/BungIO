@@ -5,9 +5,7 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.models.mixins import DestinyCharacterMixin
 from bungio.utils import enum_converter
 
@@ -40,7 +38,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyCharacterComponent(BaseModel, DestinyCharacterMixin):
     """
     This component contains base properties of the character. You'll probably want to always request this component, but hey you do you.
@@ -84,36 +82,36 @@ class DestinyCharacterComponent(BaseModel, DestinyCharacterMixin):
         manifest_title_record_hash: Manifest information for `title_record_hash`
     """
 
-    base_character_level: int = attr.field()
-    character_id: int = attr.field()
-    class_hash: int = attr.field()
-    class_type: Union["DestinyClass", int] = attr.field(converter=enum_converter("DestinyClass"))
-    date_last_played: datetime = attr.field()
-    emblem_background_path: str = attr.field()
-    emblem_color: "DestinyColor" = attr.field()
-    emblem_hash: int = attr.field()
-    emblem_path: str = attr.field()
-    gender_hash: int = attr.field()
-    gender_type: Union["DestinyGender", int] = attr.field(converter=enum_converter("DestinyGender"))
-    level_progression: "DestinyProgression" = attr.field()
-    light: int = attr.field()
-    membership_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
-    minutes_played_this_session: int = attr.field()
-    minutes_played_total: int = attr.field()
-    percent_to_next_level: float = attr.field()
-    race_hash: int = attr.field()
-    race_type: Union["DestinyRace", int] = attr.field(converter=enum_converter("DestinyRace"))
-    stats: dict[int, int] = attr.field(metadata={"type": """dict[int, int]"""})
-    title_record_hash: int = attr.field()
-    manifest_class_hash: Optional["DestinyClassDefinition"] = attr.field(default=None)
-    manifest_emblem_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_gender_hash: Optional["DestinyGenderDefinition"] = attr.field(default=None)
-    manifest_race_hash: Optional["DestinyRaceDefinition"] = attr.field(default=None)
-    manifest_title_record_hash: Optional["DestinyRecordDefinition"] = attr.field(default=None)
+    base_character_level: int = custom_field()
+    character_id: int = custom_field()
+    class_hash: int = custom_field()
+    class_type: Union["DestinyClass", int] = custom_field(converter=enum_converter("DestinyClass"))
+    date_last_played: datetime = custom_field()
+    emblem_background_path: str = custom_field()
+    emblem_color: "DestinyColor" = custom_field()
+    emblem_hash: int = custom_field()
+    emblem_path: str = custom_field()
+    gender_hash: int = custom_field()
+    gender_type: Union["DestinyGender", int] = custom_field(converter=enum_converter("DestinyGender"))
+    level_progression: "DestinyProgression" = custom_field()
+    light: int = custom_field()
+    membership_id: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
+    minutes_played_this_session: int = custom_field()
+    minutes_played_total: int = custom_field()
+    percent_to_next_level: float = custom_field()
+    race_hash: int = custom_field()
+    race_type: Union["DestinyRace", int] = custom_field(converter=enum_converter("DestinyRace"))
+    stats: dict[int, int] = custom_field(metadata={"type": """dict[int, int]"""})
+    title_record_hash: int = custom_field()
+    manifest_class_hash: Optional["DestinyClassDefinition"] = custom_field(default=None)
+    manifest_emblem_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_gender_hash: Optional["DestinyGenderDefinition"] = custom_field(default=None)
+    manifest_race_hash: Optional["DestinyRaceDefinition"] = custom_field(default=None)
+    manifest_title_record_hash: Optional["DestinyRecordDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyCharacterProgressionComponent(BaseModel):
     """
     This component returns anything that could be considered "Progression" on a user: data where the user is gaining levels, reputation, completions, rewards, etc...
@@ -130,23 +128,23 @@ class DestinyCharacterProgressionComponent(BaseModel):
         uninstanced_item_perks: Sometimes, you have items in your inventory that don't have instances, but still have perks (for example: Trials passage cards). This gives you the perk information for uninstanced items. This dictionary is keyed by item hash, which you can use to look up the corresponding item definition. The value is the list of perks states for the item.
     """
 
-    checklists: dict[int, dict[int, bool]] = attr.field(metadata={"type": """dict[int, dict[int, bool]]"""})
-    factions: dict[int, "DestinyFactionProgression"] = attr.field(
+    checklists: dict[int, dict[int, bool]] = custom_field(metadata={"type": """dict[int, dict[int, bool]]"""})
+    factions: dict[int, "DestinyFactionProgression"] = custom_field(
         metadata={"type": """dict[int, DestinyFactionProgression]"""}
     )
-    milestones: dict[int, "DestinyMilestone"] = attr.field(metadata={"type": """dict[int, DestinyMilestone]"""})
-    progressions: dict[int, "DestinyProgression"] = attr.field(metadata={"type": """dict[int, DestinyProgression]"""})
-    quests: list["DestinyQuestStatus"] = attr.field(metadata={"type": """list[DestinyQuestStatus]"""})
-    seasonal_artifact: "DestinyArtifactCharacterScoped" = attr.field()
-    uninstanced_item_objectives: dict[int, list["DestinyObjectiveProgress"]] = attr.field(
+    milestones: dict[int, "DestinyMilestone"] = custom_field(metadata={"type": """dict[int, DestinyMilestone]"""})
+    progressions: dict[int, "DestinyProgression"] = custom_field(metadata={"type": """dict[int, DestinyProgression]"""})
+    quests: list["DestinyQuestStatus"] = custom_field(metadata={"type": """list[DestinyQuestStatus]"""})
+    seasonal_artifact: "DestinyArtifactCharacterScoped" = custom_field()
+    uninstanced_item_objectives: dict[int, list["DestinyObjectiveProgress"]] = custom_field(
         metadata={"type": """dict[int, list[DestinyObjectiveProgress]]"""}
     )
-    uninstanced_item_perks: dict[int, "DestinyItemPerksComponent"] = attr.field(
+    uninstanced_item_perks: dict[int, "DestinyItemPerksComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemPerksComponent]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyCharacterRenderComponent(BaseModel):
     """
     Only really useful if you're attempting to render the character's current appearance in 3D, this returns a bare minimum of information, pre-aggregated, that you'll need to perform that rendering. Note that you need to combine this with other 3D assets and data from our servers. Examine the Javascript returned by https://bungie.net/sharedbundle/spasm to see how we use this data, but be warned: the rabbit hole goes pretty deep.
@@ -158,12 +156,12 @@ class DestinyCharacterRenderComponent(BaseModel):
         peer_view: A minimal view of: - Equipped items - The rendering-related custom options on those equipped items Combined, that should be enough to render all of the items on the equipped character.
     """
 
-    custom_dyes: list["DyeReference"] = attr.field(metadata={"type": """list[DyeReference]"""})
-    customization: "DestinyCharacterCustomization" = attr.field()
-    peer_view: "DestinyCharacterPeerView" = attr.field()
+    custom_dyes: list["DyeReference"] = custom_field(metadata={"type": """list[DyeReference]"""})
+    customization: "DestinyCharacterCustomization" = custom_field()
+    peer_view: "DestinyCharacterPeerView" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyCharacterActivitiesComponent(BaseModel):
     """
     This component holds activity data for a character. It will tell you about the character's current activity status, as well as activities that are available to the user.
@@ -193,18 +191,18 @@ class DestinyCharacterActivitiesComponent(BaseModel):
         manifest_last_completed_story_hash: Manifest information for `last_completed_story_hash`
     """
 
-    available_activities: list["DestinyActivity"] = attr.field(metadata={"type": """list[DestinyActivity]"""})
-    current_activity_hash: int = attr.field()
-    current_activity_mode_hash: int = attr.field()
-    current_activity_mode_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    current_activity_mode_type: int = attr.field()
-    current_activity_mode_types: list[Union["DestinyActivityModeType", int]] = attr.field(
+    available_activities: list["DestinyActivity"] = custom_field(metadata={"type": """list[DestinyActivity]"""})
+    current_activity_hash: int = custom_field()
+    current_activity_mode_hash: int = custom_field()
+    current_activity_mode_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    current_activity_mode_type: int = custom_field()
+    current_activity_mode_types: list[Union["DestinyActivityModeType", int]] = custom_field(
         converter=enum_converter("DestinyActivityModeType")
     )
-    current_playlist_activity_hash: int = attr.field()
-    date_activity_started: datetime = attr.field()
-    last_completed_story_hash: int = attr.field()
-    manifest_current_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_current_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field(default=None)
-    manifest_current_playlist_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_last_completed_story_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    current_playlist_activity_hash: int = custom_field()
+    date_activity_started: datetime = custom_field()
+    last_completed_story_hash: int = custom_field()
+    manifest_current_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
+    manifest_current_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = custom_field(default=None)
+    manifest_current_playlist_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
+    manifest_last_completed_story_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)

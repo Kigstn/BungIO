@@ -4,9 +4,7 @@
 
 from typing import TYPE_CHECKING, Optional
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -15,7 +13,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyMetricsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -35,14 +33,14 @@ class DestinyMetricsComponent(BaseModel):
         manifest_metrics_root_node_hash: Manifest information for `metrics_root_node_hash`
     """
 
-    metrics: dict[int, "DestinyMetricComponent"] = attr.field(
+    metrics: dict[int, "DestinyMetricComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyMetricComponent]"""}
     )
-    metrics_root_node_hash: int = attr.field()
-    manifest_metrics_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+    metrics_root_node_hash: int = custom_field()
+    manifest_metrics_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyMetricComponent(BaseModel):
     """
     _No description given by bungie._
@@ -53,5 +51,5 @@ class DestinyMetricComponent(BaseModel):
         objective_progress: _No description given by bungie._
     """
 
-    invisible: bool = attr.field()
-    objective_progress: "DestinyObjectiveProgress" = attr.field()
+    invisible: bool = custom_field()
+    objective_progress: "DestinyObjectiveProgress" = custom_field()

@@ -5,9 +5,7 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Optional
 
-import attr
-
-from bungio.models.base import BaseModel, ManifestModel
+from bungio.models.base import BaseModel, ManifestModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -20,7 +18,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinySeasonDefinition(ManifestModel):
     """
     Defines a canonical "Season" of Destiny: a range of a few months where the game highlights certain challenges, provides new loot, has new Clan-related rewards and celebrates various seasonal events.
@@ -56,30 +54,30 @@ class DestinySeasonDefinition(ManifestModel):
         manifest_seasonal_challenges_presentation_node_hash: Manifest information for `seasonal_challenges_presentation_node_hash`
     """
 
-    artifact_item_hash: int = attr.field()
-    background_image_path: str = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    end_date: datetime = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    preview: "DestinySeasonPreviewDefinition" = attr.field()
-    redacted: bool = attr.field()
-    seal_presentation_node_hash: int = attr.field()
-    season_number: int = attr.field()
-    season_pass_hash: int = attr.field()
-    season_pass_progression_hash: int = attr.field()
-    seasonal_challenges_presentation_node_hash: int = attr.field()
-    start_date: datetime = attr.field()
-    manifest_artifact_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_seal_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
-    manifest_season_pass_hash: Optional["DestinySeasonPassDefinition"] = attr.field(default=None)
-    manifest_season_pass_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
-    manifest_seasonal_challenges_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(
+    artifact_item_hash: int = custom_field()
+    background_image_path: str = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    end_date: datetime = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    preview: "DestinySeasonPreviewDefinition" = custom_field()
+    redacted: bool = custom_field()
+    seal_presentation_node_hash: int = custom_field()
+    season_number: int = custom_field()
+    season_pass_hash: int = custom_field()
+    season_pass_progression_hash: int = custom_field()
+    seasonal_challenges_presentation_node_hash: int = custom_field()
+    start_date: datetime = custom_field()
+    manifest_artifact_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_seal_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
+    manifest_season_pass_hash: Optional["DestinySeasonPassDefinition"] = custom_field(default=None)
+    manifest_season_pass_progression_hash: Optional["DestinyProgressionDefinition"] = custom_field(default=None)
+    manifest_seasonal_challenges_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(
         default=None
     )
 
 
-@attr.define
+@custom_define()
 class DestinySeasonPreviewDefinition(BaseModel):
     """
     Defines the promotional text, images, and links to preview this season.
@@ -92,15 +90,15 @@ class DestinySeasonPreviewDefinition(BaseModel):
         video_link: An optional link to a localized video, probably YouTube.
     """
 
-    description: str = attr.field()
-    images: list["DestinySeasonPreviewImageDefinition"] = attr.field(
+    description: str = custom_field()
+    images: list["DestinySeasonPreviewImageDefinition"] = custom_field(
         metadata={"type": """list[DestinySeasonPreviewImageDefinition]"""}
     )
-    link_path: str = attr.field()
-    video_link: str = attr.field()
+    link_path: str = custom_field()
+    video_link: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinySeasonPreviewImageDefinition(BaseModel):
     """
     Defines the thumbnail icon, high-res image, and video link for promotional images
@@ -111,11 +109,11 @@ class DestinySeasonPreviewImageDefinition(BaseModel):
         thumbnail_image: A thumbnail icon path to preview seasonal content, probably 480x270.
     """
 
-    high_res_image: str = attr.field()
-    thumbnail_image: str = attr.field()
+    high_res_image: str = custom_field()
+    thumbnail_image: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinySeasonPassDefinition(ManifestModel):
     """
     _No description given by bungie._
@@ -140,17 +138,17 @@ class DestinySeasonPassDefinition(ManifestModel):
         manifest_reward_progression_hash: Manifest information for `reward_progression_hash`
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    prestige_progression_hash: int = attr.field()
-    redacted: bool = attr.field()
-    reward_progression_hash: int = attr.field()
-    manifest_prestige_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
-    manifest_reward_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    prestige_progression_hash: int = custom_field()
+    redacted: bool = custom_field()
+    reward_progression_hash: int = custom_field()
+    manifest_prestige_progression_hash: Optional["DestinyProgressionDefinition"] = custom_field(default=None)
+    manifest_reward_progression_hash: Optional["DestinyProgressionDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyEventCardDefinition(ManifestModel):
     """
     Defines the properties of an 'Event Card' in Destiny 2, to coincide with a seasonal event for additional challenges, premium rewards, a new seal, and a special title. For example: Solstice of Heroes 2022.
@@ -184,26 +182,26 @@ class DestinyEventCardDefinition(ManifestModel):
         manifest_triumphs_presentation_node_hash: Manifest information for `triumphs_presentation_node_hash`
     """
 
-    color: "DestinyColor" = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    end_time: int = attr.field()
-    hash: int = attr.field()
-    images: "DestinyEventCardImages" = attr.field()
-    index: int = attr.field()
-    link_redirect_path: str = attr.field()
-    redacted: bool = attr.field()
-    seal_presentation_node_hash: int = attr.field()
-    ticket_currency_item_hash: int = attr.field()
-    ticket_vendor_category_hash: int = attr.field()
-    ticket_vendor_hash: int = attr.field()
-    triumphs_presentation_node_hash: int = attr.field()
-    manifest_seal_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
-    manifest_ticket_currency_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_ticket_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
-    manifest_triumphs_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+    color: "DestinyColor" = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    end_time: int = custom_field()
+    hash: int = custom_field()
+    images: "DestinyEventCardImages" = custom_field()
+    index: int = custom_field()
+    link_redirect_path: str = custom_field()
+    redacted: bool = custom_field()
+    seal_presentation_node_hash: int = custom_field()
+    ticket_currency_item_hash: int = custom_field()
+    ticket_vendor_category_hash: int = custom_field()
+    ticket_vendor_hash: int = custom_field()
+    triumphs_presentation_node_hash: int = custom_field()
+    manifest_seal_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
+    manifest_ticket_currency_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_ticket_vendor_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
+    manifest_triumphs_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyEventCardImages(BaseModel):
     """
     _No description given by bungie._
@@ -219,10 +217,10 @@ class DestinyEventCardImages(BaseModel):
         unowned_card_sleeve_wrap_image_path: _No description given by bungie._
     """
 
-    card_complete_image_path: str = attr.field()
-    card_complete_wrap_image_path: str = attr.field()
-    card_incomplete_image_path: str = attr.field()
-    progress_icon_image_path: str = attr.field()
-    theme_background_image_path: str = attr.field()
-    unowned_card_sleeve_image_path: str = attr.field()
-    unowned_card_sleeve_wrap_image_path: str = attr.field()
+    card_complete_image_path: str = custom_field()
+    card_complete_wrap_image_path: str = custom_field()
+    card_incomplete_image_path: str = custom_field()
+    progress_icon_image_path: str = custom_field()
+    theme_background_image_path: str = custom_field()
+    unowned_card_sleeve_image_path: str = custom_field()
+    unowned_card_sleeve_wrap_image_path: str = custom_field()

@@ -4,9 +4,7 @@
 
 from typing import TYPE_CHECKING, Optional
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -16,7 +14,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyCraftablesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -36,14 +34,14 @@ class DestinyCraftablesComponent(BaseModel):
         manifest_crafting_root_node_hash: Manifest information for `crafting_root_node_hash`
     """
 
-    craftables: dict[int, "DestinyCraftableComponent"] = attr.field(
+    craftables: dict[int, "DestinyCraftableComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyCraftableComponent]"""}
     )
-    crafting_root_node_hash: int = attr.field()
-    manifest_crafting_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = attr.field(default=None)
+    crafting_root_node_hash: int = custom_field()
+    manifest_crafting_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyCraftableComponent(BaseModel):
     """
     _No description given by bungie._
@@ -55,14 +53,14 @@ class DestinyCraftableComponent(BaseModel):
         visible: _No description given by bungie._
     """
 
-    failed_requirement_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    sockets: list["DestinyCraftableSocketComponent"] = attr.field(
+    failed_requirement_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    sockets: list["DestinyCraftableSocketComponent"] = custom_field(
         metadata={"type": """list[DestinyCraftableSocketComponent]"""}
     )
-    visible: bool = attr.field()
+    visible: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyCraftableSocketComponent(BaseModel):
     """
     _No description given by bungie._
@@ -82,14 +80,14 @@ class DestinyCraftableSocketComponent(BaseModel):
         manifest_plug_set_hash: Manifest information for `plug_set_hash`
     """
 
-    plug_set_hash: int = attr.field()
-    plugs: list["DestinyCraftableSocketPlugComponent"] = attr.field(
+    plug_set_hash: int = custom_field()
+    plugs: list["DestinyCraftableSocketPlugComponent"] = custom_field(
         metadata={"type": """list[DestinyCraftableSocketPlugComponent]"""}
     )
-    manifest_plug_set_hash: Optional["DestinyPlugSetDefinition"] = attr.field(default=None)
+    manifest_plug_set_hash: Optional["DestinyPlugSetDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyCraftableSocketPlugComponent(BaseModel):
     """
     _No description given by bungie._
@@ -109,6 +107,6 @@ class DestinyCraftableSocketPlugComponent(BaseModel):
         manifest_plug_item_hash: Manifest information for `plug_item_hash`
     """
 
-    failed_requirement_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    plug_item_hash: int = attr.field()
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    failed_requirement_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    plug_item_hash: int = custom_field()
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)

@@ -2,14 +2,13 @@ import asyncio
 import datetime
 from typing import TYPE_CHECKING, Optional, Type
 
-import attr
 from sqlalchemy import JSON, Column, Table, Text, select
 from sqlalchemy.exc import MultipleResultsFound
 from sqlalchemy.ext.asyncio import AsyncConnection
 from sqlalchemy.sql.ddl import CreateTable, DropTable
 
 from bungio.http.route import Route
-from bungio.models.base import ClientMixin
+from bungio.models.base import ClientMixin, custom_define, custom_field
 from bungio.utils import get_now_with_tz
 
 if TYPE_CHECKING:
@@ -18,22 +17,22 @@ if TYPE_CHECKING:
 __all__ = ("Manifest",)
 
 
-@attr.define
+@custom_define()
 class Manifest(ClientMixin):
     """
     The connector to all manifest data
     """
 
-    prefix: str = attr.field(init=False, default="destiny_manifest_")
+    prefix: str = custom_field(init=False, default="destiny_manifest_")
 
-    __synchronised: bool = attr.field(init=False, default=False)
-    __saved_manifests: dict[str, Table] = attr.field(init=False, factory=dict)
-    __manifest_urls: dict[str, str] = attr.field(init=False, factory=dict)
-    __locks: dict[str, asyncio.Lock] = attr.field(init=False, factory=dict)
-    __manifest_lock: asyncio.Lock = attr.field(init=False, default=asyncio.Lock())
-    __synchronise_lock: asyncio.Lock = attr.field(init=False, default=asyncio.Lock())
-    __manifest_last_update: datetime.datetime = attr.field(init=False, default=None)
-    __version_table: Table = attr.field(init=False)
+    __synchronised: bool = custom_field(init=False, default=False)
+    __saved_manifests: dict[str, Table] = custom_field(init=False, factory=dict)
+    __manifest_urls: dict[str, str] = custom_field(init=False, factory=dict)
+    __locks: dict[str, asyncio.Lock] = custom_field(init=False, factory=dict)
+    __manifest_lock: asyncio.Lock = custom_field(init=False, default=asyncio.Lock())
+    __synchronise_lock: asyncio.Lock = custom_field(init=False, default=asyncio.Lock())
+    __manifest_last_update: datetime.datetime = custom_field(init=False, default=None)
+    __version_table: Table = custom_field(init=False)
 
     def __attrs_post_init__(self):
         # noinspection PyProtectedMember

@@ -4,12 +4,10 @@
 
 from datetime import datetime
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 
-@attr.define
+@custom_define()
 class DateRange(BaseModel):
     """
     _No description given by bungie._
@@ -20,5 +18,5 @@ class DateRange(BaseModel):
         start: _No description given by bungie._
     """
 
-    end: datetime = attr.field()
-    start: datetime = attr.field()
+    end: datetime = custom_field()
+    start: datetime = custom_field()

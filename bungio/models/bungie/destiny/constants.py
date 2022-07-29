@@ -4,9 +4,7 @@
 
 from typing import TYPE_CHECKING, Optional
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -17,7 +15,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyEnvironmentLocationMapping(BaseModel):
     """
     _No description given by bungie._
@@ -43,12 +41,12 @@ class DestinyEnvironmentLocationMapping(BaseModel):
         manifest_objective_hash: Manifest information for `objective_hash`
     """
 
-    activation_source: str = attr.field()
-    activity_hash: int = attr.field()
-    item_hash: int = attr.field()
-    location_hash: int = attr.field()
-    objective_hash: int = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_location_hash: Optional["DestinyLocationDefinition"] = attr.field(default=None)
-    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
+    activation_source: str = custom_field()
+    activity_hash: int = custom_field()
+    item_hash: int = custom_field()
+    location_hash: int = custom_field()
+    objective_hash: int = custom_field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_location_hash: Optional["DestinyLocationDefinition"] = custom_field(default=None)
+    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = custom_field(default=None)

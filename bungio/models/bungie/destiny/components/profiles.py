@@ -5,9 +5,7 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -24,7 +22,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyProfileProgressionComponent(BaseModel):
     """
     The set of progression-related information that applies at a Profile-wide level for your Destiny experience. This differs from the Jimi Hendrix Experience because there's less guitars on fire. Yet. #spoileralert? This will include information such as Checklist info.
@@ -35,11 +33,11 @@ class DestinyProfileProgressionComponent(BaseModel):
         seasonal_artifact: Data related to your progress on the current season's artifact that is the same across characters.
     """
 
-    checklists: dict[int, dict[int, bool]] = attr.field(metadata={"type": """dict[int, dict[int, bool]]"""})
-    seasonal_artifact: "DestinyArtifactProfileScoped" = attr.field()
+    checklists: dict[int, dict[int, bool]] = custom_field(metadata={"type": """dict[int, dict[int, bool]]"""})
+    seasonal_artifact: "DestinyArtifactProfileScoped" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyProfileTransitoryComponent(BaseModel):
     """
     This is an experimental set of data that Bungie considers to be "transitory" - information that may be useful for API users, but that is coming from a non-authoritative data source about information that could potentially change at a more frequent pace than Bungie.net will receive updates about it. This information is provided exclusively for convenience should any of it be useful to users: we provide no guarantees to the accuracy or timeliness of data that comes from this source. Know that this data can potentially be out-of-date or even wrong entirely if the user disconnected from the game or suddenly changed their status before we can receive refreshed data.
@@ -62,19 +60,19 @@ class DestinyProfileTransitoryComponent(BaseModel):
         manifest_last_orbited_destination_hash: Manifest information for `last_orbited_destination_hash`
     """
 
-    current_activity: "DestinyProfileTransitoryCurrentActivity" = attr.field()
-    joinability: "DestinyProfileTransitoryJoinability" = attr.field()
-    last_orbited_destination_hash: int = attr.field()
-    party_members: list["DestinyProfileTransitoryPartyMember"] = attr.field(
+    current_activity: "DestinyProfileTransitoryCurrentActivity" = custom_field()
+    joinability: "DestinyProfileTransitoryJoinability" = custom_field()
+    last_orbited_destination_hash: int = custom_field()
+    party_members: list["DestinyProfileTransitoryPartyMember"] = custom_field(
         metadata={"type": """list[DestinyProfileTransitoryPartyMember]"""}
     )
-    tracking: list["DestinyProfileTransitoryTrackingEntry"] = attr.field(
+    tracking: list["DestinyProfileTransitoryTrackingEntry"] = custom_field(
         metadata={"type": """list[DestinyProfileTransitoryTrackingEntry]"""}
     )
-    manifest_last_orbited_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
+    manifest_last_orbited_destination_hash: Optional["DestinyDestinationDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyProfileTransitoryPartyMember(BaseModel):
     """
     This is some bare minimum information about a party member in a Fireteam. Unfortunately, without great computational expense on our side we can only get at the data contained here. I'd like to give you a character ID for example, but we don't have it. But we do have these three pieces of information. May they help you on your quest to show meaningful data about current Fireteams. Notably, we don't and can't feasibly return info on characters. If you can, try to use just the data below for your UI and purposes. Only hit us with further queries if you absolutely must know the character ID of the currently playing character. Pretty please with sugar on top.
@@ -96,14 +94,14 @@ class DestinyProfileTransitoryPartyMember(BaseModel):
         manifest_emblem_hash: Manifest information for `emblem_hash`
     """
 
-    display_name: str = attr.field()
-    emblem_hash: int = attr.field()
-    membership_id: int = attr.field()
-    status: Union["DestinyPartyMemberStates", int] = attr.field(converter=enum_converter("DestinyPartyMemberStates"))
-    manifest_emblem_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    display_name: str = custom_field()
+    emblem_hash: int = custom_field()
+    membership_id: int = custom_field()
+    status: Union["DestinyPartyMemberStates", int] = custom_field(converter=enum_converter("DestinyPartyMemberStates"))
+    manifest_emblem_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyProfileTransitoryCurrentActivity(BaseModel):
     """
     If you are playing in an activity, this is some information about it. Note that we cannot guarantee any of this resembles what ends up in the PGCR in any way. They are sourced by two entirely separate systems with their own logic, and the one we source this data from should be considered non-authoritative in comparison.
@@ -118,15 +116,15 @@ class DestinyProfileTransitoryCurrentActivity(BaseModel):
         start_time: When the activity started.
     """
 
-    end_time: datetime = attr.field()
-    highest_opposing_faction_score: float = attr.field()
-    number_of_opponents: int = attr.field()
-    number_of_players: int = attr.field()
-    score: float = attr.field()
-    start_time: datetime = attr.field()
+    end_time: datetime = custom_field()
+    highest_opposing_faction_score: float = custom_field()
+    number_of_opponents: int = custom_field()
+    number_of_players: int = custom_field()
+    score: float = custom_field()
+    start_time: datetime = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyProfileTransitoryJoinability(BaseModel):
     """
     Some basic information about whether you can be joined, how many slots are left etc. Note that this can change quickly, so it may not actually be useful. But perhaps it will be in some use cases?
@@ -138,16 +136,16 @@ class DestinyProfileTransitoryJoinability(BaseModel):
         privacy_setting: Who the person is currently allowing invites from.
     """
 
-    closed_reasons: Union["DestinyJoinClosedReasons", int] = attr.field(
+    closed_reasons: Union["DestinyJoinClosedReasons", int] = custom_field(
         converter=enum_converter("DestinyJoinClosedReasons")
     )
-    open_slots: int = attr.field()
-    privacy_setting: Union["DestinyGamePrivacySetting", int] = attr.field(
+    open_slots: int = custom_field()
+    privacy_setting: Union["DestinyGamePrivacySetting", int] = custom_field(
         converter=enum_converter("DestinyGamePrivacySetting")
     )
 
 
-@attr.define
+@custom_define()
 class DestinyProfileTransitoryTrackingEntry(BaseModel):
     """
     This represents a single "thing" being tracked by the player. This can point to many types of entities, but only a subset of them will actually have a valid hash identifier for whatever it is being pointed to. It's up to you to interpret what it means when various combinations of these entries have values being tracked.
@@ -175,14 +173,14 @@ class DestinyProfileTransitoryTrackingEntry(BaseModel):
         manifest_questline_item_hash: Manifest information for `questline_item_hash`
     """
 
-    activity_hash: int = attr.field()
-    item_hash: int = attr.field()
-    location_hash: int = attr.field()
-    objective_hash: int = attr.field()
-    questline_item_hash: int = attr.field()
-    tracked_date: datetime = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_location_hash: Optional["DestinyLocationDefinition"] = attr.field(default=None)
-    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
-    manifest_questline_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    activity_hash: int = custom_field()
+    item_hash: int = custom_field()
+    location_hash: int = custom_field()
+    objective_hash: int = custom_field()
+    questline_item_hash: int = custom_field()
+    tracked_date: datetime = custom_field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_location_hash: Optional["DestinyLocationDefinition"] = custom_field(default=None)
+    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = custom_field(default=None)
+    manifest_questline_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)

@@ -4,9 +4,7 @@
 
 from typing import TYPE_CHECKING, Optional
 
-import attr
-
-from bungio.models.base import BaseModel, ManifestModel
+from bungio.models.base import BaseModel, ManifestModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -16,7 +14,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyArtifactDefinition(ManifestModel):
     """
     Represents known info about a Destiny Artifact. We cannot guarantee that artifact definitions will be immutable between seasons - in fact, we've been told that they will be replaced between seasons. But this definition is built both to minimize the amount of lookups for related data that have to occur, and is built in hope that, if this plan changes, we will be able to accommodate it more easily.
@@ -31,17 +29,17 @@ class DestinyArtifactDefinition(ManifestModel):
         translation_block: Any Geometry/3D info we know about the Artifact. Currently sourced from a related inventory item's gearset information, but the source of this data is subject to change.
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
-    tiers: list["DestinyArtifactTierDefinition"] = attr.field(
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()
+    tiers: list["DestinyArtifactTierDefinition"] = custom_field(
         metadata={"type": """list[DestinyArtifactTierDefinition]"""}
     )
-    translation_block: "DestinyItemTranslationBlockDefinition" = attr.field()
+    translation_block: "DestinyItemTranslationBlockDefinition" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyArtifactTierDefinition(BaseModel):
     """
     _No description given by bungie._
@@ -55,16 +53,16 @@ class DestinyArtifactTierDefinition(BaseModel):
         tier_hash: An identifier, unique within the Artifact, for this specific tier.
     """
 
-    display_title: str = attr.field()
-    items: list["DestinyArtifactTierItemDefinition"] = attr.field(
+    display_title: str = custom_field()
+    items: list["DestinyArtifactTierItemDefinition"] = custom_field(
         metadata={"type": """list[DestinyArtifactTierItemDefinition]"""}
     )
-    minimum_unlock_points_used_requirement: int = attr.field()
-    progress_requirement_message: str = attr.field()
-    tier_hash: int = attr.field()
+    minimum_unlock_points_used_requirement: int = custom_field()
+    progress_requirement_message: str = custom_field()
+    tier_hash: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyArtifactTierItemDefinition(BaseModel):
     """
     _No description given by bungie._
@@ -83,5 +81,5 @@ class DestinyArtifactTierItemDefinition(BaseModel):
         manifest_item_hash: Manifest information for `item_hash`
     """
 
-    item_hash: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    item_hash: int = custom_field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)

@@ -4,13 +4,11 @@
 
 from typing import Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseEnum, BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 
-@attr.define
+@custom_define()
 class ContentTypeDescription(BaseModel):
     """
     _No description given by bungie._
@@ -40,32 +38,32 @@ class ContentTypeDescription(BaseModel):
         usage_examples: _No description given by bungie._
     """
 
-    allow_comments: bool = attr.field()
-    auto_english_property_fallback: bool = attr.field()
-    bind_identifier_to_property: str = attr.field()
-    bound_regex: str = attr.field()
-    bulk_uploadable: bool = attr.field()
-    c_type: str = attr.field()
-    content_description: str = attr.field()
-    force_identifier_binding: bool = attr.field()
-    name: str = attr.field()
-    preview_image: str = attr.field()
-    previews: list["ContentPreview"] = attr.field(metadata={"type": """list[ContentPreview]"""})
-    priority: int = attr.field()
-    properties: list["ContentTypeProperty"] = attr.field(metadata={"type": """list[ContentTypeProperty]"""})
-    property_sections: list["ContentTypePropertySection"] = attr.field(
+    allow_comments: bool = custom_field()
+    auto_english_property_fallback: bool = custom_field()
+    bind_identifier_to_property: str = custom_field()
+    bound_regex: str = custom_field()
+    bulk_uploadable: bool = custom_field()
+    c_type: str = custom_field()
+    content_description: str = custom_field()
+    force_identifier_binding: bool = custom_field()
+    name: str = custom_field()
+    preview_image: str = custom_field()
+    previews: list["ContentPreview"] = custom_field(metadata={"type": """list[ContentPreview]"""})
+    priority: int = custom_field()
+    properties: list["ContentTypeProperty"] = custom_field(metadata={"type": """list[ContentTypeProperty]"""})
+    property_sections: list["ContentTypePropertySection"] = custom_field(
         metadata={"type": """list[ContentTypePropertySection]"""}
     )
-    reminder: str = attr.field()
-    show_in_content_editor: bool = attr.field()
-    suppress_cms_path: bool = attr.field()
-    tag_metadata: list["TagMetadataDefinition"] = attr.field(metadata={"type": """list[TagMetadataDefinition]"""})
-    tag_metadata_items: dict[str, "TagMetadataItem"] = attr.field(metadata={"type": """dict[str, TagMetadataItem]"""})
-    type_of: str = attr.field()
-    usage_examples: list[str] = attr.field(metadata={"type": """list[str]"""})
+    reminder: str = custom_field()
+    show_in_content_editor: bool = custom_field()
+    suppress_cms_path: bool = custom_field()
+    tag_metadata: list["TagMetadataDefinition"] = custom_field(metadata={"type": """list[TagMetadataDefinition]"""})
+    tag_metadata_items: dict[str, "TagMetadataItem"] = custom_field(metadata={"type": """dict[str, TagMetadataItem]"""})
+    type_of: str = custom_field()
+    usage_examples: list[str] = custom_field(metadata={"type": """list[str]"""})
 
 
-@attr.define
+@custom_define()
 class ContentTypeProperty(BaseModel):
     """
     _No description given by bungie._
@@ -116,50 +114,52 @@ class ContentTypeProperty(BaseModel):
         weight: _No description given by bungie._
     """
 
-    attributes: dict[str, str] = attr.field(metadata={"type": """dict[str, str]"""})
-    bind_to_property: str = attr.field()
-    bound_regex: str = attr.field()
-    child_properties: list["ContentTypeProperty"] = attr.field(metadata={"type": """list[ContentTypeProperty]"""})
-    content_type_allowed: str = attr.field()
-    datatype: Union["ContentPropertyDataTypeEnum", int] = attr.field(
+    attributes: dict[str, str] = custom_field(metadata={"type": """dict[str, str]"""})
+    bind_to_property: str = custom_field()
+    bound_regex: str = custom_field()
+    child_properties: list["ContentTypeProperty"] = custom_field(metadata={"type": """list[ContentTypeProperty]"""})
+    content_type_allowed: str = custom_field()
+    datatype: Union["ContentPropertyDataTypeEnum", int] = custom_field(
         converter=enum_converter("ContentPropertyDataTypeEnum")
     )
-    default_values: list["ContentTypeDefaultValue"] = attr.field(metadata={"type": """list[ContentTypeDefaultValue]"""})
-    enabled: bool = attr.field()
-    entitytype: str = attr.field()
-    fallback: bool = attr.field()
-    is_combo: bool = attr.field()
-    is_external_allowed: bool = attr.field()
-    is_image: bool = attr.field()
-    is_title: bool = attr.field()
-    is_video: bool = attr.field()
-    legal_content_types: list[str] = attr.field(metadata={"type": """list[str]"""})
-    localizable: bool = attr.field()
-    max_byte_length: int = attr.field()
-    max_file_size: int = attr.field()
-    max_height: int = attr.field()
-    max_length: int = attr.field()
-    max_width: int = attr.field()
-    min_height: int = attr.field()
-    min_width: int = attr.field()
-    name: str = attr.field()
-    order: int = attr.field()
-    property_description: str = attr.field()
-    property_section: str = attr.field()
-    readable_name: str = attr.field()
-    regexp: str = attr.field()
-    representation_selection: dict[str, str] = attr.field(metadata={"type": """dict[str, str]"""})
-    representation_validation_string: str = attr.field()
-    required: bool = attr.field()
-    root_property_name: str = attr.field()
-    rss_attribute: str = attr.field()
-    suppress_property: bool = attr.field()
-    validate_as: str = attr.field()
-    value: str = attr.field()
-    visible: bool = attr.field()
-    visible_dependency: str = attr.field()
-    visible_on: str = attr.field()
-    weight: int = attr.field()
+    default_values: list["ContentTypeDefaultValue"] = custom_field(
+        metadata={"type": """list[ContentTypeDefaultValue]"""}
+    )
+    enabled: bool = custom_field()
+    entitytype: str = custom_field()
+    fallback: bool = custom_field()
+    is_combo: bool = custom_field()
+    is_external_allowed: bool = custom_field()
+    is_image: bool = custom_field()
+    is_title: bool = custom_field()
+    is_video: bool = custom_field()
+    legal_content_types: list[str] = custom_field(metadata={"type": """list[str]"""})
+    localizable: bool = custom_field()
+    max_byte_length: int = custom_field()
+    max_file_size: int = custom_field()
+    max_height: int = custom_field()
+    max_length: int = custom_field()
+    max_width: int = custom_field()
+    min_height: int = custom_field()
+    min_width: int = custom_field()
+    name: str = custom_field()
+    order: int = custom_field()
+    property_description: str = custom_field()
+    property_section: str = custom_field()
+    readable_name: str = custom_field()
+    regexp: str = custom_field()
+    representation_selection: dict[str, str] = custom_field(metadata={"type": """dict[str, str]"""})
+    representation_validation_string: str = custom_field()
+    required: bool = custom_field()
+    root_property_name: str = custom_field()
+    rss_attribute: str = custom_field()
+    suppress_property: bool = custom_field()
+    validate_as: str = custom_field()
+    value: str = custom_field()
+    visible: bool = custom_field()
+    visible_dependency: str = custom_field()
+    visible_on: str = custom_field()
+    weight: int = custom_field()
 
 
 class ContentPropertyDataTypeEnum(BaseEnum):
@@ -199,7 +199,7 @@ class ContentPropertyDataTypeEnum(BaseEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class ContentTypeDefaultValue(BaseModel):
     """
     _No description given by bungie._
@@ -211,12 +211,12 @@ class ContentTypeDefaultValue(BaseModel):
         when_value: _No description given by bungie._
     """
 
-    default_value: str = attr.field()
-    when_clause: str = attr.field()
-    when_value: str = attr.field()
+    default_value: str = custom_field()
+    when_clause: str = custom_field()
+    when_value: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class TagMetadataDefinition(BaseModel):
     """
     _No description given by bungie._
@@ -231,15 +231,15 @@ class TagMetadataDefinition(BaseModel):
         order: _No description given by bungie._
     """
 
-    datatype: str = attr.field()
-    description: str = attr.field()
-    is_required: bool = attr.field()
-    items: list["TagMetadataItem"] = attr.field(metadata={"type": """list[TagMetadataItem]"""})
-    name: str = attr.field()
-    order: int = attr.field()
+    datatype: str = custom_field()
+    description: str = custom_field()
+    is_required: bool = custom_field()
+    items: list["TagMetadataItem"] = custom_field(metadata={"type": """list[TagMetadataItem]"""})
+    name: str = custom_field()
+    order: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class TagMetadataItem(BaseModel):
     """
     _No description given by bungie._
@@ -253,14 +253,14 @@ class TagMetadataItem(BaseModel):
         tag_text: _No description given by bungie._
     """
 
-    description: str = attr.field()
-    groups: list[str] = attr.field(metadata={"type": """list[str]"""})
-    is_default: bool = attr.field()
-    name: str = attr.field()
-    tag_text: str = attr.field()
+    description: str = custom_field()
+    groups: list[str] = custom_field(metadata={"type": """list[str]"""})
+    is_default: bool = custom_field()
+    name: str = custom_field()
+    tag_text: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class ContentPreview(BaseModel):
     """
     _No description given by bungie._
@@ -275,15 +275,15 @@ class ContentPreview(BaseModel):
         use_set_id: _No description given by bungie._
     """
 
-    item_in_set: bool = attr.field()
-    name: str = attr.field()
-    path: str = attr.field()
-    set_nesting: int = attr.field()
-    set_tag: str = attr.field()
-    use_set_id: int = attr.field()
+    item_in_set: bool = custom_field()
+    name: str = custom_field()
+    path: str = custom_field()
+    set_nesting: int = custom_field()
+    set_tag: str = custom_field()
+    use_set_id: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class ContentTypePropertySection(BaseModel):
     """
     _No description given by bungie._
@@ -295,6 +295,6 @@ class ContentTypePropertySection(BaseModel):
         readable_name: _No description given by bungie._
     """
 
-    collapsed: bool = attr.field()
-    name: str = attr.field()
-    readable_name: str = attr.field()
+    collapsed: bool = custom_field()
+    name: str = custom_field()
+    readable_name: str = custom_field()

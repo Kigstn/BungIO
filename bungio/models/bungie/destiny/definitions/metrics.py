@@ -4,9 +4,7 @@
 
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import ManifestModel
+from bungio.models.base import ManifestModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -17,7 +15,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyMetricDefinition(ManifestModel):
     """
     _No description given by bungie._
@@ -45,16 +43,16 @@ class DestinyMetricDefinition(ManifestModel):
         manifest_tracking_objective_hash: Manifest information for `tracking_objective_hash`
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    lower_value_is_better: bool = attr.field()
-    parent_node_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    presentation_node_type: Union["DestinyPresentationNodeType", int] = attr.field(
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    lower_value_is_better: bool = custom_field()
+    parent_node_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    presentation_node_type: Union["DestinyPresentationNodeType", int] = custom_field(
         converter=enum_converter("DestinyPresentationNodeType")
     )
-    redacted: bool = attr.field()
-    tracking_objective_hash: int = attr.field()
-    trait_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    trait_ids: list[str] = attr.field(metadata={"type": """list[str]"""})
-    manifest_tracking_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
+    redacted: bool = custom_field()
+    tracking_objective_hash: int = custom_field()
+    trait_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    trait_ids: list[str] = custom_field(metadata={"type": """list[str]"""})
+    manifest_tracking_objective_hash: Optional["DestinyObjectiveDefinition"] = custom_field(default=None)

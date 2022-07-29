@@ -5,14 +5,12 @@
 from datetime import datetime
 from typing import Optional
 
-import attr
-
 from bungio.models import ApiUsage, Application
 from bungio.models.auth import AuthData
-from bungio.models.base import ClientMixin
+from bungio.models.base import ClientMixin, custom_define
 
 
-@attr.define
+@custom_define()
 class AppRouteInterface(ClientMixin):
     async def get_application_api_usage(
         self, application_id: int, auth: AuthData, end: Optional[datetime] = None, start: Optional[datetime] = None

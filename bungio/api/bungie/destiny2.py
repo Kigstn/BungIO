@@ -5,8 +5,6 @@
 from datetime import datetime
 from typing import Optional, Union
 
-import attr
-
 from bungio.models import (
     AwaAuthorizationResult,
     AwaInitializeResponse,
@@ -55,11 +53,11 @@ from bungio.models import (
     UserInfoCard,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import ClientMixin
+from bungio.models.base import ClientMixin, custom_define
 from bungio.utils import AllowAsyncIteration
 
 
-@attr.define
+@custom_define()
 class Destiny2RouteInterface(ClientMixin):
     async def get_destiny_manifest(self, auth: Optional[AuthData] = None) -> DestinyManifest:
         """

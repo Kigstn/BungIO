@@ -1,9 +1,6 @@
-from datetime import datetime
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import ClientMixin, FuzzyAttrFinder
+from bungio.models.base import ClientMixin, FuzzyAttrFinder, custom_define
 
 if TYPE_CHECKING:
     # AUTOMATIC IMPORTS START
@@ -41,7 +38,7 @@ if TYPE_CHECKING:
 __all__ = ("DestinyClanMixin",)
 
 
-@attr.define
+@custom_define()
 class DestinyClanMixin(ClientMixin, FuzzyAttrFinder):
     # DO NOT CHANGE ANY CODE BELOW. Automatically generated and overwritten
 

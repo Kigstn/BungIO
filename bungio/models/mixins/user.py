@@ -1,15 +1,13 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, AsyncGenerator, Optional, Union
 
-import attr
-
-from bungio.models.base import ClientMixin, FuzzyAttrFinder
+from bungio.models.base import ClientMixin, FuzzyAttrFinder, custom_define
 
 if TYPE_CHECKING:
     # AUTOMATIC IMPORTS START
     from bungio.models import (
+        BungieMembershipType,
         BungieRewardDisplay,
-        DestinyCharacter,
         DestinyComponentType,
         DestinyHistoricalStatsAccountResult,
         DestinyItemResponse,
@@ -33,13 +31,15 @@ if TYPE_CHECKING:
 
     # AUTOMATIC IMPORTS END
     from bungio.models.auth import AuthData
+    from bungio.models.basic import DestinyCharacter
     from bungio.models.bungie import DestinyActivityModeType
     from bungio.models.overwrites import DestinyHistoricalStatsPeriodGroup
+
 
 __all__ = ("DestinyUserMixin",)
 
 
-@attr.define
+@custom_define()
 class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
     @property
     def full_bungie_name(self) -> str:

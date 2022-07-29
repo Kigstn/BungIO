@@ -5,16 +5,14 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Union
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import DestinyItemQuantity, DestinyVendorItemRefundPolicy
 
 
-@attr.define
+@custom_define()
 class DestinyVendorReceipt(BaseModel):
     """
     If a character purchased an item that is refundable, a Vendor Receipt will be created on the user's Destiny Profile. These expire after a configurable period of time, but until then can be used to get refunds on items. BNet does not provide the ability to refund a purchase *yet*, but you know.
@@ -31,13 +29,13 @@ class DestinyVendorReceipt(BaseModel):
         time_to_expiration: The seconds since epoch at which this receipt is rendered invalid.
     """
 
-    currency_paid: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})
-    expires_on: datetime = attr.field()
-    item_received: "DestinyItemQuantity" = attr.field()
-    license_unlock_hash: int = attr.field()
-    purchased_by_character_id: int = attr.field()
-    refund_policy: Union["DestinyVendorItemRefundPolicy", int] = attr.field(
+    currency_paid: list["DestinyItemQuantity"] = custom_field(metadata={"type": """list[DestinyItemQuantity]"""})
+    expires_on: datetime = custom_field()
+    item_received: "DestinyItemQuantity" = custom_field()
+    license_unlock_hash: int = custom_field()
+    purchased_by_character_id: int = custom_field()
+    refund_policy: Union["DestinyVendorItemRefundPolicy", int] = custom_field(
         converter=enum_converter("DestinyVendorItemRefundPolicy")
     )
-    sequence_number: int = attr.field()
-    time_to_expiration: int = attr.field()
+    sequence_number: int = custom_field()
+    time_to_expiration: int = custom_field()

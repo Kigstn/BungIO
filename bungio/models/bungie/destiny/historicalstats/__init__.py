@@ -5,9 +5,14 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Any, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel, ManifestModel
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -24,7 +29,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyPostGameCarnageReportData(BaseModel):
     """
     _No description given by bungie._
@@ -39,19 +44,19 @@ class DestinyPostGameCarnageReportData(BaseModel):
         teams: Collection of stats for the player in this activity.
     """
 
-    activity_details: "DestinyHistoricalStatsActivity" = attr.field()
-    activity_was_started_from_beginning: bool = attr.field()
-    entries: list["DestinyPostGameCarnageReportEntry"] = attr.field(
+    activity_details: "DestinyHistoricalStatsActivity" = custom_field()
+    activity_was_started_from_beginning: bool = custom_field()
+    entries: list["DestinyPostGameCarnageReportEntry"] = custom_field(
         metadata={"type": """list[DestinyPostGameCarnageReportEntry]"""}
     )
-    period: datetime = attr.field()
-    starting_phase_index: int = attr.field()
-    teams: list["DestinyPostGameCarnageReportTeamEntry"] = attr.field(
+    period: datetime = custom_field()
+    starting_phase_index: int = custom_field()
+    teams: list["DestinyPostGameCarnageReportTeamEntry"] = custom_field(
         metadata={"type": """list[DestinyPostGameCarnageReportTeamEntry]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyHistoricalStatsActivity(BaseModel):
     """
     Summary information about the activity that was played.
@@ -77,18 +82,20 @@ class DestinyHistoricalStatsActivity(BaseModel):
         manifest_reference_id: Manifest information for `reference_id`
     """
 
-    director_activity_hash: int = attr.field()
-    instance_id: int = attr.field()
-    is_private: bool = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
-    mode: Union["DestinyActivityModeType", int] = attr.field(converter=enum_converter("DestinyActivityModeType"))
-    modes: list[Union["DestinyActivityModeType", int]] = attr.field(converter=enum_converter("DestinyActivityModeType"))
-    reference_id: int = attr.field()
-    manifest_director_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_reference_id: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    director_activity_hash: int = custom_field()
+    instance_id: int = custom_field()
+    is_private: bool = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
+    mode: Union["DestinyActivityModeType", int] = custom_field(converter=enum_converter("DestinyActivityModeType"))
+    modes: list[Union["DestinyActivityModeType", int]] = custom_field(
+        converter=enum_converter("DestinyActivityModeType")
+    )
+    reference_id: int = custom_field()
+    manifest_director_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
+    manifest_reference_id: Optional["DestinyActivityDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyPostGameCarnageReportEntry(BaseModel):
     """
     _No description given by bungie._
@@ -103,17 +110,17 @@ class DestinyPostGameCarnageReportEntry(BaseModel):
         values: Collection of stats for the player in this activity.
     """
 
-    character_id: int = attr.field()
-    extended: "DestinyPostGameCarnageReportExtendedData" = attr.field()
-    player: "DestinyPlayer" = attr.field()
-    score: "DestinyHistoricalStatsValue" = attr.field()
-    standing: int = attr.field()
-    values: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
+    character_id: int = custom_field()
+    extended: "DestinyPostGameCarnageReportExtendedData" = custom_field()
+    player: "DestinyPlayer" = custom_field()
+    score: "DestinyHistoricalStatsValue" = custom_field()
+    standing: int = custom_field()
+    values: dict[str, "DestinyHistoricalStatsValue"] = custom_field(
         metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyHistoricalStatsValue(BaseModel):
     """
     _No description given by bungie._
@@ -127,14 +134,14 @@ class DestinyHistoricalStatsValue(BaseModel):
         weighted: Weighted value of the stat if a weight greater than 1 has been assigned.
     """
 
-    activity_id: int = attr.field()
-    basic: "DestinyHistoricalStatsValuePair" = attr.field()
-    pga: "DestinyHistoricalStatsValuePair" = attr.field()
-    stat_id: str = attr.field()
-    weighted: "DestinyHistoricalStatsValuePair" = attr.field()
+    activity_id: int = custom_field()
+    basic: "DestinyHistoricalStatsValuePair" = custom_field()
+    pga: "DestinyHistoricalStatsValuePair" = custom_field()
+    stat_id: str = custom_field()
+    weighted: "DestinyHistoricalStatsValuePair" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyHistoricalStatsValuePair(BaseModel):
     """
     _No description given by bungie._
@@ -145,11 +152,11 @@ class DestinyHistoricalStatsValuePair(BaseModel):
         value: Raw value of the statistic
     """
 
-    display_value: str = attr.field()
-    value: float = attr.field()
+    display_value: str = custom_field()
+    value: float = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyPlayer(BaseModel):
     """
     _No description given by bungie._
@@ -181,24 +188,24 @@ class DestinyPlayer(BaseModel):
         manifest_race_hash: Manifest information for `race_hash`
     """
 
-    bungie_net_user_info: "UserInfoCard" = attr.field()
-    character_class: str = attr.field()
-    character_level: int = attr.field()
-    clan_name: str = attr.field()
-    clan_tag: str = attr.field()
-    class_hash: int = attr.field()
-    destiny_user_info: "UserInfoCard" = attr.field()
-    emblem_hash: int = attr.field()
-    gender_hash: int = attr.field()
-    light_level: int = attr.field()
-    race_hash: int = attr.field()
-    manifest_class_hash: Optional["DestinyClassDefinition"] = attr.field(default=None)
-    manifest_emblem_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_gender_hash: Optional["DestinyGenderDefinition"] = attr.field(default=None)
-    manifest_race_hash: Optional["DestinyRaceDefinition"] = attr.field(default=None)
+    bungie_net_user_info: "UserInfoCard" = custom_field()
+    character_class: str = custom_field()
+    character_level: int = custom_field()
+    clan_name: str = custom_field()
+    clan_tag: str = custom_field()
+    class_hash: int = custom_field()
+    destiny_user_info: "UserInfoCard" = custom_field()
+    emblem_hash: int = custom_field()
+    gender_hash: int = custom_field()
+    light_level: int = custom_field()
+    race_hash: int = custom_field()
+    manifest_class_hash: Optional["DestinyClassDefinition"] = custom_field(default=None)
+    manifest_emblem_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_gender_hash: Optional["DestinyGenderDefinition"] = custom_field(default=None)
+    manifest_race_hash: Optional["DestinyRaceDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyPostGameCarnageReportExtendedData(BaseModel):
     """
     _No description given by bungie._
@@ -209,15 +216,15 @@ class DestinyPostGameCarnageReportExtendedData(BaseModel):
         weapons: List of weapons and their perspective values.
     """
 
-    values: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
+    values: dict[str, "DestinyHistoricalStatsValue"] = custom_field(
         metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
-    weapons: list["DestinyHistoricalWeaponStats"] = attr.field(
+    weapons: list["DestinyHistoricalWeaponStats"] = custom_field(
         metadata={"type": """list[DestinyHistoricalWeaponStats]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyHistoricalWeaponStats(BaseModel):
     """
     _No description given by bungie._
@@ -237,14 +244,14 @@ class DestinyHistoricalWeaponStats(BaseModel):
         manifest_reference_id: Manifest information for `reference_id`
     """
 
-    reference_id: int = attr.field()
-    values: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
+    reference_id: int = custom_field()
+    values: dict[str, "DestinyHistoricalStatsValue"] = custom_field(
         metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
-    manifest_reference_id: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_reference_id: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyPostGameCarnageReportTeamEntry(BaseModel):
     """
     _No description given by bungie._
@@ -257,13 +264,13 @@ class DestinyPostGameCarnageReportTeamEntry(BaseModel):
         team_name: Alpha or Bravo
     """
 
-    score: "DestinyHistoricalStatsValue" = attr.field()
-    standing: "DestinyHistoricalStatsValue" = attr.field()
-    team_id: int = attr.field()
-    team_name: str = attr.field()
+    score: "DestinyHistoricalStatsValue" = custom_field()
+    standing: "DestinyHistoricalStatsValue" = custom_field()
+    team_id: int = custom_field()
+    team_name: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyLeaderboard(BaseModel):
     """
     _No description given by bungie._
@@ -274,11 +281,11 @@ class DestinyLeaderboard(BaseModel):
         stat_id: _No description given by bungie._
     """
 
-    entries: list["DestinyLeaderboardEntry"] = attr.field(metadata={"type": """list[DestinyLeaderboardEntry]"""})
-    stat_id: str = attr.field()
+    entries: list["DestinyLeaderboardEntry"] = custom_field(metadata={"type": """list[DestinyLeaderboardEntry]"""})
+    stat_id: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyLeaderboardEntry(BaseModel):
     """
     _No description given by bungie._
@@ -291,13 +298,13 @@ class DestinyLeaderboardEntry(BaseModel):
         value: Value of the stat for this player
     """
 
-    character_id: int = attr.field()
-    player: "DestinyPlayer" = attr.field()
-    rank: int = attr.field()
-    value: "DestinyHistoricalStatsValue" = attr.field()
+    character_id: int = custom_field()
+    player: "DestinyPlayer" = custom_field()
+    rank: int = custom_field()
+    value: "DestinyHistoricalStatsValue" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyLeaderboardResults(BaseModel):
     """
     _No description given by bungie._
@@ -308,11 +315,11 @@ class DestinyLeaderboardResults(BaseModel):
         focus_membership_id: Indicate the membership ID of the account that is the focal point of the provided leaderboards.
     """
 
-    focus_character_id: int = attr.field()
-    focus_membership_id: int = attr.field()
+    focus_character_id: int = custom_field()
+    focus_membership_id: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyClanAggregateStat(BaseModel):
     """
     _No description given by bungie._
@@ -324,12 +331,12 @@ class DestinyClanAggregateStat(BaseModel):
         value: Value of the stat for this player
     """
 
-    mode: Union["DestinyActivityModeType", int] = attr.field(converter=enum_converter("DestinyActivityModeType"))
-    stat_id: str = attr.field()
-    value: "DestinyHistoricalStatsValue" = attr.field()
+    mode: Union["DestinyActivityModeType", int] = custom_field(converter=enum_converter("DestinyActivityModeType"))
+    stat_id: str = custom_field()
+    value: "DestinyHistoricalStatsValue" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyHistoricalStatsByPeriod(BaseModel):
     """
     _No description given by bungie._
@@ -344,27 +351,27 @@ class DestinyHistoricalStatsByPeriod(BaseModel):
         monthly: _No description given by bungie._
     """
 
-    all_time: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
+    all_time: dict[str, "DestinyHistoricalStatsValue"] = custom_field(
         metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
-    all_time_tier1: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
+    all_time_tier1: dict[str, "DestinyHistoricalStatsValue"] = custom_field(
         metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
-    all_time_tier2: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
+    all_time_tier2: dict[str, "DestinyHistoricalStatsValue"] = custom_field(
         metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
-    all_time_tier3: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
+    all_time_tier3: dict[str, "DestinyHistoricalStatsValue"] = custom_field(
         metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
-    daily: list["DestinyHistoricalStatsPeriodGroup"] = attr.field(
+    daily: list["DestinyHistoricalStatsPeriodGroup"] = custom_field(
         metadata={"type": """list[DestinyHistoricalStatsPeriodGroup]"""}
     )
-    monthly: list["DestinyHistoricalStatsPeriodGroup"] = attr.field(
+    monthly: list["DestinyHistoricalStatsPeriodGroup"] = custom_field(
         metadata={"type": """list[DestinyHistoricalStatsPeriodGroup]"""}
     )
 
 
-@attr.define
+@custom_define()
 class OverwrittenDestinyHistoricalStatsPeriodGroup(BaseModel):
     """
     _No description given by bungie._
@@ -376,14 +383,14 @@ class OverwrittenDestinyHistoricalStatsPeriodGroup(BaseModel):
         values: Collection of stats for the period.
     """
 
-    activity_details: "DestinyHistoricalStatsActivity" = attr.field()
-    period: datetime = attr.field()
-    values: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
+    activity_details: "DestinyHistoricalStatsActivity" = custom_field()
+    period: datetime = custom_field()
+    values: dict[str, "DestinyHistoricalStatsValue"] = custom_field(
         metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyHistoricalStatsAccountResult(BaseModel):
     """
     _No description given by bungie._
@@ -395,14 +402,14 @@ class DestinyHistoricalStatsAccountResult(BaseModel):
         merged_deleted_characters: _No description given by bungie._
     """
 
-    characters: list["DestinyHistoricalStatsPerCharacter"] = attr.field(
+    characters: list["DestinyHistoricalStatsPerCharacter"] = custom_field(
         metadata={"type": """list[DestinyHistoricalStatsPerCharacter]"""}
     )
-    merged_all_characters: "DestinyHistoricalStatsWithMerged" = attr.field()
-    merged_deleted_characters: "DestinyHistoricalStatsWithMerged" = attr.field()
+    merged_all_characters: "DestinyHistoricalStatsWithMerged" = custom_field()
+    merged_deleted_characters: "DestinyHistoricalStatsWithMerged" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyHistoricalStatsWithMerged(BaseModel):
     """
     _No description given by bungie._
@@ -413,13 +420,13 @@ class DestinyHistoricalStatsWithMerged(BaseModel):
         results: _No description given by bungie._
     """
 
-    merged: "DestinyHistoricalStatsByPeriod" = attr.field()
-    results: dict[str, "DestinyHistoricalStatsByPeriod"] = attr.field(
+    merged: "DestinyHistoricalStatsByPeriod" = custom_field()
+    results: dict[str, "DestinyHistoricalStatsByPeriod"] = custom_field(
         metadata={"type": """dict[str, DestinyHistoricalStatsByPeriod]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyHistoricalStatsPerCharacter(BaseModel):
     """
     _No description given by bungie._
@@ -432,15 +439,15 @@ class DestinyHistoricalStatsPerCharacter(BaseModel):
         results: _No description given by bungie._
     """
 
-    character_id: int = attr.field()
-    deleted: bool = attr.field()
-    merged: "DestinyHistoricalStatsByPeriod" = attr.field()
-    results: dict[str, "DestinyHistoricalStatsByPeriod"] = attr.field(
+    character_id: int = custom_field()
+    deleted: bool = custom_field()
+    merged: "DestinyHistoricalStatsByPeriod" = custom_field()
+    results: dict[str, "DestinyHistoricalStatsByPeriod"] = custom_field(
         metadata={"type": """dict[str, DestinyHistoricalStatsByPeriod]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyActivityHistoryResults(BaseModel):
     """
     _No description given by bungie._
@@ -450,12 +457,12 @@ class DestinyActivityHistoryResults(BaseModel):
         activities: List of activities, the most recent activity first.
     """
 
-    activities: list["DestinyHistoricalStatsPeriodGroup"] = attr.field(
+    activities: list["DestinyHistoricalStatsPeriodGroup"] = custom_field(
         metadata={"type": """list[DestinyHistoricalStatsPeriodGroup]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyHistoricalWeaponStatsData(BaseModel):
     """
     _No description given by bungie._
@@ -465,12 +472,12 @@ class DestinyHistoricalWeaponStatsData(BaseModel):
         weapons: List of weapons and their perspective values.
     """
 
-    weapons: list["DestinyHistoricalWeaponStats"] = attr.field(
+    weapons: list["DestinyHistoricalWeaponStats"] = custom_field(
         metadata={"type": """list[DestinyHistoricalWeaponStats]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyAggregateActivityResults(BaseModel):
     """
     _No description given by bungie._
@@ -480,12 +487,12 @@ class DestinyAggregateActivityResults(BaseModel):
         activities: List of all activities the player has participated in.
     """
 
-    activities: list["DestinyAggregateActivityStats"] = attr.field(
+    activities: list["DestinyAggregateActivityStats"] = custom_field(
         metadata={"type": """list[DestinyAggregateActivityStats]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyAggregateActivityStats(BaseModel):
     """
     _No description given by bungie._
@@ -505,8 +512,8 @@ class DestinyAggregateActivityStats(BaseModel):
         manifest_activity_hash: Manifest information for `activity_hash`
     """
 
-    activity_hash: int = attr.field()
-    values: dict[str, "DestinyHistoricalStatsValue"] = attr.field(
+    activity_hash: int = custom_field()
+    values: dict[str, "DestinyHistoricalStatsValue"] = custom_field(
         metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)

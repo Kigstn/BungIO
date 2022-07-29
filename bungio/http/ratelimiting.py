@@ -1,12 +1,12 @@
 import asyncio
 import time
 
-import attr
+from bungio.models.base import custom_define, custom_field
 
 __all__ = ("RateLimiter",)
 
 
-@attr.define
+@custom_define()
 class RateLimiter:
     """
     Gives out x tokens for network operations every y seconds
@@ -16,13 +16,13 @@ class RateLimiter:
         seconds: In how many seconds those requests are allowed
     """
 
-    max_tokens: int = attr.field(default=240)
-    seconds: int = attr.field(default=10)
+    max_tokens: int = custom_field(default=240)
+    seconds: int = custom_field(default=10)
 
-    tokens: float = attr.field(init=False)
-    updated_at: float = attr.field(init=False)
+    tokens: float = custom_field(init=False)
+    updated_at: float = custom_field(init=False)
 
-    lock: asyncio.Lock = attr.field(init=False, default=asyncio.Lock())
+    lock: asyncio.Lock = custom_field(init=False, default=asyncio.Lock())
 
     def __attrs_post_init__(self):
         self.tokens = self.max_tokens

@@ -4,8 +4,6 @@
 
 from typing import Optional, Union
 
-import attr
-
 from bungio.models import (
     BungieMembershipType,
     ClanBanner,
@@ -39,11 +37,11 @@ from bungio.models import (
     SearchResultOfGroupMemberApplication,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import ClientMixin
+from bungio.models.base import ClientMixin, custom_define
 from bungio.utils import AllowAsyncIteration
 
 
-@attr.define
+@custom_define()
 class GroupV2RouteInterface(ClientMixin):
     async def get_available_avatars(self, auth: Optional[AuthData] = None) -> dict[int, str]:
         """

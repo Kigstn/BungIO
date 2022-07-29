@@ -4,9 +4,7 @@
 
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseEnum, ManifestModel
+from bungio.models.base import BaseEnum, ManifestModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -186,7 +184,7 @@ class DestinyActivityModeType(BaseEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class DestinyHistoricalStatsDefinition(ManifestModel):
     """
     _No description given by bungie._
@@ -218,21 +216,25 @@ class DestinyHistoricalStatsDefinition(ManifestModel):
         manifest_medal_tier_hash: Manifest information for `medal_tier_hash`
     """
 
-    category: Union["DestinyStatsCategoryType", int] = attr.field(converter=enum_converter("DestinyStatsCategoryType"))
-    group: Union["DestinyStatsGroupType", int] = attr.field(converter=enum_converter("DestinyStatsGroupType"))
-    icon_image: str = attr.field()
-    medal_tier_hash: int = attr.field()
-    merge_method: int = attr.field()
-    modes: list[Union["DestinyActivityModeType", int]] = attr.field(converter=enum_converter("DestinyActivityModeType"))
-    period_types: list[Union["PeriodType", int]] = attr.field(converter=enum_converter("PeriodType"))
-    stat_description: str = attr.field()
-    stat_id: str = attr.field()
-    stat_name: str = attr.field()
-    stat_name_abbr: str = attr.field()
-    unit_label: str = attr.field()
-    unit_type: Union["UnitType", int] = attr.field(converter=enum_converter("UnitType"))
-    weight: int = attr.field()
-    manifest_medal_tier_hash: Optional["DestinyMedalTierDefinition"] = attr.field(default=None)
+    category: Union["DestinyStatsCategoryType", int] = custom_field(
+        converter=enum_converter("DestinyStatsCategoryType")
+    )
+    group: Union["DestinyStatsGroupType", int] = custom_field(converter=enum_converter("DestinyStatsGroupType"))
+    icon_image: str = custom_field()
+    medal_tier_hash: int = custom_field()
+    merge_method: int = custom_field()
+    modes: list[Union["DestinyActivityModeType", int]] = custom_field(
+        converter=enum_converter("DestinyActivityModeType")
+    )
+    period_types: list[Union["PeriodType", int]] = custom_field(converter=enum_converter("PeriodType"))
+    stat_description: str = custom_field()
+    stat_id: str = custom_field()
+    stat_name: str = custom_field()
+    stat_name_abbr: str = custom_field()
+    unit_label: str = custom_field()
+    unit_type: Union["UnitType", int] = custom_field(converter=enum_converter("UnitType"))
+    weight: int = custom_field()
+    manifest_medal_tier_hash: Optional["DestinyMedalTierDefinition"] = custom_field(default=None)
 
 
 class DestinyStatsGroupType(BaseEnum):

@@ -4,15 +4,13 @@
 
 from typing import TYPE_CHECKING, Optional
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import DestinyInventoryItemDefinition, DestinyObjectiveProgress
 
 
-@attr.define
+@custom_define()
 class DestinyItemPlugBase(BaseModel):
     """
     _No description given by bungie._
@@ -35,15 +33,15 @@ class DestinyItemPlugBase(BaseModel):
         manifest_plug_item_hash: Manifest information for `plug_item_hash`
     """
 
-    can_insert: bool = attr.field()
-    enable_fail_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    enabled: bool = attr.field()
-    insert_fail_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    plug_item_hash: int = attr.field()
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    can_insert: bool = custom_field()
+    enable_fail_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    enabled: bool = custom_field()
+    insert_fail_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    plug_item_hash: int = custom_field()
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemPlug(BaseModel):
     """
     _No description given by bungie._
@@ -67,12 +65,12 @@ class DestinyItemPlug(BaseModel):
         manifest_plug_item_hash: Manifest information for `plug_item_hash`
     """
 
-    can_insert: bool = attr.field()
-    enable_fail_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    enabled: bool = attr.field()
-    insert_fail_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    plug_item_hash: int = attr.field()
-    plug_objectives: list["DestinyObjectiveProgress"] = attr.field(
+    can_insert: bool = custom_field()
+    enable_fail_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    enabled: bool = custom_field()
+    insert_fail_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    plug_item_hash: int = custom_field()
+    plug_objectives: list["DestinyObjectiveProgress"] = custom_field(
         metadata={"type": """list[DestinyObjectiveProgress]"""}
     )
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)

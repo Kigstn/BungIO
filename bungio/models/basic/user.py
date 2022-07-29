@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING, Union
 
-import attr
-
+from bungio.models.base import custom_define, custom_field
 from bungio.models.mixins.user import DestinyUserMixin
 from bungio.utils import enum_converter
 
@@ -11,7 +10,7 @@ if TYPE_CHECKING:
 __all__ = ("DestinyUser",)
 
 
-@attr.define
+@custom_define()
 class DestinyUser(DestinyUserMixin):
     """
     A representation of a Destiny 2 user
@@ -21,5 +20,5 @@ class DestinyUser(DestinyUserMixin):
         membership_type: The user's type, aka platform
     """
 
-    membership_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
+    membership_id: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))

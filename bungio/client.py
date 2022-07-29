@@ -6,19 +6,18 @@ from base64 import b64encode
 from copy import copy
 from typing import TYPE_CHECKING, Callable, Optional
 
-import attr
 from sqlalchemy import MetaData
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
 import bungio.singleton as singleton
 from bungio.api import ApiClient
-from bungio.definitions import DEFAULT_LOGGER, LOGGER_NAME, ROOT_DIR
+from bungio.definitions import DEFAULT_LOGGER, ROOT_DIR
 from bungio.error import InvalidAuthentication
 from bungio.http.client import HttpClient
 from bungio.manifest import Manifest
 from bungio.models import BungieMembershipType
 from bungio.models.auth import AuthData
-from bungio.models.base import MISSING
+from bungio.models.base import MISSING, custom_define, custom_field
 from bungio.models.enums import BungieLanguage
 from bungio.utils import get_now_with_tz
 
@@ -47,7 +46,7 @@ token_update_lock: dict[int, asyncio.Lock] = {}
 __all__ = ("Client",)
 
 
-@attr.define(init=False)
+@custom_define(init=False)
 class Client(singleton.Singleton):
     """
     The singleton api client
@@ -63,28 +62,28 @@ class Client(singleton.Singleton):
         always_return_manifest_information: If manifest information should always be returned on every request. Keep in mind that this will increase requests performed / storage for an increased ease of use.
     """
 
-    bungie_client_id: str = attr.field(repr=False)
-    bungie_client_secret: str = attr.field(repr=False)
-    bungie_token: str = attr.field(repr=False)
+    bungie_client_id: str = custom_field(repr=False)
+    bungie_client_secret: str = custom_field(repr=False)
+    bungie_token: str = custom_field(repr=False)
 
-    logger: logging.Logger = attr.field(default=DEFAULT_LOGGER)
+    logger: logging.Logger = custom_field(default=DEFAULT_LOGGER)
 
-    language: BungieLanguage = attr.field(default=BungieLanguage.ENGLISH)
+    language: BungieLanguage = custom_field(default=BungieLanguage.ENGLISH)
 
-    cache: Optional["CacheBackend"] = attr.field(default=None)
-    manifest_storage: bool | AsyncEngine = attr.field(default=True)
-    always_return_manifest_information: bool = attr.field(default=False)
+    cache: Optional["CacheBackend"] = custom_field(default=None)
+    manifest_storage: bool | AsyncEngine = custom_field(default=True)
+    always_return_manifest_information: bool = custom_field(default=False)
 
-    json_dumps: Callable = attr.field(init=False, default=json_dumps, repr=False)
-    json_loads: Callable = attr.field(init=False, default=json_loads, repr=False)
+    json_dumps: Callable = custom_field(init=False, default=json_dumps, repr=False)
+    json_loads: Callable = custom_field(init=False, default=json_loads, repr=False)
 
-    api: ApiClient = attr.field(init=False, repr=False)
-    http: HttpClient = attr.field(init=False, repr=False)
-    manifest: Optional[Manifest] = attr.field(init=False, default=None, repr=False)
+    api: ApiClient = custom_field(init=False, repr=False)
+    http: HttpClient = custom_field(init=False, repr=False)
+    manifest: Optional[Manifest] = custom_field(init=False, default=None, repr=False)
 
-    _metadata: Optional[MetaData] = attr.field(init=False, default=None, repr=False)
+    _metadata: Optional[MetaData] = custom_field(init=False, default=None, repr=False)
 
-    _initialised: bool = attr.field(init=False, default=False)
+    _initialised: bool = custom_field(init=False, default=False)
 
     def __init__(self, *args, **kwargs):
         if not getattr(self, "_initialised", False):

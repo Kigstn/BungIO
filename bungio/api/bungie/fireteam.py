@@ -4,8 +4,6 @@
 
 from typing import Optional, Union
 
-import attr
-
 from bungio.models import (
     FireteamDateRange,
     FireteamPlatform,
@@ -16,10 +14,10 @@ from bungio.models import (
     SearchResultOfFireteamSummary,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import ClientMixin
+from bungio.models.base import ClientMixin, custom_define
 
 
-@attr.define
+@custom_define()
 class FireteamRouteInterface(ClientMixin):
     async def get_active_private_clan_fireteam_count(self, group_id: int, auth: AuthData) -> int:
         """

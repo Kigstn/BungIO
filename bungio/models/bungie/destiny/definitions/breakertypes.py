@@ -4,16 +4,14 @@
 
 from typing import TYPE_CHECKING, Union
 
-import attr
-
-from bungio.models.base import ManifestModel
+from bungio.models.base import ManifestModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import DestinyBreakerType, DestinyDisplayPropertiesDefinition
 
 
-@attr.define
+@custom_define()
 class DestinyBreakerTypeDefinition(ManifestModel):
     """
     _No description given by bungie._
@@ -27,8 +25,8 @@ class DestinyBreakerTypeDefinition(ManifestModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    enum_value: Union["DestinyBreakerType", int] = attr.field(converter=enum_converter("DestinyBreakerType"))
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    enum_value: Union["DestinyBreakerType", int] = custom_field(converter=enum_converter("DestinyBreakerType"))
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()

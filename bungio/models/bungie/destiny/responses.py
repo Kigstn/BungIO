@@ -5,9 +5,7 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Union
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.models.mixins import DestinyUserMixin
 from bungio.utils import enum_converter
 
@@ -79,7 +77,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyLinkedProfilesResponse(BaseModel):
     """
     I know what you seek. You seek linked accounts. Found them, you have. This contract returns a minimal amount of data about Destiny Accounts that are linked through your Bungie.Net account. We will not return accounts in this response whose
@@ -91,12 +89,14 @@ class DestinyLinkedProfilesResponse(BaseModel):
         profiles_with_errors: This is brief summary info for profiles that we believe have valid Destiny info, but who failed to return data for some other reason and thus we know that subsequent calls for their info will also fail.
     """
 
-    bnet_membership: "UserInfoCard" = attr.field()
-    profiles: list["DestinyProfileUserInfoCard"] = attr.field(metadata={"type": """list[DestinyProfileUserInfoCard]"""})
-    profiles_with_errors: list["DestinyErrorProfile"] = attr.field(metadata={"type": """list[DestinyErrorProfile]"""})
+    bnet_membership: "UserInfoCard" = custom_field()
+    profiles: list["DestinyProfileUserInfoCard"] = custom_field(
+        metadata={"type": """list[DestinyProfileUserInfoCard]"""}
+    )
+    profiles_with_errors: list["DestinyErrorProfile"] = custom_field(metadata={"type": """list[DestinyErrorProfile]"""})
 
 
-@attr.define
+@custom_define()
 class DestinyProfileUserInfoCard(BaseModel, DestinyUserMixin):
     """
     _No description given by bungie._
@@ -120,28 +120,28 @@ class DestinyProfileUserInfoCard(BaseModel, DestinyUserMixin):
         unpaired_game_versions: If this profile is not in a cross save pairing, this will return the game versions that we believe this profile has access to.  For the time being, we will not return this information for any membership that is in a cross save pairing. The gist is that, once the pairing occurs, we do not currently have a consistent way to get that information for the profile's original Platform, and thus gameVersions would be too inconsistent (based on the last platform they happened to play on) for the info to be useful.  If we ever can get this data, this field will be deprecated and replaced with data on the DestinyLinkedProfileResponse itself, with game versions per linked Platform. But since we can't get that, we have this as a stop-gap measure for getting the data in the only situation that we currently need it.
     """
 
-    applicable_membership_types: list[Union["BungieMembershipType", int]] = attr.field(
+    applicable_membership_types: list[Union["BungieMembershipType", int]] = custom_field(
         converter=enum_converter("BungieMembershipType")
     )
-    bungie_global_display_name: str = attr.field()
-    bungie_global_display_name_code: int = attr.field()
-    cross_save_override: Union["BungieMembershipType", int] = attr.field(
+    bungie_global_display_name: str = custom_field()
+    bungie_global_display_name_code: int = custom_field()
+    cross_save_override: Union["BungieMembershipType", int] = custom_field(
         converter=enum_converter("BungieMembershipType")
     )
-    date_last_played: datetime = attr.field()
-    display_name: str = attr.field()
-    icon_path: str = attr.field()
-    is_cross_save_primary: bool = attr.field()
-    is_overridden: bool = attr.field()
-    is_public: bool = attr.field()
-    membership_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
-    platform_silver: "DestinyPlatformSilverComponent" = attr.field()
-    supplemental_display_name: str = attr.field()
-    unpaired_game_versions: int = attr.field()
+    date_last_played: datetime = custom_field()
+    display_name: str = custom_field()
+    icon_path: str = custom_field()
+    is_cross_save_primary: bool = custom_field()
+    is_overridden: bool = custom_field()
+    is_public: bool = custom_field()
+    membership_id: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
+    platform_silver: "DestinyPlatformSilverComponent" = custom_field()
+    supplemental_display_name: str = custom_field()
+    unpaired_game_versions: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyErrorProfile(BaseModel):
     """
     If a Destiny Profile can't be returned, but we're pretty certain it's a valid Destiny account, this will contain as much info as we can get about the profile for your use. Assume that the most you'll get is the Error Code, the Membership Type and the Membership ID.
@@ -152,11 +152,11 @@ class DestinyErrorProfile(BaseModel):
         info_card: Basic info about the account that failed. Don't expect anything other than membership ID, Membership Type, and displayName to be populated.
     """
 
-    error_code: Union["PlatformErrorCodes", int] = attr.field(converter=enum_converter("PlatformErrorCodes"))
-    info_card: "UserInfoCard" = attr.field()
+    error_code: Union["PlatformErrorCodes", int] = custom_field(converter=enum_converter("PlatformErrorCodes"))
+    info_card: "UserInfoCard" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyProfileResponse(BaseModel):
     """
     The response for GetDestinyProfile, with components for character and item-level data.
@@ -195,43 +195,43 @@ class DestinyProfileResponse(BaseModel):
         vendor_receipts: Recent, refundable purchases you have made from vendors. When will you use it? Couldn't say... COMPONENT TYPE: VendorReceipts
     """
 
-    character_activities: "DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent" = attr.field()
-    character_collectibles: "DictionaryComponentResponseOfint64AndDestinyCollectiblesComponent" = attr.field()
-    character_craftables: "DictionaryComponentResponseOfint64AndDestinyCraftablesComponent" = attr.field()
-    character_currency_lookups: "DictionaryComponentResponseOfint64AndDestinyCurrenciesComponent" = attr.field()
-    character_equipment: "DictionaryComponentResponseOfint64AndDestinyInventoryComponent" = attr.field()
-    character_inventories: "DictionaryComponentResponseOfint64AndDestinyInventoryComponent" = attr.field()
-    character_kiosks: "DictionaryComponentResponseOfint64AndDestinyKiosksComponent" = attr.field()
-    character_plug_sets: "DictionaryComponentResponseOfint64AndDestinyPlugSetsComponent" = attr.field()
+    character_activities: "DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent" = custom_field()
+    character_collectibles: "DictionaryComponentResponseOfint64AndDestinyCollectiblesComponent" = custom_field()
+    character_craftables: "DictionaryComponentResponseOfint64AndDestinyCraftablesComponent" = custom_field()
+    character_currency_lookups: "DictionaryComponentResponseOfint64AndDestinyCurrenciesComponent" = custom_field()
+    character_equipment: "DictionaryComponentResponseOfint64AndDestinyInventoryComponent" = custom_field()
+    character_inventories: "DictionaryComponentResponseOfint64AndDestinyInventoryComponent" = custom_field()
+    character_kiosks: "DictionaryComponentResponseOfint64AndDestinyKiosksComponent" = custom_field()
+    character_plug_sets: "DictionaryComponentResponseOfint64AndDestinyPlugSetsComponent" = custom_field()
     character_presentation_nodes: "DictionaryComponentResponseOfint64AndDestinyPresentationNodesComponent" = (
-        attr.field()
+        custom_field()
     )
-    character_progressions: "DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent" = attr.field()
-    character_records: "DictionaryComponentResponseOfint64AndDestinyCharacterRecordsComponent" = attr.field()
-    character_render_data: "DictionaryComponentResponseOfint64AndDestinyCharacterRenderComponent" = attr.field()
-    character_string_variables: "DictionaryComponentResponseOfint64AndDestinyStringVariablesComponent" = attr.field()
-    character_uninstanced_item_components: dict[int, "DestinyBaseItemComponentSetOfuint32"] = attr.field(
+    character_progressions: "DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent" = custom_field()
+    character_records: "DictionaryComponentResponseOfint64AndDestinyCharacterRecordsComponent" = custom_field()
+    character_render_data: "DictionaryComponentResponseOfint64AndDestinyCharacterRenderComponent" = custom_field()
+    character_string_variables: "DictionaryComponentResponseOfint64AndDestinyStringVariablesComponent" = custom_field()
+    character_uninstanced_item_components: dict[int, "DestinyBaseItemComponentSetOfuint32"] = custom_field(
         metadata={"type": """dict[int, DestinyBaseItemComponentSetOfuint32]"""}
     )
-    characters: "DictionaryComponentResponseOfint64AndDestinyCharacterComponent" = attr.field()
-    item_components: "DestinyItemComponentSetOfint64" = attr.field()
-    metrics: "SingleComponentResponseOfDestinyMetricsComponent" = attr.field()
-    platform_silver: "SingleComponentResponseOfDestinyPlatformSilverComponent" = attr.field()
-    profile: "SingleComponentResponseOfDestinyProfileComponent" = attr.field()
-    profile_collectibles: "SingleComponentResponseOfDestinyProfileCollectiblesComponent" = attr.field()
-    profile_currencies: "SingleComponentResponseOfDestinyInventoryComponent" = attr.field()
-    profile_inventory: "SingleComponentResponseOfDestinyInventoryComponent" = attr.field()
-    profile_kiosks: "SingleComponentResponseOfDestinyKiosksComponent" = attr.field()
-    profile_plug_sets: "SingleComponentResponseOfDestinyPlugSetsComponent" = attr.field()
-    profile_presentation_nodes: "SingleComponentResponseOfDestinyPresentationNodesComponent" = attr.field()
-    profile_progression: "SingleComponentResponseOfDestinyProfileProgressionComponent" = attr.field()
-    profile_records: "SingleComponentResponseOfDestinyProfileRecordsComponent" = attr.field()
-    profile_string_variables: "SingleComponentResponseOfDestinyStringVariablesComponent" = attr.field()
-    profile_transitory_data: "SingleComponentResponseOfDestinyProfileTransitoryComponent" = attr.field()
-    vendor_receipts: "SingleComponentResponseOfDestinyVendorReceiptsComponent" = attr.field()
+    characters: "DictionaryComponentResponseOfint64AndDestinyCharacterComponent" = custom_field()
+    item_components: "DestinyItemComponentSetOfint64" = custom_field()
+    metrics: "SingleComponentResponseOfDestinyMetricsComponent" = custom_field()
+    platform_silver: "SingleComponentResponseOfDestinyPlatformSilverComponent" = custom_field()
+    profile: "SingleComponentResponseOfDestinyProfileComponent" = custom_field()
+    profile_collectibles: "SingleComponentResponseOfDestinyProfileCollectiblesComponent" = custom_field()
+    profile_currencies: "SingleComponentResponseOfDestinyInventoryComponent" = custom_field()
+    profile_inventory: "SingleComponentResponseOfDestinyInventoryComponent" = custom_field()
+    profile_kiosks: "SingleComponentResponseOfDestinyKiosksComponent" = custom_field()
+    profile_plug_sets: "SingleComponentResponseOfDestinyPlugSetsComponent" = custom_field()
+    profile_presentation_nodes: "SingleComponentResponseOfDestinyPresentationNodesComponent" = custom_field()
+    profile_progression: "SingleComponentResponseOfDestinyProfileProgressionComponent" = custom_field()
+    profile_records: "SingleComponentResponseOfDestinyProfileRecordsComponent" = custom_field()
+    profile_string_variables: "SingleComponentResponseOfDestinyStringVariablesComponent" = custom_field()
+    profile_transitory_data: "SingleComponentResponseOfDestinyProfileTransitoryComponent" = custom_field()
+    vendor_receipts: "SingleComponentResponseOfDestinyVendorReceiptsComponent" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyCharacterResponse(BaseModel):
     """
     The response contract for GetDestinyCharacter, with components that can be returned for character and item-level data.
@@ -254,23 +254,23 @@ class DestinyCharacterResponse(BaseModel):
         uninstanced_item_components: The set of components belonging to the player's UNinstanced items. Because apparently now those too can have information relevant to the character's state. COMPONENT TYPE: [See inside the DestinyItemComponentSet contract for component types.]
     """
 
-    activities: "SingleComponentResponseOfDestinyCharacterActivitiesComponent" = attr.field()
-    character: "SingleComponentResponseOfDestinyCharacterComponent" = attr.field()
-    collectibles: "SingleComponentResponseOfDestinyCollectiblesComponent" = attr.field()
-    currency_lookups: "SingleComponentResponseOfDestinyCurrenciesComponent" = attr.field()
-    equipment: "SingleComponentResponseOfDestinyInventoryComponent" = attr.field()
-    inventory: "SingleComponentResponseOfDestinyInventoryComponent" = attr.field()
-    item_components: "DestinyItemComponentSetOfint64" = attr.field()
-    kiosks: "SingleComponentResponseOfDestinyKiosksComponent" = attr.field()
-    plug_sets: "SingleComponentResponseOfDestinyPlugSetsComponent" = attr.field()
-    presentation_nodes: "SingleComponentResponseOfDestinyPresentationNodesComponent" = attr.field()
-    progressions: "SingleComponentResponseOfDestinyCharacterProgressionComponent" = attr.field()
-    records: "SingleComponentResponseOfDestinyCharacterRecordsComponent" = attr.field()
-    render_data: "SingleComponentResponseOfDestinyCharacterRenderComponent" = attr.field()
-    uninstanced_item_components: "DestinyBaseItemComponentSetOfuint32" = attr.field()
+    activities: "SingleComponentResponseOfDestinyCharacterActivitiesComponent" = custom_field()
+    character: "SingleComponentResponseOfDestinyCharacterComponent" = custom_field()
+    collectibles: "SingleComponentResponseOfDestinyCollectiblesComponent" = custom_field()
+    currency_lookups: "SingleComponentResponseOfDestinyCurrenciesComponent" = custom_field()
+    equipment: "SingleComponentResponseOfDestinyInventoryComponent" = custom_field()
+    inventory: "SingleComponentResponseOfDestinyInventoryComponent" = custom_field()
+    item_components: "DestinyItemComponentSetOfint64" = custom_field()
+    kiosks: "SingleComponentResponseOfDestinyKiosksComponent" = custom_field()
+    plug_sets: "SingleComponentResponseOfDestinyPlugSetsComponent" = custom_field()
+    presentation_nodes: "SingleComponentResponseOfDestinyPresentationNodesComponent" = custom_field()
+    progressions: "SingleComponentResponseOfDestinyCharacterProgressionComponent" = custom_field()
+    records: "SingleComponentResponseOfDestinyCharacterRecordsComponent" = custom_field()
+    render_data: "SingleComponentResponseOfDestinyCharacterRenderComponent" = custom_field()
+    uninstanced_item_components: "DestinyBaseItemComponentSetOfuint32" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyItemResponse(BaseModel):
     """
     The response object for retrieving an individual instanced item. None of these components are relevant for an item that doesn't have an "itemInstanceId": for those, get your information from the DestinyInventoryDefinition.
@@ -290,20 +290,20 @@ class DestinyItemResponse(BaseModel):
         talent_grid: Information about the talent grid attached to the item. Talent nodes can provide a variety of benefits and abilities, and in Destiny 2 are used almost exclusively for the character's "Builds". COMPONENT TYPE: ItemTalentGrids
     """
 
-    character_id: int = attr.field()
-    instance: "SingleComponentResponseOfDestinyItemInstanceComponent" = attr.field()
-    item: "SingleComponentResponseOfDestinyItemComponent" = attr.field()
-    objectives: "SingleComponentResponseOfDestinyItemObjectivesComponent" = attr.field()
-    perks: "SingleComponentResponseOfDestinyItemPerksComponent" = attr.field()
-    plug_objectives: "SingleComponentResponseOfDestinyItemPlugObjectivesComponent" = attr.field()
-    render_data: "SingleComponentResponseOfDestinyItemRenderComponent" = attr.field()
-    reusable_plugs: "SingleComponentResponseOfDestinyItemReusablePlugsComponent" = attr.field()
-    sockets: "SingleComponentResponseOfDestinyItemSocketsComponent" = attr.field()
-    stats: "SingleComponentResponseOfDestinyItemStatsComponent" = attr.field()
-    talent_grid: "SingleComponentResponseOfDestinyItemTalentGridComponent" = attr.field()
+    character_id: int = custom_field()
+    instance: "SingleComponentResponseOfDestinyItemInstanceComponent" = custom_field()
+    item: "SingleComponentResponseOfDestinyItemComponent" = custom_field()
+    objectives: "SingleComponentResponseOfDestinyItemObjectivesComponent" = custom_field()
+    perks: "SingleComponentResponseOfDestinyItemPerksComponent" = custom_field()
+    plug_objectives: "SingleComponentResponseOfDestinyItemPlugObjectivesComponent" = custom_field()
+    render_data: "SingleComponentResponseOfDestinyItemRenderComponent" = custom_field()
+    reusable_plugs: "SingleComponentResponseOfDestinyItemReusablePlugsComponent" = custom_field()
+    sockets: "SingleComponentResponseOfDestinyItemSocketsComponent" = custom_field()
+    stats: "SingleComponentResponseOfDestinyItemStatsComponent" = custom_field()
+    talent_grid: "SingleComponentResponseOfDestinyItemTalentGridComponent" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyVendorsResponse(BaseModel):
     """
     A response containing all of the components for all requested vendors.
@@ -319,18 +319,18 @@ class DestinyVendorsResponse(BaseModel):
         vendors: The base properties of the vendor. These are keyed by the Vendor Hash, so you will get one Vendor Component per vendor returned. COMPONENT TYPE: Vendors
     """
 
-    categories: "DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent" = attr.field()
-    currency_lookups: "SingleComponentResponseOfDestinyCurrenciesComponent" = attr.field()
-    item_components: dict[int, "DestinyItemComponentSetOfint32"] = attr.field(
+    categories: "DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent" = custom_field()
+    currency_lookups: "SingleComponentResponseOfDestinyCurrenciesComponent" = custom_field()
+    item_components: dict[int, "DestinyItemComponentSetOfint32"] = custom_field(
         metadata={"type": """dict[int, DestinyItemComponentSetOfint32]"""}
     )
-    sales: "DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComponent" = attr.field()
-    string_variables: "SingleComponentResponseOfDestinyStringVariablesComponent" = attr.field()
-    vendor_groups: "SingleComponentResponseOfDestinyVendorGroupComponent" = attr.field()
-    vendors: "DictionaryComponentResponseOfuint32AndDestinyVendorComponent" = attr.field()
+    sales: "DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComponent" = custom_field()
+    string_variables: "SingleComponentResponseOfDestinyStringVariablesComponent" = custom_field()
+    vendor_groups: "SingleComponentResponseOfDestinyVendorGroupComponent" = custom_field()
+    vendors: "DictionaryComponentResponseOfuint32AndDestinyVendorComponent" = custom_field()
 
 
-@attr.define
+@custom_define()
 class PersonalDestinyVendorSaleItemSetComponent(BaseModel):
     """
     _No description given by bungie._
@@ -340,12 +340,12 @@ class PersonalDestinyVendorSaleItemSetComponent(BaseModel):
         sale_items: _No description given by bungie._
     """
 
-    sale_items: dict[int, "DestinyVendorSaleItemComponent"] = attr.field(
+    sale_items: dict[int, "DestinyVendorSaleItemComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyVendorSaleItemComponent]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyVendorResponse(BaseModel):
     """
     A response containing all of the components for a vendor.
@@ -360,15 +360,15 @@ class DestinyVendorResponse(BaseModel):
         vendor: The base properties of the vendor. COMPONENT TYPE: Vendors
     """
 
-    categories: "SingleComponentResponseOfDestinyVendorCategoriesComponent" = attr.field()
-    currency_lookups: "SingleComponentResponseOfDestinyCurrenciesComponent" = attr.field()
-    item_components: "DestinyItemComponentSetOfint32" = attr.field()
-    sales: "DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent" = attr.field()
-    string_variables: "SingleComponentResponseOfDestinyStringVariablesComponent" = attr.field()
-    vendor: "SingleComponentResponseOfDestinyVendorComponent" = attr.field()
+    categories: "SingleComponentResponseOfDestinyVendorCategoriesComponent" = custom_field()
+    currency_lookups: "SingleComponentResponseOfDestinyCurrenciesComponent" = custom_field()
+    item_components: "DestinyItemComponentSetOfint32" = custom_field()
+    sales: "DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent" = custom_field()
+    string_variables: "SingleComponentResponseOfDestinyStringVariablesComponent" = custom_field()
+    vendor: "SingleComponentResponseOfDestinyVendorComponent" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyPublicVendorsResponse(BaseModel):
     """
     A response containing all valid components for the public Vendors endpoint.  It is a decisively smaller subset of data compared to what we can get when we know the specific user making the request.  If you want any of the other data - item details, whether or not you can buy it, etc... you'll have to call in the context of a character. I know, sad but true.
@@ -382,14 +382,14 @@ class DestinyPublicVendorsResponse(BaseModel):
         vendors: The base properties of the vendor. These are keyed by the Vendor Hash, so you will get one Vendor Component per vendor returned. COMPONENT TYPE: Vendors
     """
 
-    categories: "DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent" = attr.field()
-    sales: "DictionaryComponentResponseOfuint32AndPublicDestinyVendorSaleItemSetComponent" = attr.field()
-    string_variables: "SingleComponentResponseOfDestinyStringVariablesComponent" = attr.field()
-    vendor_groups: "SingleComponentResponseOfDestinyVendorGroupComponent" = attr.field()
-    vendors: "DictionaryComponentResponseOfuint32AndDestinyPublicVendorComponent" = attr.field()
+    categories: "DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent" = custom_field()
+    sales: "DictionaryComponentResponseOfuint32AndPublicDestinyVendorSaleItemSetComponent" = custom_field()
+    string_variables: "SingleComponentResponseOfDestinyStringVariablesComponent" = custom_field()
+    vendor_groups: "SingleComponentResponseOfDestinyVendorGroupComponent" = custom_field()
+    vendors: "DictionaryComponentResponseOfuint32AndDestinyPublicVendorComponent" = custom_field()
 
 
-@attr.define
+@custom_define()
 class PublicDestinyVendorSaleItemSetComponent(BaseModel):
     """
     _No description given by bungie._
@@ -399,12 +399,12 @@ class PublicDestinyVendorSaleItemSetComponent(BaseModel):
         sale_items: _No description given by bungie._
     """
 
-    sale_items: dict[int, "DestinyPublicVendorSaleItemComponent"] = attr.field(
+    sale_items: dict[int, "DestinyPublicVendorSaleItemComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyPublicVendorSaleItemComponent]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyCollectibleNodeDetailResponse(BaseModel):
     """
     Returns the detailed information about a Collectible Presentation Node and any Collectibles that are direct descendants.
@@ -415,11 +415,11 @@ class DestinyCollectibleNodeDetailResponse(BaseModel):
         collectibles: COMPONENT TYPE: Collectibles
     """
 
-    collectible_item_components: "DestinyItemComponentSetOfuint32" = attr.field()
-    collectibles: "SingleComponentResponseOfDestinyCollectiblesComponent" = attr.field()
+    collectible_item_components: "DestinyItemComponentSetOfuint32" = custom_field()
+    collectibles: "SingleComponentResponseOfDestinyCollectiblesComponent" = custom_field()
 
 
-@attr.define
+@custom_define()
 class InventoryChangedResponse(BaseModel):
     """
     A response containing all of the components for all requested vendors.
@@ -430,15 +430,15 @@ class InventoryChangedResponse(BaseModel):
         removed_inventory_items: Items that disappeared from the inventory possibly as a result of an action.
     """
 
-    added_inventory_items: list["DestinyItemComponent"] = attr.field(
+    added_inventory_items: list["DestinyItemComponent"] = custom_field(
         metadata={"type": """list[DestinyItemComponent]"""}
     )
-    removed_inventory_items: list["DestinyItemComponent"] = attr.field(
+    removed_inventory_items: list["DestinyItemComponent"] = custom_field(
         metadata={"type": """list[DestinyItemComponent]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyItemChangeResponse(BaseModel):
     """
     _No description given by bungie._
@@ -450,10 +450,10 @@ class DestinyItemChangeResponse(BaseModel):
         removed_inventory_items: Items that disappeared from the inventory possibly as a result of an action.
     """
 
-    added_inventory_items: list["DestinyItemComponent"] = attr.field(
+    added_inventory_items: list["DestinyItemComponent"] = custom_field(
         metadata={"type": """list[DestinyItemComponent]"""}
     )
-    item: "DestinyItemResponse" = attr.field()
-    removed_inventory_items: list["DestinyItemComponent"] = attr.field(
+    item: "DestinyItemResponse" = custom_field()
+    removed_inventory_items: list["DestinyItemComponent"] = custom_field(
         metadata={"type": """list[DestinyItemComponent]"""}
     )

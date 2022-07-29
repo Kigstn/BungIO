@@ -4,15 +4,13 @@
 
 from typing import TYPE_CHECKING, Optional
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import DestinyInventoryItemDefinition, DyeReference
 
 
-@attr.define
+@custom_define()
 class DestinyCharacterCustomization(BaseModel):
     """
     Raw data about the customization options chosen for a character's face and appearance. You can look up the relevant class/race/gender combo in DestinyCharacterCustomizationOptionDefinition for the character, and then look up these values within the CustomizationOptions found to pull some data about their choices. Warning: not all of that data is meaningful. Some data has useful icons. Others have nothing, and are only meant for 3D rendering purposes (which we sadly do not expose yet)
@@ -33,21 +31,21 @@ class DestinyCharacterCustomization(BaseModel):
         wear_helmet: _No description given by bungie._
     """
 
-    decal_color: int = attr.field()
-    decal_index: int = attr.field()
-    eye_color: int = attr.field()
-    face: int = attr.field()
-    feature_colors: list[int] = attr.field(metadata={"type": """list[int]"""})
-    feature_index: int = attr.field()
-    hair_colors: list[int] = attr.field(metadata={"type": """list[int]"""})
-    hair_index: int = attr.field()
-    lip_color: int = attr.field()
-    personality: int = attr.field()
-    skin_color: int = attr.field()
-    wear_helmet: bool = attr.field()
+    decal_color: int = custom_field()
+    decal_index: int = custom_field()
+    eye_color: int = custom_field()
+    face: int = custom_field()
+    feature_colors: list[int] = custom_field(metadata={"type": """list[int]"""})
+    feature_index: int = custom_field()
+    hair_colors: list[int] = custom_field(metadata={"type": """list[int]"""})
+    hair_index: int = custom_field()
+    lip_color: int = custom_field()
+    personality: int = custom_field()
+    skin_color: int = custom_field()
+    wear_helmet: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyCharacterPeerView(BaseModel):
     """
     A minimal view of a character's equipped items, for the purpose of rendering a summary screen or showing the character in 3D.
@@ -57,10 +55,10 @@ class DestinyCharacterPeerView(BaseModel):
         equipment: _No description given by bungie._
     """
 
-    equipment: list["DestinyItemPeerView"] = attr.field(metadata={"type": """list[DestinyItemPeerView]"""})
+    equipment: list["DestinyItemPeerView"] = custom_field(metadata={"type": """list[DestinyItemPeerView]"""})
 
 
-@attr.define
+@custom_define()
 class DestinyItemPeerView(BaseModel):
     """
     Bare minimum summary information for an item, for the sake of 3D rendering the item.
@@ -80,6 +78,6 @@ class DestinyItemPeerView(BaseModel):
         manifest_item_hash: Manifest information for `item_hash`
     """
 
-    dyes: list["DyeReference"] = attr.field(metadata={"type": """list[DyeReference]"""})
-    item_hash: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    dyes: list["DyeReference"] = custom_field(metadata={"type": """list[DyeReference]"""})
+    item_hash: int = custom_field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)

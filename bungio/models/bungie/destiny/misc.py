@@ -2,12 +2,11 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-import attr
 
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 
-@attr.define
+@custom_define()
 class DestinyColor(BaseModel):
     """
     Represents a color whose RGBA values are all represented as values between 0 and 255.
@@ -20,7 +19,7 @@ class DestinyColor(BaseModel):
         red: _No description given by bungie._
     """
 
-    alpha: int = attr.field()
-    blue: int = attr.field()
-    green: int = attr.field()
-    red: int = attr.field()
+    alpha: int = custom_field()
+    blue: int = custom_field()
+    green: int = custom_field()
+    red: int = custom_field()

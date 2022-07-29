@@ -4,15 +4,13 @@
 
 from typing import TYPE_CHECKING
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import DestinyInventoryItemStatDefinition
 
 
-@attr.define
+@custom_define()
 class DestinyItemSourceDefinition(BaseModel):
     """
     Properties of a DestinyInventoryItemDefinition that store all of the information we were able to discern about how the item spawns, and where you can find the item. Items will have many of these sources, one per level at which it spawns, to try and give more granular data about where items spawn for specific level ranges.
@@ -28,12 +26,12 @@ class DestinyItemSourceDefinition(BaseModel):
         source_hashes: The DestinyRewardSourceDefinitions found that can spawn the item at this level.
     """
 
-    computed_stats: dict[int, "DestinyInventoryItemStatDefinition"] = attr.field(
+    computed_stats: dict[int, "DestinyInventoryItemStatDefinition"] = custom_field(
         metadata={"type": """dict[int, DestinyInventoryItemStatDefinition]"""}
     )
-    level: int = attr.field()
-    max_level_required: int = attr.field()
-    max_quality: int = attr.field()
-    min_level_required: int = attr.field()
-    min_quality: int = attr.field()
-    source_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
+    level: int = custom_field()
+    max_level_required: int = custom_field()
+    max_quality: int = custom_field()
+    min_level_required: int = custom_field()
+    min_quality: int = custom_field()
+    source_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})

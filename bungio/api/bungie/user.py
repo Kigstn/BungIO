@@ -4,8 +4,6 @@
 
 from typing import Optional, Union
 
-import attr
-
 from bungio.models import (
     BungieCredentialType,
     BungieMembershipType,
@@ -18,11 +16,11 @@ from bungio.models import (
     UserTheme,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import ClientMixin
+from bungio.models.base import ClientMixin, custom_define
 from bungio.utils import AllowAsyncIteration
 
 
-@attr.define
+@custom_define()
 class UserRouteInterface(ClientMixin):
     async def get_bungie_net_user_by_id(self, id: int, auth: Optional[AuthData] = None) -> GeneralUser:
         """

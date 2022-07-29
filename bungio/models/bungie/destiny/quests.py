@@ -4,9 +4,7 @@
 
 from typing import TYPE_CHECKING, Optional
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -17,7 +15,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyObjectiveProgress(BaseModel):
     """
     Returns data about a character's status with a given Objective. Combine with DestinyObjectiveDefinition static data for display purposes.
@@ -44,19 +42,19 @@ class DestinyObjectiveProgress(BaseModel):
         manifest_objective_hash: Manifest information for `objective_hash`
     """
 
-    activity_hash: int = attr.field()
-    complete: bool = attr.field()
-    completion_value: int = attr.field()
-    destination_hash: int = attr.field()
-    objective_hash: int = attr.field()
-    progress: int = attr.field()
-    visible: bool = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
-    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
+    activity_hash: int = custom_field()
+    complete: bool = custom_field()
+    completion_value: int = custom_field()
+    destination_hash: int = custom_field()
+    objective_hash: int = custom_field()
+    progress: int = custom_field()
+    visible: bool = custom_field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
+    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = custom_field(default=None)
+    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyQuestStatus(BaseModel):
     """
     Data regarding the progress of a Quest for a specific character. Quests are composed of multiple steps, each with potentially multiple objectives: this QuestStatus will return Objective data for the *currently active* step in this quest.
@@ -84,16 +82,16 @@ class DestinyQuestStatus(BaseModel):
         manifest_step_hash: Manifest information for `step_hash`
     """
 
-    completed: bool = attr.field()
-    item_instance_id: int = attr.field()
-    quest_hash: int = attr.field()
-    redeemed: bool = attr.field()
-    started: bool = attr.field()
-    step_hash: int = attr.field()
-    step_objectives: list["DestinyObjectiveProgress"] = attr.field(
+    completed: bool = custom_field()
+    item_instance_id: int = custom_field()
+    quest_hash: int = custom_field()
+    redeemed: bool = custom_field()
+    started: bool = custom_field()
+    step_hash: int = custom_field()
+    step_objectives: list["DestinyObjectiveProgress"] = custom_field(
         metadata={"type": """list[DestinyObjectiveProgress]"""}
     )
-    tracked: bool = attr.field()
-    vendor_hash: int = attr.field()
-    manifest_quest_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_step_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    tracked: bool = custom_field()
+    vendor_hash: int = custom_field()
+    manifest_quest_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_step_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)

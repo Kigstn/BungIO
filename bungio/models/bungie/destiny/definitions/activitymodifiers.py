@@ -4,15 +4,13 @@
 
 from typing import TYPE_CHECKING
 
-import attr
-
-from bungio.models.base import ManifestModel
+from bungio.models.base import ManifestModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import DestinyDisplayPropertiesDefinition
 
 
-@attr.define
+@custom_define()
 class DestinyActivityModifierDefinition(ManifestModel):
     """
     Modifiers - in Destiny 1, these were referred to as "Skulls" - are changes that can be applied to an Activity.
@@ -27,9 +25,9 @@ class DestinyActivityModifierDefinition(ManifestModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    display_in_activity_selection: bool = attr.field()
-    display_in_nav_mode: bool = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
+    display_in_activity_selection: bool = custom_field()
+    display_in_nav_mode: bool = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()

@@ -4,9 +4,7 @@
 
 from typing import TYPE_CHECKING, Optional
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -16,7 +14,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyArtifactProfileScoped(BaseModel):
     """
     Represents a Seasonal Artifact and all data related to it for the requested Account. It can be combined with Character-scoped data for a full picture of what a character has available/has chosen, or just these settings can be used for overview information.
@@ -39,15 +37,15 @@ class DestinyArtifactProfileScoped(BaseModel):
         manifest_artifact_hash: Manifest information for `artifact_hash`
     """
 
-    artifact_hash: int = attr.field()
-    point_progression: "DestinyProgression" = attr.field()
-    points_acquired: int = attr.field()
-    power_bonus: int = attr.field()
-    power_bonus_progression: "DestinyProgression" = attr.field()
-    manifest_artifact_hash: Optional["DestinyArtifactDefinition"] = attr.field(default=None)
+    artifact_hash: int = custom_field()
+    point_progression: "DestinyProgression" = custom_field()
+    points_acquired: int = custom_field()
+    power_bonus: int = custom_field()
+    power_bonus_progression: "DestinyProgression" = custom_field()
+    manifest_artifact_hash: Optional["DestinyArtifactDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyArtifactCharacterScoped(BaseModel):
     """
     _No description given by bungie._
@@ -69,14 +67,14 @@ class DestinyArtifactCharacterScoped(BaseModel):
         manifest_artifact_hash: Manifest information for `artifact_hash`
     """
 
-    artifact_hash: int = attr.field()
-    points_used: int = attr.field()
-    reset_count: int = attr.field()
-    tiers: list["DestinyArtifactTier"] = attr.field(metadata={"type": """list[DestinyArtifactTier]"""})
-    manifest_artifact_hash: Optional["DestinyArtifactDefinition"] = attr.field(default=None)
+    artifact_hash: int = custom_field()
+    points_used: int = custom_field()
+    reset_count: int = custom_field()
+    tiers: list["DestinyArtifactTier"] = custom_field(metadata={"type": """list[DestinyArtifactTier]"""})
+    manifest_artifact_hash: Optional["DestinyArtifactDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyArtifactTier(BaseModel):
     """
     _No description given by bungie._
@@ -89,13 +87,13 @@ class DestinyArtifactTier(BaseModel):
         tier_hash: _No description given by bungie._
     """
 
-    is_unlocked: bool = attr.field()
-    items: list["DestinyArtifactTierItem"] = attr.field(metadata={"type": """list[DestinyArtifactTierItem]"""})
-    points_to_unlock: int = attr.field()
-    tier_hash: int = attr.field()
+    is_unlocked: bool = custom_field()
+    items: list["DestinyArtifactTierItem"] = custom_field(metadata={"type": """list[DestinyArtifactTierItem]"""})
+    points_to_unlock: int = custom_field()
+    tier_hash: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyArtifactTierItem(BaseModel):
     """
     _No description given by bungie._
@@ -115,6 +113,6 @@ class DestinyArtifactTierItem(BaseModel):
         manifest_item_hash: Manifest information for `item_hash`
     """
 
-    is_active: bool = attr.field()
-    item_hash: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    is_active: bool = custom_field()
+    item_hash: int = custom_field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)

@@ -5,9 +5,7 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseEnum, BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -127,7 +125,7 @@ class BungieCredentialType(BaseEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class SearchResultOfContentItemPublicContract(BaseModel):
     """
     _No description given by bungie._
@@ -142,15 +140,15 @@ class SearchResultOfContentItemPublicContract(BaseModel):
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
-    has_more: bool = attr.field()
-    query: "PagedQuery" = attr.field()
-    replacement_continuation_token: str = attr.field()
-    results: list["ContentItemPublicContract"] = attr.field(metadata={"type": """list[ContentItemPublicContract]"""})
-    total_results: int = attr.field()
-    use_total_results: bool = attr.field()
+    has_more: bool = custom_field()
+    query: "PagedQuery" = custom_field()
+    replacement_continuation_token: str = custom_field()
+    results: list["ContentItemPublicContract"] = custom_field(metadata={"type": """list[ContentItemPublicContract]"""})
+    total_results: int = custom_field()
+    use_total_results: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class SearchResultOfPostResponse(BaseModel):
     """
     _No description given by bungie._
@@ -165,15 +163,15 @@ class SearchResultOfPostResponse(BaseModel):
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
-    has_more: bool = attr.field()
-    query: "PagedQuery" = attr.field()
-    replacement_continuation_token: str = attr.field()
-    results: list["PostResponse"] = attr.field(metadata={"type": """list[PostResponse]"""})
-    total_results: int = attr.field()
-    use_total_results: bool = attr.field()
+    has_more: bool = custom_field()
+    query: "PagedQuery" = custom_field()
+    replacement_continuation_token: str = custom_field()
+    results: list["PostResponse"] = custom_field(metadata={"type": """list[PostResponse]"""})
+    total_results: int = custom_field()
+    use_total_results: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class SearchResultOfGroupV2Card(BaseModel):
     """
     _No description given by bungie._
@@ -188,15 +186,15 @@ class SearchResultOfGroupV2Card(BaseModel):
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
-    has_more: bool = attr.field()
-    query: "PagedQuery" = attr.field()
-    replacement_continuation_token: str = attr.field()
-    results: list["GroupV2Card"] = attr.field(metadata={"type": """list[GroupV2Card]"""})
-    total_results: int = attr.field()
-    use_total_results: bool = attr.field()
+    has_more: bool = custom_field()
+    query: "PagedQuery" = custom_field()
+    replacement_continuation_token: str = custom_field()
+    results: list["GroupV2Card"] = custom_field(metadata={"type": """list[GroupV2Card]"""})
+    total_results: int = custom_field()
+    use_total_results: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class SearchResultOfGroupMember(BaseModel):
     """
     _No description given by bungie._
@@ -211,15 +209,15 @@ class SearchResultOfGroupMember(BaseModel):
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
-    has_more: bool = attr.field()
-    query: "PagedQuery" = attr.field()
-    replacement_continuation_token: str = attr.field()
-    results: list["GroupMember"] = attr.field(metadata={"type": """list[GroupMember]"""})
-    total_results: int = attr.field()
-    use_total_results: bool = attr.field()
+    has_more: bool = custom_field()
+    query: "PagedQuery" = custom_field()
+    replacement_continuation_token: str = custom_field()
+    results: list["GroupMember"] = custom_field(metadata={"type": """list[GroupMember]"""})
+    total_results: int = custom_field()
+    use_total_results: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class SearchResultOfGroupBan(BaseModel):
     """
     _No description given by bungie._
@@ -234,15 +232,15 @@ class SearchResultOfGroupBan(BaseModel):
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
-    has_more: bool = attr.field()
-    query: "PagedQuery" = attr.field()
-    replacement_continuation_token: str = attr.field()
-    results: list["GroupBan"] = attr.field(metadata={"type": """list[GroupBan]"""})
-    total_results: int = attr.field()
-    use_total_results: bool = attr.field()
+    has_more: bool = custom_field()
+    query: "PagedQuery" = custom_field()
+    replacement_continuation_token: str = custom_field()
+    results: list["GroupBan"] = custom_field(metadata={"type": """list[GroupBan]"""})
+    total_results: int = custom_field()
+    use_total_results: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class SearchResultOfGroupMemberApplication(BaseModel):
     """
     _No description given by bungie._
@@ -257,15 +255,15 @@ class SearchResultOfGroupMemberApplication(BaseModel):
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
-    has_more: bool = attr.field()
-    query: "PagedQuery" = attr.field()
-    replacement_continuation_token: str = attr.field()
-    results: list["GroupMemberApplication"] = attr.field(metadata={"type": """list[GroupMemberApplication]"""})
-    total_results: int = attr.field()
-    use_total_results: bool = attr.field()
+    has_more: bool = custom_field()
+    query: "PagedQuery" = custom_field()
+    replacement_continuation_token: str = custom_field()
+    results: list["GroupMemberApplication"] = custom_field(metadata={"type": """list[GroupMemberApplication]"""})
+    total_results: int = custom_field()
+    use_total_results: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class SearchResultOfGroupMembership(BaseModel):
     """
     _No description given by bungie._
@@ -280,15 +278,15 @@ class SearchResultOfGroupMembership(BaseModel):
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
-    has_more: bool = attr.field()
-    query: "PagedQuery" = attr.field()
-    replacement_continuation_token: str = attr.field()
-    results: list["GroupMembership"] = attr.field(metadata={"type": """list[GroupMembership]"""})
-    total_results: int = attr.field()
-    use_total_results: bool = attr.field()
+    has_more: bool = custom_field()
+    query: "PagedQuery" = custom_field()
+    replacement_continuation_token: str = custom_field()
+    results: list["GroupMembership"] = custom_field(metadata={"type": """list[GroupMembership]"""})
+    total_results: int = custom_field()
+    use_total_results: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class SearchResultOfGroupPotentialMembership(BaseModel):
     """
     _No description given by bungie._
@@ -303,15 +301,15 @@ class SearchResultOfGroupPotentialMembership(BaseModel):
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
-    has_more: bool = attr.field()
-    query: "PagedQuery" = attr.field()
-    replacement_continuation_token: str = attr.field()
-    results: list["GroupPotentialMembership"] = attr.field(metadata={"type": """list[GroupPotentialMembership]"""})
-    total_results: int = attr.field()
-    use_total_results: bool = attr.field()
+    has_more: bool = custom_field()
+    query: "PagedQuery" = custom_field()
+    replacement_continuation_token: str = custom_field()
+    results: list["GroupPotentialMembership"] = custom_field(metadata={"type": """list[GroupPotentialMembership]"""})
+    total_results: int = custom_field()
+    use_total_results: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyVendorReceiptsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -323,12 +321,12 @@ class SingleComponentResponseOfDestinyVendorReceiptsComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyVendorReceiptsComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyVendorReceiptsComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyInventoryComponent(BaseModel):
     """
     _No description given by bungie._
@@ -340,12 +338,12 @@ class SingleComponentResponseOfDestinyInventoryComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyInventoryComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyInventoryComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyProfileComponent(BaseModel):
     """
     _No description given by bungie._
@@ -357,12 +355,12 @@ class SingleComponentResponseOfDestinyProfileComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyProfileComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyProfileComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyPlatformSilverComponent(BaseModel):
     """
     _No description given by bungie._
@@ -374,12 +372,12 @@ class SingleComponentResponseOfDestinyPlatformSilverComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyPlatformSilverComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyPlatformSilverComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyKiosksComponent(BaseModel):
     """
     _No description given by bungie._
@@ -391,12 +389,12 @@ class SingleComponentResponseOfDestinyKiosksComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyKiosksComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyKiosksComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyPlugSetsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -408,12 +406,12 @@ class SingleComponentResponseOfDestinyPlugSetsComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyPlugSetsComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyPlugSetsComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyProfileProgressionComponent(BaseModel):
     """
     _No description given by bungie._
@@ -425,12 +423,12 @@ class SingleComponentResponseOfDestinyProfileProgressionComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyProfileProgressionComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyProfileProgressionComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyPresentationNodesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -442,12 +440,12 @@ class SingleComponentResponseOfDestinyPresentationNodesComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyPresentationNodesComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyPresentationNodesComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyProfileRecordsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -459,12 +457,12 @@ class SingleComponentResponseOfDestinyProfileRecordsComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyProfileRecordsComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyProfileRecordsComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyProfileCollectiblesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -476,12 +474,12 @@ class SingleComponentResponseOfDestinyProfileCollectiblesComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyProfileCollectiblesComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyProfileCollectiblesComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyProfileTransitoryComponent(BaseModel):
     """
     _No description given by bungie._
@@ -493,12 +491,12 @@ class SingleComponentResponseOfDestinyProfileTransitoryComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyProfileTransitoryComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyProfileTransitoryComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyMetricsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -510,12 +508,12 @@ class SingleComponentResponseOfDestinyMetricsComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyMetricsComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyMetricsComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyStringVariablesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -527,12 +525,12 @@ class SingleComponentResponseOfDestinyStringVariablesComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyStringVariablesComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyStringVariablesComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyCharacterComponent(BaseModel):
     """
     _No description given by bungie._
@@ -544,14 +542,14 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyCharacterComponent"] = attr.field(
+    data: dict[int, "DestinyCharacterComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyCharacterComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyInventoryComponent(BaseModel):
     """
     _No description given by bungie._
@@ -563,14 +561,14 @@ class DictionaryComponentResponseOfint64AndDestinyInventoryComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyInventoryComponent"] = attr.field(
+    data: dict[int, "DestinyInventoryComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyInventoryComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent(BaseModel):
     """
     _No description given by bungie._
@@ -582,14 +580,14 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent(
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyCharacterProgressionComponent"] = attr.field(
+    data: dict[int, "DestinyCharacterProgressionComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyCharacterProgressionComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyCharacterRenderComponent(BaseModel):
     """
     _No description given by bungie._
@@ -601,14 +599,14 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterRenderComponent(BaseM
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyCharacterRenderComponent"] = attr.field(
+    data: dict[int, "DestinyCharacterRenderComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyCharacterRenderComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -620,14 +618,14 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent(B
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyCharacterActivitiesComponent"] = attr.field(
+    data: dict[int, "DestinyCharacterActivitiesComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyCharacterActivitiesComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyKiosksComponent(BaseModel):
     """
     _No description given by bungie._
@@ -639,12 +637,12 @@ class DictionaryComponentResponseOfint64AndDestinyKiosksComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyKiosksComponent"] = attr.field(metadata={"type": """dict[int, DestinyKiosksComponent]"""})
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: dict[int, "DestinyKiosksComponent"] = custom_field(metadata={"type": """dict[int, DestinyKiosksComponent]"""})
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyPlugSetsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -656,14 +654,14 @@ class DictionaryComponentResponseOfint64AndDestinyPlugSetsComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyPlugSetsComponent"] = attr.field(
+    data: dict[int, "DestinyPlugSetsComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyPlugSetsComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DestinyBaseItemComponentSetOfuint32(BaseModel):
     """
     _No description given by bungie._
@@ -674,11 +672,11 @@ class DestinyBaseItemComponentSetOfuint32(BaseModel):
         perks: _No description given by bungie._
     """
 
-    objectives: "DictionaryComponentResponseOfuint32AndDestinyItemObjectivesComponent" = attr.field()
-    perks: "DictionaryComponentResponseOfuint32AndDestinyItemPerksComponent" = attr.field()
+    objectives: "DictionaryComponentResponseOfuint32AndDestinyItemObjectivesComponent" = custom_field()
+    perks: "DictionaryComponentResponseOfuint32AndDestinyItemPerksComponent" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfuint32AndDestinyItemObjectivesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -690,14 +688,14 @@ class DictionaryComponentResponseOfuint32AndDestinyItemObjectivesComponent(BaseM
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemObjectivesComponent"] = attr.field(
+    data: dict[int, "DestinyItemObjectivesComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemObjectivesComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfuint32AndDestinyItemPerksComponent(BaseModel):
     """
     _No description given by bungie._
@@ -709,14 +707,14 @@ class DictionaryComponentResponseOfuint32AndDestinyItemPerksComponent(BaseModel)
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemPerksComponent"] = attr.field(
+    data: dict[int, "DestinyItemPerksComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemPerksComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyPresentationNodesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -728,14 +726,14 @@ class DictionaryComponentResponseOfint64AndDestinyPresentationNodesComponent(Bas
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyPresentationNodesComponent"] = attr.field(
+    data: dict[int, "DestinyPresentationNodesComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyPresentationNodesComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyCharacterRecordsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -747,14 +745,14 @@ class DictionaryComponentResponseOfint64AndDestinyCharacterRecordsComponent(Base
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyCharacterRecordsComponent"] = attr.field(
+    data: dict[int, "DestinyCharacterRecordsComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyCharacterRecordsComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyCollectiblesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -766,14 +764,14 @@ class DictionaryComponentResponseOfint64AndDestinyCollectiblesComponent(BaseMode
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyCollectiblesComponent"] = attr.field(
+    data: dict[int, "DestinyCollectiblesComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyCollectiblesComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyStringVariablesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -785,14 +783,14 @@ class DictionaryComponentResponseOfint64AndDestinyStringVariablesComponent(BaseM
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyStringVariablesComponent"] = attr.field(
+    data: dict[int, "DestinyStringVariablesComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyStringVariablesComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyCraftablesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -804,14 +802,14 @@ class DictionaryComponentResponseOfint64AndDestinyCraftablesComponent(BaseModel)
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyCraftablesComponent"] = attr.field(
+    data: dict[int, "DestinyCraftablesComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyCraftablesComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DestinyBaseItemComponentSetOfint64(BaseModel):
     """
     _No description given by bungie._
@@ -822,11 +820,11 @@ class DestinyBaseItemComponentSetOfint64(BaseModel):
         perks: _No description given by bungie._
     """
 
-    objectives: "DictionaryComponentResponseOfint64AndDestinyItemObjectivesComponent" = attr.field()
-    perks: "DictionaryComponentResponseOfint64AndDestinyItemPerksComponent" = attr.field()
+    objectives: "DictionaryComponentResponseOfint64AndDestinyItemObjectivesComponent" = custom_field()
+    perks: "DictionaryComponentResponseOfint64AndDestinyItemPerksComponent" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyItemObjectivesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -838,14 +836,14 @@ class DictionaryComponentResponseOfint64AndDestinyItemObjectivesComponent(BaseMo
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemObjectivesComponent"] = attr.field(
+    data: dict[int, "DestinyItemObjectivesComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemObjectivesComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyItemPerksComponent(BaseModel):
     """
     _No description given by bungie._
@@ -857,14 +855,14 @@ class DictionaryComponentResponseOfint64AndDestinyItemPerksComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemPerksComponent"] = attr.field(
+    data: dict[int, "DestinyItemPerksComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemPerksComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DestinyItemComponentSetOfint64(BaseModel):
     """
     _No description given by bungie._
@@ -883,19 +881,19 @@ class DestinyItemComponentSetOfint64(BaseModel):
         talent_grids: _No description given by bungie._
     """
 
-    instances: "DictionaryComponentResponseOfint64AndDestinyItemInstanceComponent" = attr.field()
-    objectives: "DictionaryComponentResponseOfint64AndDestinyItemObjectivesComponent" = attr.field()
-    perks: "DictionaryComponentResponseOfint64AndDestinyItemPerksComponent" = attr.field()
-    plug_objectives: "DictionaryComponentResponseOfint64AndDestinyItemPlugObjectivesComponent" = attr.field()
-    plug_states: "DictionaryComponentResponseOfuint32AndDestinyItemPlugComponent" = attr.field()
-    render_data: "DictionaryComponentResponseOfint64AndDestinyItemRenderComponent" = attr.field()
-    reusable_plugs: "DictionaryComponentResponseOfint64AndDestinyItemReusablePlugsComponent" = attr.field()
-    sockets: "DictionaryComponentResponseOfint64AndDestinyItemSocketsComponent" = attr.field()
-    stats: "DictionaryComponentResponseOfint64AndDestinyItemStatsComponent" = attr.field()
-    talent_grids: "DictionaryComponentResponseOfint64AndDestinyItemTalentGridComponent" = attr.field()
+    instances: "DictionaryComponentResponseOfint64AndDestinyItemInstanceComponent" = custom_field()
+    objectives: "DictionaryComponentResponseOfint64AndDestinyItemObjectivesComponent" = custom_field()
+    perks: "DictionaryComponentResponseOfint64AndDestinyItemPerksComponent" = custom_field()
+    plug_objectives: "DictionaryComponentResponseOfint64AndDestinyItemPlugObjectivesComponent" = custom_field()
+    plug_states: "DictionaryComponentResponseOfuint32AndDestinyItemPlugComponent" = custom_field()
+    render_data: "DictionaryComponentResponseOfint64AndDestinyItemRenderComponent" = custom_field()
+    reusable_plugs: "DictionaryComponentResponseOfint64AndDestinyItemReusablePlugsComponent" = custom_field()
+    sockets: "DictionaryComponentResponseOfint64AndDestinyItemSocketsComponent" = custom_field()
+    stats: "DictionaryComponentResponseOfint64AndDestinyItemStatsComponent" = custom_field()
+    talent_grids: "DictionaryComponentResponseOfint64AndDestinyItemTalentGridComponent" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyItemInstanceComponent(BaseModel):
     """
     _No description given by bungie._
@@ -907,14 +905,14 @@ class DictionaryComponentResponseOfint64AndDestinyItemInstanceComponent(BaseMode
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemInstanceComponent"] = attr.field(
+    data: dict[int, "DestinyItemInstanceComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemInstanceComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyItemRenderComponent(BaseModel):
     """
     _No description given by bungie._
@@ -926,14 +924,14 @@ class DictionaryComponentResponseOfint64AndDestinyItemRenderComponent(BaseModel)
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemRenderComponent"] = attr.field(
+    data: dict[int, "DestinyItemRenderComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemRenderComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyItemStatsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -945,14 +943,14 @@ class DictionaryComponentResponseOfint64AndDestinyItemStatsComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemStatsComponent"] = attr.field(
+    data: dict[int, "DestinyItemStatsComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemStatsComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyItemSocketsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -964,14 +962,14 @@ class DictionaryComponentResponseOfint64AndDestinyItemSocketsComponent(BaseModel
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemSocketsComponent"] = attr.field(
+    data: dict[int, "DestinyItemSocketsComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemSocketsComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyItemReusablePlugsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -983,14 +981,14 @@ class DictionaryComponentResponseOfint64AndDestinyItemReusablePlugsComponent(Bas
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemReusablePlugsComponent"] = attr.field(
+    data: dict[int, "DestinyItemReusablePlugsComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemReusablePlugsComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyItemPlugObjectivesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1002,14 +1000,14 @@ class DictionaryComponentResponseOfint64AndDestinyItemPlugObjectivesComponent(Ba
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemPlugObjectivesComponent"] = attr.field(
+    data: dict[int, "DestinyItemPlugObjectivesComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemPlugObjectivesComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyItemTalentGridComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1021,14 +1019,14 @@ class DictionaryComponentResponseOfint64AndDestinyItemTalentGridComponent(BaseMo
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemTalentGridComponent"] = attr.field(
+    data: dict[int, "DestinyItemTalentGridComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemTalentGridComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfuint32AndDestinyItemPlugComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1040,14 +1038,14 @@ class DictionaryComponentResponseOfuint32AndDestinyItemPlugComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemPlugComponent"] = attr.field(
+    data: dict[int, "DestinyItemPlugComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemPlugComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyCurrenciesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1059,14 +1057,14 @@ class DictionaryComponentResponseOfint64AndDestinyCurrenciesComponent(BaseModel)
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyCurrenciesComponent"] = attr.field(
+    data: dict[int, "DestinyCurrenciesComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyCurrenciesComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyCharacterComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1078,12 +1076,12 @@ class SingleComponentResponseOfDestinyCharacterComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyCharacterComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyCharacterComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyCharacterProgressionComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1095,12 +1093,12 @@ class SingleComponentResponseOfDestinyCharacterProgressionComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyCharacterProgressionComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyCharacterProgressionComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyCharacterRenderComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1112,12 +1110,12 @@ class SingleComponentResponseOfDestinyCharacterRenderComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyCharacterRenderComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyCharacterRenderComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyCharacterActivitiesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1129,12 +1127,12 @@ class SingleComponentResponseOfDestinyCharacterActivitiesComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyCharacterActivitiesComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyCharacterActivitiesComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyCharacterRecordsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1146,12 +1144,12 @@ class SingleComponentResponseOfDestinyCharacterRecordsComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyCharacterRecordsComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyCharacterRecordsComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyCollectiblesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1163,12 +1161,12 @@ class SingleComponentResponseOfDestinyCollectiblesComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyCollectiblesComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyCollectiblesComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyCurrenciesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1180,12 +1178,12 @@ class SingleComponentResponseOfDestinyCurrenciesComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyCurrenciesComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyCurrenciesComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyItemComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1197,12 +1195,12 @@ class SingleComponentResponseOfDestinyItemComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyItemComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyItemComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyItemInstanceComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1214,12 +1212,12 @@ class SingleComponentResponseOfDestinyItemInstanceComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyItemInstanceComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyItemInstanceComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyItemObjectivesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1231,12 +1229,12 @@ class SingleComponentResponseOfDestinyItemObjectivesComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyItemObjectivesComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyItemObjectivesComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyItemPerksComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1248,12 +1246,12 @@ class SingleComponentResponseOfDestinyItemPerksComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyItemPerksComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyItemPerksComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyItemRenderComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1265,12 +1263,12 @@ class SingleComponentResponseOfDestinyItemRenderComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyItemRenderComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyItemRenderComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyItemStatsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1282,12 +1280,12 @@ class SingleComponentResponseOfDestinyItemStatsComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyItemStatsComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyItemStatsComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyItemTalentGridComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1299,12 +1297,12 @@ class SingleComponentResponseOfDestinyItemTalentGridComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyItemTalentGridComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyItemTalentGridComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyItemSocketsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1316,12 +1314,12 @@ class SingleComponentResponseOfDestinyItemSocketsComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyItemSocketsComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyItemSocketsComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyItemReusablePlugsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1333,12 +1331,12 @@ class SingleComponentResponseOfDestinyItemReusablePlugsComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyItemReusablePlugsComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyItemReusablePlugsComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyItemPlugObjectivesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1350,12 +1348,12 @@ class SingleComponentResponseOfDestinyItemPlugObjectivesComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyItemPlugObjectivesComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyItemPlugObjectivesComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyVendorGroupComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1367,12 +1365,12 @@ class SingleComponentResponseOfDestinyVendorGroupComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyVendorGroupComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyVendorGroupComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfuint32AndDestinyVendorComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1384,12 +1382,12 @@ class DictionaryComponentResponseOfuint32AndDestinyVendorComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyVendorComponent"] = attr.field(metadata={"type": """dict[int, DestinyVendorComponent]"""})
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: dict[int, "DestinyVendorComponent"] = custom_field(metadata={"type": """dict[int, DestinyVendorComponent]"""})
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1401,14 +1399,14 @@ class DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent(Bas
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyVendorCategoriesComponent"] = attr.field(
+    data: dict[int, "DestinyVendorCategoriesComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyVendorCategoriesComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DestinyVendorSaleItemSetComponentOfDestinyVendorSaleItemComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1418,12 +1416,12 @@ class DestinyVendorSaleItemSetComponentOfDestinyVendorSaleItemComponent(BaseMode
         sale_items: _No description given by bungie._
     """
 
-    sale_items: dict[int, "DestinyVendorSaleItemComponent"] = attr.field(
+    sale_items: dict[int, "DestinyVendorSaleItemComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyVendorSaleItemComponent]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1435,14 +1433,14 @@ class DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComp
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "PersonalDestinyVendorSaleItemSetComponent"] = attr.field(
+    data: dict[int, "PersonalDestinyVendorSaleItemSetComponent"] = custom_field(
         metadata={"type": """dict[int, PersonalDestinyVendorSaleItemSetComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DestinyBaseItemComponentSetOfint32(BaseModel):
     """
     _No description given by bungie._
@@ -1453,11 +1451,11 @@ class DestinyBaseItemComponentSetOfint32(BaseModel):
         perks: _No description given by bungie._
     """
 
-    objectives: "DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent" = attr.field()
-    perks: "DictionaryComponentResponseOfint32AndDestinyItemPerksComponent" = attr.field()
+    objectives: "DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent" = custom_field()
+    perks: "DictionaryComponentResponseOfint32AndDestinyItemPerksComponent" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1469,14 +1467,14 @@ class DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent(BaseMo
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemObjectivesComponent"] = attr.field(
+    data: dict[int, "DestinyItemObjectivesComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemObjectivesComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint32AndDestinyItemPerksComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1488,14 +1486,14 @@ class DictionaryComponentResponseOfint32AndDestinyItemPerksComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemPerksComponent"] = attr.field(
+    data: dict[int, "DestinyItemPerksComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemPerksComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DestinyItemComponentSetOfint32(BaseModel):
     """
     _No description given by bungie._
@@ -1514,19 +1512,19 @@ class DestinyItemComponentSetOfint32(BaseModel):
         talent_grids: _No description given by bungie._
     """
 
-    instances: "DictionaryComponentResponseOfint32AndDestinyItemInstanceComponent" = attr.field()
-    objectives: "DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent" = attr.field()
-    perks: "DictionaryComponentResponseOfint32AndDestinyItemPerksComponent" = attr.field()
-    plug_objectives: "DictionaryComponentResponseOfint32AndDestinyItemPlugObjectivesComponent" = attr.field()
-    plug_states: "DictionaryComponentResponseOfuint32AndDestinyItemPlugComponent" = attr.field()
-    render_data: "DictionaryComponentResponseOfint32AndDestinyItemRenderComponent" = attr.field()
-    reusable_plugs: "DictionaryComponentResponseOfint32AndDestinyItemReusablePlugsComponent" = attr.field()
-    sockets: "DictionaryComponentResponseOfint32AndDestinyItemSocketsComponent" = attr.field()
-    stats: "DictionaryComponentResponseOfint32AndDestinyItemStatsComponent" = attr.field()
-    talent_grids: "DictionaryComponentResponseOfint32AndDestinyItemTalentGridComponent" = attr.field()
+    instances: "DictionaryComponentResponseOfint32AndDestinyItemInstanceComponent" = custom_field()
+    objectives: "DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent" = custom_field()
+    perks: "DictionaryComponentResponseOfint32AndDestinyItemPerksComponent" = custom_field()
+    plug_objectives: "DictionaryComponentResponseOfint32AndDestinyItemPlugObjectivesComponent" = custom_field()
+    plug_states: "DictionaryComponentResponseOfuint32AndDestinyItemPlugComponent" = custom_field()
+    render_data: "DictionaryComponentResponseOfint32AndDestinyItemRenderComponent" = custom_field()
+    reusable_plugs: "DictionaryComponentResponseOfint32AndDestinyItemReusablePlugsComponent" = custom_field()
+    sockets: "DictionaryComponentResponseOfint32AndDestinyItemSocketsComponent" = custom_field()
+    stats: "DictionaryComponentResponseOfint32AndDestinyItemStatsComponent" = custom_field()
+    talent_grids: "DictionaryComponentResponseOfint32AndDestinyItemTalentGridComponent" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint32AndDestinyItemInstanceComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1538,14 +1536,14 @@ class DictionaryComponentResponseOfint32AndDestinyItemInstanceComponent(BaseMode
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemInstanceComponent"] = attr.field(
+    data: dict[int, "DestinyItemInstanceComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemInstanceComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint32AndDestinyItemRenderComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1557,14 +1555,14 @@ class DictionaryComponentResponseOfint32AndDestinyItemRenderComponent(BaseModel)
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemRenderComponent"] = attr.field(
+    data: dict[int, "DestinyItemRenderComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemRenderComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint32AndDestinyItemStatsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1576,14 +1574,14 @@ class DictionaryComponentResponseOfint32AndDestinyItemStatsComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemStatsComponent"] = attr.field(
+    data: dict[int, "DestinyItemStatsComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemStatsComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint32AndDestinyItemSocketsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1595,14 +1593,14 @@ class DictionaryComponentResponseOfint32AndDestinyItemSocketsComponent(BaseModel
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemSocketsComponent"] = attr.field(
+    data: dict[int, "DestinyItemSocketsComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemSocketsComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint32AndDestinyItemReusablePlugsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1614,14 +1612,14 @@ class DictionaryComponentResponseOfint32AndDestinyItemReusablePlugsComponent(Bas
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemReusablePlugsComponent"] = attr.field(
+    data: dict[int, "DestinyItemReusablePlugsComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemReusablePlugsComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint32AndDestinyItemPlugObjectivesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1633,14 +1631,14 @@ class DictionaryComponentResponseOfint32AndDestinyItemPlugObjectivesComponent(Ba
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemPlugObjectivesComponent"] = attr.field(
+    data: dict[int, "DestinyItemPlugObjectivesComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemPlugObjectivesComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint32AndDestinyItemTalentGridComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1652,14 +1650,14 @@ class DictionaryComponentResponseOfint32AndDestinyItemTalentGridComponent(BaseMo
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemTalentGridComponent"] = attr.field(
+    data: dict[int, "DestinyItemTalentGridComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemTalentGridComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyVendorComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1671,12 +1669,12 @@ class SingleComponentResponseOfDestinyVendorComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyVendorComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyVendorComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SingleComponentResponseOfDestinyVendorCategoriesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1688,12 +1686,12 @@ class SingleComponentResponseOfDestinyVendorCategoriesComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: "DestinyVendorCategoriesComponent" = attr.field()
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    data: "DestinyVendorCategoriesComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1705,14 +1703,14 @@ class DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent(BaseMo
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyVendorSaleItemComponent"] = attr.field(
+    data: dict[int, "DestinyVendorSaleItemComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyVendorSaleItemComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfuint32AndDestinyPublicVendorComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1724,14 +1722,14 @@ class DictionaryComponentResponseOfuint32AndDestinyPublicVendorComponent(BaseMod
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyPublicVendorComponent"] = attr.field(
+    data: dict[int, "DestinyPublicVendorComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyPublicVendorComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DestinyVendorSaleItemSetComponentOfDestinyPublicVendorSaleItemComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1741,12 +1739,12 @@ class DestinyVendorSaleItemSetComponentOfDestinyPublicVendorSaleItemComponent(Ba
         sale_items: _No description given by bungie._
     """
 
-    sale_items: dict[int, "DestinyPublicVendorSaleItemComponent"] = attr.field(
+    sale_items: dict[int, "DestinyPublicVendorSaleItemComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyPublicVendorSaleItemComponent]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfuint32AndPublicDestinyVendorSaleItemSetComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1758,14 +1756,14 @@ class DictionaryComponentResponseOfuint32AndPublicDestinyVendorSaleItemSetCompon
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "PublicDestinyVendorSaleItemSetComponent"] = attr.field(
+    data: dict[int, "PublicDestinyVendorSaleItemSetComponent"] = custom_field(
         metadata={"type": """dict[int, PublicDestinyVendorSaleItemSetComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DestinyItemComponentSetOfuint32(BaseModel):
     """
     _No description given by bungie._
@@ -1784,19 +1782,19 @@ class DestinyItemComponentSetOfuint32(BaseModel):
         talent_grids: _No description given by bungie._
     """
 
-    instances: "DictionaryComponentResponseOfuint32AndDestinyItemInstanceComponent" = attr.field()
-    objectives: "DictionaryComponentResponseOfuint32AndDestinyItemObjectivesComponent" = attr.field()
-    perks: "DictionaryComponentResponseOfuint32AndDestinyItemPerksComponent" = attr.field()
-    plug_objectives: "DictionaryComponentResponseOfuint32AndDestinyItemPlugObjectivesComponent" = attr.field()
-    plug_states: "DictionaryComponentResponseOfuint32AndDestinyItemPlugComponent" = attr.field()
-    render_data: "DictionaryComponentResponseOfuint32AndDestinyItemRenderComponent" = attr.field()
-    reusable_plugs: "DictionaryComponentResponseOfuint32AndDestinyItemReusablePlugsComponent" = attr.field()
-    sockets: "DictionaryComponentResponseOfuint32AndDestinyItemSocketsComponent" = attr.field()
-    stats: "DictionaryComponentResponseOfuint32AndDestinyItemStatsComponent" = attr.field()
-    talent_grids: "DictionaryComponentResponseOfuint32AndDestinyItemTalentGridComponent" = attr.field()
+    instances: "DictionaryComponentResponseOfuint32AndDestinyItemInstanceComponent" = custom_field()
+    objectives: "DictionaryComponentResponseOfuint32AndDestinyItemObjectivesComponent" = custom_field()
+    perks: "DictionaryComponentResponseOfuint32AndDestinyItemPerksComponent" = custom_field()
+    plug_objectives: "DictionaryComponentResponseOfuint32AndDestinyItemPlugObjectivesComponent" = custom_field()
+    plug_states: "DictionaryComponentResponseOfuint32AndDestinyItemPlugComponent" = custom_field()
+    render_data: "DictionaryComponentResponseOfuint32AndDestinyItemRenderComponent" = custom_field()
+    reusable_plugs: "DictionaryComponentResponseOfuint32AndDestinyItemReusablePlugsComponent" = custom_field()
+    sockets: "DictionaryComponentResponseOfuint32AndDestinyItemSocketsComponent" = custom_field()
+    stats: "DictionaryComponentResponseOfuint32AndDestinyItemStatsComponent" = custom_field()
+    talent_grids: "DictionaryComponentResponseOfuint32AndDestinyItemTalentGridComponent" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfuint32AndDestinyItemInstanceComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1808,14 +1806,14 @@ class DictionaryComponentResponseOfuint32AndDestinyItemInstanceComponent(BaseMod
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemInstanceComponent"] = attr.field(
+    data: dict[int, "DestinyItemInstanceComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemInstanceComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfuint32AndDestinyItemRenderComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1827,14 +1825,14 @@ class DictionaryComponentResponseOfuint32AndDestinyItemRenderComponent(BaseModel
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemRenderComponent"] = attr.field(
+    data: dict[int, "DestinyItemRenderComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemRenderComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfuint32AndDestinyItemStatsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1846,14 +1844,14 @@ class DictionaryComponentResponseOfuint32AndDestinyItemStatsComponent(BaseModel)
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemStatsComponent"] = attr.field(
+    data: dict[int, "DestinyItemStatsComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemStatsComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfuint32AndDestinyItemSocketsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1865,14 +1863,14 @@ class DictionaryComponentResponseOfuint32AndDestinyItemSocketsComponent(BaseMode
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemSocketsComponent"] = attr.field(
+    data: dict[int, "DestinyItemSocketsComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemSocketsComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfuint32AndDestinyItemReusablePlugsComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1884,14 +1882,14 @@ class DictionaryComponentResponseOfuint32AndDestinyItemReusablePlugsComponent(Ba
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemReusablePlugsComponent"] = attr.field(
+    data: dict[int, "DestinyItemReusablePlugsComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemReusablePlugsComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfuint32AndDestinyItemPlugObjectivesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1903,14 +1901,14 @@ class DictionaryComponentResponseOfuint32AndDestinyItemPlugObjectivesComponent(B
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemPlugObjectivesComponent"] = attr.field(
+    data: dict[int, "DestinyItemPlugObjectivesComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemPlugObjectivesComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class DictionaryComponentResponseOfuint32AndDestinyItemTalentGridComponent(BaseModel):
     """
     _No description given by bungie._
@@ -1922,14 +1920,14 @@ class DictionaryComponentResponseOfuint32AndDestinyItemTalentGridComponent(BaseM
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, "DestinyItemTalentGridComponent"] = attr.field(
+    data: dict[int, "DestinyItemTalentGridComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemTalentGridComponent]"""}
     )
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
-@attr.define
+@custom_define()
 class SearchResultOfDestinyEntitySearchResultItem(BaseModel):
     """
     _No description given by bungie._
@@ -1944,17 +1942,17 @@ class SearchResultOfDestinyEntitySearchResultItem(BaseModel):
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
-    has_more: bool = attr.field()
-    query: "PagedQuery" = attr.field()
-    replacement_continuation_token: str = attr.field()
-    results: list["DestinyEntitySearchResultItem"] = attr.field(
+    has_more: bool = custom_field()
+    query: "PagedQuery" = custom_field()
+    replacement_continuation_token: str = custom_field()
+    results: list["DestinyEntitySearchResultItem"] = custom_field(
         metadata={"type": """list[DestinyEntitySearchResultItem]"""}
     )
-    total_results: int = attr.field()
-    use_total_results: bool = attr.field()
+    total_results: int = custom_field()
+    use_total_results: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class SearchResultOfTrendingEntry(BaseModel):
     """
     _No description given by bungie._
@@ -1969,15 +1967,15 @@ class SearchResultOfTrendingEntry(BaseModel):
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
-    has_more: bool = attr.field()
-    query: "PagedQuery" = attr.field()
-    replacement_continuation_token: str = attr.field()
-    results: list["TrendingEntry"] = attr.field(metadata={"type": """list[TrendingEntry]"""})
-    total_results: int = attr.field()
-    use_total_results: bool = attr.field()
+    has_more: bool = custom_field()
+    query: "PagedQuery" = custom_field()
+    replacement_continuation_token: str = custom_field()
+    results: list["TrendingEntry"] = custom_field(metadata={"type": """list[TrendingEntry]"""})
+    total_results: int = custom_field()
+    use_total_results: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class SearchResultOfFireteamSummary(BaseModel):
     """
     _No description given by bungie._
@@ -1992,15 +1990,15 @@ class SearchResultOfFireteamSummary(BaseModel):
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
-    has_more: bool = attr.field()
-    query: "PagedQuery" = attr.field()
-    replacement_continuation_token: str = attr.field()
-    results: list["FireteamSummary"] = attr.field(metadata={"type": """list[FireteamSummary]"""})
-    total_results: int = attr.field()
-    use_total_results: bool = attr.field()
+    has_more: bool = custom_field()
+    query: "PagedQuery" = custom_field()
+    replacement_continuation_token: str = custom_field()
+    results: list["FireteamSummary"] = custom_field(metadata={"type": """list[FireteamSummary]"""})
+    total_results: int = custom_field()
+    use_total_results: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class SearchResultOfFireteamResponse(BaseModel):
     """
     _No description given by bungie._
@@ -2015,15 +2013,15 @@ class SearchResultOfFireteamResponse(BaseModel):
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
-    has_more: bool = attr.field()
-    query: "PagedQuery" = attr.field()
-    replacement_continuation_token: str = attr.field()
-    results: list["FireteamResponse"] = attr.field(metadata={"type": """list[FireteamResponse]"""})
-    total_results: int = attr.field()
-    use_total_results: bool = attr.field()
+    has_more: bool = custom_field()
+    query: "PagedQuery" = custom_field()
+    replacement_continuation_token: str = custom_field()
+    results: list["FireteamResponse"] = custom_field(metadata={"type": """list[FireteamResponse]"""})
+    total_results: int = custom_field()
+    use_total_results: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class GlobalAlert(BaseModel):
     """
     _No description given by bungie._
@@ -2039,13 +2037,13 @@ class GlobalAlert(BaseModel):
         stream_info: _No description given by bungie._
     """
 
-    alert_html: str = attr.field()
-    alert_key: str = attr.field()
-    alert_level: Union["GlobalAlertLevel", int] = attr.field(converter=enum_converter("GlobalAlertLevel"))
-    alert_link: str = attr.field()
-    alert_timestamp: datetime = attr.field()
-    alert_type: Union["GlobalAlertType", int] = attr.field(converter=enum_converter("GlobalAlertType"))
-    stream_info: "StreamInfo" = attr.field()
+    alert_html: str = custom_field()
+    alert_key: str = custom_field()
+    alert_level: Union["GlobalAlertLevel", int] = custom_field(converter=enum_converter("GlobalAlertLevel"))
+    alert_link: str = custom_field()
+    alert_timestamp: datetime = custom_field()
+    alert_type: Union["GlobalAlertType", int] = custom_field(converter=enum_converter("GlobalAlertType"))
+    stream_info: "StreamInfo" = custom_field()
 
 
 class GlobalAlertLevel(BaseEnum):
@@ -2074,7 +2072,7 @@ class GlobalAlertType(BaseEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class StreamInfo(BaseModel):
     """
     _No description given by bungie._
@@ -2084,4 +2082,4 @@ class StreamInfo(BaseModel):
         channel_name: _No description given by bungie._
     """
 
-    channel_name: str = attr.field()
+    channel_name: str = custom_field()

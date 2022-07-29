@@ -4,15 +4,13 @@
 
 from typing import TYPE_CHECKING, Optional
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import DestinyDestinationDefinition
 
 
-@attr.define
+@custom_define()
 class DestinyVendorLocationDefinition(BaseModel):
     """
     These definitions represent vendors' locations and relevant display information at different times in the game.
@@ -32,6 +30,6 @@ class DestinyVendorLocationDefinition(BaseModel):
         manifest_destination_hash: Manifest information for `destination_hash`
     """
 
-    background_image_path: str = attr.field()
-    destination_hash: int = attr.field()
-    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
+    background_image_path: str = custom_field()
+    destination_hash: int = custom_field()
+    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = custom_field(default=None)

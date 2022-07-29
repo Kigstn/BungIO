@@ -4,13 +4,11 @@
 
 from typing import Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseEnum, BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 
-@attr.define
+@custom_define()
 class ComponentResponse(BaseModel):
     """
     The base class for any component-returning object that may need to indicate information about the state of the component being returned.
@@ -21,8 +19,8 @@ class ComponentResponse(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    disabled: bool = attr.field()
-    privacy: Union["ComponentPrivacySetting", int] = attr.field(converter=enum_converter("ComponentPrivacySetting"))
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
 
 class ComponentPrivacySetting(BaseEnum):

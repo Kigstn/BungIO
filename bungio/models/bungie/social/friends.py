@@ -4,9 +4,13 @@
 
 from typing import TYPE_CHECKING, Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    custom_define,
+    custom_field,
+)
 from bungio.models.mixins import DestinyUserMixin
 from bungio.utils import enum_converter
 
@@ -14,7 +18,7 @@ if TYPE_CHECKING:
     from bungio.models import BungieMembershipType, GeneralUser
 
 
-@attr.define
+@custom_define()
 class BungieFriendListResponse(BaseModel):
     """
     _No description given by bungie._
@@ -24,10 +28,10 @@ class BungieFriendListResponse(BaseModel):
         friends: _No description given by bungie._
     """
 
-    friends: list["BungieFriend"] = attr.field(metadata={"type": """list[BungieFriend]"""})
+    friends: list["BungieFriend"] = custom_field(metadata={"type": """list[BungieFriend]"""})
 
 
-@attr.define
+@custom_define()
 class BungieFriend(BaseModel, DestinyUserMixin):
     """
     _No description given by bungie._
@@ -44,18 +48,18 @@ class BungieFriend(BaseModel, DestinyUserMixin):
         relationship: _No description given by bungie._
     """
 
-    bungie_global_display_name: str = attr.field()
-    bungie_global_display_name_code: int = attr.field()
-    bungie_net_user: "GeneralUser" = attr.field()
-    last_seen_as_bungie_membership_type: Union["BungieMembershipType", int] = attr.field(
+    bungie_global_display_name: str = custom_field()
+    bungie_global_display_name_code: int = custom_field()
+    bungie_net_user: "GeneralUser" = custom_field()
+    last_seen_as_bungie_membership_type: Union["BungieMembershipType", int] = custom_field(
         converter=enum_converter("BungieMembershipType")
     )
-    last_seen_as_membership_id: int = attr.field()
-    online_status: Union["PresenceStatus", int] = attr.field(converter=enum_converter("PresenceStatus"))
-    online_title: Union["PresenceOnlineStateFlags", int] = attr.field(
+    last_seen_as_membership_id: int = custom_field()
+    online_status: Union["PresenceStatus", int] = custom_field(converter=enum_converter("PresenceStatus"))
+    online_title: Union["PresenceOnlineStateFlags", int] = custom_field(
         converter=enum_converter("PresenceOnlineStateFlags")
     )
-    relationship: Union["FriendRelationshipState", int] = attr.field(
+    relationship: Union["FriendRelationshipState", int] = custom_field(
         converter=enum_converter("FriendRelationshipState")
     )
 
@@ -99,7 +103,7 @@ class FriendRelationshipState(BaseEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class BungieFriendRequestListResponse(BaseModel):
     """
     _No description given by bungie._
@@ -110,8 +114,8 @@ class BungieFriendRequestListResponse(BaseModel):
         outgoing_requests: _No description given by bungie._
     """
 
-    incoming_requests: list["BungieFriend"] = attr.field(metadata={"type": """list[BungieFriend]"""})
-    outgoing_requests: list["BungieFriend"] = attr.field(metadata={"type": """list[BungieFriend]"""})
+    incoming_requests: list["BungieFriend"] = custom_field(metadata={"type": """list[BungieFriend]"""})
+    outgoing_requests: list["BungieFriend"] = custom_field(metadata={"type": """list[BungieFriend]"""})
 
 
 class PlatformFriendType(BaseEnum):
@@ -129,7 +133,7 @@ class PlatformFriendType(BaseEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class PlatformFriendResponse(BaseModel):
     """
     _No description given by bungie._
@@ -142,13 +146,13 @@ class PlatformFriendResponse(BaseModel):
         platform_friends: _No description given by bungie._
     """
 
-    current_page: int = attr.field()
-    has_more: bool = attr.field()
-    items_per_page: int = attr.field()
-    platform_friends: list["PlatformFriend"] = attr.field(metadata={"type": """list[PlatformFriend]"""})
+    current_page: int = custom_field()
+    has_more: bool = custom_field()
+    items_per_page: int = custom_field()
+    platform_friends: list["PlatformFriend"] = custom_field(metadata={"type": """list[PlatformFriend]"""})
 
 
-@attr.define
+@custom_define()
 class PlatformFriend(BaseModel, DestinyUserMixin):
     """
     _No description given by bungie._
@@ -164,10 +168,10 @@ class PlatformFriend(BaseModel, DestinyUserMixin):
         platform_display_name: _No description given by bungie._
     """
 
-    bungie_global_display_name: str = attr.field()
-    bungie_global_display_name_code: int = attr.field()
-    bungie_net_membership_id: int = attr.field()
-    destiny_membership_id: int = attr.field()
-    destiny_membership_type: int = attr.field()
-    friend_platform: Union["PlatformFriendType", int] = attr.field(converter=enum_converter("PlatformFriendType"))
-    platform_display_name: str = attr.field()
+    bungie_global_display_name: str = custom_field()
+    bungie_global_display_name_code: int = custom_field()
+    bungie_net_membership_id: int = custom_field()
+    destiny_membership_id: int = custom_field()
+    destiny_membership_type: int = custom_field()
+    friend_platform: Union["PlatformFriendType", int] = custom_field(converter=enum_converter("PlatformFriendType"))
+    platform_display_name: str = custom_field()

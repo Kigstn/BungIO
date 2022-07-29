@@ -5,9 +5,7 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseEnum, BaseModel, custom_define, custom_field
 from bungio.models.mixins import DestinyClanMixin, DestinyUserMixin
 from bungio.utils import enum_converter
 
@@ -77,7 +75,7 @@ class FireteamSlotSearch(BaseEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class FireteamSummary(BaseModel, DestinyClanMixin):
     """
     _No description given by bungie._
@@ -105,28 +103,28 @@ class FireteamSummary(BaseModel, DestinyClanMixin):
         title_before_moderation: _No description given by bungie._
     """
 
-    activity_type: int = attr.field()
-    alternate_slot_count: int = attr.field()
-    available_alternate_slot_count: int = attr.field()
-    available_player_slot_count: int = attr.field()
-    date_created: datetime = attr.field()
-    date_modified: datetime = attr.field()
-    date_player_modified: datetime = attr.field()
-    fireteam_id: int = attr.field()
-    group_id: int = attr.field()
-    is_immediate: bool = attr.field()
-    is_public: bool = attr.field()
-    is_valid: bool = attr.field()
-    locale: str = attr.field()
-    owner_membership_id: int = attr.field()
-    platform: Union["FireteamPlatform", int] = attr.field(converter=enum_converter("FireteamPlatform"))
-    player_slot_count: int = attr.field()
-    scheduled_time: datetime = attr.field()
-    title: str = attr.field()
-    title_before_moderation: str = attr.field()
+    activity_type: int = custom_field()
+    alternate_slot_count: int = custom_field()
+    available_alternate_slot_count: int = custom_field()
+    available_player_slot_count: int = custom_field()
+    date_created: datetime = custom_field()
+    date_modified: datetime = custom_field()
+    date_player_modified: datetime = custom_field()
+    fireteam_id: int = custom_field()
+    group_id: int = custom_field()
+    is_immediate: bool = custom_field()
+    is_public: bool = custom_field()
+    is_valid: bool = custom_field()
+    locale: str = custom_field()
+    owner_membership_id: int = custom_field()
+    platform: Union["FireteamPlatform", int] = custom_field(converter=enum_converter("FireteamPlatform"))
+    player_slot_count: int = custom_field()
+    scheduled_time: datetime = custom_field()
+    title: str = custom_field()
+    title_before_moderation: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class FireteamResponse(BaseModel):
     """
     _No description given by bungie._
@@ -138,12 +136,12 @@ class FireteamResponse(BaseModel):
         summary: _No description given by bungie._
     """
 
-    alternates: list["FireteamMember"] = attr.field(metadata={"type": """list[FireteamMember]"""})
-    members: list["FireteamMember"] = attr.field(metadata={"type": """list[FireteamMember]"""})
-    summary: "FireteamSummary" = attr.field()
+    alternates: list["FireteamMember"] = custom_field(metadata={"type": """list[FireteamMember]"""})
+    members: list["FireteamMember"] = custom_field(metadata={"type": """list[FireteamMember]"""})
+    summary: "FireteamSummary" = custom_field()
 
 
-@attr.define
+@custom_define()
 class FireteamMember(BaseModel):
     """
     _No description given by bungie._
@@ -159,18 +157,18 @@ class FireteamMember(BaseModel):
         last_platform_invite_attempt_result: _No description given by bungie._
     """
 
-    bungie_net_user_info: "UserInfoCard" = attr.field()
-    character_id: int = attr.field()
-    date_joined: datetime = attr.field()
-    destiny_user_info: "FireteamUserInfoCard" = attr.field()
-    has_microphone: bool = attr.field()
-    last_platform_invite_attempt_date: datetime = attr.field()
-    last_platform_invite_attempt_result: Union["FireteamPlatformInviteResult", int] = attr.field(
+    bungie_net_user_info: "UserInfoCard" = custom_field()
+    character_id: int = custom_field()
+    date_joined: datetime = custom_field()
+    destiny_user_info: "FireteamUserInfoCard" = custom_field()
+    has_microphone: bool = custom_field()
+    last_platform_invite_attempt_date: datetime = custom_field()
+    last_platform_invite_attempt_result: Union["FireteamPlatformInviteResult", int] = custom_field(
         converter=enum_converter("FireteamPlatformInviteResult")
     )
 
 
-@attr.define
+@custom_define()
 class FireteamUserInfoCard(BaseModel, DestinyUserMixin):
     """
     _No description given by bungie._
@@ -191,24 +189,24 @@ class FireteamUserInfoCard(BaseModel, DestinyUserMixin):
         supplemental_display_name: A platform specific additional display name - ex: psn Real Name, bnet Unique Name, etc.
     """
 
-    applicable_membership_types: list[Union["BungieMembershipType", int]] = attr.field(
+    applicable_membership_types: list[Union["BungieMembershipType", int]] = custom_field(
         converter=enum_converter("BungieMembershipType")
     )
-    bungie_global_display_name: str = attr.field()
-    bungie_global_display_name_code: int = attr.field()
-    cross_save_override: Union["BungieMembershipType", int] = attr.field(
+    bungie_global_display_name: str = custom_field()
+    bungie_global_display_name_code: int = custom_field()
+    cross_save_override: Union["BungieMembershipType", int] = custom_field(
         converter=enum_converter("BungieMembershipType")
     )
-    display_name: str = attr.field()
-    fireteam_display_name: str = attr.field()
-    fireteam_membership_type: Union["BungieMembershipType", int] = attr.field(
+    display_name: str = custom_field()
+    fireteam_display_name: str = custom_field()
+    fireteam_membership_type: Union["BungieMembershipType", int] = custom_field(
         converter=enum_converter("BungieMembershipType")
     )
-    icon_path: str = attr.field()
-    is_public: bool = attr.field()
-    membership_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
-    supplemental_display_name: str = attr.field()
+    icon_path: str = custom_field()
+    is_public: bool = custom_field()
+    membership_id: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
+    supplemental_display_name: str = custom_field()
 
 
 class FireteamPlatformInviteResult(BaseEnum):

@@ -5,9 +5,7 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Optional
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -18,7 +16,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyVendorGroupComponent(BaseModel):
     """
     This component returns references to all of the Vendors in the response, grouped by categorizations that Bungie has deemed to be interesting, in the order in which both the groups and the vendors within that group should be rendered.
@@ -28,10 +26,10 @@ class DestinyVendorGroupComponent(BaseModel):
         groups: The ordered list of groups being returned.
     """
 
-    groups: list["DestinyVendorGroup"] = attr.field(metadata={"type": """list[DestinyVendorGroup]"""})
+    groups: list["DestinyVendorGroup"] = custom_field(metadata={"type": """list[DestinyVendorGroup]"""})
 
 
-@attr.define
+@custom_define()
 class DestinyVendorGroup(BaseModel):
     """
     Represents a specific group of vendors that can be rendered in the recommended order. How do we figure out this order? It's a long story, and will likely get more complicated over time.
@@ -51,12 +49,12 @@ class DestinyVendorGroup(BaseModel):
         manifest_vendor_group_hash: Manifest information for `vendor_group_hash`
     """
 
-    vendor_group_hash: int = attr.field()
-    vendor_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_vendor_group_hash: Optional["DestinyVendorGroupDefinition"] = attr.field(default=None)
+    vendor_group_hash: int = custom_field()
+    vendor_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    manifest_vendor_group_hash: Optional["DestinyVendorGroupDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyVendorBaseComponent(BaseModel):
     """
     This component contains essential/summary information about the vendor.
@@ -77,13 +75,13 @@ class DestinyVendorBaseComponent(BaseModel):
         manifest_vendor_hash: Manifest information for `vendor_hash`
     """
 
-    enabled: bool = attr.field()
-    next_refresh_date: datetime = attr.field()
-    vendor_hash: int = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    enabled: bool = custom_field()
+    next_refresh_date: datetime = custom_field()
+    vendor_hash: int = custom_field()
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyVendorSaleItemBaseComponent(BaseModel):
     """
     The base class for Vendor Sale Item data. Has a bunch of character-agnostic state about the item being sold. Note that if you want instance, stats, etc... data for the item, you'll have to request additional components such as ItemInstances, ItemPerks etc... and acquire them from the DestinyVendorResponse's "items" property.
@@ -109,18 +107,18 @@ class DestinyVendorSaleItemBaseComponent(BaseModel):
         manifest_override_style_item_hash: Manifest information for `override_style_item_hash`
     """
 
-    api_purchasable: bool = attr.field()
-    costs: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})
-    item_hash: int = attr.field()
-    override_next_refresh_date: datetime = attr.field()
-    override_style_item_hash: int = attr.field()
-    quantity: int = attr.field()
-    vendor_item_index: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    api_purchasable: bool = custom_field()
+    costs: list["DestinyItemQuantity"] = custom_field(metadata={"type": """list[DestinyItemQuantity]"""})
+    item_hash: int = custom_field()
+    override_next_refresh_date: datetime = custom_field()
+    override_style_item_hash: int = custom_field()
+    quantity: int = custom_field()
+    vendor_item_index: int = custom_field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyPublicVendorComponent(BaseModel):
     """
     This component contains essential/summary information about the vendor from the perspective of a character-agnostic view.
@@ -141,13 +139,13 @@ class DestinyPublicVendorComponent(BaseModel):
         manifest_vendor_hash: Manifest information for `vendor_hash`
     """
 
-    enabled: bool = attr.field()
-    next_refresh_date: datetime = attr.field()
-    vendor_hash: int = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    enabled: bool = custom_field()
+    next_refresh_date: datetime = custom_field()
+    vendor_hash: int = custom_field()
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyPublicVendorSaleItemComponent(BaseModel):
     """
     Has character-agnostic information about an item being sold by a vendor. Note that if you want instance, stats, etc... data for the item, you'll have to request additional components such as ItemInstances, ItemPerks etc... and acquire them from the DestinyVendorResponse's "items" property. For most of these, however, you'll have to ask for it in context of a specific character.
@@ -173,12 +171,12 @@ class DestinyPublicVendorSaleItemComponent(BaseModel):
         manifest_override_style_item_hash: Manifest information for `override_style_item_hash`
     """
 
-    api_purchasable: bool = attr.field()
-    costs: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})
-    item_hash: int = attr.field()
-    override_next_refresh_date: datetime = attr.field()
-    override_style_item_hash: int = attr.field()
-    quantity: int = attr.field()
-    vendor_item_index: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    api_purchasable: bool = custom_field()
+    costs: list["DestinyItemQuantity"] = custom_field(metadata={"type": """list[DestinyItemQuantity]"""})
+    item_hash: int = custom_field()
+    override_next_refresh_date: datetime = custom_field()
+    override_style_item_hash: int = custom_field()
+    quantity: int = custom_field()
+    vendor_item_index: int = custom_field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)

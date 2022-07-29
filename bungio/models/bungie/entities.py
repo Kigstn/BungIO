@@ -4,16 +4,14 @@
 
 from typing import TYPE_CHECKING, Union
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import PlatformErrorCodes
 
 
-@attr.define
+@custom_define()
 class EntityActionResult(BaseModel):
     """
     _No description given by bungie._
@@ -24,5 +22,5 @@ class EntityActionResult(BaseModel):
         result: _No description given by bungie._
     """
 
-    entity_id: int = attr.field()
-    result: Union["PlatformErrorCodes", int] = attr.field(converter=enum_converter("PlatformErrorCodes"))
+    entity_id: int = custom_field()
+    result: Union["PlatformErrorCodes", int] = custom_field(converter=enum_converter("PlatformErrorCodes"))

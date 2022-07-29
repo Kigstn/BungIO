@@ -5,9 +5,7 @@
 from datetime import datetime
 from typing import TYPE_CHECKING
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.models.mixins import DestinyUserMixin
 
 if TYPE_CHECKING:
@@ -18,7 +16,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class PartnerOfferClaimRequest(BaseModel):
     """
     _No description given by bungie._
@@ -30,12 +28,12 @@ class PartnerOfferClaimRequest(BaseModel):
         transaction_id: _No description given by bungie._
     """
 
-    bungie_net_membership_id: int = attr.field()
-    partner_offer_id: str = attr.field()
-    transaction_id: str = attr.field()
+    bungie_net_membership_id: int = custom_field()
+    partner_offer_id: str = custom_field()
+    transaction_id: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class PartnerOfferSkuHistoryResponse(BaseModel):
     """
     _No description given by bungie._
@@ -51,18 +49,18 @@ class PartnerOfferSkuHistoryResponse(BaseModel):
         transaction_id: _No description given by bungie._
     """
 
-    all_offers_applied: bool = attr.field()
-    claim_date: datetime = attr.field()
-    localized_description: str = attr.field()
-    localized_name: str = attr.field()
-    sku_identifier: str = attr.field()
-    sku_offers: list["PartnerOfferHistoryResponse"] = attr.field(
+    all_offers_applied: bool = custom_field()
+    claim_date: datetime = custom_field()
+    localized_description: str = custom_field()
+    localized_name: str = custom_field()
+    sku_identifier: str = custom_field()
+    sku_offers: list["PartnerOfferHistoryResponse"] = custom_field(
         metadata={"type": """list[PartnerOfferHistoryResponse]"""}
     )
-    transaction_id: str = attr.field()
+    transaction_id: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class PartnerOfferHistoryResponse(BaseModel, DestinyUserMixin):
     """
     _No description given by bungie._
@@ -79,17 +77,17 @@ class PartnerOfferHistoryResponse(BaseModel, DestinyUserMixin):
         quantity_applied: _No description given by bungie._
     """
 
-    apply_date: datetime = attr.field()
-    is_consumable: bool = attr.field()
-    localized_description: str = attr.field()
-    localized_name: str = attr.field()
-    membership_id: int = attr.field()
-    membership_type: int = attr.field()
-    partner_offer_key: str = attr.field()
-    quantity_applied: int = attr.field()
+    apply_date: datetime = custom_field()
+    is_consumable: bool = custom_field()
+    localized_description: str = custom_field()
+    localized_name: str = custom_field()
+    membership_id: int = custom_field()
+    membership_type: int = custom_field()
+    partner_offer_key: str = custom_field()
+    quantity_applied: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class BungieRewardDisplay(BaseModel):
     """
     _No description given by bungie._
@@ -101,12 +99,12 @@ class BungieRewardDisplay(BaseModel):
         user_reward_availability_model: _No description given by bungie._
     """
 
-    objective_display_properties: "RewardDisplayProperties" = attr.field()
-    reward_display_properties: "RewardDisplayProperties" = attr.field()
-    user_reward_availability_model: "UserRewardAvailabilityModel" = attr.field()
+    objective_display_properties: "RewardDisplayProperties" = custom_field()
+    reward_display_properties: "RewardDisplayProperties" = custom_field()
+    user_reward_availability_model: "UserRewardAvailabilityModel" = custom_field()
 
 
-@attr.define
+@custom_define()
 class UserRewardAvailabilityModel(BaseModel):
     """
     _No description given by bungie._
@@ -118,12 +116,12 @@ class UserRewardAvailabilityModel(BaseModel):
         is_unlocked_for_user: _No description given by bungie._
     """
 
-    availability_model: "RewardAvailabilityModel" = attr.field()
-    is_available_for_user: bool = attr.field()
-    is_unlocked_for_user: bool = attr.field()
+    availability_model: "RewardAvailabilityModel" = custom_field()
+    is_available_for_user: bool = custom_field()
+    is_unlocked_for_user: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class RewardAvailabilityModel(BaseModel):
     """
     _No description given by bungie._
@@ -143,24 +141,24 @@ class RewardAvailabilityModel(BaseModel):
         shopify_end_date: _No description given by bungie._
     """
 
-    collectible_definitions: list["CollectibleDefinitions"] = attr.field(
+    collectible_definitions: list["CollectibleDefinitions"] = custom_field(
         metadata={"type": """list[CollectibleDefinitions]"""}
     )
-    decrypted_token: str = attr.field()
-    game_earn_by_date: datetime = attr.field()
-    has_existing_code: bool = attr.field()
-    has_offer: bool = attr.field()
-    is_loyalty_reward: bool = attr.field()
-    is_offer: bool = attr.field()
-    offer_applied: bool = attr.field()
-    record_definitions: list["DestinyRecordDefinition"] = attr.field(
+    decrypted_token: str = custom_field()
+    game_earn_by_date: datetime = custom_field()
+    has_existing_code: bool = custom_field()
+    has_offer: bool = custom_field()
+    is_loyalty_reward: bool = custom_field()
+    is_offer: bool = custom_field()
+    offer_applied: bool = custom_field()
+    record_definitions: list["DestinyRecordDefinition"] = custom_field(
         metadata={"type": """list[DestinyRecordDefinition]"""}
     )
-    redemption_end_date: datetime = attr.field()
-    shopify_end_date: datetime = attr.field()
+    redemption_end_date: datetime = custom_field()
+    shopify_end_date: datetime = custom_field()
 
 
-@attr.define
+@custom_define()
 class CollectibleDefinitions(BaseModel):
     """
     _No description given by bungie._
@@ -171,11 +169,11 @@ class CollectibleDefinitions(BaseModel):
         destiny_inventory_item_definition: _No description given by bungie._
     """
 
-    collectible_definition: "DestinyCollectibleDefinition" = attr.field()
-    destiny_inventory_item_definition: "DestinyInventoryItemDefinition" = attr.field()
+    collectible_definition: "DestinyCollectibleDefinition" = custom_field()
+    destiny_inventory_item_definition: "DestinyInventoryItemDefinition" = custom_field()
 
 
-@attr.define
+@custom_define()
 class RewardDisplayProperties(BaseModel):
     """
     _No description given by bungie._
@@ -187,6 +185,6 @@ class RewardDisplayProperties(BaseModel):
         name: _No description given by bungie._
     """
 
-    description: str = attr.field()
-    image_path: str = attr.field()
-    name: str = attr.field()
+    description: str = custom_field()
+    image_path: str = custom_field()
+    name: str = custom_field()

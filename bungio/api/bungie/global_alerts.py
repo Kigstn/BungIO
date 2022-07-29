@@ -4,14 +4,12 @@
 
 from typing import Optional
 
-import attr
-
 from bungio.models import GlobalAlert
 from bungio.models.auth import AuthData
-from bungio.models.base import ClientMixin
+from bungio.models.base import ClientMixin, custom_define
 
 
-@attr.define
+@custom_define()
 class GlobalAlertsRouteInterface(ClientMixin):
     async def get_global_alerts(
         self, includestreaming: Optional[bool] = None, auth: Optional[AuthData] = None

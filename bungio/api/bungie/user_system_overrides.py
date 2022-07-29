@@ -4,15 +4,13 @@
 
 from typing import Optional
 
-import attr
-
 from bungio.models import CoreSystem
 from bungio.models.auth import AuthData
-from bungio.models.base import ClientMixin
+from bungio.models.base import ClientMixin, custom_define
 from bungio.utils import AllowAsyncIteration
 
 
-@attr.define
+@custom_define()
 class UserSystemOverridesRouteInterface(ClientMixin):
     async def get_user_system_overrides(self, auth: Optional[AuthData] = None) -> dict[str, CoreSystem]:
         """

@@ -5,9 +5,7 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseEnum, BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -20,7 +18,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class TrendingCategories(BaseModel):
     """
     _No description given by bungie._
@@ -30,10 +28,10 @@ class TrendingCategories(BaseModel):
         categories: _No description given by bungie._
     """
 
-    categories: list["TrendingCategory"] = attr.field(metadata={"type": """list[TrendingCategory]"""})
+    categories: list["TrendingCategory"] = custom_field(metadata={"type": """list[TrendingCategory]"""})
 
 
-@attr.define
+@custom_define()
 class TrendingCategory(BaseModel):
     """
     _No description given by bungie._
@@ -45,12 +43,12 @@ class TrendingCategory(BaseModel):
         entries: _No description given by bungie._
     """
 
-    category_id: str = attr.field()
-    category_name: str = attr.field()
-    entries: "SearchResultOfTrendingEntry" = attr.field()
+    category_id: str = custom_field()
+    category_name: str = custom_field()
+    entries: "SearchResultOfTrendingEntry" = custom_field()
 
 
-@attr.define
+@custom_define()
 class TrendingEntry(BaseModel):
     """
     The list entry view for trending items. Returns just enough to show the item on the trending page.
@@ -74,21 +72,21 @@ class TrendingEntry(BaseModel):
         weight: The weighted score of this trending item.
     """
 
-    creation_date: datetime = attr.field()
-    display_name: str = attr.field()
-    end_date: datetime = attr.field()
-    entity_type: Union["TrendingEntryType", int] = attr.field(converter=enum_converter("TrendingEntryType"))
-    feature_image: str = attr.field()
-    identifier: str = attr.field()
-    image: str = attr.field()
-    is_featured: bool = attr.field()
-    items: list["TrendingEntry"] = attr.field(metadata={"type": """list[TrendingEntry]"""})
-    link: str = attr.field()
-    mp4_video: str = attr.field()
-    start_date: datetime = attr.field()
-    tagline: str = attr.field()
-    webm_video: str = attr.field()
-    weight: float = attr.field()
+    creation_date: datetime = custom_field()
+    display_name: str = custom_field()
+    end_date: datetime = custom_field()
+    entity_type: Union["TrendingEntryType", int] = custom_field(converter=enum_converter("TrendingEntryType"))
+    feature_image: str = custom_field()
+    identifier: str = custom_field()
+    image: str = custom_field()
+    is_featured: bool = custom_field()
+    items: list["TrendingEntry"] = custom_field(metadata={"type": """list[TrendingEntry]"""})
+    link: str = custom_field()
+    mp4_video: str = custom_field()
+    start_date: datetime = custom_field()
+    tagline: str = custom_field()
+    webm_video: str = custom_field()
+    weight: float = custom_field()
 
 
 class TrendingEntryType(BaseEnum):
@@ -122,7 +120,7 @@ class TrendingEntryType(BaseEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class TrendingDetail(BaseModel):
     """
     _No description given by bungie._
@@ -139,17 +137,17 @@ class TrendingDetail(BaseModel):
         support: _No description given by bungie._
     """
 
-    creation: "TrendingEntryCommunityCreation" = attr.field()
-    destiny_activity: "TrendingEntryDestinyActivity" = attr.field()
-    destiny_item: "TrendingEntryDestinyItem" = attr.field()
-    destiny_ritual: "TrendingEntryDestinyRitual" = attr.field()
-    entity_type: Union["TrendingEntryType", int] = attr.field(converter=enum_converter("TrendingEntryType"))
-    identifier: str = attr.field()
-    news: "TrendingEntryNews" = attr.field()
-    support: "TrendingEntrySupportArticle" = attr.field()
+    creation: "TrendingEntryCommunityCreation" = custom_field()
+    destiny_activity: "TrendingEntryDestinyActivity" = custom_field()
+    destiny_item: "TrendingEntryDestinyItem" = custom_field()
+    destiny_ritual: "TrendingEntryDestinyRitual" = custom_field()
+    entity_type: Union["TrendingEntryType", int] = custom_field(converter=enum_converter("TrendingEntryType"))
+    identifier: str = custom_field()
+    news: "TrendingEntryNews" = custom_field()
+    support: "TrendingEntrySupportArticle" = custom_field()
 
 
-@attr.define
+@custom_define()
 class TrendingEntryNews(BaseModel):
     """
     _No description given by bungie._
@@ -159,10 +157,10 @@ class TrendingEntryNews(BaseModel):
         article: _No description given by bungie._
     """
 
-    article: "ContentItemPublicContract" = attr.field()
+    article: "ContentItemPublicContract" = custom_field()
 
 
-@attr.define
+@custom_define()
 class TrendingEntrySupportArticle(BaseModel):
     """
     _No description given by bungie._
@@ -172,10 +170,10 @@ class TrendingEntrySupportArticle(BaseModel):
         article: _No description given by bungie._
     """
 
-    article: "ContentItemPublicContract" = attr.field()
+    article: "ContentItemPublicContract" = custom_field()
 
 
-@attr.define
+@custom_define()
 class TrendingEntryDestinyItem(BaseModel):
     """
     _No description given by bungie._
@@ -185,10 +183,10 @@ class TrendingEntryDestinyItem(BaseModel):
         item_hash: _No description given by bungie._
     """
 
-    item_hash: int = attr.field()
+    item_hash: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class TrendingEntryDestinyActivity(BaseModel):
     """
     _No description given by bungie._
@@ -199,11 +197,11 @@ class TrendingEntryDestinyActivity(BaseModel):
         status: _No description given by bungie._
     """
 
-    activity_hash: int = attr.field()
-    status: "DestinyPublicActivityStatus" = attr.field()
+    activity_hash: int = custom_field()
+    status: "DestinyPublicActivityStatus" = custom_field()
 
 
-@attr.define
+@custom_define()
 class TrendingEntryDestinyRitual(BaseModel):
     """
     _No description given by bungie._
@@ -220,17 +218,17 @@ class TrendingEntryDestinyRitual(BaseModel):
         title: _No description given by bungie._
     """
 
-    date_end: datetime = attr.field()
-    date_start: datetime = attr.field()
-    event_content: "DestinyMilestoneContent" = attr.field()
-    icon: str = attr.field()
-    image: str = attr.field()
-    milestone_details: "DestinyPublicMilestone" = attr.field()
-    subtitle: str = attr.field()
-    title: str = attr.field()
+    date_end: datetime = custom_field()
+    date_start: datetime = custom_field()
+    event_content: "DestinyMilestoneContent" = custom_field()
+    icon: str = custom_field()
+    image: str = custom_field()
+    milestone_details: "DestinyPublicMilestone" = custom_field()
+    subtitle: str = custom_field()
+    title: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class TrendingEntryCommunityCreation(BaseModel):
     """
     _No description given by bungie._
@@ -246,10 +244,10 @@ class TrendingEntryCommunityCreation(BaseModel):
         upvotes: _No description given by bungie._
     """
 
-    author: str = attr.field()
-    author_membership_id: int = attr.field()
-    body: str = attr.field()
-    media: str = attr.field()
-    post_id: int = attr.field()
-    title: str = attr.field()
-    upvotes: int = attr.field()
+    author: str = custom_field()
+    author_membership_id: int = custom_field()
+    body: str = custom_field()
+    media: str = custom_field()
+    post_id: int = custom_field()
+    title: str = custom_field()
+    upvotes: int = custom_field()

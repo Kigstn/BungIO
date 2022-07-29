@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-import attr
+from bungio.models.base import custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models.auth import AuthData
@@ -18,7 +18,7 @@ __all__ = (
 )
 
 
-@attr.define
+@custom_define()
 class BungIOException(Exception):
     """
     The base exception.
@@ -27,7 +27,7 @@ class BungIOException(Exception):
     pass
 
 
-@attr.define
+@custom_define()
 class HttpException(BungIOException):
     """
     The base http exception.
@@ -36,7 +36,7 @@ class HttpException(BungIOException):
     pass
 
 
-@attr.define
+@custom_define()
 class BungieException(HttpException):
     """
     An exception raised by bungie
@@ -48,18 +48,18 @@ class BungieException(HttpException):
         data: The data of the exception
     """
 
-    error: str = attr.field()
-    message: str = attr.field()
-    code: int = attr.field()
-    data: dict = attr.field()
+    error: str = custom_field()
+    message: str = custom_field()
+    code: int = custom_field()
+    data: dict = custom_field()
 
 
-@attr.define
+@custom_define()
 class _InvalidAuthentication(HttpException):
     pass
 
 
-@attr.define
+@custom_define()
 class InvalidAuthentication(HttpException):
     """
     Raised if the passed authentication is invalid
@@ -71,7 +71,7 @@ class InvalidAuthentication(HttpException):
     auth: "AuthData"
 
 
-@attr.define
+@custom_define()
 class NotFound(HttpException):
     """
     Raised if the resource was not found (404)
@@ -80,7 +80,7 @@ class NotFound(HttpException):
     pass
 
 
-@attr.define
+@custom_define()
 class BadRequest(HttpException):
     """
     Raised if the resource returned a generic error (400)
@@ -89,7 +89,7 @@ class BadRequest(HttpException):
     pass
 
 
-@attr.define
+@custom_define()
 class AuthenticationTooSlow(HttpException):
     """
     Raised if the authentication grant expired
@@ -98,7 +98,7 @@ class AuthenticationTooSlow(HttpException):
     pass
 
 
-@attr.define
+@custom_define()
 class BungieDead(HttpException):
     """
     Raised if bungie is down. Usually this mean maintenance, see their [twitter](https://twitter.com/BungieHelp) for more info
@@ -107,12 +107,12 @@ class BungieDead(HttpException):
     pass
 
 
-@attr.define
+@custom_define()
 class _RouteError(HttpException):
     route: str
 
 
-@attr.define
+@custom_define()
 class TimeoutException(HttpException):
     """
     If the requests failed multiple times in a row without a specific exception

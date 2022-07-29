@@ -5,9 +5,14 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Any, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel, ManifestModel
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -24,7 +29,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyProgression(BaseModel):
     """
     Information about a current character's status with a Progression. A progression is a value that can increase with activity and has levels. Think Character Level and Reputation Levels. Combine this "live" data with the related DestinyProgressionDefinition for a full picture of the Progression.
@@ -56,28 +61,28 @@ class DestinyProgression(BaseModel):
         manifest_progression_hash: Manifest information for `progression_hash`
     """
 
-    current_progress: int = attr.field()
-    current_reset_count: int = attr.field()
-    daily_limit: int = attr.field()
-    daily_progress: int = attr.field()
-    level: int = attr.field()
-    level_cap: int = attr.field()
-    next_level_at: int = attr.field()
-    progress_to_next_level: int = attr.field()
-    progression_hash: int = attr.field()
-    reward_item_states: list[Union["DestinyProgressionRewardItemState", int]] = attr.field(
+    current_progress: int = custom_field()
+    current_reset_count: int = custom_field()
+    daily_limit: int = custom_field()
+    daily_progress: int = custom_field()
+    level: int = custom_field()
+    level_cap: int = custom_field()
+    next_level_at: int = custom_field()
+    progress_to_next_level: int = custom_field()
+    progression_hash: int = custom_field()
+    reward_item_states: list[Union["DestinyProgressionRewardItemState", int]] = custom_field(
         converter=enum_converter("DestinyProgressionRewardItemState")
     )
-    season_resets: list["DestinyProgressionResetEntry"] = attr.field(
+    season_resets: list["DestinyProgressionResetEntry"] = custom_field(
         metadata={"type": """list[DestinyProgressionResetEntry]"""}
     )
-    step_index: int = attr.field()
-    weekly_limit: int = attr.field()
-    weekly_progress: int = attr.field()
-    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
+    step_index: int = custom_field()
+    weekly_limit: int = custom_field()
+    weekly_progress: int = custom_field()
+    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyProgressionResetEntry(BaseModel):
     """
     Represents a season and the number of resets you had in that season.  We do not necessarily - even for progressions with resets - track it over all seasons. So be careful and check the season numbers being returned.
@@ -88,8 +93,8 @@ class DestinyProgressionResetEntry(BaseModel):
         season: _No description given by bungie._
     """
 
-    resets: int = attr.field()
-    season: int = attr.field()
+    resets: int = custom_field()
+    season: int = custom_field()
 
 
 class DestinyProgressionRewardItemState(BaseFlagEnum):
@@ -147,7 +152,7 @@ class DestinyProgressionStepDisplayEffect(BaseEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class DestinyItemQuantity(BaseModel):
     """
     Used in a number of Destiny contracts to return data about an item stack and its quantity. Can optionally return an itemInstanceId if the item is instanced - in which case, the quantity returned will be 1. If it's not... uh, let me know okay? Thanks.
@@ -169,11 +174,11 @@ class DestinyItemQuantity(BaseModel):
         manifest_item_hash: Manifest information for `item_hash`
     """
 
-    has_conditional_visibility: bool = attr.field()
-    item_hash: int = attr.field()
-    item_instance_id: int = attr.field()
-    quantity: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    has_conditional_visibility: bool = custom_field()
+    item_hash: int = custom_field()
+    item_instance_id: int = custom_field()
+    quantity: int = custom_field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
 class SocketTypeActionType(BaseEnum):
@@ -351,7 +356,7 @@ class DestinyAmmunitionType(BaseEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class DyeReference(BaseModel):
     """
     _No description given by bungie._
@@ -362,8 +367,8 @@ class DyeReference(BaseModel):
         dye_hash: _No description given by bungie._
     """
 
-    channel_hash: int = attr.field()
-    dye_hash: int = attr.field()
+    channel_hash: int = custom_field()
+    dye_hash: int = custom_field()
 
 
 class DestinyClass(BaseEnum):
@@ -1346,7 +1351,7 @@ class DestinyRace(BaseEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class DestinyActivity(BaseModel):
     """
     Represents the "Live" data that we can obtain about a Character's status with a specific Activity. This will tell you whether the character can participate in the activity, as well as some other basic mutable information.  Meant to be combined with static DestinyActivityDefinition data for a full picture of the Activity.
@@ -1377,22 +1382,22 @@ class DestinyActivity(BaseModel):
         manifest_activity_hash: Manifest information for `activity_hash`
     """
 
-    activity_hash: int = attr.field()
-    boolean_activity_options: dict[int, bool] = attr.field(metadata={"type": """dict[int, bool]"""})
-    can_join: bool = attr.field()
-    can_lead: bool = attr.field()
-    challenges: list["DestinyChallengeStatus"] = attr.field(metadata={"type": """list[DestinyChallengeStatus]"""})
-    difficulty_tier: Union["DestinyActivityDifficultyTier", int] = attr.field(
+    activity_hash: int = custom_field()
+    boolean_activity_options: dict[int, bool] = custom_field(metadata={"type": """dict[int, bool]"""})
+    can_join: bool = custom_field()
+    can_lead: bool = custom_field()
+    challenges: list["DestinyChallengeStatus"] = custom_field(metadata={"type": """list[DestinyChallengeStatus]"""})
+    difficulty_tier: Union["DestinyActivityDifficultyTier", int] = custom_field(
         converter=enum_converter("DestinyActivityDifficultyTier")
     )
-    display_level: int = attr.field()
-    is_completed: bool = attr.field()
-    is_new: bool = attr.field()
-    is_visible: bool = attr.field()
-    loadout_requirement_index: int = attr.field()
-    modifier_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    recommended_light: int = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    display_level: int = custom_field()
+    is_completed: bool = custom_field()
+    is_new: bool = custom_field()
+    is_visible: bool = custom_field()
+    loadout_requirement_index: int = custom_field()
+    modifier_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    recommended_light: int = custom_field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
 
 
 class DestinyActivityDifficultyTier(BaseEnum):
@@ -1418,7 +1423,7 @@ class DestinyActivityDifficultyTier(BaseEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class DestinyStat(BaseModel):
     """
     Represents a stat on an item *or* Character (NOT a Historical Stat, but a physical attribute stat like Attack, Defense etc...)
@@ -1438,9 +1443,9 @@ class DestinyStat(BaseModel):
         manifest_stat_hash: Manifest information for `stat_hash`
     """
 
-    stat_hash: int = attr.field()
-    value: int = attr.field()
-    manifest_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
+    stat_hash: int = custom_field()
+    value: int = custom_field()
+    manifest_stat_hash: Optional["DestinyStatDefinition"] = custom_field(default=None)
 
 
 class EquipFailureReason(BaseFlagEnum):
@@ -1462,7 +1467,7 @@ class EquipFailureReason(BaseFlagEnum):
     """This item can't be equipped on the character requested, because it must be in that character's inventory first. Transfer the item to the character you want to equip it before you attempt to equip it. """
 
 
-@attr.define
+@custom_define()
 class DestinyTalentNode(BaseModel):
     """
     I see you've come to find out more about Talent Nodes. I'm so sorry. Talent Nodes are the conceptual, visual nodes that appear on Talent Grids. Talent Grids, in Destiny 1, were found on almost every instanced item: they had Nodes that could be activated to change the properties of the item. In Destiny 2, Talent Grids only exist for Builds/Subclasses, and while the basic concept is the same (Nodes can be activated once you've gained sufficient Experience on the Item, and provide effects), there are some new concepts from Destiny 1. Examine DestinyTalentGridDefinition and its subordinates for more information. This is the "Live" information for the current status of a Talent Node on a specific item. Talent Nodes have many Steps, but only one can be active at any one time: and it is the Step that determines both the visual and the game state-changing properties that the Node provides. Examine this and DestinyTalentNodeStepDefinition carefully. *IMPORTANT NOTE* Talent Nodes are, unfortunately, Content Version DEPENDENT. Though they refer to hashes for Nodes and Steps, those hashes are not guaranteed to be immutable across content versions. This is a source of great exasperation for me, but as a result anyone using Talent Grid data must ensure that the content version of their static content matches that of the server responses before showing or making decisions based on talent grid data.
@@ -1481,18 +1486,18 @@ class DestinyTalentNode(BaseModel):
         step_index: The currently relevant Step for the node. It is this step that has rendering data for the node and the benefits that are provided if the node is activated. (the actual rules for benefits provided are extremely complicated in theory, but with how Talent Grids are being used in Destiny 2 you don't have to worry about a lot of those old Destiny 1 rules.) This is an index into: DestinyTalentGridDefinition.nodes[nodeIndex].steps[stepIndex]
     """
 
-    activation_grid_level: int = attr.field()
-    hidden: bool = attr.field()
-    is_activated: bool = attr.field()
-    materials_to_upgrade: list["DestinyMaterialRequirement"] = attr.field(
+    activation_grid_level: int = custom_field()
+    hidden: bool = custom_field()
+    is_activated: bool = custom_field()
+    materials_to_upgrade: list["DestinyMaterialRequirement"] = custom_field(
         metadata={"type": """list[DestinyMaterialRequirement]"""}
     )
-    node_hash: int = attr.field()
-    node_index: int = attr.field()
-    node_stats_block: "DestinyTalentNodeStatBlock" = attr.field()
-    progress_percent: float = attr.field()
-    state: Union["DestinyTalentNodeState", int] = attr.field(converter=enum_converter("DestinyTalentNodeState"))
-    step_index: int = attr.field()
+    node_hash: int = custom_field()
+    node_index: int = custom_field()
+    node_stats_block: "DestinyTalentNodeStatBlock" = custom_field()
+    progress_percent: float = custom_field()
+    state: Union["DestinyTalentNodeState", int] = custom_field(converter=enum_converter("DestinyTalentNodeState"))
+    step_index: int = custom_field()
 
 
 class DestinyTalentNodeState(BaseEnum):
@@ -1530,7 +1535,7 @@ class DestinyTalentNodeState(BaseEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class DestinyTalentNodeStatBlock(BaseModel):
     """
     This property has some history. A talent grid can provide stats on both the item it's related to and the character equipping the item. This returns data about those stat bonuses.
@@ -1541,8 +1546,8 @@ class DestinyTalentNodeStatBlock(BaseModel):
         next_step_stats: This is a holdover from the old days of Destiny 1, when a node could be activated multiple times, conferring multiple steps worth of benefits: you would use this property to show what activating the "next" step on the node would provide vs. what the current step is providing. While Nodes are currently not being used this way, the underlying system for this functionality still exists. I hesitate to remove this property while the ability for designers to make such a talent grid still exists. Whether you want to show it is up to you.
     """
 
-    current_step_stats: list["DestinyStat"] = attr.field(metadata={"type": """list[DestinyStat]"""})
-    next_step_stats: list["DestinyStat"] = attr.field(metadata={"type": """list[DestinyStat]"""})
+    current_step_stats: list["DestinyStat"] = custom_field(metadata={"type": """list[DestinyStat]"""})
+    next_step_stats: list["DestinyStat"] = custom_field(metadata={"type": """list[DestinyStat]"""})
 
 
 class DestinyVendorFilter(BaseEnum):
@@ -1593,7 +1598,7 @@ class VendorItemStatus(BaseFlagEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class DestinyUnlockStatus(BaseModel):
     """
     Indicates the status of an "Unlock Flag" on a Character or Profile. These are individual bits of state that can be either set or not set, and sometimes provide interesting human-readable information in their related DestinyUnlockDefinition.
@@ -1613,9 +1618,9 @@ class DestinyUnlockStatus(BaseModel):
         manifest_unlock_hash: Manifest information for `unlock_hash`
     """
 
-    is_set: bool = attr.field()
-    unlock_hash: int = attr.field()
-    manifest_unlock_hash: Optional["DestinyUnlockDefinition"] = attr.field(default=None)
+    is_set: bool = custom_field()
+    unlock_hash: int = custom_field()
+    manifest_unlock_hash: Optional["DestinyUnlockDefinition"] = custom_field(default=None)
 
 
 class DestinyVendorItemState(BaseFlagEnum):
@@ -1665,7 +1670,7 @@ class DestinyVendorItemState(BaseFlagEnum):
     """This indicates that the sale item is locked. """
 
 
-@attr.define
+@custom_define()
 class DestinyEquipItemResults(BaseModel):
     """
     The results of a bulk Equipping operation performed through the Destiny API.
@@ -1675,10 +1680,10 @@ class DestinyEquipItemResults(BaseModel):
         equip_results: _No description given by bungie._
     """
 
-    equip_results: list["DestinyEquipItemResult"] = attr.field(metadata={"type": """list[DestinyEquipItemResult]"""})
+    equip_results: list["DestinyEquipItemResult"] = custom_field(metadata={"type": """list[DestinyEquipItemResult]"""})
 
 
-@attr.define
+@custom_define()
 class DestinyEquipItemResult(BaseModel):
     """
     The results of an Equipping operation performed through the Destiny API.
@@ -1689,5 +1694,5 @@ class DestinyEquipItemResult(BaseModel):
         item_instance_id: The instance ID of the item in question (all items that can be equipped must, but definition, be Instanced and thus have an Instance ID that you can use to refer to them)
     """
 
-    equip_status: Union["PlatformErrorCodes", int] = attr.field(converter=enum_converter("PlatformErrorCodes"))
-    item_instance_id: int = attr.field()
+    equip_status: Union["PlatformErrorCodes", int] = custom_field(converter=enum_converter("PlatformErrorCodes"))
+    item_instance_id: int = custom_field()

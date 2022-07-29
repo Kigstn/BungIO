@@ -4,9 +4,7 @@
 
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -18,7 +16,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyFactionProgression(BaseModel):
     """
     Mostly for historical purposes, we segregate Faction progressions from other progressions. This is just a DestinyProgression with a shortcut for finding the DestinyFactionDefinition of the faction related to the progression.
@@ -53,25 +51,25 @@ class DestinyFactionProgression(BaseModel):
         manifest_progression_hash: Manifest information for `progression_hash`
     """
 
-    current_progress: int = attr.field()
-    current_reset_count: int = attr.field()
-    daily_limit: int = attr.field()
-    daily_progress: int = attr.field()
-    faction_hash: int = attr.field()
-    faction_vendor_index: int = attr.field()
-    level: int = attr.field()
-    level_cap: int = attr.field()
-    next_level_at: int = attr.field()
-    progress_to_next_level: int = attr.field()
-    progression_hash: int = attr.field()
-    reward_item_states: list[Union["DestinyProgressionRewardItemState", int]] = attr.field(
+    current_progress: int = custom_field()
+    current_reset_count: int = custom_field()
+    daily_limit: int = custom_field()
+    daily_progress: int = custom_field()
+    faction_hash: int = custom_field()
+    faction_vendor_index: int = custom_field()
+    level: int = custom_field()
+    level_cap: int = custom_field()
+    next_level_at: int = custom_field()
+    progress_to_next_level: int = custom_field()
+    progression_hash: int = custom_field()
+    reward_item_states: list[Union["DestinyProgressionRewardItemState", int]] = custom_field(
         converter=enum_converter("DestinyProgressionRewardItemState")
     )
-    season_resets: list["DestinyProgressionResetEntry"] = attr.field(
+    season_resets: list["DestinyProgressionResetEntry"] = custom_field(
         metadata={"type": """list[DestinyProgressionResetEntry]"""}
     )
-    step_index: int = attr.field()
-    weekly_limit: int = attr.field()
-    weekly_progress: int = attr.field()
-    manifest_faction_hash: Optional["DestinyFactionDefinition"] = attr.field(default=None)
-    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
+    step_index: int = custom_field()
+    weekly_limit: int = custom_field()
+    weekly_progress: int = custom_field()
+    manifest_faction_hash: Optional["DestinyFactionDefinition"] = custom_field(default=None)
+    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = custom_field(default=None)

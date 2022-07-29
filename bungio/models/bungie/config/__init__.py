@@ -5,13 +5,18 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Any, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel, ManifestModel
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
 from bungio.utils import enum_converter
 
 
-@attr.define
+@custom_define()
 class UserTheme(BaseModel):
     """
     _No description given by bungie._
@@ -23,12 +28,12 @@ class UserTheme(BaseModel):
         user_theme_name: _No description given by bungie._
     """
 
-    user_theme_description: str = attr.field()
-    user_theme_id: int = attr.field()
-    user_theme_name: str = attr.field()
+    user_theme_description: str = custom_field()
+    user_theme_id: int = custom_field()
+    user_theme_name: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class GroupTheme(BaseModel):
     """
     _No description given by bungie._
@@ -40,6 +45,6 @@ class GroupTheme(BaseModel):
         name: _No description given by bungie._
     """
 
-    description: str = attr.field()
-    folder: str = attr.field()
-    name: str = attr.field()
+    description: str = custom_field()
+    folder: str = custom_field()
+    name: str = custom_field()

@@ -4,18 +4,16 @@
 
 from typing import Optional, Union
 
-import attr
-
 from bungio.models import (
     CommunityContentSortMode,
     ForumTopicsCategoryFiltersEnum,
     PostSearchResponse,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import ClientMixin
+from bungio.models.base import ClientMixin, custom_define
 
 
-@attr.define
+@custom_define()
 class CommunityContentRouteInterface(ClientMixin):
     async def get_community_content(
         self,

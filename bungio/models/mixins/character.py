@@ -1,9 +1,7 @@
 from datetime import datetime
-from typing import TYPE_CHECKING, AsyncGenerator, ForwardRef, Optional, Union
+from typing import TYPE_CHECKING, AsyncGenerator, Optional, Union
 
-import attr
-
-from bungio.models.base import MISSING, ClientMixin, FuzzyAttrFinder
+from bungio.models.base import MISSING, ClientMixin, FuzzyAttrFinder, custom_define
 
 if TYPE_CHECKING:
     # AUTOMATIC IMPORTS START
@@ -32,7 +30,7 @@ if TYPE_CHECKING:
 __all__ = ("DestinyCharacterMixin",)
 
 
-@attr.define
+@custom_define()
 class DestinyCharacterMixin(ClientMixin, FuzzyAttrFinder):
     async def yield_activity_history(
         self,

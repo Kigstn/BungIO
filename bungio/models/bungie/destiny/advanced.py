@@ -5,16 +5,14 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseEnum, BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import BungieMembershipType
 
 
-@attr.define
+@custom_define()
 class AwaInitializeResponse(BaseModel):
     """
     _No description given by bungie._
@@ -25,11 +23,11 @@ class AwaInitializeResponse(BaseModel):
         sent_to_self: True if the PUSH message will only be sent to the device that made this request.
     """
 
-    correlation_id: str = attr.field()
-    sent_to_self: bool = attr.field()
+    correlation_id: str = custom_field()
+    sent_to_self: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class AwaPermissionRequested(BaseModel):
     """
     _No description given by bungie._
@@ -42,10 +40,10 @@ class AwaPermissionRequested(BaseModel):
         type: Type of advanced write action.
     """
 
-    affected_item_id: int = attr.field()
-    character_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
-    type: Union["AwaType", int] = attr.field(converter=enum_converter("AwaType"))
+    affected_item_id: int = custom_field()
+    character_id: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
+    type: Union["AwaType", int] = custom_field(converter=enum_converter("AwaType"))
 
 
 class AwaType(BaseEnum):
@@ -59,7 +57,7 @@ class AwaType(BaseEnum):
     """Insert plugs into sockets. """
 
 
-@attr.define
+@custom_define()
 class AwaUserResponse(BaseModel):
     """
     _No description given by bungie._
@@ -71,9 +69,9 @@ class AwaUserResponse(BaseModel):
         selection: Indication of the selection the user has made (Approving or rejecting the action)
     """
 
-    correlation_id: str = attr.field()
-    nonce: list[int] = attr.field(metadata={"type": """list[int]"""})
-    selection: Union["AwaUserSelection", int] = attr.field(converter=enum_converter("AwaUserSelection"))
+    correlation_id: str = custom_field()
+    nonce: list[int] = custom_field(metadata={"type": """list[int]"""})
+    selection: Union["AwaUserSelection", int] = custom_field(converter=enum_converter("AwaUserSelection"))
 
 
 class AwaUserSelection(BaseEnum):
@@ -89,7 +87,7 @@ class AwaUserSelection(BaseEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class AwaAuthorizationResult(BaseModel):
     """
     _No description given by bungie._
@@ -106,14 +104,14 @@ class AwaAuthorizationResult(BaseModel):
         valid_until: Time, UTC, when token expires.
     """
 
-    action_token: str = attr.field()
-    developer_note: str = attr.field()
-    maximum_number_of_uses: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
-    response_reason: Union["AwaResponseReason", int] = attr.field(converter=enum_converter("AwaResponseReason"))
-    type: Union["AwaType", int] = attr.field(converter=enum_converter("AwaType"))
-    user_selection: Union["AwaUserSelection", int] = attr.field(converter=enum_converter("AwaUserSelection"))
-    valid_until: datetime = attr.field()
+    action_token: str = custom_field()
+    developer_note: str = custom_field()
+    maximum_number_of_uses: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
+    response_reason: Union["AwaResponseReason", int] = custom_field(converter=enum_converter("AwaResponseReason"))
+    type: Union["AwaType", int] = custom_field(converter=enum_converter("AwaType"))
+    user_selection: Union["AwaUserSelection", int] = custom_field(converter=enum_converter("AwaUserSelection"))
+    valid_until: datetime = custom_field()
 
 
 class AwaResponseReason(BaseEnum):

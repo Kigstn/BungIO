@@ -1,14 +1,13 @@
 from typing import TYPE_CHECKING, Optional
 
-import attr
-
+from bungio.models.base import custom_define
 from bungio.models.bungie.destiny import historicalstats
 
 if TYPE_CHECKING:
     from bungio.models import AuthData, DestinyPostGameCarnageReportData
 
 
-@attr.define
+@custom_define()
 class DestinyHistoricalStatsPeriodGroup(historicalstats.OverwrittenDestinyHistoricalStatsPeriodGroup):
     """
     _No description given by bungie._

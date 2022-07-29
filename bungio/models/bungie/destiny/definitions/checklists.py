@@ -4,9 +4,7 @@
 
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseModel, ManifestModel
+from bungio.models.base import BaseModel, ManifestModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -21,7 +19,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyChecklistDefinition(ManifestModel):
     """
     By public demand, Checklists are loose sets of "things to do/things you have done" in Destiny that we were actually able to track. They include easter eggs you find in the world, unique chests you unlock, and other such data where the first time you do it is significant enough to be tracked, and you have the potential to "get them all". These may be account-wide, or may be per character. The status of these will be returned in related "Checklist" data coming down from API requests such as GetProfile or GetCharacter. Generally speaking, the items in a checklist can be completed in any order: we return an ordered list which only implies the way we are showing them in our own UI, and you can feel free to alter it as you wish. Note that, in the future, there will be something resembling the old D1 Record Books in at least some vague form. When that is created, it may be that it will supercede much or all of this Checklist data. It remains to be seen if that will be the case, so for now assume that the Checklists will still exist even after the release of D2: Forsaken.
@@ -37,18 +35,18 @@ class DestinyChecklistDefinition(ManifestModel):
         view_action_string: A localized string prompting you to view the checklist.
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    entries: list["DestinyChecklistEntryDefinition"] = attr.field(
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    entries: list["DestinyChecklistEntryDefinition"] = custom_field(
         metadata={"type": """list[DestinyChecklistEntryDefinition]"""}
     )
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
-    scope: Union["DestinyScope", int] = attr.field(converter=enum_converter("DestinyScope"))
-    view_action_string: str = attr.field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()
+    scope: Union["DestinyScope", int] = custom_field(converter=enum_converter("DestinyScope"))
+    view_action_string: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyChecklistEntryDefinition(BaseModel):
     """
     The properties of an individual checklist item. Note that almost everything is optional: it is *highly* variable what kind of data we'll actually be able to return: at times we may have no other relationships to entities at all. Whatever UI you build, do it with the knowledge that any given entry might not actually be able to be associated with some other Destiny entity.
@@ -80,18 +78,18 @@ class DestinyChecklistEntryDefinition(BaseModel):
         manifest_vendor_hash: Manifest information for `vendor_hash`
     """
 
-    activity_hash: int = attr.field()
-    bubble_hash: int = attr.field()
-    destination_hash: int = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    hash: int = attr.field()
-    item_hash: int = attr.field()
-    location_hash: int = attr.field()
-    scope: Union["DestinyScope", int] = attr.field(converter=enum_converter("DestinyScope"))
-    vendor_hash: int = attr.field()
-    vendor_interaction_index: int = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_location_hash: Optional["DestinyLocationDefinition"] = attr.field(default=None)
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    activity_hash: int = custom_field()
+    bubble_hash: int = custom_field()
+    destination_hash: int = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    hash: int = custom_field()
+    item_hash: int = custom_field()
+    location_hash: int = custom_field()
+    scope: Union["DestinyScope", int] = custom_field(converter=enum_converter("DestinyScope"))
+    vendor_hash: int = custom_field()
+    vendor_interaction_index: int = custom_field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
+    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = custom_field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_location_hash: Optional["DestinyLocationDefinition"] = custom_field(default=None)
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)

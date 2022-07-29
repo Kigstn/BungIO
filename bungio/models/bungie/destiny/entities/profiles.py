@@ -5,9 +5,7 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -20,7 +18,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyVendorReceiptsComponent(BaseModel):
     """
     For now, this isn't used for much: it's a record of the recent refundable purchases that the user has made. In the future, it could be used for providing refunds/buyback via the API. Wouldn't that be fun?
@@ -30,10 +28,10 @@ class DestinyVendorReceiptsComponent(BaseModel):
         receipts: The receipts for refundable purchases made at a vendor.
     """
 
-    receipts: list["DestinyVendorReceipt"] = attr.field(metadata={"type": """list[DestinyVendorReceipt]"""})
+    receipts: list["DestinyVendorReceipt"] = custom_field(metadata={"type": """list[DestinyVendorReceipt]"""})
 
 
-@attr.define
+@custom_define()
 class DestinyProfileComponent(BaseModel):
     """
     The most essential summary information about a Profile (in Destiny 1, we called these "Accounts").
@@ -61,14 +59,14 @@ class DestinyProfileComponent(BaseModel):
         manifest_current_season_hash: Manifest information for `current_season_hash`
     """
 
-    active_event_card_hash: int = attr.field()
-    character_ids: list[int] = attr.field(metadata={"type": """list[int]"""})
-    current_season_hash: int = attr.field()
-    current_season_reward_power_cap: int = attr.field()
-    date_last_played: datetime = attr.field()
-    event_card_hashes_owned: list[int] = attr.field(metadata={"type": """list[int]"""})
-    season_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    user_info: "UserInfoCard" = attr.field()
-    versions_owned: Union["DestinyGameVersions", int] = attr.field(converter=enum_converter("DestinyGameVersions"))
-    manifest_active_event_card_hash: Optional["DestinyEventCardDefinition"] = attr.field(default=None)
-    manifest_current_season_hash: Optional["DestinySeasonDefinition"] = attr.field(default=None)
+    active_event_card_hash: int = custom_field()
+    character_ids: list[int] = custom_field(metadata={"type": """list[int]"""})
+    current_season_hash: int = custom_field()
+    current_season_reward_power_cap: int = custom_field()
+    date_last_played: datetime = custom_field()
+    event_card_hashes_owned: list[int] = custom_field(metadata={"type": """list[int]"""})
+    season_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    user_info: "UserInfoCard" = custom_field()
+    versions_owned: Union["DestinyGameVersions", int] = custom_field(converter=enum_converter("DestinyGameVersions"))
+    manifest_active_event_card_hash: Optional["DestinyEventCardDefinition"] = custom_field(default=None)
+    manifest_current_season_hash: Optional["DestinySeasonDefinition"] = custom_field(default=None)

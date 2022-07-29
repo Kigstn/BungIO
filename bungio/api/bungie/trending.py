@@ -4,8 +4,6 @@
 
 from typing import Optional, Union
 
-import attr
-
 from bungio.models import (
     SearchResultOfTrendingEntry,
     TrendingCategories,
@@ -13,10 +11,10 @@ from bungio.models import (
     TrendingEntryType,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import ClientMixin
+from bungio.models.base import ClientMixin, custom_define
 
 
-@attr.define
+@custom_define()
 class TrendingRouteInterface(ClientMixin):
     async def get_trending_categories(self, auth: Optional[AuthData] = None) -> TrendingCategories:
         """

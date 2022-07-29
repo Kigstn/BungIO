@@ -4,16 +4,14 @@
 
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseModel
+from bungio.models.base import BaseEnum, BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import BungieMembershipType, DestinyInventoryItemDefinition
 
 
-@attr.define
+@custom_define()
 class DestinyActionRequest(BaseModel):
     """
     _No description given by bungie._
@@ -23,10 +21,10 @@ class DestinyActionRequest(BaseModel):
         membership_type: _No description given by bungie._
     """
 
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
 
 
-@attr.define
+@custom_define()
 class DestinyCharacterActionRequest(BaseModel):
     """
     _No description given by bungie._
@@ -37,11 +35,11 @@ class DestinyCharacterActionRequest(BaseModel):
         membership_type: _No description given by bungie._
     """
 
-    character_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
+    character_id: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
 
 
-@attr.define
+@custom_define()
 class DestinyItemActionRequest(BaseModel):
     """
     _No description given by bungie._
@@ -53,12 +51,12 @@ class DestinyItemActionRequest(BaseModel):
         membership_type: _No description given by bungie._
     """
 
-    character_id: int = attr.field()
-    item_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
+    character_id: int = custom_field()
+    item_id: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
 
 
-@attr.define
+@custom_define()
 class DestinyPostmasterTransferRequest(BaseModel):
     """
     _No description given by bungie._
@@ -81,15 +79,15 @@ class DestinyPostmasterTransferRequest(BaseModel):
         manifest_item_reference_hash: Manifest information for `item_reference_hash`
     """
 
-    character_id: int = attr.field()
-    item_id: int = attr.field()
-    item_reference_hash: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
-    stack_size: int = attr.field()
-    manifest_item_reference_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    character_id: int = custom_field()
+    item_id: int = custom_field()
+    item_reference_hash: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
+    stack_size: int = custom_field()
+    manifest_item_reference_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemSetActionRequest(BaseModel):
     """
     _No description given by bungie._
@@ -101,12 +99,12 @@ class DestinyItemSetActionRequest(BaseModel):
         membership_type: _No description given by bungie._
     """
 
-    character_id: int = attr.field()
-    item_ids: list[int] = attr.field(metadata={"type": """list[int]"""})
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
+    character_id: int = custom_field()
+    item_ids: list[int] = custom_field(metadata={"type": """list[int]"""})
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
 
 
-@attr.define
+@custom_define()
 class DestinyItemStateRequest(BaseModel):
     """
     _No description given by bungie._
@@ -119,13 +117,13 @@ class DestinyItemStateRequest(BaseModel):
         state: _No description given by bungie._
     """
 
-    character_id: int = attr.field()
-    item_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
-    state: bool = attr.field()
+    character_id: int = custom_field()
+    item_id: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
+    state: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyInsertPlugsActionRequest(BaseModel):
     """
     _No description given by bungie._
@@ -139,14 +137,14 @@ class DestinyInsertPlugsActionRequest(BaseModel):
         plug: The plugs being inserted.
     """
 
-    action_token: str = attr.field()
-    character_id: int = attr.field()
-    item_instance_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
-    plug: "DestinyInsertPlugsRequestEntry" = attr.field()
+    action_token: str = custom_field()
+    character_id: int = custom_field()
+    item_instance_id: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
+    plug: "DestinyInsertPlugsRequestEntry" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyInsertPlugsRequestEntry(BaseModel):
     """
     Represents all of the data related to a single plug to be inserted. Note that, while you *can* point to a socket that represents infusion, you will receive an error if you attempt to do so. Come on guys, let's play nice.
@@ -158,11 +156,11 @@ class DestinyInsertPlugsRequestEntry(BaseModel):
         socket_index: The index into the socket array, which identifies the specific socket being operated on. We also need to know the socketArrayType in order to uniquely identify the socket. Don't point to or try to insert a plug into an infusion socket. It won't work.
     """
 
-    plug_item_hash: int = attr.field()
-    socket_array_type: Union["DestinySocketArrayType", int] = attr.field(
+    plug_item_hash: int = custom_field()
+    socket_array_type: Union["DestinySocketArrayType", int] = custom_field(
         converter=enum_converter("DestinySocketArrayType")
     )
-    socket_index: int = attr.field()
+    socket_index: int = custom_field()
 
 
 class DestinySocketArrayType(BaseEnum):
@@ -176,7 +174,7 @@ class DestinySocketArrayType(BaseEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class DestinyInsertPlugsFreeActionRequest(BaseModel):
     """
     _No description given by bungie._
@@ -189,7 +187,7 @@ class DestinyInsertPlugsFreeActionRequest(BaseModel):
         plug: The plugs being inserted.
     """
 
-    character_id: int = attr.field()
-    item_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
-    plug: "DestinyInsertPlugsRequestEntry" = attr.field()
+    character_id: int = custom_field()
+    item_id: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
+    plug: "DestinyInsertPlugsRequestEntry" = custom_field()

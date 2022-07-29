@@ -4,16 +4,14 @@
 
 from typing import TYPE_CHECKING, Union
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import DestinyObjectiveProgress, DestinyPresentationNodeState
 
 
-@attr.define
+@custom_define()
 class DestinyPresentationNodesComponent(BaseModel):
     """
     _No description given by bungie._
@@ -23,12 +21,12 @@ class DestinyPresentationNodesComponent(BaseModel):
         nodes: _No description given by bungie._
     """
 
-    nodes: dict[int, "DestinyPresentationNodeComponent"] = attr.field(
+    nodes: dict[int, "DestinyPresentationNodeComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyPresentationNodeComponent]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyPresentationNodeComponent(BaseModel):
     """
     _No description given by bungie._
@@ -42,10 +40,10 @@ class DestinyPresentationNodeComponent(BaseModel):
         state: _No description given by bungie._
     """
 
-    completion_value: int = attr.field()
-    objective: "DestinyObjectiveProgress" = attr.field()
-    progress_value: int = attr.field()
-    record_category_score: int = attr.field()
-    state: Union["DestinyPresentationNodeState", int] = attr.field(
+    completion_value: int = custom_field()
+    objective: "DestinyObjectiveProgress" = custom_field()
+    progress_value: int = custom_field()
+    record_category_score: int = custom_field()
+    state: Union["DestinyPresentationNodeState", int] = custom_field(
         converter=enum_converter("DestinyPresentationNodeState")
     )

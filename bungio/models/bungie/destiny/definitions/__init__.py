@@ -5,9 +5,14 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Any, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel, ManifestModel
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -80,7 +85,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyDefinition(BaseModel):
     """
     Provides common properties for destiny definitions.
@@ -92,12 +97,12 @@ class DestinyDefinition(BaseModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyProgressionDefinition(ManifestModel):
     """
     A "Progression" in Destiny is best explained by an example. A Character's "Level" is a progression: it has Experience that can be earned, levels that can be gained, and is evaluated and displayed at various points in the game. A Character's "Faction Reputation" is also a progression for much the same reason. Progression is used by a variety of systems, and the definition of a Progression will generally only be useful if combining with live data (such as a character's DestinyCharacterProgressionComponent.progressions property, which holds that character's live Progression states). Fundamentally, a Progression measures your "Level" by evaluating the thresholds in its Steps (one step per level, except for the last step which can be repeated indefinitely for "Levels" that have no ceiling) against the total earned "progression points"/experience. (for simplicity purposes, we will henceforth refer to earned progression points as experience, though it need not be a mechanic that in any way resembles Experience in a traditional sense). Earned experience is calculated in a variety of ways, determined by the Progression's scope. These go from looking up a stored value to performing exceedingly obtuse calculations. This is why we provide live data in DestinyCharacterProgressionComponent.progressions, so you don't have to worry about those.
@@ -128,27 +133,27 @@ class DestinyProgressionDefinition(ManifestModel):
         manifest_faction_hash: Manifest information for `faction_hash`
     """
 
-    color: "DestinyColor" = attr.field()
-    display_properties: "DestinyProgressionDisplayPropertiesDefinition" = attr.field()
-    faction_hash: int = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    rank_icon: str = attr.field()
-    redacted: bool = attr.field()
-    repeat_last_step: bool = attr.field()
-    reward_items: list["DestinyProgressionRewardItemQuantity"] = attr.field(
+    color: "DestinyColor" = custom_field()
+    display_properties: "DestinyProgressionDisplayPropertiesDefinition" = custom_field()
+    faction_hash: int = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    rank_icon: str = custom_field()
+    redacted: bool = custom_field()
+    repeat_last_step: bool = custom_field()
+    reward_items: list["DestinyProgressionRewardItemQuantity"] = custom_field(
         metadata={"type": """list[DestinyProgressionRewardItemQuantity]"""}
     )
-    scope: Union["DestinyProgressionScope", int] = attr.field(converter=enum_converter("DestinyProgressionScope"))
-    source: str = attr.field()
-    steps: list["DestinyProgressionStepDefinition"] = attr.field(
+    scope: Union["DestinyProgressionScope", int] = custom_field(converter=enum_converter("DestinyProgressionScope"))
+    source: str = custom_field()
+    steps: list["DestinyProgressionStepDefinition"] = custom_field(
         metadata={"type": """list[DestinyProgressionStepDefinition]"""}
     )
-    visible: bool = attr.field()
-    manifest_faction_hash: Optional["DestinyFactionDefinition"] = attr.field(default=None)
+    visible: bool = custom_field()
+    manifest_faction_hash: Optional["DestinyFactionDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyProgressionDisplayPropertiesDefinition(BaseModel):
     """
     _No description given by bungie._
@@ -164,18 +169,18 @@ class DestinyProgressionDisplayPropertiesDefinition(BaseModel):
         name: _No description given by bungie._
     """
 
-    description: str = attr.field()
-    display_units_name: str = attr.field()
-    has_icon: bool = attr.field()
-    high_res_icon: str = attr.field()
-    icon: str = attr.field()
-    icon_sequences: list["DestinyIconSequenceDefinition"] = attr.field(
+    description: str = custom_field()
+    display_units_name: str = custom_field()
+    has_icon: bool = custom_field()
+    high_res_icon: str = custom_field()
+    icon: str = custom_field()
+    icon_sequences: list["DestinyIconSequenceDefinition"] = custom_field(
         metadata={"type": """list[DestinyIconSequenceDefinition]"""}
     )
-    name: str = attr.field()
+    name: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyProgressionStepDefinition(BaseModel):
     """
     This defines a single Step in a progression (which roughly equates to a level. See DestinyProgressionDefinition for caveats).
@@ -189,16 +194,16 @@ class DestinyProgressionStepDefinition(BaseModel):
         step_name: Very rarely, Progressions will have localized text describing the Level of the progression. This will be that localized text, if it exists. Otherwise, the standard appears to be to simply show the level numerically.
     """
 
-    display_effect_type: Union["DestinyProgressionStepDisplayEffect", int] = attr.field(
+    display_effect_type: Union["DestinyProgressionStepDisplayEffect", int] = custom_field(
         converter=enum_converter("DestinyProgressionStepDisplayEffect")
     )
-    icon: str = attr.field()
-    progress_total: int = attr.field()
-    reward_items: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})
-    step_name: str = attr.field()
+    icon: str = custom_field()
+    progress_total: int = custom_field()
+    reward_items: list["DestinyItemQuantity"] = custom_field(metadata={"type": """list[DestinyItemQuantity]"""})
+    step_name: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyInventoryItemDefinition(ManifestModel):
     """
     So much of what you see in Destiny is actually an Item used in a new and creative way. This is the definition for Items in Destiny, which started off as just entities that could exist in your Inventory but ended up being the backing data for so much more: quests, reward previews, slots, and subclasses. In practice, you will want to associate this data with "live" item data from a Bungie.Net Platform call: these definitions describe the item in generic, non-instanced terms: but an actual instance of an item can vary widely from these generic definitions.
@@ -285,85 +290,87 @@ class DestinyInventoryItemDefinition(ManifestModel):
         manifest_summary_item_hash: Manifest information for `summary_item_hash`
     """
 
-    action: "DestinyItemActionBlockDefinition" = attr.field()
-    allow_actions: bool = attr.field()
-    animations: list["DestinyAnimationReference"] = attr.field(metadata={"type": """list[DestinyAnimationReference]"""})
-    background_color: "DestinyColor" = attr.field()
-    breaker_type: Union["DestinyBreakerType", int] = attr.field(converter=enum_converter("DestinyBreakerType"))
-    breaker_type_hash: int = attr.field()
-    class_type: Union["DestinyClass", int] = attr.field(converter=enum_converter("DestinyClass"))
-    collectible_hash: int = attr.field()
-    crafting: "DestinyItemCraftingBlockDefinition" = attr.field()
-    damage_type_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    damage_types: list[Union["DamageType", int]] = attr.field(converter=enum_converter("DamageType"))
-    default_damage_type: Union["DamageType", int] = attr.field(converter=enum_converter("DamageType"))
-    default_damage_type_hash: int = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    display_source: str = attr.field()
-    does_postmaster_pull_have_side_effects: bool = attr.field()
-    emblem_objective_hash: int = attr.field()
-    equippable: bool = attr.field()
-    equipping_block: "DestinyEquippingBlockDefinition" = attr.field()
-    flavor_text: str = attr.field()
-    gearset: "DestinyItemGearsetBlockDefinition" = attr.field()
-    hash: int = attr.field()
-    icon_watermark: str = attr.field()
-    icon_watermark_shelved: str = attr.field()
-    index: int = attr.field()
-    inventory: "DestinyItemInventoryBlockDefinition" = attr.field()
-    investment_stats: list["DestinyItemInvestmentStatDefinition"] = attr.field(
+    action: "DestinyItemActionBlockDefinition" = custom_field()
+    allow_actions: bool = custom_field()
+    animations: list["DestinyAnimationReference"] = custom_field(
+        metadata={"type": """list[DestinyAnimationReference]"""}
+    )
+    background_color: "DestinyColor" = custom_field()
+    breaker_type: Union["DestinyBreakerType", int] = custom_field(converter=enum_converter("DestinyBreakerType"))
+    breaker_type_hash: int = custom_field()
+    class_type: Union["DestinyClass", int] = custom_field(converter=enum_converter("DestinyClass"))
+    collectible_hash: int = custom_field()
+    crafting: "DestinyItemCraftingBlockDefinition" = custom_field()
+    damage_type_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    damage_types: list[Union["DamageType", int]] = custom_field(converter=enum_converter("DamageType"))
+    default_damage_type: Union["DamageType", int] = custom_field(converter=enum_converter("DamageType"))
+    default_damage_type_hash: int = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    display_source: str = custom_field()
+    does_postmaster_pull_have_side_effects: bool = custom_field()
+    emblem_objective_hash: int = custom_field()
+    equippable: bool = custom_field()
+    equipping_block: "DestinyEquippingBlockDefinition" = custom_field()
+    flavor_text: str = custom_field()
+    gearset: "DestinyItemGearsetBlockDefinition" = custom_field()
+    hash: int = custom_field()
+    icon_watermark: str = custom_field()
+    icon_watermark_shelved: str = custom_field()
+    index: int = custom_field()
+    inventory: "DestinyItemInventoryBlockDefinition" = custom_field()
+    investment_stats: list["DestinyItemInvestmentStatDefinition"] = custom_field(
         metadata={"type": """list[DestinyItemInvestmentStatDefinition]"""}
     )
-    is_wrapper: bool = attr.field()
-    item_category_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    item_sub_type: Union["DestinyItemSubType", int] = attr.field(converter=enum_converter("DestinyItemSubType"))
-    item_type: Union["DestinyItemType", int] = attr.field(converter=enum_converter("DestinyItemType"))
-    item_type_and_tier_display_name: str = attr.field()
-    item_type_display_name: str = attr.field()
-    links: list["HyperlinkReference"] = attr.field(metadata={"type": """list[HyperlinkReference]"""})
-    lore_hash: int = attr.field()
-    metrics: "DestinyItemMetricBlockDefinition" = attr.field()
-    non_transferrable: bool = attr.field()
-    objectives: "DestinyItemObjectiveBlockDefinition" = attr.field()
-    perks: list["DestinyItemPerkEntryDefinition"] = attr.field(
+    is_wrapper: bool = custom_field()
+    item_category_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    item_sub_type: Union["DestinyItemSubType", int] = custom_field(converter=enum_converter("DestinyItemSubType"))
+    item_type: Union["DestinyItemType", int] = custom_field(converter=enum_converter("DestinyItemType"))
+    item_type_and_tier_display_name: str = custom_field()
+    item_type_display_name: str = custom_field()
+    links: list["HyperlinkReference"] = custom_field(metadata={"type": """list[HyperlinkReference]"""})
+    lore_hash: int = custom_field()
+    metrics: "DestinyItemMetricBlockDefinition" = custom_field()
+    non_transferrable: bool = custom_field()
+    objectives: "DestinyItemObjectiveBlockDefinition" = custom_field()
+    perks: list["DestinyItemPerkEntryDefinition"] = custom_field(
         metadata={"type": """list[DestinyItemPerkEntryDefinition]"""}
     )
-    plug: "DestinyItemPlugDefinition" = attr.field()
-    preview: "DestinyItemPreviewBlockDefinition" = attr.field()
-    quality: "DestinyItemQualityBlockDefinition" = attr.field()
-    redacted: bool = attr.field()
-    sack: "DestinyItemSackBlockDefinition" = attr.field()
-    screenshot: str = attr.field()
-    season_hash: int = attr.field()
-    secondary_icon: str = attr.field()
-    secondary_overlay: str = attr.field()
-    secondary_special: str = attr.field()
-    set_data: "DestinyItemSetBlockDefinition" = attr.field()
-    sockets: "DestinyItemSocketBlockDefinition" = attr.field()
-    source_data: "DestinyItemSourceBlockDefinition" = attr.field()
-    special_item_type: Union["SpecialItemType", int] = attr.field(converter=enum_converter("SpecialItemType"))
-    stats: "DestinyItemStatBlockDefinition" = attr.field()
-    summary: "DestinyItemSummaryBlockDefinition" = attr.field()
-    summary_item_hash: int = attr.field()
-    talent_grid: "DestinyItemTalentGridBlockDefinition" = attr.field()
-    tooltip_notifications: list["DestinyItemTooltipNotification"] = attr.field(
+    plug: "DestinyItemPlugDefinition" = custom_field()
+    preview: "DestinyItemPreviewBlockDefinition" = custom_field()
+    quality: "DestinyItemQualityBlockDefinition" = custom_field()
+    redacted: bool = custom_field()
+    sack: "DestinyItemSackBlockDefinition" = custom_field()
+    screenshot: str = custom_field()
+    season_hash: int = custom_field()
+    secondary_icon: str = custom_field()
+    secondary_overlay: str = custom_field()
+    secondary_special: str = custom_field()
+    set_data: "DestinyItemSetBlockDefinition" = custom_field()
+    sockets: "DestinyItemSocketBlockDefinition" = custom_field()
+    source_data: "DestinyItemSourceBlockDefinition" = custom_field()
+    special_item_type: Union["SpecialItemType", int] = custom_field(converter=enum_converter("SpecialItemType"))
+    stats: "DestinyItemStatBlockDefinition" = custom_field()
+    summary: "DestinyItemSummaryBlockDefinition" = custom_field()
+    summary_item_hash: int = custom_field()
+    talent_grid: "DestinyItemTalentGridBlockDefinition" = custom_field()
+    tooltip_notifications: list["DestinyItemTooltipNotification"] = custom_field(
         metadata={"type": """list[DestinyItemTooltipNotification]"""}
     )
-    tooltip_style: str = attr.field()
-    trait_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    trait_ids: list[str] = attr.field(metadata={"type": """list[str]"""})
-    translation_block: "DestinyItemTranslationBlockDefinition" = attr.field()
-    ui_item_display_style: str = attr.field()
-    value: "DestinyItemValueBlockDefinition" = attr.field()
-    manifest_breaker_type_hash: Optional["DestinyBreakerTypeDefinition"] = attr.field(default=None)
-    manifest_collectible_hash: Optional["DestinyCollectibleDefinition"] = attr.field(default=None)
-    manifest_default_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = attr.field(default=None)
-    manifest_lore_hash: Optional["DestinyLoreDefinition"] = attr.field(default=None)
-    manifest_season_hash: Optional["DestinySeasonDefinition"] = attr.field(default=None)
-    manifest_summary_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    tooltip_style: str = custom_field()
+    trait_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    trait_ids: list[str] = custom_field(metadata={"type": """list[str]"""})
+    translation_block: "DestinyItemTranslationBlockDefinition" = custom_field()
+    ui_item_display_style: str = custom_field()
+    value: "DestinyItemValueBlockDefinition" = custom_field()
+    manifest_breaker_type_hash: Optional["DestinyBreakerTypeDefinition"] = custom_field(default=None)
+    manifest_collectible_hash: Optional["DestinyCollectibleDefinition"] = custom_field(default=None)
+    manifest_default_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = custom_field(default=None)
+    manifest_lore_hash: Optional["DestinyLoreDefinition"] = custom_field(default=None)
+    manifest_season_hash: Optional["DestinySeasonDefinition"] = custom_field(default=None)
+    manifest_summary_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemTooltipNotification(BaseModel):
     """
     _No description given by bungie._
@@ -374,11 +381,11 @@ class DestinyItemTooltipNotification(BaseModel):
         display_style: _No description given by bungie._
     """
 
-    display_string: str = attr.field()
-    display_style: str = attr.field()
+    display_string: str = custom_field()
+    display_style: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyItemActionBlockDefinition(BaseModel):
     """
     If an item can have an action performed on it (like "Dismantle"), it will be defined here if you care.
@@ -401,27 +408,27 @@ class DestinyItemActionBlockDefinition(BaseModel):
         verb_name: Localized text for the verb of the action being performed.
     """
 
-    action_type_label: str = attr.field()
-    consume_entire_stack: bool = attr.field()
-    delete_on_action: bool = attr.field()
-    is_positive: bool = attr.field()
-    overlay_icon: str = attr.field()
-    overlay_screen_name: str = attr.field()
-    progression_rewards: list["DestinyProgressionRewardDefinition"] = attr.field(
+    action_type_label: str = custom_field()
+    consume_entire_stack: bool = custom_field()
+    delete_on_action: bool = custom_field()
+    is_positive: bool = custom_field()
+    overlay_icon: str = custom_field()
+    overlay_screen_name: str = custom_field()
+    progression_rewards: list["DestinyProgressionRewardDefinition"] = custom_field(
         metadata={"type": """list[DestinyProgressionRewardDefinition]"""}
     )
-    required_cooldown_hash: int = attr.field()
-    required_cooldown_seconds: int = attr.field()
-    required_items: list["DestinyItemActionRequiredItemDefinition"] = attr.field(
+    required_cooldown_hash: int = custom_field()
+    required_cooldown_seconds: int = custom_field()
+    required_items: list["DestinyItemActionRequiredItemDefinition"] = custom_field(
         metadata={"type": """list[DestinyItemActionRequiredItemDefinition]"""}
     )
-    required_location: str = attr.field()
-    use_on_acquire: bool = attr.field()
-    verb_description: str = attr.field()
-    verb_name: str = attr.field()
+    required_location: str = custom_field()
+    use_on_acquire: bool = custom_field()
+    verb_description: str = custom_field()
+    verb_name: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyItemActionRequiredItemDefinition(BaseModel):
     """
     The definition of an item and quantity required in a character's inventory in order to perform an action.
@@ -442,13 +449,13 @@ class DestinyItemActionRequiredItemDefinition(BaseModel):
         manifest_item_hash: Manifest information for `item_hash`
     """
 
-    count: int = attr.field()
-    delete_on_action: bool = attr.field()
-    item_hash: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    count: int = custom_field()
+    delete_on_action: bool = custom_field()
+    item_hash: int = custom_field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyProgressionRewardDefinition(BaseModel):
     """
     Inventory Items can reward progression when actions are performed on them. A common example of this in Destiny 1 was Bounties, which would reward Experience on your Character and the like when you completed the bounty. Note that this maps to a DestinyProgressionMappingDefinition, and *not* a DestinyProgressionDefinition directly. This is apparently so that multiple progressions can be granted progression points/experience at the same time.
@@ -469,13 +476,13 @@ class DestinyProgressionRewardDefinition(BaseModel):
         manifest_progression_mapping_hash: Manifest information for `progression_mapping_hash`
     """
 
-    amount: int = attr.field()
-    apply_throttles: bool = attr.field()
-    progression_mapping_hash: int = attr.field()
-    manifest_progression_mapping_hash: Optional["DestinyProgressionMappingDefinition"] = attr.field(default=None)
+    amount: int = custom_field()
+    apply_throttles: bool = custom_field()
+    progression_mapping_hash: int = custom_field()
+    manifest_progression_mapping_hash: Optional["DestinyProgressionMappingDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyProgressionMappingDefinition(BaseModel):
     """
     Aggregations of multiple progressions. These are used to apply rewards to multiple progressions at once. They can sometimes have human readable data as well, but only extremely sporadically.
@@ -489,14 +496,14 @@ class DestinyProgressionMappingDefinition(BaseModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    display_units: str = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    display_units: str = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyItemCraftingBlockDefinition(BaseModel):
     """
     If an item can have an action performed on it (like "Dismantle"), it will be defined here if you care.
@@ -520,18 +527,20 @@ class DestinyItemCraftingBlockDefinition(BaseModel):
         manifest_output_item_hash: Manifest information for `output_item_hash`
     """
 
-    base_material_requirements: int = attr.field()
-    bonus_plugs: list["DestinyItemCraftingBlockBonusPlugDefinition"] = attr.field(
+    base_material_requirements: int = custom_field()
+    bonus_plugs: list["DestinyItemCraftingBlockBonusPlugDefinition"] = custom_field(
         metadata={"type": """list[DestinyItemCraftingBlockBonusPlugDefinition]"""}
     )
-    failed_requirement_strings: list[str] = attr.field(metadata={"type": """list[str]"""})
-    output_item_hash: int = attr.field()
-    required_socket_type_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_base_material_requirements: Optional["DestinyMaterialRequirementSetDefinition"] = attr.field(default=None)
-    manifest_output_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    failed_requirement_strings: list[str] = custom_field(metadata={"type": """list[str]"""})
+    output_item_hash: int = custom_field()
+    required_socket_type_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    manifest_base_material_requirements: Optional["DestinyMaterialRequirementSetDefinition"] = custom_field(
+        default=None
+    )
+    manifest_output_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemCraftingBlockBonusPlugDefinition(BaseModel):
     """
     _No description given by bungie._
@@ -552,13 +561,13 @@ class DestinyItemCraftingBlockBonusPlugDefinition(BaseModel):
         manifest_socket_type_hash: Manifest information for `socket_type_hash`
     """
 
-    plug_item_hash: int = attr.field()
-    socket_type_hash: int = attr.field()
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = attr.field(default=None)
+    plug_item_hash: int = custom_field()
+    socket_type_hash: int = custom_field()
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyMaterialRequirementSetDefinition(ManifestModel):
     """
     Represent a set of material requirements: Items that either need to be owned or need to be consumed in order to perform an action. A variety of other entities refer to these as gatekeepers and payments for actions that can be performed in game.
@@ -571,15 +580,15 @@ class DestinyMaterialRequirementSetDefinition(ManifestModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    hash: int = attr.field()
-    index: int = attr.field()
-    materials: list["DestinyMaterialRequirement"] = attr.field(
+    hash: int = custom_field()
+    index: int = custom_field()
+    materials: list["DestinyMaterialRequirement"] = custom_field(
         metadata={"type": """list[DestinyMaterialRequirement]"""}
     )
-    redacted: bool = attr.field()
+    redacted: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyMaterialRequirement(BaseModel):
     """
     Many actions relating to items require you to expend materials: - Activating a talent node - Inserting a plug into a socket The items will refer to material requirements by a materialRequirementsHash in these cases, and this is the definition for those requirements in terms of the item required, how much of it is required and other interesting info. This is one of the rare/strange times where a single contract class is used both in definitions *and* in live data response contracts. I'm not sure yet whether I regret that.
@@ -602,15 +611,15 @@ class DestinyMaterialRequirement(BaseModel):
         manifest_item_hash: Manifest information for `item_hash`
     """
 
-    count: int = attr.field()
-    count_is_constant: bool = attr.field()
-    delete_on_action: bool = attr.field()
-    item_hash: int = attr.field()
-    omit_from_requirements: bool = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    count: int = custom_field()
+    count_is_constant: bool = custom_field()
+    delete_on_action: bool = custom_field()
+    item_hash: int = custom_field()
+    omit_from_requirements: bool = custom_field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemInventoryBlockDefinition(BaseModel):
     """
     If the item can exist in an inventory - the overwhelming majority of them can and do - then this is the basic properties regarding the item's relationship with the inventory.
@@ -644,26 +653,26 @@ class DestinyItemInventoryBlockDefinition(BaseModel):
         manifest_tier_type_hash: Manifest information for `tier_type_hash`
     """
 
-    bucket_type_hash: int = attr.field()
-    expiration_tooltip: str = attr.field()
-    expired_in_activity_message: str = attr.field()
-    expired_in_orbit_message: str = attr.field()
-    is_instance_item: bool = attr.field()
-    max_stack_size: int = attr.field()
-    recipe_item_hash: int = attr.field()
-    recovery_bucket_type_hash: int = attr.field()
-    stack_unique_label: str = attr.field()
-    suppress_expiration_when_objectives_complete: bool = attr.field()
-    tier_type: Union["TierType", int] = attr.field(converter=enum_converter("TierType"))
-    tier_type_hash: int = attr.field()
-    tier_type_name: str = attr.field()
-    manifest_bucket_type_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field(default=None)
-    manifest_recipe_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_recovery_bucket_type_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field(default=None)
-    manifest_tier_type_hash: Optional["DestinyItemTierTypeDefinition"] = attr.field(default=None)
+    bucket_type_hash: int = custom_field()
+    expiration_tooltip: str = custom_field()
+    expired_in_activity_message: str = custom_field()
+    expired_in_orbit_message: str = custom_field()
+    is_instance_item: bool = custom_field()
+    max_stack_size: int = custom_field()
+    recipe_item_hash: int = custom_field()
+    recovery_bucket_type_hash: int = custom_field()
+    stack_unique_label: str = custom_field()
+    suppress_expiration_when_objectives_complete: bool = custom_field()
+    tier_type: Union["TierType", int] = custom_field(converter=enum_converter("TierType"))
+    tier_type_hash: int = custom_field()
+    tier_type_name: str = custom_field()
+    manifest_bucket_type_hash: Optional["DestinyInventoryBucketDefinition"] = custom_field(default=None)
+    manifest_recipe_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_recovery_bucket_type_hash: Optional["DestinyInventoryBucketDefinition"] = custom_field(default=None)
+    manifest_tier_type_hash: Optional["DestinyItemTierTypeDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyInventoryBucketDefinition(ManifestModel):
     """
     An Inventory (be it Character or Profile level) is comprised of many Buckets. An example of a bucket is "Primary Weapons", where all of the primary weapons on a character are gathered together into a single visual element in the UI: a subset of the inventory that has a limited number of slots, and in this case also has an associated Equipment Slot for equipping an item in the bucket. Item definitions declare what their "default" bucket is (DestinyInventoryItemDefinition.inventory.bucketTypeHash), and Item instances will tell you which bucket they are currently residing in (DestinyItemComponent.bucketHash). You can use this information along with the DestinyInventoryBucketDefinition to show these items grouped by bucket. You cannot transfer an item to a bucket that is not its Default without going through a Vendor's "accepted items" (DestinyVendorDefinition.acceptedItems). This is how transfer functionality like the Vault is implemented, as a feature of a Vendor. See the vendor's acceptedItems property for more details.
@@ -684,21 +693,21 @@ class DestinyInventoryBucketDefinition(ManifestModel):
         scope: Where the bucket is found. 0 = Character, 1 = Account
     """
 
-    bucket_order: int = attr.field()
-    category: Union["BucketCategory", int] = attr.field(converter=enum_converter("BucketCategory"))
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    enabled: bool = attr.field()
-    fifo: bool = attr.field()
-    has_transfer_destination: bool = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    item_count: int = attr.field()
-    location: Union["ItemLocation", int] = attr.field(converter=enum_converter("ItemLocation"))
-    redacted: bool = attr.field()
-    scope: Union["BucketScope", int] = attr.field(converter=enum_converter("BucketScope"))
+    bucket_order: int = custom_field()
+    category: Union["BucketCategory", int] = custom_field(converter=enum_converter("BucketCategory"))
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    enabled: bool = custom_field()
+    fifo: bool = custom_field()
+    has_transfer_destination: bool = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    item_count: int = custom_field()
+    location: Union["ItemLocation", int] = custom_field(converter=enum_converter("ItemLocation"))
+    redacted: bool = custom_field()
+    scope: Union["BucketScope", int] = custom_field(converter=enum_converter("BucketScope"))
 
 
-@attr.define
+@custom_define()
 class DestinyItemSetBlockDefinition(BaseModel):
     """
     Primarily for Quests, this is the definition of properties related to the item if it is a quest and its various quest steps.
@@ -714,18 +723,18 @@ class DestinyItemSetBlockDefinition(BaseModel):
         set_type: A string identifier we can use to attempt to identify the category of the Quest.
     """
 
-    item_list: list["DestinyItemSetBlockEntryDefinition"] = attr.field(
+    item_list: list["DestinyItemSetBlockEntryDefinition"] = custom_field(
         metadata={"type": """list[DestinyItemSetBlockEntryDefinition]"""}
     )
-    quest_line_description: str = attr.field()
-    quest_line_name: str = attr.field()
-    quest_step_summary: str = attr.field()
-    require_ordered_set_item_add: bool = attr.field()
-    set_is_featured: bool = attr.field()
-    set_type: str = attr.field()
+    quest_line_description: str = custom_field()
+    quest_line_name: str = custom_field()
+    quest_step_summary: str = custom_field()
+    require_ordered_set_item_add: bool = custom_field()
+    set_is_featured: bool = custom_field()
+    set_type: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyItemSetBlockEntryDefinition(BaseModel):
     """
     Defines a particular entry in an ItemSet (AKA a particular Quest Step in a Quest)
@@ -745,12 +754,12 @@ class DestinyItemSetBlockEntryDefinition(BaseModel):
         manifest_item_hash: Manifest information for `item_hash`
     """
 
-    item_hash: int = attr.field()
-    tracking_value: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    item_hash: int = custom_field()
+    tracking_value: int = custom_field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemStatBlockDefinition(BaseModel):
     """
     Information about the item's calculated stats, with as much data as we can find for the stats without having an actual instance of the item. Note that this means the entire concept of providing these stats is fundamentally insufficient: we cannot predict with 100% accuracy the conditions under which an item can spawn, so we use various heuristics to attempt to simulate the conditions as accurately as possible. Actual stats for items in-game can and will vary, but these should at least be useful base points for comparison and display. It is also worth noting that some stats, like Magazine size, have further calculations performed on them by scripts in-game and on the game servers that BNet does not have access to. We cannot know how those stats are further transformed, and thus some stats will be inaccurate even on instances of items in BNet vs. how they appear in-game. This is a known limitation of our item statistics, without any planned fix.
@@ -774,18 +783,18 @@ class DestinyItemStatBlockDefinition(BaseModel):
         manifest_stat_group_hash: Manifest information for `stat_group_hash`
     """
 
-    disable_primary_stat_display: bool = attr.field()
-    has_displayable_stats: bool = attr.field()
-    primary_base_stat_hash: int = attr.field()
-    stat_group_hash: int = attr.field()
-    stats: dict[int, "DestinyInventoryItemStatDefinition"] = attr.field(
+    disable_primary_stat_display: bool = custom_field()
+    has_displayable_stats: bool = custom_field()
+    primary_base_stat_hash: int = custom_field()
+    stat_group_hash: int = custom_field()
+    stats: dict[int, "DestinyInventoryItemStatDefinition"] = custom_field(
         metadata={"type": """dict[int, DestinyInventoryItemStatDefinition]"""}
     )
-    manifest_primary_base_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
-    manifest_stat_group_hash: Optional["DestinyStatGroupDefinition"] = attr.field(default=None)
+    manifest_primary_base_stat_hash: Optional["DestinyStatDefinition"] = custom_field(default=None)
+    manifest_stat_group_hash: Optional["DestinyStatGroupDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyInventoryItemStatDefinition(BaseModel):
     """
     Defines a specific stat value on an item, and the minimum/maximum range that we could compute for the item based on our heuristics for how the item might be generated. Not guaranteed to match real-world instances of the item, but should hopefully at least be close. If it's not close, let us know on the Bungie API forums.
@@ -808,15 +817,15 @@ class DestinyInventoryItemStatDefinition(BaseModel):
         manifest_stat_hash: Manifest information for `stat_hash`
     """
 
-    display_maximum: int = attr.field()
-    maximum: int = attr.field()
-    minimum: int = attr.field()
-    stat_hash: int = attr.field()
-    value: int = attr.field()
-    manifest_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
+    display_maximum: int = custom_field()
+    maximum: int = custom_field()
+    minimum: int = custom_field()
+    stat_hash: int = custom_field()
+    value: int = custom_field()
+    manifest_stat_hash: Optional["DestinyStatDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyStatDefinition(ManifestModel):
     """
     This represents a stat that's applied to a character or an item (such as a weapon, piece of armor, or a vehicle). An example of a stat might be Attack Power on a weapon. Stats go through a complex set of transformations before they end up being shown to the user as a number or a progress bar, and those transformations are fundamentally intertwined with the concept of a "Stat Group" (DestinyStatGroupDefinition). Items have both Stats and a reference to a Stat Group, and it is the Stat Group that takes the raw stat information and gives it both rendering metadata (such as whether to show it as a number or a progress bar) and the final transformation data (interpolation tables to turn the raw investment stat into a display stat). Please see DestinyStatGroupDefinition for more information on that transformational process. Stats are segregated from Stat Groups because different items and types of items can refer to the same stat, but have different "scales" for the stat while still having the same underlying value. For example, both a Shotgun and an Auto Rifle may have a "raw" impact stat of 50, but the Auto Rifle's Stat Group will scale that 50 down so that, when it is displayed, it is a smaller value relative to the shotgun. (this is a totally made up example, don't assume shotguns have naturally higher impact than auto rifles because of this) A final caveat is that some stats, even after this "final" transformation, go through yet another set of transformations directly in the game as a result of dynamic, stateful scripts that get run. BNet has no access to these scripts, nor any way to know which scripts get executed. As a result, the stats for an item that you see in-game - particularly for stats that are often impacted by Perks, like Magazine Size - can change dramatically from what we return on Bungie.Net. This is a known issue with no fix coming down the pipeline. Take these stats with a grain of salt. Stats actually go through four transformations, for those interested: 1) "Sandbox" stat, the "most raw" form. These are pretty much useless without transformations applied, and thus are not currently returned in the API. If you really want these, we can provide them. Maybe someone could do something cool with it? 2) "Investment" stat (the stat's value after DestinyStatDefinition's interpolation tables and aggregation logic is applied to the "Sandbox" stat value) 3) "Display" stat (the stat's base UI-visible value after DestinyStatGroupDefinition's interpolation tables are applied to the Investment Stat value. For most stats, this is what is displayed.) 4) Underlying in-game stat (the stat's actual value according to the game, after the game runs dynamic scripts based on the game and character's state. This is the final transformation that BNet does not have access to. For most stats, this is not actually displayed to the user, with the exception of Magazine Size which is then piped back to the UI for display in-game, but not to BNet.)
@@ -832,18 +841,18 @@ class DestinyStatDefinition(ManifestModel):
         stat_category: The category of the stat, according to the game.
     """
 
-    aggregation_type: Union["DestinyStatAggregationType", int] = attr.field(
+    aggregation_type: Union["DestinyStatAggregationType", int] = custom_field(
         converter=enum_converter("DestinyStatAggregationType")
     )
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    has_computed_block: bool = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
-    stat_category: Union["DestinyStatCategory", int] = attr.field(converter=enum_converter("DestinyStatCategory"))
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    has_computed_block: bool = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()
+    stat_category: Union["DestinyStatCategory", int] = custom_field(converter=enum_converter("DestinyStatCategory"))
 
 
-@attr.define
+@custom_define()
 class DestinyStatGroupDefinition(ManifestModel):
     """
     When an inventory item (DestinyInventoryItemDefinition) has Stats (such as Attack Power), the item will refer to a Stat Group. This definition enumerates the properties used to transform the item's "Investment" stats into "Display" stats. See DestinyStatDefinition's documentation for information about the transformation of Stats, and the meaning of an Investment vs. a Display stat. If you don't want to do these calculations on your own, fear not: pulling live data from the BNet endpoints will return display stat values pre-computed and ready for you to use. I highly recommend this approach, saves a lot of time and also accounts for certain stat modifiers that can't easily be accounted for without live data (such as stat modifiers on Talent Grids and Socket Plugs)
@@ -859,20 +868,20 @@ class DestinyStatGroupDefinition(ManifestModel):
         ui_position: This apparently indicates the position of the stats in the UI? I've returned it in case anyone can use it, but it's not of any use to us on BNet. Something's being lost in translation with this value.
     """
 
-    hash: int = attr.field()
-    index: int = attr.field()
-    maximum_value: int = attr.field()
-    overrides: dict[int, "DestinyStatOverrideDefinition"] = attr.field(
+    hash: int = custom_field()
+    index: int = custom_field()
+    maximum_value: int = custom_field()
+    overrides: dict[int, "DestinyStatOverrideDefinition"] = custom_field(
         metadata={"type": """dict[int, DestinyStatOverrideDefinition]"""}
     )
-    redacted: bool = attr.field()
-    scaled_stats: list["DestinyStatDisplayDefinition"] = attr.field(
+    redacted: bool = custom_field()
+    scaled_stats: list["DestinyStatDisplayDefinition"] = custom_field(
         metadata={"type": """list[DestinyStatDisplayDefinition]"""}
     )
-    ui_position: int = attr.field()
+    ui_position: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyStatDisplayDefinition(BaseModel):
     """
     Describes the way that an Item Stat (see DestinyStatDefinition) is transformed using the DestinyStatGroupDefinition related to that item. See both of the aforementioned definitions for more information about the stages of stat transformation. This represents the transformation of a stat into a "Display" stat (the closest value that BNet can get to the in-game display value of the stat)
@@ -894,14 +903,14 @@ class DestinyStatDisplayDefinition(BaseModel):
         manifest_stat_hash: Manifest information for `stat_hash`
     """
 
-    display_as_numeric: bool = attr.field()
-    display_interpolation: list["InterpolationPoint"] = attr.field(metadata={"type": """list[InterpolationPoint]"""})
-    maximum_value: int = attr.field()
-    stat_hash: int = attr.field()
-    manifest_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
+    display_as_numeric: bool = custom_field()
+    display_interpolation: list["InterpolationPoint"] = custom_field(metadata={"type": """list[InterpolationPoint]"""})
+    maximum_value: int = custom_field()
+    stat_hash: int = custom_field()
+    manifest_stat_hash: Optional["DestinyStatDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyStatOverrideDefinition(BaseModel):
     """
     Stat Groups (DestinyStatGroupDefinition) has the ability to override the localized text associated with stats that are to be shown on the items with which they are associated. This defines a specific overridden stat. You could theoretically check these before rendering your stat UI, and for each stat that has an override show these displayProperties instead of those on the DestinyStatDefinition. Or you could be like us, and skip that for now because the game has yet to actually use this feature. But know that it's here, waiting for a resilliant young designer to take up the mantle and make us all look foolish by showing the wrong name for stats. Note that, if this gets used, the override will apply only to items using the overriding Stat Group. Other items will still show the default stat's name/description.
@@ -921,12 +930,12 @@ class DestinyStatOverrideDefinition(BaseModel):
         manifest_stat_hash: Manifest information for `stat_hash`
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    stat_hash: int = attr.field()
-    manifest_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    stat_hash: int = custom_field()
+    manifest_stat_hash: Optional["DestinyStatDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyEquippingBlockDefinition(BaseModel):
     """
     Items that can be equipped define this block. It contains information we need to understand how and when the item can be equipped.
@@ -952,20 +961,20 @@ class DestinyEquippingBlockDefinition(BaseModel):
         manifest_gearset_item_hash: Manifest information for `gearset_item_hash`
     """
 
-    ammo_type: Union["DestinyAmmunitionType", int] = attr.field(converter=enum_converter("DestinyAmmunitionType"))
-    attributes: Union["EquippingItemBlockAttributes", int] = attr.field(
+    ammo_type: Union["DestinyAmmunitionType", int] = custom_field(converter=enum_converter("DestinyAmmunitionType"))
+    attributes: Union["EquippingItemBlockAttributes", int] = custom_field(
         converter=enum_converter("EquippingItemBlockAttributes")
     )
-    display_strings: list[str] = attr.field(metadata={"type": """list[str]"""})
-    equipment_slot_type_hash: int = attr.field()
-    gearset_item_hash: int = attr.field()
-    unique_label: str = attr.field()
-    unique_label_hash: int = attr.field()
-    manifest_equipment_slot_type_hash: Optional["DestinyEquipmentSlotDefinition"] = attr.field(default=None)
-    manifest_gearset_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    display_strings: list[str] = custom_field(metadata={"type": """list[str]"""})
+    equipment_slot_type_hash: int = custom_field()
+    gearset_item_hash: int = custom_field()
+    unique_label: str = custom_field()
+    unique_label_hash: int = custom_field()
+    manifest_equipment_slot_type_hash: Optional["DestinyEquipmentSlotDefinition"] = custom_field(default=None)
+    manifest_gearset_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyEquipmentSlotDefinition(ManifestModel):
     """
     Characters can not only have Inventory buckets (containers of items that are generally matched by their type or functionality), they can also have Equipment Slots. The Equipment Slot is an indicator that the related bucket can have instanced items equipped on the character. For instance, the Primary Weapon bucket has an Equipment Slot that determines whether you can equip primary weapons, and holds the association between its slot and the inventory bucket from which it can have items equipped. An Equipment Slot must have a related Inventory Bucket, but not all inventory buckets must have Equipment Slots.
@@ -991,18 +1000,20 @@ class DestinyEquipmentSlotDefinition(ManifestModel):
         manifest_bucket_type_hash: Manifest information for `bucket_type_hash`
     """
 
-    apply_custom_art_dyes: bool = attr.field()
-    art_dye_channels: list["DestinyArtDyeReference"] = attr.field(metadata={"type": """list[DestinyArtDyeReference]"""})
-    bucket_type_hash: int = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    equipment_category_hash: int = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
-    manifest_bucket_type_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field(default=None)
+    apply_custom_art_dyes: bool = custom_field()
+    art_dye_channels: list["DestinyArtDyeReference"] = custom_field(
+        metadata={"type": """list[DestinyArtDyeReference]"""}
+    )
+    bucket_type_hash: int = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    equipment_category_hash: int = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()
+    manifest_bucket_type_hash: Optional["DestinyInventoryBucketDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyArtDyeReference(BaseModel):
     """
     _No description given by bungie._
@@ -1012,10 +1023,10 @@ class DestinyArtDyeReference(BaseModel):
         art_dye_channel_hash: _No description given by bungie._
     """
 
-    art_dye_channel_hash: int = attr.field()
+    art_dye_channel_hash: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyItemTranslationBlockDefinition(BaseModel):
     """
     This Block defines the rendering data associated with the item, if any.
@@ -1040,19 +1051,19 @@ class DestinyItemTranslationBlockDefinition(BaseModel):
         manifest_weapon_pattern_hash: Manifest information for `weapon_pattern_hash`
     """
 
-    arrangements: list["DestinyGearArtArrangementReference"] = attr.field(
+    arrangements: list["DestinyGearArtArrangementReference"] = custom_field(
         metadata={"type": """list[DestinyGearArtArrangementReference]"""}
     )
-    custom_dyes: list["DyeReference"] = attr.field(metadata={"type": """list[DyeReference]"""})
-    default_dyes: list["DyeReference"] = attr.field(metadata={"type": """list[DyeReference]"""})
-    has_geometry: bool = attr.field()
-    locked_dyes: list["DyeReference"] = attr.field(metadata={"type": """list[DyeReference]"""})
-    weapon_pattern_hash: int = attr.field()
-    weapon_pattern_identifier: str = attr.field()
-    manifest_weapon_pattern_hash: Optional["DestinySandboxPatternDefinition"] = attr.field(default=None)
+    custom_dyes: list["DyeReference"] = custom_field(metadata={"type": """list[DyeReference]"""})
+    default_dyes: list["DyeReference"] = custom_field(metadata={"type": """list[DyeReference]"""})
+    has_geometry: bool = custom_field()
+    locked_dyes: list["DyeReference"] = custom_field(metadata={"type": """list[DyeReference]"""})
+    weapon_pattern_hash: int = custom_field()
+    weapon_pattern_identifier: str = custom_field()
+    manifest_weapon_pattern_hash: Optional["DestinySandboxPatternDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyGearArtArrangementReference(BaseModel):
     """
     _No description given by bungie._
@@ -1072,12 +1083,12 @@ class DestinyGearArtArrangementReference(BaseModel):
         manifest_class_hash: Manifest information for `class_hash`
     """
 
-    art_arrangement_hash: int = attr.field()
-    class_hash: int = attr.field()
-    manifest_class_hash: Optional["DestinyClassDefinition"] = attr.field(default=None)
+    art_arrangement_hash: int = custom_field()
+    class_hash: int = custom_field()
+    manifest_class_hash: Optional["DestinyClassDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyClassDefinition(ManifestModel):
     """
     Defines a Character Class in Destiny 2. These are types of characters you can play, like Titan, Warlock, and Hunter.
@@ -1103,20 +1114,20 @@ class DestinyClassDefinition(ManifestModel):
         manifest_mentor_vendor_hash: Manifest information for `mentor_vendor_hash`
     """
 
-    class_type: Union["DestinyClass", int] = attr.field(converter=enum_converter("DestinyClass"))
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    gendered_class_names: dict[Union["DestinyGender", int], str] = attr.field(
+    class_type: Union["DestinyClass", int] = custom_field(converter=enum_converter("DestinyClass"))
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    gendered_class_names: dict[Union["DestinyGender", int], str] = custom_field(
         metadata={"type": """dict[DestinyGender, str]"""}
     )
-    gendered_class_names_by_gender_hash: dict[int, str] = attr.field(metadata={"type": """dict[int, str]"""})
-    hash: int = attr.field()
-    index: int = attr.field()
-    mentor_vendor_hash: int = attr.field()
-    redacted: bool = attr.field()
-    manifest_mentor_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    gendered_class_names_by_gender_hash: dict[int, str] = custom_field(metadata={"type": """dict[int, str]"""})
+    hash: int = custom_field()
+    index: int = custom_field()
+    mentor_vendor_hash: int = custom_field()
+    redacted: bool = custom_field()
+    manifest_mentor_vendor_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyGenderDefinition(ManifestModel):
     """
     Gender is a social construct, and as such we have definitions for Genders. Right now there happens to only be two, but we'll see what the future holds.
@@ -1130,14 +1141,14 @@ class DestinyGenderDefinition(ManifestModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    gender_type: Union["DestinyGender", int] = attr.field(converter=enum_converter("DestinyGender"))
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    gender_type: Union["DestinyGender", int] = custom_field(converter=enum_converter("DestinyGender"))
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyVendorDefinition(ManifestModel):
     """
     These are the definitions for Vendors. In Destiny, a Vendor can be a lot of things - some things that you wouldn't expect, and some things that you don't even see directly in the game. Vendors are the Dolly Levi of the Destiny universe. - Traditional Vendors as you see in game: people who you come up to and who give you quests, rewards, or who you can buy things from. - Kiosks/Collections, which are really just Vendors that don't charge currency (or charge some pittance of a currency) and whose gating for purchases revolves more around your character's state. - Previews for rewards or the contents of sacks. These are implemented as Vendors, where you can't actually purchase from them but the items that they have for sale and the categories of sale items reflect the rewards or contents of the sack. This is so that the game could reuse the existing Vendor display UI for rewards and save a bunch of wheel reinvention. - Item Transfer capabilities, like the Vault and Postmaster. Vendors can have "acceptedItem" buckets that determine the source and destination buckets for transfers. When you interact with such a vendor, these buckets are what gets shown in the UI instead of any items that the Vendor would have for sale. Yep, the Vault is a vendor. It is pretty much guaranteed that they'll be used for even more features in the future. They have come to be seen more as generic categorized containers for items than "vendors" in a traditional sense, for better or worse. Where possible and time allows, we'll attempt to split those out into their own more digestible derived "Definitions": but often time does not allow that, as you can see from the above ways that vendors are used which we never split off from Vendor Definitions externally. Since Vendors are so many things to so many parts of the game, the definition is understandably complex. You will want to combine this data with live Vendor information from the API when it is available.
@@ -1191,68 +1202,70 @@ class DestinyVendorDefinition(ManifestModel):
         manifest_faction_hash: Manifest information for `faction_hash`
     """
 
-    accepted_items: list["DestinyVendorAcceptedItemDefinition"] = attr.field(
+    accepted_items: list["DestinyVendorAcceptedItemDefinition"] = custom_field(
         metadata={"type": """list[DestinyVendorAcceptedItemDefinition]"""}
     )
-    actions: list["DestinyVendorActionDefinition"] = attr.field(
+    actions: list["DestinyVendorActionDefinition"] = custom_field(
         metadata={"type": """list[DestinyVendorActionDefinition]"""}
     )
-    buy_string: str = attr.field()
-    categories: list["DestinyVendorCategoryEntryDefinition"] = attr.field(
+    buy_string: str = custom_field()
+    categories: list["DestinyVendorCategoryEntryDefinition"] = custom_field(
         metadata={"type": """list[DestinyVendorCategoryEntryDefinition]"""}
     )
-    consolidate_categories: bool = attr.field()
-    display_categories: list["DestinyDisplayCategoryDefinition"] = attr.field(
+    consolidate_categories: bool = custom_field()
+    display_categories: list["DestinyDisplayCategoryDefinition"] = custom_field(
         metadata={"type": """list[DestinyDisplayCategoryDefinition]"""}
     )
-    display_item_hash: int = attr.field()
-    display_properties: "DestinyVendorDisplayPropertiesDefinition" = attr.field()
-    enabled: bool = attr.field()
-    faction_hash: int = attr.field()
-    failure_strings: list[str] = attr.field(metadata={"type": """list[str]"""})
-    groups: list["DestinyVendorGroupReference"] = attr.field(metadata={"type": """list[DestinyVendorGroupReference]"""})
-    hash: int = attr.field()
-    ignore_sale_item_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    index: int = attr.field()
-    inhibit_buying: bool = attr.field()
-    inhibit_selling: bool = attr.field()
-    interactions: list["DestinyVendorInteractionDefinition"] = attr.field(
+    display_item_hash: int = custom_field()
+    display_properties: "DestinyVendorDisplayPropertiesDefinition" = custom_field()
+    enabled: bool = custom_field()
+    faction_hash: int = custom_field()
+    failure_strings: list[str] = custom_field(metadata={"type": """list[str]"""})
+    groups: list["DestinyVendorGroupReference"] = custom_field(
+        metadata={"type": """list[DestinyVendorGroupReference]"""}
+    )
+    hash: int = custom_field()
+    ignore_sale_item_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    index: int = custom_field()
+    inhibit_buying: bool = custom_field()
+    inhibit_selling: bool = custom_field()
+    interactions: list["DestinyVendorInteractionDefinition"] = custom_field(
         metadata={"type": """list[DestinyVendorInteractionDefinition]"""}
     )
-    inventory_flyouts: list["DestinyVendorInventoryFlyoutDefinition"] = attr.field(
+    inventory_flyouts: list["DestinyVendorInventoryFlyoutDefinition"] = custom_field(
         metadata={"type": """list[DestinyVendorInventoryFlyoutDefinition]"""}
     )
-    item_list: list["DestinyVendorItemDefinition"] = attr.field(
+    item_list: list["DestinyVendorItemDefinition"] = custom_field(
         metadata={"type": """list[DestinyVendorItemDefinition]"""}
     )
-    locations: list["DestinyVendorLocationDefinition"] = attr.field(
+    locations: list["DestinyVendorLocationDefinition"] = custom_field(
         metadata={"type": """list[DestinyVendorLocationDefinition]"""}
     )
-    original_categories: list["DestinyVendorCategoryEntryDefinition"] = attr.field(
+    original_categories: list["DestinyVendorCategoryEntryDefinition"] = custom_field(
         metadata={"type": """list[DestinyVendorCategoryEntryDefinition]"""}
     )
-    redacted: bool = attr.field()
-    reset_interval_minutes: int = attr.field()
-    reset_offset_minutes: int = attr.field()
-    return_with_vendor_request: bool = attr.field()
-    sell_string: str = attr.field()
-    services: list["DestinyVendorServiceDefinition"] = attr.field(
+    redacted: bool = custom_field()
+    reset_interval_minutes: int = custom_field()
+    reset_offset_minutes: int = custom_field()
+    return_with_vendor_request: bool = custom_field()
+    sell_string: str = custom_field()
+    services: list["DestinyVendorServiceDefinition"] = custom_field(
         metadata={"type": """list[DestinyVendorServiceDefinition]"""}
     )
-    unlock_ranges: list["DateRange"] = attr.field(metadata={"type": """list[DateRange]"""})
-    vendor_banner: str = attr.field()
-    vendor_identifier: str = attr.field()
-    vendor_portrait: str = attr.field()
-    vendor_progression_type: Union["DestinyVendorProgressionType", int] = attr.field(
+    unlock_ranges: list["DateRange"] = custom_field(metadata={"type": """list[DateRange]"""})
+    vendor_banner: str = custom_field()
+    vendor_identifier: str = custom_field()
+    vendor_portrait: str = custom_field()
+    vendor_progression_type: Union["DestinyVendorProgressionType", int] = custom_field(
         converter=enum_converter("DestinyVendorProgressionType")
     )
-    vendor_subcategory_identifier: str = attr.field()
-    visible: bool = attr.field()
-    manifest_display_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_faction_hash: Optional["DestinyFactionDefinition"] = attr.field(default=None)
+    vendor_subcategory_identifier: str = custom_field()
+    visible: bool = custom_field()
+    manifest_display_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_faction_hash: Optional["DestinyFactionDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyVendorDisplayPropertiesDefinition(BaseModel):
     """
     _No description given by bungie._
@@ -1274,26 +1287,26 @@ class DestinyVendorDisplayPropertiesDefinition(BaseModel):
         subtitle: _No description given by bungie._
     """
 
-    description: str = attr.field()
-    has_icon: bool = attr.field()
-    high_res_icon: str = attr.field()
-    icon: str = attr.field()
-    icon_sequences: list["DestinyIconSequenceDefinition"] = attr.field(
+    description: str = custom_field()
+    has_icon: bool = custom_field()
+    high_res_icon: str = custom_field()
+    icon: str = custom_field()
+    icon_sequences: list["DestinyIconSequenceDefinition"] = custom_field(
         metadata={"type": """list[DestinyIconSequenceDefinition]"""}
     )
-    large_icon: str = attr.field()
-    large_transparent_icon: str = attr.field()
-    map_icon: str = attr.field()
-    name: str = attr.field()
-    original_icon: str = attr.field()
-    requirements_display: list["DestinyVendorRequirementDisplayEntryDefinition"] = attr.field(
+    large_icon: str = custom_field()
+    large_transparent_icon: str = custom_field()
+    map_icon: str = custom_field()
+    name: str = custom_field()
+    original_icon: str = custom_field()
+    requirements_display: list["DestinyVendorRequirementDisplayEntryDefinition"] = custom_field(
         metadata={"type": """list[DestinyVendorRequirementDisplayEntryDefinition]"""}
     )
-    small_transparent_icon: str = attr.field()
-    subtitle: str = attr.field()
+    small_transparent_icon: str = custom_field()
+    subtitle: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyVendorRequirementDisplayEntryDefinition(BaseModel):
     """
     The localized properties of the requirementsDisplay, allowing information about the requirement or item being featured to be seen.
@@ -1306,13 +1319,13 @@ class DestinyVendorRequirementDisplayEntryDefinition(BaseModel):
         type: _No description given by bungie._
     """
 
-    icon: str = attr.field()
-    name: str = attr.field()
-    source: str = attr.field()
-    type: str = attr.field()
+    icon: str = custom_field()
+    name: str = custom_field()
+    source: str = custom_field()
+    type: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyVendorActionDefinition(BaseModel):
     """
     If a vendor can ever end up performing actions, these are the properties that will be related to those actions. I'm not going to bother documenting this yet, as it is unused and unclear if it will ever be used... but in case it is ever populated and someone finds it useful, it is defined here.
@@ -1330,18 +1343,18 @@ class DestinyVendorActionDefinition(BaseModel):
         verb: _No description given by bungie._
     """
 
-    action_hash: int = attr.field()
-    action_id: str = attr.field()
-    auto_perform_action: bool = attr.field()
-    description: str = attr.field()
-    execute_seconds: int = attr.field()
-    icon: str = attr.field()
-    is_positive: bool = attr.field()
-    name: str = attr.field()
-    verb: str = attr.field()
+    action_hash: int = custom_field()
+    action_id: str = custom_field()
+    auto_perform_action: bool = custom_field()
+    description: str = custom_field()
+    execute_seconds: int = custom_field()
+    icon: str = custom_field()
+    is_positive: bool = custom_field()
+    name: str = custom_field()
+    verb: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyVendorCategoryEntryDefinition(BaseModel):
     """
     This is the definition for a single Vendor Category, into which Sale Items are grouped.
@@ -1366,25 +1379,25 @@ class DestinyVendorCategoryEntryDefinition(BaseModel):
         vendor_item_indexes: A shortcut for the vendor item indexes sold under this category. Saves us from some expensive reorganization at runtime.
     """
 
-    buy_string_override: str = attr.field()
-    category_hash: int = attr.field()
-    category_index: int = attr.field()
-    disabled_description: str = attr.field()
-    display_title: str = attr.field()
-    hide_from_regular_purchase: bool = attr.field()
-    hide_if_no_currency: bool = attr.field()
-    is_display_only: bool = attr.field()
-    is_preview: bool = attr.field()
-    overlay: "DestinyVendorCategoryOverlayDefinition" = attr.field()
-    quantity_available: int = attr.field()
-    reset_interval_minutes_override: int = attr.field()
-    reset_offset_minutes_override: int = attr.field()
-    show_unavailable_items: bool = attr.field()
-    sort_value: int = attr.field()
-    vendor_item_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
+    buy_string_override: str = custom_field()
+    category_hash: int = custom_field()
+    category_index: int = custom_field()
+    disabled_description: str = custom_field()
+    display_title: str = custom_field()
+    hide_from_regular_purchase: bool = custom_field()
+    hide_if_no_currency: bool = custom_field()
+    is_display_only: bool = custom_field()
+    is_preview: bool = custom_field()
+    overlay: "DestinyVendorCategoryOverlayDefinition" = custom_field()
+    quantity_available: int = custom_field()
+    reset_interval_minutes_override: int = custom_field()
+    reset_offset_minutes_override: int = custom_field()
+    show_unavailable_items: bool = custom_field()
+    sort_value: int = custom_field()
+    vendor_item_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
 
 
-@attr.define
+@custom_define()
 class DestinyVendorCategoryOverlayDefinition(BaseModel):
     """
     The details of an overlay prompt to show to a user. They are all fairly self-explanatory localized strings that can be shown.
@@ -1407,15 +1420,15 @@ class DestinyVendorCategoryOverlayDefinition(BaseModel):
         manifest_currency_item_hash: Manifest information for `currency_item_hash`
     """
 
-    choice_description: str = attr.field()
-    currency_item_hash: int = attr.field()
-    description: str = attr.field()
-    icon: str = attr.field()
-    title: str = attr.field()
-    manifest_currency_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    choice_description: str = custom_field()
+    currency_item_hash: int = custom_field()
+    description: str = custom_field()
+    icon: str = custom_field()
+    title: str = custom_field()
+    manifest_currency_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyDisplayCategoryDefinition(BaseModel):
     """
     Display Categories are different from "categories" in that these are specifically for visual grouping and display of categories in Vendor UI. The "categories" structure is for validation of the contained items, and can be categorized entirely separately from "Display Categories", there need be and often will be no meaningful relationship between the two.
@@ -1442,21 +1455,21 @@ class DestinyDisplayCategoryDefinition(BaseModel):
         manifest_progression_hash: Manifest information for `progression_hash`
     """
 
-    display_category_hash: int = attr.field()
-    display_in_banner: bool = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    display_style_hash: int = attr.field()
-    display_style_identifier: str = attr.field()
-    identifier: str = attr.field()
-    index: int = attr.field()
-    progression_hash: int = attr.field()
-    sort_order: Union["VendorDisplayCategorySortOrder", int] = attr.field(
+    display_category_hash: int = custom_field()
+    display_in_banner: bool = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    display_style_hash: int = custom_field()
+    display_style_identifier: str = custom_field()
+    identifier: str = custom_field()
+    index: int = custom_field()
+    progression_hash: int = custom_field()
+    sort_order: Union["VendorDisplayCategorySortOrder", int] = custom_field(
         converter=enum_converter("VendorDisplayCategorySortOrder")
     )
-    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
+    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyVendorInteractionDefinition(BaseModel):
     """
     A Vendor Interaction is a dialog shown by the vendor other than sale items or transfer screens. The vendor is showing you something, and asking you to reply to it by choosing an option or reward.
@@ -1487,29 +1500,29 @@ class DestinyVendorInteractionDefinition(BaseModel):
         manifest_questline_item_hash: Manifest information for `questline_item_hash`
     """
 
-    flavor_line_one: str = attr.field()
-    flavor_line_two: str = attr.field()
-    header_display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    instructions: str = attr.field()
-    interaction_index: int = attr.field()
-    interaction_type: Union["VendorInteractionType", int] = attr.field(
+    flavor_line_one: str = custom_field()
+    flavor_line_two: str = custom_field()
+    header_display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    instructions: str = custom_field()
+    interaction_index: int = custom_field()
+    interaction_type: Union["VendorInteractionType", int] = custom_field(
         converter=enum_converter("VendorInteractionType")
     )
-    questline_item_hash: int = attr.field()
-    replies: list["DestinyVendorInteractionReplyDefinition"] = attr.field(
+    questline_item_hash: int = custom_field()
+    replies: list["DestinyVendorInteractionReplyDefinition"] = custom_field(
         metadata={"type": """list[DestinyVendorInteractionReplyDefinition]"""}
     )
-    reward_block_label: str = attr.field()
-    reward_vendor_category_index: int = attr.field()
-    sack_interaction_list: list["DestinyVendorInteractionSackEntryDefinition"] = attr.field(
+    reward_block_label: str = custom_field()
+    reward_vendor_category_index: int = custom_field()
+    sack_interaction_list: list["DestinyVendorInteractionSackEntryDefinition"] = custom_field(
         metadata={"type": """list[DestinyVendorInteractionSackEntryDefinition]"""}
     )
-    ui_interaction_type: int = attr.field()
-    vendor_category_index: int = attr.field()
-    manifest_questline_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    ui_interaction_type: int = custom_field()
+    vendor_category_index: int = custom_field()
+    manifest_questline_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyVendorInteractionReplyDefinition(BaseModel):
     """
     When the interaction is replied to, Reward sites will fire and items potentially selected based on whether the given unlock expression is TRUE. You can potentially choose one from multiple replies when replying to an interaction: this is how you get either/or rewards from vendors.
@@ -1521,14 +1534,14 @@ class DestinyVendorInteractionReplyDefinition(BaseModel):
         reply_type: An enum indicating the type of reply being made.
     """
 
-    item_rewards_selection: Union["DestinyVendorInteractionRewardSelection", int] = attr.field(
+    item_rewards_selection: Union["DestinyVendorInteractionRewardSelection", int] = custom_field(
         converter=enum_converter("DestinyVendorInteractionRewardSelection")
     )
-    reply: str = attr.field()
-    reply_type: Union["DestinyVendorReplyType", int] = attr.field(converter=enum_converter("DestinyVendorReplyType"))
+    reply: str = custom_field()
+    reply_type: Union["DestinyVendorReplyType", int] = custom_field(converter=enum_converter("DestinyVendorReplyType"))
 
 
-@attr.define
+@custom_define()
 class DestinyVendorInteractionSackEntryDefinition(BaseModel):
     """
     Compare this sackType to the sack identifier in the DestinyInventoryItemDefinition.vendorSackType property of items. If they match, show this sack with this interaction.
@@ -1538,10 +1551,10 @@ class DestinyVendorInteractionSackEntryDefinition(BaseModel):
         sack_type: _No description given by bungie._
     """
 
-    sack_type: int = attr.field()
+    sack_type: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyVendorInventoryFlyoutDefinition(BaseModel):
     """
     The definition for an "inventory flyout": a UI screen where we show you part of an otherwise hidden vendor inventory: like the Vault inventory buckets.
@@ -1556,17 +1569,17 @@ class DestinyVendorInventoryFlyoutDefinition(BaseModel):
         suppress_newness: If this is true, don't show any of the glistening "this is a new item" UI elements, like we show on the inventory items themselves in in-game UI.
     """
 
-    buckets: list["DestinyVendorInventoryFlyoutBucketDefinition"] = attr.field(
+    buckets: list["DestinyVendorInventoryFlyoutBucketDefinition"] = custom_field(
         metadata={"type": """list[DestinyVendorInventoryFlyoutBucketDefinition]"""}
     )
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    equipment_slot_hash: int = attr.field()
-    flyout_id: int = attr.field()
-    locked_description: str = attr.field()
-    suppress_newness: bool = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    equipment_slot_hash: int = custom_field()
+    flyout_id: int = custom_field()
+    locked_description: str = custom_field()
+    suppress_newness: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyVendorInventoryFlyoutBucketDefinition(BaseModel):
     """
     Information about a single inventory bucket in a vendor flyout UI and how it is shown.
@@ -1587,13 +1600,13 @@ class DestinyVendorInventoryFlyoutBucketDefinition(BaseModel):
         manifest_inventory_bucket_hash: Manifest information for `inventory_bucket_hash`
     """
 
-    collapsible: bool = attr.field()
-    inventory_bucket_hash: int = attr.field()
-    sort_items_by: Union["DestinyItemSortType", int] = attr.field(converter=enum_converter("DestinyItemSortType"))
-    manifest_inventory_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field(default=None)
+    collapsible: bool = custom_field()
+    inventory_bucket_hash: int = custom_field()
+    sort_items_by: Union["DestinyItemSortType", int] = custom_field(converter=enum_converter("DestinyItemSortType"))
+    manifest_inventory_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyVendorItemDefinition(BaseModel):
     """
     This represents an item being sold by the vendor.
@@ -1638,43 +1651,45 @@ class DestinyVendorItemDefinition(BaseModel):
         manifest_item_hash: Manifest information for `item_hash`
     """
 
-    action: "DestinyVendorSaleItemActionBlockDefinition" = attr.field()
-    category_index: int = attr.field()
-    creation_levels: list["DestinyItemCreationEntryLevelDefinition"] = attr.field(
+    action: "DestinyVendorSaleItemActionBlockDefinition" = custom_field()
+    category_index: int = custom_field()
+    creation_levels: list["DestinyItemCreationEntryLevelDefinition"] = custom_field(
         metadata={"type": """list[DestinyItemCreationEntryLevelDefinition]"""}
     )
-    currencies: list["DestinyVendorItemQuantity"] = attr.field(metadata={"type": """list[DestinyVendorItemQuantity]"""})
-    display_category: str = attr.field()
-    display_category_index: int = attr.field()
-    exclusivity: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
-    expiration_tooltip: str = attr.field()
-    failure_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    inventory_bucket_hash: int = attr.field()
-    is_crm: bool = attr.field()
-    is_offer: bool = attr.field()
-    item_hash: int = attr.field()
-    maximum_level: int = attr.field()
-    minimum_level: int = attr.field()
-    original_category_index: int = attr.field()
-    purchasable_scope: Union["DestinyGatingScope", int] = attr.field(converter=enum_converter("DestinyGatingScope"))
-    quantity: int = attr.field()
-    redirect_to_sale_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    refund_policy: Union["DestinyVendorItemRefundPolicy", int] = attr.field(
+    currencies: list["DestinyVendorItemQuantity"] = custom_field(
+        metadata={"type": """list[DestinyVendorItemQuantity]"""}
+    )
+    display_category: str = custom_field()
+    display_category_index: int = custom_field()
+    exclusivity: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
+    expiration_tooltip: str = custom_field()
+    failure_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    inventory_bucket_hash: int = custom_field()
+    is_crm: bool = custom_field()
+    is_offer: bool = custom_field()
+    item_hash: int = custom_field()
+    maximum_level: int = custom_field()
+    minimum_level: int = custom_field()
+    original_category_index: int = custom_field()
+    purchasable_scope: Union["DestinyGatingScope", int] = custom_field(converter=enum_converter("DestinyGatingScope"))
+    quantity: int = custom_field()
+    redirect_to_sale_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    refund_policy: Union["DestinyVendorItemRefundPolicy", int] = custom_field(
         converter=enum_converter("DestinyVendorItemRefundPolicy")
     )
-    refund_time_limit: int = attr.field()
-    socket_overrides: list["DestinyVendorItemSocketOverride"] = attr.field(
+    refund_time_limit: int = custom_field()
+    socket_overrides: list["DestinyVendorItemSocketOverride"] = custom_field(
         metadata={"type": """list[DestinyVendorItemSocketOverride]"""}
     )
-    sort_value: int = attr.field()
-    unpurchasable: bool = attr.field()
-    vendor_item_index: int = attr.field()
-    visibility_scope: Union["DestinyGatingScope", int] = attr.field(converter=enum_converter("DestinyGatingScope"))
-    manifest_inventory_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field(default=None)
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    sort_value: int = custom_field()
+    unpurchasable: bool = custom_field()
+    vendor_item_index: int = custom_field()
+    visibility_scope: Union["DestinyGatingScope", int] = custom_field(converter=enum_converter("DestinyGatingScope"))
+    manifest_inventory_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = custom_field(default=None)
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyVendorItemQuantity(BaseModel):
     """
     In addition to item quantity information for vendor prices, this also has any optional information that may exist about how the item's quantity can be modified. (unfortunately not information that is able to be read outside of the BNet servers, but it's there)
@@ -1696,14 +1711,14 @@ class DestinyVendorItemQuantity(BaseModel):
         manifest_item_hash: Manifest information for `item_hash`
     """
 
-    has_conditional_visibility: bool = attr.field()
-    item_hash: int = attr.field()
-    item_instance_id: int = attr.field()
-    quantity: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    has_conditional_visibility: bool = custom_field()
+    item_hash: int = custom_field()
+    item_instance_id: int = custom_field()
+    quantity: int = custom_field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemCreationEntryLevelDefinition(BaseModel):
     """
     An overly complicated wrapper for the item level at which the item should spawn.
@@ -1713,10 +1728,10 @@ class DestinyItemCreationEntryLevelDefinition(BaseModel):
         level: _No description given by bungie._
     """
 
-    level: int = attr.field()
+    level: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyVendorSaleItemActionBlockDefinition(BaseModel):
     """
     Not terribly useful, some basic cooldown interaction info.
@@ -1727,11 +1742,11 @@ class DestinyVendorSaleItemActionBlockDefinition(BaseModel):
         is_positive: _No description given by bungie._
     """
 
-    execute_seconds: float = attr.field()
-    is_positive: bool = attr.field()
+    execute_seconds: float = custom_field()
+    is_positive: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyVendorItemSocketOverride(BaseModel):
     """
     The information for how the vendor purchase should override a given socket with custom plug data.
@@ -1753,14 +1768,14 @@ class DestinyVendorItemSocketOverride(BaseModel):
         manifest_socket_type_hash: Manifest information for `socket_type_hash`
     """
 
-    randomized_options_count: int = attr.field()
-    single_item_hash: int = attr.field()
-    socket_type_hash: int = attr.field()
-    manifest_single_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = attr.field(default=None)
+    randomized_options_count: int = custom_field()
+    single_item_hash: int = custom_field()
+    socket_type_hash: int = custom_field()
+    manifest_single_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyVendorServiceDefinition(BaseModel):
     """
     When a vendor provides services, this is the localized name of those services.
@@ -1770,10 +1785,10 @@ class DestinyVendorServiceDefinition(BaseModel):
         name: The localized name of a service provided.
     """
 
-    name: str = attr.field()
+    name: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyVendorAcceptedItemDefinition(BaseModel):
     """
     If you ever wondered how the Vault works, here it is. The Vault is merely a set of inventory buckets that exist on your Profile/Account level. When you transfer items in the Vault, the game is using the Vault Vendor's DestinyVendorAcceptedItemDefinitions to see where the appropriate destination bucket is for the source bucket from whence your item is moving. If it finds such an entry, it transfers the item to the other bucket. The mechanics for Postmaster works similarly, which is also a vendor. All driven by Accepted Items.
@@ -1794,13 +1809,15 @@ class DestinyVendorAcceptedItemDefinition(BaseModel):
         manifest_destination_inventory_bucket_hash: Manifest information for `destination_inventory_bucket_hash`
     """
 
-    accepted_inventory_bucket_hash: int = attr.field()
-    destination_inventory_bucket_hash: int = attr.field()
-    manifest_accepted_inventory_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field(default=None)
-    manifest_destination_inventory_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = attr.field(default=None)
+    accepted_inventory_bucket_hash: int = custom_field()
+    destination_inventory_bucket_hash: int = custom_field()
+    manifest_accepted_inventory_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = custom_field(default=None)
+    manifest_destination_inventory_bucket_hash: Optional["DestinyInventoryBucketDefinition"] = custom_field(
+        default=None
+    )
 
 
-@attr.define
+@custom_define()
 class DestinyDestinationDefinition(ManifestModel):
     """
     On to one of the more confusing subjects of the API. What is a Destination, and what is the relationship between it, Activities, Locations, and Places? A "Destination" is a specific region/city/area of a larger "Place". For instance, a Place might be Earth where a Destination might be Bellevue, Washington. (Please, pick a more interesting destination if you come to visit Earth).
@@ -1828,24 +1845,24 @@ class DestinyDestinationDefinition(ManifestModel):
         manifest_place_hash: Manifest information for `place_hash`
     """
 
-    activity_graph_entries: list["DestinyActivityGraphListEntryDefinition"] = attr.field(
+    activity_graph_entries: list["DestinyActivityGraphListEntryDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityGraphListEntryDefinition]"""}
     )
-    bubble_settings: list["DestinyDestinationBubbleSettingDefinition"] = attr.field(
+    bubble_settings: list["DestinyDestinationBubbleSettingDefinition"] = custom_field(
         metadata={"type": """list[DestinyDestinationBubbleSettingDefinition]"""}
     )
-    bubbles: list["DestinyBubbleDefinition"] = attr.field(metadata={"type": """list[DestinyBubbleDefinition]"""})
-    default_freeroam_activity_hash: int = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    place_hash: int = attr.field()
-    redacted: bool = attr.field()
-    manifest_default_freeroam_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_place_hash: Optional["DestinyPlaceDefinition"] = attr.field(default=None)
+    bubbles: list["DestinyBubbleDefinition"] = custom_field(metadata={"type": """list[DestinyBubbleDefinition]"""})
+    default_freeroam_activity_hash: int = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    place_hash: int = custom_field()
+    redacted: bool = custom_field()
+    manifest_default_freeroam_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
+    manifest_place_hash: Optional["DestinyPlaceDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyActivityGraphListEntryDefinition(BaseModel):
     """
     Destinations and Activities may have default Activity Graphs that should be shown when you bring up the Director and are playing in either. This contract defines the graph referred to and the gating for when it is relevant.
@@ -1864,11 +1881,11 @@ class DestinyActivityGraphListEntryDefinition(BaseModel):
         manifest_activity_graph_hash: Manifest information for `activity_graph_hash`
     """
 
-    activity_graph_hash: int = attr.field()
-    manifest_activity_graph_hash: Optional["DestinyActivityGraphDefinition"] = attr.field(default=None)
+    activity_graph_hash: int = custom_field()
+    manifest_activity_graph_hash: Optional["DestinyActivityGraphDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyActivityDefinition(ManifestModel):
     """
     The static data about Activities in Destiny 2. Note that an Activity must be combined with an ActivityMode to know - from a Gameplay perspective - what the user is "Playing". In most PvE activities, this is fairly straightforward. A Story Activity can only be played in the Story Activity Mode. However, in PvP activities, the Activity alone only tells you the map being played, or the Playlist that the user chose to enter. You'll need to know the Activity Mode they're playing to know that they're playing Mode X on Map Y. Activity Definitions tell a great deal of information about what *could* be relevant to a user: what rewards they can earn, what challenges could be performed, what modifiers could be applied. To figure out which of these properties is actually live, you'll need to combine the definition with "Live" data from one of the Destiny endpoints. Activities also have Activity Types, but unfortunately in Destiny 2 these are even less reliable of a source of information than they were in Destiny 1. I will be looking into ways to provide more reliable sources for type information as time goes on, but for now we're going to have to deal with the limitations. See DestinyActivityTypeDefinition for more information.
@@ -1920,64 +1937,64 @@ class DestinyActivityDefinition(ManifestModel):
         manifest_place_hash: Manifest information for `place_hash`
     """
 
-    activity_graph_list: list["DestinyActivityGraphListEntryDefinition"] = attr.field(
+    activity_graph_list: list["DestinyActivityGraphListEntryDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityGraphListEntryDefinition]"""}
     )
-    activity_light_level: int = attr.field()
-    activity_location_mappings: list["DestinyEnvironmentLocationMapping"] = attr.field(
+    activity_light_level: int = custom_field()
+    activity_location_mappings: list["DestinyEnvironmentLocationMapping"] = custom_field(
         metadata={"type": """list[DestinyEnvironmentLocationMapping]"""}
     )
-    activity_mode_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    activity_mode_types: list[Union["DestinyActivityModeType", int]] = attr.field(
+    activity_mode_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    activity_mode_types: list[Union["DestinyActivityModeType", int]] = custom_field(
         converter=enum_converter("DestinyActivityModeType")
     )
-    activity_type_hash: int = attr.field()
-    challenges: list["DestinyActivityChallengeDefinition"] = attr.field(
+    activity_type_hash: int = custom_field()
+    challenges: list["DestinyActivityChallengeDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityChallengeDefinition]"""}
     )
-    destination_hash: int = attr.field()
-    direct_activity_mode_hash: int = attr.field()
-    direct_activity_mode_type: int = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    guided_game: "DestinyActivityGuidedBlockDefinition" = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    insertion_points: list["DestinyActivityInsertionPointDefinition"] = attr.field(
+    destination_hash: int = custom_field()
+    direct_activity_mode_hash: int = custom_field()
+    direct_activity_mode_type: int = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    guided_game: "DestinyActivityGuidedBlockDefinition" = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    insertion_points: list["DestinyActivityInsertionPointDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityInsertionPointDefinition]"""}
     )
-    is_playlist: bool = attr.field()
-    is_pv_p: bool = attr.field()
-    loadouts: list["DestinyActivityLoadoutRequirementSet"] = attr.field(
+    is_playlist: bool = custom_field()
+    is_pv_p: bool = custom_field()
+    loadouts: list["DestinyActivityLoadoutRequirementSet"] = custom_field(
         metadata={"type": """list[DestinyActivityLoadoutRequirementSet]"""}
     )
-    matchmaking: "DestinyActivityMatchmakingBlockDefinition" = attr.field()
-    modifiers: list["DestinyActivityModifierReferenceDefinition"] = attr.field(
+    matchmaking: "DestinyActivityMatchmakingBlockDefinition" = custom_field()
+    modifiers: list["DestinyActivityModifierReferenceDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityModifierReferenceDefinition]"""}
     )
-    optional_unlock_strings: list["DestinyActivityUnlockStringDefinition"] = attr.field(
+    optional_unlock_strings: list["DestinyActivityUnlockStringDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityUnlockStringDefinition]"""}
     )
-    original_display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    pgcr_image: str = attr.field()
-    place_hash: int = attr.field()
-    playlist_items: list["DestinyActivityPlaylistItemDefinition"] = attr.field(
+    original_display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    pgcr_image: str = custom_field()
+    place_hash: int = custom_field()
+    playlist_items: list["DestinyActivityPlaylistItemDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityPlaylistItemDefinition]"""}
     )
-    redacted: bool = attr.field()
-    release_icon: str = attr.field()
-    release_time: int = attr.field()
-    rewards: list["DestinyActivityRewardDefinition"] = attr.field(
+    redacted: bool = custom_field()
+    release_icon: str = custom_field()
+    release_time: int = custom_field()
+    rewards: list["DestinyActivityRewardDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityRewardDefinition]"""}
     )
-    selection_screen_display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    tier: int = attr.field()
-    manifest_activity_type_hash: Optional["DestinyActivityTypeDefinition"] = attr.field(default=None)
-    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
-    manifest_direct_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field(default=None)
-    manifest_place_hash: Optional["DestinyPlaceDefinition"] = attr.field(default=None)
+    selection_screen_display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    tier: int = custom_field()
+    manifest_activity_type_hash: Optional["DestinyActivityTypeDefinition"] = custom_field(default=None)
+    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = custom_field(default=None)
+    manifest_direct_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = custom_field(default=None)
+    manifest_place_hash: Optional["DestinyPlaceDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyActivityRewardDefinition(BaseModel):
     """
     Activities can refer to one or more sets of tooltip-friendly reward data. These are the definitions for those tooltip friendly rewards.
@@ -1988,11 +2005,11 @@ class DestinyActivityRewardDefinition(BaseModel):
         reward_text: The header for the reward set, if any.
     """
 
-    reward_items: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})
-    reward_text: str = attr.field()
+    reward_items: list["DestinyItemQuantity"] = custom_field(metadata={"type": """list[DestinyItemQuantity]"""})
+    reward_text: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyActivityModifierReferenceDefinition(BaseModel):
     """
     A reference to an Activity Modifier from another entity, such as an Activity (for now, just Activities). This defines some
@@ -2011,11 +2028,11 @@ class DestinyActivityModifierReferenceDefinition(BaseModel):
         manifest_activity_modifier_hash: Manifest information for `activity_modifier_hash`
     """
 
-    activity_modifier_hash: int = attr.field()
-    manifest_activity_modifier_hash: Optional["DestinyActivityModifierDefinition"] = attr.field(default=None)
+    activity_modifier_hash: int = custom_field()
+    manifest_activity_modifier_hash: Optional["DestinyActivityModifierDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyActivityChallengeDefinition(BaseModel):
     """
     Represents a reference to a Challenge, which for now is just an Objective.
@@ -2035,12 +2052,12 @@ class DestinyActivityChallengeDefinition(BaseModel):
         manifest_objective_hash: Manifest information for `objective_hash`
     """
 
-    dummy_rewards: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})
-    objective_hash: int = attr.field()
-    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
+    dummy_rewards: list["DestinyItemQuantity"] = custom_field(metadata={"type": """list[DestinyItemQuantity]"""})
+    objective_hash: int = custom_field()
+    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyObjectiveDefinition(ManifestModel):
     """
     Defines an "Objective". An objective is a specific task you should accomplish in the game. These are referred to by: - Quest Steps (which are DestinyInventoryItemDefinition entities with Objectives) - Challenges (which are Objectives defined on an DestinyActivityDefintion) - Milestones (which refer to Objectives that are defined on both Quest Steps and Activities) - Anything else that the designers decide to do later. Objectives have progress, a notion of having been Completed, human readable data describing the task to be accomplished, and a lot of optional tack-on data that can enhance the information provided about the task.
@@ -2079,37 +2096,37 @@ class DestinyObjectiveDefinition(ManifestModel):
         manifest_location_hash: Manifest information for `location_hash`
     """
 
-    allow_negative_value: bool = attr.field()
-    allow_overcompletion: bool = attr.field()
-    allow_value_change_when_completed: bool = attr.field()
-    completed_value_style: Union["DestinyUnlockValueUIStyle", int] = attr.field(
+    allow_negative_value: bool = custom_field()
+    allow_overcompletion: bool = custom_field()
+    allow_value_change_when_completed: bool = custom_field()
+    completed_value_style: Union["DestinyUnlockValueUIStyle", int] = custom_field(
         converter=enum_converter("DestinyUnlockValueUIStyle")
     )
-    completion_value: int = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    hash: int = attr.field()
-    in_progress_value_style: Union["DestinyUnlockValueUIStyle", int] = attr.field(
+    completion_value: int = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    hash: int = custom_field()
+    in_progress_value_style: Union["DestinyUnlockValueUIStyle", int] = custom_field(
         converter=enum_converter("DestinyUnlockValueUIStyle")
     )
-    index: int = attr.field()
-    is_counting_downward: bool = attr.field()
-    location_hash: int = attr.field()
-    minimum_visibility_threshold: int = attr.field()
-    perks: "DestinyObjectivePerkEntryDefinition" = attr.field()
-    progress_description: str = attr.field()
-    redacted: bool = attr.field()
-    scope: Union["DestinyGatingScope", int] = attr.field(converter=enum_converter("DestinyGatingScope"))
-    show_value_on_complete: bool = attr.field()
-    stats: "DestinyObjectiveStatEntryDefinition" = attr.field()
-    ui_label: str = attr.field()
-    ui_style: Union["DestinyObjectiveUiStyle", int] = attr.field(converter=enum_converter("DestinyObjectiveUiStyle"))
-    value_style: Union["DestinyUnlockValueUIStyle", int] = attr.field(
+    index: int = custom_field()
+    is_counting_downward: bool = custom_field()
+    location_hash: int = custom_field()
+    minimum_visibility_threshold: int = custom_field()
+    perks: "DestinyObjectivePerkEntryDefinition" = custom_field()
+    progress_description: str = custom_field()
+    redacted: bool = custom_field()
+    scope: Union["DestinyGatingScope", int] = custom_field(converter=enum_converter("DestinyGatingScope"))
+    show_value_on_complete: bool = custom_field()
+    stats: "DestinyObjectiveStatEntryDefinition" = custom_field()
+    ui_label: str = custom_field()
+    ui_style: Union["DestinyObjectiveUiStyle", int] = custom_field(converter=enum_converter("DestinyObjectiveUiStyle"))
+    value_style: Union["DestinyUnlockValueUIStyle", int] = custom_field(
         converter=enum_converter("DestinyUnlockValueUIStyle")
     )
-    manifest_location_hash: Optional["DestinyLocationDefinition"] = attr.field(default=None)
+    manifest_location_hash: Optional["DestinyLocationDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyObjectivePerkEntryDefinition(BaseModel):
     """
     Defines the conditions under which an intrinsic perk is applied while participating in an Objective. These perks will generally not be benefit-granting perks, but rather a perk that modifies gameplay in some interesting way.
@@ -2129,12 +2146,14 @@ class DestinyObjectivePerkEntryDefinition(BaseModel):
         manifest_perk_hash: Manifest information for `perk_hash`
     """
 
-    perk_hash: int = attr.field()
-    style: Union["DestinyObjectiveGrantStyle", int] = attr.field(converter=enum_converter("DestinyObjectiveGrantStyle"))
-    manifest_perk_hash: Optional["DestinySandboxPerkDefinition"] = attr.field(default=None)
+    perk_hash: int = custom_field()
+    style: Union["DestinyObjectiveGrantStyle", int] = custom_field(
+        converter=enum_converter("DestinyObjectiveGrantStyle")
+    )
+    manifest_perk_hash: Optional["DestinySandboxPerkDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinySandboxPerkDefinition(ManifestModel):
     """
     Perks are modifiers to a character or item that can be applied situationally. - Perks determine a weapons' damage type. - Perks put the Mods in Modifiers (they are literally the entity that bestows the Sandbox benefit for whatever fluff text about the modifier in the Socket, Plug or Talent Node) - Perks are applied for unique alterations of state in Objectives Anyways, I'm sure you can see why perks are so interesting. What Perks often don't have is human readable information, so we attempt to reverse engineer that by pulling that data from places that uniquely refer to these perks: namely, Talent Nodes and Plugs. That only gives us a subset of perks that are human readable, but those perks are the ones people generally care about anyways. The others are left as a mystery, their true purpose mostly unknown and undocumented.
@@ -2161,19 +2180,19 @@ class DestinySandboxPerkDefinition(ManifestModel):
         manifest_damage_type_hash: Manifest information for `damage_type_hash`
     """
 
-    damage_type: Union["DamageType", int] = attr.field(converter=enum_converter("DamageType"))
-    damage_type_hash: int = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    is_displayable: bool = attr.field()
-    perk_groups: "DestinyTalentNodeStepGroups" = attr.field()
-    perk_identifier: str = attr.field()
-    redacted: bool = attr.field()
-    manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = attr.field(default=None)
+    damage_type: Union["DamageType", int] = custom_field(converter=enum_converter("DamageType"))
+    damage_type_hash: int = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    is_displayable: bool = custom_field()
+    perk_groups: "DestinyTalentNodeStepGroups" = custom_field()
+    perk_identifier: str = custom_field()
+    redacted: bool = custom_field()
+    manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyTalentNodeStepGroups(BaseModel):
     """
     These properties are an attempt to categorize talent node steps by certain common properties. See the related enumerations for the type of properties being categorized.
@@ -2187,19 +2206,19 @@ class DestinyTalentNodeStepGroups(BaseModel):
         weapon_performance: _No description given by bungie._
     """
 
-    damage_types: Union["DestinyTalentNodeStepDamageTypes", int] = attr.field(
+    damage_types: Union["DestinyTalentNodeStepDamageTypes", int] = custom_field(
         converter=enum_converter("DestinyTalentNodeStepDamageTypes")
     )
-    guardian_attributes: Union["DestinyTalentNodeStepGuardianAttributes", int] = attr.field(
+    guardian_attributes: Union["DestinyTalentNodeStepGuardianAttributes", int] = custom_field(
         converter=enum_converter("DestinyTalentNodeStepGuardianAttributes")
     )
-    impact_effects: Union["DestinyTalentNodeStepImpactEffects", int] = attr.field(
+    impact_effects: Union["DestinyTalentNodeStepImpactEffects", int] = custom_field(
         converter=enum_converter("DestinyTalentNodeStepImpactEffects")
     )
-    light_abilities: Union["DestinyTalentNodeStepLightAbilities", int] = attr.field(
+    light_abilities: Union["DestinyTalentNodeStepLightAbilities", int] = custom_field(
         converter=enum_converter("DestinyTalentNodeStepLightAbilities")
     )
-    weapon_performance: Union["DestinyTalentNodeStepWeaponPerformances", int] = attr.field(
+    weapon_performance: Union["DestinyTalentNodeStepWeaponPerformances", int] = custom_field(
         converter=enum_converter("DestinyTalentNodeStepWeaponPerformances")
     )
 
@@ -2333,7 +2352,7 @@ class DestinyTalentNodeStepDamageTypes(BaseFlagEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class DestinyDamageTypeDefinition(ManifestModel):
     """
     All damage types that are possible in the game are defined here, along with localized info and icons as needed.
@@ -2349,16 +2368,16 @@ class DestinyDamageTypeDefinition(ManifestModel):
         transparent_icon_path: A variant of the icon that is transparent and colorless.
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    enum_value: Union["DamageType", int] = attr.field(converter=enum_converter("DamageType"))
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
-    show_icon: bool = attr.field()
-    transparent_icon_path: str = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    enum_value: Union["DamageType", int] = custom_field(converter=enum_converter("DamageType"))
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()
+    show_icon: bool = custom_field()
+    transparent_icon_path: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyObjectiveStatEntryDefinition(BaseModel):
     """
     Defines the conditions under which stat modifications will be applied to a Character while participating in an objective.
@@ -2369,11 +2388,13 @@ class DestinyObjectiveStatEntryDefinition(BaseModel):
         style: Whether it will be applied as long as the objective is active, when it's completed, or until it's completed.
     """
 
-    stat: "DestinyItemInvestmentStatDefinition" = attr.field()
-    style: Union["DestinyObjectiveGrantStyle", int] = attr.field(converter=enum_converter("DestinyObjectiveGrantStyle"))
+    stat: "DestinyItemInvestmentStatDefinition" = custom_field()
+    style: Union["DestinyObjectiveGrantStyle", int] = custom_field(
+        converter=enum_converter("DestinyObjectiveGrantStyle")
+    )
 
 
-@attr.define
+@custom_define()
 class DestinyItemInvestmentStatDefinition(BaseModel):
     """
     Represents a "raw" investment stat, before calculated stats are calculated and before any DestinyStatGroupDefinition is applied to transform the stat into something closer to what you see in-game. Because these won't match what you see in-game, consider carefully whether you really want to use these stats. I have left them in case someone can do something useful or interesting with the pre-processed statistics.
@@ -2394,13 +2415,13 @@ class DestinyItemInvestmentStatDefinition(BaseModel):
         manifest_stat_type_hash: Manifest information for `stat_type_hash`
     """
 
-    is_conditionally_active: bool = attr.field()
-    stat_type_hash: int = attr.field()
-    value: int = attr.field()
-    manifest_stat_type_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
+    is_conditionally_active: bool = custom_field()
+    stat_type_hash: int = custom_field()
+    value: int = custom_field()
+    manifest_stat_type_hash: Optional["DestinyStatDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyLocationDefinition(ManifestModel):
     """
     A "Location" is a sort of shortcut for referring to a specific combination of Activity, Destination, Place, and even Bubble or NavPoint within a space. Most of this data isn't intrinsically useful to us, but Objectives refer to locations, and through that we can at least infer the Activity, Destination, and Place being referred to by the Objective.
@@ -2423,17 +2444,17 @@ class DestinyLocationDefinition(ManifestModel):
         manifest_vendor_hash: Manifest information for `vendor_hash`
     """
 
-    hash: int = attr.field()
-    index: int = attr.field()
-    location_releases: list["DestinyLocationReleaseDefinition"] = attr.field(
+    hash: int = custom_field()
+    index: int = custom_field()
+    location_releases: list["DestinyLocationReleaseDefinition"] = custom_field(
         metadata={"type": """list[DestinyLocationReleaseDefinition]"""}
     )
-    redacted: bool = attr.field()
-    vendor_hash: int = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    redacted: bool = custom_field()
+    vendor_hash: int = custom_field()
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyLocationReleaseDefinition(BaseModel):
     """
     A specific "spot" referred to by a location. Only one of these can be active at a time for a given Location.
@@ -2466,27 +2487,27 @@ class DestinyLocationReleaseDefinition(BaseModel):
         manifest_destination_hash: Manifest information for `destination_hash`
     """
 
-    activity_bubble_name: int = attr.field()
-    activity_graph_hash: int = attr.field()
-    activity_graph_node_hash: int = attr.field()
-    activity_hash: int = attr.field()
-    activity_path_bundle: int = attr.field()
-    activity_path_destination: int = attr.field()
-    destination_hash: int = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    large_transparent_icon: str = attr.field()
-    map_icon: str = attr.field()
-    nav_point_type: Union["DestinyActivityNavPointType", int] = attr.field(
+    activity_bubble_name: int = custom_field()
+    activity_graph_hash: int = custom_field()
+    activity_graph_node_hash: int = custom_field()
+    activity_hash: int = custom_field()
+    activity_path_bundle: int = custom_field()
+    activity_path_destination: int = custom_field()
+    destination_hash: int = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    large_transparent_icon: str = custom_field()
+    map_icon: str = custom_field()
+    nav_point_type: Union["DestinyActivityNavPointType", int] = custom_field(
         converter=enum_converter("DestinyActivityNavPointType")
     )
-    small_transparent_icon: str = attr.field()
-    spawn_point: int = attr.field()
-    world_position: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
+    small_transparent_icon: str = custom_field()
+    spawn_point: int = custom_field()
+    world_position: list[int] = custom_field(metadata={"type": """list[int]"""})
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
+    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyActivityUnlockStringDefinition(BaseModel):
     """
     Represents a status string that could be conditionally displayed about an activity. Note that externally, you can only see the strings themselves. Internally we combine this information with server state to determine which strings should be shown.
@@ -2496,10 +2517,10 @@ class DestinyActivityUnlockStringDefinition(BaseModel):
         display_string: The string to be displayed if the conditions are met.
     """
 
-    display_string: str = attr.field()
+    display_string: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyActivityPlaylistItemDefinition(BaseModel):
     """
     If the activity is a playlist, this is the definition for a specific entry in the playlist: a single possible combination of Activity and Activity Mode that can be chosen.
@@ -2523,18 +2544,18 @@ class DestinyActivityPlaylistItemDefinition(BaseModel):
         manifest_direct_activity_mode_hash: Manifest information for `direct_activity_mode_hash`
     """
 
-    activity_hash: int = attr.field()
-    activity_mode_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    activity_mode_types: list[Union["DestinyActivityModeType", int]] = attr.field(
+    activity_hash: int = custom_field()
+    activity_mode_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    activity_mode_types: list[Union["DestinyActivityModeType", int]] = custom_field(
         converter=enum_converter("DestinyActivityModeType")
     )
-    direct_activity_mode_hash: int = attr.field()
-    direct_activity_mode_type: int = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
-    manifest_direct_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = attr.field(default=None)
+    direct_activity_mode_hash: int = custom_field()
+    direct_activity_mode_type: int = custom_field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
+    manifest_direct_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyActivityModeDefinition(ManifestModel):
     """
     This definition represents an "Activity Mode" as it exists in the Historical Stats endpoints. An individual Activity Mode represents a collection of activities that are played in a certain way. For example, Nightfall Strikes are part of a "Nightfall" activity mode, and any activities played as the PVP mode "Clash" are part of the "Clash activity mode. Activity modes are nested under each other in a hierarchy, so that if you ask for - for example - "AllPvP", you will get any PVP activities that the user has played, regardless of what specific PVP mode was being played.
@@ -2557,27 +2578,27 @@ class DestinyActivityModeDefinition(ManifestModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    activity_mode_category: Union["DestinyActivityModeCategory", int] = attr.field(
+    activity_mode_category: Union["DestinyActivityModeCategory", int] = custom_field(
         converter=enum_converter("DestinyActivityModeCategory")
     )
-    activity_mode_mappings: dict[int, Union["DestinyActivityModeType", int]] = attr.field(
+    activity_mode_mappings: dict[int, Union["DestinyActivityModeType", int]] = custom_field(
         metadata={"type": """dict[int, DestinyActivityModeType]"""}
     )
-    display: bool = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    friendly_name: str = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    is_aggregate_mode: bool = attr.field()
-    is_team_based: bool = attr.field()
-    mode_type: Union["DestinyActivityModeType", int] = attr.field(converter=enum_converter("DestinyActivityModeType"))
-    order: int = attr.field()
-    parent_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    pgcr_image: str = attr.field()
-    redacted: bool = attr.field()
+    display: bool = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    friendly_name: str = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    is_aggregate_mode: bool = custom_field()
+    is_team_based: bool = custom_field()
+    mode_type: Union["DestinyActivityModeType", int] = custom_field(converter=enum_converter("DestinyActivityModeType"))
+    order: int = custom_field()
+    parent_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    pgcr_image: str = custom_field()
+    redacted: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyActivityMatchmakingBlockDefinition(BaseModel):
     """
     Information about matchmaking and party size for the activity.
@@ -2591,14 +2612,14 @@ class DestinyActivityMatchmakingBlockDefinition(BaseModel):
         requires_guardian_oath: If true, you have to Solemnly Swear to be up to Nothing But Good(tm) to play.
     """
 
-    is_matchmade: bool = attr.field()
-    max_party: int = attr.field()
-    max_players: int = attr.field()
-    min_party: int = attr.field()
-    requires_guardian_oath: bool = attr.field()
+    is_matchmade: bool = custom_field()
+    max_party: int = custom_field()
+    max_players: int = custom_field()
+    min_party: int = custom_field()
+    requires_guardian_oath: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyActivityGuidedBlockDefinition(BaseModel):
     """
     Guided Game information for this activity.
@@ -2610,12 +2631,12 @@ class DestinyActivityGuidedBlockDefinition(BaseModel):
         guided_min_lobby_size: The minimum amount of people that can be in the waiting lobby.
     """
 
-    guided_disband_count: int = attr.field()
-    guided_max_lobby_size: int = attr.field()
-    guided_min_lobby_size: int = attr.field()
+    guided_disband_count: int = custom_field()
+    guided_max_lobby_size: int = custom_field()
+    guided_min_lobby_size: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyActivityLoadoutRequirementSet(BaseModel):
     """
     _No description given by bungie._
@@ -2625,12 +2646,12 @@ class DestinyActivityLoadoutRequirementSet(BaseModel):
         requirements: The set of requirements that will be applied on the activity if this requirement set is active.
     """
 
-    requirements: list["DestinyActivityLoadoutRequirement"] = attr.field(
+    requirements: list["DestinyActivityLoadoutRequirement"] = custom_field(
         metadata={"type": """list[DestinyActivityLoadoutRequirement]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyActivityLoadoutRequirement(BaseModel):
     """
     _No description given by bungie._
@@ -2651,15 +2672,15 @@ class DestinyActivityLoadoutRequirement(BaseModel):
         manifest_equipment_slot_hash: Manifest information for `equipment_slot_hash`
     """
 
-    allowed_equipped_item_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    allowed_weapon_sub_types: list[Union["DestinyItemSubType", int]] = attr.field(
+    allowed_equipped_item_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    allowed_weapon_sub_types: list[Union["DestinyItemSubType", int]] = custom_field(
         converter=enum_converter("DestinyItemSubType")
     )
-    equipment_slot_hash: int = attr.field()
-    manifest_equipment_slot_hash: Optional["DestinyEquipmentSlotDefinition"] = attr.field(default=None)
+    equipment_slot_hash: int = custom_field()
+    manifest_equipment_slot_hash: Optional["DestinyEquipmentSlotDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyActivityInsertionPointDefinition(BaseModel):
     """
     A point of entry into an activity, gated by an unlock flag and with some more-or-less useless (for our purposes) phase information. I'm including it in case we end up being able to bolt more useful information onto it in the future. UPDATE: Turns out this information isn't actually useless, and is in fact actually useful for people. Who would have thought? We still don't have localized info for it, but at least this will help people when they're looking at phase indexes in stats data, or when they want to know what phases have been completed on a weekly achievement.
@@ -2669,10 +2690,10 @@ class DestinyActivityInsertionPointDefinition(BaseModel):
         phase_hash: A unique hash value representing the phase. This can be useful for, for example, comparing how different instances of Raids have phases in different orders!
     """
 
-    phase_hash: int = attr.field()
+    phase_hash: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyPlaceDefinition(ManifestModel):
     """
     Okay, so Activities (DestinyActivityDefinition) take place in Destinations (DestinyDestinationDefinition). Destinations are part of larger locations known as Places (you're reading its documentation right now). Places are more on the planetary scale, like "Earth" and "Your Mom."
@@ -2685,13 +2706,13 @@ class DestinyPlaceDefinition(ManifestModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyActivityTypeDefinition(ManifestModel):
     """
     The definition for an Activity Type. In Destiny 2, an Activity Type represents a conceptual categorization of Activities. These are most commonly used in the game for the subtitle under Activities, but BNet uses them extensively to identify and group activities by their common properties. Unfortunately, there has been a movement away from providing the richer data in Destiny 2 that we used to get in Destiny 1 for Activity Types. For instance, Nightfalls are grouped under the same Activity Type as regular Strikes.  For this reason, BNet will eventually migrate toward Activity Modes as a better indicator of activity category. But for the time being, it is still referred to in many places across our codebase.
@@ -2704,13 +2725,13 @@ class DestinyActivityTypeDefinition(ManifestModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyUnlockExpressionDefinition(BaseModel):
     """
     Where the sausage gets made. Unlock Expressions are the foundation of the game's gating mechanics and investment-related restrictions. They can test Unlock Flags and Unlock Values for certain states, using a sufficient amount of logical operators such that unlock expressions are effectively Turing complete. Use UnlockExpressionParser to evaluate expressions using an IUnlockContext parsed from Babel.
@@ -2720,10 +2741,10 @@ class DestinyUnlockExpressionDefinition(BaseModel):
         scope: A shortcut for determining the most restrictive gating that this expression performs. See the DestinyGatingScope enum's documentation for more details.
     """
 
-    scope: Union["DestinyGatingScope", int] = attr.field(converter=enum_converter("DestinyGatingScope"))
+    scope: Union["DestinyGatingScope", int] = custom_field(converter=enum_converter("DestinyGatingScope"))
 
 
-@attr.define
+@custom_define()
 class DestinyDestinationBubbleSettingDefinition(BaseModel):
     """
     Human readable data about the bubble. Combine with DestinyBubbleDefinition - see DestinyDestinationDefinition.bubbleSettings for more information. DEPRECATED - Just use bubbles.
@@ -2733,10 +2754,10 @@ class DestinyDestinationBubbleSettingDefinition(BaseModel):
         display_properties: _No description given by bungie._
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyBubbleDefinition(BaseModel):
     """
     Basic identifying data about the bubble. Combine with DestinyDestinationBubbleSettingDefinition - see DestinyDestinationDefinition.bubbleSettings for more information.
@@ -2747,11 +2768,11 @@ class DestinyBubbleDefinition(BaseModel):
         hash: The identifier for the bubble: only guaranteed to be unique within the Destination.
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    hash: int = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    hash: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyVendorGroupReference(BaseModel):
     """
     _No description given by bungie._
@@ -2770,11 +2791,11 @@ class DestinyVendorGroupReference(BaseModel):
         manifest_vendor_group_hash: Manifest information for `vendor_group_hash`
     """
 
-    vendor_group_hash: int = attr.field()
-    manifest_vendor_group_hash: Optional["DestinyVendorGroupDefinition"] = attr.field(default=None)
+    vendor_group_hash: int = custom_field()
+    manifest_vendor_group_hash: Optional["DestinyVendorGroupDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyVendorGroupDefinition(ManifestModel):
     """
     BNet attempts to group vendors into similar collections. These groups aren't technically game canonical, but they are helpful for filtering vendors or showing them organized into a clean view on a webpage or app. These definitions represent the groups we've built. Unlike in Destiny 1, a Vendors' group may change dynamically as the game state changes: thus, you will want to check DestinyVendorComponent responses to find a vendor's currently active Group (if you care). Using this will let you group your vendors in your UI in a similar manner to how we will do grouping in the Companion.
@@ -2788,14 +2809,14 @@ class DestinyVendorGroupDefinition(ManifestModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    category_name: str = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    order: int = attr.field()
-    redacted: bool = attr.field()
+    category_name: str = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    order: int = custom_field()
+    redacted: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyFactionDefinition(ManifestModel):
     """
     These definitions represent Factions in the game. Factions have ended up unilaterally being related to Vendors that represent them, but that need not necessarily be the case. A Faction is really just an entity that has a related progression for which a character can gain experience. In Destiny 1, Dead Orbit was an example of a Faction: there happens to be a Vendor that represents Dead Orbit (and indeed, DestinyVendorDefinition.factionHash defines to this relationship), but Dead Orbit could theoretically exist without the Vendor that provides rewards.
@@ -2824,23 +2845,23 @@ class DestinyFactionDefinition(ManifestModel):
         manifest_reward_vendor_hash: Manifest information for `reward_vendor_hash`
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    progression_hash: int = attr.field()
-    redacted: bool = attr.field()
-    reward_item_hash: int = attr.field()
-    reward_vendor_hash: int = attr.field()
-    token_values: dict[int, int] = attr.field(metadata={"type": """dict[int, int]"""})
-    vendors: list["DestinyFactionVendorDefinition"] = attr.field(
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    progression_hash: int = custom_field()
+    redacted: bool = custom_field()
+    reward_item_hash: int = custom_field()
+    reward_vendor_hash: int = custom_field()
+    token_values: dict[int, int] = custom_field(metadata={"type": """dict[int, int]"""})
+    vendors: list["DestinyFactionVendorDefinition"] = custom_field(
         metadata={"type": """list[DestinyFactionVendorDefinition]"""}
     )
-    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
-    manifest_reward_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_reward_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = custom_field(default=None)
+    manifest_reward_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_reward_vendor_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyFactionVendorDefinition(BaseModel):
     """
     These definitions represent faction vendors at different points in the game. A single faction may contain multiple vendors, or the same vendor available at two different locations.
@@ -2862,14 +2883,14 @@ class DestinyFactionVendorDefinition(BaseModel):
         manifest_vendor_hash: Manifest information for `vendor_hash`
     """
 
-    background_image_path: str = attr.field()
-    destination_hash: int = attr.field()
-    vendor_hash: int = attr.field()
-    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = attr.field(default=None)
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    background_image_path: str = custom_field()
+    destination_hash: int = custom_field()
+    vendor_hash: int = custom_field()
+    manifest_destination_hash: Optional["DestinyDestinationDefinition"] = custom_field(default=None)
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinySandboxPatternDefinition(ManifestModel):
     """
     _No description given by bungie._
@@ -2888,21 +2909,21 @@ class DestinySandboxPatternDefinition(ManifestModel):
         weapon_type_hash: _No description given by bungie._
     """
 
-    filters: list["DestinyArrangementRegionFilterDefinition"] = attr.field(
+    filters: list["DestinyArrangementRegionFilterDefinition"] = custom_field(
         metadata={"type": """list[DestinyArrangementRegionFilterDefinition]"""}
     )
-    hash: int = attr.field()
-    index: int = attr.field()
-    pattern_global_tag_id_hash: int = attr.field()
-    pattern_hash: int = attr.field()
-    redacted: bool = attr.field()
-    weapon_content_group_hash: int = attr.field()
-    weapon_translation_group_hash: int = attr.field()
-    weapon_type: Union["DestinyItemSubType", int] = attr.field(converter=enum_converter("DestinyItemSubType"))
-    weapon_type_hash: int = attr.field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    pattern_global_tag_id_hash: int = custom_field()
+    pattern_hash: int = custom_field()
+    redacted: bool = custom_field()
+    weapon_content_group_hash: int = custom_field()
+    weapon_translation_group_hash: int = custom_field()
+    weapon_type: Union["DestinyItemSubType", int] = custom_field(converter=enum_converter("DestinyItemSubType"))
+    weapon_type_hash: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyArrangementRegionFilterDefinition(BaseModel):
     """
     _No description given by bungie._
@@ -2915,13 +2936,13 @@ class DestinyArrangementRegionFilterDefinition(BaseModel):
         stat_hash: _No description given by bungie._
     """
 
-    arrangement_index_by_stat_value: dict[int, int] = attr.field(metadata={"type": """dict[int, int]"""})
-    art_arrangement_region_hash: int = attr.field()
-    art_arrangement_region_index: int = attr.field()
-    stat_hash: int = attr.field()
+    arrangement_index_by_stat_value: dict[int, int] = custom_field(metadata={"type": """dict[int, int]"""})
+    art_arrangement_region_hash: int = custom_field()
+    art_arrangement_region_index: int = custom_field()
+    stat_hash: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyItemPreviewBlockDefinition(BaseModel):
     """
     Items like Sacks or Boxes can have items that it shows in-game when you view details that represent the items you can obtain if you use or acquire the item. This defines those categories, and gives some insights into that data's source.
@@ -2945,18 +2966,18 @@ class DestinyItemPreviewBlockDefinition(BaseModel):
         manifest_preview_vendor_hash: Manifest information for `preview_vendor_hash`
     """
 
-    artifact_hash: int = attr.field()
-    derived_item_categories: list["DestinyDerivedItemCategoryDefinition"] = attr.field(
+    artifact_hash: int = custom_field()
+    derived_item_categories: list["DestinyDerivedItemCategoryDefinition"] = custom_field(
         metadata={"type": """list[DestinyDerivedItemCategoryDefinition]"""}
     )
-    preview_action_string: str = attr.field()
-    preview_vendor_hash: int = attr.field()
-    screen_style: str = attr.field()
-    manifest_artifact_hash: Optional["DestinyArtifactDefinition"] = attr.field(default=None)
-    manifest_preview_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    preview_action_string: str = custom_field()
+    preview_vendor_hash: int = custom_field()
+    screen_style: str = custom_field()
+    manifest_artifact_hash: Optional["DestinyArtifactDefinition"] = custom_field(default=None)
+    manifest_preview_vendor_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemQualityBlockDefinition(BaseModel):
     """
     An item's "Quality" determines its calculated stats. The Level at which the item spawns is combined with its "qualityLevel" along with some additional calculations to determine the value of those stats. In Destiny 2, most items don't have default item levels and quality, making this property less useful: these apparently are almost always determined by the complex mechanisms of the Reward system rather than statically. They are still provided here in case they are still useful for people. This also contains some information about Infusion.
@@ -2983,23 +3004,23 @@ class DestinyItemQualityBlockDefinition(BaseModel):
         manifest_progression_level_requirement_hash: Manifest information for `progression_level_requirement_hash`
     """
 
-    current_version: int = attr.field()
-    display_version_watermark_icons: list[str] = attr.field(metadata={"type": """list[str]"""})
-    infusion_category_hash: int = attr.field()
-    infusion_category_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    infusion_category_name: str = attr.field()
-    item_levels: list[int] = attr.field(metadata={"type": """list[int]"""})
-    progression_level_requirement_hash: int = attr.field()
-    quality_level: int = attr.field()
-    versions: list["DestinyItemVersionDefinition"] = attr.field(
+    current_version: int = custom_field()
+    display_version_watermark_icons: list[str] = custom_field(metadata={"type": """list[str]"""})
+    infusion_category_hash: int = custom_field()
+    infusion_category_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    infusion_category_name: str = custom_field()
+    item_levels: list[int] = custom_field(metadata={"type": """list[int]"""})
+    progression_level_requirement_hash: int = custom_field()
+    quality_level: int = custom_field()
+    versions: list["DestinyItemVersionDefinition"] = custom_field(
         metadata={"type": """list[DestinyItemVersionDefinition]"""}
     )
-    manifest_progression_level_requirement_hash: Optional["DestinyProgressionLevelRequirementDefinition"] = attr.field(
-        default=None
-    )
+    manifest_progression_level_requirement_hash: Optional[
+        "DestinyProgressionLevelRequirementDefinition"
+    ] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemVersionDefinition(BaseModel):
     """
     The version definition currently just holds a reference to the power cap.
@@ -3018,11 +3039,11 @@ class DestinyItemVersionDefinition(BaseModel):
         manifest_power_cap_hash: Manifest information for `power_cap_hash`
     """
 
-    power_cap_hash: int = attr.field()
-    manifest_power_cap_hash: Optional["DestinyPowerCapDefinition"] = attr.field(default=None)
+    power_cap_hash: int = custom_field()
+    manifest_power_cap_hash: Optional["DestinyPowerCapDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemValueBlockDefinition(BaseModel):
     """
     This defines an item's "Value". Unfortunately, this appears to be used in different ways depending on the way that the item itself is used. For items being sold at a Vendor, this is the default "sale price" of the item. These days, the vendor itself almost always sets the price, but it still possible for the price to fall back to this value. For quests, it is a preview of rewards you can gain by completing the quest. For dummy items, if the itemValue refers to an Emblem, it is the emblem that should be shown as the reward. (jeez louise) It will likely be used in a number of other ways in the future, it appears to be a bucket where they put arbitrary items and quantities into the item.
@@ -3033,11 +3054,11 @@ class DestinyItemValueBlockDefinition(BaseModel):
         value_description: If there's a localized text description of the value provided, this will be said description.
     """
 
-    item_value: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})
-    value_description: str = attr.field()
+    item_value: list["DestinyItemQuantity"] = custom_field(metadata={"type": """list[DestinyItemQuantity]"""})
+    value_description: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyItemSourceBlockDefinition(BaseModel):
     """
     Data about an item's "sources": ways that the item can be obtained.
@@ -3050,17 +3071,17 @@ class DestinyItemSourceBlockDefinition(BaseModel):
         vendor_sources: A denormalized reference back to vendors that potentially sell this item.
     """
 
-    exclusive: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
-    source_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    sources: list["DestinyItemSourceDefinition"] = attr.field(
+    exclusive: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
+    source_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    sources: list["DestinyItemSourceDefinition"] = custom_field(
         metadata={"type": """list[DestinyItemSourceDefinition]"""}
     )
-    vendor_sources: list["DestinyItemVendorSourceReference"] = attr.field(
+    vendor_sources: list["DestinyItemVendorSourceReference"] = custom_field(
         metadata={"type": """list[DestinyItemVendorSourceReference]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyRewardSourceDefinition(ManifestModel):
     """
     Represents a heuristically-determined "item source" according to Bungie.net. These item sources are non-canonical: we apply a combination of special configuration and often-fragile heuristics to attempt to discern whether an item should be part of a given "source," but we have known cases of false positives and negatives due to our imperfect heuristics. Still, they provide a decent approximation for people trying to figure out how an item can be obtained. DestinyInventoryItemDefinition refers to sources in the sourceDatas.sourceHashes property for all sources we determined the item could spawn from. An example in Destiny 1 of a Source would be "Nightfall". If an item has the "Nightfall" source associated with it, it's extremely likely that you can earn that item while playing Nightfall, either during play or as an after-completion reward.
@@ -3074,13 +3095,13 @@ class DestinyRewardSourceDefinition(ManifestModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    category: Union["DestinyRewardSourceCategory", int] = attr.field(
+    category: Union["DestinyRewardSourceCategory", int] = custom_field(
         converter=enum_converter("DestinyRewardSourceCategory")
     )
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()
 
 
 class DestinyRewardSourceCategory(BaseEnum):
@@ -3098,7 +3119,7 @@ class DestinyRewardSourceCategory(BaseEnum):
     """This source is a custom aggregation of items that can be earned in many ways, but that share some other property in common that is useful to share. For instance, in Destiny 1 we would make "Reward Sources" for every game expansion: that way, you could search reward sources to see what items became available with any given Expansion. """
 
 
-@attr.define
+@custom_define()
 class DestinyItemVendorSourceReference(BaseModel):
     """
     Represents that a vendor could sell this item, and provides a quick link to that vendor and sale item.  Note that we do not and cannot make a guarantee that the vendor will ever *actually* sell this item, only that the Vendor has a definition that indicates it *could* be sold.  Note also that a vendor may sell the same item in multiple "ways", which means there may be multiple vendorItemIndexes for a single Vendor hash.
@@ -3118,12 +3139,12 @@ class DestinyItemVendorSourceReference(BaseModel):
         manifest_vendor_hash: Manifest information for `vendor_hash`
     """
 
-    vendor_hash: int = attr.field()
-    vendor_item_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    vendor_hash: int = custom_field()
+    vendor_item_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemObjectiveBlockDefinition(BaseModel):
     """
     An item can have objectives on it. In practice, these are the exclusive purview of "Quest Step" items: DestinyInventoryItemDefinitions that represent a specific step in a Quest. Quest steps have 1:M objectives that we end up processing and returning in live data as DestinyQuestStatus data, and other useful information.
@@ -3151,22 +3172,22 @@ class DestinyItemObjectiveBlockDefinition(BaseModel):
         manifest_questline_item_hash: Manifest information for `questline_item_hash`
     """
 
-    display_activity_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    display_as_stat_tracker: bool = attr.field()
-    narrative: str = attr.field()
-    objective_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    objective_verb_name: str = attr.field()
-    per_objective_display_properties: list["DestinyObjectiveDisplayProperties"] = attr.field(
+    display_activity_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    display_as_stat_tracker: bool = custom_field()
+    narrative: str = custom_field()
+    objective_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    objective_verb_name: str = custom_field()
+    per_objective_display_properties: list["DestinyObjectiveDisplayProperties"] = custom_field(
         metadata={"type": """list[DestinyObjectiveDisplayProperties]"""}
     )
-    quest_type_hash: int = attr.field()
-    quest_type_identifier: str = attr.field()
-    questline_item_hash: int = attr.field()
-    require_full_objective_completion: bool = attr.field()
-    manifest_questline_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    quest_type_hash: int = custom_field()
+    quest_type_identifier: str = custom_field()
+    questline_item_hash: int = custom_field()
+    require_full_objective_completion: bool = custom_field()
+    manifest_questline_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyObjectiveDisplayProperties(BaseModel):
     """
     _No description given by bungie._
@@ -3186,12 +3207,12 @@ class DestinyObjectiveDisplayProperties(BaseModel):
         manifest_activity_hash: Manifest information for `activity_hash`
     """
 
-    activity_hash: int = attr.field()
-    display_on_item_preview_screen: bool = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    activity_hash: int = custom_field()
+    display_on_item_preview_screen: bool = custom_field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemMetricBlockDefinition(BaseModel):
     """
     The metrics available for display and selection on an item.
@@ -3201,10 +3222,10 @@ class DestinyItemMetricBlockDefinition(BaseModel):
         available_metric_category_node_hashes: Hash identifiers for any DestinyPresentationNodeDefinition entry that can be used to list available metrics. Any metric listed directly below these nodes, or in any of these nodes' children will be made available for selection.
     """
 
-    available_metric_category_node_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
+    available_metric_category_node_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
 
 
-@attr.define
+@custom_define()
 class DestinyUnlockValueDefinition(BaseModel):
     """
     An Unlock Value is an internal integer value, stored on the server and used in a variety of ways, most frequently for the gating/requirement checks that the game performs across all of its main features. They can also be used as the storage data for mapped Progressions, Objectives, and other features that require storage of variable numeric values.
@@ -3216,12 +3237,12 @@ class DestinyUnlockValueDefinition(BaseModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyItemGearsetBlockDefinition(BaseModel):
     """
     If an item has a related gearset, this is the list of items in that set, and an unlock expression that evaluates to a number representing the progress toward gearset completion (a very rare use for unlock expressions!)
@@ -3232,11 +3253,11 @@ class DestinyItemGearsetBlockDefinition(BaseModel):
         tracking_value_max: The maximum possible number of items that can be collected.
     """
 
-    item_list: list[int] = attr.field(metadata={"type": """list[int]"""})
-    tracking_value_max: int = attr.field()
+    item_list: list[int] = custom_field(metadata={"type": """list[int]"""})
+    tracking_value_max: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyItemSackBlockDefinition(BaseModel):
     """
     Some items are "sacks" - they can be "opened" to produce other items. This is information related to its sack status, mostly UI strings. Engrams are an example of items that are considered to be "Sacks".
@@ -3250,14 +3271,14 @@ class DestinyItemSackBlockDefinition(BaseModel):
         vendor_sack_type: _No description given by bungie._
     """
 
-    detail_action: str = attr.field()
-    open_action: str = attr.field()
-    open_on_acquire: bool = attr.field()
-    select_item_count: int = attr.field()
-    vendor_sack_type: str = attr.field()
+    detail_action: str = custom_field()
+    open_action: str = custom_field()
+    open_on_acquire: bool = custom_field()
+    select_item_count: int = custom_field()
+    vendor_sack_type: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyItemSocketBlockDefinition(BaseModel):
     """
     If defined, the item has at least one socket.
@@ -3270,19 +3291,19 @@ class DestinyItemSocketBlockDefinition(BaseModel):
         socket_entries: Each non-intrinsic (or mutable) socket on an item is defined here. Check inside for more info.
     """
 
-    detail: str = attr.field()
-    intrinsic_sockets: list["DestinyItemIntrinsicSocketEntryDefinition"] = attr.field(
+    detail: str = custom_field()
+    intrinsic_sockets: list["DestinyItemIntrinsicSocketEntryDefinition"] = custom_field(
         metadata={"type": """list[DestinyItemIntrinsicSocketEntryDefinition]"""}
     )
-    socket_categories: list["DestinyItemSocketCategoryDefinition"] = attr.field(
+    socket_categories: list["DestinyItemSocketCategoryDefinition"] = custom_field(
         metadata={"type": """list[DestinyItemSocketCategoryDefinition]"""}
     )
-    socket_entries: list["DestinyItemSocketEntryDefinition"] = attr.field(
+    socket_entries: list["DestinyItemSocketEntryDefinition"] = custom_field(
         metadata={"type": """list[DestinyItemSocketEntryDefinition]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyItemSocketEntryDefinition(BaseModel):
     """
     The definition information for a specific socket on an item. This will determine how the socket behaves in-game.
@@ -3312,24 +3333,24 @@ class DestinyItemSocketEntryDefinition(BaseModel):
         manifest_socket_type_hash: Manifest information for `socket_type_hash`
     """
 
-    default_visible: bool = attr.field()
-    hide_perks_in_item_tooltip: bool = attr.field()
-    plug_sources: Union["SocketPlugSources", int] = attr.field(converter=enum_converter("SocketPlugSources"))
-    prevent_initialization_on_vendor_purchase: bool = attr.field()
-    randomized_plug_set_hash: int = attr.field()
-    reusable_plug_items: list["DestinyItemSocketEntryPlugItemDefinition"] = attr.field(
+    default_visible: bool = custom_field()
+    hide_perks_in_item_tooltip: bool = custom_field()
+    plug_sources: Union["SocketPlugSources", int] = custom_field(converter=enum_converter("SocketPlugSources"))
+    prevent_initialization_on_vendor_purchase: bool = custom_field()
+    randomized_plug_set_hash: int = custom_field()
+    reusable_plug_items: list["DestinyItemSocketEntryPlugItemDefinition"] = custom_field(
         metadata={"type": """list[DestinyItemSocketEntryPlugItemDefinition]"""}
     )
-    reusable_plug_set_hash: int = attr.field()
-    single_initial_item_hash: int = attr.field()
-    socket_type_hash: int = attr.field()
-    manifest_randomized_plug_set_hash: Optional["DestinyPlugSetDefinition"] = attr.field(default=None)
-    manifest_reusable_plug_set_hash: Optional["DestinyPlugSetDefinition"] = attr.field(default=None)
-    manifest_single_initial_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = attr.field(default=None)
+    reusable_plug_set_hash: int = custom_field()
+    single_initial_item_hash: int = custom_field()
+    socket_type_hash: int = custom_field()
+    manifest_randomized_plug_set_hash: Optional["DestinyPlugSetDefinition"] = custom_field(default=None)
+    manifest_reusable_plug_set_hash: Optional["DestinyPlugSetDefinition"] = custom_field(default=None)
+    manifest_single_initial_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemSocketEntryPlugItemDefinition(BaseModel):
     """
     The definition of a known, reusable plug that can be applied to a socket.
@@ -3348,11 +3369,11 @@ class DestinyItemSocketEntryPlugItemDefinition(BaseModel):
         manifest_plug_item_hash: Manifest information for `plug_item_hash`
     """
 
-    plug_item_hash: int = attr.field()
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    plug_item_hash: int = custom_field()
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemSocketEntryPlugItemRandomizedDefinition(BaseModel):
     """
     _No description given by bungie._
@@ -3373,13 +3394,13 @@ class DestinyItemSocketEntryPlugItemRandomizedDefinition(BaseModel):
         manifest_plug_item_hash: Manifest information for `plug_item_hash`
     """
 
-    crafting_requirements: "DestinyPlugItemCraftingRequirements" = attr.field()
-    currently_can_roll: bool = attr.field()
-    plug_item_hash: int = attr.field()
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    crafting_requirements: "DestinyPlugItemCraftingRequirements" = custom_field()
+    currently_can_roll: bool = custom_field()
+    plug_item_hash: int = custom_field()
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyPlugItemCraftingRequirements(BaseModel):
     """
     _No description given by bungie._
@@ -3391,14 +3412,14 @@ class DestinyPlugItemCraftingRequirements(BaseModel):
         unlock_requirements: _No description given by bungie._
     """
 
-    material_requirement_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    required_level: int = attr.field()
-    unlock_requirements: list["DestinyPlugItemCraftingUnlockRequirement"] = attr.field(
+    material_requirement_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    required_level: int = custom_field()
+    unlock_requirements: list["DestinyPlugItemCraftingUnlockRequirement"] = custom_field(
         metadata={"type": """list[DestinyPlugItemCraftingUnlockRequirement]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyPlugItemCraftingUnlockRequirement(BaseModel):
     """
     _No description given by bungie._
@@ -3408,10 +3429,10 @@ class DestinyPlugItemCraftingUnlockRequirement(BaseModel):
         failure_description: _No description given by bungie._
     """
 
-    failure_description: str = attr.field()
+    failure_description: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyItemIntrinsicSocketEntryDefinition(BaseModel):
     """
     Represents a socket that has a plug associated with it intrinsically. This is useful for situations where the weapon needs to have a visual plug/Mod on it, but that plug/Mod should never change.
@@ -3433,14 +3454,14 @@ class DestinyItemIntrinsicSocketEntryDefinition(BaseModel):
         manifest_socket_type_hash: Manifest information for `socket_type_hash`
     """
 
-    default_visible: bool = attr.field()
-    plug_item_hash: int = attr.field()
-    socket_type_hash: int = attr.field()
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = attr.field(default=None)
+    default_visible: bool = custom_field()
+    plug_item_hash: int = custom_field()
+    socket_type_hash: int = custom_field()
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemSocketCategoryDefinition(BaseModel):
     """
     Sockets are grouped into categories in the UI. These define which category and which sockets are under that category.
@@ -3460,12 +3481,12 @@ class DestinyItemSocketCategoryDefinition(BaseModel):
         manifest_socket_category_hash: Manifest information for `socket_category_hash`
     """
 
-    socket_category_hash: int = attr.field()
-    socket_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_socket_category_hash: Optional["DestinySocketCategoryDefinition"] = attr.field(default=None)
+    socket_category_hash: int = custom_field()
+    socket_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    manifest_socket_category_hash: Optional["DestinySocketCategoryDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemSummaryBlockDefinition(BaseModel):
     """
     This appears to be information used when rendering rewards. We don't currently use it on BNet.
@@ -3475,10 +3496,10 @@ class DestinyItemSummaryBlockDefinition(BaseModel):
         sort_priority: Apparently when rendering an item in a reward, this should be used as a sort priority. We're not doing it presently.
     """
 
-    sort_priority: int = attr.field()
+    sort_priority: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyItemTalentGridBlockDefinition(BaseModel):
     """
     This defines information that can only come from a talent grid on an item. Items mostly have negligible talent grid data these days, but instanced items still retain grids as a source for some of this common information. Builds/Subclasses are the only items left that still have talent grids with meaningful Nodes.
@@ -3501,15 +3522,15 @@ class DestinyItemTalentGridBlockDefinition(BaseModel):
         manifest_talent_grid_hash: Manifest information for `talent_grid_hash`
     """
 
-    build_name: str = attr.field()
-    hud_damage_type: Union["DamageType", int] = attr.field(converter=enum_converter("DamageType"))
-    hud_icon: str = attr.field()
-    item_detail_string: str = attr.field()
-    talent_grid_hash: int = attr.field()
-    manifest_talent_grid_hash: Optional["DestinyTalentGridDefinition"] = attr.field(default=None)
+    build_name: str = custom_field()
+    hud_damage_type: Union["DamageType", int] = custom_field(converter=enum_converter("DamageType"))
+    hud_icon: str = custom_field()
+    item_detail_string: str = custom_field()
+    talent_grid_hash: int = custom_field()
+    manifest_talent_grid_hash: Optional["DestinyTalentGridDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyTalentGridDefinition(ManifestModel):
     """
     The time has unfortunately come to talk about Talent Grids. Talent Grids are the most complex and unintuitive part of the Destiny Definition data. Grab a cup of coffee before we begin, I can wait. Talent Grids were the primary way that items could be customized in Destiny 1. In Destiny 2, for now, talent grids have become exclusively used by Subclass/Build items: but the system is still in place for it to be used by items should the direction change back toward talent grids. Talent Grids have Nodes: the visual circles on the talent grid detail screen that have icons and can be activated if you meet certain requirements and pay costs. The actual visual data and effects, however, are driven by the "Steps" on Talent Nodes. Any given node will have 1:M of these steps, and the specific step that will be considered the "current" step (and thus the dictator of all benefits, visual state, and activation requirements on the Node) will almost always not be determined until an instance of the item is created. This is how, in Destiny 1, items were able to have such a wide variety of what users saw as "Perks": they were actually Talent Grids with nodes that had a wide variety of Steps, randomly chosen at the time of item creation. Now that Talent Grids are used exclusively by subclasses and builds, all of the properties within still apply: but there are additional visual elements on the Subclass/Build screens that are superimposed on top of the talent nodes. Unfortunately, BNet doesn't have this data: if you want to build a subclass screen, you will have to provide your own "decorative" assets, such as the visual connectors between nodes and the fancy colored-fire-bathed character standing behind the nodes. DestinyInventoryItem.talentGrid.talentGridHash defines an item's linked Talent Grid, which brings you to this definition that contains enough satic data about talent grids to make your head spin. These *must* be combined with instanced data - found when live data returns DestinyItemTalentGridComponent - in order to derive meaning. The instanced data will reference nodes and steps within these definitions, which you will then have to look up in the definition and combine with the instanced data to give the user the visual representation of their item's talent grid.
@@ -3538,27 +3559,29 @@ class DestinyTalentGridDefinition(ManifestModel):
         manifest_progression_hash: Manifest information for `progression_hash`
     """
 
-    exclusive_sets: list["DestinyTalentNodeExclusiveSetDefinition"] = attr.field(
+    exclusive_sets: list["DestinyTalentNodeExclusiveSetDefinition"] = custom_field(
         metadata={"type": """list[DestinyTalentNodeExclusiveSetDefinition]"""}
     )
-    grid_level_per_column: int = attr.field()
-    groups: dict[int, "DestinyTalentExclusiveGroup"] = attr.field(
+    grid_level_per_column: int = custom_field()
+    groups: dict[int, "DestinyTalentExclusiveGroup"] = custom_field(
         metadata={"type": """dict[int, DestinyTalentExclusiveGroup]"""}
     )
-    hash: int = attr.field()
-    independent_node_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    index: int = attr.field()
-    max_grid_level: int = attr.field()
-    node_categories: list["DestinyTalentNodeCategory"] = attr.field(
+    hash: int = custom_field()
+    independent_node_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    index: int = custom_field()
+    max_grid_level: int = custom_field()
+    node_categories: list["DestinyTalentNodeCategory"] = custom_field(
         metadata={"type": """list[DestinyTalentNodeCategory]"""}
     )
-    nodes: list["DestinyTalentNodeDefinition"] = attr.field(metadata={"type": """list[DestinyTalentNodeDefinition]"""})
-    progression_hash: int = attr.field()
-    redacted: bool = attr.field()
-    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = attr.field(default=None)
+    nodes: list["DestinyTalentNodeDefinition"] = custom_field(
+        metadata={"type": """list[DestinyTalentNodeDefinition]"""}
+    )
+    progression_hash: int = custom_field()
+    redacted: bool = custom_field()
+    manifest_progression_hash: Optional["DestinyProgressionDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyTalentNodeDefinition(BaseModel):
     """
     Talent Grids on items have Nodes. These nodes have positions in the talent grid's UI, and contain "Steps" (DestinyTalentNodeStepDefinition), one of whom will be the "Current" step. The Current Step determines the visual properties of the node, as well as what the node grants when it is activated. See DestinyTalentGridDefinition for a more complete overview of how Talent Grids work, and how they are used in Destiny 2 (and how they were used in Destiny 1).
@@ -3595,29 +3618,29 @@ class DestinyTalentNodeDefinition(BaseModel):
         manifest_lore_hash: Manifest information for `lore_hash`
     """
 
-    auto_unlocks: bool = attr.field()
-    binary_pair_node_index: int = attr.field()
-    column: int = attr.field()
-    exclusive_with_node_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    group_hash: int = attr.field()
-    ignore_for_completion: bool = attr.field()
-    is_random: bool = attr.field()
-    is_random_repurchasable: bool = attr.field()
-    last_step_repeats: bool = attr.field()
-    layout_identifier: str = attr.field()
-    lore_hash: int = attr.field()
-    node_hash: int = attr.field()
-    node_index: int = attr.field()
-    node_style_identifier: str = attr.field()
-    prerequisite_node_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    random_activation_requirement: "DestinyNodeActivationRequirement" = attr.field()
-    random_start_progression_bar_at_progression: int = attr.field()
-    row: int = attr.field()
-    steps: list["DestinyNodeStepDefinition"] = attr.field(metadata={"type": """list[DestinyNodeStepDefinition]"""})
-    manifest_lore_hash: Optional["DestinyLoreDefinition"] = attr.field(default=None)
+    auto_unlocks: bool = custom_field()
+    binary_pair_node_index: int = custom_field()
+    column: int = custom_field()
+    exclusive_with_node_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    group_hash: int = custom_field()
+    ignore_for_completion: bool = custom_field()
+    is_random: bool = custom_field()
+    is_random_repurchasable: bool = custom_field()
+    last_step_repeats: bool = custom_field()
+    layout_identifier: str = custom_field()
+    lore_hash: int = custom_field()
+    node_hash: int = custom_field()
+    node_index: int = custom_field()
+    node_style_identifier: str = custom_field()
+    prerequisite_node_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    random_activation_requirement: "DestinyNodeActivationRequirement" = custom_field()
+    random_start_progression_bar_at_progression: int = custom_field()
+    row: int = custom_field()
+    steps: list["DestinyNodeStepDefinition"] = custom_field(metadata={"type": """list[DestinyNodeStepDefinition]"""})
+    manifest_lore_hash: Optional["DestinyLoreDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyNodeActivationRequirement(BaseModel):
     """
     Talent nodes have requirements that must be met before they can be activated. This describes the material costs, the Level of the Talent Grid's progression required, and other conditional information that limits whether a talent node can be activated.
@@ -3628,11 +3651,11 @@ class DestinyNodeActivationRequirement(BaseModel):
         material_requirement_hashes: The list of hash identifiers for material requirement sets: materials that are required for the node to be activated. See DestinyMaterialRequirementSetDefinition for more information about material requirements. In this case, only a single DestinyMaterialRequirementSetDefinition will be chosen from this list, and we won't know which one will be chosen until an instance of the item is created.
     """
 
-    grid_level: int = attr.field()
-    material_requirement_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
+    grid_level: int = custom_field()
+    material_requirement_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
 
 
-@attr.define
+@custom_define()
 class DestinyNodeStepDefinition(BaseModel):
     """
     This defines the properties of a "Talent Node Step". When you see a talent node in game, the actual visible properties that you see (its icon, description, the perks and stats it provides) are not provided by the Node itself, but rather by the currently active Step on the node. When a Talent Node is activated, the currently active step's benefits are conferred upon the item and character. The currently active step on talent nodes are determined when an item is first instantiated. Sometimes it is random, sometimes it is more deterministic (particularly when a node has only a single step). Note that, when dealing with Talent Node Steps, you must ensure that you have the latest version of content. stepIndex and nodeStepHash - two ways of identifying the step within a node - are both content version dependent, and thus are subject to change between content updates.
@@ -3667,29 +3690,29 @@ class DestinyNodeStepDefinition(BaseModel):
         manifest_damage_type_hash: Manifest information for `damage_type_hash`
     """
 
-    activation_requirement: "DestinyNodeActivationRequirement" = attr.field()
-    affects_level: bool = attr.field()
-    affects_quality: bool = attr.field()
-    can_activate_next_step: bool = attr.field()
-    damage_type: Union["DamageType", int] = attr.field(converter=enum_converter("DamageType"))
-    damage_type_hash: int = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    interaction_description: str = attr.field()
-    is_next_step_random: bool = attr.field()
-    next_step_index: int = attr.field()
-    node_step_hash: int = attr.field()
-    perk_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    socket_replacements: list["DestinyNodeSocketReplaceResponse"] = attr.field(
+    activation_requirement: "DestinyNodeActivationRequirement" = custom_field()
+    affects_level: bool = custom_field()
+    affects_quality: bool = custom_field()
+    can_activate_next_step: bool = custom_field()
+    damage_type: Union["DamageType", int] = custom_field(converter=enum_converter("DamageType"))
+    damage_type_hash: int = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    interaction_description: str = custom_field()
+    is_next_step_random: bool = custom_field()
+    next_step_index: int = custom_field()
+    node_step_hash: int = custom_field()
+    perk_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    socket_replacements: list["DestinyNodeSocketReplaceResponse"] = custom_field(
         metadata={"type": """list[DestinyNodeSocketReplaceResponse]"""}
     )
-    start_progression_bar_at_progress: int = attr.field()
-    stat_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    step_groups: "DestinyTalentNodeStepGroups" = attr.field()
-    step_index: int = attr.field()
-    manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = attr.field(default=None)
+    start_progression_bar_at_progress: int = custom_field()
+    stat_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    step_groups: "DestinyTalentNodeStepGroups" = custom_field()
+    step_index: int = custom_field()
+    manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyNodeSocketReplaceResponse(BaseModel):
     """
     This is a bit of an odd duck. Apparently, if talent nodes steps have this data, the game will go through on step activation and alter the first Socket it finds on the item that has a type matching the given socket type, inserting the indicated plug item.
@@ -3710,13 +3733,13 @@ class DestinyNodeSocketReplaceResponse(BaseModel):
         manifest_socket_type_hash: Manifest information for `socket_type_hash`
     """
 
-    plug_item_hash: int = attr.field()
-    socket_type_hash: int = attr.field()
-    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = attr.field(default=None)
+    plug_item_hash: int = custom_field()
+    socket_type_hash: int = custom_field()
+    manifest_plug_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_socket_type_hash: Optional["DestinySocketTypeDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyTalentNodeExclusiveSetDefinition(BaseModel):
     """
     The list of indexes into the Talent Grid's "nodes" property for nodes in this exclusive set. (See DestinyTalentNodeDefinition.nodeIndex)
@@ -3726,10 +3749,10 @@ class DestinyTalentNodeExclusiveSetDefinition(BaseModel):
         node_indexes: The list of node indexes for the exclusive set. Historically, these were indexes. I would have liked to replace this with nodeHashes for consistency, but it's way too late for that. (9:09 PM, he's right!)
     """
 
-    node_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
+    node_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
 
 
-@attr.define
+@custom_define()
 class DestinyTalentExclusiveGroup(BaseModel):
     """
     As of Destiny 2, nodes can exist as part of "Exclusive Groups". These differ from exclusive sets in that, within the group, many nodes can be activated. But the act of activating any node in the group will cause "opposing" nodes (nodes in groups that are not allowed to be activated at the same time as this group) to deactivate.
@@ -3752,15 +3775,15 @@ class DestinyTalentExclusiveGroup(BaseModel):
         manifest_lore_hash: Manifest information for `lore_hash`
     """
 
-    group_hash: int = attr.field()
-    lore_hash: int = attr.field()
-    node_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    opposing_group_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    opposing_node_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    manifest_lore_hash: Optional["DestinyLoreDefinition"] = attr.field(default=None)
+    group_hash: int = custom_field()
+    lore_hash: int = custom_field()
+    node_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    opposing_group_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    opposing_node_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    manifest_lore_hash: Optional["DestinyLoreDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyTalentNodeCategory(BaseModel):
     """
     An artificial construct provided by Bungie.Net, where we attempt to group talent nodes by functionality. This is a single set of references to Talent Nodes that share a common trait or purpose.
@@ -3773,13 +3796,13 @@ class DestinyTalentNodeCategory(BaseModel):
         node_hashes: The set of all hash identifiers for Talent Nodes (DestinyTalentNodeDefinition) in this Talent Grid that are part of this Category.
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    identifier: str = attr.field()
-    is_lore_driven: bool = attr.field()
-    node_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    identifier: str = custom_field()
+    is_lore_driven: bool = custom_field()
+    node_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
 
 
-@attr.define
+@custom_define()
 class DestinyItemPerkEntryDefinition(BaseModel):
     """
     An intrinsic perk on an item, and the requirements for it to be activated.
@@ -3800,13 +3823,13 @@ class DestinyItemPerkEntryDefinition(BaseModel):
         manifest_perk_hash: Manifest information for `perk_hash`
     """
 
-    perk_hash: int = attr.field()
-    perk_visibility: Union["ItemPerkVisibility", int] = attr.field(converter=enum_converter("ItemPerkVisibility"))
-    requirement_display_string: str = attr.field()
-    manifest_perk_hash: Optional["DestinySandboxPerkDefinition"] = attr.field(default=None)
+    perk_hash: int = custom_field()
+    perk_visibility: Union["ItemPerkVisibility", int] = custom_field(converter=enum_converter("ItemPerkVisibility"))
+    requirement_display_string: str = custom_field()
+    manifest_perk_hash: Optional["DestinySandboxPerkDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyItemCategoryDefinition(ManifestModel):
     """
     In an attempt to categorize items by type, usage, and other interesting properties, we created DestinyItemCategoryDefinition: information about types that is assembled using a set of heuristics that examine the properties of an item such as what inventory bucket it's in, its item type name, and whether it has or is missing certain blocks of data. This heuristic is imperfect, however. If you find an item miscategorized, let us know on the Bungie API forums! We then populate all of the categories that we think an item belongs to in its DestinyInventoryItemDefinition.itemCategoryHashes property. You can use that to provide your own custom item filtering, sorting, aggregating... go nuts on it! And let us know if you see more categories that you wish would be added!
@@ -3834,32 +3857,32 @@ class DestinyItemCategoryDefinition(ManifestModel):
         visible: If True, this category should be visible in UI. Sometimes we make categories that we don't think are interesting externally. It's up to you if you want to skip on showing them.
     """
 
-    deprecated: bool = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    grant_destiny_breaker_type: Union["DestinyBreakerType", int] = attr.field(
+    deprecated: bool = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    grant_destiny_breaker_type: Union["DestinyBreakerType", int] = custom_field(
         converter=enum_converter("DestinyBreakerType")
     )
-    grant_destiny_class: Union["DestinyClass", int] = attr.field(converter=enum_converter("DestinyClass"))
-    grant_destiny_item_type: Union["DestinyItemType", int] = attr.field(converter=enum_converter("DestinyItemType"))
-    grant_destiny_sub_type: Union["DestinyItemSubType", int] = attr.field(
+    grant_destiny_class: Union["DestinyClass", int] = custom_field(converter=enum_converter("DestinyClass"))
+    grant_destiny_item_type: Union["DestinyItemType", int] = custom_field(converter=enum_converter("DestinyItemType"))
+    grant_destiny_sub_type: Union["DestinyItemSubType", int] = custom_field(
         converter=enum_converter("DestinyItemSubType")
     )
-    group_category_only: bool = attr.field()
-    grouped_category_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    hash: int = attr.field()
-    index: int = attr.field()
-    item_type_regex: str = attr.field()
-    item_type_regex_not: str = attr.field()
-    origin_bucket_identifier: str = attr.field()
-    parent_category_hashes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    plug_category_identifier: str = attr.field()
-    redacted: bool = attr.field()
-    short_title: str = attr.field()
-    trait_id: str = attr.field()
-    visible: bool = attr.field()
+    group_category_only: bool = custom_field()
+    grouped_category_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    hash: int = custom_field()
+    index: int = custom_field()
+    item_type_regex: str = custom_field()
+    item_type_regex_not: str = custom_field()
+    origin_bucket_identifier: str = custom_field()
+    parent_category_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    plug_category_identifier: str = custom_field()
+    redacted: bool = custom_field()
+    short_title: str = custom_field()
+    trait_id: str = custom_field()
+    visible: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyProgressionRewardItemQuantity(BaseModel):
     """
     _No description given by bungie._
@@ -3885,20 +3908,20 @@ class DestinyProgressionRewardItemQuantity(BaseModel):
         manifest_item_hash: Manifest information for `item_hash`
     """
 
-    acquisition_behavior: Union["DestinyProgressionRewardItemAcquisitionBehavior", int] = attr.field(
+    acquisition_behavior: Union["DestinyProgressionRewardItemAcquisitionBehavior", int] = custom_field(
         converter=enum_converter("DestinyProgressionRewardItemAcquisitionBehavior")
     )
-    claim_unlock_display_strings: list[str] = attr.field(metadata={"type": """list[str]"""})
-    has_conditional_visibility: bool = attr.field()
-    item_hash: int = attr.field()
-    item_instance_id: int = attr.field()
-    quantity: int = attr.field()
-    rewarded_at_progression_level: int = attr.field()
-    ui_display_style: str = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    claim_unlock_display_strings: list[str] = custom_field(metadata={"type": """list[str]"""})
+    has_conditional_visibility: bool = custom_field()
+    item_hash: int = custom_field()
+    item_instance_id: int = custom_field()
+    quantity: int = custom_field()
+    rewarded_at_progression_level: int = custom_field()
+    ui_display_style: str = custom_field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyRaceDefinition(ManifestModel):
     """
     In Destiny, "Races" are really more like "Species". Sort of. I mean, are the Awoken a separate species from humans? I'm not sure. But either way, they're defined here. You'll see Exo, Awoken, and Human as examples of these Species. Players will choose one for their character.
@@ -3914,18 +3937,18 @@ class DestinyRaceDefinition(ManifestModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    gendered_race_names: dict[Union["DestinyGender", int], str] = attr.field(
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    gendered_race_names: dict[Union["DestinyGender", int], str] = custom_field(
         metadata={"type": """dict[DestinyGender, str]"""}
     )
-    gendered_race_names_by_gender_hash: dict[int, str] = attr.field(metadata={"type": """dict[int, str]"""})
-    hash: int = attr.field()
-    index: int = attr.field()
-    race_type: Union["DestinyRace", int] = attr.field(converter=enum_converter("DestinyRace"))
-    redacted: bool = attr.field()
+    gendered_race_names_by_gender_hash: dict[int, str] = custom_field(metadata={"type": """dict[int, str]"""})
+    hash: int = custom_field()
+    index: int = custom_field()
+    race_type: Union["DestinyRace", int] = custom_field(converter=enum_converter("DestinyRace"))
+    redacted: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyUnlockDefinition(ManifestModel):
     """
     Unlock Flags are small bits (literally, a bit, as in a boolean value) that the game server uses for an extremely wide range of state checks, progress storage, and other interesting tidbits of information.
@@ -3938,13 +3961,13 @@ class DestinyUnlockDefinition(ManifestModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyMedalTierDefinition(ManifestModel):
     """
     An artificial construct of our own creation, to try and put some order on top of Medals and keep them from being one giant, unmanageable and unsorted blob of stats. Unfortunately, we haven't had time to do this evaluation yet in Destiny 2, so we're short on Medal Tiers. This will hopefully be updated over time, if Medals continue to exist.
@@ -3958,14 +3981,14 @@ class DestinyMedalTierDefinition(ManifestModel):
         tier_name: The name of the tier.
     """
 
-    hash: int = attr.field()
-    index: int = attr.field()
-    order: int = attr.field()
-    redacted: bool = attr.field()
-    tier_name: str = attr.field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    order: int = custom_field()
+    redacted: bool = custom_field()
+    tier_name: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyEntitySearchResult(BaseModel):
     """
     The results of a search for Destiny content. This will be improved on over time, I've been doing some experimenting to see what might be useful.
@@ -3976,11 +3999,11 @@ class DestinyEntitySearchResult(BaseModel):
         suggested_words: A list of suggested words that might make for better search results, based on the text searched for.
     """
 
-    results: "SearchResultOfDestinyEntitySearchResultItem" = attr.field()
-    suggested_words: list[str] = attr.field(metadata={"type": """list[str]"""})
+    results: "SearchResultOfDestinyEntitySearchResultItem" = custom_field()
+    suggested_words: list[str] = custom_field(metadata={"type": """list[str]"""})
 
 
-@attr.define
+@custom_define()
 class DestinyEntitySearchResultItem(BaseModel):
     """
     An individual Destiny Entity returned from the entity search.
@@ -3993,7 +4016,7 @@ class DestinyEntitySearchResultItem(BaseModel):
         weight: The ranking value for sorting that we calculated using our relevance formula. This will hopefully get better with time and iteration.
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    entity_type: str = attr.field()
-    hash: int = attr.field()
-    weight: float = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    entity_type: str = custom_field()
+    hash: int = custom_field()
+    weight: float = custom_field()

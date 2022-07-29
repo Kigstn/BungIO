@@ -4,9 +4,7 @@
 
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseModel, ManifestModel
+from bungio.models.base import BaseModel, ManifestModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -21,7 +19,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyActivityGraphDefinition(ManifestModel):
     """
     Represents a Map View in the director: be them overview views, destination views, or other. They have nodes which map to activities, and other various visual elements that we (or others) may or may not be able to use. Activity graphs, most importantly, have nodes which can have activities in various states of playability. Unfortunately, activity graphs are combined at runtime with Game UI-only assets such as fragments of map images, various in-game special effects, decals etc... that we don't get in these definitions. If we end up having time, we may end up trying to manually populate those here: but the last time we tried that, before the lead-up to D1, it proved to be unmaintainable as the game's content changed. So don't bet the farm on us providing that content in this definition.
@@ -39,30 +37,30 @@ class DestinyActivityGraphDefinition(ManifestModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    art_elements: list["DestinyActivityGraphArtElementDefinition"] = attr.field(
+    art_elements: list["DestinyActivityGraphArtElementDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityGraphArtElementDefinition]"""}
     )
-    connections: list["DestinyActivityGraphConnectionDefinition"] = attr.field(
+    connections: list["DestinyActivityGraphConnectionDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityGraphConnectionDefinition]"""}
     )
-    display_objectives: list["DestinyActivityGraphDisplayObjectiveDefinition"] = attr.field(
+    display_objectives: list["DestinyActivityGraphDisplayObjectiveDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityGraphDisplayObjectiveDefinition]"""}
     )
-    display_progressions: list["DestinyActivityGraphDisplayProgressionDefinition"] = attr.field(
+    display_progressions: list["DestinyActivityGraphDisplayProgressionDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityGraphDisplayProgressionDefinition]"""}
     )
-    hash: int = attr.field()
-    index: int = attr.field()
-    linked_graphs: list["DestinyLinkedGraphDefinition"] = attr.field(
+    hash: int = custom_field()
+    index: int = custom_field()
+    linked_graphs: list["DestinyLinkedGraphDefinition"] = custom_field(
         metadata={"type": """list[DestinyLinkedGraphDefinition]"""}
     )
-    nodes: list["DestinyActivityGraphNodeDefinition"] = attr.field(
+    nodes: list["DestinyActivityGraphNodeDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityGraphNodeDefinition]"""}
     )
-    redacted: bool = attr.field()
+    redacted: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyActivityGraphNodeDefinition(BaseModel):
     """
     This is the position and other data related to nodes in the activity graph that you can click to launch activities. An Activity Graph node will only have one active Activity at a time, which will determine the activity to be launched (and, unless overrideDisplay information is provided, will also determine the tooltip and other UI related to the node)
@@ -77,21 +75,21 @@ class DestinyActivityGraphNodeDefinition(BaseModel):
         states: Represents possible states that the graph node can be in. These are combined with some checking that happens in the game client and server to determine which state is actually active at any given time.
     """
 
-    activities: list["DestinyActivityGraphNodeActivityDefinition"] = attr.field(
+    activities: list["DestinyActivityGraphNodeActivityDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityGraphNodeActivityDefinition]"""}
     )
-    featuring_states: list["DestinyActivityGraphNodeFeaturingStateDefinition"] = attr.field(
+    featuring_states: list["DestinyActivityGraphNodeFeaturingStateDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityGraphNodeFeaturingStateDefinition]"""}
     )
-    node_id: int = attr.field()
-    override_display: "DestinyDisplayPropertiesDefinition" = attr.field()
-    position: "DestinyPositionDefinition" = attr.field()
-    states: list["DestinyActivityGraphNodeStateEntry"] = attr.field(
+    node_id: int = custom_field()
+    override_display: "DestinyDisplayPropertiesDefinition" = custom_field()
+    position: "DestinyPositionDefinition" = custom_field()
+    states: list["DestinyActivityGraphNodeStateEntry"] = custom_field(
         metadata={"type": """list[DestinyActivityGraphNodeStateEntry]"""}
     )
 
 
-@attr.define
+@custom_define()
 class DestinyActivityGraphNodeFeaturingStateDefinition(BaseModel):
     """
     Nodes can have different visual states. This object represents a single visual state ("highlight type") that a node can be in, and the unlock expression condition to determine whether it should be set.
@@ -101,12 +99,12 @@ class DestinyActivityGraphNodeFeaturingStateDefinition(BaseModel):
         highlight_type: The node can be highlighted in a variety of ways - the game iterates through these and finds the first FeaturingState that is valid at the present moment given the Game, Account, and Character state, and renders the node in that state. See the ActivityGraphNodeHighlightType enum for possible values.
     """
 
-    highlight_type: Union["ActivityGraphNodeHighlightType", int] = attr.field(
+    highlight_type: Union["ActivityGraphNodeHighlightType", int] = custom_field(
         converter=enum_converter("ActivityGraphNodeHighlightType")
     )
 
 
-@attr.define
+@custom_define()
 class DestinyActivityGraphNodeActivityDefinition(BaseModel):
     """
     The actual activity to be redirected to when you click on the node. Note that a node can have many Activities attached to it: but only one will be active at any given time. The list of Node Activities will be traversed, and the first one found to be active will be displayed. This way, a node can layer multiple variants of an activity on top of each other. For instance, one node can control the weekly Crucible Playlist. There are multiple possible playlists, but only one is active for the week.
@@ -126,12 +124,12 @@ class DestinyActivityGraphNodeActivityDefinition(BaseModel):
         manifest_activity_hash: Manifest information for `activity_hash`
     """
 
-    activity_hash: int = attr.field()
-    node_activity_id: int = attr.field()
-    manifest_activity_hash: Optional["DestinyActivityDefinition"] = attr.field(default=None)
+    activity_hash: int = custom_field()
+    node_activity_id: int = custom_field()
+    manifest_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyActivityGraphNodeStateEntry(BaseModel):
     """
     Represents a single state that a graph node might end up in. Depending on what's going on in the game, graph nodes could be shown in different ways or even excluded from view entirely.
@@ -141,10 +139,10 @@ class DestinyActivityGraphNodeStateEntry(BaseModel):
         state: _No description given by bungie._
     """
 
-    state: Union["DestinyGraphNodeState", int] = attr.field(converter=enum_converter("DestinyGraphNodeState"))
+    state: Union["DestinyGraphNodeState", int] = custom_field(converter=enum_converter("DestinyGraphNodeState"))
 
 
-@attr.define
+@custom_define()
 class DestinyActivityGraphArtElementDefinition(BaseModel):
     """
     These Art Elements are meant to represent one-off visual effects overlaid on the map. Currently, we do not have a pipeline to import the assets for these overlays, so this info exists as a placeholder for when such a pipeline exists (if it ever will)
@@ -154,10 +152,10 @@ class DestinyActivityGraphArtElementDefinition(BaseModel):
         position: The position on the map of the art element.
     """
 
-    position: "DestinyPositionDefinition" = attr.field()
+    position: "DestinyPositionDefinition" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyActivityGraphConnectionDefinition(BaseModel):
     """
     Nodes on a graph can be visually connected: this appears to be the information about which nodes to link. It appears to lack more detailed information, such as the path for that linking.
@@ -168,11 +166,11 @@ class DestinyActivityGraphConnectionDefinition(BaseModel):
         source_node_hash: _No description given by bungie._
     """
 
-    dest_node_hash: int = attr.field()
-    source_node_hash: int = attr.field()
+    dest_node_hash: int = custom_field()
+    source_node_hash: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyActivityGraphDisplayObjectiveDefinition(BaseModel):
     """
     When a Graph needs to show active Objectives, this defines those objectives as well as an identifier.
@@ -192,12 +190,12 @@ class DestinyActivityGraphDisplayObjectiveDefinition(BaseModel):
         manifest_objective_hash: Manifest information for `objective_hash`
     """
 
-    id: int = attr.field()
-    objective_hash: int = attr.field()
-    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = attr.field(default=None)
+    id: int = custom_field()
+    objective_hash: int = custom_field()
+    manifest_objective_hash: Optional["DestinyObjectiveDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyActivityGraphDisplayProgressionDefinition(BaseModel):
     """
     When a Graph needs to show active Progressions, this defines those objectives as well as an identifier.
@@ -208,11 +206,11 @@ class DestinyActivityGraphDisplayProgressionDefinition(BaseModel):
         progression_hash: _No description given by bungie._
     """
 
-    id: int = attr.field()
-    progression_hash: int = attr.field()
+    id: int = custom_field()
+    progression_hash: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyLinkedGraphDefinition(BaseModel):
     """
     This describes links between the current graph and others, as well as when that link is relevant.
@@ -227,17 +225,17 @@ class DestinyLinkedGraphDefinition(BaseModel):
         unlock_expression: _No description given by bungie._
     """
 
-    description: str = attr.field()
-    linked_graph_id: int = attr.field()
-    linked_graphs: list["DestinyLinkedGraphEntryDefinition"] = attr.field(
+    description: str = custom_field()
+    linked_graph_id: int = custom_field()
+    linked_graphs: list["DestinyLinkedGraphEntryDefinition"] = custom_field(
         metadata={"type": """list[DestinyLinkedGraphEntryDefinition]"""}
     )
-    name: str = attr.field()
-    overview: str = attr.field()
-    unlock_expression: "DestinyUnlockExpressionDefinition" = attr.field()
+    name: str = custom_field()
+    overview: str = custom_field()
+    unlock_expression: "DestinyUnlockExpressionDefinition" = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyLinkedGraphEntryDefinition(BaseModel):
     """
     _No description given by bungie._
@@ -247,4 +245,4 @@ class DestinyLinkedGraphEntryDefinition(BaseModel):
         activity_graph_hash: _No description given by bungie._
     """
 
-    activity_graph_hash: int = attr.field()
+    activity_graph_hash: int = custom_field()

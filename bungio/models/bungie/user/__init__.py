@@ -5,9 +5,14 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Any, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel, ManifestModel
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
 from bungio.models.mixins import DestinyUserMixin
 from bungio.utils import enum_converter
 
@@ -15,7 +20,7 @@ if TYPE_CHECKING:
     from bungio.models import BungieMembershipType, GroupUserInfoCard, IgnoreResponse
 
 
-@attr.define
+@custom_define()
 class UserMembership(BaseModel, DestinyUserMixin):
     """
     Very basic info about a user as returned by the Account server.
@@ -29,14 +34,14 @@ class UserMembership(BaseModel, DestinyUserMixin):
         membership_type: Type of the membership. Not necessarily the native type.
     """
 
-    bungie_global_display_name: str = attr.field()
-    bungie_global_display_name_code: int = attr.field()
-    display_name: str = attr.field()
-    membership_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
+    bungie_global_display_name: str = custom_field()
+    bungie_global_display_name_code: int = custom_field()
+    display_name: str = custom_field()
+    membership_id: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
 
 
-@attr.define
+@custom_define()
 class CrossSaveUserMembership(BaseModel, DestinyUserMixin):
     """
     Very basic info about a user as returned by the Account server, but including CrossSave information. Do NOT use as a request contract.
@@ -53,21 +58,21 @@ class CrossSaveUserMembership(BaseModel, DestinyUserMixin):
         membership_type: Type of the membership. Not necessarily the native type.
     """
 
-    applicable_membership_types: list[Union["BungieMembershipType", int]] = attr.field(
+    applicable_membership_types: list[Union["BungieMembershipType", int]] = custom_field(
         converter=enum_converter("BungieMembershipType")
     )
-    bungie_global_display_name: str = attr.field()
-    bungie_global_display_name_code: int = attr.field()
-    cross_save_override: Union["BungieMembershipType", int] = attr.field(
+    bungie_global_display_name: str = custom_field()
+    bungie_global_display_name_code: int = custom_field()
+    cross_save_override: Union["BungieMembershipType", int] = custom_field(
         converter=enum_converter("BungieMembershipType")
     )
-    display_name: str = attr.field()
-    is_public: bool = attr.field()
-    membership_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
+    display_name: str = custom_field()
+    is_public: bool = custom_field()
+    membership_id: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
 
 
-@attr.define
+@custom_define()
 class UserInfoCard(BaseModel, DestinyUserMixin):
     """
     This contract supplies basic information commonly used to display a minimal amount of information about a user. Take care to not add more properties here unless the property applies in all (or at least the majority) of the situations where UserInfoCard is used. Avoid adding game specific or platform specific details here. In cases where UserInfoCard is a subset of the data needed in a contract, use UserInfoCard as a property of other contracts.
@@ -86,23 +91,23 @@ class UserInfoCard(BaseModel, DestinyUserMixin):
         supplemental_display_name: A platform specific additional display name - ex: psn Real Name, bnet Unique Name, etc.
     """
 
-    applicable_membership_types: list[Union["BungieMembershipType", int]] = attr.field(
+    applicable_membership_types: list[Union["BungieMembershipType", int]] = custom_field(
         converter=enum_converter("BungieMembershipType")
     )
-    bungie_global_display_name: str = attr.field()
-    bungie_global_display_name_code: int = attr.field()
-    cross_save_override: Union["BungieMembershipType", int] = attr.field(
+    bungie_global_display_name: str = custom_field()
+    bungie_global_display_name_code: int = custom_field()
+    cross_save_override: Union["BungieMembershipType", int] = custom_field(
         converter=enum_converter("BungieMembershipType")
     )
-    display_name: str = attr.field()
-    icon_path: str = attr.field()
-    is_public: bool = attr.field()
-    membership_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
-    supplemental_display_name: str = attr.field()
+    display_name: str = custom_field()
+    icon_path: str = custom_field()
+    is_public: bool = custom_field()
+    membership_id: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
+    supplemental_display_name: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class GeneralUser(BaseModel):
     """
     _No description given by bungie._
@@ -146,44 +151,44 @@ class GeneralUser(BaseModel):
         xbox_display_name: _No description given by bungie._
     """
 
-    about: str = attr.field()
-    blizzard_display_name: str = attr.field()
-    cached_bungie_global_display_name: str = attr.field()
-    cached_bungie_global_display_name_code: int = attr.field()
-    context: "UserToUserContext" = attr.field()
-    display_name: str = attr.field()
-    fb_display_name: str = attr.field()
-    first_access: datetime = attr.field()
-    is_deleted: bool = attr.field()
-    last_ban_report_id: int = attr.field()
-    last_update: datetime = attr.field()
-    legacy_portal_u_i_d: int = attr.field()
-    locale: str = attr.field()
-    locale_inherit_default: bool = attr.field()
-    membership_id: int = attr.field()
-    normalized_name: str = attr.field()
-    profile_ban_expire: datetime = attr.field()
-    profile_picture: int = attr.field()
-    profile_picture_path: str = attr.field()
-    profile_picture_wide_path: str = attr.field()
-    profile_theme: int = attr.field()
-    profile_theme_name: str = attr.field()
-    psn_display_name: str = attr.field()
-    show_activity: bool = attr.field()
-    show_group_messaging: bool = attr.field()
-    stadia_display_name: str = attr.field()
-    status_date: datetime = attr.field()
-    status_text: str = attr.field()
-    steam_display_name: str = attr.field()
-    success_message_flags: int = attr.field()
-    twitch_display_name: str = attr.field()
-    unique_name: str = attr.field()
-    user_title: int = attr.field()
-    user_title_display: str = attr.field()
-    xbox_display_name: str = attr.field()
+    about: str = custom_field()
+    blizzard_display_name: str = custom_field()
+    cached_bungie_global_display_name: str = custom_field()
+    cached_bungie_global_display_name_code: int = custom_field()
+    context: "UserToUserContext" = custom_field()
+    display_name: str = custom_field()
+    fb_display_name: str = custom_field()
+    first_access: datetime = custom_field()
+    is_deleted: bool = custom_field()
+    last_ban_report_id: int = custom_field()
+    last_update: datetime = custom_field()
+    legacy_portal_u_i_d: int = custom_field()
+    locale: str = custom_field()
+    locale_inherit_default: bool = custom_field()
+    membership_id: int = custom_field()
+    normalized_name: str = custom_field()
+    profile_ban_expire: datetime = custom_field()
+    profile_picture: int = custom_field()
+    profile_picture_path: str = custom_field()
+    profile_picture_wide_path: str = custom_field()
+    profile_theme: int = custom_field()
+    profile_theme_name: str = custom_field()
+    psn_display_name: str = custom_field()
+    show_activity: bool = custom_field()
+    show_group_messaging: bool = custom_field()
+    stadia_display_name: str = custom_field()
+    status_date: datetime = custom_field()
+    status_text: str = custom_field()
+    steam_display_name: str = custom_field()
+    success_message_flags: int = custom_field()
+    twitch_display_name: str = custom_field()
+    unique_name: str = custom_field()
+    user_title: int = custom_field()
+    user_title_display: str = custom_field()
+    xbox_display_name: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class UserToUserContext(BaseModel):
     """
     _No description given by bungie._
@@ -195,12 +200,12 @@ class UserToUserContext(BaseModel):
         is_following: _No description given by bungie._
     """
 
-    global_ignore_end_date: datetime = attr.field()
-    ignore_status: "IgnoreResponse" = attr.field()
-    is_following: bool = attr.field()
+    global_ignore_end_date: datetime = custom_field()
+    ignore_status: "IgnoreResponse" = custom_field()
+    is_following: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class UserMembershipData(BaseModel):
     """
     _No description given by bungie._
@@ -212,12 +217,12 @@ class UserMembershipData(BaseModel):
         primary_membership_id: If this property is populated, it will have the membership ID of the account considered to be "primary" in this user's cross save relationship.  If null, this user has no cross save relationship, nor primary account.
     """
 
-    bungie_net_user: "GeneralUser" = attr.field()
-    destiny_memberships: list["GroupUserInfoCard"] = attr.field(metadata={"type": """list[GroupUserInfoCard]"""})
-    primary_membership_id: int = attr.field()
+    bungie_net_user: "GeneralUser" = custom_field()
+    destiny_memberships: list["GroupUserInfoCard"] = custom_field(metadata={"type": """list[GroupUserInfoCard]"""})
+    primary_membership_id: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class HardLinkedUserMembership(BaseModel, DestinyUserMixin):
     """
     _No description given by bungie._
@@ -230,15 +235,15 @@ class HardLinkedUserMembership(BaseModel, DestinyUserMixin):
         membership_type: _No description given by bungie._
     """
 
-    cross_save_overridden_membership_id: int = attr.field()
-    cross_save_overridden_type: Union["BungieMembershipType", int] = attr.field(
+    cross_save_overridden_membership_id: int = custom_field()
+    cross_save_overridden_type: Union["BungieMembershipType", int] = custom_field(
         converter=enum_converter("BungieMembershipType")
     )
-    membership_id: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
+    membership_id: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
 
 
-@attr.define
+@custom_define()
 class UserSearchResponse(BaseModel):
     """
     _No description given by bungie._
@@ -250,14 +255,14 @@ class UserSearchResponse(BaseModel):
         search_results: _No description given by bungie._
     """
 
-    has_more: bool = attr.field()
-    page: int = attr.field()
-    search_results: list["UserSearchResponseDetail"] = attr.field(
+    has_more: bool = custom_field()
+    page: int = custom_field()
+    search_results: list["UserSearchResponseDetail"] = custom_field(
         metadata={"type": """list[UserSearchResponseDetail]"""}
     )
 
 
-@attr.define
+@custom_define()
 class UserSearchResponseDetail(BaseModel):
     """
     _No description given by bungie._
@@ -270,13 +275,13 @@ class UserSearchResponseDetail(BaseModel):
         destiny_memberships: _No description given by bungie._
     """
 
-    bungie_global_display_name: str = attr.field()
-    bungie_global_display_name_code: int = attr.field()
-    bungie_net_membership_id: int = attr.field()
-    destiny_memberships: list["UserInfoCard"] = attr.field(metadata={"type": """list[UserInfoCard]"""})
+    bungie_global_display_name: str = custom_field()
+    bungie_global_display_name_code: int = custom_field()
+    bungie_net_membership_id: int = custom_field()
+    destiny_memberships: list["UserInfoCard"] = custom_field(metadata={"type": """list[UserInfoCard]"""})
 
 
-@attr.define
+@custom_define()
 class UserSearchPrefixRequest(BaseModel):
     """
     _No description given by bungie._
@@ -286,10 +291,10 @@ class UserSearchPrefixRequest(BaseModel):
         display_name_prefix: _No description given by bungie._
     """
 
-    display_name_prefix: str = attr.field()
+    display_name_prefix: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class ExactSearchRequest(BaseModel):
     """
     _No description given by bungie._
@@ -300,11 +305,11 @@ class ExactSearchRequest(BaseModel):
         display_name_code: _No description given by bungie._
     """
 
-    display_name: str = attr.field()
-    display_name_code: int = attr.field()
+    display_name: str = custom_field()
+    display_name_code: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class EmailSettings(BaseModel):
     """
     The set of all email subscription/opt-in settings and definitions.
@@ -316,16 +321,16 @@ class EmailSettings(BaseModel):
         views: Keyed by the name identifier of the View definition.
     """
 
-    opt_in_definitions: dict[str, "EmailOptInDefinition"] = attr.field(
+    opt_in_definitions: dict[str, "EmailOptInDefinition"] = custom_field(
         metadata={"type": """dict[str, EmailOptInDefinition]"""}
     )
-    subscription_definitions: dict[str, "EmailSubscriptionDefinition"] = attr.field(
+    subscription_definitions: dict[str, "EmailSubscriptionDefinition"] = custom_field(
         metadata={"type": """dict[str, EmailSubscriptionDefinition]"""}
     )
-    views: dict[str, "EmailViewDefinition"] = attr.field(metadata={"type": """dict[str, EmailViewDefinition]"""})
+    views: dict[str, "EmailViewDefinition"] = custom_field(metadata={"type": """dict[str, EmailViewDefinition]"""})
 
 
-@attr.define
+@custom_define()
 class EmailOptInDefinition(BaseModel):
     """
     Defines a single opt-in category: a wide-scoped permission to send emails for the subject related to the opt-in.
@@ -338,12 +343,12 @@ class EmailOptInDefinition(BaseModel):
         value: The flag value for this opt-in category. For historical reasons, this is defined as a flags enum.
     """
 
-    dependent_subscriptions: list["EmailSubscriptionDefinition"] = attr.field(
+    dependent_subscriptions: list["EmailSubscriptionDefinition"] = custom_field(
         metadata={"type": """list[EmailSubscriptionDefinition]"""}
     )
-    name: str = attr.field()
-    set_by_default: bool = attr.field()
-    value: Union["OptInFlags", int] = attr.field(converter=enum_converter("OptInFlags"))
+    name: str = custom_field()
+    set_by_default: bool = custom_field()
+    value: Union["OptInFlags", int] = custom_field(converter=enum_converter("OptInFlags"))
 
 
 class OptInFlags(BaseFlagEnum):
@@ -373,7 +378,7 @@ class OptInFlags(BaseFlagEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class EmailSubscriptionDefinition(BaseModel):
     """
     Defines a single subscription: permission to send emails for a specific, focused subject (generally timeboxed, such as for a specific release of a product or feature).
@@ -385,14 +390,14 @@ class EmailSubscriptionDefinition(BaseModel):
         value: The bitflag value for this subscription. Should be a unique power of two value.
     """
 
-    localization: dict[str, "EMailSettingSubscriptionLocalization"] = attr.field(
+    localization: dict[str, "EMailSettingSubscriptionLocalization"] = custom_field(
         metadata={"type": """dict[str, EMailSettingSubscriptionLocalization]"""}
     )
-    name: str = attr.field()
-    value: int = attr.field()
+    name: str = custom_field()
+    value: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class EMailSettingLocalization(BaseModel):
     """
     Localized text relevant to a given EMail setting in a given localization.
@@ -403,11 +408,11 @@ class EMailSettingLocalization(BaseModel):
         title: _No description given by bungie._
     """
 
-    description: str = attr.field()
-    title: str = attr.field()
+    description: str = custom_field()
+    title: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class EMailSettingSubscriptionLocalization(BaseModel):
     """
     Localized text relevant to a given EMail setting in a given localization. Extra settings specifically for subscriptions.
@@ -423,16 +428,16 @@ class EMailSettingSubscriptionLocalization(BaseModel):
         unregistered_user_description: _No description given by bungie._
     """
 
-    description: str = attr.field()
-    known_user_action_text: str = attr.field()
-    registered_user_description: str = attr.field()
-    title: str = attr.field()
-    unknown_user_action_text: str = attr.field()
-    unknown_user_description: str = attr.field()
-    unregistered_user_description: str = attr.field()
+    description: str = custom_field()
+    known_user_action_text: str = custom_field()
+    registered_user_description: str = custom_field()
+    title: str = custom_field()
+    unknown_user_action_text: str = custom_field()
+    unknown_user_description: str = custom_field()
+    unregistered_user_description: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class EmailViewDefinition(BaseModel):
     """
     Represents a data-driven view for Email settings. Web/Mobile UI can use this data to show new EMail settings consistently without further manual work.
@@ -443,13 +448,13 @@ class EmailViewDefinition(BaseModel):
         view_settings: The ordered list of settings to show in this view.
     """
 
-    name: str = attr.field()
-    view_settings: list["EmailViewDefinitionSetting"] = attr.field(
+    name: str = custom_field()
+    view_settings: list["EmailViewDefinitionSetting"] = custom_field(
         metadata={"type": """list[EmailViewDefinitionSetting]"""}
     )
 
 
-@attr.define
+@custom_define()
 class EmailViewDefinitionSetting(BaseModel):
     """
     _No description given by bungie._
@@ -463,12 +468,12 @@ class EmailViewDefinitionSetting(BaseModel):
         subscriptions: The subscriptions to show as children of this setting, if any.
     """
 
-    localization: dict[str, "EMailSettingLocalization"] = attr.field(
+    localization: dict[str, "EMailSettingLocalization"] = custom_field(
         metadata={"type": """dict[str, EMailSettingLocalization]"""}
     )
-    name: str = attr.field()
-    opt_in_aggregate_value: Union["OptInFlags", int] = attr.field(converter=enum_converter("OptInFlags"))
-    set_by_default: bool = attr.field()
-    subscriptions: list["EmailSubscriptionDefinition"] = attr.field(
+    name: str = custom_field()
+    opt_in_aggregate_value: Union["OptInFlags", int] = custom_field(converter=enum_converter("OptInFlags"))
+    set_by_default: bool = custom_field()
+    subscriptions: list["EmailSubscriptionDefinition"] = custom_field(
         metadata={"type": """list[EmailSubscriptionDefinition]"""}
     )

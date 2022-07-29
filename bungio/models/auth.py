@@ -3,9 +3,7 @@ from __future__ import annotations
 import datetime
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -14,7 +12,7 @@ if TYPE_CHECKING:
 __all__ = ("AuthData",)
 
 
-@attr.define
+@custom_define()
 class AuthData(BaseModel):
     """
     Bungie User Authentication Information
@@ -30,14 +28,14 @@ class AuthData(BaseModel):
         cross_save_setup: If the user has cross save set up. If this is `False`, the membership information may be for an unwanted system
     """
 
-    token: Optional[str] = attr.field(repr=False)
-    token_expiry: datetime.datetime = attr.field()
-    refresh_token: str = attr.field(repr=False)
-    refresh_token_expiry: datetime.datetime = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
-    membership_id: int = attr.field()
-    bungie_name: Optional[str] = attr.field()
-    cross_save_setup: bool = attr.field(default=True)
+    token: Optional[str] = custom_field(repr=False)
+    token_expiry: datetime.datetime = custom_field()
+    refresh_token: str = custom_field(repr=False)
+    refresh_token_expiry: datetime.datetime = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
+    membership_id: int = custom_field()
+    bungie_name: Optional[str] = custom_field()
+    cross_save_setup: bool = custom_field(default=True)
 
     async def refresh(self) -> AuthData:
         """

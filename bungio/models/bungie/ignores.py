@@ -4,13 +4,17 @@
 
 from typing import Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    custom_define,
+    custom_field,
+)
 from bungio.utils import enum_converter
 
 
-@attr.define
+@custom_define()
 class IgnoreResponse(BaseModel):
     """
     _No description given by bungie._
@@ -21,8 +25,8 @@ class IgnoreResponse(BaseModel):
         is_ignored: _No description given by bungie._
     """
 
-    ignore_flags: Union["IgnoreStatus", int] = attr.field(converter=enum_converter("IgnoreStatus"))
-    is_ignored: bool = attr.field()
+    ignore_flags: Union["IgnoreStatus", int] = custom_field(converter=enum_converter("IgnoreStatus"))
+    is_ignored: bool = custom_field()
 
 
 class IgnoreStatus(BaseFlagEnum):

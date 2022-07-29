@@ -4,8 +4,6 @@
 
 from typing import Any, Optional
 
-import attr
-
 from bungio.models import (
     ContentItemPublicContract,
     ContentTypeDescription,
@@ -13,10 +11,10 @@ from bungio.models import (
     SearchResultOfContentItemPublicContract,
 )
 from bungio.models.auth import AuthData
-from bungio.models.base import ClientMixin
+from bungio.models.base import ClientMixin, custom_define
 
 
-@attr.define
+@custom_define()
 class ContentRouteInterface(ClientMixin):
     async def get_content_type(self, type: str, auth: Optional[AuthData] = None) -> ContentTypeDescription:
         """

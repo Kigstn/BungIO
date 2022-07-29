@@ -4,15 +4,13 @@
 
 from typing import TYPE_CHECKING
 
-import attr
-
-from bungio.models.base import BaseModel, ManifestModel
+from bungio.models.base import BaseModel, ManifestModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import DestinyDisplayPropertiesDefinition
 
 
-@attr.define
+@custom_define()
 class DestinyReportReasonCategoryDefinition(ManifestModel):
     """
     If you're going to report someone for a Terms of Service violation, you need to choose a category and reason for the report. This definition holds both the categories and the reasons within those categories, for simplicity and my own laziness' sake. Note tha this means that, to refer to a Reason by reasonHash, you need a combination of the reasonHash *and* the associated ReasonCategory's hash: there are some reasons defined under multiple categories.
@@ -26,16 +24,16 @@ class DestinyReportReasonCategoryDefinition(ManifestModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    hash: int = attr.field()
-    index: int = attr.field()
-    reasons: dict[int, "DestinyReportReasonDefinition"] = attr.field(
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    hash: int = custom_field()
+    index: int = custom_field()
+    reasons: dict[int, "DestinyReportReasonDefinition"] = custom_field(
         metadata={"type": """dict[int, DestinyReportReasonDefinition]"""}
     )
-    redacted: bool = attr.field()
+    redacted: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class DestinyReportReasonDefinition(BaseModel):
     """
     A specific reason for being banned. Only accessible under the related category (DestinyReportReasonCategoryDefinition) under which it is shown. Note that this means that report reasons' reasonHash are not globally unique: and indeed, entries like "Other" are defined under most categories for example.
@@ -46,5 +44,5 @@ class DestinyReportReasonDefinition(BaseModel):
         reason_hash: The identifier for the reason: they are only guaranteed unique under the Category in which they are found.
     """
 
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    reason_hash: int = attr.field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    reason_hash: int = custom_field()

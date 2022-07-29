@@ -4,15 +4,13 @@
 
 from typing import TYPE_CHECKING, Optional
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import DestinySandboxPerkDefinition
 
 
-@attr.define
+@custom_define()
 class DestinyPerkReference(BaseModel):
     """
     The list of perks to display in an item tooltip - and whether or not they have been activated. Perks apply a variety of effects to a character, and are generally either intrinsic to the item or provided in activated talent nodes or sockets.
@@ -34,8 +32,8 @@ class DestinyPerkReference(BaseModel):
         manifest_perk_hash: Manifest information for `perk_hash`
     """
 
-    icon_path: str = attr.field()
-    is_active: bool = attr.field()
-    perk_hash: int = attr.field()
-    visible: bool = attr.field()
-    manifest_perk_hash: Optional["DestinySandboxPerkDefinition"] = attr.field(default=None)
+    icon_path: str = custom_field()
+    is_active: bool = custom_field()
+    perk_hash: int = custom_field()
+    visible: bool = custom_field()
+    manifest_perk_hash: Optional["DestinySandboxPerkDefinition"] = custom_field(default=None)

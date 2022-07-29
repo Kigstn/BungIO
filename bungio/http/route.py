@@ -1,15 +1,13 @@
 from typing import Optional
 
-import attr
-
 from bungio.definitions import BASE_ROUTE
 from bungio.models.auth import AuthData
-from bungio.models.base import MISSING
+from bungio.models.base import MISSING, custom_define
 
 __all__ = ("Route",)
 
 
-@attr.define(init=False)
+@custom_define(init=False)
 class Route:
     """
     Bungie http route

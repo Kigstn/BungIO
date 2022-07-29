@@ -5,16 +5,21 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Any, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel, ManifestModel
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import GeneralUser
 
 
-@attr.define
+@custom_define()
 class ContentItemPublicContract(BaseModel):
     """
     _No description given by bungie._
@@ -38,24 +43,24 @@ class ContentItemPublicContract(BaseModel):
         tags: NOTE: Tags will always be lower case.
     """
 
-    allow_comments: bool = attr.field()
-    author: "GeneralUser" = attr.field()
-    auto_english_property_fallback: bool = attr.field()
-    c_type: str = attr.field()
-    cms_path: str = attr.field()
-    comment_summary: "CommentSummary" = attr.field()
-    content_id: int = attr.field()
-    creation_date: datetime = attr.field()
-    has_age_gate: bool = attr.field()
-    minimum_age: int = attr.field()
-    modify_date: datetime = attr.field()
-    properties: dict[str, Any] = attr.field(metadata={"type": """dict[str, Any]"""})
-    rating_image_path: str = attr.field()
-    representations: list["ContentRepresentation"] = attr.field(metadata={"type": """list[ContentRepresentation]"""})
-    tags: list[str] = attr.field(metadata={"type": """list[str]"""})
+    allow_comments: bool = custom_field()
+    author: "GeneralUser" = custom_field()
+    auto_english_property_fallback: bool = custom_field()
+    c_type: str = custom_field()
+    cms_path: str = custom_field()
+    comment_summary: "CommentSummary" = custom_field()
+    content_id: int = custom_field()
+    creation_date: datetime = custom_field()
+    has_age_gate: bool = custom_field()
+    minimum_age: int = custom_field()
+    modify_date: datetime = custom_field()
+    properties: dict[str, Any] = custom_field(metadata={"type": """dict[str, Any]"""})
+    rating_image_path: str = custom_field()
+    representations: list["ContentRepresentation"] = custom_field(metadata={"type": """list[ContentRepresentation]"""})
+    tags: list[str] = custom_field(metadata={"type": """list[str]"""})
 
 
-@attr.define
+@custom_define()
 class ContentRepresentation(BaseModel):
     """
     _No description given by bungie._
@@ -67,12 +72,12 @@ class ContentRepresentation(BaseModel):
         validation_string: _No description given by bungie._
     """
 
-    name: str = attr.field()
-    path: str = attr.field()
-    validation_string: str = attr.field()
+    name: str = custom_field()
+    path: str = custom_field()
+    validation_string: str = custom_field()
 
 
-@attr.define
+@custom_define()
 class CommentSummary(BaseModel):
     """
     _No description given by bungie._
@@ -83,11 +88,11 @@ class CommentSummary(BaseModel):
         topic_id: _No description given by bungie._
     """
 
-    comment_count: int = attr.field()
-    topic_id: int = attr.field()
+    comment_count: int = custom_field()
+    topic_id: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class NewsArticleRssResponse(BaseModel):
     """
     _No description given by bungie._
@@ -100,13 +105,13 @@ class NewsArticleRssResponse(BaseModel):
         result_count_this_page: _No description given by bungie._
     """
 
-    current_pagination_token: int = attr.field()
-    news_articles: list["NewsArticleRssItem"] = attr.field(metadata={"type": """list[NewsArticleRssItem]"""})
-    next_pagination_token: int = attr.field()
-    result_count_this_page: int = attr.field()
+    current_pagination_token: int = custom_field()
+    news_articles: list["NewsArticleRssItem"] = custom_field(metadata={"type": """list[NewsArticleRssItem]"""})
+    next_pagination_token: int = custom_field()
+    result_count_this_page: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class NewsArticleRssItem(BaseModel):
     """
     _No description given by bungie._
@@ -120,8 +125,8 @@ class NewsArticleRssItem(BaseModel):
         unique_identifier: _No description given by bungie._
     """
 
-    description: str = attr.field()
-    link: str = attr.field()
-    pub_date: datetime = attr.field()
-    title: str = attr.field()
-    unique_identifier: str = attr.field()
+    description: str = custom_field()
+    link: str = custom_field()
+    pub_date: datetime = custom_field()
+    title: str = custom_field()
+    unique_identifier: str = custom_field()

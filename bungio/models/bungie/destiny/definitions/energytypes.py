@@ -4,9 +4,7 @@
 
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import ManifestModel
+from bungio.models.base import ManifestModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -17,7 +15,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyEnergyTypeDefinition(ManifestModel):
     """
     Represents types of Energy that can be used for costs and payments related to Armor 2.0 mods.
@@ -45,14 +43,14 @@ class DestinyEnergyTypeDefinition(ManifestModel):
         manifest_cost_stat_hash: Manifest information for `cost_stat_hash`
     """
 
-    capacity_stat_hash: int = attr.field()
-    cost_stat_hash: int = attr.field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = attr.field()
-    enum_value: Union["DestinyEnergyType", int] = attr.field(converter=enum_converter("DestinyEnergyType"))
-    hash: int = attr.field()
-    index: int = attr.field()
-    redacted: bool = attr.field()
-    show_icon: bool = attr.field()
-    transparent_icon_path: str = attr.field()
-    manifest_capacity_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
-    manifest_cost_stat_hash: Optional["DestinyStatDefinition"] = attr.field(default=None)
+    capacity_stat_hash: int = custom_field()
+    cost_stat_hash: int = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    enum_value: Union["DestinyEnergyType", int] = custom_field(converter=enum_converter("DestinyEnergyType"))
+    hash: int = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()
+    show_icon: bool = custom_field()
+    transparent_icon_path: str = custom_field()
+    manifest_capacity_stat_hash: Optional["DestinyStatDefinition"] = custom_field(default=None)
+    manifest_cost_stat_hash: Optional["DestinyStatDefinition"] = custom_field(default=None)

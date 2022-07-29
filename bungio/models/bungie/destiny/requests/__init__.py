@@ -5,16 +5,21 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Any, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel, ManifestModel
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import BungieMembershipType, DestinyInventoryItemDefinition
 
 
-@attr.define
+@custom_define()
 class DestinyItemTransferRequest(BaseModel):
     """
     _No description given by bungie._
@@ -38,10 +43,10 @@ class DestinyItemTransferRequest(BaseModel):
         manifest_item_reference_hash: Manifest information for `item_reference_hash`
     """
 
-    character_id: int = attr.field()
-    item_id: int = attr.field()
-    item_reference_hash: int = attr.field()
-    membership_type: Union["BungieMembershipType", int] = attr.field(converter=enum_converter("BungieMembershipType"))
-    stack_size: int = attr.field()
-    transfer_to_vault: bool = attr.field()
-    manifest_item_reference_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    character_id: int = custom_field()
+    item_id: int = custom_field()
+    item_reference_hash: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
+    stack_size: int = custom_field()
+    transfer_to_vault: bool = custom_field()
+    manifest_item_reference_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)

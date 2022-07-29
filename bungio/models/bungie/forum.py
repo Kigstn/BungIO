@@ -5,9 +5,13 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Union
 
-import attr
-
-from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    custom_define,
+    custom_field,
+)
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -85,7 +89,7 @@ class ForumTopicsSortEnum(BaseEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class PostResponse(BaseModel):
     """
     _No description given by bungie._
@@ -108,20 +112,20 @@ class PostResponse(BaseModel):
         user_rating: _No description given by bungie._
     """
 
-    ignore_status: "IgnoreResponse" = attr.field()
-    is_active: bool = attr.field()
-    is_announcement: bool = attr.field()
-    is_pinned: bool = attr.field()
-    last_reply_timestamp: datetime = attr.field()
-    latest_reply_author_id: int = attr.field()
-    latest_reply_post_id: int = attr.field()
-    locale: str = attr.field()
-    popularity: Union["ForumPostPopularity", int] = attr.field(converter=enum_converter("ForumPostPopularity"))
-    thumbnail: str = attr.field()
-    url_media_type: Union["ForumMediaType", int] = attr.field(converter=enum_converter("ForumMediaType"))
-    user_has_muted_post: bool = attr.field()
-    user_has_rated: bool = attr.field()
-    user_rating: int = attr.field()
+    ignore_status: "IgnoreResponse" = custom_field()
+    is_active: bool = custom_field()
+    is_announcement: bool = custom_field()
+    is_pinned: bool = custom_field()
+    last_reply_timestamp: datetime = custom_field()
+    latest_reply_author_id: int = custom_field()
+    latest_reply_post_id: int = custom_field()
+    locale: str = custom_field()
+    popularity: Union["ForumPostPopularity", int] = custom_field(converter=enum_converter("ForumPostPopularity"))
+    thumbnail: str = custom_field()
+    url_media_type: Union["ForumMediaType", int] = custom_field(converter=enum_converter("ForumMediaType"))
+    user_has_muted_post: bool = custom_field()
+    user_has_rated: bool = custom_field()
+    user_rating: int = custom_field()
 
 
 class ForumMediaType(BaseEnum):
@@ -158,7 +162,7 @@ class ForumPostPopularity(BaseEnum):
     """_No description given by bungie._ """
 
 
-@attr.define
+@custom_define()
 class PostSearchResponse(BaseModel):
     """
     _No description given by bungie._
@@ -180,24 +184,24 @@ class PostSearchResponse(BaseModel):
         use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
     """
 
-    authors: list["GeneralUser"] = attr.field(metadata={"type": """list[GeneralUser]"""})
-    available_pages: int = attr.field()
-    groups: list["GroupResponse"] = attr.field(metadata={"type": """list[GroupResponse]"""})
-    has_more: bool = attr.field()
-    polls: list["PollResponse"] = attr.field(metadata={"type": """list[PollResponse]"""})
-    query: "PagedQuery" = attr.field()
-    recruitment_details: list["ForumRecruitmentDetail"] = attr.field(
+    authors: list["GeneralUser"] = custom_field(metadata={"type": """list[GeneralUser]"""})
+    available_pages: int = custom_field()
+    groups: list["GroupResponse"] = custom_field(metadata={"type": """list[GroupResponse]"""})
+    has_more: bool = custom_field()
+    polls: list["PollResponse"] = custom_field(metadata={"type": """list[PollResponse]"""})
+    query: "PagedQuery" = custom_field()
+    recruitment_details: list["ForumRecruitmentDetail"] = custom_field(
         metadata={"type": """list[ForumRecruitmentDetail]"""}
     )
-    related_posts: list["PostResponse"] = attr.field(metadata={"type": """list[PostResponse]"""})
-    replacement_continuation_token: str = attr.field()
-    results: list["PostResponse"] = attr.field(metadata={"type": """list[PostResponse]"""})
-    searched_tags: list["TagResponse"] = attr.field(metadata={"type": """list[TagResponse]"""})
-    total_results: int = attr.field()
-    use_total_results: bool = attr.field()
+    related_posts: list["PostResponse"] = custom_field(metadata={"type": """list[PostResponse]"""})
+    replacement_continuation_token: str = custom_field()
+    results: list["PostResponse"] = custom_field(metadata={"type": """list[PostResponse]"""})
+    searched_tags: list["TagResponse"] = custom_field(metadata={"type": """list[TagResponse]"""})
+    total_results: int = custom_field()
+    use_total_results: bool = custom_field()
 
 
-@attr.define
+@custom_define()
 class PollResponse(BaseModel):
     """
     _No description given by bungie._
@@ -209,12 +213,12 @@ class PollResponse(BaseModel):
         total_votes: _No description given by bungie._
     """
 
-    results: list["PollResult"] = attr.field(metadata={"type": """list[PollResult]"""})
-    topic_id: int = attr.field()
-    total_votes: int = attr.field()
+    results: list["PollResult"] = custom_field(metadata={"type": """list[PollResult]"""})
+    topic_id: int = custom_field()
+    total_votes: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class PollResult(BaseModel):
     """
     _No description given by bungie._
@@ -228,14 +232,14 @@ class PollResult(BaseModel):
         votes: _No description given by bungie._
     """
 
-    answer_slot: int = attr.field()
-    answer_text: str = attr.field()
-    last_vote_date: datetime = attr.field()
-    requesting_user_voted: bool = attr.field()
-    votes: int = attr.field()
+    answer_slot: int = custom_field()
+    answer_text: str = custom_field()
+    last_vote_date: datetime = custom_field()
+    requesting_user_voted: bool = custom_field()
+    votes: int = custom_field()
 
 
-@attr.define
+@custom_define()
 class ForumRecruitmentDetail(BaseModel):
     """
     _No description given by bungie._
@@ -254,18 +258,18 @@ class ForumRecruitmentDetail(BaseModel):
         topic_id: _No description given by bungie._
     """
 
-    approved: bool = attr.field()
-    conversation_id: int = attr.field()
-    fireteam: list["GeneralUser"] = attr.field(metadata={"type": """list[GeneralUser]"""})
-    intensity: Union["ForumRecruitmentIntensityLabel", int] = attr.field(
+    approved: bool = custom_field()
+    conversation_id: int = custom_field()
+    fireteam: list["GeneralUser"] = custom_field(metadata={"type": """list[GeneralUser]"""})
+    intensity: Union["ForumRecruitmentIntensityLabel", int] = custom_field(
         converter=enum_converter("ForumRecruitmentIntensityLabel")
     )
-    kicked_player_ids: list[int] = attr.field(metadata={"type": """list[int]"""})
-    microphone_required: bool = attr.field()
-    player_slots_remaining: int = attr.field()
-    player_slots_total: int = attr.field()
-    tone: Union["ForumRecruitmentToneLabel", int] = attr.field(converter=enum_converter("ForumRecruitmentToneLabel"))
-    topic_id: int = attr.field()
+    kicked_player_ids: list[int] = custom_field(metadata={"type": """list[int]"""})
+    microphone_required: bool = custom_field()
+    player_slots_remaining: int = custom_field()
+    player_slots_total: int = custom_field()
+    tone: Union["ForumRecruitmentToneLabel", int] = custom_field(converter=enum_converter("ForumRecruitmentToneLabel"))
+    topic_id: int = custom_field()
 
 
 class ForumRecruitmentIntensityLabel(BaseEnum):

@@ -1,9 +1,7 @@
 from typing import TYPE_CHECKING
 
-import attr
-
 from bungio.definitions import DEFAULT_LOGGER
-from bungio.models.base import MISSING
+from bungio.models.base import MISSING, custom_define
 
 if TYPE_CHECKING:
     from bungio.client import Client
@@ -20,7 +18,7 @@ client: "Client" = MISSING
 _instances: dict = {}
 
 
-@attr.define()
+@custom_define()
 class Singleton:
     """
     Singleton class used to only create one instance

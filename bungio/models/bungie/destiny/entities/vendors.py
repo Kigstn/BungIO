@@ -5,9 +5,7 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, Optional, Union
 
-import attr
-
-from bungio.models.base import BaseModel
+from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -22,7 +20,7 @@ if TYPE_CHECKING:
     )
 
 
-@attr.define
+@custom_define()
 class DestinyVendorComponent(BaseModel):
     """
     This component contains essential/summary information about the vendor.
@@ -47,17 +45,17 @@ class DestinyVendorComponent(BaseModel):
         manifest_vendor_hash: Manifest information for `vendor_hash`
     """
 
-    can_purchase: bool = attr.field()
-    enabled: bool = attr.field()
-    next_refresh_date: datetime = attr.field()
-    progression: "DestinyProgression" = attr.field()
-    seasonal_rank: int = attr.field()
-    vendor_hash: int = attr.field()
-    vendor_location_index: int = attr.field()
-    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = attr.field(default=None)
+    can_purchase: bool = custom_field()
+    enabled: bool = custom_field()
+    next_refresh_date: datetime = custom_field()
+    progression: "DestinyProgression" = custom_field()
+    seasonal_rank: int = custom_field()
+    vendor_hash: int = custom_field()
+    vendor_location_index: int = custom_field()
+    manifest_vendor_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
 
 
-@attr.define
+@custom_define()
 class DestinyVendorCategoriesComponent(BaseModel):
     """
     A vendor can have many categories of items that they sell. This component will return the category information for available items, as well as the index into those items in the user's sale item list. Note that, since both the category and items are indexes, this data is Content Version dependent. Be sure to check that your content is up to date before using this data. This is an unfortunate, but permanent, limitation of Vendor data.
@@ -67,10 +65,10 @@ class DestinyVendorCategoriesComponent(BaseModel):
         categories: The list of categories for items that the vendor sells, in rendering order. These categories each point to a "display category" in the displayCategories property of the DestinyVendorDefinition, as opposed to the other categories.
     """
 
-    categories: list["DestinyVendorCategory"] = attr.field(metadata={"type": """list[DestinyVendorCategory]"""})
+    categories: list["DestinyVendorCategory"] = custom_field(metadata={"type": """list[DestinyVendorCategory]"""})
 
 
-@attr.define
+@custom_define()
 class DestinyVendorCategory(BaseModel):
     """
     Information about the category and items currently sold in that category.
@@ -81,11 +79,11 @@ class DestinyVendorCategory(BaseModel):
         item_indexes: An ordered list of indexes into items being sold in this category (DestinyVendorDefinition.itemList) which will contain more information about the items being sold themselves. Can also be used to index into DestinyVendorSaleItemComponent data, if you asked for that data to be returned.
     """
 
-    display_category_index: int = attr.field()
-    item_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
+    display_category_index: int = custom_field()
+    item_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
 
 
-@attr.define
+@custom_define()
 class DestinyVendorSaleItemComponent(BaseModel):
     """
     Request this component if you want the details about an item being sold in relation to the character making the request: whether the character can buy it, whether they can afford it, and other data related to purchasing the item. Note that if you want instance, stats, etc... data for the item, you'll have to request additional components such as ItemInstances, ItemPerks etc... and acquire them from the DestinyVendorResponse's "items" property.
@@ -117,18 +115,18 @@ class DestinyVendorSaleItemComponent(BaseModel):
         manifest_override_style_item_hash: Manifest information for `override_style_item_hash`
     """
 
-    api_purchasable: bool = attr.field()
-    augments: Union["DestinyVendorItemState", int] = attr.field(converter=enum_converter("DestinyVendorItemState"))
-    costs: list["DestinyItemQuantity"] = attr.field(metadata={"type": """list[DestinyItemQuantity]"""})
-    failure_indexes: list[int] = attr.field(metadata={"type": """list[int]"""})
-    item_hash: int = attr.field()
-    item_value_visibility: list[bool] = attr.field(metadata={"type": """list[bool]"""})
-    override_next_refresh_date: datetime = attr.field()
-    override_style_item_hash: int = attr.field()
-    quantity: int = attr.field()
-    required_unlocks: list[int] = attr.field(metadata={"type": """list[int]"""})
-    sale_status: Union["VendorItemStatus", int] = attr.field(converter=enum_converter("VendorItemStatus"))
-    unlock_statuses: list["DestinyUnlockStatus"] = attr.field(metadata={"type": """list[DestinyUnlockStatus]"""})
-    vendor_item_index: int = attr.field()
-    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
-    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = attr.field(default=None)
+    api_purchasable: bool = custom_field()
+    augments: Union["DestinyVendorItemState", int] = custom_field(converter=enum_converter("DestinyVendorItemState"))
+    costs: list["DestinyItemQuantity"] = custom_field(metadata={"type": """list[DestinyItemQuantity]"""})
+    failure_indexes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    item_hash: int = custom_field()
+    item_value_visibility: list[bool] = custom_field(metadata={"type": """list[bool]"""})
+    override_next_refresh_date: datetime = custom_field()
+    override_style_item_hash: int = custom_field()
+    quantity: int = custom_field()
+    required_unlocks: list[int] = custom_field(metadata={"type": """list[int]"""})
+    sale_status: Union["VendorItemStatus", int] = custom_field(converter=enum_converter("VendorItemStatus"))
+    unlock_statuses: list["DestinyUnlockStatus"] = custom_field(metadata={"type": """list[DestinyUnlockStatus]"""})
+    vendor_item_index: int = custom_field()
+    manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
+    manifest_override_style_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
