@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import builtins
 import datetime
 import inspect
-from enum import Enum, IntEnum, IntFlag
+from enum import Enum, IntFlag
+from functools import partial
 from typing import TYPE_CHECKING, Any, Optional, Type, _UnionGenericAlias
 
-import attr
+import attrs
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 import bungio.models as models
@@ -14,6 +16,8 @@ if TYPE_CHECKING:
     from bungio.client import Client
 
 __all__ = (
+    "custom_define",
+    "custom_field",
     "MISSING",
     "BaseEnum",
     "BaseFlagEnum",
@@ -24,6 +28,41 @@ __all__ = (
     "FuzzyAttrFinder",
     "EnumMixin",
 )
+
+
+custom_define = partial(
+    attrs.define,
+    **{
+        "slots": True,
+        "kw_only": True,
+    },
+)
+custom_field = partial(attrs.field, **{})
+
+
+_catch_types = []
+for entry in ["dict", "int", "str", "float", "bool"]:
+    _catch_types.extend([entry, getattr(builtins, entry)])
+
+
+def _enforce_type(field_type: Any, value: Any) -> Any:
+    if field_type in _catch_types:
+        # enforce the field_type, so the typing is correct
+        # bungie does not do this
+        if isinstance(field_type, str):
+            field_type = getattr(builtins, field_type)
+        if not isinstance(value, field_type):
+            value = field_type(value)
+    elif field_type in ["Any", Any]:
+        pass
+    else:
+        # this mean it's not something we want to enforce, so raise an error
+        raise ValueError
+    return value
+
+
+# def _transform_builtins(cls, fields: list[attrs.Attribute]) -> list[attrs.Attribute]:
+#     for
 
 
 class MISSING:
@@ -38,14 +77,14 @@ class MISSING:
 MISSING = MISSING()
 
 
-@attr.define
+@custom_define()
 class UnknownEnumValue:
     """
     Sometimes Bungie returns information that they have not defined anywhere, so this has to do
     """
 
-    value: int | str = attr.field()
-    enum: Type[BaseEnum] = attr.field()
+    value: int | str = custom_field()
+    enum: Type[BaseEnum] = custom_field()
 
 
 class EnumMixin(Enum):
@@ -130,13 +169,13 @@ class BaseFlagEnum(EnumMixin, IntFlag):
     pass
 
 
-@attr.define
+@custom_define()
 class ClientMixin:
     """
     Mixin that give models access to the client obj
     """
 
-    _client: "Client" = attr.field(repr=False, init=False)
+    _client: "Client" = custom_field(repr=False, init=False)
 
     @_client.default
     def __client_factory(self) -> "Client":
@@ -147,7 +186,7 @@ class ClientMixin:
         return client
 
 
-@attr.define
+@custom_define()
 class FuzzyAttrFinder:
     def _fuzzy_getattr(self, name: str) -> Any:
         """
@@ -173,7 +212,7 @@ class FuzzyAttrFinder:
             raise KeyError(f"`{name}` not found in `{self.__dir__()}`")
 
 
-@attr.define(kw_only=True)
+@custom_define()
 class BaseModel(ClientMixin):
     """
     Base methods which help to acquire this model from json and export it to json.
@@ -221,17 +260,17 @@ class BaseModel(ClientMixin):
         data = cls.process_dict(data=data, client=client)
 
         prepared = {}
-        for name, field in attr.fields_dict(cls).items():
+        for name, field in attrs.fields_dict(cls).items():
             if field.init and name != "_client":
                 # get the value we want. This also skips the manifest_... entries since they have no value and a default
-                value = data.get(cls._convert_to_bungie_case(name), attr.NOTHING)
+                value = data.get(cls._convert_to_bungie_case(name), attrs.NOTHING)
                 default = field.default
 
                 # sadly bungie sometimes does not return info without marking that fact in the api specs
-                if value is attr.NOTHING and default is attr.NOTHING:
+                if value is attrs.NOTHING and default is attrs.NOTHING:
                     default = MISSING
 
-                if value is attr.NOTHING:
+                if value is attrs.NOTHING:
                     value = default
 
                 else:
@@ -258,12 +297,12 @@ class BaseModel(ClientMixin):
                 return value
             field_type = str(field_type).removeprefix("typing.Optional[").removesuffix("]")
 
-        # sometimes the field type is the attr as a string
-        if isinstance(field_type, str):
-            # catch build-ins
-            if field_type in ["dict", "int", "str", "Any", "float", "bool"]:
-                return value
-            else:
+        # catch build-ins
+        try:
+            return _enforce_type(field_type=field_type, value=value)
+        except ValueError:
+            # sometimes the field type is the attr class as a string
+            if isinstance(field_type, str):
                 field_type = getattr(models, field_type)
 
         # convert models in models
@@ -412,7 +451,7 @@ class BaseModel(ClientMixin):
         if not _cache:
             _cache = {}
 
-        class_definition = attr.fields_dict(type(self))  # noqa
+        class_definition = fields_dict(type(self))  # noqa
 
         # loop through the class attributes
         for name in self.__dir__():
@@ -451,6 +490,6 @@ class BaseModel(ClientMixin):
                 await value.fetch_manifest_information(_cache=_cache)
 
 
-@attr.define
+@custom_define()
 class ManifestModel(BaseModel):
     pass
