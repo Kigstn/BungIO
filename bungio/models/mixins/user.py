@@ -74,7 +74,7 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
 
         # get character ids and gen functions
         # use the stats page to also get deleted chars
-        data = await self.get_historical_stats_for_account(groups=[DestinyStatsGroupType.NONE], auth=auth)
+        data = await self.get_historical_stats_for_account(groups=[0], auth=auth)
 
         characters = [
             DestinyCharacter(
