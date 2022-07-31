@@ -451,7 +451,7 @@ class BaseModel(ClientMixin):
         if not _cache:
             _cache = {}
 
-        class_definition = fields_dict(type(self))  # noqa
+        class_definition = attrs.fields_dict(type(self))  # noqa
 
         # loop through the class attributes
         for name in self.__dir__():
