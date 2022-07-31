@@ -32,7 +32,10 @@ class AppRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_application_api_usage(
-            application_id=application_id, auth=auth, end=end if end else None, start=start if start else None
+            application_id=application_id,
+            auth=auth,
+            end=end if end is not None else None,
+            start=start if start is not None else None,
         )
         return await ApiUsage.from_dict(
             data=response, client=self._client, application_id=application_id, auth=auth, end=end, start=start

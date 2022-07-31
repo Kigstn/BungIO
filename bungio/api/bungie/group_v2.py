@@ -339,8 +339,8 @@ class GroupV2RouteInterface(ClientMixin):
         response = await self._client.http.get_members_of_group(
             currentpage=currentpage,
             group_id=group_id,
-            member_type=getattr(member_type, "value", member_type) if member_type else None,
-            name_search=name_search if name_search else None,
+            member_type=getattr(member_type, "value", member_type) if member_type is not None else None,
+            name_search=name_search if name_search is not None else None,
             auth=auth,
         )
         return await SearchResultOfGroupMember.from_dict(

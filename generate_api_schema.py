@@ -342,7 +342,7 @@ def generate_function(
                     info["format"] = """getattr({name}, "value", {name})"""
 
             if is_optional:
-                info["format"] = f"""{info["format"]} if {info["name"]} else None"""
+                info["format"] = f"""{info["format"]} if {info["name"]} is not None else None"""
 
         if info["in"] == "query":
             arg_type = f"Optional[{arg_type}] = None"

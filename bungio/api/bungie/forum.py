@@ -56,8 +56,8 @@ class ForumRouteInterface(ClientMixin):
             page_size=page_size,
             quick_date=getattr(quick_date, "value", quick_date),
             sort=getattr(sort, "value", sort),
-            locales=locales if locales else None,
-            tagstring=tagstring if tagstring else None,
+            locales=locales if locales is not None else None,
+            tagstring=tagstring if tagstring is not None else None,
             auth=auth,
         )
         return await PostSearchResponse.from_dict(
@@ -103,7 +103,7 @@ class ForumRouteInterface(ClientMixin):
             page=page,
             quick_date=getattr(quick_date, "value", quick_date),
             sort=getattr(sort, "value", sort),
-            locales=locales if locales else None,
+            locales=locales if locales is not None else None,
             auth=auth,
         )
         return await PostSearchResponse.from_dict(
@@ -155,7 +155,7 @@ class ForumRouteInterface(ClientMixin):
             reply_size=reply_size,
             root_thread_mode=root_thread_mode,
             sort_mode=getattr(sort_mode, "value", sort_mode),
-            showbanned=showbanned if showbanned else None,
+            showbanned=showbanned if showbanned is not None else None,
             auth=auth,
         )
         return await PostSearchResponse.from_dict(
@@ -207,7 +207,7 @@ class ForumRouteInterface(ClientMixin):
             reply_size=reply_size,
             root_thread_mode=root_thread_mode,
             sort_mode=getattr(sort_mode, "value", sort_mode),
-            showbanned=showbanned if showbanned else None,
+            showbanned=showbanned if showbanned is not None else None,
             auth=auth,
         )
         return await PostSearchResponse.from_dict(
@@ -239,7 +239,7 @@ class ForumRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_post_and_parent(
-            child_post_id=child_post_id, showbanned=showbanned if showbanned else None, auth=auth
+            child_post_id=child_post_id, showbanned=showbanned if showbanned is not None else None, auth=auth
         )
         return await PostSearchResponse.from_dict(
             data=response, client=self._client, child_post_id=child_post_id, showbanned=showbanned, auth=auth
@@ -261,7 +261,7 @@ class ForumRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_post_and_parent_awaiting_approval(
-            child_post_id=child_post_id, showbanned=showbanned if showbanned else None, auth=auth
+            child_post_id=child_post_id, showbanned=showbanned if showbanned is not None else None, auth=auth
         )
         return await PostSearchResponse.from_dict(
             data=response, client=self._client, child_post_id=child_post_id, showbanned=showbanned, auth=auth
@@ -297,7 +297,7 @@ class ForumRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_forum_tag_suggestions(
-            partialtag=partialtag if partialtag else None, auth=auth
+            partialtag=partialtag if partialtag is not None else None, auth=auth
         )
         return [
             await TagResponse.from_dict(data=value, client=self._client, partialtag=partialtag, auth=auth)

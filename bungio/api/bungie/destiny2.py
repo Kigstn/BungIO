@@ -144,7 +144,7 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.get_linked_profiles(
             membership_id=membership_id,
             membership_type=getattr(membership_type, "value", membership_type),
-            get_all_memberships=get_all_memberships if get_all_memberships else None,
+            get_all_memberships=get_all_memberships if get_all_memberships is not None else None,
             auth=auth,
         )
         return await DestinyLinkedProfilesResponse.from_dict(
@@ -179,7 +179,7 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.get_profile(
             destiny_membership_id=destiny_membership_id,
             membership_type=getattr(membership_type, "value", membership_type),
-            components=[getattr(x, "value", x) for x in components] if components else None,
+            components=[getattr(x, "value", x) for x in components] if components is not None else None,
             auth=auth,
         )
         return await DestinyProfileResponse.from_dict(
@@ -217,7 +217,7 @@ class Destiny2RouteInterface(ClientMixin):
             character_id=character_id,
             destiny_membership_id=destiny_membership_id,
             membership_type=getattr(membership_type, "value", membership_type),
-            components=[getattr(x, "value", x) for x in components] if components else None,
+            components=[getattr(x, "value", x) for x in components] if components is not None else None,
             auth=auth,
         )
         return await DestinyCharacterResponse.from_dict(
@@ -285,7 +285,7 @@ class Destiny2RouteInterface(ClientMixin):
             destiny_membership_id=destiny_membership_id,
             item_instance_id=item_instance_id,
             membership_type=getattr(membership_type, "value", membership_type),
-            components=[getattr(x, "value", x) for x in components] if components else None,
+            components=[getattr(x, "value", x) for x in components] if components is not None else None,
             auth=auth,
         )
         return await DestinyItemResponse.from_dict(
@@ -326,8 +326,8 @@ class Destiny2RouteInterface(ClientMixin):
             character_id=character_id,
             destiny_membership_id=destiny_membership_id,
             membership_type=getattr(membership_type, "value", membership_type),
-            components=[getattr(x, "value", x) for x in components] if components else None,
-            filter=getattr(filter, "value", filter) if filter else None,
+            components=[getattr(x, "value", x) for x in components] if components is not None else None,
+            filter=getattr(filter, "value", filter) if filter is not None else None,
             auth=auth,
         )
         return await DestinyVendorsResponse.from_dict(
@@ -370,7 +370,7 @@ class Destiny2RouteInterface(ClientMixin):
             destiny_membership_id=destiny_membership_id,
             membership_type=getattr(membership_type, "value", membership_type),
             vendor_hash=vendor_hash,
-            components=[getattr(x, "value", x) for x in components] if components else None,
+            components=[getattr(x, "value", x) for x in components] if components is not None else None,
             auth=auth,
         )
         return await DestinyVendorResponse.from_dict(
@@ -399,7 +399,7 @@ class Destiny2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_public_vendors(
-            components=[getattr(x, "value", x) for x in components] if components else None, auth=auth
+            components=[getattr(x, "value", x) for x in components] if components is not None else None, auth=auth
         )
         return await DestinyPublicVendorsResponse.from_dict(
             data=response, client=self._client, components=components, auth=auth
@@ -434,7 +434,7 @@ class Destiny2RouteInterface(ClientMixin):
             collectible_presentation_node_hash=collectible_presentation_node_hash,
             destiny_membership_id=destiny_membership_id,
             membership_type=getattr(membership_type, "value", membership_type),
-            components=[getattr(x, "value", x) for x in components] if components else None,
+            components=[getattr(x, "value", x) for x in components] if components is not None else None,
             auth=auth,
         )
         return await DestinyCollectibleNodeDetailResponse.from_dict(
@@ -681,9 +681,9 @@ class Destiny2RouteInterface(ClientMixin):
 
         response = await self._client.http.get_clan_leaderboards(
             group_id=group_id,
-            maxtop=maxtop if maxtop else None,
-            modes=modes if modes else None,
-            statid=statid if statid else None,
+            maxtop=maxtop if maxtop is not None else None,
+            modes=modes if modes is not None else None,
+            statid=statid if statid is not None else None,
             auth=auth,
         )
         return {
@@ -718,7 +718,7 @@ class Destiny2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_clan_aggregate_stats(
-            group_id=group_id, modes=modes if modes else None, auth=auth
+            group_id=group_id, modes=modes if modes is not None else None, auth=auth
         )
         return [
             await DestinyClanAggregateStat.from_dict(
@@ -754,9 +754,9 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.get_leaderboards(
             destiny_membership_id=destiny_membership_id,
             membership_type=getattr(membership_type, "value", membership_type),
-            maxtop=maxtop if maxtop else None,
-            modes=modes if modes else None,
-            statid=statid if statid else None,
+            maxtop=maxtop if maxtop is not None else None,
+            modes=modes if modes is not None else None,
+            statid=statid if statid is not None else None,
             auth=auth,
         )
         return {
@@ -806,9 +806,9 @@ class Destiny2RouteInterface(ClientMixin):
             character_id=character_id,
             destiny_membership_id=destiny_membership_id,
             membership_type=getattr(membership_type, "value", membership_type),
-            maxtop=maxtop if maxtop else None,
-            modes=modes if modes else None,
-            statid=statid if statid else None,
+            maxtop=maxtop if maxtop is not None else None,
+            modes=modes if modes is not None else None,
+            statid=statid if statid is not None else None,
             auth=auth,
         )
         return {
@@ -846,7 +846,7 @@ class Destiny2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.search_destiny_entities(
-            search_term=search_term, type=type, page=page if page else None, auth=auth
+            search_term=search_term, type=type, page=page if page is not None else None, auth=auth
         )
         return await DestinyEntitySearchResult.from_dict(
             data=response, client=self._client, search_term=search_term, type=type, page=page, auth=auth
@@ -886,11 +886,11 @@ class Destiny2RouteInterface(ClientMixin):
             character_id=character_id,
             destiny_membership_id=destiny_membership_id,
             membership_type=getattr(membership_type, "value", membership_type),
-            dayend=dayend if dayend else None,
-            daystart=daystart if daystart else None,
-            groups=[getattr(x, "value", x) for x in groups] if groups else None,
-            modes=[getattr(x, "value", x) for x in modes] if modes else None,
-            period_type=getattr(period_type, "value", period_type) if period_type else None,
+            dayend=dayend if dayend is not None else None,
+            daystart=daystart if daystart is not None else None,
+            groups=[getattr(x, "value", x) for x in groups] if groups is not None else None,
+            modes=[getattr(x, "value", x) for x in modes] if modes is not None else None,
+            period_type=getattr(period_type, "value", period_type) if period_type is not None else None,
             auth=auth,
         )
         return {
@@ -933,7 +933,7 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.get_historical_stats_for_account(
             destiny_membership_id=destiny_membership_id,
             membership_type=getattr(membership_type, "value", membership_type),
-            groups=[getattr(x, "value", x) for x in groups] if groups else None,
+            groups=[getattr(x, "value", x) for x in groups] if groups is not None else None,
             auth=auth,
         )
         return await DestinyHistoricalStatsAccountResult.from_dict(
@@ -975,9 +975,9 @@ class Destiny2RouteInterface(ClientMixin):
             character_id=character_id,
             destiny_membership_id=destiny_membership_id,
             membership_type=getattr(membership_type, "value", membership_type),
-            count=count if count else None,
-            mode=getattr(mode, "value", mode) if mode else None,
-            page=page if page else None,
+            count=count if count is not None else None,
+            mode=getattr(mode, "value", mode) if mode is not None else None,
+            page=page if page is not None else None,
             auth=auth,
         )
         return await DestinyActivityHistoryResults.from_dict(

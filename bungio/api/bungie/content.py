@@ -48,7 +48,7 @@ class ContentRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_content_by_id(
-            id=id, locale=locale, head=head if head else None, auth=auth
+            id=id, locale=locale, head=head if head is not None else None, auth=auth
         )
         return await ContentItemPublicContract.from_dict(
             data=response, client=self._client, id=id, locale=locale, head=head, auth=auth
@@ -72,7 +72,7 @@ class ContentRouteInterface(ClientMixin):
         """
 
         response = await self._client.http.get_content_by_tag_and_type(
-            locale=locale, tag=tag, type=type, head=head if head else None, auth=auth
+            locale=locale, tag=tag, type=type, head=head if head is not None else None, auth=auth
         )
         return await ContentItemPublicContract.from_dict(
             data=response, client=self._client, locale=locale, tag=tag, type=type, head=head, auth=auth
@@ -108,12 +108,12 @@ class ContentRouteInterface(ClientMixin):
 
         response = await self._client.http.search_content_with_text(
             locale=locale,
-            ctype=ctype if ctype else None,
-            currentpage=currentpage if currentpage else None,
-            head=head if head else None,
-            searchtext=searchtext if searchtext else None,
-            source=source if source else None,
-            tag=tag if tag else None,
+            ctype=ctype if ctype is not None else None,
+            currentpage=currentpage if currentpage is not None else None,
+            head=head if head is not None else None,
+            searchtext=searchtext if searchtext is not None else None,
+            source=source if source is not None else None,
+            tag=tag if tag is not None else None,
             auth=auth,
         )
         return await SearchResultOfContentItemPublicContract.from_dict(
@@ -159,9 +159,9 @@ class ContentRouteInterface(ClientMixin):
             locale=locale,
             tag=tag,
             type=type,
-            currentpage=currentpage if currentpage else None,
-            head=head if head else None,
-            itemsperpage=itemsperpage if itemsperpage else None,
+            currentpage=currentpage if currentpage is not None else None,
+            head=head if head is not None else None,
+            itemsperpage=itemsperpage if itemsperpage is not None else None,
             auth=auth,
         )
         return await SearchResultOfContentItemPublicContract.from_dict(
