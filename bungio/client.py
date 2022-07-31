@@ -258,7 +258,7 @@ class Client(singleton.Singleton):
 
             # check that token exists
             if auth.token is None:
-                raise InvalidAuthentication(auth)
+                raise InvalidAuthentication(auth=auth)
 
             # check if token is expired
             now = get_now_with_tz()
@@ -268,7 +268,7 @@ class Client(singleton.Singleton):
             # check the refresh token expiry
             if auth.refresh_token_expiry < (now - datetime.timedelta(minutes=5)):
                 self._invalidate_token(auth=auth)
-                raise InvalidAuthentication(auth)
+                raise InvalidAuthentication(auth=auth)
 
             old_auth = copy(auth)
 
