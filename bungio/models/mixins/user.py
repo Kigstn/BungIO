@@ -31,7 +31,6 @@ if TYPE_CHECKING:
 
     # AUTOMATIC IMPORTS END
     from bungio.models.auth import AuthData
-    from bungio.models.basic import DestinyCharacter
     from bungio.models.bungie import DestinyActivityModeType
     from bungio.models.overwrites import DestinyHistoricalStatsPeriodGroup
 
@@ -71,6 +70,7 @@ class DestinyUserMixin(ClientMixin, FuzzyAttrFinder):
         Returns:
             A generator for the model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
+        from bungio.models.basic import DestinyCharacter
 
         # get character ids and gen functions
         # use the stats page to also get deleted chars
