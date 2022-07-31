@@ -291,11 +291,27 @@ class BaseModel(ClientMixin):
 
     @staticmethod
     async def _convert_to_type(field_type: Any, field_metadata: Optional[dict], value: Any, client: Client) -> Any:
-        # catch optional
-        if isinstance(field_type, _UnionGenericAlias) and "Optional" in str(field_type):
-            if value is None:
-                return value
-            field_type = str(field_type).removeprefix("typing.Optional[").removesuffix("]")
+        if isinstance(field_type, _UnionGenericAlias):
+            as_string = str(field_type)
+
+            # catch optional
+            if "Optional" in as_string:
+                if value is None:
+                    return value
+                field_type = (
+                    as_string.removeprefix("typing.Optional[")
+                    .removesuffix("]")
+                    .replace("ForwardRef('", "")
+                    .replace("')", "")
+                )
+            # catch union
+            if "Union" in as_string:
+                field_type = (
+                    as_string.removeprefix("typing.Union[")
+                    .removesuffix(", int]")
+                    .replace("ForwardRef('", "")
+                    .replace("')", "")
+                )
 
         # catch build-ins
         try:
