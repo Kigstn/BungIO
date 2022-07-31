@@ -262,7 +262,7 @@ class Client(singleton.Singleton):
 
             # check if token is expired
             now = get_now_with_tz()
-            if auth.token_expiry < (now - datetime.timedelta(minutes=5)):
+            if auth.token_expiry > (now - datetime.timedelta(minutes=5)):
                 return auth
 
             # check the refresh token expiry
@@ -273,7 +273,7 @@ class Client(singleton.Singleton):
             old_auth = copy(auth)
 
             # refresh the data
-            data = await self.refresh_access_token(auth=auth)
+            data = await self.http.refresh_access_token(auth=auth)
             auth.token = data["access_token"]
             auth.refresh_token = data["refresh_token"]
             auth.token_expiry = now + datetime.timedelta(seconds=data["expires_in"])
