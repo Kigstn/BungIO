@@ -252,7 +252,7 @@ class Client(singleton.Singleton):
                 return auth
 
             # check the refresh token expiry
-            if auth.refresh_token_expiry > (now - datetime.timedelta(minutes=5)):
+            if auth.refresh_token_expiry < (now - datetime.timedelta(minutes=5)):
                 self._invalidate_token(auth=auth)
                 raise InvalidAuthentication(auth)
 
