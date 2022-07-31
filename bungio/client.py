@@ -219,6 +219,20 @@ class Client(singleton.Singleton):
 
         return auth
 
+    def _invalidate_token(self, auth: AuthData) -> None:
+        """
+        Invalidate a token
+
+        Args:
+            auth: The data to invalidate
+        """
+
+        old_auth = copy(auth)
+        auth.token = None
+
+        # dispatch the update event
+        asyncio.create_task(self.on_token_update(before=old_auth, after=auth))
+
     async def get_working_auth(self, auth: AuthData) -> AuthData:
         """
         Check if tokens need to be refreshed and then do that.

@@ -189,7 +189,8 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
                     route = e.route
 
                 except _InvalidAuthentication:
-                    self._invalidate_token(auth=auth)
+                    # noinspection PyProtectedMember
+                    self._client._invalidate_token(auth=auth)
                     raise InvalidAuthentication(auth=auth)
 
                 except (
@@ -377,20 +378,6 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
         )
 
         return headers
-
-    def _invalidate_token(self, auth: AuthData) -> None:
-        """
-        Invalidate a token
-
-        Args:
-            auth: The data to invalidate
-        """
-
-        old_auth = copy(auth)
-        auth.token = None
-
-        # dispatch the update event
-        asyncio.create_task(self._client.on_token_update(before=old_auth, after=auth))
 
     def __setup_session(self) -> None:
         """
