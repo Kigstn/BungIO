@@ -81,7 +81,7 @@ class MISSING:
 MISSING = MISSING()
 
 
-@custom_define()
+@custom_define(slots=False)
 class HashObject:
     """
     Many objs have a unique `hash` attribute, this implements logic for this.
