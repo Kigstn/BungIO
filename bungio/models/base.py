@@ -85,7 +85,12 @@ MISSING = MISSING()
 class HashObject:
     """
     Many objs have a unique `hash` attribute, this implements logic for this.
+
+    Attributes:
+        hash: The id / hash of the object
     """
+
+    hash: int = custom_field()
 
     def __eq__(self, other: Any) -> bool:
         if hasattr(other, "hash"):
