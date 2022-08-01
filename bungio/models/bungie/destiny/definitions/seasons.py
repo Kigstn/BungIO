@@ -3,9 +3,18 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Any, Optional, Union
 
-from bungio.models.base import BaseModel, ManifestModel, custom_define, custom_field
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    HashObject,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -19,7 +28,7 @@ if TYPE_CHECKING:
 
 
 @custom_define()
-class DestinySeasonDefinition(ManifestModel):
+class DestinySeasonDefinition(ManifestModel, HashObject):
     """
     Defines a canonical "Season" of Destiny: a range of a few months where the game highlights certain challenges, provides new loot, has new Clan-related rewards and celebrates various seasonal events.
 
@@ -58,7 +67,6 @@ class DestinySeasonDefinition(ManifestModel):
     background_image_path: str = custom_field()
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
     end_date: datetime = custom_field()
-    hash: int = custom_field()
     index: int = custom_field()
     preview: "DestinySeasonPreviewDefinition" = custom_field()
     redacted: bool = custom_field()
@@ -114,7 +122,7 @@ class DestinySeasonPreviewImageDefinition(BaseModel):
 
 
 @custom_define()
-class DestinySeasonPassDefinition(ManifestModel):
+class DestinySeasonPassDefinition(ManifestModel, HashObject):
     """
     _No description given by bungie._
 
@@ -139,7 +147,6 @@ class DestinySeasonPassDefinition(ManifestModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    hash: int = custom_field()
     index: int = custom_field()
     prestige_progression_hash: int = custom_field()
     redacted: bool = custom_field()
@@ -149,7 +156,7 @@ class DestinySeasonPassDefinition(ManifestModel):
 
 
 @custom_define()
-class DestinyEventCardDefinition(ManifestModel):
+class DestinyEventCardDefinition(ManifestModel, HashObject):
     """
     Defines the properties of an 'Event Card' in Destiny 2, to coincide with a seasonal event for additional challenges, premium rewards, a new seal, and a special title. For example: Solstice of Heroes 2022.
 
@@ -185,7 +192,6 @@ class DestinyEventCardDefinition(ManifestModel):
     color: "DestinyColor" = custom_field()
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
     end_time: int = custom_field()
-    hash: int = custom_field()
     images: "DestinyEventCardImages" = custom_field()
     index: int = custom_field()
     link_redirect_path: str = custom_field()

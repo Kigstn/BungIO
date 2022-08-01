@@ -9,6 +9,7 @@ from bungio.models.base import (
     BaseEnum,
     BaseFlagEnum,
     BaseModel,
+    HashObject,
     ManifestModel,
     custom_define,
     custom_field,

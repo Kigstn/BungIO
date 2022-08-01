@@ -2,12 +2,23 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
+from datetime import datetime
+from typing import TYPE_CHECKING, Any, Optional, Union
 
-from bungio.models.base import ManifestModel, custom_define, custom_field
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    HashObject,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
+from bungio.utils import enum_converter
 
 
 @custom_define()
-class DestinyPowerCapDefinition(ManifestModel):
+class DestinyPowerCapDefinition(ManifestModel, HashObject):
     """
     Defines a 'power cap' (limit) for gear items, based on the rarity tier and season of release.
 
@@ -19,7 +30,6 @@ class DestinyPowerCapDefinition(ManifestModel):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    hash: int = custom_field()
     index: int = custom_field()
     power_cap: int = custom_field()
     redacted: bool = custom_field()

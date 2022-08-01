@@ -791,7 +791,7 @@ from datetime import datetime
 from typing import Optional, Any, Union, TYPE_CHECKING
 
 from bungio.utils import enum_converter
-from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, ManifestModel, custom_define, custom_field
+from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, ManifestModel, custom_define, custom_field
 
 {"%mixin_imports%" if mixins else ""}
 %imports%"""
@@ -1033,9 +1033,12 @@ class {model["name"]}(BaseEnum):"""
         except ModuleNotFoundError:
             pass
 
+        # does the obj has a hash attr
+        hash_extra = "hash" in properties
+
         text = f"""
 @custom_define()
-class {model_name}({"BaseModel" if "x-mobile-manifest-name" not in model else "ManifestModel"}{mixin_extra}):
+class {model_name}({"BaseModel" if "x-mobile-manifest-name" not in model else "ManifestModel"}{mixin_extra}{", HashObject" if hash_extra else ""}):
     \"\"\"
     {clean_desc(model)}
 
@@ -1050,6 +1053,9 @@ class {model_name}({"BaseModel" if "x-mobile-manifest-name" not in model else "M
     \"\"\"
 """
         for name, data in properties.items():
+            if name == "hash":
+                continue
+
             field_extras = []
             if data["enum_type"]:
                 field_extras.insert(0, f"""converter=enum_converter({data["enum_type"]})""")

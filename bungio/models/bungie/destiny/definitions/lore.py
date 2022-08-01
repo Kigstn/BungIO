@@ -2,16 +2,26 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING
+from datetime import datetime
+from typing import TYPE_CHECKING, Any, Optional, Union
 
-from bungio.models.base import ManifestModel, custom_define, custom_field
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    HashObject,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import DestinyDisplayPropertiesDefinition
 
 
 @custom_define()
-class DestinyLoreDefinition(ManifestModel):
+class DestinyLoreDefinition(ManifestModel, HashObject):
     """
     These are definitions for in-game "Lore," meant to be narrative enhancements of the game experience. DestinyInventoryItemDefinitions for interesting items point to these definitions, but nothing's stopping you from scraping all of these and doing something cool with them. If they end up having cool data.
 
@@ -25,7 +35,6 @@ class DestinyLoreDefinition(ManifestModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    hash: int = custom_field()
     index: int = custom_field()
     redacted: bool = custom_field()
     subtitle: str = custom_field()

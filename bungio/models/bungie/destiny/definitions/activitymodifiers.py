@@ -2,16 +2,26 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING
+from datetime import datetime
+from typing import TYPE_CHECKING, Any, Optional, Union
 
-from bungio.models.base import ManifestModel, custom_define, custom_field
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    HashObject,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import DestinyDisplayPropertiesDefinition
 
 
 @custom_define()
-class DestinyActivityModifierDefinition(ManifestModel):
+class DestinyActivityModifierDefinition(ManifestModel, HashObject):
     """
     Modifiers - in Destiny 1, these were referred to as "Skulls" - are changes that can be applied to an Activity.
 
@@ -28,6 +38,5 @@ class DestinyActivityModifierDefinition(ManifestModel):
     display_in_activity_selection: bool = custom_field()
     display_in_nav_mode: bool = custom_field()
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    hash: int = custom_field()
     index: int = custom_field()
     redacted: bool = custom_field()

@@ -2,9 +2,19 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional
+from datetime import datetime
+from typing import TYPE_CHECKING, Any, Optional, Union
 
-from bungio.models.base import BaseModel, ManifestModel, custom_define, custom_field
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    HashObject,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
@@ -15,7 +25,7 @@ if TYPE_CHECKING:
 
 
 @custom_define()
-class DestinyArtifactDefinition(ManifestModel):
+class DestinyArtifactDefinition(ManifestModel, HashObject):
     """
     Represents known info about a Destiny Artifact. We cannot guarantee that artifact definitions will be immutable between seasons - in fact, we've been told that they will be replaced between seasons. But this definition is built both to minimize the amount of lookups for related data that have to occur, and is built in hope that, if this plan changes, we will be able to accommodate it more easily.
 
@@ -30,7 +40,6 @@ class DestinyArtifactDefinition(ManifestModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    hash: int = custom_field()
     index: int = custom_field()
     redacted: bool = custom_field()
     tiers: list["DestinyArtifactTierDefinition"] = custom_field(

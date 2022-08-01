@@ -2,9 +2,18 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional, Union
+from datetime import datetime
+from typing import TYPE_CHECKING, Any, Optional, Union
 
-from bungio.models.base import BaseModel, ManifestModel, custom_define, custom_field
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    HashObject,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -20,7 +29,7 @@ if TYPE_CHECKING:
 
 
 @custom_define()
-class DestinyItemTierTypeDefinition(ManifestModel):
+class DestinyItemTierTypeDefinition(ManifestModel, HashObject):
     """
     Defines the tier type of an item. Mostly this provides human readable properties for types like Common, Rare, etc... It also provides some base data for infusion that could be useful.
 
@@ -34,7 +43,6 @@ class DestinyItemTierTypeDefinition(ManifestModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    hash: int = custom_field()
     index: int = custom_field()
     infusion_process: "DestinyItemTierTypeInfusionBlock" = custom_field()
     redacted: bool = custom_field()

@@ -2,16 +2,26 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING
+from datetime import datetime
+from typing import TYPE_CHECKING, Any, Optional, Union
 
-from bungio.models.base import BaseModel, ManifestModel, custom_define, custom_field
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    HashObject,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import DestinyDisplayPropertiesDefinition
 
 
 @custom_define()
-class DestinyReportReasonCategoryDefinition(ManifestModel):
+class DestinyReportReasonCategoryDefinition(ManifestModel, HashObject):
     """
     If you're going to report someone for a Terms of Service violation, you need to choose a category and reason for the report. This definition holds both the categories and the reasons within those categories, for simplicity and my own laziness' sake. Note tha this means that, to refer to a Reason by reasonHash, you need a combination of the reasonHash *and* the associated ReasonCategory's hash: there are some reasons defined under multiple categories.
 
@@ -25,7 +35,6 @@ class DestinyReportReasonCategoryDefinition(ManifestModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    hash: int = custom_field()
     index: int = custom_field()
     reasons: dict[int, "DestinyReportReasonDefinition"] = custom_field(
         metadata={"type": """dict[int, DestinyReportReasonDefinition]"""}

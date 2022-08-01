@@ -2,9 +2,18 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional, Union
+from datetime import datetime
+from typing import TYPE_CHECKING, Any, Optional, Union
 
-from bungio.models.base import BaseModel, ManifestModel, custom_define, custom_field
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    HashObject,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -13,15 +22,17 @@ if TYPE_CHECKING:
         DestinyInventoryItemDefinition,
         DestinyMaterialRequirementSetDefinition,
         DestinyPresentationChildBlock,
+        DestinyPresentationNodeDefinition,
         DestinyPresentationNodeRequirementsBlock,
         DestinyPresentationNodeType,
         DestinyScope,
+        DestinyTraitDefinition,
         DestinyUnlockValueDefinition,
     )
 
 
 @custom_define()
-class DestinyCollectibleDefinition(ManifestModel):
+class DestinyCollectibleDefinition(ManifestModel, HashObject):
     """
     Defines a
 
@@ -55,7 +66,6 @@ class DestinyCollectibleDefinition(ManifestModel):
 
     acquisition_info: "DestinyCollectibleAcquisitionBlock" = custom_field()
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    hash: int = custom_field()
     index: int = custom_field()
     item_hash: int = custom_field()
     parent_node_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})

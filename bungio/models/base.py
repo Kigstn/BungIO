@@ -27,6 +27,7 @@ __all__ = (
     "UnknownEnumValue",
     "FuzzyAttrFinder",
     "EnumMixin",
+    "HashObject",
 )
 
 
@@ -78,6 +79,27 @@ class MISSING:
 
 
 MISSING = MISSING()
+
+
+@custom_define()
+class HashObject:
+    """
+    Many objs have a unique `hash` attribute, this implements logic for this.
+    """
+
+    def __eq__(self, other: Any) -> bool:
+        if hasattr(other, "hash"):
+            other = other.hash
+        return self.hash == other
+
+    def __ne__(self, other: Any) -> bool:
+        return self.hash != other.hash
+
+    def __hash__(self) -> int:
+        return self.hash
+
+    def __int__(self) -> int:
+        return self.hash
 
 
 @custom_define()

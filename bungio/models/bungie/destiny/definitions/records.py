@@ -2,9 +2,18 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional, Union
+from datetime import datetime
+from typing import TYPE_CHECKING, Any, Optional, Union
 
-from bungio.models.base import BaseModel, ManifestModel, custom_define, custom_field
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    HashObject,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -15,16 +24,18 @@ if TYPE_CHECKING:
         DestinyLoreDefinition,
         DestinyObjectiveDefinition,
         DestinyPresentationChildBlock,
+        DestinyPresentationNodeDefinition,
         DestinyPresentationNodeRequirementsBlock,
         DestinyPresentationNodeType,
         DestinyRecordToastStyle,
         DestinyRecordValueStyle,
         DestinyScope,
+        DestinyTraitDefinition,
     )
 
 
 @custom_define()
-class DestinyRecordDefinition(ManifestModel):
+class DestinyRecordDefinition(ManifestModel, HashObject):
     """
     _No description given by bungie._
 
@@ -67,7 +78,6 @@ class DestinyRecordDefinition(ManifestModel):
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
     expiration_info: "DestinyRecordExpirationBlock" = custom_field()
     for_title_gilding: bool = custom_field()
-    hash: int = custom_field()
     index: int = custom_field()
     interval_info: "DestinyRecordIntervalBlock" = custom_field()
     lore_hash: int = custom_field()

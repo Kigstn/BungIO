@@ -2,9 +2,18 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional, Union
+from datetime import datetime
+from typing import TYPE_CHECKING, Any, Optional, Union
 
-from bungio.models.base import BaseModel, ManifestModel, custom_define, custom_field
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    HashObject,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -19,11 +28,12 @@ if TYPE_CHECKING:
         DestinyPresentationScreenStyle,
         DestinyRecordDefinition,
         DestinyScope,
+        DestinyTraitDefinition,
     )
 
 
 @custom_define()
-class DestinyPresentationNodeBaseDefinition(BaseModel):
+class DestinyPresentationNodeBaseDefinition(BaseModel, HashObject):
     """
     This is the base class for all presentation system children. Presentation Nodes, Records, Collectibles, and Metrics.
 
@@ -38,7 +48,6 @@ class DestinyPresentationNodeBaseDefinition(BaseModel):
         trait_ids: _No description given by bungie._
     """
 
-    hash: int = custom_field()
     index: int = custom_field()
     parent_node_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     presentation_node_type: Union["DestinyPresentationNodeType", int] = custom_field(
@@ -50,7 +59,7 @@ class DestinyPresentationNodeBaseDefinition(BaseModel):
 
 
 @custom_define()
-class DestinyScoredPresentationNodeBaseDefinition(BaseModel):
+class DestinyScoredPresentationNodeBaseDefinition(BaseModel, HashObject):
     """
     _No description given by bungie._
 
@@ -66,7 +75,6 @@ class DestinyScoredPresentationNodeBaseDefinition(BaseModel):
         trait_ids: _No description given by bungie._
     """
 
-    hash: int = custom_field()
     index: int = custom_field()
     max_category_record_score: int = custom_field()
     parent_node_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
@@ -79,7 +87,7 @@ class DestinyScoredPresentationNodeBaseDefinition(BaseModel):
 
 
 @custom_define()
-class DestinyPresentationNodeDefinition(ManifestModel):
+class DestinyPresentationNodeDefinition(ManifestModel, HashObject):
     """
     A PresentationNode is an entity that represents a logical grouping of other entities visually/organizationally. For now, Presentation Nodes may contain the following... but it may be used for more in the future: - Collectibles - Records (Or, as the public will call them, "Triumphs." Don't ask me why we're overloading the term "Triumph", it still hurts me to think about it) - Metrics (aka Stat Trackers) - Other Presentation Nodes, allowing a tree of Presentation Nodes to be created Part of me wants to break these into conceptual definitions per entity being collected, but the possibility of these different types being mixed in the same UI and the possibility that it could actually be more useful to return the "bare metal" presentation node concept has resulted in me deciding against that for the time being. We'll see if I come to regret this as well.
 
@@ -124,7 +132,6 @@ class DestinyPresentationNodeDefinition(ManifestModel):
     display_style: Union["DestinyPresentationDisplayStyle", int] = custom_field(
         converter=enum_converter("DestinyPresentationDisplayStyle")
     )
-    hash: int = custom_field()
     index: int = custom_field()
     max_category_record_score: int = custom_field()
     node_type: Union["DestinyPresentationNodeType", int] = custom_field(

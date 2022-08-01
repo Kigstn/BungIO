@@ -2,16 +2,26 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional
+from datetime import datetime
+from typing import TYPE_CHECKING, Any, Optional, Union
 
-from bungio.models.base import ManifestModel, custom_define, custom_field
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    HashObject,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import DestinyDisplayPropertiesDefinition
 
 
 @custom_define()
-class DestinyTraitDefinition(ManifestModel):
+class DestinyTraitDefinition(ManifestModel, HashObject):
     """
     _No description given by bungie._
 
@@ -37,7 +47,6 @@ class DestinyTraitDefinition(ManifestModel):
 
     display_hint: str = custom_field()
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    hash: int = custom_field()
     index: int = custom_field()
     redacted: bool = custom_field()
     trait_category_hash: int = custom_field()
@@ -46,7 +55,7 @@ class DestinyTraitDefinition(ManifestModel):
 
 
 @custom_define()
-class DestinyTraitCategoryDefinition(ManifestModel):
+class DestinyTraitCategoryDefinition(ManifestModel, HashObject):
     """
     _No description given by bungie._
 
@@ -60,7 +69,6 @@ class DestinyTraitCategoryDefinition(ManifestModel):
         trait_ids: _No description given by bungie._
     """
 
-    hash: int = custom_field()
     index: int = custom_field()
     redacted: bool = custom_field()
     trait_category_id: str = custom_field()

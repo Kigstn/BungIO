@@ -2,9 +2,18 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional, Union
+from datetime import datetime
+from typing import TYPE_CHECKING, Any, Optional, Union
 
-from bungio.models.base import BaseModel, ManifestModel, custom_define, custom_field
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    HashObject,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -19,7 +28,7 @@ if TYPE_CHECKING:
 
 
 @custom_define()
-class DestinySocketTypeDefinition(ManifestModel):
+class DestinySocketTypeDefinition(ManifestModel, HashObject):
     """
     All Sockets have a "Type": a set of common properties that determine when the socket allows Plugs to be inserted, what Categories of Plugs can be inserted, and whether the socket is even visible at all given the current game/character/account state. See DestinyInventoryItemDefinition for more information about Socketed items and Plugs.
 
@@ -56,7 +65,6 @@ class DestinySocketTypeDefinition(ManifestModel):
         metadata={"type": """list[DestinySocketTypeScalarMaterialRequirementEntry]"""}
     )
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    hash: int = custom_field()
     hide_duplicate_reusable_plugs: bool = custom_field()
     index: int = custom_field()
     insert_action: "DestinyInsertPlugActionDefinition" = custom_field()
@@ -131,7 +139,7 @@ class DestinySocketTypeScalarMaterialRequirementEntry(BaseModel):
 
 
 @custom_define()
-class DestinySocketCategoryDefinition(ManifestModel):
+class DestinySocketCategoryDefinition(ManifestModel, HashObject):
     """
     Sockets on an item are organized into Categories visually. You can find references to the socket category defined on an item's DestinyInventoryItemDefinition.sockets.socketCategories property. This has the display information for rendering the categories' header, and a hint for how the UI should handle showing this category. The shitty thing about this, however, is that the socket categories' UI style can be overridden by the item's UI style. For instance, the Socket Category used by Emote Sockets says it's "consumable," but that's a lie: they're all reusable, and overridden by the detail UI pages in ways that we can't easily account for in the API. As a result, I will try to compile these rules into the individual sockets on items, and provide the best hint possible there through the plugSources property. In the future, I may attempt to use this information in conjunction with the item to provide a more usable UI hint on the socket layer, but for now improving the consistency of plugSources is the best I have time to provide. (See https://github.com/Bungie-net/api/issues/522 for more info)
 
@@ -149,14 +157,13 @@ class DestinySocketCategoryDefinition(ManifestModel):
         converter=enum_converter("DestinySocketCategoryStyle")
     )
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    hash: int = custom_field()
     index: int = custom_field()
     redacted: bool = custom_field()
     ui_category_style: int = custom_field()
 
 
 @custom_define()
-class DestinyPlugSetDefinition(ManifestModel):
+class DestinyPlugSetDefinition(ManifestModel, HashObject):
     """
     Sometimes, we have large sets of reusable plugs that are defined identically and thus can (and in some cases, are so large that they *must*) be shared across the places where they are used. These are the definitions for those reusable sets of plugs.   See DestinyItemSocketEntryDefinition.plugSource and reusablePlugSetHash for the relationship between these reusable plug sets and the sockets that leverage them (for starters, Emotes).  As of the release of Shadowkeep (Late 2019), these will begin to be sourced from game content directly - which means there will be many more of them, but it also means we may not get all data that we used to get for them.  DisplayProperties, in particular, will no longer be guaranteed to contain valid information. We will make a best effort to guess what ought to be populated there where possible, but it will be invalid for many/most plug sets.
 
@@ -171,7 +178,6 @@ class DestinyPlugSetDefinition(ManifestModel):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    hash: int = custom_field()
     index: int = custom_field()
     is_fake_plug_set: bool = custom_field()
     redacted: bool = custom_field()

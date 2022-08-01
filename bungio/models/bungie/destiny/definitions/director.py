@@ -2,9 +2,18 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional, Union
+from datetime import datetime
+from typing import TYPE_CHECKING, Any, Optional, Union
 
-from bungio.models.base import BaseModel, ManifestModel, custom_define, custom_field
+from bungio.models.base import (
+    BaseEnum,
+    BaseFlagEnum,
+    BaseModel,
+    HashObject,
+    ManifestModel,
+    custom_define,
+    custom_field,
+)
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
@@ -20,7 +29,7 @@ if TYPE_CHECKING:
 
 
 @custom_define()
-class DestinyActivityGraphDefinition(ManifestModel):
+class DestinyActivityGraphDefinition(ManifestModel, HashObject):
     """
     Represents a Map View in the director: be them overview views, destination views, or other. They have nodes which map to activities, and other various visual elements that we (or others) may or may not be able to use. Activity graphs, most importantly, have nodes which can have activities in various states of playability. Unfortunately, activity graphs are combined at runtime with Game UI-only assets such as fragments of map images, various in-game special effects, decals etc... that we don't get in these definitions. If we end up having time, we may end up trying to manually populate those here: but the last time we tried that, before the lead-up to D1, it proved to be unmaintainable as the game's content changed. So don't bet the farm on us providing that content in this definition.
 
@@ -49,7 +58,6 @@ class DestinyActivityGraphDefinition(ManifestModel):
     display_progressions: list["DestinyActivityGraphDisplayProgressionDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityGraphDisplayProgressionDefinition]"""}
     )
-    hash: int = custom_field()
     index: int = custom_field()
     linked_graphs: list["DestinyLinkedGraphDefinition"] = custom_field(
         metadata={"type": """list[DestinyLinkedGraphDefinition]"""}
