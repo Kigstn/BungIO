@@ -459,9 +459,38 @@ class BaseModel(ClientMixin):
 
         return result
 
-    async def fetch_manifest_information(self, _cache: Optional[dict] = None):
+    async def fetch_manifest_information(
+        self, include: Optional[list[str]] = None, exclude: Optional[list[str]] = None, _cache: Optional[dict] = None
+    ):
         """
         Fill the model in-place with information from the manifest.
+
+        Example:
+            Fill every attribute
+            ```py
+            model: DestinyHistoricalStatsActivity
+            await model.fetch_manifest_information()
+            assert model.manifest_director_activity_hash is not None
+            assert model.manifest_reference_id is not None
+            ```
+
+            Fill only some attribute
+            ```py
+            model: DestinyHistoricalStatsActivity
+            await model.fetch_manifest_information(include=["manifest_director_activity_hash"])
+            assert model.manifest_director_activity_hash is not None
+            assert model.manifest_reference_id is None
+            ```
+            ```py
+            model: DestinyHistoricalStatsActivity
+            await model.fetch_manifest_information(exclude=["manifest_director_activity_hash"])
+            assert model.manifest_director_activity_hash is None
+            assert model.manifest_reference_id is not None
+            ```
+
+        Args:
+            include: A list of attributes you want to include. Excludes everything not mentioned
+            exclude:  A list of attributes you want to exclude. Includes everything not mentioned
         """
 
         if not isinstance(self._client.manifest_storage, AsyncEngine):
@@ -475,6 +504,11 @@ class BaseModel(ClientMixin):
         # loop through the class attributes
         for name in self.__dir__():
             if name.startswith("__"):
+                continue
+
+            if include and name not in include:
+                continue
+            if exclude and name in exclude:
                 continue
 
             # manifest entries
