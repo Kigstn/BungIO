@@ -63,4 +63,12 @@ class Route:
             # lists need to be comma seperated
             if isinstance(value, list):
                 value = ",".join([str(v) for v in value])
+
+            # key needs to be name case again
+            bungie_key = ""
+            for i, k in enumerate(key.split("_")):
+                if i != 0:
+                    bungie_key += k.capitalize()
+                else:
+                    bungie_key += k
             self.params[key] = value
