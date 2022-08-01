@@ -73,6 +73,9 @@ class MISSING:
     def __bool__(self) -> bool:
         return False
 
+    def __repr__(self) -> str:
+        return "<MISSING>"
+
 
 MISSING = MISSING()
 
