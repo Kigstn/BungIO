@@ -71,4 +71,4 @@ class Route:
                     bungie_key += k.capitalize()
                 else:
                     bungie_key += k
-            self.params[key] = value
+            self.params[bungie_key] = value
