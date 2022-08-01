@@ -36,6 +36,7 @@ custom_define = partial(
     **{
         "slots": True,
         "kw_only": True,
+        "eq": False,
     },
 )
 custom_field = partial(attrs.field, **{})
@@ -60,10 +61,6 @@ def _enforce_type(field_type: Any, value: Any) -> Any:
         # this mean it's not something we want to enforce, so raise an error
         raise ValueError
     return value
-
-
-# def _transform_builtins(cls, fields: list[attrs.Attribute]) -> list[attrs.Attribute]:
-#     for
 
 
 class MISSING:
