@@ -209,9 +209,7 @@ class Client(singleton.Singleton):
                 if not entry.bungie_global_display_name or not entry.bungie_global_display_name_code:
                     auth.bungie_name = None
                 else:
-                    auth.bungie_name = (
-                        f"{entry.bungie_global_display_name}#{str(entry.bungie_global_display_name_code).zfill(4)}"
-                    )
+                    auth.bungie_name = entry.full_bungie_name
         assert auth.membership_type is not MISSING
 
         # dispatch the update event
