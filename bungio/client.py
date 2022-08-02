@@ -215,7 +215,7 @@ class Client(singleton.Singleton):
         assert auth.membership_type is not MISSING
 
         # dispatch the update event
-        asyncio.create_task(self._client.on_token_update(before=None, after=auth))
+        asyncio.create_task(self.on_token_update(before=None, after=auth))
 
         return auth
 
@@ -280,7 +280,7 @@ class Client(singleton.Singleton):
             auth.refresh_token_expiry = now + datetime.timedelta(seconds=data["refresh_expires_in"])
 
             # dispatch the update event
-            asyncio.create_task(self._client.on_token_update(before=old_auth, after=auth))
+            asyncio.create_task(self.on_token_update(before=old_auth, after=auth))
 
         return auth
 
