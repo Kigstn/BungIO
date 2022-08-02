@@ -159,6 +159,7 @@ class Manifest(ClientMixin):
                         self._client._metadata,
                         Column("reference_id", Text, nullable=False, primary_key=True),
                         Column("data", JSON, nullable=False),
+                        keep_existing=True,
                     )
                     await db.execute(CreateTable(self.__saved_manifests[manifest_class]))
 
