@@ -83,7 +83,7 @@ class Client(singleton.Singleton):
 
     _metadata: Optional[MetaData] = custom_field(init=False, default=None, repr=False)
 
-    _tasks: set = custom_field(init=False, default_factory=set, repr=False)
+    _tasks: set = custom_field(init=False, factory=set, repr=False)
 
     _initialised: bool = custom_field(init=False, default=False)
 
