@@ -83,6 +83,8 @@ class Client(singleton.Singleton):
 
     _metadata: Optional[MetaData] = custom_field(init=False, default=None, repr=False)
 
+    _tasks: set = custom_field(init=False, default_factory=set, repr=False)
+
     _initialised: bool = custom_field(init=False, default=False)
 
     def __init__(self, *args, **kwargs):
@@ -213,7 +215,9 @@ class Client(singleton.Singleton):
         assert auth.membership_type is not MISSING
 
         # dispatch the update event
-        asyncio.create_task(self.on_token_update(before=None, after=auth))
+        task = asyncio.create_task(self.on_token_update(before=None, after=auth))
+        self._tasks.add(task)
+        task.add_done_callback(self._tasks.discard)
 
         return auth
 
@@ -229,7 +233,9 @@ class Client(singleton.Singleton):
         auth.token = None
 
         # dispatch the update event
-        asyncio.create_task(self.on_token_update(before=old_auth, after=auth))
+        task = asyncio.create_task(self.on_token_update(before=old_auth, after=auth))
+        self._tasks.add(task)
+        task.add_done_callback(self._tasks.discard)
 
     async def get_working_auth(self, auth: AuthData) -> AuthData:
         """
@@ -278,7 +284,9 @@ class Client(singleton.Singleton):
             auth.refresh_token_expiry = now + datetime.timedelta(seconds=data["refresh_expires_in"])
 
             # dispatch the update event
-            asyncio.create_task(self.on_token_update(before=old_auth, after=auth))
+            task = asyncio.create_task(self.on_token_update(before=old_auth, after=auth))
+            self._tasks.add(task)
+            task.add_done_callback(self._tasks.discard)
 
         return auth
 

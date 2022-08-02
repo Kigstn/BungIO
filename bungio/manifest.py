@@ -205,6 +205,8 @@ class Manifest(ClientMixin):
                             self.__manifest_urls[name] = url
 
                         # dispatch the update event
-                        asyncio.create_task(self._client.on_manifest_update())
+                        task = asyncio.create_task(self._client.on_manifest_update())
+                        self._client._tasks.add(task)  # noqa
+                        task.add_done_callback(self._client._tasks.discard)  # noqa
 
             self.__manifest_last_update = now
