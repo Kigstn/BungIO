@@ -181,8 +181,17 @@ class Manifest(ClientMixin):
 
         now = get_now_with_tz()
         async with self.__manifest_lock:
-            if self.__manifest_last_update is None or self.__manifest_last_update < (now - datetime.timedelta(hours=1)):
+            if (
+                self.__manifest_last_update is None
+                or self.__manifest_urls == {}
+                or self.__manifest_last_update < (now - datetime.timedelta(hours=1))
+            ):
                 manifest = await self._client.api.get_destiny_manifest()
+
+                # set the urls
+                self.__manifest_urls = {}
+                for name, url in manifest.json_world_component_content_paths[self._client.language.value].items():
+                    self.__manifest_urls[name] = url
 
                 async with self._client.manifest_storage.begin() as db:
                     res = await db.execute(self.__version_table.select())
@@ -197,13 +206,6 @@ class Manifest(ClientMixin):
                         # update version
                         await db.execute(self.__version_table.delete())
                         await db.execute(self.__version_table.insert().values(version=manifest.version))
-
-                        # set the urls
-                        self.__manifest_urls = {}
-                        for name, url in manifest.json_world_component_content_paths[
-                            self._client.language.value
-                        ].items():
-                            self.__manifest_urls[name] = url
 
                         # dispatch the update event
                         task = asyncio.create_task(self._client.on_manifest_update())
