@@ -362,7 +362,10 @@ class BaseModel(ClientMixin):
         except ValueError:
             # sometimes the field type is the attr class as a string
             if isinstance(field_type, str):
-                field_type = getattr(models, field_type)
+                try:
+                    field_type = getattr(models, field_type)
+                except AttributeError:
+                    pass
 
         # convert models in models
         if hasattr(field_type, "from_dict"):
