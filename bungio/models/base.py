@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import asyncio
 import builtins
 import datetime
+import functools
 import inspect
 from enum import Enum, IntFlag
 from functools import partial
@@ -58,7 +60,7 @@ def _enforce_type(field_type: Any, value: Any) -> Any:
     elif field_type in ["Any", Any]:
         pass
     else:
-        # this mean it's not something we want to enforce, so raise an error
+        # this means it's not something we want to enforce, so raise an error
         raise ValueError
     return value
 
@@ -317,28 +319,39 @@ class BaseModel(ClientMixin):
         return res
 
     @staticmethod
-    async def _convert_to_type(field_type: Any, field_metadata: Optional[dict], value: Any, client: Client) -> Any:
+    @functools.cache
+    def _acquire_type(field_type: Any, value_is_none: bool) -> Any:
         if isinstance(field_type, _UnionGenericAlias):
-            as_string = str(field_type)
+            field_type = str(field_type)
 
             # catch optional
-            if "Optional" in as_string:
-                if value is None:
-                    return value
+            if "Optional" in field_type:
+                if value_is_none:
+                    raise NameError
                 field_type = (
-                    as_string.removeprefix("typing.Optional[")
+                    field_type.removeprefix("typing.Optional[")
                     .removesuffix("]")
                     .replace("ForwardRef('", "")
                     .replace("')", "")
                 )
+
             # catch union
-            if "Union" in as_string:
+            if "Union" in field_type:
                 field_type = (
-                    as_string.removeprefix("typing.Union[")
+                    field_type.removeprefix("typing.Union[")
                     .removesuffix(", int]")
                     .replace("ForwardRef('", "")
                     .replace("')", "")
                 )
+
+        return field_type
+
+    @staticmethod
+    async def _convert_to_type(field_type: Any, field_metadata: Optional[dict], value: Any, client: Client) -> Any:
+        try:
+            field_type = BaseModel._acquire_type(field_type=field_type, value_is_none=value is None)
+        except NameError:
+            return None
 
         # catch build-ins
         try:
@@ -424,6 +437,7 @@ class BaseModel(ClientMixin):
         return value
 
     @staticmethod
+    @functools.cache
     def _convert_to_bungie_case(string: str) -> str:
         """
         Convert a string to how it is represented by bungie: my_name_string -> myNameString
@@ -435,11 +449,11 @@ class BaseModel(ClientMixin):
             The bungie string
         """
 
-        split = string.split("_")
-        if len(split) == 1:
-            return split[0]
+        if "_" not in string:
+            return string
         else:
-            return "".join([split[0], *[s.capitalize() for s in split[1:]]])
+            split = string.split("_")
+            return "".join((split[0], *(s.capitalize() for s in split[1:])))
 
     def to_dict(self) -> dict:
         """
