@@ -348,6 +348,9 @@ class BaseModel(ClientMixin):
 
     @staticmethod
     async def _convert_to_type(field_type: Any, field_metadata: Optional[dict], value: Any, client: Client) -> Any:
+        if value is None:
+            return None
+
         try:
             field_type = BaseModel._acquire_type(field_type=field_type, value_is_none=value is None)
         except NameError:
