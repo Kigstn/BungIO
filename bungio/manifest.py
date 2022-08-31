@@ -161,7 +161,7 @@ class Manifest(ClientMixin):
                         Column("data", JSON, nullable=False),
                         keep_existing=True,
                     )
-                    await db.execute(CreateTable(self.__saved_manifests[manifest_class]))
+                    await db.execute(CreateTable(self.__saved_manifests[manifest_class], if_not_exists=True))
 
                     # fill the table
                     raw_data = await self._client.http.request(
