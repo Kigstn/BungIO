@@ -5,11 +5,12 @@ from typing import TYPE_CHECKING, Optional, Type
 from sqlalchemy import JSON, Column, Table, Text, select
 from sqlalchemy.exc import MultipleResultsFound
 from sqlalchemy.ext.asyncio import AsyncConnection
+from sqlalchemy.sql import Delete, Insert
 from sqlalchemy.sql.ddl import CreateTable, DropTable
 
 from bungio.http.route import Route
 from bungio.models.base import ClientMixin, custom_define, custom_field
-from bungio.utils import get_now_with_tz
+from bungio.utils import get_now_with_tz, split_list
 
 if TYPE_CHECKING:
     from bungio.models.base import BaseModel, ManifestModel
@@ -169,7 +170,8 @@ class Manifest(ClientMixin):
                     )
                     to_insert = [{"reference_id": str(key), "data": data} for key, data in raw_data.items()]
 
-                    await db.execute(self.__saved_manifests[manifest_class].insert(), to_insert)
+                    for part in split_list(to_split=to_insert, chunk_size=500):
+                        await db.execute(Insert(self.__saved_manifests[manifest_class], values=part))
 
     async def _check_for_updates(self):
         """
@@ -204,8 +206,8 @@ class Manifest(ClientMixin):
                         self.__saved_manifests = {}
 
                         # update version
-                        await db.execute(self.__version_table.delete())
-                        await db.execute(self.__version_table.insert().values(version=manifest.version))
+                        await db.execute(Delete(self.__version_table))
+                        await db.execute(Insert(self.__version_table), values={"version": manifest.version})
 
                         # dispatch the update event
                         task = asyncio.create_task(self._client.on_manifest_update())

@@ -1,6 +1,6 @@
 import datetime
 import importlib
-from typing import Callable, Type
+from typing import Callable, Generator, Type
 
 from bungio.models.base import MISSING, BaseEnum, UnknownEnumValue
 
@@ -43,6 +43,22 @@ def enum_converter(enum_name: str) -> Callable:
         return enum_class(value)
 
     return converter
+
+
+def split_list(to_split: list, chunk_size: int) -> Generator[list]:
+    """
+    Yield successive n-sized chunks from list
+
+    Args:
+        to_split: The list to split
+        chunk_size: How long the chunks should be
+
+    Returns:
+        A generator which returns the chunks
+    """
+
+    for i in range(0, len(to_split), chunk_size):
+        yield to_split[i : i + chunk_size]
 
 
 # all this does is allow objs to be asynchronously iterable, which does "fix" this bug https://bugs.python.org/issue33346
