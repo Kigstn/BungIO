@@ -45,7 +45,7 @@ def enum_converter(enum_name: str) -> Callable:
     return converter
 
 
-def split_list(to_split: list, chunk_size: int) -> Generator[list]:
+def split_list(to_split: list, chunk_size: int) -> Generator[list, None, None]:
     """
     Yield successive n-sized chunks from list
 

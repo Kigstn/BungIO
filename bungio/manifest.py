@@ -207,7 +207,7 @@ class Manifest(ClientMixin):
 
                         # update version
                         await db.execute(Delete(self.__version_table))
-                        await db.execute(Insert(self.__version_table), values={"version": manifest.version})
+                        await db.execute(Insert(self.__version_table, values={"version": manifest.version}))
 
                         # dispatch the update event
                         task = asyncio.create_task(self._client.on_manifest_update())
