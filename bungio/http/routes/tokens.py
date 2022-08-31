@@ -7,6 +7,31 @@ from bungio.models.auth import AuthData
 class TokensRouteHttpRequests:
     request: Callable[..., Coroutine]
 
+    async def force_drops_repair(self, auth: AuthData) -> dict:
+        """
+        Twitch Drops self-repair function - scans twitch for drops not marked as fulfilled and resyncs them.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: PartnerOfferGrant
+
+        Args:
+            auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
+        Returns:
+            The json response
+        """
+
+        return await self.request(Route(path=f"/Tokens/Partner/ForceDropsRepair/", method="POST", auth=auth))
+
     async def claim_partner_offer(
         self, partner_offer_id: str, bungie_net_membership_id: int, transaction_id: str, auth: AuthData
     ) -> dict:
@@ -108,6 +133,41 @@ class TokensRouteHttpRequests:
         return await self.request(
             Route(
                 path=f"/Tokens/Partner/History/{partner_application_id}/{target_bnet_membership_id}/",
+                method="GET",
+                auth=auth,
+            )
+        )
+
+    async def get_partner_reward_history(
+        self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData
+    ) -> dict:
+        """
+        Returns the partner rewards history of the targeted user, both partner offers and Twitch drops.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: PartnerOfferGrant
+
+        Args:
+            partner_application_id: The partner application identifier.
+            target_bnet_membership_id: The bungie.net user to return reward history for.
+            auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
+        Returns:
+            The json response
+        """
+
+        return await self.request(
+            Route(
+                path=f"/Tokens/Partner/History/{target_bnet_membership_id}/Application/{partner_application_id}/",
                 method="GET",
                 auth=auth,
             )

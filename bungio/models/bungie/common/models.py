@@ -2,27 +2,14 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from datetime import datetime
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import TYPE_CHECKING, Optional
 
-from bungio.models.base import (
-    BaseEnum,
-    BaseFlagEnum,
-    BaseModel,
-    HashObject,
-    ManifestModel,
-    custom_define,
-    custom_field,
-)
-from bungio.utils import enum_converter
+from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import (
-        DestinyInventoryItemDefinition,
         DestinyPresentationNodeDefinition,
-        DestinyProgressionDefinition,
         DestinySeasonDefinition,
-        DestinySocketTypeDefinition,
         DestinyVendorDefinition,
         EmailSettings,
     )
@@ -42,6 +29,7 @@ class CoreSettingsConfiguration(BaseModel):
         clan_banner_gonfalon_details: _No description given by bungie._
         clan_banner_gonfalons: _No description given by bungie._
         clan_banner_standards: _No description given by bungie._
+        default_group_theme: _No description given by bungie._
         destiny2_core_settings: _No description given by bungie._
         destiny_membership_types: _No description given by bungie._
         email_settings: _No description given by bungie._
@@ -65,6 +53,7 @@ class CoreSettingsConfiguration(BaseModel):
     clan_banner_gonfalon_details: list["CoreSetting"] = custom_field(metadata={"type": """list[CoreSetting]"""})
     clan_banner_gonfalons: list["CoreSetting"] = custom_field(metadata={"type": """list[CoreSetting]"""})
     clan_banner_standards: list["CoreSetting"] = custom_field(metadata={"type": """list[CoreSetting]"""})
+    default_group_theme: "CoreSetting" = custom_field()
     destiny2_core_settings: "Destiny2CoreSettings" = custom_field()
     destiny_membership_types: list["CoreSetting"] = custom_field(metadata={"type": """list[CoreSetting]"""})
     email_settings: "EmailSettings" = custom_field()

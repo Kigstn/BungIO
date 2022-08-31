@@ -48,7 +48,7 @@ class ApplicationScopes(BaseFlagEnum):
     ADVANCED_WRITE_ACTIONS = 2048
     """Can perform actions that will result in a prompt to the user via the Destiny app. """
     PARTNER_OFFER_GRANT = 4096
-    """Can user the partner offer api to claim rewards defined for a partner """
+    """Can use the partner offer api to claim rewards defined for a partner """
     DESTINY_UNLOCK_VALUE_QUERY = 8192
     """Allows an app to query sensitive information like unlock flags and values not available through normal methods. """
     USER_PII_READ = 16384

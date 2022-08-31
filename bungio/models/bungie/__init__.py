@@ -789,6 +789,7 @@ from bungio.models.bungie.social.friends import (
     PresenceOnlineStateFlags,
     PresenceStatus,
 )
+from bungio.models.bungie.streaming import DropStateEnum
 from bungio.models.bungie.tags.models.contracts import TagResponse
 from bungio.models.bungie.tokens import (
     BungieRewardDisplay,
@@ -796,8 +797,10 @@ from bungio.models.bungie.tokens import (
     PartnerOfferClaimRequest,
     PartnerOfferHistoryResponse,
     PartnerOfferSkuHistoryResponse,
+    PartnerRewardHistoryResponse,
     RewardAvailabilityModel,
     RewardDisplayProperties,
+    TwitchDropHistoryResponse,
     UserRewardAvailabilityModel,
 )
 from bungio.models.bungie.trending import (

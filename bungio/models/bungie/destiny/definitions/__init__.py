@@ -2079,7 +2079,7 @@ class DestinyObjectiveDefinition(ManifestModel, HashObject):
         stats: If this objective enables modifications on a player's stats intrinsically, the conditions are defined here.
         ui_label: Objectives can have arbitrary UI-defined identifiers that define the style applied to objectives. For convenience, known UI labels will be defined in the uiStyle enum value.
         ui_style: If the objective has a known UI label value, this property will represent it.
-        value_style: The UI style applied to the objective. It's an enum, take a look at DestinyUnlockValueUIStyle for details of the possible styles. Use this info as you wish to customize your UI.
+        value_style: The UI style applied to the objective. It's an enum, take a look at DestinyUnlockValueUIStyle for details of the possible styles. Use this info as you wish to customize your UI. DEPRECATED: This is no longer populated by Destiny 2 game content. Please use inProgressValueStyle and completedValueStyle instead.
         manifest_location_hash: Manifest information for `location_hash`
     """
 

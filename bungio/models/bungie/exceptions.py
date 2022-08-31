@@ -601,6 +601,8 @@ class PlatformErrorCodes(BaseEnum):
     """_No description given by bungie._ """
     FORUM_REQUIRES_DESTINY2_PROGRESS = 595
     """_No description given by bungie._ """
+    FORUM_REQUIRES_DESTINY2_ENTITLEMENT_PURCHASE = 596
+    """_No description given by bungie._ """
     GROUP_MEMBERSHIP_APPLICATION_ALREADY_RESOLVED = 601
     """_No description given by bungie._ """
     GROUP_MEMBERSHIP_ALREADY_APPLIED = 602
@@ -1413,6 +1415,10 @@ class PlatformErrorCodes(BaseEnum):
     """_No description given by bungie._ """
     TWITCH_NO_PLATFORM_CHOSEN = 2506
     """_No description given by bungie._ """
+    TWITCH_DROP_HISTORY_PERMISSION_FAILURE = 2507
+    """_No description given by bungie._ """
+    TWITCH_DROPS_REPAIR_PARTIAL_FAILURE = 2508
+    """_No description given by bungie._ """
     TRENDING_CATEGORY_NOT_FOUND = 2600
     """_No description given by bungie._ """
     TRENDING_ENTRY_TYPE_NOT_SUPPORTED = 2601
@@ -1658,4 +1664,24 @@ class PlatformErrorCodes(BaseEnum):
     ERROR_BUNGIE_FRIENDS_LIST_FULL = 3910
     """_No description given by bungie._ """
     ERROR_BUNGIE_BLOCK_LIST_FULL = 3911
+    """_No description given by bungie._ """
+    ERROR_EGS_UNKNOWN = 4000
+    """_No description given by bungie._ """
+    ERROR_EGS_BAD_REQUEST = 4001
+    """_No description given by bungie._ """
+    ERROR_EGS_NOT_AUTHORIZED = 4002
+    """_No description given by bungie._ """
+    ERROR_EGS_FORBIDDEN = 4003
+    """_No description given by bungie._ """
+    ERROR_EGS_ACCOUNT_NOT_FOUND = 4004
+    """_No description given by bungie._ """
+    ERROR_EGS_WEB_EXCEPTION = 4005
+    """_No description given by bungie._ """
+    ERROR_EGS_UNAVAILABLE = 4006
+    """_No description given by bungie._ """
+    ERROR_EGS_JWKS_MISSING = 4007
+    """_No description given by bungie._ """
+    ERROR_EGS_JWT_MALFORMED_HEADER = 4008
+    """_No description given by bungie._ """
+    ERROR_EGS_JWT_MALFORMED_PAYLOAD = 4009
     """_No description given by bungie._ """

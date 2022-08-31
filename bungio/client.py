@@ -62,9 +62,9 @@ class Client(singleton.Singleton):
         always_return_manifest_information: If manifest information should always be returned on every request. Keep in mind that this will increase requests performed / storage for an increased ease of use.
     """
 
-    bungie_client_id: str = custom_field(repr=False)
-    bungie_client_secret: str = custom_field(repr=False)
-    bungie_token: str = custom_field(repr=False)
+    bungie_client_id: str = custom_field()
+    bungie_client_secret: str = custom_field()
+    bungie_token: str = custom_field()
 
     logger: logging.Logger = custom_field(default=DEFAULT_LOGGER)
 
@@ -74,16 +74,16 @@ class Client(singleton.Singleton):
     manifest_storage: bool | AsyncEngine = custom_field(default=True)
     always_return_manifest_information: bool = custom_field(default=False)
 
-    json_dumps: Callable = custom_field(init=False, default=json_dumps, repr=False)
-    json_loads: Callable = custom_field(init=False, default=json_loads, repr=False)
+    json_dumps: Callable = custom_field(init=False, default=json_dumps)
+    json_loads: Callable = custom_field(init=False, default=json_loads)
 
-    api: ApiClient = custom_field(init=False, repr=False)
-    http: HttpClient = custom_field(init=False, repr=False)
-    manifest: Optional[Manifest] = custom_field(init=False, default=None, repr=False)
+    api: ApiClient = custom_field(init=False)
+    http: HttpClient = custom_field(init=False)
+    manifest: Optional[Manifest] = custom_field(init=False, default=None)
 
-    _metadata: Optional[MetaData] = custom_field(init=False, default=None, repr=False)
+    _metadata: Optional[MetaData] = custom_field(init=False, default=None)
 
-    _tasks: set = custom_field(init=False, factory=set, repr=False)
+    _tasks: set = custom_field(init=False, factory=set)
 
     _initialised: bool = custom_field(init=False, default=False)
 

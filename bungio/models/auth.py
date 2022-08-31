@@ -28,9 +28,9 @@ class AuthData(BaseModel):
         cross_save_setup: If the user has cross save set up. If this is `False`, the membership information may be for an unwanted system
     """
 
-    token: Optional[str] = custom_field(repr=False)
+    token: Optional[str] = custom_field()
     token_expiry: datetime.datetime = custom_field()
-    refresh_token: str = custom_field(repr=False)
+    refresh_token: str = custom_field()
     refresh_token_expiry: datetime.datetime = custom_field()
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
     membership_id: int = custom_field()

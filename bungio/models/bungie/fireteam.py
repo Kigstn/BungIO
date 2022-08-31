@@ -47,6 +47,8 @@ class FireteamPlatform(BaseEnum):
     """_No description given by bungie._ """
     STADIA = 5
     """_No description given by bungie._ """
+    EGS = 6
+    """_No description given by bungie._ """
 
 
 class FireteamPublicSearchOption(BaseEnum):

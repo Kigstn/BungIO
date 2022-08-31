@@ -121,6 +121,7 @@ class GeneralUser(BaseModel):
         cached_bungie_global_display_name_code: _No description given by bungie._
         context: _No description given by bungie._
         display_name: _No description given by bungie._
+        egs_display_name: _No description given by bungie._
         fb_display_name: _No description given by bungie._
         first_access: _No description given by bungie._
         is_deleted: _No description given by bungie._
@@ -158,6 +159,7 @@ class GeneralUser(BaseModel):
     cached_bungie_global_display_name_code: int = custom_field()
     context: "UserToUserContext" = custom_field()
     display_name: str = custom_field()
+    egs_display_name: str = custom_field()
     fb_display_name: str = custom_field()
     first_access: datetime = custom_field()
     is_deleted: bool = custom_field()

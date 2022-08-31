@@ -84,6 +84,8 @@ class BungieMembershipType(BaseEnum):
     """_No description given by bungie._ """
     TIGER_STADIA = 5
     """_No description given by bungie._ """
+    TIGER_EGS = 6
+    """_No description given by bungie._ """
     TIGER_DEMON = 10
     """_No description given by bungie._ """
     BUNGIE_NEXT = 254
@@ -122,6 +124,8 @@ class BungieCredentialType(BaseEnum):
     STADIA_ID = 16
     """_No description given by bungie._ """
     TWITCH_ID = 18
+    """_No description given by bungie._ """
+    EGS_ID = 20
     """_No description given by bungie._ """
 
 

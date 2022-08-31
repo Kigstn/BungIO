@@ -9,6 +9,7 @@ from bungio.models import (
     BungieRewardDisplay,
     PartnerOfferClaimRequest,
     PartnerOfferSkuHistoryResponse,
+    PartnerRewardHistoryResponse,
 )
 from bungio.models.auth import AuthData
 from bungio.models.base import ClientMixin, custom_define
@@ -17,6 +18,23 @@ from bungio.utils import AllowAsyncIteration
 
 @custom_define()
 class TokensRouteInterface(ClientMixin):
+    async def force_drops_repair(self, auth: AuthData) -> bool:
+        """
+        Twitch Drops self-repair function - scans twitch for drops not marked as fulfilled and resyncs them.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: PartnerOfferGrant
+
+        Args:
+            auth: Authentication information.
+
+        Returns:
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
+        """
+
+        response = await self._client.http.force_drops_repair(auth=auth)
+        return response["Response"]
+
     async def claim_partner_offer(self, data: PartnerOfferClaimRequest, auth: AuthData) -> bool:
         """
         Claim a partner offer as the authenticated user.
@@ -93,6 +111,37 @@ class TokensRouteInterface(ClientMixin):
             )
             for value in response["Response"]
         ]
+
+    async def get_partner_reward_history(
+        self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData
+    ) -> PartnerRewardHistoryResponse:
+        """
+        Returns the partner rewards history of the targeted user, both partner offers and Twitch drops.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: PartnerOfferGrant
+
+        Args:
+            partner_application_id: The partner application identifier.
+            target_bnet_membership_id: The bungie.net user to return reward history for.
+            auth: Authentication information.
+
+        Returns:
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
+        """
+
+        response = await self._client.http.get_partner_reward_history(
+            partner_application_id=partner_application_id,
+            target_bnet_membership_id=target_bnet_membership_id,
+            auth=auth,
+        )
+        return await PartnerRewardHistoryResponse.from_dict(
+            data=response,
+            client=self._client,
+            partner_application_id=partner_application_id,
+            target_bnet_membership_id=target_bnet_membership_id,
+            auth=auth,
+        )
 
     async def get_bungie_rewards_for_user(self, membership_id: int, auth: AuthData) -> dict[str, BungieRewardDisplay]:
         """

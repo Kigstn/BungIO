@@ -88,6 +88,44 @@ class PartnerOfferHistoryResponse(BaseModel, DestinyUserMixin):
 
 
 @custom_define()
+class PartnerRewardHistoryResponse(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        partner_offers: _No description given by bungie._
+        twitch_drops: _No description given by bungie._
+    """
+
+    partner_offers: list["PartnerOfferSkuHistoryResponse"] = custom_field(
+        metadata={"type": """list[PartnerOfferSkuHistoryResponse]"""}
+    )
+    twitch_drops: list["TwitchDropHistoryResponse"] = custom_field(
+        metadata={"type": """list[TwitchDropHistoryResponse]"""}
+    )
+
+
+@custom_define()
+class TwitchDropHistoryResponse(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        claim_state: _No description given by bungie._
+        created_at: _No description given by bungie._
+        description: _No description given by bungie._
+        title: _No description given by bungie._
+    """
+
+    claim_state: int = custom_field()
+    created_at: datetime = custom_field()
+    description: str = custom_field()
+    title: str = custom_field()
+
+
+@custom_define()
 class BungieRewardDisplay(BaseModel):
     """
     _No description given by bungie._

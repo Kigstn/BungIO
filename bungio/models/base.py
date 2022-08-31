@@ -41,7 +41,7 @@ custom_define = partial(
         "eq": False,
     },
 )
-custom_field = partial(attrs.field, **{})
+custom_field = partial(attrs.field, **{"repr": False})
 
 
 _catch_types = []
@@ -89,7 +89,7 @@ class HashObject:
         hash: The id / hash of the object
     """
 
-    hash: int = custom_field()
+    hash: int = custom_field(repr=True)
 
     def __eq__(self, other: Any) -> bool:
         if hasattr(other, "hash"):
@@ -204,7 +204,7 @@ class ClientMixin:
     Mixin that give models access to the client obj
     """
 
-    _client: "Client" = custom_field(repr=False, init=False)
+    _client: "Client" = custom_field(init=False)
 
     @_client.default
     def __client_factory(self) -> "Client":
