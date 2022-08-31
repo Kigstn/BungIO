@@ -2,7 +2,7 @@ import asyncio
 import datetime
 from typing import TYPE_CHECKING, Optional, Type
 
-from sqlalchemy import JSON, Column, Table, Text, select
+from sqlalchemy import JSON, Column, Table, Text, select, text
 from sqlalchemy.exc import MultipleResultsFound
 from sqlalchemy.ext.asyncio import AsyncConnection
 from sqlalchemy.sql import Delete, Insert
@@ -104,12 +104,15 @@ class Manifest(ClientMixin):
 
             return await manifest_class.from_dict(data=result, client=self._client, recursive=True)
 
-    async def fetch_all(self, manifest_class: Type["ManifestModel"]) -> list["ManifestModel"]:
+    async def fetch_all(
+        self, manifest_class: Type["ManifestModel"], filter: Optional[str] = None
+    ) -> list["ManifestModel"]:
         """
         Return all models for a specific manifest entry
 
         Args:
             manifest_class: The classes to find in the manifest
+            filter: A sql where clause with which you can filter the results. Example: `filter="CAST(data ->> 'itemType' AS INTEGER) = 3"` to get only weapons from `DestinyInventoryItemDefinition`
 
         Returns:
             The manifest information, if found
@@ -126,6 +129,9 @@ class Manifest(ClientMixin):
         # get the data
         async with self._client.manifest_storage.begin() as db:
             query = select(self.__saved_manifests[name].columns.data)
+            if filter:
+                query = query.filter(text(filter))
+
             results = await db.execute(query)
             results = results.scalars().all()
 
