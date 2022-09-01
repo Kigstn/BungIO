@@ -40,7 +40,10 @@ def enum_converter(enum_name: str) -> Callable:
 
         imp = importlib.import_module("bungio.models")
         enum_class = getattr(imp, enum_name)
-        return enum_class(value)
+        try:
+            return enum_class(value)
+        except ValueError:
+            return UnknownEnumValue(value=value, enum=enum_class)
 
     return converter
 

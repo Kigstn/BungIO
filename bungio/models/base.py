@@ -112,8 +112,8 @@ class UnknownEnumValue:
     Sometimes Bungie returns information that they have not defined anywhere, so this has to do
     """
 
-    value: int | str = custom_field()
-    enum: Type[BaseEnum] = custom_field()
+    value: int | str = custom_field(repr=True)
+    enum: Type[BaseEnum] = custom_field(repr=True)
 
 
 class EnumMixin(Enum):
