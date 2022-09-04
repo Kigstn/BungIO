@@ -4,7 +4,7 @@ import logging
 import os
 from base64 import b64encode
 from copy import copy
-from typing import TYPE_CHECKING, Callable, Optional
+from typing import TYPE_CHECKING, Callable, Optional, Type
 
 from sqlalchemy import MetaData
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
@@ -60,6 +60,9 @@ class Client(singleton.Singleton):
         cache: If http requests should be cached. It is recommended that you make use of this to not ratelimit yourself as quickly.
         manifest_storage: If manifest entires should be stored, and how. Disabling this stops you from querying the manifest.
         always_return_manifest_information: If manifest information should always be returned on every request. Keep in mind that this will increase requests performed / storage for an increased ease of use.
+        api_client_class: Supply a custom class for `Client.api`
+        http_client_class: Supply a custom class for `Client.http`
+        manifest_client_class: Supply a custom class for `Client.manifest`
     """
 
     bungie_client_id: str = custom_field()
@@ -73,6 +76,10 @@ class Client(singleton.Singleton):
     cache: Optional["CacheBackend"] = custom_field(default=None)
     manifest_storage: bool | AsyncEngine = custom_field(default=True)
     always_return_manifest_information: bool = custom_field(default=False)
+
+    api_client_class: Type[ApiClient] = custom_field(default=ApiClient)
+    http_client_class: Type[HttpClient] = custom_field(default=HttpClient)
+    manifest_client_class: Type[Manifest] = custom_field(default=Manifest)
 
     json_dumps: Callable = custom_field(init=False, default=json_dumps)
     json_loads: Callable = custom_field(init=False, default=json_loads)
@@ -115,10 +122,10 @@ class Client(singleton.Singleton):
         singleton.client = self
 
         # set up the api client
-        self.api = ApiClient()
+        self.api = self.api_client_class()
 
         # set up the http client
-        self.http = HttpClient(
+        self.http = self.http_client_class(
             bungie_headers={
                 "User-Agent": "BungIO",
                 "X-API-Key": self.bungie_token,
@@ -139,7 +146,7 @@ class Client(singleton.Singleton):
                     f"""sqlite+aiosqlite:///{os.path.join(ROOT_DIR, "manifest.db")}"""
                 )
             self._metadata = MetaData(bind=self.manifest_storage)
-            self.manifest = Manifest()
+            self.manifest = self.manifest_client_class()
 
     def get_auth_url(self, state: str) -> str:
         """
