@@ -214,7 +214,7 @@ class Client(singleton.Singleton):
         # get the correct membership type and bungie name
         for entry in destiny_info.destiny_memberships:
             if entry.membership_id == auth.membership_id:
-                auth.membership_type = BungieMembershipType(int(entry.membership_type))
+                auth.membership_type = entry.membership_type
                 if not entry.bungie_global_display_name or not entry.bungie_global_display_name_code:
                     auth.bungie_name = None
                 else:
