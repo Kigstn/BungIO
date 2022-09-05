@@ -187,7 +187,7 @@ class Client(singleton.Singleton):
 
         auth = AuthData(
             membership_type=MISSING,
-            destiny_membership_id=MISSING,
+            membership_id=MISSING,
             bungie_name=MISSING,
             token=data["access_token"],
             token_expiry=now + datetime.timedelta(seconds=data["expires_in"]),
