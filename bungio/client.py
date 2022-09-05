@@ -183,7 +183,7 @@ class Client(singleton.Singleton):
         """
 
         now = get_now_with_tz()
-        data = await self.request_access_token(code=code)
+        data = await self.http.request_access_token(code=code)
 
         auth = AuthData(
             membership_type=MISSING,
