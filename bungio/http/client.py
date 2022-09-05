@@ -229,7 +229,8 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
             If the response was OK
         """
         # get the bungie errors from the json
-        error = content.get("ErrorStatus", "MISSING")
+        if (error := content.get("error", None)) is None:
+            error = content.get("ErrorStatus", "MISSING")
         error_code = content.get("ErrorCode", -1)
         error_message = content.get("Message", "MISSING")
         error_data = content.get("MessageData", {})
