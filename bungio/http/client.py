@@ -256,7 +256,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
                 )
                 raise _RouteError(route=new_route)
 
-            case (401, _) | (_, "invalid_grant" | "AuthorizationCodeInvalid"):
+            case (401, _) | (_, "invalid_grant"):
                 # unauthorized
                 self._client.logger.debug(
                     f"`{response.status} - {error} | {error_code}`: Unauthorized (too slow, user fault) request for `{route_with_params}`"
@@ -296,14 +296,20 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
                 )
                 await asyncio.sleep(60)
 
-            case (_, "DestinyServiceFailure" | "DestinyInternalError" | "UnhandledException"):
+            case (_, "server_error" | "DestinyServiceFailure" | "DestinyInternalError" | "UnhandledException"):
                 # timeout
                 self._client.logger.debug(
                     f"`{response.status} - {error} | {error_code}`: Retrying... - Bungie is having problems `{route_with_params}`\n{content}"
                 )
                 await asyncio.sleep(60)
 
-            case (_, "AuthorizationRecordRevoked" | "AuthorizationRecordExpired" | "WebAuthRequired"):
+            case (
+                _,
+                "AuthorizationRecordRevoked"
+                | "AuthorizationRecordExpired"
+                | "WebAuthRequired"
+                | "AuthorizationCodeInvalid",
+            ):
                 # users tokens are no longer valid
                 raise _InvalidAuthentication()
 
