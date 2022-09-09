@@ -250,7 +250,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
 
             case (_, "invalid_grant"):
                 # unauthorized
-                self._client.logger.debug(
+                self._client.logger.warning(
                     f"`{response.status} - {error} | {error_code}`: Unauthorized (too slow, user fault) request for `{route_with_params}`\n{content=}"
                 )
                 raise AuthenticationTooSlow
@@ -258,7 +258,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
             case (200, _):
                 # make sure we got a json
                 if not content:
-                    self._client.logger.debug(f"Wrong content type returned text: '{await response.text()}'")
+                    self._client.logger.warning(f"Wrong content type returned text: '{await response.text()}'")
                     await asyncio.sleep(3)
                     return False
                 return True
@@ -274,21 +274,21 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
 
             case (502, _):
                 # bad gateway
-                self._client.logger.debug(
+                self._client.logger.warning(
                     f"Retrying... - `{response.status}` Bad gateway error for `{route_with_params}`"
                 )
                 await asyncio.sleep(5)
 
             case (524, _):
                 # cloudflare error, retry
-                self._client.logger.debug(
+                self._client.logger.warning(
                     f"Retrying... - `{response.status}` Cloudflare error for `{route_with_params}`"
                 )
                 await asyncio.sleep(2)
 
             case (429, _) | (_, "PerEndpointRequestThrottleExceeded" | "DestinyDirectBabelClientTimeout"):
                 # we are getting throttled (should never be called in theory)
-                self._client.logger.debug(
+                self._client.logger.warning(
                     f"`{response.status} - {error} | {error_code}`: Retrying... - Getting throttled for `{route_with_params}`\n{content=}"
                 )
 
@@ -300,14 +300,14 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
 
             case (_, "DestinyDirectBabelClientTimeout"):
                 # timeout
-                self._client.logger.debug(
+                self._client.logger.warning(
                     f"`{response.status} - {error} | {error_code}`: Retrying... - Getting timeouts for `{route_with_params}`\n{content=}"
                 )
                 await asyncio.sleep(60)
 
             case (_, "DestinyServiceFailure" | "DestinyInternalError" | "UnhandledException"):
                 # timeout
-                self._client.logger.debug(
+                self._client.logger.warning(
                     f"`{response.status} - {error} | {error_code}`: Retrying... - Bungie is having problems `{route_with_params}`\n{content=}"
                 )
                 await asyncio.sleep(60)
@@ -324,7 +324,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
 
             case (404, _):
                 # not found
-                self._client.logger.debug(
+                self._client.logger.warning(
                     f"`{response.status} - {error} | {error_code}`: Not found for `{route_with_params}`\n{content=}"
                 )
 
@@ -335,7 +335,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
 
             case (400, _):
                 # generic bad request, such as wrong format
-                self._client.logger.debug(
+                self._client.logger.warning(
                     f"`{response.status} - {error} | {error_code}`: Generic bad request for `{route_with_params}`\n{content=}"
                 )
 
@@ -345,7 +345,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
                     raise BadRequest
 
             case (503, _):
-                self._client.logger.debug(
+                self._client.logger.warning(
                     f"`{response.status} - {error} | {error_code}`: Retrying... - Server is overloaded for `{route_with_params}`\n{content=}"
                 )
                 await asyncio.sleep(10)
@@ -355,7 +355,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
                 retry = error == "Success"
 
                 # catch the rest
-                self._client.logger.debug(
+                self._client.logger.warning(
                     f"`{status} - {error} | {error_code}` - Request failed for `{route_with_params}` - `{error_message}`"
                 )
 
