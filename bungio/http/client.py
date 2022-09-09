@@ -239,6 +239,13 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
             case (_, "SystemDisabled"):
                 raise BungieDead
 
+            case (_, "invalid_grant"):
+                # unauthorized
+                self._client.logger.debug(
+                    f"`{response.status} - {error} | {error_code}`: Unauthorized (too slow, user fault) request for `{route_with_params}`"
+                )
+                raise AuthenticationTooSlow
+
             case (200, _):
                 # make sure we got a json
                 if not content:
@@ -255,13 +262,6 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
                     f"Wrong location, retrying with the correct one: `{response.url}` -> `{new_route}`"
                 )
                 raise _RouteError(route=new_route)
-
-            case (401, _) | (_, "invalid_grant"):
-                # unauthorized
-                self._client.logger.debug(
-                    f"`{response.status} - {error} | {error_code}`: Unauthorized (too slow, user fault) request for `{route_with_params}`"
-                )
-                raise AuthenticationTooSlow
 
             case (502, _):
                 # bad gateway
@@ -304,7 +304,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
                 await asyncio.sleep(60)
 
             case (
-                _,
+                401,
                 "AuthorizationRecordRevoked"
                 | "AuthorizationRecordExpired"
                 | "WebAuthRequired"
