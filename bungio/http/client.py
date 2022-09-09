@@ -204,7 +204,9 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
                 await asyncio.sleep(2 + attempt * 3)
                 continue
 
-        self._client.logger.exception(f"{route_with_params}- Aborting. Failed {self._max_attempts} times")
+        self._client.logger.exception(
+            f"{route_with_params}- Aborting. Failed {self._max_attempts} times. Infos: {method=} | {auth=} | {data=} | {form_data=}"
+        )
         raise TimeoutException
 
     async def _handle_response(self, route_with_params: str, response: ClientResponse, content: dict) -> bool:
@@ -296,7 +298,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
                 )
                 await asyncio.sleep(60)
 
-            case (_, "server_error" | "DestinyServiceFailure" | "DestinyInternalError" | "UnhandledException"):
+            case (_, "DestinyServiceFailure" | "DestinyInternalError" | "UnhandledException"):
                 # timeout
                 self._client.logger.debug(
                     f"`{response.status} - {error} | {error_code}`: Retrying... - Bungie is having problems `{route_with_params}`\n{content}"
