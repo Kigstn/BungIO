@@ -251,7 +251,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
             case (_, "invalid_grant"):
                 # unauthorized
                 self._client.logger.debug(
-                    f"`{response.status} - {error} | {error_code}`: Unauthorized (too slow, user fault) request for `{route_with_params}`"
+                    f"`{response.status} - {error} | {error_code}`: Unauthorized (too slow, user fault) request for `{route_with_params}`\n{content=}"
                 )
                 raise AuthenticationTooSlow
 
