@@ -230,11 +230,18 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
         Returns:
             If the response was OK
         """
+
         # get the bungie errors from the json
         if (error := content.get("error", None)) is None:
             error = content.get("ErrorStatus", "MISSING")
+            error_message = content.get("Message", "MISSING")
+        else:
+            # auth routes have different error code locations which are undocumented
+            error_message = content.get("error_description", "MISSING")
+            if error == "server_error":
+                error = content.get("error_description", error)
+
         error_code = content.get("ErrorCode", -1)
-        error_message = content.get("Message", "MISSING")
         error_data = content.get("MessageData", {})
 
         match (response.status, error):
@@ -282,7 +289,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
             case (429, _) | (_, "PerEndpointRequestThrottleExceeded" | "DestinyDirectBabelClientTimeout"):
                 # we are getting throttled (should never be called in theory)
                 self._client.logger.debug(
-                    f"`{response.status} - {error} | {error_code}`: Retrying... - Getting throttled for `{route_with_params}`\n{content}"
+                    f"`{response.status} - {error} | {error_code}`: Retrying... - Getting throttled for `{route_with_params}`\n{content=}"
                 )
 
                 throttle_seconds = content["ThrottleSeconds"]
@@ -294,14 +301,14 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
             case (_, "DestinyDirectBabelClientTimeout"):
                 # timeout
                 self._client.logger.debug(
-                    f"`{response.status} - {error} | {error_code}`: Retrying... - Getting timeouts for `{route_with_params}`\n{content}"
+                    f"`{response.status} - {error} | {error_code}`: Retrying... - Getting timeouts for `{route_with_params}`\n{content=}"
                 )
                 await asyncio.sleep(60)
 
             case (_, "DestinyServiceFailure" | "DestinyInternalError" | "UnhandledException"):
                 # timeout
                 self._client.logger.debug(
-                    f"`{response.status} - {error} | {error_code}`: Retrying... - Bungie is having problems `{route_with_params}`\n{content}"
+                    f"`{response.status} - {error} | {error_code}`: Retrying... - Bungie is having problems `{route_with_params}`\n{content=}"
                 )
                 await asyncio.sleep(60)
 
@@ -318,7 +325,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
             case (404, _):
                 # not found
                 self._client.logger.debug(
-                    f"`{response.status} - {error} | {error_code}`: Not found for `{route_with_params}`\n{content}"
+                    f"`{response.status} - {error} | {error_code}`: Not found for `{route_with_params}`\n{content=}"
                 )
 
                 if error != "MISSING":
@@ -329,7 +336,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
             case (400, _):
                 # generic bad request, such as wrong format
                 self._client.logger.debug(
-                    f"`{response.status} - {error} | {error_code}`: Generic bad request for `{route_with_params}`\n{content}"
+                    f"`{response.status} - {error} | {error_code}`: Generic bad request for `{route_with_params}`\n{content=}"
                 )
 
                 if error != "MISSING":
@@ -339,7 +346,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
 
             case (503, _):
                 self._client.logger.debug(
-                    f"`{response.status} - {error} | {error_code}`: Retrying... - Server is overloaded for `{route_with_params}`\n{content}"
+                    f"`{response.status} - {error} | {error_code}`: Retrying... - Server is overloaded for `{route_with_params}`\n{content=}"
                 )
                 await asyncio.sleep(10)
 
