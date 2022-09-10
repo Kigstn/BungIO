@@ -312,8 +312,12 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
                 )
                 await asyncio.sleep(60)
 
+            case (401, _):
+                # users tokens are no longer valid
+                raise _InvalidAuthentication()
+
             case (
-                401,
+                _,
                 "AuthorizationRecordRevoked"
                 | "AuthorizationRecordExpired"
                 | "WebAuthRequired"
