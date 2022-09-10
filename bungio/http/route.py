@@ -30,7 +30,6 @@ class Route:
         self, path: str, method: str, data: Optional[dict | list] = None, auth: Optional[AuthData] = None, **params
     ):
         self.data = data
-        self.auth = auth
         self.method = method
         self.path = BASE_ROUTE + path
 
@@ -41,6 +40,11 @@ class Route:
         # manifest too
         if "destiny2_content" in self.path:
             self.path = self.path.replace("/Platform", "")
+
+        # only set auth if a token is provided
+        if auth is not None and auth.token is None:
+            auth = None
+        self.auth = auth
 
         # clean the data
         if isinstance(data, dict):
