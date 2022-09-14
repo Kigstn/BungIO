@@ -312,16 +312,9 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
                 )
                 await asyncio.sleep(60)
 
-            case (401, _):
-                # users tokens are no longer valid
-                raise _InvalidAuthentication()
-
             case (
                 _,
-                "AuthorizationRecordRevoked"
-                | "AuthorizationRecordExpired"
-                | "WebAuthRequired"
-                | "AuthorizationCodeInvalid",
+                "AuthorizationRecordRevoked" | "AuthorizationRecordExpired",
             ):
                 # users tokens are no longer valid
                 raise _InvalidAuthentication()
@@ -337,7 +330,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
                 else:
                     raise NotFound
 
-            case (400, _):
+            case ((400 | 401), _):
                 # generic bad request, such as wrong format
                 self._client.logger.warning(
                     f"`{response.status} - {error} | {error_code}`: Generic bad request for `{route_with_params}`\n{content=}"
