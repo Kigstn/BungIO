@@ -236,13 +236,14 @@ class Client(singleton.Singleton):
             auth: The data to invalidate
         """
 
-        old_auth = copy(auth)
-        auth.token = None
+        if isinstance(auth, AuthData):
+            old_auth = copy(auth)
+            auth.token = None
 
-        # dispatch the update event
-        task = asyncio.create_task(self.on_token_update(before=old_auth, after=auth))
-        self._tasks.add(task)
-        task.add_done_callback(self._tasks.discard)
+            # dispatch the update event
+            task = asyncio.create_task(self.on_token_update(before=old_auth, after=auth))
+            self._tasks.add(task)
+            task.add_done_callback(self._tasks.discard)
 
     async def get_working_auth(self, auth: AuthData) -> AuthData:
         """
