@@ -11,7 +11,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.10"
 aiohttp = "^3.8.1"
-attrs = "^21.4.0"
+attrs = "^22.1.0"
 SQLAlchemy = {version = "^1.4.36", extras = ["aiosqlite"]}
 orjson = {version = "^3.6.8", optional = true}
 aiodns = {version = "^3.0.0", optional = true}
