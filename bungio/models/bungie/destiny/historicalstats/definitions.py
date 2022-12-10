@@ -182,6 +182,8 @@ class DestinyActivityModeType(BaseEnum):
     """_No description given by bungie._ """
     IRON_BANNER_RIFT = 90
     """_No description given by bungie._ """
+    IRON_BANNER_ZONE_CONTROL = 91
+    """_No description given by bungie._ """
 
 
 @custom_define()

@@ -1142,6 +1142,8 @@ class DestinyGameVersions(BaseFlagEnum):
     """_No description given by bungie._ """
     THE_WITCH_QUEEN = 256
     """_No description given by bungie._ """
+    LIGHTFALL = 512
+    """_No description given by bungie._ """
 
 
 class DestinyComponentType(BaseEnum):
@@ -1464,8 +1466,14 @@ class EquipFailureReason(BaseFlagEnum):
     """This item has state-based gating that prevents it from being equipped in certain circumstances. For instance, an item might be for Warlocks only and you're a Titan, or it might require you to have beaten some special quest that you haven't beaten yet. Use the additional failure data passed on the item itself to get more information about what the specific failure case was (See DestinyInventoryItemDefinition and DestinyItemInstanceComponent) """
     ITEM_FAILED_LEVEL_CHECK = 8
     """This item requires you to have reached a specific character level in order to equip it, and you haven't reached that level yet. """
-    ITEM_NOT_ON_CHARACTER = 16
-    """This item can't be equipped on the character requested, because it must be in that character's inventory first. Transfer the item to the character you want to equip it before you attempt to equip it. """
+    ITEM_WRAPPED = 16
+    """This item is 'wrapped' and must be unwrapped before being equipped. NOTE: This value used to be called ItemNotOnCharacter but that is no longer accurate. """
+    ITEM_NOT_LOADED = 32
+    """This item is not yet loaded and cannot be equipped yet. """
+    ITEM_EQUIP_BLOCKLISTED = 64
+    """This item is block-listed and cannot be equipped. """
+    ITEM_LOADOUT_REQUIREMENT_NOT_MET = 128
+    """This item does not meet the loadout requirements for the current activity """
 
 
 @custom_define()
@@ -1669,6 +1677,10 @@ class DestinyVendorItemState(BaseFlagEnum):
     """This indicates that the sale item is free. """
     LOCKED = 262144
     """This indicates that the sale item is locked. """
+    PARACAUSAL = 524288
+    """This indicates that the sale item is paracausal. """
+    CRYPTARCH = 1048576
+    """_No description given by bungie._ """
 
 
 @custom_define()

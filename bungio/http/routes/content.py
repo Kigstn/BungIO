@@ -212,12 +212,20 @@ class ContentRouteHttpRequests:
             Route(path=f"/Content/SearchHelpArticles/{searchtext}/{size}/", method="GET", auth=auth)
         )
 
-    async def rss_news_articles(self, page_token: str, auth: Optional[AuthData] = None) -> dict:
+    async def rss_news_articles(
+        self,
+        page_token: str,
+        categoryfilter: Optional[str] = None,
+        includebody: Optional[bool] = None,
+        auth: Optional[AuthData] = None,
+    ) -> dict:
         """
         Returns a JSON string response that is the RSS feed for news articles.
 
         Args:
             page_token: Zero-based pagination token for paging through result sets.
+            categoryfilter: Optionally filter response to only include news items in a certain category.
+            includebody: Optionally include full content body for each news item.
             auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
@@ -233,4 +241,12 @@ class ContentRouteHttpRequests:
             The json response
         """
 
-        return await self.request(Route(path=f"/Content/Rss/NewsArticles/{page_token}/", method="GET", auth=auth))
+        return await self.request(
+            Route(
+                path=f"/Content/Rss/NewsArticles/{page_token}/",
+                method="GET",
+                categoryfilter=categoryfilter,
+                includebody=includebody,
+                auth=auth,
+            )
+        )

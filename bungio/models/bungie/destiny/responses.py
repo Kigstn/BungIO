@@ -192,6 +192,8 @@ class DestinyProfileResponse(BaseModel):
         profile_records: COMPONENT TYPE: Records
         profile_string_variables: COMPONENT TYPE: StringVariables
         profile_transitory_data: COMPONENT TYPE: Transitory
+        response_minted_timestamp: Records the timestamp of when most components were last generated from the world server source. Unless the component type is specified in the documentation for secondaryComponentsMintedTimestamp, this value is sufficient to do data freshness.
+        secondary_components_minted_timestamp: Some secondary components are not tracked in the primary response timestamp and have their timestamp tracked here. If your component is any of the following, this field is where you will find your timestamp value:  PresentationNodes, Records, Collectibles, Metrics, StringVariables, Craftables, Transitory  All other component types may use the primary timestamp property.
         vendor_receipts: Recent, refundable purchases you have made from vendors. When will you use it? Couldn't say... COMPONENT TYPE: VendorReceipts
     """
 
@@ -228,6 +230,8 @@ class DestinyProfileResponse(BaseModel):
     profile_records: "SingleComponentResponseOfDestinyProfileRecordsComponent" = custom_field()
     profile_string_variables: "SingleComponentResponseOfDestinyStringVariablesComponent" = custom_field()
     profile_transitory_data: "SingleComponentResponseOfDestinyProfileTransitoryComponent" = custom_field()
+    response_minted_timestamp: datetime = custom_field()
+    secondary_components_minted_timestamp: datetime = custom_field()
     vendor_receipts: "SingleComponentResponseOfDestinyVendorReceiptsComponent" = custom_field()
 
 

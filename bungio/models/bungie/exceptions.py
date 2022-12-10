@@ -40,7 +40,7 @@ class PlatformErrorCodes(BaseEnum):
     DUPLICATE = 13
     """_No description given by bungie._ """
     UNKNOWN_SQL_RESULT = 14
-    """Deprecated, please do not check for this value anywhere. """
+    """_No description given by bungie._ """
     VALIDATION_ERROR = 15
     """_No description given by bungie._ """
     VALIDATION_MISSING_FIELD_ERROR = 16
@@ -398,6 +398,12 @@ class PlatformErrorCodes(BaseEnum):
     ERROR_NO_AVAILABLE_NAME_CHANGES = 240
     """_No description given by bungie._ """
     ERROR_NAME_ALREADY_SET_TO_INPUT = 241
+    """_No description given by bungie._ """
+    USER_DISPLAY_NAME_LESS_THAN_MIN_LENGTH = 242
+    """_No description given by bungie._ """
+    USER_DISPLAY_NAME_GREATER_THAN_MAX_LENGTH = 243
+    """_No description given by bungie._ """
+    USER_DISPLAY_NAME_CONTAINS_UNACCEPTABLE_OR_INVALID_CONTENT = 244
     """_No description given by bungie._ """
     MESSAGING_UNKNOWN_ERROR = 300
     """_No description given by bungie._ """
@@ -818,6 +824,10 @@ class PlatformErrorCodes(BaseEnum):
     CLAN_CREATION_BAN = 752
     """_No description given by bungie._ """
     CLAN_CREATION_TENURE_REQUIREMENTS_NOT_MET = 753
+    """_No description given by bungie._ """
+    CLAN_FIELD_CONTAINS_RESERVED_TERMS = 754
+    """_No description given by bungie._ """
+    CLAN_FIELD_CONTAINS_INAPPROPRIATE_CONTENT = 755
     """_No description given by bungie._ """
     ITEM_ALREADY_FOLLOWED = 801
     """_No description given by bungie._ """
@@ -1418,6 +1428,10 @@ class PlatformErrorCodes(BaseEnum):
     TWITCH_DROP_HISTORY_PERMISSION_FAILURE = 2507
     """_No description given by bungie._ """
     TWITCH_DROPS_REPAIR_PARTIAL_FAILURE = 2508
+    """_No description given by bungie._ """
+    TWITCH_NOT_AUTHORIZED = 2509
+    """_No description given by bungie._ """
+    TWITCH_UNKNOWN_AUTHORIZATION_FAILURE = 2510
     """_No description given by bungie._ """
     TRENDING_CATEGORY_NOT_FOUND = 2600
     """_No description given by bungie._ """

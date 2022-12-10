@@ -100,12 +100,14 @@ class NewsArticleRssResponse(BaseModel):
 
     None
     Attributes:
+        category_filter: _No description given by bungie._
         current_pagination_token: _No description given by bungie._
         news_articles: _No description given by bungie._
         next_pagination_token: _No description given by bungie._
         result_count_this_page: _No description given by bungie._
     """
 
+    category_filter: str = custom_field()
     current_pagination_token: int = custom_field()
     news_articles: list["NewsArticleRssItem"] = custom_field(metadata={"type": """list[NewsArticleRssItem]"""})
     next_pagination_token: int = custom_field()
@@ -120,14 +122,20 @@ class NewsArticleRssItem(BaseModel):
     None
     Attributes:
         description: _No description given by bungie._
+        html_content: _No description given by bungie._
+        image_path: _No description given by bungie._
         link: _No description given by bungie._
+        optional_mobile_image_path: _No description given by bungie._
         pub_date: _No description given by bungie._
         title: _No description given by bungie._
         unique_identifier: _No description given by bungie._
     """
 
     description: str = custom_field()
+    html_content: str = custom_field()
+    image_path: str = custom_field()
     link: str = custom_field()
+    optional_mobile_image_path: str = custom_field()
     pub_date: datetime = custom_field()
     title: str = custom_field()
     unique_identifier: str = custom_field()

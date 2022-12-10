@@ -192,19 +192,37 @@ class ContentRouteInterface(ClientMixin):
         response = await self._client.http.search_help_articles(searchtext=searchtext, size=size, auth=auth)
         return response["Response"]
 
-    async def rss_news_articles(self, page_token: str, auth: Optional[AuthData] = None) -> NewsArticleRssResponse:
+    async def rss_news_articles(
+        self,
+        page_token: str,
+        categoryfilter: Optional[str] = None,
+        includebody: Optional[bool] = None,
+        auth: Optional[AuthData] = None,
+    ) -> NewsArticleRssResponse:
         """
         Returns a JSON string response that is the RSS feed for news articles.
 
         Args:
             page_token: Zero-based pagination token for paging through result sets.
+            categoryfilter: Optionally filter response to only include news items in a certain category.
+            includebody: Optionally include full content body for each news item.
             auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.rss_news_articles(page_token=page_token, auth=auth)
+        response = await self._client.http.rss_news_articles(
+            page_token=page_token,
+            categoryfilter=categoryfilter if categoryfilter is not None else None,
+            includebody=includebody if includebody is not None else None,
+            auth=auth,
+        )
         return await NewsArticleRssResponse.from_dict(
-            data=response, client=self._client, page_token=page_token, auth=auth
+            data=response,
+            client=self._client,
+            page_token=page_token,
+            categoryfilter=categoryfilter,
+            includebody=includebody,
+            auth=auth,
         )
