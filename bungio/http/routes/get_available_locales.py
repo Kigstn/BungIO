@@ -7,7 +7,7 @@ from bungio.models.auth import AuthData
 class GetAvailableLocalesRouteHttpRequests:
     request: Callable[..., Coroutine]
 
-    async def get_available_locales(self, auth: Optional[AuthData] = None) -> dict:
+    async def get_available_locales(self, auth: Optional[AuthData] = None, *args, **kwargs) -> dict:
         """
         List of available localization cultures
 

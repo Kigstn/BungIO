@@ -399,6 +399,8 @@ def generate_function(
 
     for item in body + params:  # noqa
         text += f""", {item["name"]}: {item["type"]}"""
+    if create_raw_http:
+        text += ", *args, **kwargs"
 
     for item in m_body + m_params:  # noqa
         if found_mixin_name:

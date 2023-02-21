@@ -7,7 +7,7 @@ from bungio.models.auth import AuthData
 class UserSystemOverridesRouteHttpRequests:
     request: Callable[..., Coroutine]
 
-    async def get_user_system_overrides(self, auth: Optional[AuthData] = None) -> dict:
+    async def get_user_system_overrides(self, auth: Optional[AuthData] = None, *args, **kwargs) -> dict:
         """
         Get the user-specific system overrides that should be respected alongside common systems.
 

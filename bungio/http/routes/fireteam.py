@@ -7,7 +7,7 @@ from bungio.models.auth import AuthData
 class FireteamRouteHttpRequests:
     request: Callable[..., Coroutine]
 
-    async def get_active_private_clan_fireteam_count(self, group_id: int, auth: AuthData) -> dict:
+    async def get_active_private_clan_fireteam_count(self, group_id: int, auth: AuthData, *args, **kwargs) -> dict:
         """
         Gets a count of all active non-public fireteams for the specified clan. Maximum value returned is 25.
 
@@ -44,6 +44,8 @@ class FireteamRouteHttpRequests:
         slot_filter: int,
         auth: AuthData,
         lang_filter: Optional[str] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Gets a listing of all of this clan's fireteams that are have available slots. Caller is not checked for join criteria so caching is maximized.
@@ -93,6 +95,8 @@ class FireteamRouteHttpRequests:
         slot_filter: int,
         auth: AuthData,
         lang_filter: Optional[str] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Gets a listing of all public fireteams starting now with open slots. Caller is not checked for join criteria so caching is maximized.
@@ -140,6 +144,8 @@ class FireteamRouteHttpRequests:
         auth: AuthData,
         group_filter: Optional[bool] = None,
         lang_filter: Optional[str] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Gets a listing of all fireteams that caller is an applicant, a member, or an alternate of.
@@ -179,7 +185,7 @@ class FireteamRouteHttpRequests:
             )
         )
 
-    async def get_clan_fireteam(self, fireteam_id: int, group_id: int, auth: AuthData) -> dict:
+    async def get_clan_fireteam(self, fireteam_id: int, group_id: int, auth: AuthData, *args, **kwargs) -> dict:
         """
         Gets a specific fireteam.
 

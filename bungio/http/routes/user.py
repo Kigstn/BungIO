@@ -7,7 +7,7 @@ from bungio.models.auth import AuthData
 class UserRouteHttpRequests:
     request: Callable[..., Coroutine]
 
-    async def get_bungie_net_user_by_id(self, id: int, auth: Optional[AuthData] = None) -> dict:
+    async def get_bungie_net_user_by_id(self, id: int, auth: Optional[AuthData] = None, *args, **kwargs) -> dict:
         """
         Loads a bungienet user by membership id.
 
@@ -30,7 +30,9 @@ class UserRouteHttpRequests:
 
         return await self.request(Route(path=f"/User/GetBungieNetUserById/{id}/", method="GET", auth=auth))
 
-    async def get_sanitized_platform_display_names(self, membership_id: int, auth: Optional[AuthData] = None) -> dict:
+    async def get_sanitized_platform_display_names(
+        self, membership_id: int, auth: Optional[AuthData] = None, *args, **kwargs
+    ) -> dict:
         """
         Gets a list of all display names linked to this membership id but sanitized (profanity filtered). Obeys all visibility rules of calling user and is heavily cached.
 
@@ -56,7 +58,7 @@ class UserRouteHttpRequests:
         )
 
     async def get_credential_types_for_target_account(
-        self, membership_id: int, auth: Optional[AuthData] = None
+        self, membership_id: int, auth: Optional[AuthData] = None, *args, **kwargs
     ) -> dict:
         """
         Returns a list of credential types attached to the requested account
@@ -82,7 +84,7 @@ class UserRouteHttpRequests:
             Route(path=f"/User/GetCredentialTypesForTargetAccount/{membership_id}/", method="GET", auth=auth)
         )
 
-    async def get_available_themes(self, auth: Optional[AuthData] = None) -> dict:
+    async def get_available_themes(self, auth: Optional[AuthData] = None, *args, **kwargs) -> dict:
         """
         Returns a list of all available user themes.
 
@@ -105,7 +107,7 @@ class UserRouteHttpRequests:
         return await self.request(Route(path=f"/User/GetAvailableThemes/", method="GET", auth=auth))
 
     async def get_membership_data_by_id(
-        self, membership_id: int, membership_type: int, auth: Optional[AuthData] = None
+        self, membership_id: int, membership_type: int, auth: Optional[AuthData] = None, *args, **kwargs
     ) -> dict:
         """
         Returns a list of accounts associated with the supplied membership ID and membership type. This will include all linked accounts (even when hidden) if supplied credentials permit it.
@@ -132,7 +134,7 @@ class UserRouteHttpRequests:
             Route(path=f"/User/GetMembershipsById/{membership_id}/{membership_type}/", method="GET", auth=auth)
         )
 
-    async def get_membership_data_for_current_user(self, auth: AuthData) -> dict:
+    async def get_membership_data_for_current_user(self, auth: AuthData, *args, **kwargs) -> dict:
         """
         Returns a list of accounts associated with signed in user. This is useful for OAuth implementations that do not give you access to the token response.
 
@@ -158,7 +160,7 @@ class UserRouteHttpRequests:
         return await self.request(Route(path=f"/User/GetMembershipsForCurrentUser/", method="GET", auth=auth))
 
     async def get_membership_from_hard_linked_credential(
-        self, credential: str, cr_type: int, auth: Optional[AuthData] = None
+        self, credential: str, cr_type: int, auth: Optional[AuthData] = None, *args, **kwargs
     ) -> dict:
         """
         Gets any hard linked membership given a credential. Only works for credentials that are public (just SteamID64 right now). Cross Save aware.
@@ -186,7 +188,7 @@ class UserRouteHttpRequests:
         )
 
     async def search_by_global_name_prefix(
-        self, display_name_prefix: str, page: int, auth: Optional[AuthData] = None
+        self, display_name_prefix: str, page: int, auth: Optional[AuthData] = None, *args, **kwargs
     ) -> dict:
         """
         [OBSOLETE] Do not use this to search users, use SearchByGlobalNamePost instead.
@@ -214,7 +216,7 @@ class UserRouteHttpRequests:
         )
 
     async def search_by_global_name_post(
-        self, display_name_prefix: str, page: int, auth: Optional[AuthData] = None
+        self, display_name_prefix: str, page: int, auth: Optional[AuthData] = None, *args, **kwargs
     ) -> dict:
         """
         Given the prefix of a global display name, returns all users who share that name.

@@ -7,7 +7,7 @@ from bungio.models.auth import AuthData
 class TrendingRouteHttpRequests:
     request: Callable[..., Coroutine]
 
-    async def get_trending_categories(self, auth: Optional[AuthData] = None) -> dict:
+    async def get_trending_categories(self, auth: Optional[AuthData] = None, *args, **kwargs) -> dict:
         """
         Returns trending items for Bungie.net, collapsed into the first page of items per category. For pagination within a category, call GetTrendingCategory.
 
@@ -29,7 +29,9 @@ class TrendingRouteHttpRequests:
 
         return await self.request(Route(path=f"/Trending/Categories/", method="GET", auth=auth))
 
-    async def get_trending_category(self, category_id: str, page_number: int, auth: Optional[AuthData] = None) -> dict:
+    async def get_trending_category(
+        self, category_id: str, page_number: int, auth: Optional[AuthData] = None, *args, **kwargs
+    ) -> dict:
         """
         Returns paginated lists of trending items for a category.
 
@@ -56,7 +58,7 @@ class TrendingRouteHttpRequests:
         )
 
     async def get_trending_entry_detail(
-        self, identifier: str, trending_entry_type: int, auth: Optional[AuthData] = None
+        self, identifier: str, trending_entry_type: int, auth: Optional[AuthData] = None, *args, **kwargs
     ) -> dict:
         """
         Returns the detailed results for a specific trending entry. Note that trending entries are uniquely identified by a combination of *both* the TrendingEntryType *and* the identifier: the identifier alone is not guaranteed to be globally unique.

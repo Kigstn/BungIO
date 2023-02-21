@@ -8,7 +8,7 @@ from bungio.models.auth import AuthData
 class Destiny2RouteHttpRequests:
     request: Callable[..., Coroutine]
 
-    async def get_destiny_manifest(self, auth: Optional[AuthData] = None) -> dict:
+    async def get_destiny_manifest(self, auth: Optional[AuthData] = None, *args, **kwargs) -> dict:
         """
         Returns the current version of the manifest as a json object.
 
@@ -31,7 +31,7 @@ class Destiny2RouteHttpRequests:
         return await self.request(Route(path=f"/Destiny2/Manifest/", method="GET", auth=auth))
 
     async def get_destiny_entity_definition(
-        self, entity_type: str, hash_identifier: int, auth: Optional[AuthData] = None
+        self, entity_type: str, hash_identifier: int, auth: Optional[AuthData] = None, *args, **kwargs
     ) -> dict:
         """
         Returns the static definition of an entity of the given Type and hash identifier. Examine the API Documentation for the Type Names of entities that have their own definitions. Note that the return type will always *inherit from* DestinyDefinition, but the specific type returned will be the requested entity type if it can be found. Please don't use this as a chatty alternative to the Manifest database if you require large sets of data, but for simple and one-off accesses this should be handy.
@@ -59,7 +59,13 @@ class Destiny2RouteHttpRequests:
         )
 
     async def search_destiny_player_by_bungie_name(
-        self, display_name: str, display_name_code: int, membership_type: int, auth: Optional[AuthData] = None
+        self,
+        display_name: str,
+        display_name_code: int,
+        membership_type: int,
+        auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Returns a list of Destiny memberships given a global Bungie Display Name. This method will hide overridden memberships due to cross save.
@@ -103,6 +109,8 @@ class Destiny2RouteHttpRequests:
         membership_type: int,
         get_all_memberships: Optional[bool] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Returns a summary information about all profiles linked to the requesting membership type/membership ID that have valid Destiny information. The passed-in Membership Type/Membership ID may be a Bungie.Net membership or a Destiny membership. It only returns the minimal amount of data to begin making more substantive requests, but will hopefully serve as a useful alternative to UserServices for people who just care about Destiny data. Note that it will only return linked accounts whose linkages you are allowed to view.
@@ -141,6 +149,8 @@ class Destiny2RouteHttpRequests:
         membership_type: int,
         components: Optional[int] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Returns Destiny Profile information for the supplied membership.
@@ -180,6 +190,8 @@ class Destiny2RouteHttpRequests:
         membership_type: int,
         components: Optional[int] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Returns character information for the supplied character.
@@ -213,7 +225,9 @@ class Destiny2RouteHttpRequests:
             )
         )
 
-    async def get_clan_weekly_reward_state(self, group_id: int, auth: Optional[AuthData] = None) -> dict:
+    async def get_clan_weekly_reward_state(
+        self, group_id: int, auth: Optional[AuthData] = None, *args, **kwargs
+    ) -> dict:
         """
         Returns information on the weekly clan rewards and if the clan has earned them or not. Note that this will always report rewards as not redeemed.
 
@@ -236,7 +250,7 @@ class Destiny2RouteHttpRequests:
 
         return await self.request(Route(path=f"/Destiny2/Clan/{group_id}/WeeklyRewardState/", method="GET", auth=auth))
 
-    async def get_clan_banner_source(self, auth: Optional[AuthData] = None) -> dict:
+    async def get_clan_banner_source(self, auth: Optional[AuthData] = None, *args, **kwargs) -> dict:
         """
         Returns the dictionary of values for the Clan Banner
 
@@ -265,6 +279,8 @@ class Destiny2RouteHttpRequests:
         membership_type: int,
         components: Optional[int] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Retrieve the details of an instanced Destiny Item. An instanced Destiny item is one with an ItemInstanceId. Non-instanced items, such as materials, have no useful instance-specific details and thus are not queryable here.
@@ -306,6 +322,8 @@ class Destiny2RouteHttpRequests:
         components: Optional[int] = None,
         filter: Optional[int] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Get currently available vendors from the list of vendors that can possibly have rotating inventory. Note that this does not include things like preview vendors and vendors-as-kiosks, neither of whom have rotating/dynamic inventories. Use their definitions as-is for those.
@@ -349,6 +367,8 @@ class Destiny2RouteHttpRequests:
         vendor_hash: int,
         components: Optional[int] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Get the details of a specific Vendor.
@@ -383,7 +403,9 @@ class Destiny2RouteHttpRequests:
             )
         )
 
-    async def get_public_vendors(self, components: Optional[int] = None, auth: Optional[AuthData] = None) -> dict:
+    async def get_public_vendors(
+        self, components: Optional[int] = None, auth: Optional[AuthData] = None, *args, **kwargs
+    ) -> dict:
         """
         Get items available from vendors where the vendors have items for sale that are common for everyone. If any portion of the Vendor's available inventory is character or account specific, we will be unable to return their data from this endpoint due to the way that available inventory is computed. As I am often guilty of saying: 'It's a long story...'
 
@@ -414,6 +436,8 @@ class Destiny2RouteHttpRequests:
         membership_type: int,
         components: Optional[int] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Given a Presentation Node that has Collectibles as direct descendants, this will return item details about those descendants in the context of the requesting character.
@@ -457,6 +481,8 @@ class Destiny2RouteHttpRequests:
         character_id: int,
         membership_type: Union[Any, int],
         auth: AuthData,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Transfer an item to/from your vault. You must have a valid Destiny account. You must also pass BOTH a reference AND an instance ID if it's an instanced item. itshappening.gif
@@ -507,6 +533,8 @@ class Destiny2RouteHttpRequests:
         character_id: int,
         membership_type: Union[Any, int],
         auth: AuthData,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Extract an item from the Postmaster, with whatever implications that may entail. You must have a valid Destiny account. You must also pass BOTH a reference AND an instance ID if it's an instanced item.
@@ -548,7 +576,7 @@ class Destiny2RouteHttpRequests:
         )
 
     async def equip_item(
-        self, item_id: int, character_id: int, membership_type: Union[Any, int], auth: AuthData
+        self, item_id: int, character_id: int, membership_type: Union[Any, int], auth: AuthData, *args, **kwargs
     ) -> dict:
         """
         Equip an item. You must have a valid Destiny Account, and either be in a social space, in orbit, or offline.
@@ -586,7 +614,7 @@ class Destiny2RouteHttpRequests:
         )
 
     async def equip_items(
-        self, item_ids: list[int], character_id: int, membership_type: Union[Any, int], auth: AuthData
+        self, item_ids: list[int], character_id: int, membership_type: Union[Any, int], auth: AuthData, *args, **kwargs
     ) -> dict:
         """
         Equip a list of items by itemInstanceIds. You must have a valid Destiny Account, and either be in a social space, in orbit, or offline. Any items not found on your character will be ignored.
@@ -624,7 +652,14 @@ class Destiny2RouteHttpRequests:
         )
 
     async def set_item_lock_state(
-        self, state: bool, item_id: int, character_id: int, membership_type: Union[Any, int], auth: AuthData
+        self,
+        state: bool,
+        item_id: int,
+        character_id: int,
+        membership_type: Union[Any, int],
+        auth: AuthData,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Set the Lock State for an instanced item. You must have a valid Destiny Account.
@@ -664,7 +699,14 @@ class Destiny2RouteHttpRequests:
         )
 
     async def set_quest_tracked_state(
-        self, state: bool, item_id: int, character_id: int, membership_type: Union[Any, int], auth: AuthData
+        self,
+        state: bool,
+        item_id: int,
+        character_id: int,
+        membership_type: Union[Any, int],
+        auth: AuthData,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Set the Tracking State for an instanced item, if that item is a Quest or Bounty. You must have a valid Destiny Account. Yeah, it's an item.
@@ -711,6 +753,8 @@ class Destiny2RouteHttpRequests:
         character_id: int,
         membership_type: Union[Any, int],
         auth: AuthData,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Insert a plug into a socketed item. I know how it sounds, but I assure you it's much more G-rated than you might be guessing. We haven't decided yet whether this will be able to insert plugs that have side effects, but if we do it will require special scope permission for an application attempting to do so. You must have a valid Destiny Account, and either be in a social space, in orbit, or offline. Request must include proof of permission for 'InsertPlugs' from the account owner.
@@ -752,7 +796,14 @@ class Destiny2RouteHttpRequests:
         )
 
     async def insert_socket_plug_free(
-        self, plug: Any, item_id: int, character_id: int, membership_type: Union[Any, int], auth: AuthData
+        self,
+        plug: Any,
+        item_id: int,
+        character_id: int,
+        membership_type: Union[Any, int],
+        auth: AuthData,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Insert a 'free' plug into an item's socket. This does not require 'Advanced Write Action' authorization and is available to 3rd-party apps, but will only work on 'free and reversible' socket actions (Perks, Armor Mods, Shaders, Ornaments, etc.). You must have a valid Destiny Account, and the character must either be in a social space, in orbit, or offline.
@@ -791,7 +842,9 @@ class Destiny2RouteHttpRequests:
             Route(path=f"/Destiny2/Actions/Items/InsertSocketPlugFree/", method="POST", data=data, auth=auth)
         )
 
-    async def get_post_game_carnage_report(self, activity_id: int, auth: Optional[AuthData] = None) -> dict:
+    async def get_post_game_carnage_report(
+        self, activity_id: int, auth: Optional[AuthData] = None, *args, **kwargs
+    ) -> dict:
         """
         Gets the available post game carnage report for the activity ID.
 
@@ -823,6 +876,8 @@ class Destiny2RouteHttpRequests:
         offending_character_id: int,
         activity_id: int,
         auth: AuthData,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Report a player that you met in an activity that was engaging in ToS-violating activities. Both you and the offending player must have played in the activityId passed in. Please use this judiciously and only when you have strong suspicions of violation, pretty please.
@@ -862,7 +917,7 @@ class Destiny2RouteHttpRequests:
             )
         )
 
-    async def get_historical_stats_definition(self, auth: Optional[AuthData] = None) -> dict:
+    async def get_historical_stats_definition(self, auth: Optional[AuthData] = None, *args, **kwargs) -> dict:
         """
         Gets historical stats definitions.
 
@@ -891,6 +946,8 @@ class Destiny2RouteHttpRequests:
         modes: Optional[str] = None,
         statid: Optional[str] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Gets leaderboards with the signed in user's friends and the supplied destinyMembershipId as the focus. PREVIEW: This endpoint is still in beta, and may experience rough edges. The schema is in final form, but there may be bugs that prevent desirable operation.
@@ -927,7 +984,7 @@ class Destiny2RouteHttpRequests:
         )
 
     async def get_clan_aggregate_stats(
-        self, group_id: int, modes: Optional[str] = None, auth: Optional[AuthData] = None
+        self, group_id: int, modes: Optional[str] = None, auth: Optional[AuthData] = None, *args, **kwargs
     ) -> dict:
         """
         Gets aggregated stats for a clan using the same categories as the clan leaderboards. PREVIEW: This endpoint is still in beta, and may experience rough edges. The schema is in final form, but there may be bugs that prevent desirable operation.
@@ -962,6 +1019,8 @@ class Destiny2RouteHttpRequests:
         modes: Optional[str] = None,
         statid: Optional[str] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Gets leaderboards with the signed in user's friends and the supplied destinyMembershipId as the focus. PREVIEW: This endpoint has not yet been implemented. It is being returned for a preview of future functionality, and for public comment/suggestion/preparation.
@@ -1007,6 +1066,8 @@ class Destiny2RouteHttpRequests:
         modes: Optional[str] = None,
         statid: Optional[str] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Gets leaderboards with the signed in user's friends and the supplied destinyMembershipId as the focus. PREVIEW: This endpoint is still in beta, and may experience rough edges. The schema is in final form, but there may be bugs that prevent desirable operation.
@@ -1045,7 +1106,7 @@ class Destiny2RouteHttpRequests:
         )
 
     async def search_destiny_entities(
-        self, search_term: str, type: str, page: Optional[int] = None, auth: Optional[AuthData] = None
+        self, search_term: str, type: str, page: Optional[int] = None, auth: Optional[AuthData] = None, *args, **kwargs
     ) -> dict:
         """
         Gets a page list of Destiny items.
@@ -1084,6 +1145,8 @@ class Destiny2RouteHttpRequests:
         modes: Optional[int] = None,
         period_type: Optional[int] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Gets historical stats for indicated character.
@@ -1131,6 +1194,8 @@ class Destiny2RouteHttpRequests:
         membership_type: int,
         groups: Optional[int] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Gets aggregate historical stats organized around each character for a given account.
@@ -1172,6 +1237,8 @@ class Destiny2RouteHttpRequests:
         mode: Optional[int] = None,
         page: Optional[int] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Gets activity history stats for indicated character.
@@ -1210,7 +1277,13 @@ class Destiny2RouteHttpRequests:
         )
 
     async def get_unique_weapon_history(
-        self, character_id: int, destiny_membership_id: int, membership_type: int, auth: Optional[AuthData] = None
+        self,
+        character_id: int,
+        destiny_membership_id: int,
+        membership_type: int,
+        auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Gets details about unique weapon usage, including all exotic weapons.
@@ -1243,7 +1316,13 @@ class Destiny2RouteHttpRequests:
         )
 
     async def get_destiny_aggregate_activity_stats(
-        self, character_id: int, destiny_membership_id: int, membership_type: int, auth: Optional[AuthData] = None
+        self,
+        character_id: int,
+        destiny_membership_id: int,
+        membership_type: int,
+        auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Gets all activities the character has participated in together with aggregate statistics for those activities.
@@ -1275,7 +1354,9 @@ class Destiny2RouteHttpRequests:
             )
         )
 
-    async def get_public_milestone_content(self, milestone_hash: int, auth: Optional[AuthData] = None) -> dict:
+    async def get_public_milestone_content(
+        self, milestone_hash: int, auth: Optional[AuthData] = None, *args, **kwargs
+    ) -> dict:
         """
         Gets custom localized content for the milestone of the given hash, if it exists.
 
@@ -1300,7 +1381,7 @@ class Destiny2RouteHttpRequests:
             Route(path=f"/Destiny2/Milestones/{milestone_hash}/Content/", method="GET", auth=auth)
         )
 
-    async def get_public_milestones(self, auth: Optional[AuthData] = None) -> dict:
+    async def get_public_milestones(self, auth: Optional[AuthData] = None, *args, **kwargs) -> dict:
         """
         Gets public information about currently available Milestones.
 
@@ -1329,6 +1410,8 @@ class Destiny2RouteHttpRequests:
         membership_type: Union[Any, int],
         character_id: int,
         auth: AuthData,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Initialize a request to perform an advanced write action.
@@ -1366,7 +1449,13 @@ class Destiny2RouteHttpRequests:
         return await self.request(Route(path=f"/Destiny2/Awa/Initialize/", method="POST", data=data, auth=auth))
 
     async def awa_provide_authorization_result(
-        self, selection: Union[Any, int], correlation_id: str, nonce: list[int], auth: Optional[AuthData] = None
+        self,
+        selection: Union[Any, int],
+        correlation_id: str,
+        nonce: list[int],
+        auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Provide the result of the user interaction. Called by the Bungie Destiny App to approve or reject a request.
@@ -1400,7 +1489,7 @@ class Destiny2RouteHttpRequests:
             Route(path=f"/Destiny2/Awa/AwaProvideAuthorizationResult/", method="POST", data=data, auth=auth)
         )
 
-    async def awa_get_action_token(self, correlation_id: str, auth: AuthData) -> dict:
+    async def awa_get_action_token(self, correlation_id: str, auth: AuthData, *args, **kwargs) -> dict:
         """
         Returns the action token if user approves the request.
 

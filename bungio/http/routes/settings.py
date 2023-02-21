@@ -7,7 +7,7 @@ from bungio.models.auth import AuthData
 class SettingsRouteHttpRequests:
     request: Callable[..., Coroutine]
 
-    async def get_common_settings(self, auth: Optional[AuthData] = None) -> dict:
+    async def get_common_settings(self, auth: Optional[AuthData] = None, *args, **kwargs) -> dict:
         """
         Get the common settings used by the Bungie.Net environment.
 

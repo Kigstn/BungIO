@@ -7,7 +7,7 @@ from bungio.models.auth import AuthData
 class TokensRouteHttpRequests:
     request: Callable[..., Coroutine]
 
-    async def force_drops_repair(self, auth: AuthData) -> dict:
+    async def force_drops_repair(self, auth: AuthData, *args, **kwargs) -> dict:
         """
         Twitch Drops self-repair function - scans twitch for drops not marked as fulfilled and resyncs them.
 
@@ -33,7 +33,7 @@ class TokensRouteHttpRequests:
         return await self.request(Route(path=f"/Tokens/Partner/ForceDropsRepair/", method="POST", auth=auth))
 
     async def claim_partner_offer(
-        self, partner_offer_id: str, bungie_net_membership_id: int, transaction_id: str, auth: AuthData
+        self, partner_offer_id: str, bungie_net_membership_id: int, transaction_id: str, auth: AuthData, *args, **kwargs
     ) -> dict:
         """
         Claim a partner offer as the authenticated user.
@@ -69,7 +69,7 @@ class TokensRouteHttpRequests:
         return await self.request(Route(path=f"/Tokens/Partner/ClaimOffer/", method="POST", data=data, auth=auth))
 
     async def apply_missing_partner_offers_without_claim(
-        self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData
+        self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData, *args, **kwargs
     ) -> dict:
         """
         Apply a partner offer to the targeted user. This endpoint does not claim a new offer, but any already claimed offers will be applied to the game if not already.
@@ -104,7 +104,7 @@ class TokensRouteHttpRequests:
         )
 
     async def get_partner_offer_sku_history(
-        self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData
+        self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData, *args, **kwargs
     ) -> dict:
         """
         Returns the partner sku and offer history of the targeted user. Elevated permissions are required to see users that are not yourself.
@@ -139,7 +139,7 @@ class TokensRouteHttpRequests:
         )
 
     async def get_partner_reward_history(
-        self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData
+        self, partner_application_id: int, target_bnet_membership_id: int, auth: AuthData, *args, **kwargs
     ) -> dict:
         """
         Returns the partner rewards history of the targeted user, both partner offers and Twitch drops.
@@ -173,7 +173,7 @@ class TokensRouteHttpRequests:
             )
         )
 
-    async def get_bungie_rewards_for_user(self, membership_id: int, auth: AuthData) -> dict:
+    async def get_bungie_rewards_for_user(self, membership_id: int, auth: AuthData, *args, **kwargs) -> dict:
         """
         Returns the bungie rewards for the targeted user.
 
@@ -202,7 +202,7 @@ class TokensRouteHttpRequests:
         )
 
     async def get_bungie_rewards_for_platform_user(
-        self, membership_id: int, membership_type: int, auth: AuthData
+        self, membership_id: int, membership_type: int, auth: AuthData, *args, **kwargs
     ) -> dict:
         """
         Returns the bungie rewards for the targeted user when a platform membership Id and Type are used.
@@ -236,7 +236,7 @@ class TokensRouteHttpRequests:
             )
         )
 
-    async def get_bungie_rewards_list(self, auth: Optional[AuthData] = None) -> dict:
+    async def get_bungie_rewards_list(self, auth: Optional[AuthData] = None, *args, **kwargs) -> dict:
         """
         Returns a list of the current bungie rewards
 

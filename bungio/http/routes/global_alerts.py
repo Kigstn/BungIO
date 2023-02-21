@@ -7,7 +7,9 @@ from bungio.models.auth import AuthData
 class GlobalAlertsRouteHttpRequests:
     request: Callable[..., Coroutine]
 
-    async def get_global_alerts(self, includestreaming: Optional[bool] = None, auth: Optional[AuthData] = None) -> dict:
+    async def get_global_alerts(
+        self, includestreaming: Optional[bool] = None, auth: Optional[AuthData] = None, *args, **kwargs
+    ) -> dict:
         """
         Gets any active global alert for display in the forum banners, help pages, etc. Usually used for DOC alerts.
 

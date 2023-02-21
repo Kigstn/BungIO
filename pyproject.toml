@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bungio"
-version = "0.7.0"
+version = "0.7.1"
 description = "A destiny 2 / bungie api wrapper"
 keywords = ["asyncio", "destiny", "destiny 2", "bungie", "api"]
 readme = "README.md"

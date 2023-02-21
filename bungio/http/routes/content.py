@@ -7,7 +7,7 @@ from bungio.models.auth import AuthData
 class ContentRouteHttpRequests:
     request: Callable[..., Coroutine]
 
-    async def get_content_type(self, type: str, auth: Optional[AuthData] = None) -> dict:
+    async def get_content_type(self, type: str, auth: Optional[AuthData] = None, *args, **kwargs) -> dict:
         """
         Gets an object describing a particular variant of content.
 
@@ -31,7 +31,7 @@ class ContentRouteHttpRequests:
         return await self.request(Route(path=f"/Content/GetContentType/{type}/", method="GET", auth=auth))
 
     async def get_content_by_id(
-        self, id: int, locale: str, head: Optional[bool] = None, auth: Optional[AuthData] = None
+        self, id: int, locale: str, head: Optional[bool] = None, auth: Optional[AuthData] = None, *args, **kwargs
     ) -> dict:
         """
         Returns a content item referenced by id
@@ -60,7 +60,14 @@ class ContentRouteHttpRequests:
         )
 
     async def get_content_by_tag_and_type(
-        self, locale: str, tag: str, type: str, head: Optional[bool] = None, auth: Optional[AuthData] = None
+        self,
+        locale: str,
+        tag: str,
+        type: str,
+        head: Optional[bool] = None,
+        auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Returns the newest item that matches a given tag and Content Type.
@@ -99,6 +106,8 @@ class ContentRouteHttpRequests:
         source: Optional[str] = None,
         tag: Optional[str] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Gets content based on querystring information passed in. Provides basic search and text search capabilities.
@@ -149,6 +158,8 @@ class ContentRouteHttpRequests:
         head: Optional[bool] = None,
         itemsperpage: Optional[int] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Searches for Content Items that match the given Tag and Content Type.
@@ -186,7 +197,9 @@ class ContentRouteHttpRequests:
             )
         )
 
-    async def search_help_articles(self, searchtext: str, size: str, auth: Optional[AuthData] = None) -> dict:
+    async def search_help_articles(
+        self, searchtext: str, size: str, auth: Optional[AuthData] = None, *args, **kwargs
+    ) -> dict:
         """
         Search for Help Articles.
 
@@ -218,6 +231,8 @@ class ContentRouteHttpRequests:
         categoryfilter: Optional[str] = None,
         includebody: Optional[bool] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Returns a JSON string response that is the RSS feed for news articles.

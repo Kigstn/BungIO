@@ -7,7 +7,7 @@ from bungio.models.auth import AuthData
 class SocialRouteHttpRequests:
     request: Callable[..., Coroutine]
 
-    async def get_friend_list(self, auth: AuthData) -> dict:
+    async def get_friend_list(self, auth: AuthData, *args, **kwargs) -> dict:
         """
         Returns your Bungie Friend list
 
@@ -32,7 +32,7 @@ class SocialRouteHttpRequests:
 
         return await self.request(Route(path=f"/Social/Friends/", method="GET", auth=auth))
 
-    async def get_friend_request_list(self, auth: AuthData) -> dict:
+    async def get_friend_request_list(self, auth: AuthData, *args, **kwargs) -> dict:
         """
         Returns your friend request queue.
 
@@ -57,7 +57,7 @@ class SocialRouteHttpRequests:
 
         return await self.request(Route(path=f"/Social/Friends/Requests/", method="GET", auth=auth))
 
-    async def issue_friend_request(self, membership_id: str, auth: AuthData) -> dict:
+    async def issue_friend_request(self, membership_id: str, auth: AuthData, *args, **kwargs) -> dict:
         """
         Requests a friend relationship with the target user. Any of the target user's linked membership ids are valid inputs.
 
@@ -83,7 +83,7 @@ class SocialRouteHttpRequests:
 
         return await self.request(Route(path=f"/Social/Friends/Add/{membership_id}/", method="POST", auth=auth))
 
-    async def accept_friend_request(self, membership_id: str, auth: AuthData) -> dict:
+    async def accept_friend_request(self, membership_id: str, auth: AuthData, *args, **kwargs) -> dict:
         """
         Accepts a friend relationship with the target user. The user must be on your incoming friend request list, though no error will occur if they are not.
 
@@ -111,7 +111,7 @@ class SocialRouteHttpRequests:
             Route(path=f"/Social/Friends/Requests/Accept/{membership_id}/", method="POST", auth=auth)
         )
 
-    async def decline_friend_request(self, membership_id: str, auth: AuthData) -> dict:
+    async def decline_friend_request(self, membership_id: str, auth: AuthData, *args, **kwargs) -> dict:
         """
         Declines a friend relationship with the target user. The user must be on your incoming friend request list, though no error will occur if they are not.
 
@@ -139,7 +139,7 @@ class SocialRouteHttpRequests:
             Route(path=f"/Social/Friends/Requests/Decline/{membership_id}/", method="POST", auth=auth)
         )
 
-    async def remove_friend(self, membership_id: str, auth: AuthData) -> dict:
+    async def remove_friend(self, membership_id: str, auth: AuthData, *args, **kwargs) -> dict:
         """
         Remove a friend relationship with the target user. The user must be on your friend list, though no error will occur if they are not.
 
@@ -165,7 +165,7 @@ class SocialRouteHttpRequests:
 
         return await self.request(Route(path=f"/Social/Friends/Remove/{membership_id}/", method="POST", auth=auth))
 
-    async def remove_friend_request(self, membership_id: str, auth: AuthData) -> dict:
+    async def remove_friend_request(self, membership_id: str, auth: AuthData, *args, **kwargs) -> dict:
         """
         Remove a friend relationship with the target user. The user must be on your outgoing request friend list, though no error will occur if they are not.
 
@@ -193,7 +193,9 @@ class SocialRouteHttpRequests:
             Route(path=f"/Social/Friends/Requests/Remove/{membership_id}/", method="POST", auth=auth)
         )
 
-    async def get_platform_friend_list(self, friend_platform: int, page: str, auth: Optional[AuthData] = None) -> dict:
+    async def get_platform_friend_list(
+        self, friend_platform: int, page: str, auth: Optional[AuthData] = None, *args, **kwargs
+    ) -> dict:
         """
         Gets the platform friend of the requested type, with additional information if they have Bungie accounts. Must have a recent login session with said platform.
 

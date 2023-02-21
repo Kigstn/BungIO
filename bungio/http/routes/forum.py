@@ -18,6 +18,8 @@ class ForumRouteHttpRequests:
         locales: Optional[str] = None,
         tagstring: Optional[str] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Get topics from any forum.
@@ -64,6 +66,8 @@ class ForumRouteHttpRequests:
         sort: int,
         locales: Optional[str] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Gets a listing of all topics marked as part of the core group.
@@ -109,6 +113,8 @@ class ForumRouteHttpRequests:
         sort_mode: int,
         showbanned: Optional[str] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Returns a thread of posts at the given parent, optionally returning replies to those posts as well as the original parent.
@@ -156,6 +162,8 @@ class ForumRouteHttpRequests:
         sort_mode: int,
         showbanned: Optional[str] = None,
         auth: Optional[AuthData] = None,
+        *args,
+        **kwargs,
     ) -> dict:
         """
         Returns a thread of posts starting at the topicId of the input childPostId, optionally returning replies to those posts as well as the original parent.
@@ -193,7 +201,7 @@ class ForumRouteHttpRequests:
         )
 
     async def get_post_and_parent(
-        self, child_post_id: int, showbanned: Optional[str] = None, auth: Optional[AuthData] = None
+        self, child_post_id: int, showbanned: Optional[str] = None, auth: Optional[AuthData] = None, *args, **kwargs
     ) -> dict:
         """
         Returns the post specified and its immediate parent.
@@ -221,7 +229,7 @@ class ForumRouteHttpRequests:
         )
 
     async def get_post_and_parent_awaiting_approval(
-        self, child_post_id: int, showbanned: Optional[str] = None, auth: Optional[AuthData] = None
+        self, child_post_id: int, showbanned: Optional[str] = None, auth: Optional[AuthData] = None, *args, **kwargs
     ) -> dict:
         """
         Returns the post specified and its immediate parent of posts that are awaiting approval.
@@ -253,7 +261,7 @@ class ForumRouteHttpRequests:
             )
         )
 
-    async def get_topic_for_content(self, content_id: int, auth: Optional[AuthData] = None) -> dict:
+    async def get_topic_for_content(self, content_id: int, auth: Optional[AuthData] = None, *args, **kwargs) -> dict:
         """
         Gets the post Id for the given content item's comments, if it exists.
 
@@ -277,7 +285,7 @@ class ForumRouteHttpRequests:
         return await self.request(Route(path=f"/Forum/GetTopicForContent/{content_id}/", method="GET", auth=auth))
 
     async def get_forum_tag_suggestions(
-        self, partialtag: Optional[str] = None, auth: Optional[AuthData] = None
+        self, partialtag: Optional[str] = None, auth: Optional[AuthData] = None, *args, **kwargs
     ) -> dict:
         """
         Gets tag suggestions based on partial text entry, matching them with other tags previously used in the forums.
@@ -303,7 +311,7 @@ class ForumRouteHttpRequests:
             Route(path=f"/Forum/GetForumTagSuggestions/", method="GET", partialtag=partialtag, auth=auth)
         )
 
-    async def get_poll(self, topic_id: int, auth: Optional[AuthData] = None) -> dict:
+    async def get_poll(self, topic_id: int, auth: Optional[AuthData] = None, *args, **kwargs) -> dict:
         """
         Gets the specified forum poll.
 
@@ -326,7 +334,9 @@ class ForumRouteHttpRequests:
 
         return await self.request(Route(path=f"/Forum/Poll/{topic_id}/", method="GET", auth=auth))
 
-    async def get_recruitment_thread_summaries(self, body_data: list[int], auth: Optional[AuthData] = None) -> dict:
+    async def get_recruitment_thread_summaries(
+        self, body_data: list[int], auth: Optional[AuthData] = None, *args, **kwargs
+    ) -> dict:
         """
         Allows the caller to get a list of to 25 recruitment thread summary information objects.
 

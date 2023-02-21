@@ -8,7 +8,7 @@ class CommunityContentRouteHttpRequests:
     request: Callable[..., Coroutine]
 
     async def get_community_content(
-        self, media_filter: int, page: int, sort: int, auth: Optional[AuthData] = None
+        self, media_filter: int, page: int, sort: int, auth: Optional[AuthData] = None, *args, **kwargs
     ) -> dict:
         """
         Returns community content.
