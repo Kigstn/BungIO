@@ -62,7 +62,7 @@ class GroupUserInfoCard(BaseModel, DestinyUserMixin):
     last_seen_display_name_type: Union["BungieMembershipType", int] = custom_field(
         converter=enum_converter("BungieMembershipType")
     )
-    membership_id: int = custom_field()
+    membership_id: int = custom_field(metadata={"int64": True})
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
     supplemental_display_name: str = custom_field()
 
@@ -145,12 +145,12 @@ class GroupV2(BaseModel, DestinyClanMixin):
     banner_path: str = custom_field()
     chat_security: Union["ChatSecuritySetting", int] = custom_field(converter=enum_converter("ChatSecuritySetting"))
     clan_info: "GroupV2ClanInfoAndInvestment" = custom_field()
-    conversation_id: int = custom_field()
+    conversation_id: int = custom_field(metadata={"int64": True})
     creation_date: datetime = custom_field()
     default_publicity: Union["GroupPostPublicity", int] = custom_field(converter=enum_converter("GroupPostPublicity"))
     enable_invitation_messaging_for_admins: bool = custom_field()
     features: "GroupFeatures" = custom_field()
-    group_id: int = custom_field()
+    group_id: int = custom_field(metadata={"int64": True})
     group_type: Union["GroupType", int] = custom_field(converter=enum_converter("GroupType"))
     homepage: Union["GroupHomepage", int] = custom_field(converter=enum_converter("GroupHomepage"))
     is_default_post_public: bool = custom_field()
@@ -158,7 +158,7 @@ class GroupV2(BaseModel, DestinyClanMixin):
     is_public_topic_admin_only: bool = custom_field()
     locale: str = custom_field()
     member_count: int = custom_field()
-    membership_id_created: int = custom_field()
+    membership_id_created: int = custom_field(metadata={"int64": True})
     membership_option: Union["MembershipOption", int] = custom_field(converter=enum_converter("MembershipOption"))
     modification_date: datetime = custom_field()
     motto: str = custom_field()
@@ -390,7 +390,7 @@ class GroupUserBase(BaseModel, DestinyClanMixin):
 
     bungie_net_user_info: "UserInfoCard" = custom_field()
     destiny_user_info: "GroupUserInfoCard" = custom_field()
-    group_id: int = custom_field()
+    group_id: int = custom_field(metadata={"int64": True})
     join_date: datetime = custom_field()
 
 
@@ -412,10 +412,10 @@ class GroupMember(BaseModel, DestinyClanMixin):
 
     bungie_net_user_info: "UserInfoCard" = custom_field()
     destiny_user_info: "GroupUserInfoCard" = custom_field()
-    group_id: int = custom_field()
+    group_id: int = custom_field(metadata={"int64": True})
     is_online: bool = custom_field()
     join_date: datetime = custom_field()
-    last_online_status_change: int = custom_field()
+    last_online_status_change: int = custom_field(metadata={"int64": True})
     member_type: Union["RuntimeGroupMemberType", int] = custom_field(converter=enum_converter("RuntimeGroupMemberType"))
 
 
@@ -448,7 +448,7 @@ class GroupPotentialMember(BaseModel, DestinyClanMixin):
 
     bungie_net_user_info: "UserInfoCard" = custom_field()
     destiny_user_info: "GroupUserInfoCard" = custom_field()
-    group_id: int = custom_field()
+    group_id: int = custom_field(metadata={"int64": True})
     join_date: datetime = custom_field()
     potential_status: Union["GroupPotentialMemberStatus", int] = custom_field(
         converter=enum_converter("GroupPotentialMemberStatus")
@@ -512,7 +512,7 @@ class GroupV2Card(BaseModel, DestinyClanMixin):
     capabilities: Union["Capabilities", int] = custom_field(converter=enum_converter("Capabilities"))
     clan_info: "GroupV2ClanInfo" = custom_field()
     creation_date: datetime = custom_field()
-    group_id: int = custom_field()
+    group_id: int = custom_field(metadata={"int64": True})
     group_type: Union["GroupType", int] = custom_field(converter=enum_converter("GroupType"))
     locale: str = custom_field()
     member_count: int = custom_field()
@@ -638,8 +638,8 @@ class GroupOptionalConversation(BaseModel, DestinyClanMixin):
     chat_enabled: bool = custom_field()
     chat_name: str = custom_field()
     chat_security: Union["ChatSecuritySetting", int] = custom_field(converter=enum_converter("ChatSecuritySetting"))
-    conversation_id: int = custom_field()
-    group_id: int = custom_field()
+    conversation_id: int = custom_field(metadata={"int64": True})
+    group_id: int = custom_field(metadata={"int64": True})
 
 
 @custom_define()
@@ -791,7 +791,7 @@ class GroupBan(BaseModel, DestinyClanMixin):
     date_banned: datetime = custom_field()
     date_expires: datetime = custom_field()
     destiny_user_info: "GroupUserInfoCard" = custom_field()
-    group_id: int = custom_field()
+    group_id: int = custom_field(metadata={"int64": True})
     last_modified_by: "UserInfoCard" = custom_field()
 
 
@@ -816,14 +816,14 @@ class GroupMemberApplication(BaseModel, DestinyClanMixin):
     bungie_net_user_info: "UserInfoCard" = custom_field()
     creation_date: datetime = custom_field()
     destiny_user_info: "GroupUserInfoCard" = custom_field()
-    group_id: int = custom_field()
+    group_id: int = custom_field(metadata={"int64": True})
     request_message: str = custom_field()
     resolve_date: datetime = custom_field()
     resolve_message: str = custom_field()
     resolve_state: Union["GroupApplicationResolveState", int] = custom_field(
         converter=enum_converter("GroupApplicationResolveState")
     )
-    resolved_by_membership_id: int = custom_field()
+    resolved_by_membership_id: int = custom_field(metadata={"int64": True})
 
 
 class GroupApplicationResolveState(BaseEnum):

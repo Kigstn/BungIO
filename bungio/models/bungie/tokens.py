@@ -28,7 +28,7 @@ class PartnerOfferClaimRequest(BaseModel):
         transaction_id: _No description given by bungie._
     """
 
-    bungie_net_membership_id: int = custom_field()
+    bungie_net_membership_id: int = custom_field(metadata={"int64": True})
     partner_offer_id: str = custom_field()
     transaction_id: str = custom_field()
 
@@ -81,7 +81,7 @@ class PartnerOfferHistoryResponse(BaseModel, DestinyUserMixin):
     is_consumable: bool = custom_field()
     localized_description: str = custom_field()
     localized_name: str = custom_field()
-    membership_id: int = custom_field()
+    membership_id: int = custom_field(metadata={"int64": True})
     membership_type: int = custom_field()
     partner_offer_key: str = custom_field()
     quantity_applied: int = custom_field()

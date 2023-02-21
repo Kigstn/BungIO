@@ -177,7 +177,7 @@ class DestinyItemQuantity(BaseModel):
 
     has_conditional_visibility: bool = custom_field()
     item_hash: int = custom_field()
-    item_instance_id: int = custom_field()
+    item_instance_id: int = custom_field(metadata={"int64": True})
     quantity: int = custom_field()
     manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
@@ -1708,4 +1708,4 @@ class DestinyEquipItemResult(BaseModel):
     """
 
     equip_status: Union["PlatformErrorCodes", int] = custom_field(converter=enum_converter("PlatformErrorCodes"))
-    item_instance_id: int = custom_field()
+    item_instance_id: int = custom_field(metadata={"int64": True})

@@ -35,7 +35,7 @@ class DestinyCharacterActionRequest(BaseModel):
         membership_type: _No description given by bungie._
     """
 
-    character_id: int = custom_field()
+    character_id: int = custom_field(metadata={"int64": True})
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
 
 
@@ -51,8 +51,8 @@ class DestinyItemActionRequest(BaseModel):
         membership_type: _No description given by bungie._
     """
 
-    character_id: int = custom_field()
-    item_id: int = custom_field()
+    character_id: int = custom_field(metadata={"int64": True})
+    item_id: int = custom_field(metadata={"int64": True})
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
 
 
@@ -79,8 +79,8 @@ class DestinyPostmasterTransferRequest(BaseModel):
         manifest_item_reference_hash: Manifest information for `item_reference_hash`
     """
 
-    character_id: int = custom_field()
-    item_id: int = custom_field()
+    character_id: int = custom_field(metadata={"int64": True})
+    item_id: int = custom_field(metadata={"int64": True})
     item_reference_hash: int = custom_field()
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
     stack_size: int = custom_field()
@@ -99,7 +99,7 @@ class DestinyItemSetActionRequest(BaseModel):
         membership_type: _No description given by bungie._
     """
 
-    character_id: int = custom_field()
+    character_id: int = custom_field(metadata={"int64": True})
     item_ids: list[int] = custom_field(metadata={"type": """list[int]"""})
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
 
@@ -117,8 +117,8 @@ class DestinyItemStateRequest(BaseModel):
         state: _No description given by bungie._
     """
 
-    character_id: int = custom_field()
-    item_id: int = custom_field()
+    character_id: int = custom_field(metadata={"int64": True})
+    item_id: int = custom_field(metadata={"int64": True})
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
     state: bool = custom_field()
 
@@ -138,8 +138,8 @@ class DestinyInsertPlugsActionRequest(BaseModel):
     """
 
     action_token: str = custom_field()
-    character_id: int = custom_field()
-    item_instance_id: int = custom_field()
+    character_id: int = custom_field(metadata={"int64": True})
+    item_instance_id: int = custom_field(metadata={"int64": True})
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
     plug: "DestinyInsertPlugsRequestEntry" = custom_field()
 
@@ -187,7 +187,7 @@ class DestinyInsertPlugsFreeActionRequest(BaseModel):
         plug: The plugs being inserted.
     """
 
-    character_id: int = custom_field()
-    item_id: int = custom_field()
+    character_id: int = custom_field(metadata={"int64": True})
+    item_id: int = custom_field(metadata={"int64": True})
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
     plug: "DestinyInsertPlugsRequestEntry" = custom_field()

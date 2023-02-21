@@ -38,7 +38,7 @@ class UserMembership(BaseModel, DestinyUserMixin):
     bungie_global_display_name: str = custom_field()
     bungie_global_display_name_code: int = custom_field()
     display_name: str = custom_field()
-    membership_id: int = custom_field()
+    membership_id: int = custom_field(metadata={"int64": True})
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
 
 
@@ -69,7 +69,7 @@ class CrossSaveUserMembership(BaseModel, DestinyUserMixin):
     )
     display_name: str = custom_field()
     is_public: bool = custom_field()
-    membership_id: int = custom_field()
+    membership_id: int = custom_field(metadata={"int64": True})
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
 
 
@@ -103,7 +103,7 @@ class UserInfoCard(BaseModel, DestinyUserMixin):
     display_name: str = custom_field()
     icon_path: str = custom_field()
     is_public: bool = custom_field()
-    membership_id: int = custom_field()
+    membership_id: int = custom_field(metadata={"int64": True})
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
     supplemental_display_name: str = custom_field()
 
@@ -163,12 +163,12 @@ class GeneralUser(BaseModel):
     fb_display_name: str = custom_field()
     first_access: datetime = custom_field()
     is_deleted: bool = custom_field()
-    last_ban_report_id: int = custom_field()
+    last_ban_report_id: int = custom_field(metadata={"int64": True})
     last_update: datetime = custom_field()
-    legacy_portal_u_i_d: int = custom_field()
+    legacy_portal_u_i_d: int = custom_field(metadata={"int64": True})
     locale: str = custom_field()
     locale_inherit_default: bool = custom_field()
-    membership_id: int = custom_field()
+    membership_id: int = custom_field(metadata={"int64": True})
     normalized_name: str = custom_field()
     profile_ban_expire: datetime = custom_field()
     profile_picture: int = custom_field()
@@ -183,7 +183,7 @@ class GeneralUser(BaseModel):
     status_date: datetime = custom_field()
     status_text: str = custom_field()
     steam_display_name: str = custom_field()
-    success_message_flags: int = custom_field()
+    success_message_flags: int = custom_field(metadata={"int64": True})
     twitch_display_name: str = custom_field()
     unique_name: str = custom_field()
     user_title: int = custom_field()
@@ -222,7 +222,7 @@ class UserMembershipData(BaseModel):
 
     bungie_net_user: "GeneralUser" = custom_field()
     destiny_memberships: list["GroupUserInfoCard"] = custom_field(metadata={"type": """list[GroupUserInfoCard]"""})
-    primary_membership_id: int = custom_field()
+    primary_membership_id: int = custom_field(metadata={"int64": True})
 
 
 @custom_define()
@@ -238,11 +238,11 @@ class HardLinkedUserMembership(BaseModel, DestinyUserMixin):
         membership_type: _No description given by bungie._
     """
 
-    cross_save_overridden_membership_id: int = custom_field()
+    cross_save_overridden_membership_id: int = custom_field(metadata={"int64": True})
     cross_save_overridden_type: Union["BungieMembershipType", int] = custom_field(
         converter=enum_converter("BungieMembershipType")
     )
-    membership_id: int = custom_field()
+    membership_id: int = custom_field(metadata={"int64": True})
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
 
 
@@ -280,7 +280,7 @@ class UserSearchResponseDetail(BaseModel):
 
     bungie_global_display_name: str = custom_field()
     bungie_global_display_name_code: int = custom_field()
-    bungie_net_membership_id: int = custom_field()
+    bungie_net_membership_id: int = custom_field(metadata={"int64": True})
     destiny_memberships: list["UserInfoCard"] = custom_field(metadata={"type": """list[UserInfoCard]"""})
 
 
@@ -397,7 +397,7 @@ class EmailSubscriptionDefinition(BaseModel):
         metadata={"type": """dict[str, EMailSettingSubscriptionLocalization]"""}
     )
     name: str = custom_field()
-    value: int = custom_field()
+    value: int = custom_field(metadata={"int64": True})
 
 
 @custom_define()

@@ -471,7 +471,7 @@ class BaseModel(ClientMixin):
 
         result = {}
 
-        for name in self.__dir__():
+        for name, field in attrs.fields_dict(type(self)).items():
             if name.startswith("_") or name.startswith("manifest_"):
                 continue
 
@@ -499,6 +499,10 @@ class BaseModel(ClientMixin):
                 if hasattr(value, "to_dict"):
                     result[name] = value.to_dict()
                 else:
+                    # convert to string if they are int64
+                    if field.metadata.get("int64", None) is True:
+                        value = str(value)
+
                     result[name] = value
 
         return result

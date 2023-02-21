@@ -117,8 +117,8 @@ class PostResponse(BaseModel):
     is_announcement: bool = custom_field()
     is_pinned: bool = custom_field()
     last_reply_timestamp: datetime = custom_field()
-    latest_reply_author_id: int = custom_field()
-    latest_reply_post_id: int = custom_field()
+    latest_reply_author_id: int = custom_field(metadata={"int64": True})
+    latest_reply_post_id: int = custom_field(metadata={"int64": True})
     locale: str = custom_field()
     popularity: Union["ForumPostPopularity", int] = custom_field(converter=enum_converter("ForumPostPopularity"))
     thumbnail: str = custom_field()
@@ -214,7 +214,7 @@ class PollResponse(BaseModel):
     """
 
     results: list["PollResult"] = custom_field(metadata={"type": """list[PollResult]"""})
-    topic_id: int = custom_field()
+    topic_id: int = custom_field(metadata={"int64": True})
     total_votes: int = custom_field()
 
 
@@ -259,7 +259,7 @@ class ForumRecruitmentDetail(BaseModel):
     """
 
     approved: bool = custom_field()
-    conversation_id: int = custom_field()
+    conversation_id: int = custom_field(metadata={"int64": True})
     fireteam: list["GeneralUser"] = custom_field(metadata={"type": """list[GeneralUser]"""})
     intensity: Union["ForumRecruitmentIntensityLabel", int] = custom_field(
         converter=enum_converter("ForumRecruitmentIntensityLabel")
@@ -269,7 +269,7 @@ class ForumRecruitmentDetail(BaseModel):
     player_slots_remaining: int = custom_field()
     player_slots_total: int = custom_field()
     tone: Union["ForumRecruitmentToneLabel", int] = custom_field(converter=enum_converter("ForumRecruitmentToneLabel"))
-    topic_id: int = custom_field()
+    topic_id: int = custom_field(metadata={"int64": True})
 
 
 class ForumRecruitmentIntensityLabel(BaseEnum):

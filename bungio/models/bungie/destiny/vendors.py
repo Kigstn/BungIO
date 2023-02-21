@@ -33,9 +33,9 @@ class DestinyVendorReceipt(BaseModel):
     expires_on: datetime = custom_field()
     item_received: "DestinyItemQuantity" = custom_field()
     license_unlock_hash: int = custom_field()
-    purchased_by_character_id: int = custom_field()
+    purchased_by_character_id: int = custom_field(metadata={"int64": True})
     refund_policy: Union["DestinyVendorItemRefundPolicy", int] = custom_field(
         converter=enum_converter("DestinyVendorItemRefundPolicy")
     )
     sequence_number: int = custom_field()
-    time_to_expiration: int = custom_field()
+    time_to_expiration: int = custom_field(metadata={"int64": True})

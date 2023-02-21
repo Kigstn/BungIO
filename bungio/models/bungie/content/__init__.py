@@ -50,7 +50,7 @@ class ContentItemPublicContract(BaseModel):
     c_type: str = custom_field()
     cms_path: str = custom_field()
     comment_summary: "CommentSummary" = custom_field()
-    content_id: int = custom_field()
+    content_id: int = custom_field(metadata={"int64": True})
     creation_date: datetime = custom_field()
     has_age_gate: bool = custom_field()
     minimum_age: int = custom_field()
@@ -90,7 +90,7 @@ class CommentSummary(BaseModel):
     """
 
     comment_count: int = custom_field()
-    topic_id: int = custom_field()
+    topic_id: int = custom_field(metadata={"int64": True})
 
 
 @custom_define()

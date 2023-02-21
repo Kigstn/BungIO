@@ -96,7 +96,7 @@ class DestinyProfileTransitoryPartyMember(BaseModel):
 
     display_name: str = custom_field()
     emblem_hash: int = custom_field()
-    membership_id: int = custom_field()
+    membership_id: int = custom_field(metadata={"int64": True})
     status: Union["DestinyPartyMemberStates", int] = custom_field(converter=enum_converter("DestinyPartyMemberStates"))
     manifest_emblem_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 

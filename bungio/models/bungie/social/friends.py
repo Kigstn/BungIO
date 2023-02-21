@@ -54,7 +54,7 @@ class BungieFriend(BaseModel, DestinyUserMixin):
     last_seen_as_bungie_membership_type: Union["BungieMembershipType", int] = custom_field(
         converter=enum_converter("BungieMembershipType")
     )
-    last_seen_as_membership_id: int = custom_field()
+    last_seen_as_membership_id: int = custom_field(metadata={"int64": True})
     online_status: Union["PresenceStatus", int] = custom_field(converter=enum_converter("PresenceStatus"))
     online_title: Union["PresenceOnlineStateFlags", int] = custom_field(
         converter=enum_converter("PresenceOnlineStateFlags")
@@ -172,8 +172,8 @@ class PlatformFriend(BaseModel, DestinyUserMixin):
 
     bungie_global_display_name: str = custom_field()
     bungie_global_display_name_code: int = custom_field()
-    bungie_net_membership_id: int = custom_field()
-    destiny_membership_id: int = custom_field()
+    bungie_net_membership_id: int = custom_field(metadata={"int64": True})
+    destiny_membership_id: int = custom_field(metadata={"int64": True})
     destiny_membership_type: int = custom_field()
     friend_platform: Union["PlatformFriendType", int] = custom_field(converter=enum_converter("PlatformFriendType"))
     platform_display_name: str = custom_field()

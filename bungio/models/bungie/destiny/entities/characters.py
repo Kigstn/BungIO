@@ -83,7 +83,7 @@ class DestinyCharacterComponent(BaseModel, DestinyCharacterMixin):
     """
 
     base_character_level: int = custom_field()
-    character_id: int = custom_field()
+    character_id: int = custom_field(metadata={"int64": True})
     class_hash: int = custom_field()
     class_type: Union["DestinyClass", int] = custom_field(converter=enum_converter("DestinyClass"))
     date_last_played: datetime = custom_field()
@@ -95,10 +95,10 @@ class DestinyCharacterComponent(BaseModel, DestinyCharacterMixin):
     gender_type: Union["DestinyGender", int] = custom_field(converter=enum_converter("DestinyGender"))
     level_progression: "DestinyProgression" = custom_field()
     light: int = custom_field()
-    membership_id: int = custom_field()
+    membership_id: int = custom_field(metadata={"int64": True})
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
-    minutes_played_this_session: int = custom_field()
-    minutes_played_total: int = custom_field()
+    minutes_played_this_session: int = custom_field(metadata={"int64": True})
+    minutes_played_total: int = custom_field(metadata={"int64": True})
     percent_to_next_level: float = custom_field()
     race_hash: int = custom_field()
     race_type: Union["DestinyRace", int] = custom_field(converter=enum_converter("DestinyRace"))

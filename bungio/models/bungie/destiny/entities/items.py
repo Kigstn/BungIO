@@ -75,7 +75,7 @@ class DestinyItemComponent(BaseModel):
     expiration_date: datetime = custom_field()
     is_wrapper: bool = custom_field()
     item_hash: int = custom_field()
-    item_instance_id: int = custom_field()
+    item_instance_id: int = custom_field(metadata={"int64": True})
     item_value_visibility: list[bool] = custom_field(metadata={"type": """list[bool]"""})
     location: Union["ItemLocation", int] = custom_field(converter=enum_converter("ItemLocation"))
     lockable: bool = custom_field()

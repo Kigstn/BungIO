@@ -83,7 +83,7 @@ class DestinyQuestStatus(BaseModel):
     """
 
     completed: bool = custom_field()
-    item_instance_id: int = custom_field()
+    item_instance_id: int = custom_field(metadata={"int64": True})
     quest_hash: int = custom_field()
     redeemed: bool = custom_field()
     started: bool = custom_field()

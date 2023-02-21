@@ -84,7 +84,7 @@ class DestinyHistoricalStatsActivity(BaseModel):
     """
 
     director_activity_hash: int = custom_field()
-    instance_id: int = custom_field()
+    instance_id: int = custom_field(metadata={"int64": True})
     is_private: bool = custom_field()
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
     mode: Union["DestinyActivityModeType", int] = custom_field(converter=enum_converter("DestinyActivityModeType"))
@@ -111,7 +111,7 @@ class DestinyPostGameCarnageReportEntry(BaseModel):
         values: Collection of stats for the player in this activity.
     """
 
-    character_id: int = custom_field()
+    character_id: int = custom_field(metadata={"int64": True})
     extended: "DestinyPostGameCarnageReportExtendedData" = custom_field()
     player: "DestinyPlayer" = custom_field()
     score: "DestinyHistoricalStatsValue" = custom_field()
@@ -135,7 +135,7 @@ class DestinyHistoricalStatsValue(BaseModel):
         weighted: Weighted value of the stat if a weight greater than 1 has been assigned.
     """
 
-    activity_id: int = custom_field()
+    activity_id: int = custom_field(metadata={"int64": True})
     basic: "DestinyHistoricalStatsValuePair" = custom_field()
     pga: "DestinyHistoricalStatsValuePair" = custom_field()
     stat_id: str = custom_field()
@@ -299,7 +299,7 @@ class DestinyLeaderboardEntry(BaseModel):
         value: Value of the stat for this player
     """
 
-    character_id: int = custom_field()
+    character_id: int = custom_field(metadata={"int64": True})
     player: "DestinyPlayer" = custom_field()
     rank: int = custom_field()
     value: "DestinyHistoricalStatsValue" = custom_field()
@@ -316,8 +316,8 @@ class DestinyLeaderboardResults(BaseModel):
         focus_membership_id: Indicate the membership ID of the account that is the focal point of the provided leaderboards.
     """
 
-    focus_character_id: int = custom_field()
-    focus_membership_id: int = custom_field()
+    focus_character_id: int = custom_field(metadata={"int64": True})
+    focus_membership_id: int = custom_field(metadata={"int64": True})
 
 
 @custom_define()
@@ -440,7 +440,7 @@ class DestinyHistoricalStatsPerCharacter(BaseModel):
         results: _No description given by bungie._
     """
 
-    character_id: int = custom_field()
+    character_id: int = custom_field(metadata={"int64": True})
     deleted: bool = custom_field()
     merged: "DestinyHistoricalStatsByPeriod" = custom_field()
     results: dict[str, "DestinyHistoricalStatsByPeriod"] = custom_field(

@@ -1702,7 +1702,7 @@ class DestinyVendorItemQuantity(BaseModel):
 
     has_conditional_visibility: bool = custom_field()
     item_hash: int = custom_field()
-    item_instance_id: int = custom_field()
+    item_instance_id: int = custom_field(metadata={"int64": True})
     quantity: int = custom_field()
     manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
@@ -3886,7 +3886,7 @@ class DestinyProgressionRewardItemQuantity(BaseModel):
     claim_unlock_display_strings: list[str] = custom_field(metadata={"type": """list[str]"""})
     has_conditional_visibility: bool = custom_field()
     item_hash: int = custom_field()
-    item_instance_id: int = custom_field()
+    item_instance_id: int = custom_field(metadata={"int64": True})
     quantity: int = custom_field()
     rewarded_at_progression_level: int = custom_field()
     ui_display_style: str = custom_field()

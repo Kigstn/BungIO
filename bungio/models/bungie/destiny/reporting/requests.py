@@ -22,6 +22,6 @@ class DestinyReportOffensePgcrRequest(BaseModel):
         reason_hashes: If applicable, provide a more specific reason(s) within the general category of problems provided by the reasonHash. This is also an identifier for a reason. All reasonHashes provided must be children of at least one the reasonCategoryHashes provided.
     """
 
-    offending_character_id: int = custom_field()
+    offending_character_id: int = custom_field(metadata={"int64": True})
     reason_category_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     reason_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})

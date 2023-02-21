@@ -22,5 +22,5 @@ class EntityActionResult(BaseModel):
         result: _No description given by bungie._
     """
 
-    entity_id: int = custom_field()
+    entity_id: int = custom_field(metadata={"int64": True})
     result: Union["PlatformErrorCodes", int] = custom_field(converter=enum_converter("PlatformErrorCodes"))

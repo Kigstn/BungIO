@@ -134,7 +134,7 @@ class DestinyProfileUserInfoCard(BaseModel, DestinyUserMixin):
     is_cross_save_primary: bool = custom_field()
     is_overridden: bool = custom_field()
     is_public: bool = custom_field()
-    membership_id: int = custom_field()
+    membership_id: int = custom_field(metadata={"int64": True})
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
     platform_silver: "DestinyPlatformSilverComponent" = custom_field()
     supplemental_display_name: str = custom_field()
@@ -294,7 +294,7 @@ class DestinyItemResponse(BaseModel):
         talent_grid: Information about the talent grid attached to the item. Talent nodes can provide a variety of benefits and abilities, and in Destiny 2 are used almost exclusively for the character's "Builds". COMPONENT TYPE: ItemTalentGrids
     """
 
-    character_id: int = custom_field()
+    character_id: int = custom_field(metadata={"int64": True})
     instance: "SingleComponentResponseOfDestinyItemInstanceComponent" = custom_field()
     item: "SingleComponentResponseOfDestinyItemComponent" = custom_field()
     objectives: "SingleComponentResponseOfDestinyItemObjectivesComponent" = custom_field()

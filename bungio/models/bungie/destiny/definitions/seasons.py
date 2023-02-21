@@ -188,7 +188,7 @@ class DestinyEventCardDefinition(ManifestModel, HashObject):
 
     color: "DestinyColor" = custom_field()
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    end_time: int = custom_field()
+    end_time: int = custom_field(metadata={"int64": True})
     images: "DestinyEventCardImages" = custom_field()
     index: int = custom_field()
     link_redirect_path: str = custom_field()

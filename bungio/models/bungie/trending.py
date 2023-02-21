@@ -245,9 +245,9 @@ class TrendingEntryCommunityCreation(BaseModel):
     """
 
     author: str = custom_field()
-    author_membership_id: int = custom_field()
+    author_membership_id: int = custom_field(metadata={"int64": True})
     body: str = custom_field()
     media: str = custom_field()
-    post_id: int = custom_field()
+    post_id: int = custom_field(metadata={"int64": True})
     title: str = custom_field()
     upvotes: int = custom_field()

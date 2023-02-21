@@ -129,7 +129,7 @@ class Application(BaseModel):
     origin: str = custom_field()
     override_authorize_view_name: str = custom_field()
     redirect_url: str = custom_field()
-    scope: int = custom_field()
+    scope: int = custom_field(metadata={"int64": True})
     status: Union["ApplicationStatus", int] = custom_field(converter=enum_converter("ApplicationStatus"))
     status_changed: datetime = custom_field()
     team: list["ApplicationDeveloper"] = custom_field(metadata={"type": """list[ApplicationDeveloper]"""})

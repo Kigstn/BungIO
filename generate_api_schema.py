@@ -10,7 +10,7 @@ import requests
 
 from bungio.definitions import ROOT_DIR
 
-Typing = namedtuple("Typing", "name manifest enum_type")
+Typing = namedtuple("Typing", "name manifest enum_type int64")
 
 mixin_params = {
     "DestinyCharacterMixin": [
@@ -332,7 +332,7 @@ def generate_function(
                 clean_arg_type = clean_arg_type.removesuffix("]").removeprefix("list[")
                 is_list = True
 
-            if "Union[" in arg_type:
+            if "Union[" in arg_type and "Union[int, str]" not in arg_type:
                 clean_arg_type = clean_arg_type.removesuffix(", int]").removeprefix("Union[")
 
             if any(clean_arg_type in imports for imports in file_imports):
@@ -606,6 +606,7 @@ def convert_to_typing(
     arg_type = []
     is_list = False
     manifest_name = None
+    is_int64 = False
 
     if new_data := data.get("allOf", None):
         assert isinstance(new_data, list)
@@ -642,7 +643,7 @@ def convert_to_typing(
             enum_type=enum_type,
             return_enum_as_union=return_enum_as_union,
         )
-        return Typing(f"""dict[{res.name}, {data_type.name}]""", data_type.manifest, None)
+        return Typing(f"""dict[{res.name}, {data_type.name}]""", data_type.manifest, None, is_int64)
 
     if new_data := data.get("$ref", None):
         if return_class_names:
@@ -670,9 +671,9 @@ def convert_to_typing(
             except ModuleNotFoundError:
                 import_name = "dict"
 
-            return Typing(import_name, None, enum_type)
+            return Typing(import_name, None, enum_type, is_int64)
         else:
-            return Typing("Any", None, enum_type)
+            return Typing("Any", None, enum_type, is_int64)
 
     if new_data := data.get("x-enum-reference", None):
         ref_arg_type = convert_to_typing(
@@ -711,8 +712,11 @@ def convert_to_typing(
             arg_format = data["format"]
 
         match arg_format:
-            case "int16" | "int32" | "int64" | "byte" | "uint32":
+            case "int16" | "int32" | "byte" | "uint32":
                 arg_type.append("int")
+            case "int64":
+                arg_type.append("int")
+                is_int64 = True
             case "double" | "float":
                 arg_type.append("float")
             case "string":
@@ -747,7 +751,7 @@ def convert_to_typing(
         return_text = f"""Union[{", ".join(arg_type)}]"""
     if is_list:
         return_text = f"list[{return_text}]"
-    return Typing(return_text, manifest_name, enum_type)
+    return Typing(return_text, manifest_name, enum_type, is_int64)
 
 
 def capital_case_to_snake_case(string: str) -> str:
@@ -978,6 +982,7 @@ class {model["name"]}(BaseEnum):"""
             data["param_type"] = param_type.name
             data["enum_type"] = param_type.enum_type
             data["description"] = clean_desc(data)
+            data["int64"] = param_type.int64
 
             # write the manifest data as a new attr
             if param_type.manifest:
@@ -987,6 +992,7 @@ class {model["name"]}(BaseEnum):"""
                     "default": "default=None",
                     "enum_type": None,
                     "description": f"Manifest information for `{capital_case_to_snake_case(name)}`",
+                    "int64": False,
                 }
                 properties[new_name] = new_data
 
@@ -1065,7 +1071,12 @@ class {model_name}({"BaseModel" if "x-mobile-manifest-name" not in model else "M
             elif "list" in data["param_type"] or "dict" in data["param_type"]:
                 list_type = data["param_type"].replace('"', "")
                 list_type = re.sub(r"Union\[ *(.+), int\]", r"\1", list_type)
-                field_extras.append(f"""metadata={{"type": \"\"\"{list_type}\"\"\"}}""")
+                field_extras.append(
+                    f"""metadata={{"type": \"\"\"{list_type}\"\"\"{', "int64": True' if data["int64"] else ""}}}"""
+                )
+
+            if data["int64"]:
+                field_extras.append(f"""metadata={{"int64": True}}""")
 
             if default_val := data.get("default", None):
                 field_extras.append(default_val)

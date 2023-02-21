@@ -201,7 +201,7 @@ class DestinyMilestoneQuestRewardItem(BaseModel):
 
     has_conditional_visibility: bool = custom_field()
     item_hash: int = custom_field()
-    item_instance_id: int = custom_field()
+    item_instance_id: int = custom_field(metadata={"int64": True})
     quantity: int = custom_field()
     vendor_hash: int = custom_field()
     vendor_item_index: int = custom_field()

@@ -40,8 +40,8 @@ class AwaPermissionRequested(BaseModel):
         type: Type of advanced write action.
     """
 
-    affected_item_id: int = custom_field()
-    character_id: int = custom_field()
+    affected_item_id: int = custom_field(metadata={"int64": True})
+    character_id: int = custom_field(metadata={"int64": True})
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
     type: Union["AwaType", int] = custom_field(converter=enum_converter("AwaType"))
 

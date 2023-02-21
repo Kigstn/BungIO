@@ -44,8 +44,8 @@ class DestinyItemTransferRequest(BaseModel):
         manifest_item_reference_hash: Manifest information for `item_reference_hash`
     """
 
-    character_id: int = custom_field()
-    item_id: int = custom_field()
+    character_id: int = custom_field(metadata={"int64": True})
+    item_id: int = custom_field(metadata={"int64": True})
     item_reference_hash: int = custom_field()
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
     stack_size: int = custom_field()
