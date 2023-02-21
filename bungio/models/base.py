@@ -461,7 +461,7 @@ class BaseModel(ClientMixin):
             split = string.split("_")
             return "".join((split[0], *(s.capitalize() for s in split[1:])))
 
-    def to_dict(self) -> dict:
+    def to_dict(self, _return_to_bungie_case: bool = True) -> dict:
         """
         Convert the model into a dict representation bungie accepts
 
@@ -476,6 +476,8 @@ class BaseModel(ClientMixin):
                 continue
 
             value = getattr(self, name)
+            if _return_to_bungie_case:
+                name = self._convert_to_bungie_case(name)
 
             if inspect.ismethod(value) or inspect.isfunction(value):
                 continue

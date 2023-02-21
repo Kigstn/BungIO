@@ -190,5 +190,7 @@ class UserRouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.search_by_global_name_post(page=page, auth=auth, **data.to_dict())
+        response = await self._client.http.search_by_global_name_post(
+            page=page, auth=auth, **data.to_dict(_return_to_bungie_case=False)
+        )
         return await UserSearchResponse.from_dict(data=response, client=self._client, page=page, auth=auth)

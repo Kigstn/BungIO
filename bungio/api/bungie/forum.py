@@ -333,7 +333,9 @@ class ForumRouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.get_recruitment_thread_summaries(auth=auth, **data.to_dict())
+        response = await self._client.http.get_recruitment_thread_summaries(
+            auth=auth, **data.to_dict(_return_to_bungie_case=False)
+        )
         return [
             await ForumRecruitmentDetail.from_dict(data=value, client=self._client, auth=auth)
             for value in response["Response"]

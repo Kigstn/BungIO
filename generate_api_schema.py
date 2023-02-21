@@ -549,7 +549,7 @@ def generate_function(
         for param in params:
             request_params.append(f"""{param["name"]}={param["format"].format(name=param["name"])}""")
         if body:
-            request_params.append("**data.to_dict()")
+            request_params.append("**data.to_dict(_return_to_bungie_case=False)")
 
         text += f"""
         response = await self._client.http.{func_name}({", ".join(request_params)})

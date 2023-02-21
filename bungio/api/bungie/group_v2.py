@@ -135,7 +135,7 @@ class GroupV2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.group_search(auth=auth, **data.to_dict())
+        response = await self._client.http.group_search(auth=auth, **data.to_dict(_return_to_bungie_case=False))
         return await GroupSearchResponse.from_dict(data=response, client=self._client, auth=auth)
 
     async def get_group(self, group_id: int, auth: Optional[AuthData] = None) -> GroupResponse:
@@ -189,7 +189,7 @@ class GroupV2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.get_group_by_name_v2(auth=auth, **data.to_dict())
+        response = await self._client.http.get_group_by_name_v2(auth=auth, **data.to_dict(_return_to_bungie_case=False))
         return await GroupResponse.from_dict(data=response, client=self._client, auth=auth)
 
     async def get_group_optional_conversations(
@@ -228,7 +228,9 @@ class GroupV2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.edit_group(group_id=group_id, auth=auth, **data.to_dict())
+        response = await self._client.http.edit_group(
+            group_id=group_id, auth=auth, **data.to_dict(_return_to_bungie_case=False)
+        )
         return response["Response"]
 
     async def edit_clan_banner(self, data: ClanBanner, group_id: int, auth: AuthData) -> int:
@@ -247,7 +249,9 @@ class GroupV2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.edit_clan_banner(group_id=group_id, auth=auth, **data.to_dict())
+        response = await self._client.http.edit_clan_banner(
+            group_id=group_id, auth=auth, **data.to_dict(_return_to_bungie_case=False)
+        )
         return response["Response"]
 
     async def edit_founder_options(self, data: GroupOptionsEditAction, group_id: int, auth: AuthData) -> int:
@@ -266,7 +270,9 @@ class GroupV2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.edit_founder_options(group_id=group_id, auth=auth, **data.to_dict())
+        response = await self._client.http.edit_founder_options(
+            group_id=group_id, auth=auth, **data.to_dict(_return_to_bungie_case=False)
+        )
         return response["Response"]
 
     async def add_optional_conversation(
@@ -287,7 +293,9 @@ class GroupV2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.add_optional_conversation(group_id=group_id, auth=auth, **data.to_dict())
+        response = await self._client.http.add_optional_conversation(
+            group_id=group_id, auth=auth, **data.to_dict(_return_to_bungie_case=False)
+        )
         return response["Response"]
 
     async def edit_optional_conversation(
@@ -310,7 +318,7 @@ class GroupV2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.edit_optional_conversation(
-            conversation_id=conversation_id, group_id=group_id, auth=auth, **data.to_dict()
+            conversation_id=conversation_id, group_id=group_id, auth=auth, **data.to_dict(_return_to_bungie_case=False)
         )
         return response["Response"]
 
@@ -473,7 +481,7 @@ class GroupV2RouteInterface(ClientMixin):
             membership_id=membership_id,
             membership_type=getattr(membership_type, "value", membership_type),
             auth=auth,
-            **data.to_dict()
+            **data.to_dict(_return_to_bungie_case=False)
         )
         return response["Response"]
 
@@ -625,7 +633,9 @@ class GroupV2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.approve_all_pending(group_id=group_id, auth=auth, **data.to_dict())
+        response = await self._client.http.approve_all_pending(
+            group_id=group_id, auth=auth, **data.to_dict(_return_to_bungie_case=False)
+        )
         return [
             await EntityActionResult.from_dict(data=value, client=self._client, group_id=group_id, auth=auth)
             for value in response["Response"]
@@ -649,7 +659,9 @@ class GroupV2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.deny_all_pending(group_id=group_id, auth=auth, **data.to_dict())
+        response = await self._client.http.deny_all_pending(
+            group_id=group_id, auth=auth, **data.to_dict(_return_to_bungie_case=False)
+        )
         return [
             await EntityActionResult.from_dict(data=value, client=self._client, group_id=group_id, auth=auth)
             for value in response["Response"]
@@ -673,7 +685,9 @@ class GroupV2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.approve_pending_for_list(group_id=group_id, auth=auth, **data.to_dict())
+        response = await self._client.http.approve_pending_for_list(
+            group_id=group_id, auth=auth, **data.to_dict(_return_to_bungie_case=False)
+        )
         return [
             await EntityActionResult.from_dict(data=value, client=self._client, group_id=group_id, auth=auth)
             for value in response["Response"]
@@ -709,7 +723,7 @@ class GroupV2RouteInterface(ClientMixin):
             membership_id=membership_id,
             membership_type=getattr(membership_type, "value", membership_type),
             auth=auth,
-            **data.to_dict()
+            **data.to_dict(_return_to_bungie_case=False)
         )
         return response["Response"]
 
@@ -731,7 +745,9 @@ class GroupV2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.deny_pending_for_list(group_id=group_id, auth=auth, **data.to_dict())
+        response = await self._client.http.deny_pending_for_list(
+            group_id=group_id, auth=auth, **data.to_dict(_return_to_bungie_case=False)
+        )
         return [
             await EntityActionResult.from_dict(data=value, client=self._client, group_id=group_id, auth=auth)
             for value in response["Response"]
@@ -880,7 +896,7 @@ class GroupV2RouteInterface(ClientMixin):
             membership_id=membership_id,
             membership_type=getattr(membership_type, "value", membership_type),
             auth=auth,
-            **data.to_dict()
+            **data.to_dict(_return_to_bungie_case=False)
         )
         return await GroupApplicationResponse.from_dict(
             data=response,

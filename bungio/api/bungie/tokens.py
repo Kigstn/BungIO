@@ -50,7 +50,7 @@ class TokensRouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.claim_partner_offer(auth=auth, **data.to_dict())
+        response = await self._client.http.claim_partner_offer(auth=auth, **data.to_dict(_return_to_bungie_case=False))
         return response["Response"]
 
     async def apply_missing_partner_offers_without_claim(

@@ -114,7 +114,9 @@ class Destiny2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.search_destiny_player_by_bungie_name(
-            membership_type=getattr(membership_type, "value", membership_type), auth=auth, **data.to_dict()
+            membership_type=getattr(membership_type, "value", membership_type),
+            auth=auth,
+            **data.to_dict(_return_to_bungie_case=False)
         )
         return [
             await UserInfoCard.from_dict(data=value, client=self._client, membership_type=membership_type, auth=auth)
@@ -463,7 +465,7 @@ class Destiny2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.transfer_item(auth=auth, **data.to_dict())
+        response = await self._client.http.transfer_item(auth=auth, **data.to_dict(_return_to_bungie_case=False))
         return response["Response"]
 
     async def pull_from_postmaster(self, data: DestinyPostmasterTransferRequest, auth: AuthData) -> int:
@@ -481,7 +483,7 @@ class Destiny2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.pull_from_postmaster(auth=auth, **data.to_dict())
+        response = await self._client.http.pull_from_postmaster(auth=auth, **data.to_dict(_return_to_bungie_case=False))
         return response["Response"]
 
     async def equip_item(self, data: DestinyItemActionRequest, auth: AuthData) -> int:
@@ -499,7 +501,7 @@ class Destiny2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.equip_item(auth=auth, **data.to_dict())
+        response = await self._client.http.equip_item(auth=auth, **data.to_dict(_return_to_bungie_case=False))
         return response["Response"]
 
     async def equip_items(self, data: DestinyItemSetActionRequest, auth: AuthData) -> DestinyEquipItemResults:
@@ -517,7 +519,7 @@ class Destiny2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.equip_items(auth=auth, **data.to_dict())
+        response = await self._client.http.equip_items(auth=auth, **data.to_dict(_return_to_bungie_case=False))
         return await DestinyEquipItemResults.from_dict(data=response, client=self._client, auth=auth)
 
     async def set_item_lock_state(self, data: DestinyItemStateRequest, auth: AuthData) -> int:
@@ -535,7 +537,7 @@ class Destiny2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.set_item_lock_state(auth=auth, **data.to_dict())
+        response = await self._client.http.set_item_lock_state(auth=auth, **data.to_dict(_return_to_bungie_case=False))
         return response["Response"]
 
     async def set_quest_tracked_state(self, data: DestinyItemStateRequest, auth: AuthData) -> int:
@@ -553,7 +555,9 @@ class Destiny2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.set_quest_tracked_state(auth=auth, **data.to_dict())
+        response = await self._client.http.set_quest_tracked_state(
+            auth=auth, **data.to_dict(_return_to_bungie_case=False)
+        )
         return response["Response"]
 
     async def insert_socket_plug(
@@ -573,7 +577,7 @@ class Destiny2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.insert_socket_plug(auth=auth, **data.to_dict())
+        response = await self._client.http.insert_socket_plug(auth=auth, **data.to_dict(_return_to_bungie_case=False))
         return await DestinyItemChangeResponse.from_dict(data=response, client=self._client, auth=auth)
 
     async def insert_socket_plug_free(
@@ -593,7 +597,9 @@ class Destiny2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.insert_socket_plug_free(auth=auth, **data.to_dict())
+        response = await self._client.http.insert_socket_plug_free(
+            auth=auth, **data.to_dict(_return_to_bungie_case=False)
+        )
         return await DestinyItemChangeResponse.from_dict(data=response, client=self._client, auth=auth)
 
     async def get_post_game_carnage_report(
@@ -634,7 +640,7 @@ class Destiny2RouteInterface(ClientMixin):
         """
 
         response = await self._client.http.report_offensive_post_game_carnage_report_player(
-            activity_id=activity_id, auth=auth, **data.to_dict()
+            activity_id=activity_id, auth=auth, **data.to_dict(_return_to_bungie_case=False)
         )
         return response["Response"]
 
@@ -1113,7 +1119,9 @@ class Destiny2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.awa_initialize_request(auth=auth, **data.to_dict())
+        response = await self._client.http.awa_initialize_request(
+            auth=auth, **data.to_dict(_return_to_bungie_case=False)
+        )
         return await AwaInitializeResponse.from_dict(data=response, client=self._client, auth=auth)
 
     async def awa_provide_authorization_result(self, data: AwaUserResponse, auth: Optional[AuthData] = None) -> int:
@@ -1128,7 +1136,9 @@ class Destiny2RouteInterface(ClientMixin):
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
         """
 
-        response = await self._client.http.awa_provide_authorization_result(auth=auth, **data.to_dict())
+        response = await self._client.http.awa_provide_authorization_result(
+            auth=auth, **data.to_dict(_return_to_bungie_case=False)
+        )
         return response["Response"]
 
     async def awa_get_action_token(self, correlation_id: str, auth: AuthData) -> AwaAuthorizationResult:
