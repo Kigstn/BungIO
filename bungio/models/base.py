@@ -291,9 +291,16 @@ class BaseModel(ClientMixin):
         prepared = {}
         for name, field in attrs.fields_dict(cls).items():
             if field.init and name != "_client":
-                # get the value we want. This also skips the manifest_... entries since they have no value and a default
-                value = data.get(cls._convert_to_bungie_case(name), attrs.NOTHING)
                 default = field.default
+
+                # get the value we want. This also skips the manifest_... entries since they have no value and a default
+                bungie_name = cls._convert_to_bungie_case(name)
+                value = data.get(bungie_name, attrs.NOTHING)
+
+                # bungie is veeery inconsistent and sometimes like to start their params with an upper case for some reason
+                # only sometimes tho :)
+                if value is attrs.NOTHING:
+                    value = data.get(f"{bungie_name[0].capitalize()}{bungie_name[1:]}", attrs.NOTHING)
 
                 # sadly bungie sometimes does not return info without marking that fact in the api specs
                 if value is attrs.NOTHING and default is attrs.NOTHING:
