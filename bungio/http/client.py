@@ -1,7 +1,7 @@
 import asyncio
 from asyncio import Semaphore
 from copy import copy
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 from urllib.parse import urlencode
 
 from aiohttp import (
@@ -32,6 +32,9 @@ from bungio.models.auth import AuthData
 from bungio.models.base import MISSING, ClientMixin, custom_define, custom_field
 from bungio.singleton import Singleton
 
+if TYPE_CHECKING:
+    from aiohttp_client_cache import CachedSession
+
 __all__ = ("HttpClient",)
 
 
@@ -52,7 +55,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
 
     ratelimiter: RateLimiter = custom_field(init=False, default=RateLimiter())
     semaphore: Semaphore = custom_field(init=False, default=Semaphore(100))
-    __session: ClientSession = custom_field(init=False, default=None)
+    _session: "CachedSession | ClientSession" = custom_field(init=False, default=None)
 
     _initialised: bool = custom_field(init=False, default=False)
 
@@ -63,9 +66,17 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
 
     def __del__(self):
         # clean up the session
-        if self.__session is not None:
+        if self._session is not None:
             # noinspection PyProtectedMember
-            self.__session._connector.close()
+            self._session._connector.close()
+
+    @property
+    def session(self) -> "CachedSession | ClientSession":
+        """Get the aiohttp session"""
+
+        if not self._session:
+            self.__setup_session()
+        return self._session
 
     async def request(self, route: Route) -> dict:
         """
@@ -141,9 +152,6 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
             The json response.
         """
 
-        if not self.__session:
-            self.__setup_session()
-
         route_with_params = f"{route}?{urlencode(params or {})}"
 
         for attempt in range(self._max_attempts):
@@ -152,7 +160,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
                 await self.ratelimiter.wait_for_token()
 
             try:
-                async with self.__session.request(
+                async with self.session.request(
                     method=method,
                     url=route,
                     headers=headers,
@@ -398,8 +406,8 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
         try:
             from aiohttp_client_cache import CachedSession
 
-            self.__session = CachedSession(
+            self._session = CachedSession(
                 json_serialize=self._client.json_dumps, cookie_jar=DummyCookieJar(), cache=self._client.cache
             )
         except ModuleNotFoundError:
-            self.__session = ClientSession(json_serialize=self._client.json_dumps, cookie_jar=DummyCookieJar())
+            self._session = ClientSession(json_serialize=self._client.json_dumps, cookie_jar=DummyCookieJar())
