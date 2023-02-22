@@ -64,6 +64,10 @@ class Route:
             if value is None or value is MISSING:
                 continue
 
+            # convert bools to string
+            if isinstance(value, bool):
+                value = str(value)
+
             # lists need to be comma seperated
             if isinstance(value, list):
                 value = ",".join([str(v) for v in value])
