@@ -3,7 +3,7 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Union
+from typing import TYPE_CHECKING, Optional, Union
 
 from bungio.models.base import BaseEnum, BaseModel, custom_define, custom_field
 from bungio.models.mixins import DestinyClanMixin, DestinyUserMixin
@@ -82,7 +82,15 @@ class FireteamSummary(BaseModel, DestinyClanMixin):
     """
     _No description given by bungie._
 
-    None
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
     Attributes:
         activity_type: _No description given by bungie._
         alternate_slot_count: _No description given by bungie._
@@ -97,12 +105,17 @@ class FireteamSummary(BaseModel, DestinyClanMixin):
         is_public: _No description given by bungie._
         is_valid: _No description given by bungie._
         locale: _No description given by bungie._
+        owner_current_guardian_rank_snapshot: _No description given by bungie._
+        owner_highest_lifetime_guardian_rank_snapshot: _No description given by bungie._
         owner_membership_id: _No description given by bungie._
+        owner_total_commendation_score_snapshot: _No description given by bungie._
         platform: _No description given by bungie._
         player_slot_count: _No description given by bungie._
         scheduled_time: _No description given by bungie._
         title: _No description given by bungie._
         title_before_moderation: _No description given by bungie._
+        manifest_owner_current_guardian_rank_snapshot: Manifest information for `owner_current_guardian_rank_snapshot`
+        manifest_owner_highest_lifetime_guardian_rank_snapshot: Manifest information for `owner_highest_lifetime_guardian_rank_snapshot`
     """
 
     activity_type: int = custom_field()
@@ -118,12 +131,21 @@ class FireteamSummary(BaseModel, DestinyClanMixin):
     is_public: bool = custom_field()
     is_valid: bool = custom_field()
     locale: str = custom_field()
+    owner_current_guardian_rank_snapshot: int = custom_field()
+    owner_highest_lifetime_guardian_rank_snapshot: int = custom_field()
     owner_membership_id: int = custom_field(metadata={"int64": True})
+    owner_total_commendation_score_snapshot: int = custom_field()
     platform: Union["FireteamPlatform", int] = custom_field(converter=enum_converter("FireteamPlatform"))
     player_slot_count: int = custom_field()
     scheduled_time: datetime = custom_field()
     title: str = custom_field()
     title_before_moderation: str = custom_field()
+    manifest_owner_current_guardian_rank_snapshot: Optional[dict] = custom_field(
+        metadata={"type": """Optional[dict]"""}, default=None
+    )
+    manifest_owner_highest_lifetime_guardian_rank_snapshot: Optional[dict] = custom_field(
+        metadata={"type": """Optional[dict]"""}, default=None
+    )
 
 
 @custom_define()

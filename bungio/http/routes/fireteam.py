@@ -43,6 +43,7 @@ class FireteamRouteHttpRequests:
         public_only: int,
         slot_filter: int,
         auth: AuthData,
+        exclude_immediate: Optional[bool] = None,
         lang_filter: Optional[str] = None,
         *args,
         **kwargs,
@@ -62,6 +63,7 @@ class FireteamRouteHttpRequests:
             public_only: Determines public/private filtering.
             slot_filter: Filters based on available slots
             auth: Authentication information.
+            exclude_immediate: If you wish the result to exclude immediate fireteams, set this to true. Immediate-only can be forced using the dateRange enum.
             lang_filter: An optional language filter.
 
         Raises:
@@ -82,6 +84,7 @@ class FireteamRouteHttpRequests:
                 path=f"/Fireteam/Clan/{group_id}/Available/{platform}/{activity_type}/{date_range}/{slot_filter}/{public_only}/{page}/",
                 method="GET",
                 auth=auth,
+                exclude_immediate=exclude_immediate,
                 lang_filter=lang_filter,
             )
         )
@@ -94,6 +97,7 @@ class FireteamRouteHttpRequests:
         platform: int,
         slot_filter: int,
         auth: AuthData,
+        exclude_immediate: Optional[bool] = None,
         lang_filter: Optional[str] = None,
         *args,
         **kwargs,
@@ -111,6 +115,7 @@ class FireteamRouteHttpRequests:
             platform: The platform filter.
             slot_filter: Filters based on available slots
             auth: Authentication information.
+            exclude_immediate: If you wish the result to exclude immediate fireteams, set this to true. Immediate-only can be forced using the dateRange enum.
             lang_filter: An optional language filter.
 
         Raises:
@@ -131,6 +136,7 @@ class FireteamRouteHttpRequests:
                 path=f"/Fireteam/Search/Available/{platform}/{activity_type}/{date_range}/{slot_filter}/{page}/",
                 method="GET",
                 auth=auth,
+                exclude_immediate=exclude_immediate,
                 lang_filter=lang_filter,
             )
         )

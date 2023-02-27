@@ -522,6 +522,80 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.equip_items(auth=auth, **data.to_dict(_return_to_bungie_case=False))
         return await DestinyEquipItemResults.from_dict(data=response, client=self._client, auth=auth)
 
+    async def equip_loadout(self, data: dict, auth: AuthData) -> int:
+        """
+        Equip a loadout. You must have a valid Destiny Account, and either be in a social space, in orbit, or offline.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: MoveEquipDestinyItems
+
+        Args:
+            data: The required data for this request.
+            auth: Authentication information.
+
+        Returns:
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
+        """
+
+        response = await self._client.http.equip_loadout(auth=auth, **data.to_dict(_return_to_bungie_case=False))
+        return response["Response"]
+
+    async def snapshot_loadout(self, data: dict, auth: AuthData) -> int:
+        """
+        Snapshot a loadout with the currently equipped items.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: MoveEquipDestinyItems
+
+        Args:
+            data: The required data for this request.
+            auth: Authentication information.
+
+        Returns:
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
+        """
+
+        response = await self._client.http.snapshot_loadout(auth=auth, **data.to_dict(_return_to_bungie_case=False))
+        return response["Response"]
+
+    async def update_loadout_identifiers(self, data: dict, auth: AuthData) -> int:
+        """
+        Update the color, icon, and name of a loadout.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: MoveEquipDestinyItems
+
+        Args:
+            data: The required data for this request.
+            auth: Authentication information.
+
+        Returns:
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
+        """
+
+        response = await self._client.http.update_loadout_identifiers(
+            auth=auth, **data.to_dict(_return_to_bungie_case=False)
+        )
+        return response["Response"]
+
+    async def clear_loadout(self, data: dict, auth: AuthData) -> int:
+        """
+        Clear the identifiers and items of a loadout.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: MoveEquipDestinyItems
+
+        Args:
+            data: The required data for this request.
+            auth: Authentication information.
+
+        Returns:
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
+        """
+
+        response = await self._client.http.clear_loadout(auth=auth, **data.to_dict(_return_to_bungie_case=False))
+        return response["Response"]
+
     async def set_item_lock_state(self, data: DestinyItemStateRequest, auth: AuthData) -> int:
         """
         Set the Lock State for an instanced item. You must have a valid Destiny Account.

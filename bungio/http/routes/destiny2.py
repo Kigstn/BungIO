@@ -651,6 +651,188 @@ class Destiny2RouteHttpRequests:
             Route(path=f"/Destiny2/Actions/Items/EquipItems/", method="POST", data=data, auth=auth)
         )
 
+    async def equip_loadout(
+        self, loadout_index: int, character_id: int, membership_type: Union[Any, int], auth: AuthData, *args, **kwargs
+    ) -> dict:
+        """
+        Equip a loadout. You must have a valid Destiny Account, and either be in a social space, in orbit, or offline.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: MoveEquipDestinyItems
+
+        Args:
+            loadout_index: The index of the loadout for this action request.
+            character_id: _No description given by bungie._
+            membership_type: _No description given by bungie._
+            auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
+        Returns:
+            The json response
+        """
+
+        data = {
+            "loadoutIndex": loadout_index,
+            "characterId": character_id,
+            "membershipType": membership_type,
+        }
+
+        return await self.request(
+            Route(path=f"/Destiny2/Actions/Loadouts/EquipLoadout/", method="POST", data=data, auth=auth)
+        )
+
+    async def snapshot_loadout(
+        self,
+        color_hash: int,
+        icon_hash: int,
+        name_hash: int,
+        loadout_index: int,
+        character_id: int,
+        membership_type: Union[Any, int],
+        auth: AuthData,
+        *args,
+        **kwargs,
+    ) -> dict:
+        """
+        Snapshot a loadout with the currently equipped items.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: MoveEquipDestinyItems
+
+        Args:
+            color_hash: _No description given by bungie._
+            icon_hash: _No description given by bungie._
+            name_hash: _No description given by bungie._
+            loadout_index: The index of the loadout for this action request.
+            character_id: _No description given by bungie._
+            membership_type: _No description given by bungie._
+            auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
+        Returns:
+            The json response
+        """
+
+        data = {
+            "colorHash": color_hash,
+            "iconHash": icon_hash,
+            "nameHash": name_hash,
+            "loadoutIndex": loadout_index,
+            "characterId": character_id,
+            "membershipType": membership_type,
+        }
+
+        return await self.request(
+            Route(path=f"/Destiny2/Actions/Loadouts/SnapshotLoadout/", method="POST", data=data, auth=auth)
+        )
+
+    async def update_loadout_identifiers(
+        self,
+        color_hash: int,
+        icon_hash: int,
+        name_hash: int,
+        loadout_index: int,
+        character_id: int,
+        membership_type: Union[Any, int],
+        auth: AuthData,
+        *args,
+        **kwargs,
+    ) -> dict:
+        """
+        Update the color, icon, and name of a loadout.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: MoveEquipDestinyItems
+
+        Args:
+            color_hash: _No description given by bungie._
+            icon_hash: _No description given by bungie._
+            name_hash: _No description given by bungie._
+            loadout_index: The index of the loadout for this action request.
+            character_id: _No description given by bungie._
+            membership_type: _No description given by bungie._
+            auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
+        Returns:
+            The json response
+        """
+
+        data = {
+            "colorHash": color_hash,
+            "iconHash": icon_hash,
+            "nameHash": name_hash,
+            "loadoutIndex": loadout_index,
+            "characterId": character_id,
+            "membershipType": membership_type,
+        }
+
+        return await self.request(
+            Route(path=f"/Destiny2/Actions/Loadouts/UpdateLoadoutIdentifiers/", method="POST", data=data, auth=auth)
+        )
+
+    async def clear_loadout(
+        self, loadout_index: int, character_id: int, membership_type: Union[Any, int], auth: AuthData, *args, **kwargs
+    ) -> dict:
+        """
+        Clear the identifiers and items of a loadout.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: MoveEquipDestinyItems
+
+        Args:
+            loadout_index: The index of the loadout for this action request.
+            character_id: _No description given by bungie._
+            membership_type: _No description given by bungie._
+            auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
+        Returns:
+            The json response
+        """
+
+        data = {
+            "loadoutIndex": loadout_index,
+            "characterId": character_id,
+            "membershipType": membership_type,
+        }
+
+        return await self.request(
+            Route(path=f"/Destiny2/Actions/Loadouts/ClearLoadout/", method="POST", data=data, auth=auth)
+        )
+
     async def set_item_lock_state(
         self,
         state: bool,

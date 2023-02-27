@@ -136,10 +136,13 @@ class Destiny2CoreSettings(BaseModel):
         current_seasonal_artifact_hash: _No description given by bungie._
         exotic_catalysts_root_node_hash: _No description given by bungie._
         future_season_hashes: _No description given by bungie._
+        guardian_rank_constants_hash: _No description given by bungie._
+        guardian_ranks_root_node_hash: _No description given by bungie._
         insert_plug_free_blocked_socket_type_hashes: _No description given by bungie._
         insert_plug_free_protected_plug_item_hashes: _No description given by bungie._
         legacy_seals_root_node_hash: _No description given by bungie._
         legacy_triumphs_root_node_hash: _No description given by bungie._
+        loadout_constants_hash: _No description given by bungie._
         lore_root_node_hash: _No description given by bungie._
         medals_root_node: _No description given by bungie._
         medals_root_node_hash: _No description given by bungie._
@@ -156,8 +159,11 @@ class Destiny2CoreSettings(BaseModel):
         manifest_current_season_hash: Manifest information for `current_season_hash`
         manifest_current_seasonal_artifact_hash: Manifest information for `current_seasonal_artifact_hash`
         manifest_exotic_catalysts_root_node_hash: Manifest information for `exotic_catalysts_root_node_hash`
+        manifest_guardian_rank_constants_hash: Manifest information for `guardian_rank_constants_hash`
+        manifest_guardian_ranks_root_node_hash: Manifest information for `guardian_ranks_root_node_hash`
         manifest_legacy_seals_root_node_hash: Manifest information for `legacy_seals_root_node_hash`
         manifest_legacy_triumphs_root_node_hash: Manifest information for `legacy_triumphs_root_node_hash`
+        manifest_loadout_constants_hash: Manifest information for `loadout_constants_hash`
         manifest_lore_root_node_hash: Manifest information for `lore_root_node_hash`
         manifest_medals_root_node: Manifest information for `medals_root_node`
         manifest_medals_root_node_hash: Manifest information for `medals_root_node_hash`
@@ -179,10 +185,13 @@ class Destiny2CoreSettings(BaseModel):
     current_seasonal_artifact_hash: int = custom_field()
     exotic_catalysts_root_node_hash: int = custom_field()
     future_season_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    guardian_rank_constants_hash: int = custom_field()
+    guardian_ranks_root_node_hash: int = custom_field()
     insert_plug_free_blocked_socket_type_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     insert_plug_free_protected_plug_item_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     legacy_seals_root_node_hash: int = custom_field()
     legacy_triumphs_root_node_hash: int = custom_field()
+    loadout_constants_hash: int = custom_field()
     lore_root_node_hash: int = custom_field()
     medals_root_node: int = custom_field()
     medals_root_node_hash: int = custom_field()
@@ -199,8 +208,15 @@ class Destiny2CoreSettings(BaseModel):
     manifest_current_season_hash: Optional["DestinySeasonDefinition"] = custom_field(default=None)
     manifest_current_seasonal_artifact_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
     manifest_exotic_catalysts_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
+    manifest_guardian_rank_constants_hash: Optional[dict] = custom_field(
+        metadata={"type": """Optional[dict]"""}, default=None
+    )
+    manifest_guardian_ranks_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_legacy_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_legacy_triumphs_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
+    manifest_loadout_constants_hash: Optional[dict] = custom_field(
+        metadata={"type": """Optional[dict]"""}, default=None
+    )
     manifest_lore_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_medals_root_node: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_medals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)

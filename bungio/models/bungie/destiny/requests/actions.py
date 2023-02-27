@@ -105,6 +105,46 @@ class DestinyItemSetActionRequest(BaseModel):
 
 
 @custom_define()
+class DestinyLoadoutActionRequest(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        character_id: _No description given by bungie._
+        loadout_index: The index of the loadout for this action request.
+        membership_type: _No description given by bungie._
+    """
+
+    character_id: int = custom_field(metadata={"int64": True})
+    loadout_index: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
+
+
+@custom_define()
+class DestinyLoadoutUpdateActionRequest(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        character_id: _No description given by bungie._
+        color_hash: _No description given by bungie._
+        icon_hash: _No description given by bungie._
+        loadout_index: The index of the loadout for this action request.
+        membership_type: _No description given by bungie._
+        name_hash: _No description given by bungie._
+    """
+
+    character_id: int = custom_field(metadata={"int64": True})
+    color_hash: int = custom_field()
+    icon_hash: int = custom_field()
+    loadout_index: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
+    name_hash: int = custom_field()
+
+
+@custom_define()
 class DestinyItemStateRequest(BaseModel):
     """
     _No description given by bungie._

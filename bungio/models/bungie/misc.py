@@ -535,6 +535,23 @@ class SingleComponentResponseOfDestinyStringVariablesComponent(BaseModel):
 
 
 @custom_define()
+class SingleComponentResponseOfDestinySocialCommendationsComponent(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        data: _No description given by bungie._
+        disabled: If true, this component is disabled.
+        privacy: _No description given by bungie._
+    """
+
+    data: dict = custom_field(metadata={"type": """dict"""})
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
+
+
+@custom_define()
 class DictionaryComponentResponseOfint64AndDestinyCharacterComponent(BaseModel):
     """
     _No description given by bungie._
@@ -568,6 +585,23 @@ class DictionaryComponentResponseOfint64AndDestinyInventoryComponent(BaseModel):
     data: dict[int, "DestinyInventoryComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyInventoryComponent]"""}
     )
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
+
+
+@custom_define()
+class DictionaryComponentResponseOfint64AndDestinyLoadoutsComponent(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        data: _No description given by bungie._
+        disabled: If true, this component is disabled.
+        privacy: _No description given by bungie._
+    """
+
+    data: dict[int, dict] = custom_field(metadata={"type": """dict[int, dict]"""})
     disabled: bool = custom_field()
     privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
@@ -1132,6 +1166,23 @@ class SingleComponentResponseOfDestinyCharacterActivitiesComponent(BaseModel):
     """
 
     data: "DestinyCharacterActivitiesComponent" = custom_field()
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
+
+
+@custom_define()
+class SingleComponentResponseOfDestinyLoadoutsComponent(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        data: _No description given by bungie._
+        disabled: If true, this component is disabled.
+        privacy: _No description given by bungie._
+    """
+
+    data: dict = custom_field(metadata={"type": """dict"""})
     disabled: bool = custom_field()
     privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 

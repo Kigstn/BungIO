@@ -170,6 +170,7 @@ class DestinyProfileResponse(BaseModel):
         character_equipment: The character's equipped items, keyed by the Character's Id. COMPONENT TYPE: CharacterEquipment
         character_inventories: The character-level non-equipped inventory items, keyed by the Character's Id. COMPONENT TYPE: CharacterInventories
         character_kiosks: Items available from Kiosks that are available to a specific character as opposed to the account as a whole. It must be combined with data from the profileKiosks property to get a full picture of the character's available items to check out of a kiosk. This component returns information about what Kiosk items are available to you on a *Character* level. Usually, kiosk items will be earned for the entire Profile (all characters) at once. To find those, look in the profileKiosks property. COMPONENT TYPE: Kiosks
+        character_loadouts: The character loadouts, keyed by the Character's Id. COMPONENT TYPE: CharacterLoadouts
         character_plug_sets: When sockets refer to reusable Plug Sets (see DestinyPlugSetDefinition for more info), this is the set of plugs and their states, per character, that are character-scoped. This comes back with ItemSockets, as it is needed for a complete picture of the sockets on requested items. COMPONENT TYPE: ItemSockets
         character_presentation_nodes: COMPONENT TYPE: PresentationNodes
         character_progressions: Character-level progression data, keyed by the Character's Id. COMPONENT TYPE: CharacterProgressions
@@ -183,6 +184,7 @@ class DestinyProfileResponse(BaseModel):
         platform_silver: Silver quantities for any platform on which this Profile plays destiny.  COMPONENT TYPE: PlatformSilver
         profile: The basic information about the Destiny Profile (formerly "Account"). COMPONENT TYPE: Profiles
         profile_collectibles: COMPONENT TYPE: Collectibles
+        profile_commendations: COMPONENT TYPE: SocialCommendations
         profile_currencies: The profile-level currencies owned by the Destiny Profile. COMPONENT TYPE: ProfileCurrencies
         profile_inventory: The profile-level inventory of the Destiny Profile. COMPONENT TYPE: ProfileInventories
         profile_kiosks: Items available from Kiosks that are available Profile-wide (i.e. across all characters) This component returns information about what Kiosk items are available to you on a *Profile* level. It is theoretically possible for Kiosks to have items gated by specific Character as well. If you ever have those, you will find them on the characterKiosks property. COMPONENT TYPE: Kiosks
@@ -204,6 +206,7 @@ class DestinyProfileResponse(BaseModel):
     character_equipment: "DictionaryComponentResponseOfint64AndDestinyInventoryComponent" = custom_field()
     character_inventories: "DictionaryComponentResponseOfint64AndDestinyInventoryComponent" = custom_field()
     character_kiosks: "DictionaryComponentResponseOfint64AndDestinyKiosksComponent" = custom_field()
+    character_loadouts: dict = custom_field(metadata={"type": """dict"""})
     character_plug_sets: "DictionaryComponentResponseOfint64AndDestinyPlugSetsComponent" = custom_field()
     character_presentation_nodes: "DictionaryComponentResponseOfint64AndDestinyPresentationNodesComponent" = (
         custom_field()
@@ -221,6 +224,7 @@ class DestinyProfileResponse(BaseModel):
     platform_silver: "SingleComponentResponseOfDestinyPlatformSilverComponent" = custom_field()
     profile: "SingleComponentResponseOfDestinyProfileComponent" = custom_field()
     profile_collectibles: "SingleComponentResponseOfDestinyProfileCollectiblesComponent" = custom_field()
+    profile_commendations: dict = custom_field(metadata={"type": """dict"""})
     profile_currencies: "SingleComponentResponseOfDestinyInventoryComponent" = custom_field()
     profile_inventory: "SingleComponentResponseOfDestinyInventoryComponent" = custom_field()
     profile_kiosks: "SingleComponentResponseOfDestinyKiosksComponent" = custom_field()
@@ -250,6 +254,7 @@ class DestinyCharacterResponse(BaseModel):
         inventory: The character-level non-equipped inventory items. COMPONENT TYPE: CharacterInventories
         item_components: The set of components belonging to the player's instanced items. COMPONENT TYPE: [See inside the DestinyItemComponentSet contract for component types.]
         kiosks: Items available from Kiosks that are available to this specific character.  COMPONENT TYPE: Kiosks
+        loadouts: The loadouts available to the character. COMPONENT TYPE: CharacterLoadouts
         plug_sets: When sockets refer to reusable Plug Sets (see DestinyPlugSetDefinition for more info), this is the set of plugs and their states that are scoped to this character. This comes back with ItemSockets, as it is needed for a complete picture of the sockets on requested items. COMPONENT TYPE: ItemSockets
         presentation_nodes: COMPONENT TYPE: PresentationNodes
         progressions: Character progression data, including Milestones. COMPONENT TYPE: CharacterProgressions
@@ -266,6 +271,7 @@ class DestinyCharacterResponse(BaseModel):
     inventory: "SingleComponentResponseOfDestinyInventoryComponent" = custom_field()
     item_components: "DestinyItemComponentSetOfint64" = custom_field()
     kiosks: "SingleComponentResponseOfDestinyKiosksComponent" = custom_field()
+    loadouts: dict = custom_field(metadata={"type": """dict"""})
     plug_sets: "SingleComponentResponseOfDestinyPlugSetsComponent" = custom_field()
     presentation_nodes: "SingleComponentResponseOfDestinyPresentationNodesComponent" = custom_field()
     progressions: "SingleComponentResponseOfDestinyCharacterProgressionComponent" = custom_field()

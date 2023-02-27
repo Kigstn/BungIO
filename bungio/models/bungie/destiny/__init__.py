@@ -612,6 +612,8 @@ class DamageType(BaseEnum):
     """_No description given by bungie._ """
     STASIS = 6
     """_No description given by bungie._ """
+    STRAND = 7
+    """_No description given by bungie._ """
 
 
 class DestinyObjectiveUiStyle(BaseEnum):
@@ -822,6 +824,10 @@ class DestinyPresentationDisplayStyle(BaseEnum):
     """_No description given by bungie._ """
     RECORD = 4
     """_No description given by bungie._ """
+    SEASONAL_TRIUMPH = 5
+    """_No description given by bungie._ """
+    GUARDIAN_RANK = 6
+    """_No description given by bungie._ """
 
 
 class DestinyRecordValueStyle(BaseEnum):
@@ -863,6 +869,8 @@ class DestinyRecordToastStyle(BaseEnum):
     GILDED_TITLE_COMPLETE = 7
     """_No description given by bungie._ """
     CRAFTING_RECIPE_UNLOCKED = 8
+    """_No description given by bungie._ """
+    TOAST_GUARDIAN_RANK_DETAILS = 9
     """_No description given by bungie._ """
 
 
@@ -1177,6 +1185,8 @@ class DestinyComponentType(BaseEnum):
     """This will return info about activities that a user can see and gating on it, if you are the currently authenticated user or the user has elected to allow anonymous viewing of its progression info. Note that the data returned by this can be unfortunately problematic and relatively unreliable in some cases. We'll eventually work on making it more consistently reliable. """
     CHARACTER_EQUIPMENT = 205
     """This will return info about the equipped items on the character(s). Everyone can see this. """
+    CHARACTER_LOADOUTS = 206
+    """This will return info about the loadouts of the character(s). """
     ITEM_INSTANCES = 300
     """This will return basic info about instanced items - whether they can be equipped, their tracked status, and some info commonly needed in many places (current damage type, primary stat value, etc) """
     ITEM_OBJECTIVES = 301
@@ -1223,6 +1233,8 @@ class DestinyComponentType(BaseEnum):
     """Returns a mapping of localized string variable hashes to values, on a per-account or per-character basis. """
     CRAFTABLES = 1300
     """Returns summary status information about all "Craftables" aka crafting recipe items. """
+    SOCIAL_COMMENDATIONS = 1400
+    """Returns score values for all commendations and commendation nodes. """
 
 
 class DestinyPresentationNodeState(BaseFlagEnum):

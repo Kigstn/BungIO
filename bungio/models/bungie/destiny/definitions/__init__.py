@@ -2344,6 +2344,7 @@ class DestinyDamageTypeDefinition(ManifestModel, HashObject):
 
     None
     Attributes:
+        color: A color associated with the damage type. The displayProperties icon is tinted with a color close to this.
         display_properties: The description of the damage type, icon etc...
         enum_value: We have an enumeration for damage types for quick reference. This is the current definition's damage type enum value.
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
@@ -2353,6 +2354,7 @@ class DestinyDamageTypeDefinition(ManifestModel, HashObject):
         transparent_icon_path: A variant of the icon that is transparent and colorless.
     """
 
+    color: "DestinyColor" = custom_field()
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
     enum_value: Union["DamageType", int] = custom_field(converter=enum_converter("DamageType"))
     index: int = custom_field()

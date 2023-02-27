@@ -47,6 +47,7 @@ class FireteamRouteInterface(ClientMixin):
         public_only: Union[FireteamPublicSearchOption, int],
         slot_filter: Union[FireteamSlotSearch, int],
         auth: AuthData,
+        exclude_immediate: Optional[bool] = None,
         lang_filter: Optional[str] = None,
     ) -> SearchResultOfFireteamSummary:
         """
@@ -64,6 +65,7 @@ class FireteamRouteInterface(ClientMixin):
             public_only: Determines public/private filtering.
             slot_filter: Filters based on available slots
             auth: Authentication information.
+            exclude_immediate: If you wish the result to exclude immediate fireteams, set this to true. Immediate-only can be forced using the dateRange enum.
             lang_filter: An optional language filter.
 
         Returns:
@@ -79,6 +81,7 @@ class FireteamRouteInterface(ClientMixin):
             public_only=getattr(public_only, "value", public_only),
             slot_filter=getattr(slot_filter, "value", slot_filter),
             auth=auth,
+            exclude_immediate=exclude_immediate if exclude_immediate is not None else None,
             lang_filter=lang_filter if lang_filter is not None else None,
         )
         return await SearchResultOfFireteamSummary.from_dict(
@@ -92,6 +95,7 @@ class FireteamRouteInterface(ClientMixin):
             public_only=public_only,
             slot_filter=slot_filter,
             auth=auth,
+            exclude_immediate=exclude_immediate,
             lang_filter=lang_filter,
         )
 
@@ -103,6 +107,7 @@ class FireteamRouteInterface(ClientMixin):
         platform: Union[FireteamPlatform, int],
         slot_filter: Union[FireteamSlotSearch, int],
         auth: AuthData,
+        exclude_immediate: Optional[bool] = None,
         lang_filter: Optional[str] = None,
     ) -> SearchResultOfFireteamSummary:
         """
@@ -118,6 +123,7 @@ class FireteamRouteInterface(ClientMixin):
             platform: The platform filter.
             slot_filter: Filters based on available slots
             auth: Authentication information.
+            exclude_immediate: If you wish the result to exclude immediate fireteams, set this to true. Immediate-only can be forced using the dateRange enum.
             lang_filter: An optional language filter.
 
         Returns:
@@ -131,6 +137,7 @@ class FireteamRouteInterface(ClientMixin):
             platform=getattr(platform, "value", platform),
             slot_filter=getattr(slot_filter, "value", slot_filter),
             auth=auth,
+            exclude_immediate=exclude_immediate if exclude_immediate is not None else None,
             lang_filter=lang_filter if lang_filter is not None else None,
         )
         return await SearchResultOfFireteamSummary.from_dict(
@@ -142,6 +149,7 @@ class FireteamRouteInterface(ClientMixin):
             platform=platform,
             slot_filter=slot_filter,
             auth=auth,
+            exclude_immediate=exclude_immediate,
             lang_filter=lang_filter,
         )
 

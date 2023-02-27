@@ -160,6 +160,11 @@ from bungio.models.bungie.destiny.components.kiosks import (
     DestinyKioskItem,
     DestinyKiosksComponent,
 )
+from bungio.models.bungie.destiny.components.loadouts import (
+    DestinyLoadoutComponent,
+    DestinyLoadoutItemComponent,
+    DestinyLoadoutsComponent,
+)
 from bungio.models.bungie.destiny.components.metrics import (
     DestinyMetricComponent,
     DestinyMetricsComponent,
@@ -182,6 +187,9 @@ from bungio.models.bungie.destiny.components.records import (
     DestinyProfileRecordsComponent,
     DestinyRecordComponent,
     DestinyRecordsComponent,
+)
+from bungio.models.bungie.destiny.components.social import (
+    DestinySocialCommendationsComponent,
 )
 from bungio.models.bungie.destiny.components.stringvariables import (
     DestinyStringVariablesComponent,
@@ -375,6 +383,11 @@ from bungio.models.bungie.destiny.definitions.director import (
 from bungio.models.bungie.destiny.definitions.energytypes import (
     DestinyEnergyTypeDefinition,
 )
+from bungio.models.bungie.destiny.definitions.guardianranks import (
+    DestinyGuardianRankConstantsDefinition,
+    DestinyGuardianRankDefinition,
+    DestinyGuardianRankIconBackgroundsDefinition,
+)
 from bungio.models.bungie.destiny.definitions.items import (
     DestinyDerivedItemCategoryDefinition,
     DestinyDerivedItemDefinition,
@@ -385,6 +398,12 @@ from bungio.models.bungie.destiny.definitions.items import (
     DestinyItemTierTypeInfusionBlock,
     DestinyParentItemOverride,
     DestinyPlugRuleDefinition,
+)
+from bungio.models.bungie.destiny.definitions.loadouts import (
+    DestinyLoadoutColorDefinition,
+    DestinyLoadoutConstantsDefinition,
+    DestinyLoadoutIconDefinition,
+    DestinyLoadoutNameDefinition,
 )
 from bungio.models.bungie.destiny.definitions.lore import DestinyLoreDefinition
 from bungio.models.bungie.destiny.definitions.metrics import DestinyMetricDefinition
@@ -446,6 +465,10 @@ from bungio.models.bungie.destiny.definitions.seasons import (
     DestinySeasonPreviewDefinition,
     DestinySeasonPreviewImageDefinition,
 )
+from bungio.models.bungie.destiny.definitions.social import (
+    DestinySocialCommendationDefinition,
+    DestinySocialCommendationNodeDefinition,
+)
 from bungio.models.bungie.destiny.definitions.sockets import (
     DestinyInsertPlugActionDefinition,
     DestinyPlugSetDefinition,
@@ -455,10 +478,7 @@ from bungio.models.bungie.destiny.definitions.sockets import (
     DestinySocketTypeScalarMaterialRequirementEntry,
 )
 from bungio.models.bungie.destiny.definitions.sources import DestinyItemSourceDefinition
-from bungio.models.bungie.destiny.definitions.traits import (
-    DestinyTraitCategoryDefinition,
-    DestinyTraitDefinition,
-)
+from bungio.models.bungie.destiny.definitions.traits import DestinyTraitDefinition
 from bungio.models.bungie.destiny.definitions.vendors import (
     DestinyVendorLocationDefinition,
 )

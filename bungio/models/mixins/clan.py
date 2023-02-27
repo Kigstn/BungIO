@@ -456,6 +456,7 @@ class DestinyClanMixin(ClientMixin, FuzzyAttrFinder):
         public_only: Union["FireteamPublicSearchOption", int],
         slot_filter: Union["FireteamSlotSearch", int],
         auth: "AuthData",
+        exclude_immediate: bool,
         lang_filter: str,
     ) -> "SearchResultOfFireteamSummary":
         """
@@ -472,6 +473,7 @@ class DestinyClanMixin(ClientMixin, FuzzyAttrFinder):
             public_only: Determines public/private filtering.
             slot_filter: Filters based on available slots
             auth: Authentication information.
+            exclude_immediate: If you wish the result to exclude immediate fireteams, set this to true. Immediate-only can be forced using the dateRange enum.
             lang_filter: An optional language filter.
 
         Returns:
@@ -487,6 +489,7 @@ class DestinyClanMixin(ClientMixin, FuzzyAttrFinder):
             public_only=public_only,
             slot_filter=slot_filter,
             auth=auth,
+            exclude_immediate=exclude_immediate,
             lang_filter=lang_filter,
         )
 
