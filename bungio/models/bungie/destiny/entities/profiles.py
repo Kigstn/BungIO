@@ -12,6 +12,7 @@ if TYPE_CHECKING:
     from bungio.models import (
         DestinyEventCardDefinition,
         DestinyGameVersions,
+        DestinyGuardianRankDefinition,
         DestinySeasonDefinition,
         DestinyVendorReceipt,
         UserInfoCard,
@@ -75,8 +76,6 @@ class DestinyProfileComponent(BaseModel):
     user_info: "UserInfoCard" = custom_field()
     versions_owned: Union["DestinyGameVersions", int] = custom_field(converter=enum_converter("DestinyGameVersions"))
     manifest_active_event_card_hash: Optional["DestinyEventCardDefinition"] = custom_field(default=None)
-    manifest_current_guardian_rank: Optional[dict] = custom_field(metadata={"type": """Optional[dict]"""}, default=None)
+    manifest_current_guardian_rank: Optional["DestinyGuardianRankDefinition"] = custom_field(default=None)
     manifest_current_season_hash: Optional["DestinySeasonDefinition"] = custom_field(default=None)
-    manifest_lifetime_highest_guardian_rank: Optional[dict] = custom_field(
-        metadata={"type": """Optional[dict]"""}, default=None
-    )
+    manifest_lifetime_highest_guardian_rank: Optional["DestinyGuardianRankDefinition"] = custom_field(default=None)

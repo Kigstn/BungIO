@@ -34,6 +34,7 @@ if TYPE_CHECKING:
         DestinyItemStatsComponent,
         DestinyItemTalentGridComponent,
         DestinyKiosksComponent,
+        DestinyLoadoutsComponent,
         DestinyMetricsComponent,
         DestinyPlatformSilverComponent,
         DestinyPlugSetsComponent,
@@ -45,6 +46,7 @@ if TYPE_CHECKING:
         DestinyProfileTransitoryComponent,
         DestinyPublicVendorComponent,
         DestinyPublicVendorSaleItemComponent,
+        DestinySocialCommendationsComponent,
         DestinyStringVariablesComponent,
         DestinyVendorCategoriesComponent,
         DestinyVendorComponent,
@@ -546,7 +548,7 @@ class SingleComponentResponseOfDestinySocialCommendationsComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: dict = custom_field(metadata={"type": """dict"""})
+    data: "DestinySocialCommendationsComponent" = custom_field()
     disabled: bool = custom_field()
     privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
@@ -601,7 +603,9 @@ class DictionaryComponentResponseOfint64AndDestinyLoadoutsComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: dict[int, dict] = custom_field(metadata={"type": """dict[int, dict]"""})
+    data: dict[int, "DestinyLoadoutsComponent"] = custom_field(
+        metadata={"type": """dict[int, DestinyLoadoutsComponent]"""}
+    )
     disabled: bool = custom_field()
     privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
@@ -1182,7 +1186,7 @@ class SingleComponentResponseOfDestinyLoadoutsComponent(BaseModel):
         privacy: _No description given by bungie._
     """
 
-    data: dict = custom_field(metadata={"type": """dict"""})
+    data: "DestinyLoadoutsComponent" = custom_field()
     disabled: bool = custom_field()
     privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 

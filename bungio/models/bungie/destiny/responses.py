@@ -31,6 +31,7 @@ if TYPE_CHECKING:
         DictionaryComponentResponseOfint64AndDestinyCurrenciesComponent,
         DictionaryComponentResponseOfint64AndDestinyInventoryComponent,
         DictionaryComponentResponseOfint64AndDestinyKiosksComponent,
+        DictionaryComponentResponseOfint64AndDestinyLoadoutsComponent,
         DictionaryComponentResponseOfint64AndDestinyPlugSetsComponent,
         DictionaryComponentResponseOfint64AndDestinyPresentationNodesComponent,
         DictionaryComponentResponseOfint64AndDestinyStringVariablesComponent,
@@ -59,6 +60,7 @@ if TYPE_CHECKING:
         SingleComponentResponseOfDestinyItemStatsComponent,
         SingleComponentResponseOfDestinyItemTalentGridComponent,
         SingleComponentResponseOfDestinyKiosksComponent,
+        SingleComponentResponseOfDestinyLoadoutsComponent,
         SingleComponentResponseOfDestinyMetricsComponent,
         SingleComponentResponseOfDestinyPlatformSilverComponent,
         SingleComponentResponseOfDestinyPlugSetsComponent,
@@ -68,6 +70,7 @@ if TYPE_CHECKING:
         SingleComponentResponseOfDestinyProfileProgressionComponent,
         SingleComponentResponseOfDestinyProfileRecordsComponent,
         SingleComponentResponseOfDestinyProfileTransitoryComponent,
+        SingleComponentResponseOfDestinySocialCommendationsComponent,
         SingleComponentResponseOfDestinyStringVariablesComponent,
         SingleComponentResponseOfDestinyVendorCategoriesComponent,
         SingleComponentResponseOfDestinyVendorComponent,
@@ -206,7 +209,7 @@ class DestinyProfileResponse(BaseModel):
     character_equipment: "DictionaryComponentResponseOfint64AndDestinyInventoryComponent" = custom_field()
     character_inventories: "DictionaryComponentResponseOfint64AndDestinyInventoryComponent" = custom_field()
     character_kiosks: "DictionaryComponentResponseOfint64AndDestinyKiosksComponent" = custom_field()
-    character_loadouts: dict = custom_field(metadata={"type": """dict"""})
+    character_loadouts: "DictionaryComponentResponseOfint64AndDestinyLoadoutsComponent" = custom_field()
     character_plug_sets: "DictionaryComponentResponseOfint64AndDestinyPlugSetsComponent" = custom_field()
     character_presentation_nodes: "DictionaryComponentResponseOfint64AndDestinyPresentationNodesComponent" = (
         custom_field()
@@ -224,7 +227,7 @@ class DestinyProfileResponse(BaseModel):
     platform_silver: "SingleComponentResponseOfDestinyPlatformSilverComponent" = custom_field()
     profile: "SingleComponentResponseOfDestinyProfileComponent" = custom_field()
     profile_collectibles: "SingleComponentResponseOfDestinyProfileCollectiblesComponent" = custom_field()
-    profile_commendations: dict = custom_field(metadata={"type": """dict"""})
+    profile_commendations: "SingleComponentResponseOfDestinySocialCommendationsComponent" = custom_field()
     profile_currencies: "SingleComponentResponseOfDestinyInventoryComponent" = custom_field()
     profile_inventory: "SingleComponentResponseOfDestinyInventoryComponent" = custom_field()
     profile_kiosks: "SingleComponentResponseOfDestinyKiosksComponent" = custom_field()
@@ -271,7 +274,7 @@ class DestinyCharacterResponse(BaseModel):
     inventory: "SingleComponentResponseOfDestinyInventoryComponent" = custom_field()
     item_components: "DestinyItemComponentSetOfint64" = custom_field()
     kiosks: "SingleComponentResponseOfDestinyKiosksComponent" = custom_field()
-    loadouts: dict = custom_field(metadata={"type": """dict"""})
+    loadouts: "SingleComponentResponseOfDestinyLoadoutsComponent" = custom_field()
     plug_sets: "SingleComponentResponseOfDestinyPlugSetsComponent" = custom_field()
     presentation_nodes: "SingleComponentResponseOfDestinyPresentationNodesComponent" = custom_field()
     progressions: "SingleComponentResponseOfDestinyCharacterProgressionComponent" = custom_field()

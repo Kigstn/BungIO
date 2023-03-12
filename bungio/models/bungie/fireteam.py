@@ -10,7 +10,11 @@ from bungio.models.mixins import DestinyClanMixin, DestinyUserMixin
 from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
-    from bungio.models import BungieMembershipType, UserInfoCard
+    from bungio.models import (
+        BungieMembershipType,
+        DestinyGuardianRankDefinition,
+        UserInfoCard,
+    )
 
 
 class FireteamDateRange(BaseEnum):
@@ -140,11 +144,11 @@ class FireteamSummary(BaseModel, DestinyClanMixin):
     scheduled_time: datetime = custom_field()
     title: str = custom_field()
     title_before_moderation: str = custom_field()
-    manifest_owner_current_guardian_rank_snapshot: Optional[dict] = custom_field(
-        metadata={"type": """Optional[dict]"""}, default=None
+    manifest_owner_current_guardian_rank_snapshot: Optional["DestinyGuardianRankDefinition"] = custom_field(
+        default=None
     )
-    manifest_owner_highest_lifetime_guardian_rank_snapshot: Optional[dict] = custom_field(
-        metadata={"type": """Optional[dict]"""}, default=None
+    manifest_owner_highest_lifetime_guardian_rank_snapshot: Optional["DestinyGuardianRankDefinition"] = custom_field(
+        default=None
     )
 
 

@@ -8,6 +8,8 @@ from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import (
+        DestinyGuardianRankConstantsDefinition,
+        DestinyLoadoutConstantsDefinition,
         DestinyPresentationNodeDefinition,
         DestinySeasonDefinition,
         DestinyVendorDefinition,
@@ -208,15 +210,13 @@ class Destiny2CoreSettings(BaseModel):
     manifest_current_season_hash: Optional["DestinySeasonDefinition"] = custom_field(default=None)
     manifest_current_seasonal_artifact_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
     manifest_exotic_catalysts_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
-    manifest_guardian_rank_constants_hash: Optional[dict] = custom_field(
-        metadata={"type": """Optional[dict]"""}, default=None
+    manifest_guardian_rank_constants_hash: Optional["DestinyGuardianRankConstantsDefinition"] = custom_field(
+        default=None
     )
     manifest_guardian_ranks_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_legacy_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_legacy_triumphs_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
-    manifest_loadout_constants_hash: Optional[dict] = custom_field(
-        metadata={"type": """Optional[dict]"""}, default=None
-    )
+    manifest_loadout_constants_hash: Optional["DestinyLoadoutConstantsDefinition"] = custom_field(default=None)
     manifest_lore_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_medals_root_node: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_medals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)

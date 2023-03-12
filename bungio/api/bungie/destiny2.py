@@ -35,6 +35,8 @@ from bungio.models import (
     DestinyItemTransferRequest,
     DestinyLeaderboard,
     DestinyLinkedProfilesResponse,
+    DestinyLoadoutActionRequest,
+    DestinyLoadoutUpdateActionRequest,
     DestinyManifest,
     DestinyMilestone,
     DestinyMilestoneContent,
@@ -522,7 +524,7 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.equip_items(auth=auth, **data.to_dict(_return_to_bungie_case=False))
         return await DestinyEquipItemResults.from_dict(data=response, client=self._client, auth=auth)
 
-    async def equip_loadout(self, data: dict, auth: AuthData) -> int:
+    async def equip_loadout(self, data: DestinyLoadoutActionRequest, auth: AuthData) -> int:
         """
         Equip a loadout. You must have a valid Destiny Account, and either be in a social space, in orbit, or offline.
 
@@ -540,7 +542,7 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.equip_loadout(auth=auth, **data.to_dict(_return_to_bungie_case=False))
         return response["Response"]
 
-    async def snapshot_loadout(self, data: dict, auth: AuthData) -> int:
+    async def snapshot_loadout(self, data: DestinyLoadoutUpdateActionRequest, auth: AuthData) -> int:
         """
         Snapshot a loadout with the currently equipped items.
 
@@ -558,7 +560,7 @@ class Destiny2RouteInterface(ClientMixin):
         response = await self._client.http.snapshot_loadout(auth=auth, **data.to_dict(_return_to_bungie_case=False))
         return response["Response"]
 
-    async def update_loadout_identifiers(self, data: dict, auth: AuthData) -> int:
+    async def update_loadout_identifiers(self, data: DestinyLoadoutUpdateActionRequest, auth: AuthData) -> int:
         """
         Update the color, icon, and name of a loadout.
 
@@ -578,7 +580,7 @@ class Destiny2RouteInterface(ClientMixin):
         )
         return response["Response"]
 
-    async def clear_loadout(self, data: dict, auth: AuthData) -> int:
+    async def clear_loadout(self, data: DestinyLoadoutActionRequest, auth: AuthData) -> int:
         """
         Clear the identifiers and items of a loadout.
 
