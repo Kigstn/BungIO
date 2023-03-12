@@ -115,6 +115,17 @@ class UnknownEnumValue:
     value: int | str = custom_field(repr=True)
     enum: Type[BaseEnum] = custom_field(repr=True)
 
+    @property
+    def display_name(self) -> str:
+        """
+        Dummy property so usages do not throw errors
+
+        Returns:
+            "Unknown"
+        """
+
+        return "UNKNOWN"
+
 
 class EnumMixin(Enum):
     """
@@ -184,7 +195,7 @@ class BaseEnum(EnumMixin, Enum):
             `name="HAND_CANNON"` -> `"Hand Cannon"`
 
         Returns:
-            THe formatted name
+            The formatted name
         """
 
         return " ".join([part.capitalize() for part in self.name.split("_")])
