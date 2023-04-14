@@ -35,4 +35,4 @@ Should there be any confusion, this is how the API keys and the `bungio.Client` 
 
 ## Usage
 
-A basic setup can be found in the [guides](/Guides/basic).
+A basic setup can be found in the [guides][basic-example].
