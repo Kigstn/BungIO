@@ -18,9 +18,7 @@ async def test_claim_partner_offer(client: Client, user: DestinyUser):
 
 
 @pytest.mark.asyncio
-async def test_apply_missing_partner_offers_without_claim(
-    client: Client, user: DestinyUser
-):
+async def test_apply_missing_partner_offers_without_claim(client: Client, user: DestinyUser):
     """
     Test for `Client.api.apply_missing_partner_offers_without_claim()`
     """

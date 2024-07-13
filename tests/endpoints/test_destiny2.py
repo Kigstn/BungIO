@@ -304,9 +304,7 @@ async def test_get_post_game_carnage_report(client: Client, user: DestinyUser):
 
 
 @pytest.mark.asyncio
-async def test_report_offensive_post_game_carnage_report_player(
-    client: Client, user: DestinyUser
-):
+async def test_report_offensive_post_game_carnage_report_player(client: Client, user: DestinyUser):
     """
     Test for `Client.api.report_offensive_post_game_carnage_report_player()`
     """
