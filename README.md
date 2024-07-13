@@ -60,7 +60,16 @@ async def main():
 # bungio is by nature asynchronous, it can only be run in an asynchronous context
 asyncio.run(main())
 ```
+---
 
-## Install Dev Environment
+## Dev Setup
+
+#### Install Dependencies
 - `pip install uv`
-- `uv pip install -r .\pyproject.toml --all-extras`
+- `uv pip install -e .[speedups,cache,docs,test,dev]`
+
+#### Run Tests
+- `pytest .`
+
+#### Run Docs
+- `mkdocs serve`

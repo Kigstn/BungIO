@@ -37,16 +37,13 @@ class AuthData(BaseModel):
     bungie_name: Optional[str] = custom_field()
     cross_save_setup: bool = custom_field(default=True)
 
-    async def refresh(self) -> AuthData:
+    async def refresh(self):
         """
         Check if tokens need to be refreshed and then do that.
         Gets called automatically when doing requests with AuthData.
 
         Tip: Staying up to date
             This dispatches the `Client.on_token_update()` event
-
-        Args:
-            auth: The potentially old authentication info.
 
         Raises:
             InvalidAuthentication: If authentication is invalid
