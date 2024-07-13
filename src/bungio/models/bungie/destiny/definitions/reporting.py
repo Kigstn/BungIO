@@ -4,13 +4,8 @@
 
 from typing import TYPE_CHECKING
 
-from bungio.models.base import (
-    BaseModel,
-    HashObject,
-    ManifestModel,
-    custom_define,
-    custom_field,
-)
+from bungio.models.base import BaseModel, HashObject, ManifestModel, custom_define, custom_field
+
 
 if TYPE_CHECKING:
     from bungio.models import DestinyDisplayPropertiesDefinition

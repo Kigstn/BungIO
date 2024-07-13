@@ -3,27 +3,21 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Union
+from typing import Union, TYPE_CHECKING
 
-from bungio.models.base import (
-    BaseEnum,
-    BaseFlagEnum,
-    BaseModel,
-    custom_define,
-    custom_field,
-)
-from bungio.models.mixins import DestinyClanMixin, DestinyUserMixin
 from bungio.utils import enum_converter
+from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, custom_define, custom_field
+
+from bungio.models.mixins import DestinyClanMixin
+from bungio.models.mixins import DestinyUserMixin
 
 if TYPE_CHECKING:
-    from bungio.models import (
-        BungieMembershipType,
-        DestinyProgression,
-        IgnoreLength,
-        PagedQuery,
-        UserInfoCard,
-        UserMembership,
-    )
+    from bungio.models import PagedQuery
+    from bungio.models import BungieMembershipType
+    from bungio.models import IgnoreLength
+    from bungio.models import UserMembership
+    from bungio.models import DestinyProgression
+    from bungio.models import UserInfoCard
 
 
 @custom_define()
@@ -133,6 +127,7 @@ class GroupV2(BaseModel, DestinyClanMixin):
         modification_date: _No description given by bungie._
         motto: _No description given by bungie._
         name: _No description given by bungie._
+        remote_group_id: _No description given by bungie._
         tags: _No description given by bungie._
         theme: _No description given by bungie._
     """
@@ -163,6 +158,7 @@ class GroupV2(BaseModel, DestinyClanMixin):
     modification_date: datetime = custom_field()
     motto: str = custom_field()
     name: str = custom_field()
+    remote_group_id: int = custom_field(metadata={"int64": True})
     tags: list[str] = custom_field(metadata={"type": """list[str]"""})
     theme: str = custom_field()
 
@@ -504,6 +500,7 @@ class GroupV2Card(BaseModel, DestinyClanMixin):
         membership_option: _No description given by bungie._
         motto: _No description given by bungie._
         name: _No description given by bungie._
+        remote_group_id: _No description given by bungie._
         theme: _No description given by bungie._
     """
 
@@ -519,6 +516,7 @@ class GroupV2Card(BaseModel, DestinyClanMixin):
     membership_option: Union["MembershipOption", int] = custom_field(converter=enum_converter("MembershipOption"))
     motto: str = custom_field()
     name: str = custom_field()
+    remote_group_id: int = custom_field(metadata={"int64": True})
     theme: str = custom_field()
 
 
@@ -793,6 +791,39 @@ class GroupBan(BaseModel, DestinyClanMixin):
     destiny_user_info: "GroupUserInfoCard" = custom_field()
     group_id: int = custom_field(metadata={"int64": True})
     last_modified_by: "UserInfoCard" = custom_field()
+
+
+@custom_define()
+class GroupEditHistory(BaseModel, DestinyClanMixin):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        about: _No description given by bungie._
+        about_editors: _No description given by bungie._
+        clan_callsign: _No description given by bungie._
+        clan_callsign_editors: _No description given by bungie._
+        edit_date: _No description given by bungie._
+        group_editors: _No description given by bungie._
+        group_id: _No description given by bungie._
+        motto: _No description given by bungie._
+        motto_editors: _No description given by bungie._
+        name: _No description given by bungie._
+        name_editors: _No description given by bungie._
+    """
+
+    about: str = custom_field()
+    about_editors: int = custom_field(metadata={"int64": True})
+    clan_callsign: str = custom_field()
+    clan_callsign_editors: int = custom_field(metadata={"int64": True})
+    edit_date: datetime = custom_field()
+    group_editors: list["UserInfoCard"] = custom_field(metadata={"type": """list[UserInfoCard]"""})
+    group_id: int = custom_field(metadata={"int64": True})
+    motto: str = custom_field()
+    motto_editors: int = custom_field(metadata={"int64": True})
+    name: str = custom_field()
+    name_editors: int = custom_field(metadata={"int64": True})
 
 
 @custom_define()

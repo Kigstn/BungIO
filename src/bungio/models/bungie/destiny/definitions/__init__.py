@@ -3,87 +3,78 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import Optional, Any, Union, TYPE_CHECKING
 
-from bungio.models.base import (
-    BaseEnum,
-    BaseFlagEnum,
-    BaseModel,
-    HashObject,
-    ManifestModel,
-    custom_define,
-    custom_field,
-)
 from bungio.utils import enum_converter
+from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, ManifestModel, custom_define, custom_field
+
 
 if TYPE_CHECKING:
-    from bungio.models import (
-        BucketCategory,
-        BucketScope,
-        BungieMembershipType,
-        DamageType,
-        DateRange,
-        DestinyActivityGraphDefinition,
-        DestinyActivityModeCategory,
-        DestinyActivityModeType,
-        DestinyActivityModifierDefinition,
-        DestinyActivityNavPointType,
-        DestinyAmmunitionType,
-        DestinyAnimationReference,
-        DestinyArtifactDefinition,
-        DestinyBreakerType,
-        DestinyBreakerTypeDefinition,
-        DestinyClass,
-        DestinyCollectibleDefinition,
-        DestinyColor,
-        DestinyDerivedItemCategoryDefinition,
-        DestinyDisplayPropertiesDefinition,
-        DestinyEnvironmentLocationMapping,
-        DestinyGatingScope,
-        DestinyGender,
-        DestinyIconSequenceDefinition,
-        DestinyItemPlugDefinition,
-        DestinyItemQuantity,
-        DestinyItemSortType,
-        DestinyItemSourceDefinition,
-        DestinyItemSubType,
-        DestinyItemTierTypeDefinition,
-        DestinyItemType,
-        DestinyLoreDefinition,
-        DestinyObjectiveGrantStyle,
-        DestinyObjectiveUiStyle,
-        DestinyPlugSetDefinition,
-        DestinyPowerCapDefinition,
-        DestinyPresentationNodeDefinition,
-        DestinyProgressionLevelRequirementDefinition,
-        DestinyProgressionRewardItemAcquisitionBehavior,
-        DestinyProgressionScope,
-        DestinyProgressionStepDisplayEffect,
-        DestinyRace,
-        DestinySeasonDefinition,
-        DestinySocketCategoryDefinition,
-        DestinySocketTypeDefinition,
-        DestinyStatAggregationType,
-        DestinyStatCategory,
-        DestinyUnlockValueUIStyle,
-        DestinyVendorInteractionRewardSelection,
-        DestinyVendorItemRefundPolicy,
-        DestinyVendorLocationDefinition,
-        DestinyVendorProgressionType,
-        DestinyVendorReplyType,
-        DyeReference,
-        EquippingItemBlockAttributes,
-        HyperlinkReference,
-        InterpolationPoint,
-        ItemLocation,
-        ItemPerkVisibility,
-        SearchResultOfDestinyEntitySearchResultItem,
-        SocketPlugSources,
-        SpecialItemType,
-        TierType,
-        VendorDisplayCategorySortOrder,
-        VendorInteractionType,
-    )
+    from bungio.models import InterpolationPoint
+    from bungio.models import ItemPerkVisibility
+    from bungio.models import VendorInteractionType
+    from bungio.models import DestinyArtifactDefinition
+    from bungio.models import DestinyRace
+    from bungio.models import DestinyItemSortType
+    from bungio.models import DestinyVendorReplyType
+    from bungio.models import DestinyProgressionRewardItemAcquisitionBehavior
+    from bungio.models import SocketPlugSources
+    from bungio.models import DestinyCollectibleDefinition
+    from bungio.models import DestinyIconSequenceDefinition
+    from bungio.models import DestinyStatAggregationType
+    from bungio.models import DestinyProgressionStepDisplayEffect
+    from bungio.models import DestinyBreakerTypeDefinition
+    from bungio.models import DestinyVendorProgressionType
+    from bungio.models import HyperlinkReference
+    from bungio.models import DestinyAnimationReference
+    from bungio.models import DestinyColor
+    from bungio.models import SpecialItemType
+    from bungio.models import DestinyActivityModifierDefinition
+    from bungio.models import DestinyClass
+    from bungio.models import DestinyProgressionLevelRequirementDefinition
+    from bungio.models import DestinySocketTypeDefinition
+    from bungio.models import DestinyVendorInteractionRewardSelection
+    from bungio.models import DestinyItemQuantity
+    from bungio.models import DestinySeasonDefinition
+    from bungio.models import DestinyItemType
+    from bungio.models import DestinyGender
+    from bungio.models import DestinyVendorItemRefundPolicy
+    from bungio.models import DestinyPowerCapDefinition
+    from bungio.models import DestinyObjectiveUiStyle
+    from bungio.models import SearchResultOfDestinyEntitySearchResultItem
+    from bungio.models import VendorDisplayCategorySortOrder
+    from bungio.models import DestinyItemPlugDefinition
+    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import BungieMembershipType
+    from bungio.models import DestinyItemSourceDefinition
+    from bungio.models import DestinyItemTierTypeDefinition
+    from bungio.models import DestinyActivityModeCategory
+    from bungio.models import DestinyPresentationNodeDefinition
+    from bungio.models import ItemLocation
+    from bungio.models import BucketScope
+    from bungio.models import DestinyDerivedItemCategoryDefinition
+    from bungio.models import DateRange
+    from bungio.models import DestinyUnlockValueUIStyle
+    from bungio.models import DestinyLoreDefinition
+    from bungio.models import DestinyActivityGraphDefinition
+    from bungio.models import DestinyPlugSetDefinition
+    from bungio.models import DyeReference
+    from bungio.models import DestinyBreakerType
+    from bungio.models import DamageType
+    from bungio.models import DestinyActivityModeType
+    from bungio.models import BucketCategory
+    from bungio.models import EquippingItemBlockAttributes
+    from bungio.models import DestinyItemSubType
+    from bungio.models import DestinyEnvironmentLocationMapping
+    from bungio.models import DestinyObjectiveGrantStyle
+    from bungio.models import DestinyStatCategory
+    from bungio.models import DestinyAmmunitionType
+    from bungio.models import DestinySocketCategoryDefinition
+    from bungio.models import DestinyVendorLocationDefinition
+    from bungio.models import TierType
+    from bungio.models import DestinyProgressionScope
+    from bungio.models import DestinyActivityNavPointType
+    from bungio.models import DestinyGatingScope
 
 
 @custom_define()
@@ -1916,6 +1907,7 @@ class DestinyActivityDefinition(ManifestModel, HashObject):
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
         release_icon: If the activity has an icon associated with a specific release (such as a DLC), this is the path to that release's icon.
         release_time: If the activity will not be visible until a specific and known time, this will be the seconds since the Epoch when it will become visible.
+        requirements: _No description given by bungie._
         rewards: The expected possible rewards for the activity. These rewards may or may not be accessible for an individual player based on their character state, the account state, and even the game's state overall. But it is a useful reference for possible rewards you can earn in the activity. These match up to rewards displayed when you hover over the Activity in the in-game Director, and often refer to Placeholder or "Dummy" items: items that tell you what you can earn in vague terms rather than what you'll specifically be earning (partly because the game doesn't even know what you'll earn specifically until you roll for it at the end)
         selection_screen_display_properties: The title, subtitle, and icon for the activity as determined by Selection Screen data, if there is any for this activity. There won't be data in this field if the activity is never shown in a selection/options screen.
         tier: The difficulty tier of the activity.
@@ -1970,6 +1962,7 @@ class DestinyActivityDefinition(ManifestModel, HashObject):
     redacted: bool = custom_field()
     release_icon: str = custom_field()
     release_time: int = custom_field()
+    requirements: "DestinyActivityRequirementsBlock" = custom_field()
     rewards: list["DestinyActivityRewardDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityRewardDefinition]"""}
     )
@@ -2142,7 +2135,7 @@ class DestinyObjectivePerkEntryDefinition(BaseModel):
 @custom_define()
 class DestinySandboxPerkDefinition(ManifestModel, HashObject):
     """
-    Perks are modifiers to a character or item that can be applied situationally. - Perks determine a weapons' damage type. - Perks put the Mods in Modifiers (they are literally the entity that bestows the Sandbox benefit for whatever fluff text about the modifier in the Socket, Plug or Talent Node) - Perks are applied for unique alterations of state in Objectives Anyways, I'm sure you can see why perks are so interesting. What Perks often don't have is human readable information, so we attempt to reverse engineer that by pulling that data from places that uniquely refer to these perks: namely, Talent Nodes and Plugs. That only gives us a subset of perks that are human readable, but those perks are the ones people generally care about anyways. The others are left as a mystery, their true purpose mostly unknown and undocumented.
+    Perks are modifiers to a character or item that can be applied situationally. - Perks determine a weapon's damage type. - Perks put the Mods in Modifiers (they are literally the entity that bestows the Sandbox benefit for whatever fluff text about the modifier in the Socket, Plug or Talent Node) - Perks are applied for unique alterations of state in Objectives Anyways, I'm sure you can see why perks are so interesting. What Perks often don't have is human readable information, so we attempt to reverse engineer that by pulling that data from places that uniquely refer to these perks: namely, Talent Nodes and Plugs. That only gives us a subset of perks that are human readable, but those perks are the ones people generally care about anyways. The others are left as a mystery, their true purpose mostly unknown and undocumented.
 
     Tip: Manifest Information
         This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
@@ -2160,7 +2153,6 @@ class DestinySandboxPerkDefinition(ManifestModel, HashObject):
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
         is_displayable: If true, you can actually show the perk in the UI. Otherwise, it doesn't have useful player-facing information.
-        perk_groups: An old holdover from the original Armory, this was an attempt to group perks by functionality. It is as yet unpopulated, and there will be quite a bit of work needed to restore it to its former working order.
         perk_identifier: The string identifier for the perk.
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
         manifest_damage_type_hash: Manifest information for `damage_type_hash`
@@ -2171,170 +2163,9 @@ class DestinySandboxPerkDefinition(ManifestModel, HashObject):
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
     index: int = custom_field()
     is_displayable: bool = custom_field()
-    perk_groups: "DestinyTalentNodeStepGroups" = custom_field()
     perk_identifier: str = custom_field()
     redacted: bool = custom_field()
     manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = custom_field(default=None)
-
-
-@custom_define()
-class DestinyTalentNodeStepGroups(BaseModel):
-    """
-    These properties are an attempt to categorize talent node steps by certain common properties. See the related enumerations for the type of properties being categorized.
-
-    None
-    Attributes:
-        damage_types: _No description given by bungie._
-        guardian_attributes: _No description given by bungie._
-        impact_effects: _No description given by bungie._
-        light_abilities: _No description given by bungie._
-        weapon_performance: _No description given by bungie._
-    """
-
-    damage_types: Union["DestinyTalentNodeStepDamageTypes", int] = custom_field(
-        converter=enum_converter("DestinyTalentNodeStepDamageTypes")
-    )
-    guardian_attributes: Union["DestinyTalentNodeStepGuardianAttributes", int] = custom_field(
-        converter=enum_converter("DestinyTalentNodeStepGuardianAttributes")
-    )
-    impact_effects: Union["DestinyTalentNodeStepImpactEffects", int] = custom_field(
-        converter=enum_converter("DestinyTalentNodeStepImpactEffects")
-    )
-    light_abilities: Union["DestinyTalentNodeStepLightAbilities", int] = custom_field(
-        converter=enum_converter("DestinyTalentNodeStepLightAbilities")
-    )
-    weapon_performance: Union["DestinyTalentNodeStepWeaponPerformances", int] = custom_field(
-        converter=enum_converter("DestinyTalentNodeStepWeaponPerformances")
-    )
-
-
-class DestinyTalentNodeStepWeaponPerformances(BaseFlagEnum):
-    """
-    _No description given by bungie._
-    """
-
-    NONE = 0
-    """_No description given by bungie._ """
-    RATE_OF_FIRE = 1
-    """_No description given by bungie._ """
-    DAMAGE = 2
-    """_No description given by bungie._ """
-    ACCURACY = 4
-    """_No description given by bungie._ """
-    RANGE = 8
-    """_No description given by bungie._ """
-    ZOOM = 16
-    """_No description given by bungie._ """
-    RECOIL = 32
-    """_No description given by bungie._ """
-    READY = 64
-    """_No description given by bungie._ """
-    RELOAD = 128
-    """_No description given by bungie._ """
-    HAIR_TRIGGER = 256
-    """_No description given by bungie._ """
-    AMMO_AND_MAGAZINE = 512
-    """_No description given by bungie._ """
-    TRACKING_AND_DETONATION = 1024
-    """_No description given by bungie._ """
-    SHOTGUN_SPREAD = 2048
-    """_No description given by bungie._ """
-    CHARGE_TIME = 4096
-    """_No description given by bungie._ """
-    ALL = 8191
-    """_No description given by bungie._ """
-
-
-class DestinyTalentNodeStepImpactEffects(BaseFlagEnum):
-    """
-    _No description given by bungie._
-    """
-
-    NONE = 0
-    """_No description given by bungie._ """
-    ARMOR_PIERCING = 1
-    """_No description given by bungie._ """
-    RICOCHET = 2
-    """_No description given by bungie._ """
-    FLINCH = 4
-    """_No description given by bungie._ """
-    COLLATERAL_DAMAGE = 8
-    """_No description given by bungie._ """
-    DISORIENT = 16
-    """_No description given by bungie._ """
-    HIGHLIGHT_TARGET = 32
-    """_No description given by bungie._ """
-    ALL = 63
-    """_No description given by bungie._ """
-
-
-class DestinyTalentNodeStepGuardianAttributes(BaseFlagEnum):
-    """
-    _No description given by bungie._
-    """
-
-    NONE = 0
-    """_No description given by bungie._ """
-    STATS = 1
-    """_No description given by bungie._ """
-    SHIELDS = 2
-    """_No description given by bungie._ """
-    HEALTH = 4
-    """_No description given by bungie._ """
-    REVIVE = 8
-    """_No description given by bungie._ """
-    AIM_UNDER_FIRE = 16
-    """_No description given by bungie._ """
-    RADAR = 32
-    """_No description given by bungie._ """
-    INVISIBILITY = 64
-    """_No description given by bungie._ """
-    REPUTATIONS = 128
-    """_No description given by bungie._ """
-    ALL = 255
-    """_No description given by bungie._ """
-
-
-class DestinyTalentNodeStepLightAbilities(BaseFlagEnum):
-    """
-    _No description given by bungie._
-    """
-
-    NONE = 0
-    """_No description given by bungie._ """
-    GRENADES = 1
-    """_No description given by bungie._ """
-    MELEE = 2
-    """_No description given by bungie._ """
-    MOVEMENT_MODES = 4
-    """_No description given by bungie._ """
-    ORBS = 8
-    """_No description given by bungie._ """
-    SUPER_ENERGY = 16
-    """_No description given by bungie._ """
-    SUPER_MODS = 32
-    """_No description given by bungie._ """
-    ALL = 63
-    """_No description given by bungie._ """
-
-
-class DestinyTalentNodeStepDamageTypes(BaseFlagEnum):
-    """
-    _No description given by bungie._
-    """
-
-    NONE = 0
-    """_No description given by bungie._ """
-    KINETIC = 1
-    """_No description given by bungie._ """
-    ARC = 2
-    """_No description given by bungie._ """
-    SOLAR = 4
-    """_No description given by bungie._ """
-    VOID = 8
-    """_No description given by bungie._ """
-    ALL = 15
-    """_No description given by bungie._ """
 
 
 @custom_define()
@@ -2500,6 +2331,38 @@ class DestinyActivityUnlockStringDefinition(BaseModel):
     None
     Attributes:
         display_string: The string to be displayed if the conditions are met.
+    """
+
+    display_string: str = custom_field()
+
+
+@custom_define()
+class DestinyActivityRequirementsBlock(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        fireteam_requirement_labels: If being a fireteam member in this activity is gated, this is the gate being checked.
+        leader_requirement_labels: If being a fireteam Leader in this activity is gated, this is the gate being checked.
+    """
+
+    fireteam_requirement_labels: list["DestinyActivityRequirementLabel"] = custom_field(
+        metadata={"type": """list[DestinyActivityRequirementLabel]"""}
+    )
+    leader_requirement_labels: list["DestinyActivityRequirementLabel"] = custom_field(
+        metadata={"type": """list[DestinyActivityRequirementLabel]"""}
+    )
+
+
+@custom_define()
+class DestinyActivityRequirementLabel(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        display_string: _No description given by bungie._
     """
 
     display_string: str = custom_field()
@@ -3685,6 +3548,166 @@ class DestinyNodeStepDefinition(BaseModel):
     step_groups: "DestinyTalentNodeStepGroups" = custom_field()
     step_index: int = custom_field()
     manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = custom_field(default=None)
+
+
+@custom_define()
+class DestinyTalentNodeStepGroups(BaseModel):
+    """
+    These properties are an attempt to categorize talent node steps by certain common properties. See the related enumerations for the type of properties being categorized.
+
+    None
+    Attributes:
+        damage_types: _No description given by bungie._
+        guardian_attributes: _No description given by bungie._
+        impact_effects: _No description given by bungie._
+        light_abilities: _No description given by bungie._
+        weapon_performance: _No description given by bungie._
+    """
+
+    damage_types: Union["DestinyTalentNodeStepDamageTypes", int] = custom_field(
+        converter=enum_converter("DestinyTalentNodeStepDamageTypes")
+    )
+    guardian_attributes: Union["DestinyTalentNodeStepGuardianAttributes", int] = custom_field(
+        converter=enum_converter("DestinyTalentNodeStepGuardianAttributes")
+    )
+    impact_effects: Union["DestinyTalentNodeStepImpactEffects", int] = custom_field(
+        converter=enum_converter("DestinyTalentNodeStepImpactEffects")
+    )
+    light_abilities: Union["DestinyTalentNodeStepLightAbilities", int] = custom_field(
+        converter=enum_converter("DestinyTalentNodeStepLightAbilities")
+    )
+    weapon_performance: Union["DestinyTalentNodeStepWeaponPerformances", int] = custom_field(
+        converter=enum_converter("DestinyTalentNodeStepWeaponPerformances")
+    )
+
+
+class DestinyTalentNodeStepWeaponPerformances(BaseFlagEnum):
+    """
+    _No description given by bungie._
+    """
+
+    NONE = 0
+    """_No description given by bungie._ """
+    RATE_OF_FIRE = 1
+    """_No description given by bungie._ """
+    DAMAGE = 2
+    """_No description given by bungie._ """
+    ACCURACY = 4
+    """_No description given by bungie._ """
+    RANGE = 8
+    """_No description given by bungie._ """
+    ZOOM = 16
+    """_No description given by bungie._ """
+    RECOIL = 32
+    """_No description given by bungie._ """
+    READY = 64
+    """_No description given by bungie._ """
+    RELOAD = 128
+    """_No description given by bungie._ """
+    HAIR_TRIGGER = 256
+    """_No description given by bungie._ """
+    AMMO_AND_MAGAZINE = 512
+    """_No description given by bungie._ """
+    TRACKING_AND_DETONATION = 1024
+    """_No description given by bungie._ """
+    SHOTGUN_SPREAD = 2048
+    """_No description given by bungie._ """
+    CHARGE_TIME = 4096
+    """_No description given by bungie._ """
+    ALL = 8191
+    """_No description given by bungie._ """
+
+
+class DestinyTalentNodeStepImpactEffects(BaseFlagEnum):
+    """
+    _No description given by bungie._
+    """
+
+    NONE = 0
+    """_No description given by bungie._ """
+    ARMOR_PIERCING = 1
+    """_No description given by bungie._ """
+    RICOCHET = 2
+    """_No description given by bungie._ """
+    FLINCH = 4
+    """_No description given by bungie._ """
+    COLLATERAL_DAMAGE = 8
+    """_No description given by bungie._ """
+    DISORIENT = 16
+    """_No description given by bungie._ """
+    HIGHLIGHT_TARGET = 32
+    """_No description given by bungie._ """
+    ALL = 63
+    """_No description given by bungie._ """
+
+
+class DestinyTalentNodeStepGuardianAttributes(BaseFlagEnum):
+    """
+    _No description given by bungie._
+    """
+
+    NONE = 0
+    """_No description given by bungie._ """
+    STATS = 1
+    """_No description given by bungie._ """
+    SHIELDS = 2
+    """_No description given by bungie._ """
+    HEALTH = 4
+    """_No description given by bungie._ """
+    REVIVE = 8
+    """_No description given by bungie._ """
+    AIM_UNDER_FIRE = 16
+    """_No description given by bungie._ """
+    RADAR = 32
+    """_No description given by bungie._ """
+    INVISIBILITY = 64
+    """_No description given by bungie._ """
+    REPUTATIONS = 128
+    """_No description given by bungie._ """
+    ALL = 255
+    """_No description given by bungie._ """
+
+
+class DestinyTalentNodeStepLightAbilities(BaseFlagEnum):
+    """
+    _No description given by bungie._
+    """
+
+    NONE = 0
+    """_No description given by bungie._ """
+    GRENADES = 1
+    """_No description given by bungie._ """
+    MELEE = 2
+    """_No description given by bungie._ """
+    MOVEMENT_MODES = 4
+    """_No description given by bungie._ """
+    ORBS = 8
+    """_No description given by bungie._ """
+    SUPER_ENERGY = 16
+    """_No description given by bungie._ """
+    SUPER_MODS = 32
+    """_No description given by bungie._ """
+    ALL = 63
+    """_No description given by bungie._ """
+
+
+class DestinyTalentNodeStepDamageTypes(BaseFlagEnum):
+    """
+    _No description given by bungie._
+    """
+
+    NONE = 0
+    """_No description given by bungie._ """
+    KINETIC = 1
+    """_No description given by bungie._ """
+    ARC = 2
+    """_No description given by bungie._ """
+    SOLAR = 4
+    """_No description given by bungie._ """
+    VOID = 8
+    """_No description given by bungie._ """
+    ALL = 15
+    """_No description given by bungie._ """
 
 
 @custom_define()

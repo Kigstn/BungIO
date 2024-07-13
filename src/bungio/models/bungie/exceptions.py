@@ -131,6 +131,8 @@ class PlatformErrorCodes(BaseEnum):
     """_No description given by bungie._ """
     INVALID_SERVICE_AUTH_CONTEXT = 59
     """_No description given by bungie._ """
+    FAILED_MINIMUM_AGE_CHECK = 60
+    """_No description given by bungie._ """
     OBSOLETE_CREDENTIAL_TYPE = 89
     """_No description given by bungie._ """
     UNABLE_TO_UN_PAIR_MOBILE_APP = 90
@@ -405,6 +407,16 @@ class PlatformErrorCodes(BaseEnum):
     """_No description given by bungie._ """
     USER_DISPLAY_NAME_CONTAINS_UNACCEPTABLE_OR_INVALID_CONTENT = 244
     """_No description given by bungie._ """
+    EMAIL_VALIDATION_OFFLINE = 245
+    """_No description given by bungie._ """
+    EMAIL_VALIDATION_FAIL_OLD_CODE = 246
+    """_No description given by bungie._ """
+    EMAIL_VALIDATION_FAIL_BAD_LINK = 247
+    """_No description given by bungie._ """
+    EMAIL_UNSUBSCRIBE_FAIL = 248
+    """_No description given by bungie._ """
+    EMAIL_UNSUBSCRIBE_FAIL_NEW = 249
+    """_No description given by bungie._ """
     MESSAGING_UNKNOWN_ERROR = 300
     """_No description given by bungie._ """
     MESSAGING_SELF_ERROR = 301
@@ -432,6 +444,8 @@ class PlatformErrorCodes(BaseEnum):
     MESSAGING_GROUP_OPTIONAL_CHAT_EXCEEDED_MAXIMUM = 312
     """_No description given by bungie._ """
     PRIVATE_MESSAGING_REQUIRES_DESTINY_MEMBERSHIP = 313
+    """_No description given by bungie._ """
+    MESSAGING_SEND_DAILY_THROTTLE = 314
     """_No description given by bungie._ """
     ADD_SURVEY_ANSWERS_UNKNOWN_SQL_EXCEPTION = 400
     """_No description given by bungie._ """
@@ -1545,6 +1559,96 @@ class PlatformErrorCodes(BaseEnum):
     """_No description given by bungie._ """
     CLAN_FIRETEAM_PURCHASE_REQUIRED_JOIN = 3038
     """_No description given by bungie._ """
+    FIRETEAM_FINDER_INVALID_MEMBERSHIP_TYPE = 3100
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_INVALID_MEMBERSHIP_ID = 3101
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_INVALID_CHARACTER_ID = 3102
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_INVALID_LISTING_OPTIONS = 3103
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_INVALID_REQUEST_DATA = 3104
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_LISTING_APPLICATION_FAILED = 3105
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_LISTING_AUTO_JOIN_FAILED = 3106
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_PLAYER_APPLICATIONS_PARSING_FAILED = 3107
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_JOIN_LOBBY_HOST_FAILED = 3108
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_PLAYER_NOT_IN_GAME = 3109
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_ACTIVATION_FAILED = 3110
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_APPLICATION_NOT_FOUND = 3111
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_USER_ALREADY_APPLIED_TO_LISTING = 3112
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_APPLICATION_CLOSED_FOR_UPDATES = 3113
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_LISTING_AT_MAX_OPEN_APPLICATIONS_LIMIT = 3114
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_USER_NOT_IN_APPLICATION = 3115
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_APPLICATION_USER_ALREADY_LISTING_OWNER = 3116
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_OFFER_NOT_FOUND = 3117
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_OFFER_CLOSED_FOR_UPDATES = 3118
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_OFFER_USER_NOT_TARGET = 3119
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_LOBBY_NOT_FOUND = 3120
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_LISTING_NOT_FOUND = 3121
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_LOBBY_FULL = 3122
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_USER_NOT_LISTING_OWNER = 3123
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_USER_NOT_LOBBY_OWNER = 3124
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_LOBBY_CLOSED_FOR_UPDATES = 3125
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_USER_NOT_IN_LOBBY = 3126
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_DISABLED_SETTINGS_VALUE = 3127
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_OWNER_IN_ACTIVE_LOBBY = 3128
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_APPLICATION_CLOSED_TO_OFFLINE_PLAYERS = 3129
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_USER_NOT_APPLICATION_OWNER = 3130
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_INVITE_VALIDATION_FAILED = 3131
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_OWNER_NOT_IN_GAME = 3132
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_PLAYER_AT_MAX_LOBBY_LIMIT = 3133
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_LOBBY_TOO_FAR_IN_THE_FUTURE = 3134
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_RESPONSE_UNDEFINED = 3150
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_RESPONSE_MOVED = 3151
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_RESPONSE_LOGGING_IN = 3152
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_RESPONSE_BAD_REQUEST = 3153
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_RESPONSE_UNAUTHORIZED = 3154
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_RESPONSE_FORBIDDEN = 3155
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_RESPONSE_NOT_FOUND = 3156
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_INTERNAL_SERVER_ERROR = 3157
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_SERVICE_UNAVAILABLE = 3158
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_INTERNAL_SERVER_ERROR_NON_FATAL = 3159
+    """_No description given by bungie._ """
     CROSS_SAVE_OVERRIDDEN_ACCOUNT_NOT_FOUND = 3200
     """_No description given by bungie._ """
     CROSS_SAVE_TOO_MANY_OVERRIDDEN_PLATFORMS = 3201
@@ -1641,6 +1745,8 @@ class PlatformErrorCodes(BaseEnum):
     """_No description given by bungie._ """
     ERROR_PHONE_VALIDATION_CODE_TOO_RECENTLY_CHECKED = 3710
     """_No description given by bungie._ """
+    ERROR_PHONE_VALIDATION_RECENTLY_PLAYED_DESTINY2_ACCOUNT_REQUIRED = 3711
+    """_No description given by bungie._ """
     APPLE_PUSH_ERROR_UNKNOWN = 3800
     """_No description given by bungie._ """
     APPLE_PUSH_ERROR_NULL = 3801
@@ -1678,6 +1784,10 @@ class PlatformErrorCodes(BaseEnum):
     ERROR_BUNGIE_FRIENDS_LIST_FULL = 3910
     """_No description given by bungie._ """
     ERROR_BUNGIE_BLOCK_LIST_FULL = 3911
+    """_No description given by bungie._ """
+    ERROR_BUNGIE_FRIEND_NOT_FOUND = 3912
+    """_No description given by bungie._ """
+    ERROR_BUNGIE_FRIEND_INVALID_MEMBERSHIP_TYPE = 3913
     """_No description given by bungie._ """
     ERROR_EGS_UNKNOWN = 4000
     """_No description given by bungie._ """

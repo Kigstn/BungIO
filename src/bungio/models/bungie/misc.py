@@ -3,70 +3,70 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Union
+from typing import Union, TYPE_CHECKING
 
-from bungio.models.base import BaseEnum, BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
+from bungio.models.base import BaseModel, BaseEnum, custom_define, custom_field
+
 
 if TYPE_CHECKING:
-    from bungio.models import (
-        ComponentPrivacySetting,
-        ContentItemPublicContract,
-        DestinyCharacterActivitiesComponent,
-        DestinyCharacterComponent,
-        DestinyCharacterProgressionComponent,
-        DestinyCharacterRecordsComponent,
-        DestinyCharacterRenderComponent,
-        DestinyCollectiblesComponent,
-        DestinyCraftablesComponent,
-        DestinyCurrenciesComponent,
-        DestinyEntitySearchResultItem,
-        DestinyInventoryComponent,
-        DestinyItemComponent,
-        DestinyItemInstanceComponent,
-        DestinyItemObjectivesComponent,
-        DestinyItemPerksComponent,
-        DestinyItemPlugComponent,
-        DestinyItemPlugObjectivesComponent,
-        DestinyItemRenderComponent,
-        DestinyItemReusablePlugsComponent,
-        DestinyItemSocketsComponent,
-        DestinyItemStatsComponent,
-        DestinyItemTalentGridComponent,
-        DestinyKiosksComponent,
-        DestinyLoadoutsComponent,
-        DestinyMetricsComponent,
-        DestinyPlatformSilverComponent,
-        DestinyPlugSetsComponent,
-        DestinyPresentationNodesComponent,
-        DestinyProfileCollectiblesComponent,
-        DestinyProfileComponent,
-        DestinyProfileProgressionComponent,
-        DestinyProfileRecordsComponent,
-        DestinyProfileTransitoryComponent,
-        DestinyPublicVendorComponent,
-        DestinyPublicVendorSaleItemComponent,
-        DestinySocialCommendationsComponent,
-        DestinyStringVariablesComponent,
-        DestinyVendorCategoriesComponent,
-        DestinyVendorComponent,
-        DestinyVendorGroupComponent,
-        DestinyVendorReceiptsComponent,
-        DestinyVendorSaleItemComponent,
-        FireteamResponse,
-        FireteamSummary,
-        GroupBan,
-        GroupMember,
-        GroupMemberApplication,
-        GroupMembership,
-        GroupPotentialMembership,
-        GroupV2Card,
-        PagedQuery,
-        PersonalDestinyVendorSaleItemSetComponent,
-        PostResponse,
-        PublicDestinyVendorSaleItemSetComponent,
-        TrendingEntry,
-    )
+    from bungio.models import DestinySocialCommendationsComponent
+    from bungio.models import DestinyProfileProgressionComponent
+    from bungio.models import TrendingEntry
+    from bungio.models import DestinyItemSocketsComponent
+    from bungio.models import DestinyCollectiblesComponent
+    from bungio.models import DestinyCharacterRenderComponent
+    from bungio.models import FireteamResponse
+    from bungio.models import GroupPotentialMembership
+    from bungio.models import DestinyPresentationNodesComponent
+    from bungio.models import DestinyItemRenderComponent
+    from bungio.models import DestinyVendorSaleItemComponent
+    from bungio.models import DestinyItemComponent
+    from bungio.models import DestinyCurrenciesComponent
+    from bungio.models import PagedQuery
+    from bungio.models import DestinyItemPlugObjectivesComponent
+    from bungio.models import DestinyItemPlugComponent
+    from bungio.models import DestinyPlugSetsComponent
+    from bungio.models import DestinyPlatformSilverComponent
+    from bungio.models import ComponentPrivacySetting
+    from bungio.models import DestinyEntitySearchResultItem
+    from bungio.models import DestinyItemObjectivesComponent
+    from bungio.models import DestinyVendorComponent
+    from bungio.models import DestinyCharacterComponent
+    from bungio.models import DestinyVendorGroupComponent
+    from bungio.models import DestinyLoadoutsComponent
+    from bungio.models import DestinyCharacterProgressionComponent
+    from bungio.models import FireteamSummary
+    from bungio.models import DestinyItemTalentGridComponent
+    from bungio.models import DestinyProfileComponent
+    from bungio.models import DestinyItemStatsComponent
+    from bungio.models import GroupV2Card
+    from bungio.models import GroupBan
+    from bungio.models import DestinyProfileRecordsComponent
+    from bungio.models import PublicDestinyVendorSaleItemSetComponent
+    from bungio.models import DestinyProfileCollectiblesComponent
+    from bungio.models import GroupMembership
+    from bungio.models import DestinyMetricsComponent
+    from bungio.models import DestinyVendorReceiptsComponent
+    from bungio.models import DestinyPublicVendorComponent
+    from bungio.models import DestinyItemReusablePlugsComponent
+    from bungio.models import DestinyProfileTransitoryComponent
+    from bungio.models import DestinyCraftablesComponent
+    from bungio.models import DestinyStringVariablesComponent
+    from bungio.models import DestinyItemPerksComponent
+    from bungio.models import PostResponse
+    from bungio.models import DestinyKiosksComponent
+    from bungio.models import DestinyVendorCategoriesComponent
+    from bungio.models import DestinyCharacterActivitiesComponent
+    from bungio.models import DestinyCharacterRecordsComponent
+    from bungio.models import ContentItemPublicContract
+    from bungio.models import DestinyItemInstanceComponent
+    from bungio.models import GroupEditHistory
+    from bungio.models import DestinyPublicVendorSaleItemComponent
+    from bungio.models import GroupMember
+    from bungio.models import DestinyInventoryComponent
+    from bungio.models import PersonalDestinyVendorSaleItemSetComponent
+    from bungio.models import GroupMemberApplication
 
 
 class BungieMembershipType(BaseEnum):
@@ -242,6 +242,29 @@ class SearchResultOfGroupBan(BaseModel):
     query: "PagedQuery" = custom_field()
     replacement_continuation_token: str = custom_field()
     results: list["GroupBan"] = custom_field(metadata={"type": """list[GroupBan]"""})
+    total_results: int = custom_field()
+    use_total_results: bool = custom_field()
+
+
+@custom_define()
+class SearchResultOfGroupEditHistory(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        has_more: _No description given by bungie._
+        query: _No description given by bungie._
+        replacement_continuation_token: _No description given by bungie._
+        results: _No description given by bungie._
+        total_results: _No description given by bungie._
+        use_total_results: If useTotalResults is true, then totalResults represents an accurate count. If False, it does not, and may be estimated/only the size of the current page. Either way, you should probably always only trust hasMore. This is a long-held historical throwback to when we used to do paging with known total results. Those queries toasted our database, and we were left to hastily alter our endpoints and create backward- compatible shims, of which useTotalResults is one.
+    """
+
+    has_more: bool = custom_field()
+    query: "PagedQuery" = custom_field()
+    replacement_continuation_token: str = custom_field()
+    results: list["GroupEditHistory"] = custom_field(metadata={"type": """list[GroupEditHistory]"""})
     total_results: int = custom_field()
     use_total_results: bool = custom_field()
 

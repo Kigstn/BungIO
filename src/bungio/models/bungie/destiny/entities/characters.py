@@ -3,39 +3,38 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional, Union
+from typing import Optional, Union, TYPE_CHECKING
 
-from bungio.models.base import BaseModel, custom_define, custom_field
-from bungio.models.mixins import DestinyCharacterMixin
 from bungio.utils import enum_converter
+from bungio.models.base import BaseModel, custom_define, custom_field
+
+from bungio.models.mixins import DestinyCharacterMixin
 
 if TYPE_CHECKING:
-    from bungio.models import (
-        BungieMembershipType,
-        DestinyActivity,
-        DestinyActivityDefinition,
-        DestinyActivityModeDefinition,
-        DestinyActivityModeType,
-        DestinyArtifactCharacterScoped,
-        DestinyCharacterCustomization,
-        DestinyCharacterPeerView,
-        DestinyClass,
-        DestinyClassDefinition,
-        DestinyColor,
-        DestinyFactionProgression,
-        DestinyGender,
-        DestinyGenderDefinition,
-        DestinyInventoryItemDefinition,
-        DestinyItemPerksComponent,
-        DestinyMilestone,
-        DestinyObjectiveProgress,
-        DestinyProgression,
-        DestinyQuestStatus,
-        DestinyRace,
-        DestinyRaceDefinition,
-        DestinyRecordDefinition,
-        DyeReference,
-    )
+    from bungio.models import DestinyRace
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyRaceDefinition
+    from bungio.models import DestinyMilestone
+    from bungio.models import DestinyObjectiveProgress
+    from bungio.models import DestinyRecordDefinition
+    from bungio.models import DestinyCharacterCustomization
+    from bungio.models import DestinyColor
+    from bungio.models import DestinyActivityModeDefinition
+    from bungio.models import DestinyClass
+    from bungio.models import DestinyGender
+    from bungio.models import DestinyCharacterPeerView
+    from bungio.models import BungieMembershipType
+    from bungio.models import DestinyQuestStatus
+    from bungio.models import DestinyProgression
+    from bungio.models import DestinyActivityDefinition
+    from bungio.models import DestinyFactionProgression
+    from bungio.models import DyeReference
+    from bungio.models import DestinyGenderDefinition
+    from bungio.models import DestinyClassDefinition
+    from bungio.models import DestinyItemPerksComponent
+    from bungio.models import DestinyActivity
+    from bungio.models import DestinyActivityModeType
+    from bungio.models import DestinyArtifactCharacterScoped
 
 
 @custom_define()

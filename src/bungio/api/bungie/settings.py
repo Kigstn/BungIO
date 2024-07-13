@@ -4,9 +4,10 @@
 
 from typing import Optional
 
-from bungio.models import CoreSettingsConfiguration
-from bungio.models.auth import AuthData
 from bungio.models.base import ClientMixin, custom_define
+from bungio.models.auth import AuthData
+
+from bungio.models import CoreSettingsConfiguration
 
 
 @custom_define()

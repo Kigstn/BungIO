@@ -2,16 +2,15 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional
+from typing import Optional, TYPE_CHECKING
 
 from bungio.models.base import BaseModel, custom_define, custom_field
 
+
 if TYPE_CHECKING:
-    from bungio.models import (
-        DestinyArtifactDefinition,
-        DestinyInventoryItemDefinition,
-        DestinyProgression,
-    )
+    from bungio.models import DestinyProgression
+    from bungio.models import DestinyArtifactDefinition
+    from bungio.models import DestinyInventoryItemDefinition
 
 
 @custom_define()
@@ -109,10 +108,12 @@ class DestinyArtifactTierItem(BaseModel):
 
     Attributes:
         is_active: _No description given by bungie._
+        is_visible: _No description given by bungie._
         item_hash: _No description given by bungie._
         manifest_item_hash: Manifest information for `item_hash`
     """
 
     is_active: bool = custom_field()
+    is_visible: bool = custom_field()
     item_hash: int = custom_field()
     manifest_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)

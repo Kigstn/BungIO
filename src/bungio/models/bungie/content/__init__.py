@@ -3,18 +3,11 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import Optional, Any, Union, TYPE_CHECKING
 
-from bungio.models.base import (
-    BaseEnum,
-    BaseFlagEnum,
-    BaseModel,
-    HashObject,
-    ManifestModel,
-    custom_define,
-    custom_field,
-)
 from bungio.utils import enum_converter
+from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, ManifestModel, custom_define, custom_field
+
 
 if TYPE_CHECKING:
     from bungio.models import GeneralUser
@@ -104,6 +97,7 @@ class NewsArticleRssResponse(BaseModel):
         current_pagination_token: _No description given by bungie._
         news_articles: _No description given by bungie._
         next_pagination_token: _No description given by bungie._
+        pager_action: _No description given by bungie._
         result_count_this_page: _No description given by bungie._
     """
 
@@ -111,6 +105,7 @@ class NewsArticleRssResponse(BaseModel):
     current_pagination_token: int = custom_field()
     news_articles: list["NewsArticleRssItem"] = custom_field(metadata={"type": """list[NewsArticleRssItem]"""})
     next_pagination_token: int = custom_field()
+    pager_action: str = custom_field()
     result_count_this_page: int = custom_field()
 
 

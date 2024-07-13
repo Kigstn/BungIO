@@ -3,31 +3,22 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import Optional, Any, Union, TYPE_CHECKING
 
-from bungio.models.base import (
-    BaseEnum,
-    BaseFlagEnum,
-    BaseModel,
-    HashObject,
-    ManifestModel,
-    custom_define,
-    custom_field,
-)
 from bungio.utils import enum_converter
+from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, ManifestModel, custom_define, custom_field
+
 
 if TYPE_CHECKING:
-    from bungio.models import (
-        DestinyActivityDefinition,
-        DestinyActivityModifierDefinition,
-        DestinyChallengeStatus,
-        DestinyInventoryItemDefinition,
-        DestinyMaterialRequirement,
-        DestinyProgressionDefinition,
-        DestinyStatDefinition,
-        DestinyUnlockDefinition,
-        PlatformErrorCodes,
-    )
+    from bungio.models import DestinyActivityModifierDefinition
+    from bungio.models import DestinyUnlockDefinition
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyMaterialRequirement
+    from bungio.models import DestinyStatDefinition
+    from bungio.models import DestinyProgressionDefinition
+    from bungio.models import DestinyChallengeStatus
+    from bungio.models import DestinyActivityDefinition
+    from bungio.models import PlatformErrorCodes
 
 
 @custom_define()
@@ -828,6 +819,34 @@ class DestinyPresentationDisplayStyle(BaseEnum):
     """_No description given by bungie._ """
     GUARDIAN_RANK = 6
     """_No description given by bungie._ """
+    CATEGORY_COLLECTIBLES = 7
+    """_No description given by bungie._ """
+    CATEGORY_CURRENCIES = 8
+    """_No description given by bungie._ """
+    CATEGORY_EMBLEMS = 9
+    """_No description given by bungie._ """
+    CATEGORY_EMOTES = 10
+    """_No description given by bungie._ """
+    CATEGORY_ENGRAMS = 11
+    """_No description given by bungie._ """
+    CATEGORY_FINISHERS = 12
+    """_No description given by bungie._ """
+    CATEGORY_GHOSTS = 13
+    """_No description given by bungie._ """
+    CATEGORY_MISC = 14
+    """_No description given by bungie._ """
+    CATEGORY_MODS = 15
+    """_No description given by bungie._ """
+    CATEGORY_ORNAMENTS = 16
+    """_No description given by bungie._ """
+    CATEGORY_SHADERS = 17
+    """_No description given by bungie._ """
+    CATEGORY_SHIPS = 18
+    """_No description given by bungie._ """
+    CATEGORY_SPAWNFX = 19
+    """_No description given by bungie._ """
+    CATEGORY_UPGRADE_MATERIALS = 20
+    """_No description given by bungie._ """
 
 
 class DestinyRecordValueStyle(BaseEnum):
@@ -871,6 +890,10 @@ class DestinyRecordToastStyle(BaseEnum):
     CRAFTING_RECIPE_UNLOCKED = 8
     """_No description given by bungie._ """
     TOAST_GUARDIAN_RANK_DETAILS = 9
+    """_No description given by bungie._ """
+    PATHFINDER_OBJECTIVE_COMPLETE_RITUALS = 10
+    """_No description given by bungie._ """
+    PATHFINDER_OBJECTIVE_COMPLETE_SCHISM = 11
     """_No description given by bungie._ """
 
 
@@ -1152,6 +1175,8 @@ class DestinyGameVersions(BaseFlagEnum):
     """_No description given by bungie._ """
     LIGHTFALL = 512
     """_No description given by bungie._ """
+    THE_FINAL_SHAPE = 1024
+    """_No description given by bungie._ """
 
 
 class DestinyComponentType(BaseEnum):
@@ -1192,7 +1217,7 @@ class DestinyComponentType(BaseEnum):
     ITEM_OBJECTIVES = 301
     """Items can have Objectives (DestinyObjectiveDefinition) bound to them. If they do, this will return info for items that have such bound objectives. """
     ITEM_PERKS = 302
-    """Items can have perks (DestinyPerkDefinition). If they do, this will return info for what perks are active on items. """
+    """Items can have perks (DestinySandboxPerkDefinition). If they do, this will return info for what perks are active on items. """
     ITEM_RENDER_DATA = 303
     """If you just want to render the weapon, this is just enough info to do that rendering. """
     ITEM_STATS = 304
@@ -1264,7 +1289,7 @@ class DestinyRecordState(BaseFlagEnum):
     OBJECTIVE_NOT_COMPLETED = 4
     """If this is set, the objective for this Record has not yet been completed. """
     OBSCURED = 8
-    """If this is set, the game recommends that you replace the display text of this Record with DestinyRecordDefinition.stateInfo.obscuredString. """
+    """If this is set, the game recommends that you replace the display text of this Record with DestinyRecordDefinition.stateInfo.obscuredDescription. """
     INVISIBLE = 16
     """If this is set, the game recommends that you not show this record. Do what you will with this recommendation. """
     ENTITLEMENT_UNOWNED = 32
@@ -1693,6 +1718,12 @@ class DestinyVendorItemState(BaseFlagEnum):
     """This indicates that the sale item is paracausal. """
     CRYPTARCH = 1048576
     """_No description given by bungie._ """
+    ARTIFACT_PERK_OWNED = 2097152
+    """_No description given by bungie._ """
+    SAVINGS = 4194304
+    """_No description given by bungie._ """
+    INELIGIBLE = 8388608
+    """_No description given by bungie._ """
 
 
 @custom_define()
@@ -1721,3 +1752,148 @@ class DestinyEquipItemResult(BaseModel):
 
     equip_status: Union["PlatformErrorCodes", int] = custom_field(converter=enum_converter("PlatformErrorCodes"))
     item_instance_id: int = custom_field(metadata={"int64": True})
+
+
+class FireteamFinderCodeOptionType(BaseEnum):
+    """
+    _No description given by bungie._
+    """
+
+    NONE = 0
+    """_No description given by bungie._ """
+    APPLICATION_ONLY = 1
+    """_No description given by bungie._ """
+    ONLINE_ONLY = 2
+    """_No description given by bungie._ """
+    PLAYER_COUNT = 3
+    """_No description given by bungie._ """
+    TITLE = 4
+    """_No description given by bungie._ """
+    TAGS = 5
+    """_No description given by bungie._ """
+    FINDER_ACTIVITY_GRAPH = 6
+    """_No description given by bungie._ """
+    MICROPHONE_REQUIRED = 7
+    """_No description given by bungie._ """
+
+
+class FireteamFinderOptionAvailability(BaseFlagEnum):
+    """
+    _No description given by bungie._
+    """
+
+    NONE = 0
+    """_No description given by bungie._ """
+    CREATE_LISTING_BUILDER = 1
+    """_No description given by bungie._ """
+    SEARCH_LISTING_BUILDER = 2
+    """_No description given by bungie._ """
+    LISTING_VIEWER = 4
+    """_No description given by bungie._ """
+    LOBBY_VIEWER = 8
+    """_No description given by bungie._ """
+
+
+class FireteamFinderOptionVisibility(BaseEnum):
+    """
+    _No description given by bungie._
+    """
+
+    ALWAYS = 0
+    """_No description given by bungie._ """
+    SHOW_WHEN_CHANGED_FROM_DEFAULT = 1
+    """_No description given by bungie._ """
+
+
+class FireteamFinderOptionControlType(BaseEnum):
+    """
+    _No description given by bungie._
+    """
+
+    NONE = 0
+    """_No description given by bungie._ """
+    VALUE_COLLECTION = 1
+    """_No description given by bungie._ """
+    RADIO_BUTTON = 2
+    """_No description given by bungie._ """
+
+
+class FireteamFinderOptionSearchFilterType(BaseEnum):
+    """
+    _No description given by bungie._
+    """
+
+    NONE = 0
+    """_No description given by bungie._ """
+    ALL = 1
+    """_No description given by bungie._ """
+    ANY = 2
+    """_No description given by bungie._ """
+    IN_RANGE_INCLUSIVE = 3
+    """_No description given by bungie._ """
+    IN_RANGE_EXCLUSIVE = 4
+    """_No description given by bungie._ """
+    GREATER_THAN = 5
+    """_No description given by bungie._ """
+    GREATER_THAN_OR_EQUAL_TO = 6
+    """_No description given by bungie._ """
+    LESS_THAN = 7
+    """_No description given by bungie._ """
+    LESS_THAN_OR_EQUAL_TO = 8
+    """_No description given by bungie._ """
+
+
+class FireteamFinderOptionDisplayFormat(BaseEnum):
+    """
+    _No description given by bungie._
+    """
+
+    TEXT = 0
+    """_No description given by bungie._ """
+    INTEGER = 1
+    """_No description given by bungie._ """
+    BOOL = 2
+    """_No description given by bungie._ """
+    FORMAT_STRING = 3
+    """_No description given by bungie._ """
+
+
+class FireteamFinderOptionValueProviderType(BaseEnum):
+    """
+    _No description given by bungie._
+    """
+
+    NONE = 0
+    """_No description given by bungie._ """
+    VALUES = 1
+    """_No description given by bungie._ """
+    PLAYER_COUNT = 2
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_LABELS = 3
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_ACTIVITY_GRAPH = 4
+    """_No description given by bungie._ """
+
+
+class FireteamFinderOptionValueFlags(BaseFlagEnum):
+    """
+    _No description given by bungie._
+    """
+
+    NONE = 0
+    """_No description given by bungie._ """
+    CREATE_LISTING_DEFAULT_VALUE = 1
+    """_No description given by bungie._ """
+    SEARCH_FILTER_DEFAULT_VALUE = 2
+    """_No description given by bungie._ """
+
+
+class FireteamFinderLabelFieldType(BaseEnum):
+    """
+    _No description given by bungie._
+    """
+
+    TITLE = 0
+    """_No description given by bungie._ """
+    LABEL = 1
+    """_No description given by bungie._ """

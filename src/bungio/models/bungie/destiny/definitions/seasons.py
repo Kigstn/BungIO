@@ -3,25 +3,18 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from typing import Optional, TYPE_CHECKING
 
-from bungio.models.base import (
-    BaseModel,
-    HashObject,
-    ManifestModel,
-    custom_define,
-    custom_field,
-)
+from bungio.models.base import BaseModel, HashObject, ManifestModel, custom_define, custom_field
+
 
 if TYPE_CHECKING:
-    from bungio.models import (
-        DestinyColor,
-        DestinyDisplayPropertiesDefinition,
-        DestinyInventoryItemDefinition,
-        DestinyPresentationNodeDefinition,
-        DestinyProgressionDefinition,
-        DestinyVendorDefinition,
-    )
+    from bungio.models import DestinyPresentationNodeDefinition
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyProgressionDefinition
+    from bungio.models import DestinyVendorDefinition
+    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyColor
 
 
 @custom_define()
@@ -39,6 +32,7 @@ class DestinySeasonDefinition(ManifestModel, HashObject):
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
+        acts: A list of Acts for the Episode
         artifact_item_hash: _No description given by bungie._
         background_image_path: _No description given by bungie._
         display_properties: _No description given by bungie._
@@ -60,6 +54,7 @@ class DestinySeasonDefinition(ManifestModel, HashObject):
         manifest_seasonal_challenges_presentation_node_hash: Manifest information for `seasonal_challenges_presentation_node_hash`
     """
 
+    acts: list["DestinySeasonActDefinition"] = custom_field(metadata={"type": """list[DestinySeasonActDefinition]"""})
     artifact_item_hash: int = custom_field()
     background_image_path: str = custom_field()
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
@@ -80,6 +75,23 @@ class DestinySeasonDefinition(ManifestModel, HashObject):
     manifest_seasonal_challenges_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(
         default=None
     )
+
+
+@custom_define()
+class DestinySeasonActDefinition(BaseModel):
+    """
+    Defines the name, start time and ranks included in an Act of an Episode.
+
+    None
+    Attributes:
+        display_name: The name of the Act.
+        rank_count: The number of ranks included in the Act.
+        start_time: The start time of the Act.
+    """
+
+    display_name: str = custom_field()
+    rank_count: int = custom_field()
+    start_time: datetime = custom_field()
 
 
 @custom_define()

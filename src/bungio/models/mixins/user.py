@@ -5,28 +5,26 @@ from bungio.models.base import ClientMixin, FuzzyAttrFinder, custom_define
 
 if TYPE_CHECKING:
     # AUTOMATIC IMPORTS START
-    from bungio.models import (
-        BungieRewardDisplay,
-        DestinyComponentType,
-        DestinyHistoricalStatsAccountResult,
-        DestinyItemResponse,
-        DestinyLeaderboard,
-        DestinyLinkedProfilesResponse,
-        DestinyProfileResponse,
-        DestinyStatsGroupType,
-        GetGroupsForMemberResponse,
-        GroupApplicationRequest,
-        GroupApplicationResponse,
-        GroupBanRequest,
-        GroupMemberLeaveResult,
-        GroupMembershipSearchResponse,
-        GroupPotentialMembershipSearchResponse,
-        GroupPotentialMemberStatus,
-        GroupsForMemberFilter,
-        GroupType,
-        RuntimeGroupMemberType,
-        UserMembershipData,
-    )
+    from bungio.models import UserMembershipData
+    from bungio.models import GroupPotentialMembershipSearchResponse
+    from bungio.models import GroupMembershipSearchResponse
+    from bungio.models import DestinyHistoricalStatsAccountResult
+    from bungio.models import BungieRewardDisplay
+    from bungio.models import GroupMemberLeaveResult
+    from bungio.models import DestinyLeaderboard
+    from bungio.models import GroupBanRequest
+    from bungio.models import DestinyStatsGroupType
+    from bungio.models import GroupApplicationRequest
+    from bungio.models import DestinyProfileResponse
+    from bungio.models import GetGroupsForMemberResponse
+    from bungio.models import DestinyLinkedProfilesResponse
+    from bungio.models import DestinyComponentType
+    from bungio.models import GroupsForMemberFilter
+    from bungio.models import GroupType
+    from bungio.models import GroupPotentialMemberStatus
+    from bungio.models import GroupApplicationResponse
+    from bungio.models import RuntimeGroupMemberType
+    from bungio.models import DestinyItemResponse
 
     # AUTOMATIC IMPORTS END
     from bungio.models.auth import AuthData

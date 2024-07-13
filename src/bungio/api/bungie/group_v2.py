@@ -4,41 +4,41 @@
 
 from typing import Optional, Union
 
-from bungio.models import (
-    BungieMembershipType,
-    ClanBanner,
-    EntityActionResult,
-    GetGroupsForMemberResponse,
-    GroupApplicationListRequest,
-    GroupApplicationRequest,
-    GroupApplicationResponse,
-    GroupBanRequest,
-    GroupDateRange,
-    GroupEditAction,
-    GroupMemberLeaveResult,
-    GroupMembershipSearchResponse,
-    GroupNameSearchRequest,
-    GroupOptionalConversation,
-    GroupOptionalConversationAddRequest,
-    GroupOptionalConversationEditRequest,
-    GroupOptionsEditAction,
-    GroupPotentialMembershipSearchResponse,
-    GroupPotentialMemberStatus,
-    GroupQuery,
-    GroupResponse,
-    GroupSearchResponse,
-    GroupsForMemberFilter,
-    GroupTheme,
-    GroupType,
-    GroupV2Card,
-    RuntimeGroupMemberType,
-    SearchResultOfGroupBan,
-    SearchResultOfGroupMember,
-    SearchResultOfGroupMemberApplication,
-)
-from bungio.models.auth import AuthData
 from bungio.models.base import ClientMixin, custom_define
+from bungio.models.auth import AuthData
 from bungio.utils import AllowAsyncIteration
+
+from bungio.models import GroupDateRange
+from bungio.models import SearchResultOfGroupMember
+from bungio.models import GroupQuery
+from bungio.models import GroupType
+from bungio.models import GroupApplicationResponse
+from bungio.models import GroupApplicationRequest
+from bungio.models import GroupPotentialMembershipSearchResponse
+from bungio.models import EntityActionResult
+from bungio.models import GroupTheme
+from bungio.models import GroupsForMemberFilter
+from bungio.models import GroupResponse
+from bungio.models import RuntimeGroupMemberType
+from bungio.models import GroupBanRequest
+from bungio.models import GroupV2Card
+from bungio.models import GroupMemberLeaveResult
+from bungio.models import SearchResultOfGroupMemberApplication
+from bungio.models import SearchResultOfGroupEditHistory
+from bungio.models import GroupOptionsEditAction
+from bungio.models import GroupOptionalConversation
+from bungio.models import BungieMembershipType
+from bungio.models import SearchResultOfGroupBan
+from bungio.models import GroupMembershipSearchResponse
+from bungio.models import GroupNameSearchRequest
+from bungio.models import GetGroupsForMemberResponse
+from bungio.models import GroupPotentialMemberStatus
+from bungio.models import GroupApplicationListRequest
+from bungio.models import GroupSearchResponse
+from bungio.models import GroupOptionalConversationAddRequest
+from bungio.models import GroupOptionalConversationEditRequest
+from bungio.models import GroupEditAction
+from bungio.models import ClanBanner
 
 
 @custom_define()
@@ -534,6 +534,29 @@ class GroupV2RouteInterface(ClientMixin):
             currentpage=currentpage, group_id=group_id, auth=auth
         )
         return await SearchResultOfGroupBan.from_dict(
+            data=response, client=self._client, currentpage=currentpage, group_id=group_id, auth=auth
+        )
+
+    async def get_group_edit_history(
+        self, currentpage: int, group_id: int, auth: AuthData
+    ) -> SearchResultOfGroupEditHistory:
+        """
+        Get the list of edits made to a given group. Only accessible to group Admins and above.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: AdminGroups
+
+        Args:
+            currentpage: Page number (starting with 1). Each page has a fixed size of 50 entries.
+            group_id: Group ID whose edit history you are fetching
+            auth: Authentication information.
+
+        Returns:
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
+        """
+
+        response = await self._client.http.get_group_edit_history(currentpage=currentpage, group_id=group_id, auth=auth)
+        return await SearchResultOfGroupEditHistory.from_dict(
             data=response, client=self._client, currentpage=currentpage, group_id=group_id, auth=auth
         )
 

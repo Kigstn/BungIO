@@ -81,6 +81,15 @@
             - DestinyVendorItemState
             - DestinyEquipItemResults
             - DestinyEquipItemResult
+            - FireteamFinderCodeOptionType
+            - FireteamFinderOptionAvailability
+            - FireteamFinderOptionVisibility
+            - FireteamFinderOptionControlType
+            - FireteamFinderOptionSearchFilterType
+            - FireteamFinderOptionDisplayFormat
+            - FireteamFinderOptionValueProviderType
+            - FireteamFinderOptionValueFlags
+            - FireteamFinderLabelFieldType
 ::: bungio.models.bungie.destiny
     options:
         members:
@@ -161,3 +170,12 @@
             - DestinyVendorItemState
             - DestinyEquipItemResults
             - DestinyEquipItemResult
+            - FireteamFinderCodeOptionType
+            - FireteamFinderOptionAvailability
+            - FireteamFinderOptionVisibility
+            - FireteamFinderOptionControlType
+            - FireteamFinderOptionSearchFilterType
+            - FireteamFinderOptionDisplayFormat
+            - FireteamFinderOptionValueProviderType
+            - FireteamFinderOptionValueFlags
+            - FireteamFinderLabelFieldType

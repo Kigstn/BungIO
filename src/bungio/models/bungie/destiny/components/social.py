@@ -13,12 +13,14 @@ class DestinySocialCommendationsComponent(BaseModel):
 
     None
     Attributes:
+        commendation_node_percentages_by_hash: The percentage for each commendation type out of total received
         commendation_node_scores_by_hash: _No description given by bungie._
         commendation_scores_by_hash: _No description given by bungie._
         score_detail_values: _No description given by bungie._
         total_score: _No description given by bungie._
     """
 
+    commendation_node_percentages_by_hash: dict[int, int] = custom_field(metadata={"type": """dict[int, int]"""})
     commendation_node_scores_by_hash: dict[int, int] = custom_field(metadata={"type": """dict[int, int]"""})
     commendation_scores_by_hash: dict[int, int] = custom_field(metadata={"type": """dict[int, int]"""})
     score_detail_values: list[int] = custom_field(metadata={"type": """list[int]"""})

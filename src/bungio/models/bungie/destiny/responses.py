@@ -3,81 +3,80 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Union
+from typing import Union, TYPE_CHECKING
 
-from bungio.models.base import BaseModel, custom_define, custom_field
-from bungio.models.mixins import DestinyUserMixin
 from bungio.utils import enum_converter
+from bungio.models.base import BaseModel, custom_define, custom_field
+
+from bungio.models.mixins import DestinyUserMixin
 
 if TYPE_CHECKING:
-    from bungio.models import (
-        BungieMembershipType,
-        DestinyBaseItemComponentSetOfuint32,
-        DestinyItemComponent,
-        DestinyItemComponentSetOfint32,
-        DestinyItemComponentSetOfint64,
-        DestinyItemComponentSetOfuint32,
-        DestinyPlatformSilverComponent,
-        DestinyPublicVendorSaleItemComponent,
-        DestinyVendorSaleItemComponent,
-        DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent,
-        DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent,
-        DictionaryComponentResponseOfint64AndDestinyCharacterComponent,
-        DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent,
-        DictionaryComponentResponseOfint64AndDestinyCharacterRecordsComponent,
-        DictionaryComponentResponseOfint64AndDestinyCharacterRenderComponent,
-        DictionaryComponentResponseOfint64AndDestinyCollectiblesComponent,
-        DictionaryComponentResponseOfint64AndDestinyCraftablesComponent,
-        DictionaryComponentResponseOfint64AndDestinyCurrenciesComponent,
-        DictionaryComponentResponseOfint64AndDestinyInventoryComponent,
-        DictionaryComponentResponseOfint64AndDestinyKiosksComponent,
-        DictionaryComponentResponseOfint64AndDestinyLoadoutsComponent,
-        DictionaryComponentResponseOfint64AndDestinyPlugSetsComponent,
-        DictionaryComponentResponseOfint64AndDestinyPresentationNodesComponent,
-        DictionaryComponentResponseOfint64AndDestinyStringVariablesComponent,
-        DictionaryComponentResponseOfuint32AndDestinyPublicVendorComponent,
-        DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent,
-        DictionaryComponentResponseOfuint32AndDestinyVendorComponent,
-        DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComponent,
-        DictionaryComponentResponseOfuint32AndPublicDestinyVendorSaleItemSetComponent,
-        PlatformErrorCodes,
-        SingleComponentResponseOfDestinyCharacterActivitiesComponent,
-        SingleComponentResponseOfDestinyCharacterComponent,
-        SingleComponentResponseOfDestinyCharacterProgressionComponent,
-        SingleComponentResponseOfDestinyCharacterRecordsComponent,
-        SingleComponentResponseOfDestinyCharacterRenderComponent,
-        SingleComponentResponseOfDestinyCollectiblesComponent,
-        SingleComponentResponseOfDestinyCurrenciesComponent,
-        SingleComponentResponseOfDestinyInventoryComponent,
-        SingleComponentResponseOfDestinyItemComponent,
-        SingleComponentResponseOfDestinyItemInstanceComponent,
-        SingleComponentResponseOfDestinyItemObjectivesComponent,
-        SingleComponentResponseOfDestinyItemPerksComponent,
-        SingleComponentResponseOfDestinyItemPlugObjectivesComponent,
-        SingleComponentResponseOfDestinyItemRenderComponent,
-        SingleComponentResponseOfDestinyItemReusablePlugsComponent,
-        SingleComponentResponseOfDestinyItemSocketsComponent,
-        SingleComponentResponseOfDestinyItemStatsComponent,
-        SingleComponentResponseOfDestinyItemTalentGridComponent,
-        SingleComponentResponseOfDestinyKiosksComponent,
-        SingleComponentResponseOfDestinyLoadoutsComponent,
-        SingleComponentResponseOfDestinyMetricsComponent,
-        SingleComponentResponseOfDestinyPlatformSilverComponent,
-        SingleComponentResponseOfDestinyPlugSetsComponent,
-        SingleComponentResponseOfDestinyPresentationNodesComponent,
-        SingleComponentResponseOfDestinyProfileCollectiblesComponent,
-        SingleComponentResponseOfDestinyProfileComponent,
-        SingleComponentResponseOfDestinyProfileProgressionComponent,
-        SingleComponentResponseOfDestinyProfileRecordsComponent,
-        SingleComponentResponseOfDestinyProfileTransitoryComponent,
-        SingleComponentResponseOfDestinySocialCommendationsComponent,
-        SingleComponentResponseOfDestinyStringVariablesComponent,
-        SingleComponentResponseOfDestinyVendorCategoriesComponent,
-        SingleComponentResponseOfDestinyVendorComponent,
-        SingleComponentResponseOfDestinyVendorGroupComponent,
-        SingleComponentResponseOfDestinyVendorReceiptsComponent,
-        UserInfoCard,
-    )
+    from bungio.models import SingleComponentResponseOfDestinySocialCommendationsComponent
+    from bungio.models import DictionaryComponentResponseOfint64AndDestinyPresentationNodesComponent
+    from bungio.models import DictionaryComponentResponseOfint64AndDestinyInventoryComponent
+    from bungio.models import SingleComponentResponseOfDestinyCharacterActivitiesComponent
+    from bungio.models import DictionaryComponentResponseOfint64AndDestinyCurrenciesComponent
+    from bungio.models import DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent
+    from bungio.models import SingleComponentResponseOfDestinyCollectiblesComponent
+    from bungio.models import SingleComponentResponseOfDestinyCharacterProgressionComponent
+    from bungio.models import SingleComponentResponseOfDestinyProfileProgressionComponent
+    from bungio.models import SingleComponentResponseOfDestinyKiosksComponent
+    from bungio.models import DictionaryComponentResponseOfint64AndDestinyCharacterRecordsComponent
+    from bungio.models import SingleComponentResponseOfDestinyItemObjectivesComponent
+    from bungio.models import SingleComponentResponseOfDestinyItemPerksComponent
+    from bungio.models import SingleComponentResponseOfDestinyVendorComponent
+    from bungio.models import DictionaryComponentResponseOfint64AndDestinyLoadoutsComponent
+    from bungio.models import DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent
+    from bungio.models import DestinyItemComponentSetOfint64
+    from bungio.models import DestinyVendorSaleItemComponent
+    from bungio.models import SingleComponentResponseOfDestinyPresentationNodesComponent
+    from bungio.models import SingleComponentResponseOfDestinyPlugSetsComponent
+    from bungio.models import SingleComponentResponseOfDestinyItemComponent
+    from bungio.models import PlatformErrorCodes
+    from bungio.models import DictionaryComponentResponseOfint64AndDestinyKiosksComponent
+    from bungio.models import DestinyItemComponent
+    from bungio.models import DestinyItemComponentSetOfuint32
+    from bungio.models import SingleComponentResponseOfDestinyProfileRecordsComponent
+    from bungio.models import SingleComponentResponseOfDestinyVendorReceiptsComponent
+    from bungio.models import DictionaryComponentResponseOfint64AndDestinyCharacterComponent
+    from bungio.models import SingleComponentResponseOfDestinyStringVariablesComponent
+    from bungio.models import DestinyPlatformSilverComponent
+    from bungio.models import DictionaryComponentResponseOfint64AndDestinyCollectiblesComponent
+    from bungio.models import SingleComponentResponseOfDestinyCharacterRecordsComponent
+    from bungio.models import DictionaryComponentResponseOfint64AndDestinyPlugSetsComponent
+    from bungio.models import UserInfoCard
+    from bungio.models import SingleComponentResponseOfDestinyProfileComponent
+    from bungio.models import SingleComponentResponseOfDestinyLoadoutsComponent
+    from bungio.models import SingleComponentResponseOfDestinyItemSocketsComponent
+    from bungio.models import BungieMembershipType
+    from bungio.models import SingleComponentResponseOfDestinyItemPlugObjectivesComponent
+    from bungio.models import SingleComponentResponseOfDestinyCurrenciesComponent
+    from bungio.models import DestinyItemComponentSetOfint32
+    from bungio.models import SingleComponentResponseOfDestinyPlatformSilverComponent
+    from bungio.models import DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent
+    from bungio.models import SingleComponentResponseOfDestinyProfileCollectiblesComponent
+    from bungio.models import DictionaryComponentResponseOfint64AndDestinyCraftablesComponent
+    from bungio.models import DictionaryComponentResponseOfint64AndDestinyStringVariablesComponent
+    from bungio.models import DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComponent
+    from bungio.models import DictionaryComponentResponseOfuint32AndDestinyPublicVendorComponent
+    from bungio.models import SingleComponentResponseOfDestinyMetricsComponent
+    from bungio.models import DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent
+    from bungio.models import DictionaryComponentResponseOfuint32AndPublicDestinyVendorSaleItemSetComponent
+    from bungio.models import DestinyBaseItemComponentSetOfuint32
+    from bungio.models import SingleComponentResponseOfDestinyItemReusablePlugsComponent
+    from bungio.models import SingleComponentResponseOfDestinyVendorCategoriesComponent
+    from bungio.models import SingleComponentResponseOfDestinyItemTalentGridComponent
+    from bungio.models import DictionaryComponentResponseOfuint32AndDestinyVendorComponent
+    from bungio.models import SingleComponentResponseOfDestinyCharacterComponent
+    from bungio.models import SingleComponentResponseOfDestinyVendorGroupComponent
+    from bungio.models import DictionaryComponentResponseOfint64AndDestinyCharacterRenderComponent
+    from bungio.models import SingleComponentResponseOfDestinyCharacterRenderComponent
+    from bungio.models import SingleComponentResponseOfDestinyInventoryComponent
+    from bungio.models import SingleComponentResponseOfDestinyItemStatsComponent
+    from bungio.models import SingleComponentResponseOfDestinyProfileTransitoryComponent
+    from bungio.models import DestinyPublicVendorSaleItemComponent
+    from bungio.models import SingleComponentResponseOfDestinyItemInstanceComponent
+    from bungio.models import SingleComponentResponseOfDestinyItemRenderComponent
 
 
 @custom_define()

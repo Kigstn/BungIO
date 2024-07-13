@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Callable, Coroutine, Optional, Union
+from typing import Callable, Coroutine, Optional, Any, Union
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData

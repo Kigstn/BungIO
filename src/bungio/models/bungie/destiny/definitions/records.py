@@ -2,31 +2,24 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional, Union
+from typing import Optional, Union, TYPE_CHECKING
 
-from bungio.models.base import (
-    BaseModel,
-    HashObject,
-    ManifestModel,
-    custom_define,
-    custom_field,
-)
 from bungio.utils import enum_converter
+from bungio.models.base import BaseModel, HashObject, ManifestModel, custom_define, custom_field
+
 
 if TYPE_CHECKING:
-    from bungio.models import (
-        DestinyDisplayPropertiesDefinition,
-        DestinyGender,
-        DestinyItemQuantity,
-        DestinyLoreDefinition,
-        DestinyObjectiveDefinition,
-        DestinyPresentationChildBlock,
-        DestinyPresentationNodeRequirementsBlock,
-        DestinyPresentationNodeType,
-        DestinyRecordToastStyle,
-        DestinyRecordValueStyle,
-        DestinyScope,
-    )
+    from bungio.models import DestinyScope
+    from bungio.models import DestinyPresentationChildBlock
+    from bungio.models import DestinyItemQuantity
+    from bungio.models import DestinyPresentationNodeRequirementsBlock
+    from bungio.models import DestinyGender
+    from bungio.models import DestinyLoreDefinition
+    from bungio.models import DestinyObjectiveDefinition
+    from bungio.models import DestinyPresentationNodeType
+    from bungio.models import DestinyRecordToastStyle
+    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyRecordValueStyle
 
 
 @custom_define()
@@ -56,6 +49,7 @@ class DestinyRecordDefinition(ManifestModel, HashObject):
         parent_node_hashes: A quick reference to presentation nodes that have this node as a child. Presentation nodes can be parented under multiple parents.
         presentation_info: _No description given by bungie._
         presentation_node_type: _No description given by bungie._
+        record_type_name: A display name for the type of record this is (Triumphs, Lore, Medals, Seasonal Challenge, etc.).
         record_value_style: _No description given by bungie._
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
         requirements: _No description given by bungie._
@@ -82,6 +76,7 @@ class DestinyRecordDefinition(ManifestModel, HashObject):
     presentation_node_type: Union["DestinyPresentationNodeType", int] = custom_field(
         converter=enum_converter("DestinyPresentationNodeType")
     )
+    record_type_name: str = custom_field()
     record_value_style: Union["DestinyRecordValueStyle", int] = custom_field(
         converter=enum_converter("DestinyRecordValueStyle")
     )
@@ -157,11 +152,13 @@ class SchemaRecordStateBlock(BaseModel):
     None
     Attributes:
         featured_priority: _No description given by bungie._
-        obscured_string: _No description given by bungie._
+        obscured_description: A display description override to show when this record is 'obscured' instead of the default obscured display description.
+        obscured_name: A display name override to show when this record is 'obscured' instead of the default obscured display name.
     """
 
     featured_priority: int = custom_field()
-    obscured_string: str = custom_field()
+    obscured_description: str = custom_field()
+    obscured_name: str = custom_field()
 
 
 @custom_define()

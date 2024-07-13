@@ -63,18 +63,14 @@
             - DestinyObjectiveDefinition
             - DestinyObjectivePerkEntryDefinition
             - DestinySandboxPerkDefinition
-            - DestinyTalentNodeStepGroups
-            - DestinyTalentNodeStepWeaponPerformances
-            - DestinyTalentNodeStepImpactEffects
-            - DestinyTalentNodeStepGuardianAttributes
-            - DestinyTalentNodeStepLightAbilities
-            - DestinyTalentNodeStepDamageTypes
             - DestinyDamageTypeDefinition
             - DestinyObjectiveStatEntryDefinition
             - DestinyItemInvestmentStatDefinition
             - DestinyLocationDefinition
             - DestinyLocationReleaseDefinition
             - DestinyActivityUnlockStringDefinition
+            - DestinyActivityRequirementsBlock
+            - DestinyActivityRequirementLabel
             - DestinyActivityPlaylistItemDefinition
             - DestinyActivityModeDefinition
             - DestinyActivityMatchmakingBlockDefinition
@@ -121,6 +117,12 @@
             - DestinyTalentNodeDefinition
             - DestinyNodeActivationRequirement
             - DestinyNodeStepDefinition
+            - DestinyTalentNodeStepGroups
+            - DestinyTalentNodeStepWeaponPerformances
+            - DestinyTalentNodeStepImpactEffects
+            - DestinyTalentNodeStepGuardianAttributes
+            - DestinyTalentNodeStepLightAbilities
+            - DestinyTalentNodeStepDamageTypes
             - DestinyNodeSocketReplaceResponse
             - DestinyTalentNodeExclusiveSetDefinition
             - DestinyTalentExclusiveGroup

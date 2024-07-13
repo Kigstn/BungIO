@@ -3,16 +3,11 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Union
+from typing import Union, TYPE_CHECKING
 
-from bungio.models.base import (
-    BaseEnum,
-    BaseFlagEnum,
-    BaseModel,
-    custom_define,
-    custom_field,
-)
 from bungio.utils import enum_converter
+from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, custom_define, custom_field
+
 
 if TYPE_CHECKING:
     from bungio.models import UserInfoCard
@@ -108,6 +103,7 @@ class Application(BaseModel):
     None
     Attributes:
         application_id: Unique ID assigned to the application
+        application_type: _No description given by bungie._
         creation_date: Date the application was first added to our database.
         first_published: Date the first time the application status entered the 'Public' status.
         link: Link to website for the application where a user can learn more about the app.
@@ -122,6 +118,9 @@ class Application(BaseModel):
     """
 
     application_id: int = custom_field()
+    application_type: Union["OAuthApplicationType", int] = custom_field(
+        converter=enum_converter("OAuthApplicationType")
+    )
     creation_date: datetime = custom_field()
     first_published: datetime = custom_field()
     link: str = custom_field()
@@ -133,6 +132,19 @@ class Application(BaseModel):
     status: Union["ApplicationStatus", int] = custom_field(converter=enum_converter("ApplicationStatus"))
     status_changed: datetime = custom_field()
     team: list["ApplicationDeveloper"] = custom_field(metadata={"type": """list[ApplicationDeveloper]"""})
+
+
+class OAuthApplicationType(BaseEnum):
+    """
+    _No description given by bungie._
+    """
+
+    NONE = 0
+    """_No description given by bungie._ """
+    CONFIDENTIAL = 1
+    """Indicates the application is server based and can keep its secrets from end users and other potential snoops. """
+    PUBLIC = 2
+    """Indicates the application runs in a public place, and it can't be trusted to keep a secret. """
 
 
 class ApplicationStatus(BaseEnum):

@@ -3,25 +3,18 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Union
+from typing import Union, TYPE_CHECKING
 
-from bungio.models.base import (
-    BaseEnum,
-    BaseFlagEnum,
-    BaseModel,
-    custom_define,
-    custom_field,
-)
 from bungio.utils import enum_converter
+from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, custom_define, custom_field
+
 
 if TYPE_CHECKING:
-    from bungio.models import (
-        GeneralUser,
-        GroupResponse,
-        IgnoreResponse,
-        PagedQuery,
-        TagResponse,
-    )
+    from bungio.models import PagedQuery
+    from bungio.models import TagResponse
+    from bungio.models import GroupResponse
+    from bungio.models import IgnoreResponse
+    from bungio.models import GeneralUser
 
 
 class ForumTopicsCategoryFiltersEnum(BaseFlagEnum):

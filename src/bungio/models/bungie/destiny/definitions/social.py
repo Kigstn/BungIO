@@ -2,12 +2,14 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional
+from typing import Optional, TYPE_CHECKING
 
 from bungio.models.base import HashObject, ManifestModel, custom_define, custom_field
 
+
 if TYPE_CHECKING:
-    from bungio.models import DestinyColor, DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyColor
 
 
 @custom_define()
@@ -33,6 +35,7 @@ class DestinySocialCommendationNodeDefinition(ManifestModel, HashObject):
         index: The index of the entity as it was found in the investment tables.
         parent_commendation_node_hash: _No description given by bungie._
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+        tinted_icon: A version of the displayProperties icon tinted with the color of this node.
         manifest_parent_commendation_node_hash: Manifest information for `parent_commendation_node_hash`
     """
 
@@ -43,6 +46,7 @@ class DestinySocialCommendationNodeDefinition(ManifestModel, HashObject):
     index: int = custom_field()
     parent_commendation_node_hash: int = custom_field()
     redacted: bool = custom_field()
+    tinted_icon: str = custom_field()
     manifest_parent_commendation_node_hash: Optional["DestinySocialCommendationNodeDefinition"] = custom_field(
         default=None
     )

@@ -4,33 +4,32 @@ from bungio.models.base import ClientMixin, FuzzyAttrFinder, custom_define
 
 if TYPE_CHECKING:
     # AUTOMATIC IMPORTS START
-    from bungio.models import (
-        BungieMembershipType,
-        ClanBanner,
-        DestinyClanAggregateStat,
-        DestinyLeaderboard,
-        DestinyMilestone,
-        EntityActionResult,
-        FireteamDateRange,
-        FireteamPlatform,
-        FireteamPublicSearchOption,
-        FireteamResponse,
-        FireteamSlotSearch,
-        GroupApplicationListRequest,
-        GroupApplicationRequest,
-        GroupEditAction,
-        GroupOptionalConversation,
-        GroupOptionalConversationAddRequest,
-        GroupOptionalConversationEditRequest,
-        GroupOptionsEditAction,
-        GroupResponse,
-        RuntimeGroupMemberType,
-        SearchResultOfFireteamResponse,
-        SearchResultOfFireteamSummary,
-        SearchResultOfGroupBan,
-        SearchResultOfGroupMember,
-        SearchResultOfGroupMemberApplication,
-    )
+    from bungio.models import GroupOptionalConversation
+    from bungio.models import BungieMembershipType
+    from bungio.models import SearchResultOfGroupMemberApplication
+    from bungio.models import SearchResultOfFireteamSummary
+    from bungio.models import GroupResponse
+    from bungio.models import DestinyMilestone
+    from bungio.models import FireteamResponse
+    from bungio.models import GroupEditAction
+    from bungio.models import SearchResultOfGroupBan
+    from bungio.models import EntityActionResult
+    from bungio.models import GroupOptionalConversationAddRequest
+    from bungio.models import GroupOptionalConversationEditRequest
+    from bungio.models import ClanBanner
+    from bungio.models import DestinyLeaderboard
+    from bungio.models import FireteamPublicSearchOption
+    from bungio.models import GroupApplicationRequest
+    from bungio.models import DestinyClanAggregateStat
+    from bungio.models import GroupOptionsEditAction
+    from bungio.models import SearchResultOfGroupEditHistory
+    from bungio.models import FireteamSlotSearch
+    from bungio.models import GroupApplicationListRequest
+    from bungio.models import FireteamPlatform
+    from bungio.models import RuntimeGroupMemberType
+    from bungio.models import FireteamDateRange
+    from bungio.models import SearchResultOfFireteamResponse
+    from bungio.models import SearchResultOfGroupMember
 
     # AUTOMATIC IMPORTS END
     from bungio.models.auth import AuthData
@@ -228,6 +227,25 @@ class DestinyClanMixin(ClientMixin, FuzzyAttrFinder):
         """
 
         return await self._client.api.get_banned_members_of_group(
+            currentpage=currentpage, group_id=self._fuzzy_getattr("group_id"), auth=auth
+        )
+
+    async def get_group_edit_history(self, currentpage: int, auth: "AuthData") -> "SearchResultOfGroupEditHistory":
+        """
+        Get the list of edits made to a given group. Only accessible to group Admins and above.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: AdminGroups
+
+        Args:
+            currentpage: Page number (starting with 1). Each page has a fixed size of 50 entries.
+            auth: Authentication information.
+
+        Returns:
+            The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
+        """
+
+        return await self._client.api.get_group_edit_history(
             currentpage=currentpage, group_id=self._fuzzy_getattr("group_id"), auth=auth
         )
 

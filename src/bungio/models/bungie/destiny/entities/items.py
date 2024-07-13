@@ -3,33 +3,32 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional, Union
+from typing import Optional, Union, TYPE_CHECKING
 
-from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
+from bungio.models.base import BaseModel, custom_define, custom_field
+
 
 if TYPE_CHECKING:
-    from bungio.models import (
-        DamageType,
-        DestinyBreakerTypeDefinition,
-        DestinyDamageTypeDefinition,
-        DestinyEnergyType,
-        DestinyEnergyTypeDefinition,
-        DestinyInventoryBucketDefinition,
-        DestinyInventoryItemDefinition,
-        DestinyMetricDefinition,
-        DestinyObjectiveProgress,
-        DestinyPerkReference,
-        DestinyProgression,
-        DestinyStat,
-        DestinyTalentGridDefinition,
-        DestinyTalentNode,
-        EquipFailureReason,
-        ItemBindStatus,
-        ItemLocation,
-        ItemState,
-        TransferStatuses,
-    )
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyInventoryBucketDefinition
+    from bungio.models import DestinyPerkReference
+    from bungio.models import DestinyEnergyType
+    from bungio.models import DestinyStat
+    from bungio.models import ItemBindStatus
+    from bungio.models import DestinyObjectiveProgress
+    from bungio.models import DestinyBreakerTypeDefinition
+    from bungio.models import DestinyMetricDefinition
+    from bungio.models import TransferStatuses
+    from bungio.models import DestinyDamageTypeDefinition
+    from bungio.models import DestinyTalentNode
+    from bungio.models import EquipFailureReason
+    from bungio.models import ItemLocation
+    from bungio.models import ItemState
+    from bungio.models import DestinyProgression
+    from bungio.models import DestinyEnergyTypeDefinition
+    from bungio.models import DamageType
+    from bungio.models import DestinyTalentGridDefinition
 
 
 @custom_define()

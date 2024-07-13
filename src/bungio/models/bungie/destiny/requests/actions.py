@@ -2,13 +2,15 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional, Union
+from typing import Optional, Union, TYPE_CHECKING
 
-from bungio.models.base import BaseEnum, BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
+from bungio.models.base import BaseModel, BaseEnum, custom_define, custom_field
+
 
 if TYPE_CHECKING:
-    from bungio.models import BungieMembershipType, DestinyInventoryItemDefinition
+    from bungio.models import BungieMembershipType
+    from bungio.models import DestinyInventoryItemDefinition
 
 
 @custom_define()

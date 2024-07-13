@@ -2,21 +2,14 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional
+from typing import Optional, TYPE_CHECKING
 
-from bungio.models.base import (
-    BaseModel,
-    HashObject,
-    ManifestModel,
-    custom_define,
-    custom_field,
-)
+from bungio.models.base import BaseModel, HashObject, ManifestModel, custom_define, custom_field
+
 
 if TYPE_CHECKING:
-    from bungio.models import (
-        DestinyDisplayPropertiesDefinition,
-        DestinyPresentationNodeDefinition,
-    )
+    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyPresentationNodeDefinition
 
 
 @custom_define()
@@ -73,6 +66,7 @@ class DestinyGuardianRankConstantsDefinition(ManifestModel, HashObject):
 
     Attributes:
         display_properties: _No description given by bungie._
+        guardian_rank_hashes: _No description given by bungie._
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         icon_backgrounds: _No description given by bungie._
         index: The index of the entity as it was found in the investment tables.
@@ -83,6 +77,7 @@ class DestinyGuardianRankConstantsDefinition(ManifestModel, HashObject):
     """
 
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    guardian_rank_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     icon_backgrounds: "DestinyGuardianRankIconBackgroundsDefinition" = custom_field()
     index: int = custom_field()
     rank_count: int = custom_field()

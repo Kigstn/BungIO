@@ -4,13 +4,12 @@
 
 from typing import Optional, Union
 
-from bungio.models import (
-    CommunityContentSortMode,
-    ForumTopicsCategoryFiltersEnum,
-    PostSearchResponse,
-)
-from bungio.models.auth import AuthData
 from bungio.models.base import ClientMixin, custom_define
+from bungio.models.auth import AuthData
+
+from bungio.models import CommunityContentSortMode
+from bungio.models import ForumTopicsCategoryFiltersEnum
+from bungio.models import PostSearchResponse
 
 
 @custom_define()

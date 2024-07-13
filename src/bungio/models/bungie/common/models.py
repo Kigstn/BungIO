@@ -2,19 +2,19 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional
+from typing import Optional, TYPE_CHECKING
 
 from bungio.models.base import BaseModel, custom_define, custom_field
 
+
 if TYPE_CHECKING:
-    from bungio.models import (
-        DestinyGuardianRankConstantsDefinition,
-        DestinyLoadoutConstantsDefinition,
-        DestinyPresentationNodeDefinition,
-        DestinySeasonDefinition,
-        DestinyVendorDefinition,
-        EmailSettings,
-    )
+    from bungio.models import DestinyPresentationNodeDefinition
+    from bungio.models import EmailSettings
+    from bungio.models import DestinySeasonDefinition
+    from bungio.models import DestinyFireteamFinderConstantsDefinition
+    from bungio.models import DestinyVendorDefinition
+    from bungio.models import DestinyLoadoutConstantsDefinition
+    from bungio.models import DestinyGuardianRankConstantsDefinition
 
 
 @custom_define()
@@ -136,7 +136,9 @@ class Destiny2CoreSettings(BaseModel):
         current_rank_progression_hashes: _No description given by bungie._
         current_season_hash: _No description given by bungie._
         current_seasonal_artifact_hash: _No description given by bungie._
+        enabled_fireteam_finder_activity_graph_hashes: _No description given by bungie._
         exotic_catalysts_root_node_hash: _No description given by bungie._
+        fireteam_finder_constants_hash: _No description given by bungie._
         future_season_hashes: _No description given by bungie._
         guardian_rank_constants_hash: _No description given by bungie._
         guardian_ranks_root_node_hash: _No description given by bungie._
@@ -161,6 +163,7 @@ class Destiny2CoreSettings(BaseModel):
         manifest_current_season_hash: Manifest information for `current_season_hash`
         manifest_current_seasonal_artifact_hash: Manifest information for `current_seasonal_artifact_hash`
         manifest_exotic_catalysts_root_node_hash: Manifest information for `exotic_catalysts_root_node_hash`
+        manifest_fireteam_finder_constants_hash: Manifest information for `fireteam_finder_constants_hash`
         manifest_guardian_rank_constants_hash: Manifest information for `guardian_rank_constants_hash`
         manifest_guardian_ranks_root_node_hash: Manifest information for `guardian_ranks_root_node_hash`
         manifest_legacy_seals_root_node_hash: Manifest information for `legacy_seals_root_node_hash`
@@ -185,7 +188,9 @@ class Destiny2CoreSettings(BaseModel):
     current_rank_progression_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     current_season_hash: int = custom_field()
     current_seasonal_artifact_hash: int = custom_field()
+    enabled_fireteam_finder_activity_graph_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     exotic_catalysts_root_node_hash: int = custom_field()
+    fireteam_finder_constants_hash: int = custom_field()
     future_season_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     guardian_rank_constants_hash: int = custom_field()
     guardian_ranks_root_node_hash: int = custom_field()
@@ -210,6 +215,9 @@ class Destiny2CoreSettings(BaseModel):
     manifest_current_season_hash: Optional["DestinySeasonDefinition"] = custom_field(default=None)
     manifest_current_seasonal_artifact_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
     manifest_exotic_catalysts_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
+    manifest_fireteam_finder_constants_hash: Optional["DestinyFireteamFinderConstantsDefinition"] = custom_field(
+        default=None
+    )
     manifest_guardian_rank_constants_hash: Optional["DestinyGuardianRankConstantsDefinition"] = custom_field(
         default=None
     )

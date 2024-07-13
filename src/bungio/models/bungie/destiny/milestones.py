@@ -3,21 +3,20 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from typing import Optional, TYPE_CHECKING
 
 from bungio.models.base import BaseModel, custom_define, custom_field
 
+
 if TYPE_CHECKING:
-    from bungio.models import (
-        DestinyActivityDefinition,
-        DestinyActivityModeDefinition,
-        DestinyChallengeStatus,
-        DestinyInventoryItemDefinition,
-        DestinyMilestoneDefinition,
-        DestinyObjectiveDefinition,
-        DestinyQuestStatus,
-        DestinyVendorDefinition,
-    )
+    from bungio.models import DestinyActivityModeDefinition
+    from bungio.models import DestinyQuestStatus
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyMilestoneDefinition
+    from bungio.models import DestinyVendorDefinition
+    from bungio.models import DestinyChallengeStatus
+    from bungio.models import DestinyObjectiveDefinition
+    from bungio.models import DestinyActivityDefinition
 
 
 @custom_define()

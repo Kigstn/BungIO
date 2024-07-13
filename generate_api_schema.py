@@ -82,7 +82,7 @@ def generate_mixins(folder_path: str):
         with open(file_path, "w", encoding="utf-8") as file:
             file.write(text)
 
-    os.system(f"""black "{base_path}\"""")
+    os.system(f"""ruff format "{base_path}\"""")
     os.system(f"""git add "{base_path}\"""")
 
 
@@ -158,7 +158,7 @@ class {name}(ClientMixin):
         relative_path = os.path.relpath(file_path, ROOT_DIR).replace(".py", "").replace(os.sep, ".")
         names[name] = relative_path
 
-        actual_docs_path = os.path.join(ROOT_DIR, f"{docs_path}/{capital_case_to_snake_case(topic)}.md")
+        actual_docs_path = os.path.join(ROOT_DIR, "..", f"{docs_path}/{capital_case_to_snake_case(topic)}.md")
         if create_raw_http:
             docs_name = f"{topic} HTTP Routes"
         else:
@@ -227,8 +227,8 @@ class AllRouteInterfacesOverwrites({", ".join(overwrite_names)}):
         with open(overwrite_path, "w", encoding="utf-8") as file:
             file.write(overwrite_init_text)
 
-    os.system(f"""autoflake --ignore-init-module-imports --remove-all-unused-imports -i -r "{base_path}\"""")
-    os.system(f"""black "{base_path}\"""")
+    os.system(f"""ruff check "{base_path}\"""")
+    os.system(f"""ruff format "{base_path}\"""")
     os.system(f"""git add "{base_path}\"""")
 
 
@@ -263,19 +263,21 @@ def generate_function(
             if "$ref" in schema_data:
                 schema_name = schema_data["$ref"]
                 schema_name = schema_name.split("/")[-1]
-                schema_data = full_data["components"]["schemas"][schema_name]["properties"]
+                schema_data = full_data["components"]["schemas"][schema_name]
 
-                for name, value in schema_data.items():
-                    arg_type = convert_to_typing(value).name
-                    body.append(
-                        {
-                            "name": capital_case_to_snake_case(name),
-                            "og_name": name,
-                            "description": clean_desc(value),
-                            "type": arg_type,
-                            "append": "",
-                        }
-                    )
+                if "properties" in schema_data:
+                    schema_data = schema_data["properties"]
+                    for name, value in schema_data.items():
+                        arg_type = convert_to_typing(value).name
+                        body.append(
+                            {
+                                "name": capital_case_to_snake_case(name),
+                                "og_name": name,
+                                "description": clean_desc(value),
+                                "type": arg_type,
+                                "append": "",
+                            }
+                        )
 
             else:
                 arg_type = convert_to_typing(schema_data).name
@@ -936,8 +938,8 @@ if TYPE_CHECKING:
                 with open(init_path, "w", encoding="utf-8") as file:
                     file.write("")
 
-    os.system(f"""autoflake --ignore-init-module-imports --remove-all-unused-imports -i -r "{base_path}\"""")
-    os.system(f"""black "{base_path}\"""")
+    os.system(f"""ruff check "{base_path}\"""")
+    os.system(f"""ruff format "{base_path}\"""")
     os.system(f"""git add "{base_path}\"""")
 
 

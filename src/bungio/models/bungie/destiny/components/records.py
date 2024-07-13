@@ -2,18 +2,17 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional, Union
+from typing import Optional, Union, TYPE_CHECKING
 
-from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
+from bungio.models.base import BaseModel, custom_define, custom_field
+
 
 if TYPE_CHECKING:
-    from bungio.models import (
-        DestinyObjectiveProgress,
-        DestinyPresentationNodeDefinition,
-        DestinyRecordDefinition,
-        DestinyRecordState,
-    )
+    from bungio.models import DestinyRecordState
+    from bungio.models import DestinyPresentationNodeDefinition
+    from bungio.models import DestinyObjectiveProgress
+    from bungio.models import DestinyRecordDefinition
 
 
 @custom_define()

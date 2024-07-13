@@ -2,30 +2,23 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import TYPE_CHECKING, Optional, Union
+from typing import Optional, Union, TYPE_CHECKING
 
-from bungio.models.base import (
-    BaseModel,
-    HashObject,
-    ManifestModel,
-    custom_define,
-    custom_field,
-)
 from bungio.utils import enum_converter
+from bungio.models.base import BaseModel, HashObject, ManifestModel, custom_define, custom_field
+
 
 if TYPE_CHECKING:
-    from bungio.models import (
-        DestinyCollectibleDefinition,
-        DestinyDisplayPropertiesDefinition,
-        DestinyInventoryItemDefinition,
-        DestinyMetricDefinition,
-        DestinyObjectiveDefinition,
-        DestinyPresentationDisplayStyle,
-        DestinyPresentationNodeType,
-        DestinyPresentationScreenStyle,
-        DestinyRecordDefinition,
-        DestinyScope,
-    )
+    from bungio.models import DestinyScope
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyCollectibleDefinition
+    from bungio.models import DestinyObjectiveDefinition
+    from bungio.models import DestinyPresentationNodeType
+    from bungio.models import DestinyRecordDefinition
+    from bungio.models import DestinyPresentationScreenStyle
+    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyPresentationDisplayStyle
+    from bungio.models import DestinyMetricDefinition
 
 
 @custom_define()
@@ -104,6 +97,7 @@ class DestinyPresentationNodeDefinition(ManifestModel, HashObject):
         display_style: A hint for how to display this presentation node when it's shown in a list.
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
+        is_seasonal: Primarily for Guardian Ranks, this property if the contents of this node are tied to the current season. These nodes are shown with a different color for the in-game Guardian Ranks display.
         max_category_record_score: _No description given by bungie._
         node_type: _No description given by bungie._
         objective_hash: If this presentation node shows a related objective (for instance, if it tracks the progress of its children), the objective being tracked is indicated here.
@@ -129,6 +123,7 @@ class DestinyPresentationNodeDefinition(ManifestModel, HashObject):
         converter=enum_converter("DestinyPresentationDisplayStyle")
     )
     index: int = custom_field()
+    is_seasonal: bool = custom_field()
     max_category_record_score: int = custom_field()
     node_type: Union["DestinyPresentationNodeType", int] = custom_field(
         converter=enum_converter("DestinyPresentationNodeType")

@@ -1,4 +1,4 @@
-from typing import Any, Callable, Coroutine, Optional, Union
+from typing import Callable, Coroutine, Optional, Any, Union
 
 from bungio.http.route import Route
 from bungio.models.auth import AuthData
@@ -808,6 +808,33 @@ class GroupV2RouteHttpRequests:
         """
 
         return await self.request(Route(path=f"/GroupV2/{group_id}/Banned/", method="GET", auth=auth))
+
+    async def get_group_edit_history(self, currentpage: int, group_id: int, auth: AuthData, *args, **kwargs) -> dict:
+        """
+        Get the list of edits made to a given group. Only accessible to group Admins and above.
+
+        Warning: Requires Authentication.
+            Required oauth2 scopes: AdminGroups
+
+        Args:
+            currentpage: Page number (starting with 1). Each page has a fixed size of 50 entries.
+            group_id: Group ID whose edit history you are fetching
+            auth: Authentication information.
+
+        Raises:
+            NotFound: 404 request
+            BadRequest: 400 request
+            InvalidAuthentication: If authentication is invalid
+            TimeoutException: If no connection could be made
+            BungieDead: Servers are down
+            AuthenticationTooSlow: The authentication key has expired
+            BungieException: Relaying the bungie error
+
+        Returns:
+            The json response
+        """
+
+        return await self.request(Route(path=f"/GroupV2/{group_id}/EditHistory/", method="GET", auth=auth))
 
     async def abdicate_foundership(
         self, founder_id_new: int, group_id: int, membership_type: int, auth: Optional[AuthData] = None, *args, **kwargs
