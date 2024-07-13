@@ -1,7 +1,6 @@
 import pytest
 from bungio.client import Client
 from bungio.models import (
-    BungieMembershipType,
     DestinyComponentType,
     DestinyInventoryItemDefinition,
     ExactSearchRequest,
@@ -41,7 +40,8 @@ async def test_search_destiny_player_by_bungie_name(client: Client, user: Destin
     """
 
     data = await client.api.search_destiny_player_by_bungie_name(
-        data=ExactSearchRequest(display_name="Kigstn", display_name_code=4459), membership_type=user.membership_type
+        data=ExactSearchRequest(display_name="Kigstn", display_name_code=4459),
+        membership_type=user.membership_type,
     )
     assert data is not None
     assert isinstance(data, list)
@@ -304,7 +304,9 @@ async def test_get_post_game_carnage_report(client: Client, user: DestinyUser):
 
 
 @pytest.mark.asyncio
-async def test_report_offensive_post_game_carnage_report_player(client: Client, user: DestinyUser):
+async def test_report_offensive_post_game_carnage_report_player(
+    client: Client, user: DestinyUser
+):
     """
     Test for `Client.api.report_offensive_post_game_carnage_report_player()`
     """

@@ -1,11 +1,12 @@
 import pytest
 from bungio.client import Client
-from bungio.models.base import BaseModel
 from bungio.models.basic.user import DestinyUser
 
 
 @pytest.mark.asyncio
-async def test_get_active_private_clan_fireteam_count(client: Client, user: DestinyUser):
+async def test_get_active_private_clan_fireteam_count(
+    client: Client, user: DestinyUser
+):
     """
     Test for `Client.api.get_active_private_clan_fireteam_count()`
     """
@@ -31,7 +32,9 @@ async def test_get_available_clan_fireteams(client: Client, user: DestinyUser):
 
 
 @pytest.mark.asyncio
-async def test_search_public_available_clan_fireteams(client: Client, user: DestinyUser):
+async def test_search_public_available_clan_fireteams(
+    client: Client, user: DestinyUser
+):
     """
     Test for `Client.api.search_public_available_clan_fireteams()`
     """

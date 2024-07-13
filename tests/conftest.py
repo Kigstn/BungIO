@@ -3,7 +3,6 @@ import os
 
 import pytest
 from bungio.client import Client
-from bungio.models import BungieMembershipType
 from bungio.models.basic.user import DestinyUser
 
 
@@ -19,7 +18,7 @@ def event_loop():
 
 
 @pytest.fixture(scope="session")
-async def client(event_loop) -> Client:
+def client(event_loop) -> Client:
     """
     Set Up the Client
     """
@@ -34,7 +33,7 @@ async def client(event_loop) -> Client:
 
 
 @pytest.fixture(scope="session")
-async def user(client) -> DestinyUser:
+def user(client) -> DestinyUser:
     """
     Get a user which can be used for queries
     """

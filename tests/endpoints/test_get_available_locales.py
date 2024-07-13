@@ -1,6 +1,5 @@
 import pytest
 from bungio.client import Client
-from bungio.models.base import BaseModel
 from bungio.models.basic.user import DestinyUser
 
 

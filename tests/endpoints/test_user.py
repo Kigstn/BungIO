@@ -32,7 +32,9 @@ async def test_get_sanitized_platform_display_names(client: Client, user: Destin
 
 
 @pytest.mark.asyncio
-async def test_get_credential_types_for_target_account(client: Client, user: DestinyUser):
+async def test_get_credential_types_for_target_account(
+    client: Client, user: DestinyUser
+):
     """
     Test for `Client.api.get_credential_types_for_target_account()`
     """
@@ -84,7 +86,9 @@ async def test_get_membership_data_for_current_user(client: Client, user: Destin
 
 
 @pytest.mark.asyncio
-async def test_get_membership_from_hard_linked_credential(client: Client, user: DestinyUser):
+async def test_get_membership_from_hard_linked_credential(
+    client: Client, user: DestinyUser
+):
     """
     Test for `Client.api.get_membership_from_hard_linked_credential()`
     """

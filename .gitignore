@@ -122,6 +122,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-/tests/
 */todo*
 *.db

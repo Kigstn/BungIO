@@ -200,7 +200,9 @@ async def test_get_admins_and_founder_of_group(client: Client, user: DestinyUser
     Test for `Client.api.get_admins_and_founder_of_group()`
     """
 
-    data = await client.api.get_admins_and_founder_of_group(currentpage=1, group_id=4107840)
+    data = await client.api.get_admins_and_founder_of_group(
+        currentpage=1, group_id=4107840
+    )
     assert data
     assert isinstance(data, BaseModel)
 
