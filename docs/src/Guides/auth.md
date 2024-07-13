@@ -45,9 +45,9 @@ class MyClient(Client):
 
 # instantiate and use both bungio and fastapi
 client = MyClient(
-    bungie_client_id=os.getenv("bungie_client_id"),
-    bungie_client_secret=os.getenv("bungie_client_secret"),
-    bungie_token=os.getenv("bungie_token"),
+    bungie_client_id=os.getenv("BUNGIE_CLIENT_ID"),
+    bungie_client_secret=os.getenv("BUNGIE_CLIENT_SECRET"),
+    bungie_token=os.getenv("BUNGIE_TOKEN"),
 )
 app = fastapi.FastAPI()
 

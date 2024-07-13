@@ -11,9 +11,9 @@ All manifest information are downloaded once, and then stored locally in a datab
 === ":one: Manual Request"
     ```py
     client = Client(
-        bungie_client_id=os.getenv("bungie_client_id"),
-        bungie_client_secret=os.getenv("bungie_client_secret"),
-        bungie_token=os.getenv("bungie_token"),
+        bungie_client_id=os.getenv("BUNGIE_CLIENT_ID"),
+        bungie_client_secret=os.getenv("BUNGIE_CLIENT_SECRET"),
+        bungie_token=os.getenv("BUNGIE_TOKEN"),
     )
 
     async def main():
@@ -39,9 +39,9 @@ All manifest information are downloaded once, and then stored locally in a datab
 
     ```py
     client = Client(
-        bungie_client_id=os.getenv("bungie_client_id"),
-        bungie_client_secret=os.getenv("bungie_client_secret"),
-        bungie_token=os.getenv("bungie_token"),
+        bungie_client_id=os.getenv("BUNGIE_CLIENT_ID"),
+        bungie_client_secret=os.getenv("BUNGIE_CLIENT_SECRET"),
+        bungie_token=os.getenv("BUNGIE_TOKEN"),
         always_return_manifest_information=True,    # specify that we always want the manifest information
     )
 

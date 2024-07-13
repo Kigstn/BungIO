@@ -37,20 +37,20 @@ def main():
 
     generate_functions(
         api_schema,
-        folder_path="bungio/http/routes",
+        folder_path="src/bungio/http/routes",
         docs_path="docs/src/API Reference/HTTP/Bungie Routes",
         create_raw_http=True,
     )
 
     generate_functions(
         api_schema,
-        folder_path="bungio/api/bungie",
+        folder_path="src/bungio/api/bungie",
         docs_path="docs/src/API Reference/Bungie Interface",
         create_raw_http=False,
         mixins=mixins,
     )
 
-    generate_mixins(folder_path="bungio/models/mixins")
+    generate_mixins(folder_path="src/bungio/models/mixins")
 
     # regen models to include mixins
     generate_models(api_schema)
@@ -362,9 +362,9 @@ def generate_function(
         security_info["type"] = "AuthData"
         security_info["in"] = "pb"  # we sort by alphabet, so this is after "page" and before "query"
     else:
-        security_info[
-            "description"
-        ] = "Authentication information. Required when users with a private profile are queried, or when Bungie feels like it"
+        security_info["description"] = (
+            "Authentication information. Required when users with a private profile are queried, or when Bungie feels like it"
+        )
         security_info["type"] = "Optional[AuthData] = None"
         security_info["in"] = "query"
     params.append(security_info)
@@ -488,7 +488,7 @@ def generate_function(
 
         """
     else:
-        t = f"""
+        t = """
 
         Returns:
             The model which is returned by bungie. [General endpoint information.](https://bungie-net.github.io/multi/index.html)
@@ -773,7 +773,7 @@ def get_import_name_from_ref(string: str) -> tuple[str, str]:
 
 
 def generate_models(api_schema: dict):
-    base_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "bungio/models/bungie")
+    base_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "src/bungio/models/bungie")
     docs_path = os.path.join(
         os.path.dirname(os.path.realpath(__file__)), "docs/src/API Reference/Models/Bungie API Models"
     )
@@ -1076,7 +1076,7 @@ class {model_name}({"BaseModel" if "x-mobile-manifest-name" not in model else "M
                 )
 
             if data["int64"]:
-                field_extras.append(f"""metadata={{"int64": True}}""")
+                field_extras.append("""metadata={"int64": True}""")
 
             if default_val := data.get("default", None):
                 field_extras.append(default_val)

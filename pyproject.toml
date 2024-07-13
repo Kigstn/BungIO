@@ -42,6 +42,13 @@ dev = [
 
 [tool.ruff]
 line-length = 120
+fix = true
+
+[tool.ruff.lint]
+# Allow applying all unsafe fixes in the `E` rules and `F401` without the `--unsafe-fixes` flag
+extend-safe-fixes = ["E", "F401"]
+extend-ignore = ["F403"]
+exclude = ["__init__.py"]
 
 [project.urls]
 Repository = "https://github.com/Kigstn/BungIO"

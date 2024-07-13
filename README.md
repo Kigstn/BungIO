@@ -42,9 +42,9 @@ from bungio.models import BungieMembershipType, DestinyActivityModeType, Destiny
 
 # create the client obj with our bungie authentication
 client = Client(
-    bungie_client_id=os.getenv("bungie_client_id"),
-    bungie_client_secret=os.getenv("bungie_client_secret"),
-    bungie_token=os.getenv("bungie_token"),
+    bungie_client_id=os.getenv("BUNGIE_CLIENT_ID"),
+    bungie_client_secret=os.getenv("BUNGIE_CLIENT_SECRET"),
+    bungie_token=os.getenv("BUNGIE_TOKEN"),
 )
 
 async def main():
@@ -60,3 +60,7 @@ async def main():
 # bungio is by nature asynchronous, it can only be run in an asynchronous context
 asyncio.run(main())
 ```
+
+## Install Dev Environment
+- `pip install uv`
+- `uv pip install -r .\pyproject.toml --all-extras`
