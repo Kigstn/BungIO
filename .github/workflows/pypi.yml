@@ -18,7 +18,7 @@ jobs:
           python -m pip install uv
           python -m pip install build
           python -m pip install twine
-          python -m uv pip install -r .\pyproject.toml
+          python -m uv pip install .
 
       - name: Publish a project to PyPi
         run: |
