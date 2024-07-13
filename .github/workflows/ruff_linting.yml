@@ -1,0 +1,30 @@
+name: Ruff Linting
+
+on:
+  push:
+    branches:
+      - master
+      - dev
+    paths:
+      - bungio/**/*.py
+  pull_request:
+    branches:
+      - master
+      - dev
+    paths:
+      - bungio/**/*.py
+
+jobs:
+  ruff:
+    name: Ruff Linting
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Run Ruff Linting
+        uses: chartboost/ruff-action@v1
+        with:
+          changed-files: "true"
