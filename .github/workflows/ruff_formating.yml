@@ -6,13 +6,15 @@ on:
       - master
       - dev
     paths:
-      - bungio/**/*.py
+      - src/**/*.py
+      - tests/**/*.py
   pull_request:
     branches:
       - master
       - dev
     paths:
-      - bungio/**/*.py
+      - src/**/*.py
+      - tests/**/*.py
 
 jobs:
   ruff:
