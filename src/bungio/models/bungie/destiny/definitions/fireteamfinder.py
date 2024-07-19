@@ -9,19 +9,44 @@ from bungio.models.base import BaseModel, HashObject, ManifestModel, custom_defi
 
 
 if TYPE_CHECKING:
-    from bungio.models import FireteamFinderOptionControlType
-    from bungio.models import FireteamFinderCodeOptionType
-    from bungio.models import FireteamFinderOptionDisplayFormat
-    from bungio.models import FireteamFinderLabelFieldType
-    from bungio.models import DestinyActivityInteractableDefinition
-    from bungio.models import FireteamFinderOptionAvailability
-    from bungio.models import DestinyActivityGraphDefinition
-    from bungio.models import FireteamFinderOptionValueFlags
     from bungio.models import FireteamFinderOptionValueProviderType
+    from bungio.models import FireteamFinderCodeOptionType
+    from bungio.models import FireteamFinderLabelFieldType
     from bungio.models import FireteamFinderOptionSearchFilterType
     from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import FireteamFinderOptionValueFlags
+    from bungio.models import DestinyActivityGraphDefinition
+    from bungio.models import FireteamFinderOptionDisplayFormat
+    from bungio.models import FireteamFinderOptionAvailability
     from bungio.models import FireteamFinderOptionVisibility
+    from bungio.models import FireteamFinderOptionControlType
     from bungio.models import DestinyColor
+    from bungio.models import DestinyActivityInteractableDefinition
+
+
+@custom_define()
+class DestinyActivityInteractableReference(BaseModel):
+    """
+    _No description given by bungie._
+
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
+    Attributes:
+        activity_interactable_element_index: _No description given by bungie._
+        activity_interactable_hash: _No description given by bungie._
+        manifest_activity_interactable_hash: Manifest information for `activity_interactable_hash`
+    """
+
+    activity_interactable_element_index: int = custom_field()
+    activity_interactable_hash: int = custom_field()
+    manifest_activity_interactable_hash: Optional["DestinyActivityInteractableDefinition"] = custom_field(default=None)
 
 
 @custom_define()
@@ -103,31 +128,6 @@ class DestinyActivityGraphReference(BaseModel):
 
     activity_graph_hash: int = custom_field()
     manifest_activity_graph_hash: Optional["DestinyActivityGraphDefinition"] = custom_field(default=None)
-
-
-@custom_define()
-class DestinyActivityInteractableReference(BaseModel):
-    """
-    _No description given by bungie._
-
-    Tip: Manifest Information
-        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
-        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
-
-        To fill the manifest dependent attributes, either:
-
-        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
-        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
-
-    Attributes:
-        activity_interactable_element_index: _No description given by bungie._
-        activity_interactable_hash: _No description given by bungie._
-        manifest_activity_interactable_hash: Manifest information for `activity_interactable_hash`
-    """
-
-    activity_interactable_element_index: int = custom_field()
-    activity_interactable_hash: int = custom_field()
-    manifest_activity_interactable_hash: Optional["DestinyActivityInteractableDefinition"] = custom_field(default=None)
 
 
 @custom_define()

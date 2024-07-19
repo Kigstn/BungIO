@@ -9,12 +9,12 @@ from bungio.models.base import BaseModel, HashObject, ManifestModel, custom_defi
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyPresentationNodeDefinition
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import DestinyProgressionDefinition
-    from bungio.models import DestinyVendorDefinition
     from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyPresentationNodeDefinition
+    from bungio.models import DestinyVendorDefinition
     from bungio.models import DestinyColor
+    from bungio.models import DestinyProgressionDefinition
+    from bungio.models import DestinyInventoryItemDefinition
 
 
 @custom_define()

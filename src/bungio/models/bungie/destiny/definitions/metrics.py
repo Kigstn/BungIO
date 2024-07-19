@@ -10,8 +10,8 @@ from bungio.models.base import HashObject, ManifestModel, custom_define, custom_
 
 if TYPE_CHECKING:
     from bungio.models import DestinyObjectiveDefinition
-    from bungio.models import DestinyPresentationNodeType
     from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyPresentationNodeType
 
 
 @custom_define()

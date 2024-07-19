@@ -8,8 +8,8 @@ from bungio.models.base import HashObject, ManifestModel, custom_define, custom_
 
 
 if TYPE_CHECKING:
-    from bungio.models import InterpolationPointFloat
     from bungio.models import DestinyProgressionDefinition
+    from bungio.models import InterpolationPointFloat
 
 
 @custom_define()

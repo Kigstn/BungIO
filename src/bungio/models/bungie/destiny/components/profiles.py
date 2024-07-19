@@ -10,14 +10,14 @@ from bungio.models.base import BaseModel, custom_define, custom_field
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyGamePrivacySetting
-    from bungio.models import DestinyDestinationDefinition
-    from bungio.models import DestinyArtifactProfileScoped
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import DestinyLocationDefinition
-    from bungio.models import DestinyJoinClosedReasons
     from bungio.models import DestinyObjectiveDefinition
+    from bungio.models import DestinyDestinationDefinition
+    from bungio.models import DestinyLocationDefinition
+    from bungio.models import DestinyGamePrivacySetting
+    from bungio.models import DestinyArtifactProfileScoped
     from bungio.models import DestinyPartyMemberStates
+    from bungio.models import DestinyJoinClosedReasons
+    from bungio.models import DestinyInventoryItemDefinition
     from bungio.models import DestinyActivityDefinition
 
 

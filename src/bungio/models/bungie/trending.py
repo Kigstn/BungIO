@@ -11,10 +11,10 @@ from bungio.models.base import BaseModel, BaseEnum, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import DestinyPublicMilestone
-    from bungio.models import ContentItemPublicContract
-    from bungio.models import SearchResultOfTrendingEntry
-    from bungio.models import DestinyMilestoneContent
     from bungio.models import DestinyPublicActivityStatus
+    from bungio.models import SearchResultOfTrendingEntry
+    from bungio.models import ContentItemPublicContract
+    from bungio.models import DestinyMilestoneContent
 
 
 @custom_define()

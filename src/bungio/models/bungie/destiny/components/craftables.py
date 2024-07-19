@@ -9,8 +9,8 @@ from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import DestinyPlugSetDefinition
-    from bungio.models import DestinyPresentationNodeDefinition
     from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyPresentationNodeDefinition
 
 
 @custom_define()

@@ -9,9 +9,9 @@ from bungio.models.base import HashObject, ManifestModel, custom_define, custom_
 
 
 if TYPE_CHECKING:
+    from bungio.models import DestinyStatDefinition
     from bungio.models import DestinyEnergyType
     from bungio.models import DestinyDisplayPropertiesDefinition
-    from bungio.models import DestinyStatDefinition
 
 
 @custom_define()

@@ -9,17 +9,17 @@ from bungio.models.base import BaseModel, HashObject, ManifestModel, custom_defi
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyScope
-    from bungio.models import DestinyPresentationChildBlock
-    from bungio.models import DestinyItemQuantity
     from bungio.models import DestinyPresentationNodeRequirementsBlock
-    from bungio.models import DestinyGender
-    from bungio.models import DestinyLoreDefinition
+    from bungio.models import DestinyPresentationChildBlock
     from bungio.models import DestinyObjectiveDefinition
-    from bungio.models import DestinyPresentationNodeType
+    from bungio.models import DestinyLoreDefinition
+    from bungio.models import DestinyGender
     from bungio.models import DestinyRecordToastStyle
     from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyScope
+    from bungio.models import DestinyPresentationNodeType
     from bungio.models import DestinyRecordValueStyle
+    from bungio.models import DestinyItemQuantity
 
 
 @custom_define()

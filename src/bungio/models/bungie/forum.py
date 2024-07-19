@@ -10,11 +10,11 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, custom_define,
 
 
 if TYPE_CHECKING:
-    from bungio.models import PagedQuery
-    from bungio.models import TagResponse
-    from bungio.models import GroupResponse
     from bungio.models import IgnoreResponse
     from bungio.models import GeneralUser
+    from bungio.models import TagResponse
+    from bungio.models import GroupResponse
+    from bungio.models import PagedQuery
 
 
 class ForumTopicsCategoryFiltersEnum(BaseFlagEnum):

@@ -8,16 +8,16 @@ from typing import Union, TYPE_CHECKING
 from bungio.utils import enum_converter
 from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, custom_define, custom_field
 
-from bungio.models.mixins import DestinyClanMixin
 from bungio.models.mixins import DestinyUserMixin
+from bungio.models.mixins import DestinyClanMixin
 
 if TYPE_CHECKING:
-    from bungio.models import PagedQuery
-    from bungio.models import BungieMembershipType
-    from bungio.models import IgnoreLength
-    from bungio.models import UserMembership
-    from bungio.models import DestinyProgression
     from bungio.models import UserInfoCard
+    from bungio.models import BungieMembershipType
+    from bungio.models import DestinyProgression
+    from bungio.models import UserMembership
+    from bungio.models import IgnoreLength
+    from bungio.models import PagedQuery
 
 
 @custom_define()

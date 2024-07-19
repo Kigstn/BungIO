@@ -7,9 +7,9 @@ from typing import Optional, Union
 from bungio.models.base import ClientMixin, custom_define
 from bungio.models.auth import AuthData
 
-from bungio.models import CommunityContentSortMode
 from bungio.models import ForumTopicsCategoryFiltersEnum
 from bungio.models import PostSearchResponse
+from bungio.models import CommunityContentSortMode
 
 
 @custom_define()

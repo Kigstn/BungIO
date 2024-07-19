@@ -8,9 +8,9 @@ from bungio.models.base import BaseModel, custom_define, custom_field
 
 
 if TYPE_CHECKING:
+    from bungio.models import DestinyInventoryItemDefinition
     from bungio.models import DestinyProgression
     from bungio.models import DestinyArtifactDefinition
-    from bungio.models import DestinyInventoryItemDefinition
 
 
 @custom_define()

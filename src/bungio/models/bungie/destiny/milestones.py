@@ -9,13 +9,13 @@ from bungio.models.base import BaseModel, custom_define, custom_field
 
 
 if TYPE_CHECKING:
+    from bungio.models import DestinyObjectiveDefinition
+    from bungio.models import DestinyChallengeStatus
     from bungio.models import DestinyActivityModeDefinition
     from bungio.models import DestinyQuestStatus
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import DestinyMilestoneDefinition
     from bungio.models import DestinyVendorDefinition
-    from bungio.models import DestinyChallengeStatus
-    from bungio.models import DestinyObjectiveDefinition
+    from bungio.models import DestinyMilestoneDefinition
+    from bungio.models import DestinyInventoryItemDefinition
     from bungio.models import DestinyActivityDefinition
 
 

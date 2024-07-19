@@ -11,30 +11,31 @@ from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.models.mixins import DestinyCharacterMixin
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyRace
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import DestinyRaceDefinition
-    from bungio.models import DestinyMilestone
-    from bungio.models import DestinyObjectiveProgress
-    from bungio.models import DestinyRecordDefinition
-    from bungio.models import DestinyCharacterCustomization
+    from bungio.models import BungieMembershipType
+    from bungio.models import DestinyProgression
     from bungio.models import DestinyColor
+    from bungio.models import DestinyItemPerksComponent
+    from bungio.models import DestinyArtifactCharacterScoped
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyRace
+    from bungio.models import DestinyMilestone
     from bungio.models import DestinyActivityModeDefinition
+    from bungio.models import DestinyActivityModeType
+    from bungio.models import DestinyFactionProgression
+    from bungio.models import DestinyActivity
+    from bungio.models import DestinyCharacterCustomization
+    from bungio.models import DestinyActivityInteractableReference
+    from bungio.models import DestinyActivityDefinition
     from bungio.models import DestinyClass
     from bungio.models import DestinyGender
-    from bungio.models import DestinyCharacterPeerView
-    from bungio.models import BungieMembershipType
-    from bungio.models import DestinyQuestStatus
-    from bungio.models import DestinyProgression
-    from bungio.models import DestinyActivityDefinition
-    from bungio.models import DestinyFactionProgression
-    from bungio.models import DyeReference
-    from bungio.models import DestinyGenderDefinition
     from bungio.models import DestinyClassDefinition
-    from bungio.models import DestinyItemPerksComponent
-    from bungio.models import DestinyActivity
-    from bungio.models import DestinyActivityModeType
-    from bungio.models import DestinyArtifactCharacterScoped
+    from bungio.models import DestinyObjectiveProgress
+    from bungio.models import DestinyQuestStatus
+    from bungio.models import DestinyCharacterPeerView
+    from bungio.models import DyeReference
+    from bungio.models import DestinyRecordDefinition
+    from bungio.models import DestinyRaceDefinition
+    from bungio.models import DestinyGenderDefinition
 
 
 @custom_define()
@@ -176,6 +177,7 @@ class DestinyCharacterActivitiesComponent(BaseModel):
 
     Attributes:
         available_activities: The list of activities that the user can play.
+        available_activity_interactables: The list of activity interactables that the player can interact with.
         current_activity_hash: If the user is in an activity, this will be the hash of the Activity being played. Note that you must combine this info with currentActivityModeHash to get a real picture of what the user is doing right now. For instance, PVP "Activities" are just maps: it's the ActivityMode that determines what type of PVP game they're playing.
         current_activity_mode_hash: If the user is in an activity, this will be the hash of the activity mode being played. Combine with currentActivityHash to give a person a full picture of what they're doing right now.
         current_activity_mode_hashes: If the user is in an activity, this will be the hashes of the DestinyActivityModeDefinition being played. Combine with currentActivityHash to give a person a full picture of what they're doing right now.
@@ -191,6 +193,9 @@ class DestinyCharacterActivitiesComponent(BaseModel):
     """
 
     available_activities: list["DestinyActivity"] = custom_field(metadata={"type": """list[DestinyActivity]"""})
+    available_activity_interactables: list["DestinyActivityInteractableReference"] = custom_field(
+        metadata={"type": """list[DestinyActivityInteractableReference]"""}
+    )
     current_activity_hash: int = custom_field()
     current_activity_mode_hash: int = custom_field()
     current_activity_mode_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})

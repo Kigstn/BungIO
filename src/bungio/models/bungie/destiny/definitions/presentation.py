@@ -9,16 +9,16 @@ from bungio.models.base import BaseModel, HashObject, ManifestModel, custom_defi
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyScope
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import DestinyCollectibleDefinition
-    from bungio.models import DestinyObjectiveDefinition
-    from bungio.models import DestinyPresentationNodeType
-    from bungio.models import DestinyRecordDefinition
     from bungio.models import DestinyPresentationScreenStyle
-    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyObjectiveDefinition
+    from bungio.models import DestinyCollectibleDefinition
     from bungio.models import DestinyPresentationDisplayStyle
+    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyScope
+    from bungio.models import DestinyRecordDefinition
+    from bungio.models import DestinyPresentationNodeType
     from bungio.models import DestinyMetricDefinition
+    from bungio.models import DestinyInventoryItemDefinition
 
 
 @custom_define()

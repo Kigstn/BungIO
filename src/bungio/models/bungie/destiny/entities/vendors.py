@@ -11,12 +11,12 @@ from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import DestinyVendorItemState
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import DestinyUnlockStatus
-    from bungio.models import DestinyItemQuantity
-    from bungio.models import VendorItemStatus
     from bungio.models import DestinyProgression
+    from bungio.models import VendorItemStatus
     from bungio.models import DestinyVendorDefinition
+    from bungio.models import DestinyUnlockStatus
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyItemQuantity
 
 
 @custom_define()

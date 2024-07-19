@@ -8,10 +8,10 @@ from bungio.models.base import ClientMixin, custom_define
 from bungio.models.auth import AuthData
 
 from bungio.models import ForumTopicsCategoryFiltersEnum
-from bungio.models import ForumTopicsQuickDateEnum
 from bungio.models import ForumPostSortEnum
-from bungio.models import TagResponse
 from bungio.models import ForumRecruitmentDetail
+from bungio.models import ForumTopicsQuickDateEnum
+from bungio.models import TagResponse
 from bungio.models import ForumTopicsSortEnum
 from bungio.models import PostSearchResponse
 

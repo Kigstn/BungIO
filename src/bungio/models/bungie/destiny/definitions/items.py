@@ -9,13 +9,13 @@ from bungio.models.base import BaseModel, HashObject, ManifestModel, custom_defi
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyEnergyTypeDefinition
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import PlugAvailabilityMode
-    from bungio.models import DestinyEnergyType
     from bungio.models import PlugUiStyles
+    from bungio.models import DestinyEnergyType
+    from bungio.models import PlugAvailabilityMode
     from bungio.models import DestinyDisplayPropertiesDefinition
     from bungio.models import DestinyMaterialRequirementSetDefinition
+    from bungio.models import DestinyEnergyTypeDefinition
+    from bungio.models import DestinyInventoryItemDefinition
 
 
 @custom_define()

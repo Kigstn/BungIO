@@ -9,13 +9,13 @@ from bungio.models.base import BaseModel, HashObject, ManifestModel, custom_defi
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyGraphNodeState
-    from bungio.models import DestinyPositionDefinition
-    from bungio.models import DestinyUnlockExpressionDefinition
-    from bungio.models import ActivityGraphNodeHighlightType
     from bungio.models import DestinyObjectiveDefinition
-    from bungio.models import DestinyActivityDefinition
     from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyPositionDefinition
+    from bungio.models import ActivityGraphNodeHighlightType
+    from bungio.models import DestinyGraphNodeState
+    from bungio.models import DestinyUnlockExpressionDefinition
+    from bungio.models import DestinyActivityDefinition
 
 
 @custom_define()

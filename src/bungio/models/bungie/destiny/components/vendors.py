@@ -9,9 +9,9 @@ from bungio.models.base import BaseModel, custom_define, custom_field
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyVendorGroupDefinition
-    from bungio.models import DestinyVendorDefinition
     from bungio.models import DestinyItemQuantity
+    from bungio.models import DestinyVendorDefinition
+    from bungio.models import DestinyVendorGroupDefinition
     from bungio.models import DestinyInventoryItemDefinition
 
 

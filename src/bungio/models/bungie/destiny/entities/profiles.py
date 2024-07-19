@@ -10,12 +10,12 @@ from bungio.models.base import BaseModel, custom_define, custom_field
 
 
 if TYPE_CHECKING:
+    from bungio.models import UserInfoCard
     from bungio.models import DestinyGuardianRankDefinition
     from bungio.models import DestinySeasonDefinition
     from bungio.models import DestinyEventCardDefinition
-    from bungio.models import DestinyVendorReceipt
     from bungio.models import DestinyGameVersions
-    from bungio.models import UserInfoCard
+    from bungio.models import DestinyVendorReceipt
 
 
 @custom_define()

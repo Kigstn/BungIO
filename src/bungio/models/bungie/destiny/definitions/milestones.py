@@ -9,13 +9,13 @@ from bungio.models.base import BaseModel, BaseEnum, HashObject, ManifestModel, c
 
 
 if TYPE_CHECKING:
+    from bungio.models import DestinyObjectiveDefinition
     from bungio.models import DestinyDestinationDefinition
+    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyActivityDefinition
+    from bungio.models import DestinyVendorDefinition
     from bungio.models import DestinyInventoryItemDefinition
     from bungio.models import DestinyItemQuantity
-    from bungio.models import DestinyVendorDefinition
-    from bungio.models import DestinyObjectiveDefinition
-    from bungio.models import DestinyActivityDefinition
-    from bungio.models import DestinyDisplayPropertiesDefinition
 
 
 @custom_define()

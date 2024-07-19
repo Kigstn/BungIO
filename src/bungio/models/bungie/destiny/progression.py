@@ -9,10 +9,10 @@ from bungio.models.base import BaseModel, custom_define, custom_field
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyFactionDefinition
     from bungio.models import DestinyProgressionResetEntry
-    from bungio.models import DestinyProgressionRewardItemState
     from bungio.models import DestinyProgressionDefinition
+    from bungio.models import DestinyProgressionRewardItemState
+    from bungio.models import DestinyFactionDefinition
 
 
 @custom_define()

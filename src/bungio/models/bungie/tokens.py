@@ -11,8 +11,8 @@ from bungio.models.mixins import DestinyUserMixin
 
 if TYPE_CHECKING:
     from bungio.models import DestinyCollectibleDefinition
-    from bungio.models import DestinyRecordDefinition
     from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyRecordDefinition
 
 
 @custom_define()

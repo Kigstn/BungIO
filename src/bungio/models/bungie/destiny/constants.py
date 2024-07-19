@@ -8,8 +8,8 @@ from bungio.models.base import BaseModel, custom_define, custom_field
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyActivityDefinition
     from bungio.models import DestinyLocationDefinition
+    from bungio.models import DestinyActivityDefinition
     from bungio.models import DestinyObjectiveDefinition
     from bungio.models import DestinyInventoryItemDefinition
 

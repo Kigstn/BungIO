@@ -8,13 +8,13 @@ from bungio.models.base import BaseModel, custom_define, custom_field
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyPresentationNodeDefinition
-    from bungio.models import EmailSettings
-    from bungio.models import DestinySeasonDefinition
-    from bungio.models import DestinyFireteamFinderConstantsDefinition
-    from bungio.models import DestinyVendorDefinition
-    from bungio.models import DestinyLoadoutConstantsDefinition
     from bungio.models import DestinyGuardianRankConstantsDefinition
+    from bungio.models import DestinyFireteamFinderConstantsDefinition
+    from bungio.models import DestinyPresentationNodeDefinition
+    from bungio.models import DestinySeasonDefinition
+    from bungio.models import EmailSettings
+    from bungio.models import DestinyLoadoutConstantsDefinition
+    from bungio.models import DestinyVendorDefinition
 
 
 @custom_define()

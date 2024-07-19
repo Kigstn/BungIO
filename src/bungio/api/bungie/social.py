@@ -8,9 +8,9 @@ from bungio.models.base import ClientMixin, custom_define
 from bungio.models.auth import AuthData
 
 from bungio.models import BungieFriendRequestListResponse
-from bungio.models import PlatformFriendResponse
 from bungio.models import BungieFriendListResponse
 from bungio.models import PlatformFriendType
+from bungio.models import PlatformFriendResponse
 
 
 @custom_define()

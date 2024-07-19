@@ -11,8 +11,8 @@ from bungio.models.base import BaseModel, BaseEnum, custom_define, custom_field
 from bungio.models.mixins import DestinyCharacterMixin
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyActivityDefinition
     from bungio.models import BungieMembershipType
+    from bungio.models import DestinyActivityDefinition
     from bungio.models import DestinyFireteamFinderActivityGraphDefinition
 
 

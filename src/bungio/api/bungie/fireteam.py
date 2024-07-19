@@ -7,13 +7,13 @@ from typing import Optional, Union
 from bungio.models.base import ClientMixin, custom_define
 from bungio.models.auth import AuthData
 
-from bungio.models import SearchResultOfFireteamResponse
-from bungio.models import FireteamPlatform
-from bungio.models import FireteamSlotSearch
-from bungio.models import FireteamResponse
 from bungio.models import FireteamDateRange
+from bungio.models import SearchResultOfFireteamResponse
 from bungio.models import SearchResultOfFireteamSummary
+from bungio.models import FireteamPlatform
 from bungio.models import FireteamPublicSearchOption
+from bungio.models import FireteamResponse
+from bungio.models import FireteamSlotSearch
 
 
 @custom_define()

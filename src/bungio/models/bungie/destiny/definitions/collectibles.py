@@ -9,14 +9,14 @@ from bungio.models.base import BaseModel, HashObject, ManifestModel, custom_defi
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyScope
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import DestinyPresentationChildBlock
     from bungio.models import DestinyUnlockValueDefinition
+    from bungio.models import DestinyPresentationChildBlock
     from bungio.models import DestinyPresentationNodeRequirementsBlock
-    from bungio.models import DestinyPresentationNodeType
     from bungio.models import DestinyDisplayPropertiesDefinition
     from bungio.models import DestinyMaterialRequirementSetDefinition
+    from bungio.models import DestinyScope
+    from bungio.models import DestinyPresentationNodeType
+    from bungio.models import DestinyInventoryItemDefinition
 
 
 @custom_define()

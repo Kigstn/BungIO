@@ -9,12 +9,12 @@ from bungio.models.base import BaseModel, HashObject, ManifestModel, custom_defi
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinySocketVisibility
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import DestinySocketCategoryStyle
     from bungio.models import SocketTypeActionType
-    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinySocketVisibility
     from bungio.models import DestinyItemSocketEntryPlugItemRandomizedDefinition
+    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinySocketCategoryStyle
+    from bungio.models import DestinyInventoryItemDefinition
 
 
 @custom_define()

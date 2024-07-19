@@ -7,10 +7,10 @@ from typing import Optional, Union
 from bungio.models.base import ClientMixin, custom_define
 from bungio.models.auth import AuthData
 
+from bungio.models import SearchResultOfTrendingEntry
 from bungio.models import TrendingEntryType
 from bungio.models import TrendingDetail
 from bungio.models import TrendingCategories
-from bungio.models import SearchResultOfTrendingEntry
 
 
 @custom_define()

@@ -7,10 +7,10 @@ from typing import Optional, Any
 from bungio.models.base import ClientMixin, custom_define
 from bungio.models.auth import AuthData
 
-from bungio.models import ContentItemPublicContract
-from bungio.models import ContentTypeDescription
 from bungio.models import SearchResultOfContentItemPublicContract
+from bungio.models import ContentItemPublicContract
 from bungio.models import NewsArticleRssResponse
+from bungio.models import ContentTypeDescription
 
 
 @custom_define()

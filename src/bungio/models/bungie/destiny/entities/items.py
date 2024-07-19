@@ -10,25 +10,25 @@ from bungio.models.base import BaseModel, custom_define, custom_field
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import DestinyInventoryBucketDefinition
-    from bungio.models import DestinyPerkReference
-    from bungio.models import DestinyEnergyType
-    from bungio.models import DestinyStat
+    from bungio.models import DestinyTalentNode
+    from bungio.models import DestinyProgression
     from bungio.models import ItemBindStatus
+    from bungio.models import DestinyDamageTypeDefinition
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import ItemLocation
+    from bungio.models import DestinyEnergyType
+    from bungio.models import EquipFailureReason
+    from bungio.models import DamageType
+    from bungio.models import DestinyMetricDefinition
+    from bungio.models import DestinyInventoryBucketDefinition
+    from bungio.models import ItemState
+    from bungio.models import DestinyTalentGridDefinition
+    from bungio.models import TransferStatuses
+    from bungio.models import DestinyPerkReference
+    from bungio.models import DestinyEnergyTypeDefinition
+    from bungio.models import DestinyStat
     from bungio.models import DestinyObjectiveProgress
     from bungio.models import DestinyBreakerTypeDefinition
-    from bungio.models import DestinyMetricDefinition
-    from bungio.models import TransferStatuses
-    from bungio.models import DestinyDamageTypeDefinition
-    from bungio.models import DestinyTalentNode
-    from bungio.models import EquipFailureReason
-    from bungio.models import ItemLocation
-    from bungio.models import ItemState
-    from bungio.models import DestinyProgression
-    from bungio.models import DestinyEnergyTypeDefinition
-    from bungio.models import DamageType
-    from bungio.models import DestinyTalentGridDefinition
 
 
 @custom_define()
