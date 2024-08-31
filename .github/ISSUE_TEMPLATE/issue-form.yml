@@ -1,0 +1,44 @@
+name: Bug Report
+description: File a bug report
+title: "[Bug]: "
+labels: ["bug", "triage"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+        Please complete the following form to help us assist you.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Bug Description
+      description: What happened? If you have screenshots, please add them here.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Which steps should someone take to run into the same error?
+    validations:
+      required: true
+
+  - type: input
+    id: webpage
+    attributes:
+      label: Webpage
+      description: The URL where the error happened.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Browser Console Logs / Errors
+      description: Please copy and paste any relevant log output if there is any. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+    validations:
+      required: false

@@ -1,0 +1,28 @@
+name: General Question
+description: Ask a question
+title: "[Question]: "
+labels: ["question"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this question form!
+        Please complete the following form to help us assist you.
+
+  - type: checkboxes
+    id: pre-question
+    attributes:
+      label: Question Validation
+      description: By submitting this issue, you agree that you've previously search the existing GitHub issues and did not find a proper answer to your question.
+      options:
+        - label: I have searched both the my question is not a duplicate.
+          required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: Ask your question here!
+    validations:
+      required: true
