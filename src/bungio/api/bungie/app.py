@@ -5,11 +5,9 @@
 from datetime import datetime
 from typing import Optional
 
-from bungio.models.base import ClientMixin, custom_define
+from bungio.models import ApiUsage, Application
 from bungio.models.auth import AuthData
-
-from bungio.models import Application
-from bungio.models import ApiUsage
+from bungio.models.base import ClientMixin, custom_define
 
 
 @custom_define()

@@ -1,6 +1,6 @@
 [project]
 name = "bungio"
-version = "1.1.0"
+version = "1.2.0"
 description = "A destiny 2 / bungie api wrapper"
 keywords = ["asyncio", "destiny", "destiny 2", "bungie", "api"]
 authors = [{ name = "Daniel J" }]
@@ -17,7 +17,6 @@ dependencies = [
 [project.optional-dependencies]
 speedups = [
     "orjson~=3.6",
-    "aiodns~=3.0",
     "brotli~=1.0",
     "charset-normalizer~=3.3",
 ]
@@ -47,6 +46,7 @@ fix = true
 [tool.ruff.lint]
 # Allow applying all unsafe fixes in the `E` rules and `F401` without the `--unsafe-fixes` flag
 extend-safe-fixes = ["E", "F401"]
+extend-select = ["I"]
 extend-ignore = ["F403"]
 exclude = ["__init__.py"]
 

@@ -2,26 +2,27 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import Optional, Union, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional, Union
 
-from bungio.utils import enum_converter
 from bungio.models.base import BaseModel, HashObject, ManifestModel, custom_define, custom_field
-
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
-    from bungio.models import FireteamFinderOptionValueProviderType
-    from bungio.models import FireteamFinderCodeOptionType
-    from bungio.models import FireteamFinderLabelFieldType
-    from bungio.models import FireteamFinderOptionSearchFilterType
-    from bungio.models import DestinyDisplayPropertiesDefinition
-    from bungio.models import FireteamFinderOptionValueFlags
-    from bungio.models import DestinyActivityGraphDefinition
-    from bungio.models import FireteamFinderOptionDisplayFormat
-    from bungio.models import FireteamFinderOptionAvailability
-    from bungio.models import FireteamFinderOptionVisibility
-    from bungio.models import FireteamFinderOptionControlType
-    from bungio.models import DestinyColor
-    from bungio.models import DestinyActivityInteractableDefinition
+    from bungio.models import (
+        DestinyActivityGraphDefinition,
+        DestinyActivityInteractableDefinition,
+        DestinyColor,
+        DestinyDisplayPropertiesDefinition,
+        FireteamFinderCodeOptionType,
+        FireteamFinderLabelFieldType,
+        FireteamFinderOptionAvailability,
+        FireteamFinderOptionControlType,
+        FireteamFinderOptionDisplayFormat,
+        FireteamFinderOptionSearchFilterType,
+        FireteamFinderOptionValueFlags,
+        FireteamFinderOptionValueProviderType,
+        FireteamFinderOptionVisibility,
+    )
 
 
 @custom_define()

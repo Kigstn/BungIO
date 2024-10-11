@@ -3,22 +3,23 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import Optional, Any, Union, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Optional, Union
 
+from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel, HashObject, ManifestModel, custom_define, custom_field
 from bungio.utils import enum_converter
-from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, ManifestModel, custom_define, custom_field
-
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyStatDefinition
-    from bungio.models import PlatformErrorCodes
-    from bungio.models import DestinyActivityModifierDefinition
-    from bungio.models import DestinyMaterialRequirement
-    from bungio.models import DestinyUnlockDefinition
-    from bungio.models import DestinyActivityDefinition
-    from bungio.models import DestinyProgressionDefinition
-    from bungio.models import DestinyChallengeStatus
-    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import (
+        DestinyActivityDefinition,
+        DestinyActivityModifierDefinition,
+        DestinyChallengeStatus,
+        DestinyInventoryItemDefinition,
+        DestinyMaterialRequirement,
+        DestinyProgressionDefinition,
+        DestinyStatDefinition,
+        DestinyUnlockDefinition,
+        PlatformErrorCodes,
+    )
 
 
 @custom_define()
@@ -895,6 +896,12 @@ class DestinyRecordToastStyle(BaseEnum):
     """_No description given by bungie._ """
     PATHFINDER_OBJECTIVE_COMPLETE_SCHISM = 11
     """_No description given by bungie._ """
+    PATHFINDER_OBJECTIVE_COMPLETE_PVP = 12
+    """_No description given by bungie._ """
+    PATHFINDER_OBJECTIVE_COMPLETE_STRIKES = 13
+    """_No description given by bungie._ """
+    PATHFINDER_OBJECTIVE_COMPLETE_GAMBIT = 14
+    """_No description given by bungie._ """
 
 
 class DestinyPresentationScreenStyle(BaseEnum):
@@ -1723,6 +1730,8 @@ class DestinyVendorItemState(BaseFlagEnum):
     SAVINGS = 4194304
     """_No description given by bungie._ """
     INELIGIBLE = 8388608
+    """_No description given by bungie._ """
+    ARTIFACT_PERK_BOOSTED = 16777216
     """_No description given by bungie._ """
 
 

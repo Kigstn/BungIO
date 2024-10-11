@@ -2,6 +2,7 @@ import asyncio
 import os
 
 import pytest
+
 from bungio.client import Client
 from bungio.models.basic.user import DestinyUser
 

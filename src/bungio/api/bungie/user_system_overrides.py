@@ -4,11 +4,10 @@
 
 from typing import Optional
 
-from bungio.models.base import ClientMixin, custom_define
-from bungio.models.auth import AuthData
-from bungio.utils import AllowAsyncIteration
-
 from bungio.models import CoreSystem
+from bungio.models.auth import AuthData
+from bungio.models.base import ClientMixin, custom_define
+from bungio.utils import AllowAsyncIteration
 
 
 @custom_define()

@@ -3,80 +3,80 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import Union, TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
-from bungio.utils import enum_converter
 from bungio.models.base import BaseModel, custom_define, custom_field
-
 from bungio.models.mixins import DestinyUserMixin
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
-    from bungio.models import SingleComponentResponseOfDestinyInventoryComponent
-    from bungio.models import DictionaryComponentResponseOfint64AndDestinyPresentationNodesComponent
-    from bungio.models import DestinyItemComponentSetOfint64
-    from bungio.models import DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent
-    from bungio.models import DictionaryComponentResponseOfint64AndDestinyCollectiblesComponent
-    from bungio.models import DictionaryComponentResponseOfuint32AndDestinyPublicVendorComponent
-    from bungio.models import BungieMembershipType
-    from bungio.models import SingleComponentResponseOfDestinyCharacterRenderComponent
-    from bungio.models import DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent
-    from bungio.models import SingleComponentResponseOfDestinyItemRenderComponent
-    from bungio.models import DictionaryComponentResponseOfint64AndDestinyCurrenciesComponent
-    from bungio.models import SingleComponentResponseOfDestinyProfileTransitoryComponent
-    from bungio.models import SingleComponentResponseOfDestinyPresentationNodesComponent
-    from bungio.models import SingleComponentResponseOfDestinyCurrenciesComponent
-    from bungio.models import SingleComponentResponseOfDestinyVendorCategoriesComponent
-    from bungio.models import SingleComponentResponseOfDestinySocialCommendationsComponent
-    from bungio.models import SingleComponentResponseOfDestinyCollectiblesComponent
-    from bungio.models import SingleComponentResponseOfDestinyVendorGroupComponent
-    from bungio.models import DictionaryComponentResponseOfint64AndDestinyStringVariablesComponent
-    from bungio.models import SingleComponentResponseOfDestinyMetricsComponent
-    from bungio.models import DestinyItemComponentSetOfint32
-    from bungio.models import DestinyItemComponentSetOfuint32
-    from bungio.models import DestinyPublicVendorSaleItemComponent
-    from bungio.models import SingleComponentResponseOfDestinyStringVariablesComponent
-    from bungio.models import SingleComponentResponseOfDestinyItemPerksComponent
-    from bungio.models import DestinyVendorSaleItemComponent
-    from bungio.models import DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent
-    from bungio.models import SingleComponentResponseOfDestinyItemObjectivesComponent
-    from bungio.models import SingleComponentResponseOfDestinyVendorComponent
-    from bungio.models import SingleComponentResponseOfDestinyPlatformSilverComponent
-    from bungio.models import DestinyItemComponent
-    from bungio.models import SingleComponentResponseOfDestinyCharacterComponent
-    from bungio.models import SingleComponentResponseOfDestinyCharacterActivitiesComponent
-    from bungio.models import PlatformErrorCodes
-    from bungio.models import SingleComponentResponseOfDestinyItemPlugObjectivesComponent
-    from bungio.models import DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent
-    from bungio.models import DictionaryComponentResponseOfint64AndDestinyInventoryComponent
-    from bungio.models import SingleComponentResponseOfDestinyCharacterRecordsComponent
-    from bungio.models import SingleComponentResponseOfDestinyPlugSetsComponent
-    from bungio.models import DestinyPlatformSilverComponent
-    from bungio.models import SingleComponentResponseOfDestinyItemInstanceComponent
-    from bungio.models import SingleComponentResponseOfDestinyItemComponent
-    from bungio.models import DictionaryComponentResponseOfint64AndDestinyCraftablesComponent
-    from bungio.models import DictionaryComponentResponseOfint64AndDestinyCharacterComponent
-    from bungio.models import DictionaryComponentResponseOfint64AndDestinyPlugSetsComponent
-    from bungio.models import DictionaryComponentResponseOfint64AndDestinyCharacterRecordsComponent
-    from bungio.models import DictionaryComponentResponseOfint64AndDestinyLoadoutsComponent
-    from bungio.models import SingleComponentResponseOfDestinyKiosksComponent
-    from bungio.models import SingleComponentResponseOfDestinyProfileProgressionComponent
-    from bungio.models import SingleComponentResponseOfDestinyItemStatsComponent
-    from bungio.models import SingleComponentResponseOfDestinyProfileCollectiblesComponent
-    from bungio.models import SingleComponentResponseOfDestinyItemReusablePlugsComponent
-    from bungio.models import SingleComponentResponseOfDestinyVendorReceiptsComponent
-    from bungio.models import SingleComponentResponseOfDestinyProfileRecordsComponent
-    from bungio.models import UserInfoCard
-    from bungio.models import SingleComponentResponseOfDestinyProfileComponent
-    from bungio.models import SingleComponentResponseOfDestinyCharacterProgressionComponent
-    from bungio.models import DictionaryComponentResponseOfuint32AndDestinyVendorComponent
-    from bungio.models import DictionaryComponentResponseOfint64AndDestinyKiosksComponent
-    from bungio.models import DestinyBaseItemComponentSetOfuint32
-    from bungio.models import DictionaryComponentResponseOfuint32AndPublicDestinyVendorSaleItemSetComponent
-    from bungio.models import SingleComponentResponseOfDestinyItemTalentGridComponent
-    from bungio.models import SingleComponentResponseOfDestinyItemSocketsComponent
-    from bungio.models import DictionaryComponentResponseOfint64AndDestinyCharacterRenderComponent
-    from bungio.models import DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComponent
-    from bungio.models import SingleComponentResponseOfDestinyLoadoutsComponent
+    from bungio.models import (
+        BungieMembershipType,
+        DestinyBaseItemComponentSetOfuint32,
+        DestinyItemComponent,
+        DestinyItemComponentSetOfint64,
+        DestinyItemComponentSetOfuint32,
+        DestinyPlatformSilverComponent,
+        DestinyPublicVendorSaleItemComponent,
+        DestinyVendorSaleItemComponent,
+        DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent,
+        DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent,
+        DictionaryComponentResponseOfint64AndDestinyCharacterComponent,
+        DictionaryComponentResponseOfint64AndDestinyCharacterProgressionComponent,
+        DictionaryComponentResponseOfint64AndDestinyCharacterRecordsComponent,
+        DictionaryComponentResponseOfint64AndDestinyCharacterRenderComponent,
+        DictionaryComponentResponseOfint64AndDestinyCollectiblesComponent,
+        DictionaryComponentResponseOfint64AndDestinyCraftablesComponent,
+        DictionaryComponentResponseOfint64AndDestinyCurrenciesComponent,
+        DictionaryComponentResponseOfint64AndDestinyInventoryComponent,
+        DictionaryComponentResponseOfint64AndDestinyKiosksComponent,
+        DictionaryComponentResponseOfint64AndDestinyLoadoutsComponent,
+        DictionaryComponentResponseOfint64AndDestinyPlugSetsComponent,
+        DictionaryComponentResponseOfint64AndDestinyPresentationNodesComponent,
+        DictionaryComponentResponseOfint64AndDestinyStringVariablesComponent,
+        DictionaryComponentResponseOfuint32AndDestinyPublicVendorComponent,
+        DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent,
+        DictionaryComponentResponseOfuint32AndDestinyVendorComponent,
+        DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComponent,
+        DictionaryComponentResponseOfuint32AndPublicDestinyVendorSaleItemSetComponent,
+        PlatformErrorCodes,
+        SingleComponentResponseOfDestinyCharacterActivitiesComponent,
+        SingleComponentResponseOfDestinyCharacterComponent,
+        SingleComponentResponseOfDestinyCharacterProgressionComponent,
+        SingleComponentResponseOfDestinyCharacterRecordsComponent,
+        SingleComponentResponseOfDestinyCharacterRenderComponent,
+        SingleComponentResponseOfDestinyCollectiblesComponent,
+        SingleComponentResponseOfDestinyCurrenciesComponent,
+        SingleComponentResponseOfDestinyInventoryComponent,
+        SingleComponentResponseOfDestinyItemComponent,
+        SingleComponentResponseOfDestinyItemInstanceComponent,
+        SingleComponentResponseOfDestinyItemObjectivesComponent,
+        SingleComponentResponseOfDestinyItemPerksComponent,
+        SingleComponentResponseOfDestinyItemPlugObjectivesComponent,
+        SingleComponentResponseOfDestinyItemRenderComponent,
+        SingleComponentResponseOfDestinyItemReusablePlugsComponent,
+        SingleComponentResponseOfDestinyItemSocketsComponent,
+        SingleComponentResponseOfDestinyItemStatsComponent,
+        SingleComponentResponseOfDestinyItemTalentGridComponent,
+        SingleComponentResponseOfDestinyKiosksComponent,
+        SingleComponentResponseOfDestinyLoadoutsComponent,
+        SingleComponentResponseOfDestinyMetricsComponent,
+        SingleComponentResponseOfDestinyPlatformSilverComponent,
+        SingleComponentResponseOfDestinyPlugSetsComponent,
+        SingleComponentResponseOfDestinyPresentationNodesComponent,
+        SingleComponentResponseOfDestinyProfileCollectiblesComponent,
+        SingleComponentResponseOfDestinyProfileComponent,
+        SingleComponentResponseOfDestinyProfileProgressionComponent,
+        SingleComponentResponseOfDestinyProfileRecordsComponent,
+        SingleComponentResponseOfDestinyProfileTransitoryComponent,
+        SingleComponentResponseOfDestinySocialCommendationsComponent,
+        SingleComponentResponseOfDestinyStringVariablesComponent,
+        SingleComponentResponseOfDestinyVendorCategoriesComponent,
+        SingleComponentResponseOfDestinyVendorComponent,
+        SingleComponentResponseOfDestinyVendorGroupComponent,
+        SingleComponentResponseOfDestinyVendorReceiptsComponent,
+        UserInfoCard,
+    )
 
 
 @custom_define()
@@ -325,7 +325,7 @@ class DestinyVendorsResponse(BaseModel):
         categories: Categories that the vendor has available, and references to the sales therein. These are keyed by the Vendor Hash, so you will get one Categories Component per vendor returned. COMPONENT TYPE: VendorCategories
         currency_lookups: A "lookup" convenience component that can be used to quickly check if the character has access to items that can be used for purchasing. COMPONENT TYPE: CurrencyLookups
         item_components: The set of item detail components, one set of item components per Vendor. These are keyed by the Vendor Hash, so you will get one Item Component Set per vendor returned. The components contained inside are themselves keyed by the vendorSaleIndex, and will have whatever item-level components you requested (Sockets, Stats, Instance data etc...) per item being sold by the vendor.
-        sales: Sales, keyed by the vendorItemIndex of the item being sold. These are keyed by the Vendor Hash, so you will get one Sale Item Set Component per vendor returned. Note that within the Sale Item Set component, the sales are themselves keyed by the vendorSaleIndex, so you can relate it to the corrent sale item definition within the Vendor's definition. COMPONENT TYPE: VendorSales
+        sales: Sales, keyed by the vendorItemIndex of the item being sold. These are keyed by the Vendor Hash, so you will get one Sale Item Set Component per vendor returned. Note that within the Sale Item Set component, the sales are themselves keyed by the vendorSaleIndex, so you can relate it to the current sale item definition within the Vendor's definition. COMPONENT TYPE: VendorSales
         string_variables: A map of string variable values by hash for this character context. COMPONENT TYPE: StringVariables
         vendor_groups: For Vendors being returned, this will give you the information you need to group them and order them in the same way that the Bungie Companion app performs grouping. It will automatically be returned if you request the Vendors component. COMPONENT TYPE: Vendors
         vendors: The base properties of the vendor. These are keyed by the Vendor Hash, so you will get one Vendor Component per vendor returned. COMPONENT TYPE: Vendors
@@ -333,9 +333,7 @@ class DestinyVendorsResponse(BaseModel):
 
     categories: "DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent" = custom_field()
     currency_lookups: "SingleComponentResponseOfDestinyCurrenciesComponent" = custom_field()
-    item_components: dict[int, "DestinyItemComponentSetOfint32"] = custom_field(
-        metadata={"type": """dict[int, DestinyItemComponentSetOfint32]"""}
-    )
+    item_components: dict[int, dict] = custom_field(metadata={"type": """dict[int, dict]"""})
     sales: "DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComponent" = custom_field()
     string_variables: "SingleComponentResponseOfDestinyStringVariablesComponent" = custom_field()
     vendor_groups: "SingleComponentResponseOfDestinyVendorGroupComponent" = custom_field()
@@ -366,7 +364,7 @@ class DestinyVendorResponse(BaseModel):
     Attributes:
         categories: Categories that the vendor has available, and references to the sales therein. COMPONENT TYPE: VendorCategories
         currency_lookups: A "lookup" convenience component that can be used to quickly check if the character has access to items that can be used for purchasing. COMPONENT TYPE: CurrencyLookups
-        item_components: Item components, keyed by the vendorItemIndex of the active sale items. COMPONENT TYPE: [See inside the DestinyItemComponentSet contract for component types.]
+        item_components: Item components, keyed by the vendorItemIndex of the active sale items. COMPONENT TYPE: [See inside the DestinyVendorItemComponentSet contract for component types.]
         sales: Sales, keyed by the vendorItemIndex of the item being sold. COMPONENT TYPE: VendorSales
         string_variables: A map of string variable values by hash for this character context. COMPONENT TYPE: StringVariables
         vendor: The base properties of the vendor. COMPONENT TYPE: Vendors
@@ -374,7 +372,7 @@ class DestinyVendorResponse(BaseModel):
 
     categories: "SingleComponentResponseOfDestinyVendorCategoriesComponent" = custom_field()
     currency_lookups: "SingleComponentResponseOfDestinyCurrenciesComponent" = custom_field()
-    item_components: "DestinyItemComponentSetOfint32" = custom_field()
+    item_components: dict = custom_field(metadata={"type": """dict"""})
     sales: "DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent" = custom_field()
     string_variables: "SingleComponentResponseOfDestinyStringVariablesComponent" = custom_field()
     vendor: "SingleComponentResponseOfDestinyVendorComponent" = custom_field()

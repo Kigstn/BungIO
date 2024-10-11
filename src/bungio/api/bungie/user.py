@@ -4,19 +4,20 @@
 
 from typing import Optional, Union
 
-from bungio.models.base import ClientMixin, custom_define
+from bungio.models import (
+    BungieCredentialType,
+    BungieMembershipType,
+    GeneralUser,
+    GetCredentialTypesForAccountResponse,
+    HardLinkedUserMembership,
+    UserMembershipData,
+    UserSearchPrefixRequest,
+    UserSearchResponse,
+    UserTheme,
+)
 from bungio.models.auth import AuthData
+from bungio.models.base import ClientMixin, custom_define
 from bungio.utils import AllowAsyncIteration
-
-from bungio.models import GeneralUser
-from bungio.models import UserSearchPrefixRequest
-from bungio.models import UserSearchResponse
-from bungio.models import GetCredentialTypesForAccountResponse
-from bungio.models import HardLinkedUserMembership
-from bungio.models import UserMembershipData
-from bungio.models import BungieMembershipType
-from bungio.models import BungieCredentialType
-from bungio.models import UserTheme
 
 
 @custom_define()

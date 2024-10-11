@@ -4,15 +4,16 @@
 
 from typing import Optional, Union
 
-from bungio.models.base import ClientMixin, custom_define
+from bungio.models import (
+    BungieMembershipType,
+    BungieRewardDisplay,
+    PartnerOfferClaimRequest,
+    PartnerOfferSkuHistoryResponse,
+    PartnerRewardHistoryResponse,
+)
 from bungio.models.auth import AuthData
+from bungio.models.base import ClientMixin, custom_define
 from bungio.utils import AllowAsyncIteration
-
-from bungio.models import BungieRewardDisplay
-from bungio.models import PartnerOfferClaimRequest
-from bungio.models import BungieMembershipType
-from bungio.models import PartnerOfferSkuHistoryResponse
-from bungio.models import PartnerRewardHistoryResponse
 
 
 @custom_define()

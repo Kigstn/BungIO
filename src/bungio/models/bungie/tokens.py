@@ -6,13 +6,10 @@ from datetime import datetime
 from typing import TYPE_CHECKING
 
 from bungio.models.base import BaseModel, custom_define, custom_field
-
 from bungio.models.mixins import DestinyUserMixin
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyCollectibleDefinition
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import DestinyRecordDefinition
+    from bungio.models import DestinyCollectibleDefinition, DestinyInventoryItemDefinition, DestinyRecordDefinition
 
 
 @custom_define()

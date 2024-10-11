@@ -3,22 +3,23 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import Optional, Union, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional, Union
 
-from bungio.utils import enum_converter
 from bungio.models.base import BaseModel, custom_define, custom_field
-
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyObjectiveDefinition
-    from bungio.models import DestinyDestinationDefinition
-    from bungio.models import DestinyLocationDefinition
-    from bungio.models import DestinyGamePrivacySetting
-    from bungio.models import DestinyArtifactProfileScoped
-    from bungio.models import DestinyPartyMemberStates
-    from bungio.models import DestinyJoinClosedReasons
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import DestinyActivityDefinition
+    from bungio.models import (
+        DestinyActivityDefinition,
+        DestinyArtifactProfileScoped,
+        DestinyDestinationDefinition,
+        DestinyGamePrivacySetting,
+        DestinyInventoryItemDefinition,
+        DestinyJoinClosedReasons,
+        DestinyLocationDefinition,
+        DestinyObjectiveDefinition,
+        DestinyPartyMemberStates,
+    )
 
 
 @custom_define()

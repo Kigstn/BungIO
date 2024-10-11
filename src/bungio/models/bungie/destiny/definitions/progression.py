@@ -2,14 +2,12 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from bungio.models.base import HashObject, ManifestModel, custom_define, custom_field
 
-
 if TYPE_CHECKING:
-    from bungio.models import DestinyProgressionDefinition
-    from bungio.models import InterpolationPointFloat
+    from bungio.models import DestinyProgressionDefinition, InterpolationPointFloat
 
 
 @custom_define()

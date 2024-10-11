@@ -3,18 +3,14 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import Optional, Union, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional, Union
 
+from bungio.models.base import BaseEnum, BaseModel, custom_define, custom_field
+from bungio.models.mixins import DestinyClanMixin, DestinyUserMixin
 from bungio.utils import enum_converter
-from bungio.models.base import BaseModel, BaseEnum, custom_define, custom_field
-
-from bungio.models.mixins import DestinyUserMixin
-from bungio.models.mixins import DestinyClanMixin
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyGuardianRankDefinition
-    from bungio.models import BungieMembershipType
-    from bungio.models import UserInfoCard
+    from bungio.models import BungieMembershipType, DestinyGuardianRankDefinition, UserInfoCard
 
 
 class FireteamDateRange(BaseEnum):

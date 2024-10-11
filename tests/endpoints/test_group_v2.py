@@ -1,4 +1,5 @@
 import pytest
+
 from bungio.client import Client
 from bungio.models import GroupNameSearchRequest, GroupQuery, GroupType
 from bungio.models.base import BaseModel

@@ -2,16 +2,17 @@
 # This file is generated automatically by `generate_api_schema.py` and will be overwritten
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from bungio.models.base import BaseModel, custom_define, custom_field
 
-
 if TYPE_CHECKING:
-    from bungio.models import DestinyDestinationDefinition
-    from bungio.models import DestinyActivityDefinition
-    from bungio.models import DestinyObjectiveDefinition
-    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import (
+        DestinyActivityDefinition,
+        DestinyDestinationDefinition,
+        DestinyInventoryItemDefinition,
+        DestinyObjectiveDefinition,
+    )
 
 
 @custom_define()

@@ -3,78 +3,79 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import Optional, Any, Union, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Optional, Union
 
+from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel, HashObject, ManifestModel, custom_define, custom_field
 from bungio.utils import enum_converter
-from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, ManifestModel, custom_define, custom_field
-
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyItemTierTypeDefinition
-    from bungio.models import DestinyProgressionLevelRequirementDefinition
-    from bungio.models import DestinyActivityModeCategory
-    from bungio.models import TierType
-    from bungio.models import DestinyIconSequenceDefinition
-    from bungio.models import BungieMembershipType
-    from bungio.models import DestinyObjectiveGrantStyle
-    from bungio.models import DestinySocketTypeDefinition
-    from bungio.models import BucketCategory
-    from bungio.models import DestinySeasonDefinition
-    from bungio.models import VendorDisplayCategorySortOrder
-    from bungio.models import DestinyColor
-    from bungio.models import DestinyUnlockValueUIStyle
-    from bungio.models import DestinyRace
-    from bungio.models import ItemLocation
-    from bungio.models import HyperlinkReference
-    from bungio.models import DestinyVendorLocationDefinition
-    from bungio.models import DestinyActivityNavPointType
-    from bungio.models import SpecialItemType
-    from bungio.models import DamageType
-    from bungio.models import DestinyActivityGraphDefinition
-    from bungio.models import DestinyVendorReplyType
-    from bungio.models import InterpolationPoint
-    from bungio.models import DestinyItemType
-    from bungio.models import DestinyBreakerType
-    from bungio.models import SearchResultOfDestinyEntitySearchResultItem
-    from bungio.models import DestinyItemPlugDefinition
-    from bungio.models import BucketScope
-    from bungio.models import SocketPlugSources
-    from bungio.models import DestinyGatingScope
-    from bungio.models import DestinyPowerCapDefinition
-    from bungio.models import DestinyProgressionStepDisplayEffect
-    from bungio.models import DestinySocketCategoryDefinition
-    from bungio.models import DestinyProgressionScope
-    from bungio.models import VendorInteractionType
-    from bungio.models import DestinyActivityModeType
-    from bungio.models import DestinyItemSourceDefinition
-    from bungio.models import DestinyLoreDefinition
-    from bungio.models import DestinyCollectibleDefinition
-    from bungio.models import DestinyEnvironmentLocationMapping
-    from bungio.models import DestinyActivityModifierDefinition
-    from bungio.models import ItemPerkVisibility
-    from bungio.models import EquippingItemBlockAttributes
-    from bungio.models import DestinyProgressionRewardItemAcquisitionBehavior
-    from bungio.models import DestinyArtifactDefinition
-    from bungio.models import DestinyVendorItemRefundPolicy
-    from bungio.models import DestinyAnimationReference
-    from bungio.models import DestinyStatAggregationType
-    from bungio.models import DestinyItemQuantity
-    from bungio.models import DestinyPlugSetDefinition
-    from bungio.models import DestinyAmmunitionType
-    from bungio.models import DestinyVendorInteractionRewardSelection
-    from bungio.models import DestinyClass
-    from bungio.models import DestinyGender
-    from bungio.models import DateRange
-    from bungio.models import DestinyDisplayPropertiesDefinition
-    from bungio.models import DestinyBreakerTypeDefinition
-    from bungio.models import DestinyPresentationNodeDefinition
-    from bungio.models import DestinyObjectiveUiStyle
-    from bungio.models import DestinyItemSortType
-    from bungio.models import DyeReference
-    from bungio.models import DestinyStatCategory
-    from bungio.models import DestinyDerivedItemCategoryDefinition
-    from bungio.models import DestinyItemSubType
-    from bungio.models import DestinyVendorProgressionType
+    from bungio.models import (
+        BucketCategory,
+        BucketScope,
+        BungieMembershipType,
+        DamageType,
+        DateRange,
+        DestinyActivityGraphDefinition,
+        DestinyActivityModeCategory,
+        DestinyActivityModeType,
+        DestinyActivityModifierDefinition,
+        DestinyActivityNavPointType,
+        DestinyAmmunitionType,
+        DestinyAnimationReference,
+        DestinyArtifactDefinition,
+        DestinyBreakerType,
+        DestinyBreakerTypeDefinition,
+        DestinyClass,
+        DestinyCollectibleDefinition,
+        DestinyColor,
+        DestinyDerivedItemCategoryDefinition,
+        DestinyDisplayPropertiesDefinition,
+        DestinyEnvironmentLocationMapping,
+        DestinyGatingScope,
+        DestinyGender,
+        DestinyIconSequenceDefinition,
+        DestinyItemPlugDefinition,
+        DestinyItemQuantity,
+        DestinyItemSortType,
+        DestinyItemSourceDefinition,
+        DestinyItemSubType,
+        DestinyItemTierTypeDefinition,
+        DestinyItemType,
+        DestinyLoreDefinition,
+        DestinyObjectiveGrantStyle,
+        DestinyObjectiveUiStyle,
+        DestinyPlugSetDefinition,
+        DestinyPowerCapDefinition,
+        DestinyPresentationNodeDefinition,
+        DestinyProgressionLevelRequirementDefinition,
+        DestinyProgressionRewardItemAcquisitionBehavior,
+        DestinyProgressionScope,
+        DestinyProgressionStepDisplayEffect,
+        DestinyRace,
+        DestinySeasonDefinition,
+        DestinySocketCategoryDefinition,
+        DestinySocketTypeDefinition,
+        DestinyStatAggregationType,
+        DestinyStatCategory,
+        DestinyUnlockValueUIStyle,
+        DestinyVendorInteractionRewardSelection,
+        DestinyVendorItemRefundPolicy,
+        DestinyVendorLocationDefinition,
+        DestinyVendorProgressionType,
+        DestinyVendorReplyType,
+        DyeReference,
+        EquippingItemBlockAttributes,
+        HyperlinkReference,
+        InterpolationPoint,
+        ItemLocation,
+        ItemPerkVisibility,
+        SearchResultOfDestinyEntitySearchResultItem,
+        SocketPlugSources,
+        SpecialItemType,
+        TierType,
+        VendorDisplayCategorySortOrder,
+        VendorInteractionType,
+    )
 
 
 @custom_define()

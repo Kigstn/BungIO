@@ -4,32 +4,34 @@ from bungio.models.base import ClientMixin, FuzzyAttrFinder, custom_define
 
 if TYPE_CHECKING:
     # AUTOMATIC IMPORTS START
-    from bungio.models import FireteamResponse
-    from bungio.models import BungieMembershipType
-    from bungio.models import EntityActionResult
-    from bungio.models import FireteamDateRange
-    from bungio.models import GroupOptionalConversationEditRequest
-    from bungio.models import ClanBanner
-    from bungio.models import SearchResultOfFireteamSummary
-    from bungio.models import GroupEditAction
-    from bungio.models import GroupApplicationListRequest
-    from bungio.models import RuntimeGroupMemberType
-    from bungio.models import SearchResultOfGroupMember
-    from bungio.models import SearchResultOfGroupMemberApplication
-    from bungio.models import GroupOptionsEditAction
-    from bungio.models import GroupApplicationRequest
-    from bungio.models import SearchResultOfFireteamResponse
-    from bungio.models import GroupOptionalConversation
-    from bungio.models import SearchResultOfGroupEditHistory
-    from bungio.models import DestinyMilestone
-    from bungio.models import FireteamSlotSearch
-    from bungio.models import GroupOptionalConversationAddRequest
-    from bungio.models import DestinyLeaderboard
-    from bungio.models import GroupResponse
-    from bungio.models import FireteamPublicSearchOption
-    from bungio.models import FireteamPlatform
-    from bungio.models import SearchResultOfGroupBan
-    from bungio.models import DestinyClanAggregateStat
+    from bungio.models import (
+        BungieMembershipType,
+        ClanBanner,
+        DestinyClanAggregateStat,
+        DestinyLeaderboard,
+        DestinyMilestone,
+        EntityActionResult,
+        FireteamDateRange,
+        FireteamPlatform,
+        FireteamPublicSearchOption,
+        FireteamResponse,
+        FireteamSlotSearch,
+        GroupApplicationListRequest,
+        GroupApplicationRequest,
+        GroupEditAction,
+        GroupOptionalConversation,
+        GroupOptionalConversationAddRequest,
+        GroupOptionalConversationEditRequest,
+        GroupOptionsEditAction,
+        GroupResponse,
+        RuntimeGroupMemberType,
+        SearchResultOfFireteamResponse,
+        SearchResultOfFireteamSummary,
+        SearchResultOfGroupBan,
+        SearchResultOfGroupEditHistory,
+        SearchResultOfGroupMember,
+        SearchResultOfGroupMemberApplication,
+    )
 
     # AUTOMATIC IMPORTS END
     from bungio.models.auth import AuthData

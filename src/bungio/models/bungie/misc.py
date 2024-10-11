@@ -3,70 +3,71 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import Union, TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
+from bungio.models.base import BaseEnum, BaseModel, custom_define, custom_field
 from bungio.utils import enum_converter
-from bungio.models.base import BaseModel, BaseEnum, custom_define, custom_field
-
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyCharacterActivitiesComponent
-    from bungio.models import DestinyLoadoutsComponent
-    from bungio.models import DestinyVendorReceiptsComponent
-    from bungio.models import GroupEditHistory
-    from bungio.models import DestinyCollectiblesComponent
-    from bungio.models import DestinyItemTalentGridComponent
-    from bungio.models import DestinyItemStatsComponent
-    from bungio.models import DestinyItemPlugObjectivesComponent
-    from bungio.models import DestinyPublicVendorComponent
-    from bungio.models import DestinyProfileCollectiblesComponent
-    from bungio.models import DestinyVendorGroupComponent
-    from bungio.models import DestinyItemPerksComponent
-    from bungio.models import ContentItemPublicContract
-    from bungio.models import PagedQuery
-    from bungio.models import DestinyItemObjectivesComponent
-    from bungio.models import DestinyVendorCategoriesComponent
-    from bungio.models import DestinyItemPlugComponent
-    from bungio.models import GroupMember
-    from bungio.models import DestinyCharacterProgressionComponent
-    from bungio.models import DestinyPublicVendorSaleItemComponent
-    from bungio.models import DestinyVendorSaleItemComponent
-    from bungio.models import DestinyVendorComponent
-    from bungio.models import DestinyItemReusablePlugsComponent
-    from bungio.models import DestinyProfileComponent
-    from bungio.models import DestinyItemComponent
-    from bungio.models import PersonalDestinyVendorSaleItemSetComponent
-    from bungio.models import GroupBan
-    from bungio.models import DestinyCharacterRenderComponent
-    from bungio.models import PublicDestinyVendorSaleItemSetComponent
-    from bungio.models import DestinyItemRenderComponent
-    from bungio.models import DestinyProfileRecordsComponent
-    from bungio.models import FireteamSummary
-    from bungio.models import GroupMemberApplication
-    from bungio.models import DestinyItemSocketsComponent
-    from bungio.models import FireteamResponse
-    from bungio.models import DestinyStringVariablesComponent
-    from bungio.models import DestinyPlatformSilverComponent
-    from bungio.models import DestinyCraftablesComponent
-    from bungio.models import DestinyProfileProgressionComponent
-    from bungio.models import DestinyKiosksComponent
-    from bungio.models import DestinyCharacterRecordsComponent
-    from bungio.models import GroupV2Card
-    from bungio.models import PostResponse
-    from bungio.models import GroupMembership
-    from bungio.models import DestinyCharacterComponent
-    from bungio.models import TrendingEntry
-    from bungio.models import DestinyMetricsComponent
-    from bungio.models import DestinyInventoryComponent
-    from bungio.models import DestinyPresentationNodesComponent
-    from bungio.models import ComponentPrivacySetting
-    from bungio.models import DestinySocialCommendationsComponent
-    from bungio.models import DestinyItemInstanceComponent
-    from bungio.models import DestinyEntitySearchResultItem
-    from bungio.models import DestinyCurrenciesComponent
-    from bungio.models import GroupPotentialMembership
-    from bungio.models import DestinyPlugSetsComponent
-    from bungio.models import DestinyProfileTransitoryComponent
+    from bungio.models import (
+        ComponentPrivacySetting,
+        ContentItemPublicContract,
+        DestinyCharacterActivitiesComponent,
+        DestinyCharacterComponent,
+        DestinyCharacterProgressionComponent,
+        DestinyCharacterRecordsComponent,
+        DestinyCharacterRenderComponent,
+        DestinyCollectiblesComponent,
+        DestinyCraftablesComponent,
+        DestinyCurrenciesComponent,
+        DestinyEntitySearchResultItem,
+        DestinyInventoryComponent,
+        DestinyItemComponent,
+        DestinyItemInstanceComponent,
+        DestinyItemObjectivesComponent,
+        DestinyItemPerksComponent,
+        DestinyItemPlugComponent,
+        DestinyItemPlugObjectivesComponent,
+        DestinyItemRenderComponent,
+        DestinyItemReusablePlugsComponent,
+        DestinyItemSocketsComponent,
+        DestinyItemStatsComponent,
+        DestinyItemTalentGridComponent,
+        DestinyKiosksComponent,
+        DestinyLoadoutsComponent,
+        DestinyMetricsComponent,
+        DestinyPlatformSilverComponent,
+        DestinyPlugSetsComponent,
+        DestinyPresentationNodesComponent,
+        DestinyProfileCollectiblesComponent,
+        DestinyProfileComponent,
+        DestinyProfileProgressionComponent,
+        DestinyProfileRecordsComponent,
+        DestinyProfileTransitoryComponent,
+        DestinyPublicVendorComponent,
+        DestinyPublicVendorSaleItemComponent,
+        DestinySocialCommendationsComponent,
+        DestinyStringVariablesComponent,
+        DestinyVendorCategoriesComponent,
+        DestinyVendorComponent,
+        DestinyVendorGroupComponent,
+        DestinyVendorReceiptsComponent,
+        DestinyVendorSaleItemComponent,
+        FireteamResponse,
+        FireteamSummary,
+        GroupBan,
+        GroupEditHistory,
+        GroupMember,
+        GroupMemberApplication,
+        GroupMembership,
+        GroupPotentialMembership,
+        GroupV2Card,
+        PagedQuery,
+        PersonalDestinyVendorSaleItemSetComponent,
+        PostResponse,
+        PublicDestinyVendorSaleItemSetComponent,
+        TrendingEntry,
+    )
 
 
 class BungieMembershipType(BaseEnum):
@@ -1735,6 +1736,56 @@ class DictionaryComponentResponseOfint32AndDestinyItemTalentGridComponent(BaseMo
     data: dict[int, "DestinyItemTalentGridComponent"] = custom_field(
         metadata={"type": """dict[int, DestinyItemTalentGridComponent]"""}
     )
+    disabled: bool = custom_field()
+    privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
+
+
+@custom_define()
+class DestinyVendorItemComponentSetOfint32(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        instances: _No description given by bungie._
+        item_components: _No description given by bungie._
+        objectives: _No description given by bungie._
+        perks: _No description given by bungie._
+        plug_objectives: _No description given by bungie._
+        plug_states: _No description given by bungie._
+        render_data: _No description given by bungie._
+        reusable_plugs: _No description given by bungie._
+        sockets: _No description given by bungie._
+        stats: _No description given by bungie._
+        talent_grids: _No description given by bungie._
+    """
+
+    instances: "DictionaryComponentResponseOfint32AndDestinyItemInstanceComponent" = custom_field()
+    item_components: dict = custom_field(metadata={"type": """dict"""})
+    objectives: "DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent" = custom_field()
+    perks: "DictionaryComponentResponseOfint32AndDestinyItemPerksComponent" = custom_field()
+    plug_objectives: "DictionaryComponentResponseOfint32AndDestinyItemPlugObjectivesComponent" = custom_field()
+    plug_states: "DictionaryComponentResponseOfuint32AndDestinyItemPlugComponent" = custom_field()
+    render_data: "DictionaryComponentResponseOfint32AndDestinyItemRenderComponent" = custom_field()
+    reusable_plugs: "DictionaryComponentResponseOfint32AndDestinyItemReusablePlugsComponent" = custom_field()
+    sockets: "DictionaryComponentResponseOfint32AndDestinyItemSocketsComponent" = custom_field()
+    stats: "DictionaryComponentResponseOfint32AndDestinyItemStatsComponent" = custom_field()
+    talent_grids: "DictionaryComponentResponseOfint32AndDestinyItemTalentGridComponent" = custom_field()
+
+
+@custom_define()
+class DictionaryComponentResponseOfint32AndDestinyItemComponent(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        data: _No description given by bungie._
+        disabled: If true, this component is disabled.
+        privacy: _No description given by bungie._
+    """
+
+    data: dict[int, "DestinyItemComponent"] = custom_field(metadata={"type": """dict[int, DestinyItemComponent]"""})
     disabled: bool = custom_field()
     privacy: Union["ComponentPrivacySetting", int] = custom_field(converter=enum_converter("ComponentPrivacySetting"))
 
