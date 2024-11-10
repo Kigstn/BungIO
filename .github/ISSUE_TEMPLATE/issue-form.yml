@@ -3,6 +3,9 @@ description: File a bug report
 title: "[Bug]: "
 labels: ["bug", "triage"]
 
+assignees:
+  - Kigstn
+
 body:
   - type: markdown
     attributes:

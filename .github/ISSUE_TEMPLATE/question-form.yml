@@ -3,6 +3,9 @@ description: Ask a question
 title: "[Question]: "
 labels: ["question"]
 
+assignees:
+  - Kigstn
+
 body:
   - type: markdown
     attributes:

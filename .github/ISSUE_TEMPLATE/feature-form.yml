@@ -3,6 +3,9 @@ description: Request a new feature
 title: "[Feature Request]: "
 labels: ["enhancement", "triage"]
 
+assignees:
+  - Kigstn
+
 body:
   - type: markdown
     attributes:
