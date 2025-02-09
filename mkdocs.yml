@@ -44,14 +44,13 @@ plugins:
   - mkdocstrings:
       handlers:
         python:
-          import:
+          inventories:
             - https://docs.python.org/3/objects.inv
-          selection:
-            docstring_style: google
           # see https://mkdocstrings.github.io/python/usage/ for options
           options:
             show_root_toc_entry: false
             inherited_members: true
+            docstring_style: google
 
 markdown_extensions:
   - tables

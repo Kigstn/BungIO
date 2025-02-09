@@ -1104,5 +1104,5 @@ def clean_desc(data: dict) -> str:
 
 main()
 
-# todo inherited overwrite classes do not display as docs correctly -> https://mkdocstrings.github.io/handlers/overview/#selection-options (inherited members)
+# todo inherited overwrite classes do not display as docs correctly -> https://mkdocstrings.github.io/handlers/overview/#selection-options (inherited members). Update: should be fixed :)
 # todo options: members: [] does not work -> config/config.md
