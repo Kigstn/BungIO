@@ -2,9 +2,8 @@
 [![](https://img.shields.io/pypi/dm/bungio?label=Downloads&logo=pypi)](https://pypi.org/project/bungio/)
 [![](https://img.shields.io/readthedocs/bungio?label=Docs&logo=readthedocs)](https://bungio.readthedocs.io/en/latest/)
 ![](https://img.shields.io/badge/Python-3.10+-1081c1?logo=python)
-[![](https://img.shields.io/github/workflow/status/Kigstn/BungIO/Ruff%20Formatting/master?label=Ruff%20Formatting&logo=github)](https://github.com/Kigstn/BungIO/actions/workflows/ruff_formating.yml)
-[![](https://img.shields.io/github/workflow/status/Kigstn/BungIO/Ruff8%20Linting/master?label=Ruff%20Linting&logo=github)](https://github.com/Kigstn/BungIO/actions/workflows/ruff_linting.yml)
-
+[![](https://img.shields.io/github/actions/workflow/status/Kigstn/BungIO/ruff_formating.yml?branch=master&logo=github&label=Ruff%20Formatting)](https://github.com/Kigstn/BungIO/actions/workflows/ruff_formating.yml)
+[![](https://img.shields.io/github/actions/workflow/status/Kigstn/BungIO/ruff_linting.yml?branch=master&logo=github&label=Ruff%20Linting)](https://github.com/Kigstn/BungIO/actions/workflows/ruff_linting.yml)
 
 <h1 align="center">
     <p>
