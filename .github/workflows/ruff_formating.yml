@@ -17,17 +17,15 @@ on:
       - tests/**/*.py
 
 jobs:
-  ruff:
-    name: Ruff Formating
-
+  ruff_format:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Run Ruff Formating
-        uses: chartboost/ruff-action@v1
-        with:
-          args: "format --check"
-          changed-files: "true"
+      - name: Setup Python Environment
+        uses: ./.github/actions/setup_python_environment
+
+      - name: Run Ruff Formater
+        run: uv run ruff format --check .

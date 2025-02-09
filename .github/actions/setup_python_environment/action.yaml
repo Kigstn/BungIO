@@ -1,0 +1,20 @@
+name: Setup Python Environment
+description: Sets up python environment
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Set up `uv`
+      uses: astral-sh/setup-uv@v3
+      with:
+        enable-cache: true
+        cache-dependency-glob: "uv.lock"
+
+    - name: Install requirements
+      shell: bash
+      run: uv sync --all-extras --dev
+
+    - name: Minimize uv cache
+      shell: bash
+      run: uv cache prune --ci
