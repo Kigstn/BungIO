@@ -11,7 +11,7 @@ build:
        - asdf global uv latest
        - uv venv
     install:
-       - uv sync --group docs
+       - uv sync --optional docs
     build:
       html:
         - NO_COLOR=1 uv run mkdocs build --clean --site-dir $READTHEDOCS_OUTPUT/html --config-file mkdocs.yml
