@@ -2,8 +2,8 @@
 [![](https://img.shields.io/pypi/dm/bungio?label=Downloads&logo=pypi)](https://pypi.org/project/bungio/)
 [![](https://img.shields.io/readthedocs/bungio?label=Docs&logo=readthedocs)](https://bungio.readthedocs.io/en/latest/)
 ![](https://img.shields.io/badge/Python-3.10+-1081c1?logo=python)
-[![](https://img.shields.io/github/workflow/status/Kigstn/BungIO/Black%20Formatting/master?label=Black%20Formatting&logo=github)](https://github.com/Kigstn/BungIO/actions/workflows/black.yml)
-[![](https://img.shields.io/github/workflow/status/Kigstn/BungIO/Flake8%20Styling/master?label=Flake%20Styling&logo=github)](https://github.com/Kigstn/BungIO/actions/workflows/flake.yml)
+[![](https://img.shields.io/github/workflow/status/Kigstn/BungIO/Black%20Formatting/master?label=Ruff%20Formatting&logo=github)](https://github.com/Kigstn/BungIO/actions/workflows/ruff_formating.yml)
+[![](https://img.shields.io/github/workflow/status/Kigstn/BungIO/Flake8%20Styling/master?label=Ruff%20Linting&logo=github)](https://github.com/Kigstn/BungIO/actions/workflows/ruff_linting.yml)
 
 
 <h1 align="center">
@@ -65,11 +65,11 @@ asyncio.run(main())
 ## Dev Setup
 
 #### Install Dependencies
-- `pip install uv`
-- `uv pip install -e .[speedups,cache,docs,test,dev]`
+- [Install uv](https://docs.astral.sh/uv/getting-started/installation/)
+- `uv sync --all-extras`
 
 #### Run Tests
-- `pytest .`
+- `uv run pytest .`
 
 #### Run Docs
-- `mkdocs serve`
+- `uv run mkdocs serve`
