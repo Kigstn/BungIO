@@ -7,7 +7,11 @@ from typing import TYPE_CHECKING, Optional
 from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyLoadoutColorDefinition, DestinyLoadoutIconDefinition, DestinyLoadoutNameDefinition
+    from bungio.models import (
+        DestinyLoadoutColorDefinition,
+        DestinyLoadoutIconDefinition,
+        DestinyLoadoutNameDefinition,
+    )
 
 
 @custom_define()

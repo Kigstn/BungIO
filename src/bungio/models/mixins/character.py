@@ -856,13 +856,17 @@ class DestinyCharacterMixin(ClientMixin, FuzzyAttrFinder):
         )
 
     async def search_listings_by_filters(
-        self, data: "DestinyFireteamFinderSearchListingsByFiltersRequest", auth: Optional["AuthData"] = None
+        self,
+        data: "DestinyFireteamFinderSearchListingsByFiltersRequest",
+        override_offline_filter: bool,
+        auth: Optional["AuthData"] = None,
     ) -> "DestinyFireteamFinderSearchListingsByFiltersResponse":
         """
         Returns search results for available Fireteams provided search filters.
 
         Args:
             data: The required data for this request.
+            override_offline_filter: Optional boolean to bypass the offline-only check, so the client can pull fireteam from the game.
             auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Returns:
@@ -874,6 +878,7 @@ class DestinyCharacterMixin(ClientMixin, FuzzyAttrFinder):
             destiny_character_id=self._fuzzy_getattr("character_id"),
             destiny_membership_id=self._fuzzy_getattr("membership_id"),
             destiny_membership_type=self._fuzzy_getattr("membership_type"),
+            override_offline_filter=override_offline_filter,
             auth=auth,
         )
 

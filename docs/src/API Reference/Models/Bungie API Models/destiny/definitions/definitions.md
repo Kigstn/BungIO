@@ -5,6 +5,7 @@
     options:
         members:
             - DestinyDefinition
+            - DestinyStatDefinition
             - DestinyProgressionDefinition
             - DestinyProgressionDisplayPropertiesDefinition
             - DestinyProgressionStepDefinition
@@ -24,7 +25,6 @@
             - DestinyItemSetBlockEntryDefinition
             - DestinyItemStatBlockDefinition
             - DestinyInventoryItemStatDefinition
-            - DestinyStatDefinition
             - DestinyStatGroupDefinition
             - DestinyStatDisplayDefinition
             - DestinyStatOverrideDefinition
@@ -130,6 +130,7 @@
             - DestinyItemPerkEntryDefinition
             - DestinyItemCategoryDefinition
             - DestinyProgressionRewardItemQuantity
+            - DestinyProgressionSocketPlugOverride
             - DestinyRaceDefinition
             - DestinyUnlockDefinition
             - DestinyMedalTierDefinition

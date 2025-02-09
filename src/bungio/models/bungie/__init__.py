@@ -208,6 +208,7 @@ from bungio.models.bungie.content.models import TagMetadataItem
 from bungio.models.bungie.content.models import ContentPreview
 from bungio.models.bungie.content.models import ContentTypePropertySection
 from bungio.models.bungie.destiny.definitions import DestinyDefinition
+from bungio.models.bungie.destiny.definitions import DestinyStatDefinition
 from bungio.models.bungie.destiny.definitions import DestinyProgressionDefinition
 from bungio.models.bungie.destiny.definitions import DestinyProgressionDisplayPropertiesDefinition
 from bungio.models.bungie.destiny.definitions import DestinyProgressionStepDefinition
@@ -227,7 +228,6 @@ from bungio.models.bungie.destiny.definitions import DestinyItemSetBlockDefiniti
 from bungio.models.bungie.destiny.definitions import DestinyItemSetBlockEntryDefinition
 from bungio.models.bungie.destiny.definitions import DestinyItemStatBlockDefinition
 from bungio.models.bungie.destiny.definitions import DestinyInventoryItemStatDefinition
-from bungio.models.bungie.destiny.definitions import DestinyStatDefinition
 from bungio.models.bungie.destiny.definitions import DestinyStatGroupDefinition
 from bungio.models.bungie.destiny.definitions import DestinyStatDisplayDefinition
 from bungio.models.bungie.destiny.definitions import DestinyStatOverrideDefinition
@@ -551,6 +551,8 @@ from bungio.models.bungie.misc import DictionaryComponentResponseOfint32AndDesti
 from bungio.models.bungie.misc import DictionaryComponentResponseOfint32AndDestinyItemReusablePlugsComponent
 from bungio.models.bungie.misc import DictionaryComponentResponseOfint32AndDestinyItemPlugObjectivesComponent
 from bungio.models.bungie.misc import DictionaryComponentResponseOfint32AndDestinyItemTalentGridComponent
+from bungio.models.bungie.misc import DestinyVendorItemComponentSetOfint32
+from bungio.models.bungie.misc import DictionaryComponentResponseOfint32AndDestinyItemComponent
 from bungio.models.bungie.misc import SingleComponentResponseOfDestinyVendorComponent
 from bungio.models.bungie.misc import SingleComponentResponseOfDestinyVendorCategoriesComponent
 from bungio.models.bungie.misc import DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent
@@ -651,6 +653,10 @@ from bungio.models.bungie.forums import ForumFlagsEnum
 from bungio.models.bungie.destiny import DestinyProgression
 from bungio.models.bungie.destiny import DestinyProgressionResetEntry
 from bungio.models.bungie.destiny import DestinyProgressionRewardItemState
+from bungio.models.bungie.destiny import DestinyStat
+from bungio.models.bungie.destiny import DestinyStatAggregationType
+from bungio.models.bungie.destiny import DestinyStatCategory
+from bungio.models.bungie.destiny import ItemState
 from bungio.models.bungie.destiny import DestinyProgressionScope
 from bungio.models.bungie.destiny import DestinyProgressionStepDisplayEffect
 from bungio.models.bungie.destiny import DestinyItemQuantity
@@ -661,8 +667,6 @@ from bungio.models.bungie.destiny import TierType
 from bungio.models.bungie.destiny import BucketScope
 from bungio.models.bungie.destiny import BucketCategory
 from bungio.models.bungie.destiny import ItemLocation
-from bungio.models.bungie.destiny import DestinyStatAggregationType
-from bungio.models.bungie.destiny import DestinyStatCategory
 from bungio.models.bungie.destiny import EquippingItemBlockAttributes
 from bungio.models.bungie.destiny import DestinyAmmunitionType
 from bungio.models.bungie.destiny import DyeReference
@@ -702,7 +706,6 @@ from bungio.models.bungie.destiny import DestinyBreakerType
 from bungio.models.bungie.destiny import DestinyProgressionRewardItemAcquisitionBehavior
 from bungio.models.bungie.destiny import ItemBindStatus
 from bungio.models.bungie.destiny import TransferStatuses
-from bungio.models.bungie.destiny import ItemState
 from bungio.models.bungie.destiny import DestinyGameVersions
 from bungio.models.bungie.destiny import DestinyComponentType
 from bungio.models.bungie.destiny import DestinyPresentationNodeState
@@ -714,7 +717,6 @@ from bungio.models.bungie.destiny import DestinyJoinClosedReasons
 from bungio.models.bungie.destiny import DestinyRace
 from bungio.models.bungie.destiny import DestinyActivity
 from bungio.models.bungie.destiny import DestinyActivityDifficultyTier
-from bungio.models.bungie.destiny import DestinyStat
 from bungio.models.bungie.destiny import EquipFailureReason
 from bungio.models.bungie.destiny import DestinyTalentNode
 from bungio.models.bungie.destiny import DestinyTalentNodeState

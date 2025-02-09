@@ -3,23 +3,22 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import Optional, Any, Union, TYPE_CHECKING
 
-from bungio.models.base import BaseEnum, BaseFlagEnum, BaseModel, HashObject, ManifestModel, custom_define, custom_field
 from bungio.utils import enum_converter
+from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, ManifestModel, custom_define, custom_field
+
 
 if TYPE_CHECKING:
-    from bungio.models import (
-        DestinyActivityDefinition,
-        DestinyActivityModifierDefinition,
-        DestinyChallengeStatus,
-        DestinyInventoryItemDefinition,
-        DestinyMaterialRequirement,
-        DestinyProgressionDefinition,
-        DestinyStatDefinition,
-        DestinyUnlockDefinition,
-        PlatformErrorCodes,
-    )
+    from bungio.models import PlatformErrorCodes
+    from bungio.models import DestinyUnlockDefinition
+    from bungio.models import DestinyActivityDefinition
+    from bungio.models import DestinyProgressionDefinition
+    from bungio.models import DestinyActivityModifierDefinition
+    from bungio.models import DestinyChallengeStatus
+    from bungio.models import DestinyStatDefinition
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyMaterialRequirement
 
 
 @custom_define()
@@ -46,6 +45,7 @@ class DestinyProgression(BaseModel):
         next_level_at: The total amount of progression (i.e. "Experience") needed in order to reach the next level.
         progress_to_next_level: The amount of progression (i.e. "Experience") needed to reach the next level of this Progression. Jeez, progression is such an overloaded word.
         progression_hash: The hash identifier of the Progression in question. Use it to look up the DestinyProgressionDefinition in static data.
+        reward_item_socket_override_states: Information about items stats and states that have socket overrides, if there is any data for it.
         reward_item_states: Information about historical rewards for this progression, if there is any data for it.
         season_resets: Information about historical resets of this progression, if there is any data for it.
         step_index: Progressions define their levels in "steps". Since the last step may be repeatable, the user may be at a higher level than the actual Step achieved in the progression. Not necessarily useful, but potentially interesting for those cruising the API. Relate this to the "steps" property of the DestinyProgression to see which step the user is on, if you care about that. (Note that this is Content Version dependent since it refers to indexes.)
@@ -63,6 +63,7 @@ class DestinyProgression(BaseModel):
     next_level_at: int = custom_field()
     progress_to_next_level: int = custom_field()
     progression_hash: int = custom_field()
+    reward_item_socket_override_states: dict[int, dict] = custom_field(metadata={"type": """dict[int, dict]"""})
     reward_item_states: list[Union["DestinyProgressionRewardItemState", int]] = custom_field(
         converter=enum_converter("DestinyProgressionRewardItemState")
     )
@@ -105,6 +106,93 @@ class DestinyProgressionRewardItemState(BaseFlagEnum):
     """If this is set, the reward has been claimed. """
     CLAIM_ALLOWED = 8
     """If this is set, the reward is allowed to be claimed by this Character. An item can be earned but still can't be claimed in certain circumstances, like if it's only allowed for certain subclasses. It also might not be able to be claimed if you already claimed it! """
+
+
+@custom_define()
+class DestinyProgressionRewardItemSocketOverrideState(BaseModel):
+    """
+    Represents the stats and item state if applicable for progression reward items with socket overrides
+
+    None
+    Attributes:
+        item_state: Information about the item state, specifically deepsight if there is any data for it
+        reward_item_stats: Information about the computed stats from socket and plug overrides for this progression, if there is any data for it.
+    """
+
+    item_state: Union["ItemState", int] = custom_field(converter=enum_converter("ItemState"))
+    reward_item_stats: dict[int, "DestinyStat"] = custom_field(metadata={"type": """dict[int, DestinyStat]"""})
+
+
+@custom_define()
+class DestinyStat(BaseModel):
+    """
+    Represents a stat on an item *or* Character (NOT a Historical Stat, but a physical attribute stat like Attack, Defense etc...)
+
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
+    Attributes:
+        stat_hash: The hash identifier for the Stat. Use it to look up the DestinyStatDefinition for static data about the stat.
+        value: The current value of the Stat.
+        manifest_stat_hash: Manifest information for `stat_hash`
+    """
+
+    stat_hash: int = custom_field()
+    value: int = custom_field()
+    manifest_stat_hash: Optional["DestinyStatDefinition"] = custom_field(default=None)
+
+
+class DestinyStatAggregationType(BaseEnum):
+    """
+    When a Stat (DestinyStatDefinition) is aggregated, this is the rules used for determining the level and formula used for aggregation. * CharacterAverage = apply a weighted average using the related DestinyStatGroupDefinition on the DestinyInventoryItemDefinition across the character's equipped items. See both of those definitions for details. * Character = don't aggregate: the stat should be located and used directly on the character. * Item = don't aggregate: the stat should be located and used directly on the item.
+    """
+
+    CHARACTER_AVERAGE = 0
+    """_No description given by bungie._ """
+    CHARACTER = 1
+    """_No description given by bungie._ """
+    ITEM = 2
+    """_No description given by bungie._ """
+
+
+class DestinyStatCategory(BaseEnum):
+    """
+    At last, stats have categories. Use this for whatever purpose you might wish.
+    """
+
+    GAMEPLAY = 0
+    """_No description given by bungie._ """
+    WEAPON = 1
+    """_No description given by bungie._ """
+    DEFENSE = 2
+    """_No description given by bungie._ """
+    PRIMARY = 3
+    """_No description given by bungie._ """
+
+
+class ItemState(BaseFlagEnum):
+    """
+    A flags enumeration/bitmask where each bit represents a different possible state that the item can be in that may effect how the item is displayed to the user and what actions can be performed against it.
+    """
+
+    NONE = 0
+    """_No description given by bungie._ """
+    LOCKED = 1
+    """If this bit is set, the item has been "locked" by the user and cannot be deleted. You may want to represent this visually with a "lock" icon. """
+    TRACKED = 2
+    """If this bit is set, the item is a quest that's being tracked by the user. You may want a visual indicator to show that this is a tracked quest. """
+    MASTERWORK = 4
+    """If this bit is set, the item has a Masterwork plug inserted. This usually coincides with having a special "glowing" effect applied to the item's icon. """
+    CRAFTED = 8
+    """If this bit is set, the item has been 'crafted' by the player. You may want to represent this visually with a "crafted" icon overlay. """
+    HIGHLIGHTED_OBJECTIVE = 16
+    """If this bit is set, the item has a 'highlighted' objective. You may want to represent this with an orange-red icon border color. """
 
 
 class DestinyProgressionScope(BaseEnum):
@@ -290,34 +378,6 @@ class ItemLocation(BaseEnum):
     VENDOR = 3
     """_No description given by bungie._ """
     POSTMASTER = 4
-    """_No description given by bungie._ """
-
-
-class DestinyStatAggregationType(BaseEnum):
-    """
-    When a Stat (DestinyStatDefinition) is aggregated, this is the rules used for determining the level and formula used for aggregation. * CharacterAverage = apply a weighted average using the related DestinyStatGroupDefinition on the DestinyInventoryItemDefinition across the character's equipped items. See both of those definitions for details. * Character = don't aggregate: the stat should be located and used directly on the character. * Item = don't aggregate: the stat should be located and used directly on the item.
-    """
-
-    CHARACTER_AVERAGE = 0
-    """_No description given by bungie._ """
-    CHARACTER = 1
-    """_No description given by bungie._ """
-    ITEM = 2
-    """_No description given by bungie._ """
-
-
-class DestinyStatCategory(BaseEnum):
-    """
-    At last, stats have categories. Use this for whatever purpose you might wish.
-    """
-
-    GAMEPLAY = 0
-    """_No description given by bungie._ """
-    WEAPON = 1
-    """_No description given by bungie._ """
-    DEFENSE = 2
-    """_No description given by bungie._ """
-    PRIMARY = 3
     """_No description given by bungie._ """
 
 
@@ -1136,25 +1196,6 @@ class TransferStatuses(BaseFlagEnum):
     """You could transfer the item, but the place you're trying to put it has run out of room! Check your remaining Vault and/or character space. """
 
 
-class ItemState(BaseFlagEnum):
-    """
-    A flags enumeration/bitmask where each bit represents a different possible state that the item can be in that may effect how the item is displayed to the user and what actions can be performed against it.
-    """
-
-    NONE = 0
-    """_No description given by bungie._ """
-    LOCKED = 1
-    """If this bit is set, the item has been "locked" by the user and cannot be deleted. You may want to represent this visually with a "lock" icon. """
-    TRACKED = 2
-    """If this bit is set, the item is a quest that's being tracked by the user. You may want a visual indicator to show that this is a tracked quest. """
-    MASTERWORK = 4
-    """If this bit is set, the item has a Masterwork plug inserted. This usually coincides with having a special "glowing" effect applied to the item's icon. """
-    CRAFTED = 8
-    """If this bit is set, the item has been 'crafted' by the player. You may want to represent this visually with a "crafted" icon overlay. """
-    HIGHLIGHTED_OBJECTIVE = 16
-    """If this bit is set, the item has a 'highlighted' objective. You may want to represent this with an orange-red icon border color. """
-
-
 class DestinyGameVersions(BaseFlagEnum):
     """
     A flags enumeration/bitmask indicating the versions of the game that a given user has purchased.
@@ -1468,31 +1509,6 @@ class DestinyActivityDifficultyTier(BaseEnum):
     """_No description given by bungie._ """
     IMPOSSIBLE = 7
     """_No description given by bungie._ """
-
-
-@custom_define()
-class DestinyStat(BaseModel):
-    """
-    Represents a stat on an item *or* Character (NOT a Historical Stat, but a physical attribute stat like Attack, Defense etc...)
-
-    Tip: Manifest Information
-        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
-        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
-
-        To fill the manifest dependent attributes, either:
-
-        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
-        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
-
-    Attributes:
-        stat_hash: The hash identifier for the Stat. Use it to look up the DestinyStatDefinition for static data about the stat.
-        value: The current value of the Stat.
-        manifest_stat_hash: Manifest information for `stat_hash`
-    """
-
-    stat_hash: int = custom_field()
-    value: int = custom_field()
-    manifest_stat_hash: Optional["DestinyStatDefinition"] = custom_field(default=None)
 
 
 class EquipFailureReason(BaseFlagEnum):

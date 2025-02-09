@@ -42,6 +42,7 @@ class DestinyFactionProgression(BaseModel):
         next_level_at: The total amount of progression (i.e. "Experience") needed in order to reach the next level.
         progress_to_next_level: The amount of progression (i.e. "Experience") needed to reach the next level of this Progression. Jeez, progression is such an overloaded word.
         progression_hash: The hash identifier of the Progression in question. Use it to look up the DestinyProgressionDefinition in static data.
+        reward_item_socket_override_states: Information about items stats and states that have socket overrides, if there is any data for it.
         reward_item_states: Information about historical rewards for this progression, if there is any data for it.
         season_resets: Information about historical resets of this progression, if there is any data for it.
         step_index: Progressions define their levels in "steps". Since the last step may be repeatable, the user may be at a higher level than the actual Step achieved in the progression. Not necessarily useful, but potentially interesting for those cruising the API. Relate this to the "steps" property of the DestinyProgression to see which step the user is on, if you care about that. (Note that this is Content Version dependent since it refers to indexes.)
@@ -62,6 +63,7 @@ class DestinyFactionProgression(BaseModel):
     next_level_at: int = custom_field()
     progress_to_next_level: int = custom_field()
     progression_hash: int = custom_field()
+    reward_item_socket_override_states: dict[int, dict] = custom_field(metadata={"type": """dict[int, dict]"""})
     reward_item_states: list[Union["DestinyProgressionRewardItemState", int]] = custom_field(
         converter=enum_converter("DestinyProgressionRewardItemState")
     )

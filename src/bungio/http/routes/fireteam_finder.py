@@ -1051,6 +1051,7 @@ class FireteamFinderRouteHttpRequests:
         destiny_character_id: int,
         destiny_membership_id: int,
         destiny_membership_type: int,
+        override_offline_filter: Optional[bool] = None,
         auth: Optional[AuthData] = None,
         *args,
         **kwargs,
@@ -1066,6 +1067,7 @@ class FireteamFinderRouteHttpRequests:
             destiny_character_id: A valid Destiny character ID.
             destiny_membership_id: A valid Destiny membership ID.
             destiny_membership_type: A valid Destiny membership type.
+            override_offline_filter: Optional boolean to bypass the offline-only check, so the client can pull fireteam from the game.
             auth: Authentication information. Required when users with a private profile are queried, or when Bungie feels like it
 
         Raises:
@@ -1093,6 +1095,7 @@ class FireteamFinderRouteHttpRequests:
                 path=f"/FireteamFinder/Search/{destiny_membership_type}/{destiny_membership_id}/{destiny_character_id}/",
                 method="POST",
                 data=data,
+                override_offline_filter=override_offline_filter,
                 auth=auth,
             )
         )

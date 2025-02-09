@@ -7,6 +7,11 @@
             - DestinyProgression
             - DestinyProgressionResetEntry
             - DestinyProgressionRewardItemState
+            - DestinyProgressionRewardItemSocketOverrideState
+            - DestinyStat
+            - DestinyStatAggregationType
+            - DestinyStatCategory
+            - ItemState
             - DestinyProgressionScope
             - DestinyProgressionStepDisplayEffect
             - DestinyItemQuantity
@@ -17,8 +22,6 @@
             - BucketScope
             - BucketCategory
             - ItemLocation
-            - DestinyStatAggregationType
-            - DestinyStatCategory
             - EquippingItemBlockAttributes
             - DestinyAmmunitionType
             - DyeReference
@@ -58,7 +61,6 @@
             - DestinyProgressionRewardItemAcquisitionBehavior
             - ItemBindStatus
             - TransferStatuses
-            - ItemState
             - DestinyGameVersions
             - DestinyComponentType
             - DestinyPresentationNodeState
@@ -70,7 +72,6 @@
             - DestinyRace
             - DestinyActivity
             - DestinyActivityDifficultyTier
-            - DestinyStat
             - EquipFailureReason
             - DestinyTalentNode
             - DestinyTalentNodeState
@@ -96,6 +97,11 @@
             - DestinyProgression
             - DestinyProgressionResetEntry
             - DestinyProgressionRewardItemState
+            - DestinyProgressionRewardItemSocketOverrideState
+            - DestinyStat
+            - DestinyStatAggregationType
+            - DestinyStatCategory
+            - ItemState
             - DestinyProgressionScope
             - DestinyProgressionStepDisplayEffect
             - DestinyItemQuantity
@@ -106,8 +112,6 @@
             - BucketScope
             - BucketCategory
             - ItemLocation
-            - DestinyStatAggregationType
-            - DestinyStatCategory
             - EquippingItemBlockAttributes
             - DestinyAmmunitionType
             - DyeReference
@@ -147,7 +151,6 @@
             - DestinyProgressionRewardItemAcquisitionBehavior
             - ItemBindStatus
             - TransferStatuses
-            - ItemState
             - DestinyGameVersions
             - DestinyComponentType
             - DestinyPresentationNodeState
@@ -159,7 +162,6 @@
             - DestinyRace
             - DestinyActivity
             - DestinyActivityDifficultyTier
-            - DestinyStat
             - EquipFailureReason
             - DestinyTalentNode
             - DestinyTalentNodeState
