@@ -321,8 +321,7 @@ class HttpClient(AllRouteHttpRequests, AuthHttpRequests, ClientMixin, Singleton)
 
             case (
                 _,
-                "AuthorizationRecordRevoked"
-                | "AuthorizationRecordExpired",
+                "AuthorizationRecordRevoked" | "AuthorizationRecordExpired",
             ):
                 # users tokens are no longer valid
                 raise _InvalidAuthentication()
