@@ -12,6 +12,7 @@ if TYPE_CHECKING:
         DestinyFactionDefinition,
         DestinyProgressionDefinition,
         DestinyProgressionResetEntry,
+        DestinyProgressionRewardItemSocketOverrideState,
         DestinyProgressionRewardItemState,
     )
 
@@ -63,7 +64,9 @@ class DestinyFactionProgression(BaseModel):
     next_level_at: int = custom_field()
     progress_to_next_level: int = custom_field()
     progression_hash: int = custom_field()
-    reward_item_socket_override_states: dict[int, dict] = custom_field(metadata={"type": """dict[int, dict]"""})
+    reward_item_socket_override_states: dict[int, "DestinyProgressionRewardItemSocketOverrideState"] = custom_field(
+        metadata={"type": """dict[int, DestinyProgressionRewardItemSocketOverrideState]"""}
+    )
     reward_item_states: list[Union["DestinyProgressionRewardItemState", int]] = custom_field(
         converter=enum_converter("DestinyProgressionRewardItemState")
     )

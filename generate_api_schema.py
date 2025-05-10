@@ -301,7 +301,7 @@ def generate_function(
     # path / query params
     params = []
     m_params = []
-    for param in data[method]["parameters"]:
+    for param in data[method].get("parameters", []):
         new_name = capital_case_to_snake_case(param["name"])
         if (string := f"""{{{param["name"]}}}""") in path:
             path = path.replace(string, f"""{{{new_name}}}""")

@@ -37,7 +37,9 @@ class DestinyCurrenciesComponent(BaseModel):
     """
 
     item_quantities: dict[int, int] = custom_field(metadata={"type": """dict[int, int]"""})
-    material_requirement_set_states: dict[int, dict] = custom_field(metadata={"type": """dict[int, dict]"""})
+    material_requirement_set_states: dict[int, "DestinyMaterialRequirementSetState"] = custom_field(
+        metadata={"type": """dict[int, DestinyMaterialRequirementSetState]"""}
+    )
 
 
 @custom_define()
@@ -61,7 +63,9 @@ class DestinyMaterialRequirementSetState(BaseModel):
     """
 
     material_requirement_set_hash: int = custom_field()
-    material_requirement_states: list[dict] = custom_field(metadata={"type": """list[dict]"""})
+    material_requirement_states: list["DestinyMaterialRequirementState"] = custom_field(
+        metadata={"type": """list[DestinyMaterialRequirementState]"""}
+    )
     manifest_material_requirement_set_hash: Optional["DestinyMaterialRequirementSetDefinition"] = custom_field(
         default=None
     )

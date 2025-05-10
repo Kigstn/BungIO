@@ -1629,6 +1629,8 @@ class PlatformErrorCodes(BaseEnum):
     """_No description given by bungie._ """
     FIRETEAM_FINDER_LOBBY_TOO_FAR_IN_THE_FUTURE = 3134
     """_No description given by bungie._ """
+    FIRETEAM_FINDER_APPLICANT_NOT_IN_GAME = 3135
+    """_No description given by bungie._ """
     FIRETEAM_FINDER_RESPONSE_UNDEFINED = 3150
     """_No description given by bungie._ """
     FIRETEAM_FINDER_RESPONSE_MOVED = 3151

@@ -81,6 +81,8 @@ from bungio.models.bungie.destiny.definitions.seasons import DestinyEventCardIma
 from bungio.models.bungie.tags.models.contracts import TagResponse
 from bungio.models.bungie.destiny.components.inventory import DestinyPlatformSilverComponent
 from bungio.models.bungie.destiny.components.inventory import DestinyCurrenciesComponent
+from bungio.models.bungie.destiny.components.inventory import DestinyMaterialRequirementSetState
+from bungio.models.bungie.destiny.components.inventory import DestinyMaterialRequirementState
 from bungio.models.bungie.destiny.entities.items import DestinyItemComponent
 from bungio.models.bungie.destiny.entities.items import DestinyItemPerksComponent
 from bungio.models.bungie.destiny.entities.items import DestinyItemObjectivesComponent
@@ -333,6 +335,7 @@ from bungio.models.bungie.destiny.definitions import DestinyTalentNodeCategory
 from bungio.models.bungie.destiny.definitions import DestinyItemPerkEntryDefinition
 from bungio.models.bungie.destiny.definitions import DestinyItemCategoryDefinition
 from bungio.models.bungie.destiny.definitions import DestinyProgressionRewardItemQuantity
+from bungio.models.bungie.destiny.definitions import DestinyProgressionSocketPlugOverride
 from bungio.models.bungie.destiny.definitions import DestinyRaceDefinition
 from bungio.models.bungie.destiny.definitions import DestinyUnlockDefinition
 from bungio.models.bungie.destiny.definitions import DestinyMedalTierDefinition
@@ -653,6 +656,7 @@ from bungio.models.bungie.forums import ForumFlagsEnum
 from bungio.models.bungie.destiny import DestinyProgression
 from bungio.models.bungie.destiny import DestinyProgressionResetEntry
 from bungio.models.bungie.destiny import DestinyProgressionRewardItemState
+from bungio.models.bungie.destiny import DestinyProgressionRewardItemSocketOverrideState
 from bungio.models.bungie.destiny import DestinyStat
 from bungio.models.bungie.destiny import DestinyStatAggregationType
 from bungio.models.bungie.destiny import DestinyStatCategory

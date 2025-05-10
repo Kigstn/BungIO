@@ -183,38 +183,50 @@ class DestinyEventCardDefinition(ManifestModel, HashObject):
         color: _No description given by bungie._
         display_properties: _No description given by bungie._
         end_time: _No description given by bungie._
+        event_card_currency_list: _No description given by bungie._
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         images: _No description given by bungie._
         index: The index of the entity as it was found in the investment tables.
         link_redirect_path: _No description given by bungie._
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+        reward_progression_hash: _No description given by bungie._
         seal_presentation_node_hash: _No description given by bungie._
         ticket_currency_item_hash: _No description given by bungie._
         ticket_vendor_category_hash: _No description given by bungie._
         ticket_vendor_hash: _No description given by bungie._
         triumphs_presentation_node_hash: _No description given by bungie._
+        weekly_challenges_presentation_node_hash: _No description given by bungie._
+        manifest_reward_progression_hash: Manifest information for `reward_progression_hash`
         manifest_seal_presentation_node_hash: Manifest information for `seal_presentation_node_hash`
         manifest_ticket_currency_item_hash: Manifest information for `ticket_currency_item_hash`
         manifest_ticket_vendor_hash: Manifest information for `ticket_vendor_hash`
         manifest_triumphs_presentation_node_hash: Manifest information for `triumphs_presentation_node_hash`
+        manifest_weekly_challenges_presentation_node_hash: Manifest information for `weekly_challenges_presentation_node_hash`
     """
 
     color: "DestinyColor" = custom_field()
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
     end_time: int = custom_field(metadata={"int64": True})
+    event_card_currency_list: list[int] = custom_field(metadata={"type": """list[int]"""})
     images: "DestinyEventCardImages" = custom_field()
     index: int = custom_field()
     link_redirect_path: str = custom_field()
     redacted: bool = custom_field()
+    reward_progression_hash: int = custom_field()
     seal_presentation_node_hash: int = custom_field()
     ticket_currency_item_hash: int = custom_field()
     ticket_vendor_category_hash: int = custom_field()
     ticket_vendor_hash: int = custom_field()
     triumphs_presentation_node_hash: int = custom_field()
+    weekly_challenges_presentation_node_hash: int = custom_field()
+    manifest_reward_progression_hash: Optional["DestinyProgressionDefinition"] = custom_field(default=None)
     manifest_seal_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_ticket_currency_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
     manifest_ticket_vendor_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
     manifest_triumphs_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
+    manifest_weekly_challenges_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(
+        default=None
+    )
 
 
 @custom_define()

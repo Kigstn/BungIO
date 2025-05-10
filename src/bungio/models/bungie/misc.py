@@ -1761,7 +1761,7 @@ class DestinyVendorItemComponentSetOfint32(BaseModel):
     """
 
     instances: "DictionaryComponentResponseOfint32AndDestinyItemInstanceComponent" = custom_field()
-    item_components: dict = custom_field(metadata={"type": """dict"""})
+    item_components: "DictionaryComponentResponseOfint32AndDestinyItemComponent" = custom_field()
     objectives: "DictionaryComponentResponseOfint32AndDestinyItemObjectivesComponent" = custom_field()
     perks: "DictionaryComponentResponseOfint32AndDestinyItemPerksComponent" = custom_field()
     plug_objectives: "DictionaryComponentResponseOfint32AndDestinyItemPlugObjectivesComponent" = custom_field()

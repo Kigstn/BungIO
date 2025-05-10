@@ -18,6 +18,7 @@ if TYPE_CHECKING:
         DestinyItemComponentSetOfuint32,
         DestinyPlatformSilverComponent,
         DestinyPublicVendorSaleItemComponent,
+        DestinyVendorItemComponentSetOfint32,
         DestinyVendorSaleItemComponent,
         DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent,
         DictionaryComponentResponseOfint64AndDestinyCharacterActivitiesComponent,
@@ -333,7 +334,9 @@ class DestinyVendorsResponse(BaseModel):
 
     categories: "DictionaryComponentResponseOfuint32AndDestinyVendorCategoriesComponent" = custom_field()
     currency_lookups: "SingleComponentResponseOfDestinyCurrenciesComponent" = custom_field()
-    item_components: dict[int, dict] = custom_field(metadata={"type": """dict[int, dict]"""})
+    item_components: dict[int, "DestinyVendorItemComponentSetOfint32"] = custom_field(
+        metadata={"type": """dict[int, DestinyVendorItemComponentSetOfint32]"""}
+    )
     sales: "DictionaryComponentResponseOfuint32AndPersonalDestinyVendorSaleItemSetComponent" = custom_field()
     string_variables: "SingleComponentResponseOfDestinyStringVariablesComponent" = custom_field()
     vendor_groups: "SingleComponentResponseOfDestinyVendorGroupComponent" = custom_field()
@@ -372,7 +375,7 @@ class DestinyVendorResponse(BaseModel):
 
     categories: "SingleComponentResponseOfDestinyVendorCategoriesComponent" = custom_field()
     currency_lookups: "SingleComponentResponseOfDestinyCurrenciesComponent" = custom_field()
-    item_components: dict = custom_field(metadata={"type": """dict"""})
+    item_components: "DestinyVendorItemComponentSetOfint32" = custom_field()
     sales: "DictionaryComponentResponseOfint32AndDestinyVendorSaleItemComponent" = custom_field()
     string_variables: "SingleComponentResponseOfDestinyStringVariablesComponent" = custom_field()
     vendor: "SingleComponentResponseOfDestinyVendorComponent" = custom_field()
