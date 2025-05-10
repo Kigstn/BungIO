@@ -12,8 +12,8 @@ from bungio.models.mixins import DestinyUserMixin
 
 if TYPE_CHECKING:
     from bungio.models import IgnoreResponse
-    from bungio.models import BungieMembershipType
     from bungio.models import GroupUserInfoCard
+    from bungio.models import BungieMembershipType
 
 
 @custom_define()

@@ -10,15 +10,15 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, Ma
 
 
 if TYPE_CHECKING:
-    from bungio.models import PlatformErrorCodes
-    from bungio.models import DestinyActivityDefinition
-    from bungio.models import DestinyProgressionDefinition
-    from bungio.models import DestinyInventoryItemDefinition
     from bungio.models import DestinyActivityModifierDefinition
-    from bungio.models import DestinyStatDefinition
-    from bungio.models import DestinyMaterialRequirement
+    from bungio.models import DestinyActivityDefinition
     from bungio.models import DestinyUnlockDefinition
+    from bungio.models import DestinyMaterialRequirement
     from bungio.models import DestinyChallengeStatus
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import PlatformErrorCodes
+    from bungio.models import DestinyStatDefinition
+    from bungio.models import DestinyProgressionDefinition
 
 
 @custom_define()
