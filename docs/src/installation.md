@@ -3,15 +3,14 @@
 
 ## Installation
 
-=== ":one: With `pip`"
+=== ":one: With `uv`"
     ```sh
-    pip install bungio
+    uv add bungio
     ```
 
-=== ":one: With `poetry`"
+=== ":two: With `pip`"
     ```sh
-    poetry add bungio
-    poetry install
+    pip install bungio
     ```
 
 ## Getting your Bungie Tokens
