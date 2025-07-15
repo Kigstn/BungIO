@@ -146,6 +146,7 @@ class DestinyItemInstanceComponent(BaseModel):
         damage_type_hash: The current damage type's hash, so you can look up localized info and icons for it.
         energy: IF populated, this item supports Energy mechanics (i.e. Armor 2.0), and these are the current details of its energy type and available capacity to spend energy points.
         equip_required_level: If the item cannot be equipped until you reach a certain level, that level will be reflected here.
+        gear_tier: Gear Tier, if applicable, fished up from the unlock value items.gear_tier
         is_equipped: Is the item currently equipped on the given character?
         item_level: The Item's "Level" has the most significant bearing on its stats, such as Light and Power.
         primary_stat: The item stat that we consider to be "primary" for the item. For instance, this would be "Attack" for Weapons or "Defense" for armor.
@@ -163,6 +164,7 @@ class DestinyItemInstanceComponent(BaseModel):
     damage_type_hash: int = custom_field()
     energy: "DestinyItemInstanceEnergy" = custom_field()
     equip_required_level: int = custom_field()
+    gear_tier: int = custom_field()
     is_equipped: bool = custom_field()
     item_level: int = custom_field()
     primary_stat: "DestinyStat" = custom_field()

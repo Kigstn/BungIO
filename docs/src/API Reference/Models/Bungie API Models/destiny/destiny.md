@@ -24,6 +24,7 @@
             - ItemLocation
             - EquippingItemBlockAttributes
             - DestinyAmmunitionType
+            - DamageType
             - DyeReference
             - DestinyClass
             - DestinyGender
@@ -38,11 +39,15 @@
             - ActivityGraphNodeHighlightType
             - DestinyUnlockValueUIStyle
             - DestinyObjectiveGrantStyle
-            - DamageType
             - DestinyObjectiveUiStyle
             - DestinyActivityNavPointType
             - DestinyActivityModeCategory
             - DestinyItemSubType
+            - DestinyActivityDifficultyId
+            - DestinyActivitySkullDynamicUse
+            - DestinyActivityModifierDisplayCategory
+            - DestinyActivityModifierConnotation
+            - DestinyActivityDifficultyTierType
             - DestinyGraphNodeState
             - DestinyPresentationNodeType
             - DestinyScope
@@ -82,6 +87,8 @@
             - DestinyVendorItemState
             - DestinyEquipItemResults
             - DestinyEquipItemResult
+            - DestinyActivityTreeType
+            - DestinyActivityTreeChildSortMode
             - FireteamFinderCodeOptionType
             - FireteamFinderOptionAvailability
             - FireteamFinderOptionVisibility
@@ -114,6 +121,7 @@
             - ItemLocation
             - EquippingItemBlockAttributes
             - DestinyAmmunitionType
+            - DamageType
             - DyeReference
             - DestinyClass
             - DestinyGender
@@ -128,11 +136,15 @@
             - ActivityGraphNodeHighlightType
             - DestinyUnlockValueUIStyle
             - DestinyObjectiveGrantStyle
-            - DamageType
             - DestinyObjectiveUiStyle
             - DestinyActivityNavPointType
             - DestinyActivityModeCategory
             - DestinyItemSubType
+            - DestinyActivityDifficultyId
+            - DestinyActivitySkullDynamicUse
+            - DestinyActivityModifierDisplayCategory
+            - DestinyActivityModifierConnotation
+            - DestinyActivityDifficultyTierType
             - DestinyGraphNodeState
             - DestinyPresentationNodeType
             - DestinyScope
@@ -172,6 +184,8 @@
             - DestinyVendorItemState
             - DestinyEquipItemResults
             - DestinyEquipItemResult
+            - DestinyActivityTreeType
+            - DestinyActivityTreeChildSortMode
             - FireteamFinderCodeOptionType
             - FireteamFinderOptionAvailability
             - FireteamFinderOptionVisibility

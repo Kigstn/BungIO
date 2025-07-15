@@ -65,9 +65,11 @@ class DestinyFireteamFinderActivityGraphDefinition(ManifestModel, HashObject):
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
+        activity_tree_child_sort_mode: _No description given by bungie._
         children: _No description given by bungie._
         color: _No description given by bungie._
         display_properties: _No description given by bungie._
+        enabled_on_tree_types_list_enum: _No description given by bungie._
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
         is_player_elected_difficulty_node: _No description given by bungie._
@@ -79,14 +81,18 @@ class DestinyFireteamFinderActivityGraphDefinition(ManifestModel, HashObject):
         related_interactable_activities: _No description given by bungie._
         related_location_hashes: _No description given by bungie._
         self_and_all_descendant_hashes: _No description given by bungie._
+        sort_matchmade_activities_to_front: _No description given by bungie._
+        sort_priority: _No description given by bungie._
         specific_activity_set_hash: _No description given by bungie._
         manifest_parent_hash: Manifest information for `parent_hash`
         manifest_specific_activity_set_hash: Manifest information for `specific_activity_set_hash`
     """
 
+    activity_tree_child_sort_mode: Union[dict, int] = custom_field(converter=enum_converter("dict"))
     children: list[int] = custom_field(metadata={"type": """list[int]"""})
     color: "DestinyColor" = custom_field()
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    enabled_on_tree_types_list_enum: list[Union[dict, int]] = custom_field(converter=enum_converter("dict"))
     index: int = custom_field()
     is_player_elected_difficulty_node: bool = custom_field()
     parent_hash: int = custom_field()
@@ -101,6 +107,8 @@ class DestinyFireteamFinderActivityGraphDefinition(ManifestModel, HashObject):
     )
     related_location_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     self_and_all_descendant_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    sort_matchmade_activities_to_front: bool = custom_field()
+    sort_priority: int = custom_field()
     specific_activity_set_hash: int = custom_field()
     manifest_parent_hash: Optional["DestinyFireteamFinderActivityGraphDefinition"] = custom_field(default=None)
     manifest_specific_activity_set_hash: Optional["DestinyFireteamFinderActivitySetDefinition"] = custom_field(

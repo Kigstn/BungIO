@@ -11,9 +11,9 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, Ma
 from bungio.models.mixins import DestinyUserMixin
 
 if TYPE_CHECKING:
-    from bungio.models import IgnoreResponse
     from bungio.models import GroupUserInfoCard
     from bungio.models import BungieMembershipType
+    from bungio.models import IgnoreResponse
 
 
 @custom_define()
@@ -212,11 +212,13 @@ class UserMembershipData(BaseModel):
     Attributes:
         bungie_net_user: _No description given by bungie._
         destiny_memberships: this allows you to see destiny memberships that are visible and linked to this account (regardless of whether or not they have characters on the world server)
+        marathon_membership_id: If this property is populated, it will have the membershipId for the Marathon Membership on this user's account  If null, this user has no Marathon (i.e. "GoliathGame") membership.
         primary_membership_id: If this property is populated, it will have the membership ID of the account considered to be "primary" in this user's cross save relationship.  If null, this user has no cross save relationship, nor primary account.
     """
 
     bungie_net_user: "GeneralUser" = custom_field()
     destiny_memberships: list["GroupUserInfoCard"] = custom_field(metadata={"type": """list[GroupUserInfoCard]"""})
+    marathon_membership_id: int = custom_field(metadata={"int64": True})
     primary_membership_id: int = custom_field(metadata={"int64": True})
 
 

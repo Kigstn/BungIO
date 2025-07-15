@@ -45,6 +45,7 @@ class DestinySeasonDefinition(ManifestModel, HashObject):
         seal_presentation_node_hash: _No description given by bungie._
         season_number: _No description given by bungie._
         season_pass_hash: _No description given by bungie._
+        season_pass_list: _No description given by bungie._
         season_pass_progression_hash: _No description given by bungie._
         seasonal_challenges_presentation_node_hash: _No description given by bungie._
         start_date: _No description given by bungie._
@@ -66,6 +67,7 @@ class DestinySeasonDefinition(ManifestModel, HashObject):
     seal_presentation_node_hash: int = custom_field()
     season_number: int = custom_field()
     season_pass_hash: int = custom_field()
+    season_pass_list: list[dict] = custom_field(metadata={"type": """list[dict]"""})
     season_pass_progression_hash: int = custom_field()
     seasonal_challenges_presentation_node_hash: int = custom_field()
     start_date: datetime = custom_field()
@@ -76,6 +78,88 @@ class DestinySeasonDefinition(ManifestModel, HashObject):
     manifest_seasonal_challenges_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(
         default=None
     )
+
+
+@custom_define()
+class DestinySeasonPassReference(BaseModel):
+    """
+    Defines the hash, unlock flag and start time of season passes
+
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
+    Attributes:
+        season_pass_end_date: The Season Pass End Date
+        season_pass_hash: The Season Pass Hash
+        season_pass_start_date: The Season Pass Start Date
+        manifest_season_pass_hash: Manifest information for `season_pass_hash`
+    """
+
+    season_pass_end_date: datetime = custom_field()
+    season_pass_hash: int = custom_field()
+    season_pass_start_date: datetime = custom_field()
+    manifest_season_pass_hash: Optional["DestinySeasonPassDefinition"] = custom_field(default=None)
+
+
+@custom_define()
+class DestinySeasonPassDefinition(ManifestModel, HashObject):
+    """
+    _No description given by bungie._
+
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
+    Attributes:
+        color: _No description given by bungie._
+        display_properties: _No description given by bungie._
+        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
+        images: _No description given by bungie._
+        index: The index of the entity as it was found in the investment tables.
+        link_redirect_path: _No description given by bungie._
+        prestige_progression_hash: I know what you're thinking, but I promise we're not going to duplicate and drown you. Instead, we're giving you sweet, sweet power bonuses.  Prestige progression is further progression that you can make on the Season pass after you gain max ranks, that will ultimately increase your power/light level over the theoretical limit.
+        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+        reward_progression_hash: This is the progression definition related to the progression for the initial levels 1-100 that provide item rewards for the Season pass. Further experience after you reach the limit is provided in the "Prestige" progression referred to by prestigeProgressionHash.
+        manifest_prestige_progression_hash: Manifest information for `prestige_progression_hash`
+        manifest_reward_progression_hash: Manifest information for `reward_progression_hash`
+    """
+
+    color: "DestinyColor" = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    images: dict = custom_field(metadata={"type": """dict"""})
+    index: int = custom_field()
+    link_redirect_path: str = custom_field()
+    prestige_progression_hash: int = custom_field()
+    redacted: bool = custom_field()
+    reward_progression_hash: int = custom_field()
+    manifest_prestige_progression_hash: Optional["DestinyProgressionDefinition"] = custom_field(default=None)
+    manifest_reward_progression_hash: Optional["DestinyProgressionDefinition"] = custom_field(default=None)
+
+
+@custom_define()
+class DestinySeasonPassImages(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        icon_image_path: _No description given by bungie._
+        theme_background_image_path: _No description given by bungie._
+    """
+
+    icon_image_path: str = custom_field()
+    theme_background_image_path: str = custom_field()
 
 
 @custom_define()
@@ -129,40 +213,6 @@ class DestinySeasonPreviewImageDefinition(BaseModel):
 
     high_res_image: str = custom_field()
     thumbnail_image: str = custom_field()
-
-
-@custom_define()
-class DestinySeasonPassDefinition(ManifestModel, HashObject):
-    """
-    _No description given by bungie._
-
-    Tip: Manifest Information
-        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
-        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
-
-        To fill the manifest dependent attributes, either:
-
-        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
-        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
-
-    Attributes:
-        display_properties: _No description given by bungie._
-        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
-        index: The index of the entity as it was found in the investment tables.
-        prestige_progression_hash: I know what you're thinking, but I promise we're not going to duplicate and drown you. Instead, we're giving you sweet, sweet power bonuses.  Prestige progression is further progression that you can make on the Season pass after you gain max ranks, that will ultimately increase your power/light level over the theoretical limit.
-        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
-        reward_progression_hash: This is the progression definition related to the progression for the initial levels 1-100 that provide item rewards for the Season pass. Further experience after you reach the limit is provided in the "Prestige" progression referred to by prestigeProgressionHash.
-        manifest_prestige_progression_hash: Manifest information for `prestige_progression_hash`
-        manifest_reward_progression_hash: Manifest information for `reward_progression_hash`
-    """
-
-    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    index: int = custom_field()
-    prestige_progression_hash: int = custom_field()
-    redacted: bool = custom_field()
-    reward_progression_hash: int = custom_field()
-    manifest_prestige_progression_hash: Optional["DestinyProgressionDefinition"] = custom_field(default=None)
-    manifest_reward_progression_hash: Optional["DestinyProgressionDefinition"] = custom_field(default=None)
 
 
 @custom_define()

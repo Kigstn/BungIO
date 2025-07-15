@@ -10,71 +10,72 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, Ma
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinySocketCategoryDefinition
-    from bungio.models import DestinyProgressionLevelRequirementDefinition
-    from bungio.models import DestinyItemSortType
-    from bungio.models import DestinyItemType
-    from bungio.models import DestinyLoreDefinition
-    from bungio.models import DestinySeasonDefinition
-    from bungio.models import DestinyPresentationNodeDefinition
-    from bungio.models import DestinyColor
-    from bungio.models import DestinyIconSequenceDefinition
-    from bungio.models import DateRange
-    from bungio.models import SpecialItemType
-    from bungio.models import VendorDisplayCategorySortOrder
-    from bungio.models import DestinyAmmunitionType
     from bungio.models import DestinyActivityModeCategory
-    from bungio.models import DestinyItemTierTypeDefinition
-    from bungio.models import DestinyProgressionStepDisplayEffect
-    from bungio.models import DestinyVendorItemRefundPolicy
-    from bungio.models import SearchResultOfDestinyEntitySearchResultItem
-    from bungio.models import TierType
-    from bungio.models import DestinyProgressionScope
-    from bungio.models import DestinyActivityModeType
-    from bungio.models import DestinyActivityGraphDefinition
-    from bungio.models import DestinyActivityModifierDefinition
-    from bungio.models import DestinyAnimationReference
-    from bungio.models import DestinyActivityNavPointType
-    from bungio.models import DestinyObjectiveGrantStyle
-    from bungio.models import DestinyItemPlugDefinition
+    from bungio.models import DestinyCollectibleDefinition
+    from bungio.models import DestinyGatingScope
     from bungio.models import DamageType
-    from bungio.models import DestinyBreakerTypeDefinition
+    from bungio.models import DestinyObjectiveGrantStyle
+    from bungio.models import DestinyProgressionStepDisplayEffect
+    from bungio.models import SocketPlugSources
+    from bungio.models import DestinyBreakerType
+    from bungio.models import DestinyPresentationNodeDefinition
+    from bungio.models import DestinyItemPlugDefinition
+    from bungio.models import DestinyVendorProgressionType
+    from bungio.models import BungieMembershipType
+    from bungio.models import DestinyActivityNavPointType
+    from bungio.models import SpecialItemType
+    from bungio.models import BucketCategory
+    from bungio.models import DestinyRace
+    from bungio.models import DestinyVendorItemRefundPolicy
+    from bungio.models import DestinyItemSubType
+    from bungio.models import DestinyVendorInteractionRewardSelection
+    from bungio.models import DestinyTraitDefinition
+    from bungio.models import DestinySocketTypeDefinition
+    from bungio.models import DestinyColor
+    from bungio.models import DestinyUnlockValueUIStyle
+    from bungio.models import DestinySeasonDefinition
+    from bungio.models import DestinyLoreDefinition
     from bungio.models import ItemLocation
-    from bungio.models import DestinyItemSourceDefinition
+    from bungio.models import DateRange
+    from bungio.models import DestinyProgressionScope
+    from bungio.models import DestinyPlugSetDefinition
+    from bungio.models import SearchResultOfDestinyEntitySearchResultItem
+    from bungio.models import DestinyIconSequenceDefinition
     from bungio.models import DestinyVendorLocationDefinition
     from bungio.models import BucketScope
-    from bungio.models import DyeReference
-    from bungio.models import DestinyStatAggregationType
-    from bungio.models import DestinyClass
-    from bungio.models import DestinyGatingScope
-    from bungio.models import DestinyUnlockValueUIStyle
-    from bungio.models import BungieMembershipType
-    from bungio.models import SocketPlugSources
-    from bungio.models import DestinyItemSubType
-    from bungio.models import DestinyVendorProgressionType
-    from bungio.models import DestinyBreakerType
-    from bungio.models import DestinyPlugSetDefinition
-    from bungio.models import DestinyProgressionRewardItemAcquisitionBehavior
-    from bungio.models import DestinyItemQuantity
-    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyVendorReplyType
     from bungio.models import DestinyPowerCapDefinition
-    from bungio.models import DestinyCollectibleDefinition
-    from bungio.models import VendorInteractionType
-    from bungio.models import DestinyGender
-    from bungio.models import BucketCategory
-    from bungio.models import DestinySocketTypeDefinition
-    from bungio.models import InterpolationPoint
-    from bungio.models import DestinyVendorInteractionRewardSelection
-    from bungio.models import DestinyStatCategory
-    from bungio.models import ItemPerkVisibility
-    from bungio.models import DestinyObjectiveUiStyle
     from bungio.models import DestinyDerivedItemCategoryDefinition
     from bungio.models import DestinyEnvironmentLocationMapping
+    from bungio.models import DestinyActivityModeType
+    from bungio.models import DestinyAnimationReference
+    from bungio.models import DestinyClass
+    from bungio.models import DestinyAmmunitionType
+    from bungio.models import DestinyObjectiveUiStyle
+    from bungio.models import DestinyItemQuantity
+    from bungio.models import DestinyDisplayPropertiesDefinition
     from bungio.models import DestinyArtifactDefinition
+    from bungio.models import DestinyGender
+    from bungio.models import DestinyItemTierTypeDefinition
+    from bungio.models import DestinyItemType
+    from bungio.models import DestinyStatAggregationType
+    from bungio.models import DestinyProgressionRewardItemAcquisitionBehavior
+    from bungio.models import ItemPerkVisibility
+    from bungio.models import DestinyActivityModifierDefinition
     from bungio.models import EquippingItemBlockAttributes
-    from bungio.models import DestinyRace
+    from bungio.models import DestinyStatCategory
+    from bungio.models import DestinyProgressionLevelRequirementDefinition
+    from bungio.models import DyeReference
+    from bungio.models import DestinyActivityGraphDefinition
+    from bungio.models import DestinyBreakerTypeDefinition
+    from bungio.models import TierType
+    from bungio.models import VendorDisplayCategorySortOrder
+    from bungio.models import DestinyItemSortType
+    from bungio.models import DestinyItemSourceDefinition
+    from bungio.models import DestinySocketCategoryDefinition
     from bungio.models import HyperlinkReference
-    from bungio.models import DestinyVendorReplyType
+    from bungio.models import VendorInteractionType
+    from bungio.models import InterpolationPoint
 
 
 @custom_define()
@@ -257,10 +258,12 @@ class DestinyInventoryItemDefinition(ManifestModel, HashObject):
         gearset: If this item has related items in a "Gear Set", this will be non-null and the relationships defined herein.
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         icon_watermark: If available, this is the original 'active' release watermark overlay for the icon. If the item has different versions, this can be overridden by the 'display version watermark icon' from the 'quality' block. Alternatively, if there is no watermark for the version, and the item version has a power cap below the current season power cap, this can be overridden by the iconWatermarkShelved property.
+        icon_watermark_featured: This is the active watermark for the item if it is currently Featured in-game. Clients should use the isFeaturedItem boolean to decide whether or not to show this as opposed to iconWatermark.
         icon_watermark_shelved: If available, this is the 'shelved' release watermark overlay for the icon. If the item version has a power cap below the current season power cap, it can be treated as 'shelved', and should be shown with this 'shelved' watermark overlay.
         index: The index of the entity as it was found in the investment tables.
         inventory: If this item can exist in an inventory, this block will be non-null. In practice, every item that currently exists has one of these blocks. But note that it is not necessarily guaranteed.
         investment_stats: If the item has stats, this block will be defined. It has the "raw" investment stats for the item. These investment stats don't take into account the ways that the items can spawn, nor do they take into account any Stat Group transformations. I have retained them for debugging purposes, but I do not know how useful people will find them.
+        is_featured_item: Whether or not this item is currently featured in the game, giving it a special watermark
         is_wrapper: If true, this is a dummy vendor-wrapped item template. Items purchased from Eververse will be "wrapped" by one of these items so that we can safely provide refund capabilities before the item is "unwrapped".
         item_category_hashes: BNet attempts to make a more formal definition of item "Categories", as defined by DestinyItemCategoryDefinition. This is a list of all Categories that we were able to algorithmically determine that this item is a member of. (for instance, that it's a "Weapon", that it's an "Auto Rifle", etc...) The algorithm for these is, unfortunately, volatile. If you believe you see a miscategorized item, please let us know on the Bungie API forums.
         item_sub_type: A value indicating the "sub-type" of the item. For instance, where an item might have an itemType value "Weapon", this will be something more specific like "Auto Rifle". itemCategoryHashes are the preferred way of identifying types, we have retained this enum for its convenience.
@@ -330,12 +333,14 @@ class DestinyInventoryItemDefinition(ManifestModel, HashObject):
     flavor_text: str = custom_field()
     gearset: "DestinyItemGearsetBlockDefinition" = custom_field()
     icon_watermark: str = custom_field()
+    icon_watermark_featured: str = custom_field()
     icon_watermark_shelved: str = custom_field()
     index: int = custom_field()
     inventory: "DestinyItemInventoryBlockDefinition" = custom_field()
     investment_stats: list["DestinyItemInvestmentStatDefinition"] = custom_field(
         metadata={"type": """list[DestinyItemInvestmentStatDefinition]"""}
     )
+    is_featured_item: bool = custom_field()
     is_wrapper: bool = custom_field()
     item_category_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     item_sub_type: Union["DestinyItemSubType", int] = custom_field(converter=enum_converter("DestinyItemSubType"))
@@ -939,10 +944,12 @@ class DestinyEquippingBlockDefinition(BaseModel):
         ammo_type: Ammo type used by a weapon is no longer determined by the bucket in which it is contained. If the item has an ammo type - i.e. if it is a weapon - this will be the type of ammunition expected.
         attributes: These are custom attributes on the equippability of the item. For now, this can only be "equip on acquire", which would mean that the item will be automatically equipped as soon as you pick it up.
         display_strings: These are strings that represent the possible Game/Account/Character state failure conditions that can occur when trying to equip the item. They match up one-to-one with requiredUnlockExpressions.
+        equipable_item_set_hash: If this item is part of an item set with bonus perks, this will the hash of that set.
         equipment_slot_type_hash: An equipped item *must* be equipped in an Equipment Slot. This is the hash identifier of the DestinyEquipmentSlotDefinition into which it must be equipped.
         gearset_item_hash: If the item is part of a gearset, this is a reference to that gearset item.
         unique_label: If defined, this is the label used to check if the item has other items of matching types already equipped.  For instance, when you aren't allowed to equip more than one Exotic Weapon, that's because all exotic weapons have identical uniqueLabels and the game checks the to-be-equipped item's uniqueLabel vs. all other already equipped items (other than the item in the slot that's about to be occupied).
         unique_label_hash: The hash of that unique label. Does not point to a specific definition.
+        manifest_equipable_item_set_hash: Manifest information for `equipable_item_set_hash`
         manifest_equipment_slot_type_hash: Manifest information for `equipment_slot_type_hash`
         manifest_gearset_item_hash: Manifest information for `gearset_item_hash`
     """
@@ -952,10 +959,14 @@ class DestinyEquippingBlockDefinition(BaseModel):
         converter=enum_converter("EquippingItemBlockAttributes")
     )
     display_strings: list[str] = custom_field(metadata={"type": """list[str]"""})
+    equipable_item_set_hash: int = custom_field()
     equipment_slot_type_hash: int = custom_field()
     gearset_item_hash: int = custom_field()
     unique_label: str = custom_field()
     unique_label_hash: int = custom_field()
+    manifest_equipable_item_set_hash: Optional[dict] = custom_field(
+        metadata={"type": """Optional[dict]"""}, default=None
+    )
     manifest_equipment_slot_type_hash: Optional["DestinyEquipmentSlotDefinition"] = custom_field(default=None)
     manifest_gearset_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
@@ -1009,6 +1020,68 @@ class DestinyArtDyeReference(BaseModel):
     """
 
     art_dye_channel_hash: int = custom_field()
+
+
+@custom_define()
+class DestinySandboxPerkDefinition(ManifestModel, HashObject):
+    """
+    Perks are modifiers to a character or item that can be applied situationally. - Perks determine a weapon's damage type. - Perks put the Mods in Modifiers (they are literally the entity that bestows the Sandbox benefit for whatever fluff text about the modifier in the Socket, Plug or Talent Node) - Perks are applied for unique alterations of state in Objectives Anyways, I'm sure you can see why perks are so interesting. What Perks often don't have is human readable information, so we attempt to reverse engineer that by pulling that data from places that uniquely refer to these perks: namely, Talent Nodes and Plugs. That only gives us a subset of perks that are human readable, but those perks are the ones people generally care about anyways. The others are left as a mystery, their true purpose mostly unknown and undocumented.
+
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
+    Attributes:
+        damage_type: If this perk grants a damage type to a weapon, the damage type will be defined here. Unless you have a compelling reason to use this enum value, use the damageTypeHash instead to look up the actual DestinyDamageTypeDefinition.
+        damage_type_hash: The hash identifier for looking up the DestinyDamageTypeDefinition, if this perk has a damage type. This is preferred over using the damageType enumeration value, which has been left purely because it is occasionally convenient.
+        display_properties: These display properties are by no means guaranteed to be populated. Usually when it is, it's only because we back-filled them with the displayProperties of some Talent Node or Plug item that happened to be uniquely providing that perk.
+        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
+        index: The index of the entity as it was found in the investment tables.
+        is_displayable: If true, you can actually show the perk in the UI. Otherwise, it doesn't have useful player-facing information.
+        perk_identifier: The string identifier for the perk.
+        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+        manifest_damage_type_hash: Manifest information for `damage_type_hash`
+    """
+
+    damage_type: Union["DamageType", int] = custom_field(converter=enum_converter("DamageType"))
+    damage_type_hash: int = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    index: int = custom_field()
+    is_displayable: bool = custom_field()
+    perk_identifier: str = custom_field()
+    redacted: bool = custom_field()
+    manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = custom_field(default=None)
+
+
+@custom_define()
+class DestinyDamageTypeDefinition(ManifestModel, HashObject):
+    """
+    All damage types that are possible in the game are defined here, along with localized info and icons as needed.
+
+    None
+    Attributes:
+        color: A color associated with the damage type. The displayProperties icon is tinted with a color close to this.
+        display_properties: The description of the damage type, icon etc...
+        enum_value: We have an enumeration for damage types for quick reference. This is the current definition's damage type enum value.
+        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
+        index: The index of the entity as it was found in the investment tables.
+        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+        show_icon: If TRUE, the game shows this damage type's icon. Otherwise, it doesn't. Whether you show it or not is up to you.
+        transparent_icon_path: A variant of the icon that is transparent and colorless.
+    """
+
+    color: "DestinyColor" = custom_field()
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    enum_value: Union["DamageType", int] = custom_field(converter=enum_converter("DamageType"))
+    index: int = custom_field()
+    redacted: bool = custom_field()
+    show_icon: bool = custom_field()
+    transparent_icon_path: str = custom_field()
 
 
 @custom_define()
@@ -1881,6 +1954,7 @@ class DestinyActivityDefinition(ManifestModel, HashObject):
         - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
 
     Attributes:
+        activity_family_hashes: _No description given by bungie._
         activity_graph_list: Unfortunately, in practice this is almost never populated. In theory, this is supposed to tell which Activity Graph to show if you bring up the director while in this activity.
         activity_light_level: The recommended light level for this activity.
         activity_location_mappings: A list of location mappings that are affected by this activity. Pulled out of DestinyLocationDefinitions for our/your lookup convenience.
@@ -1889,6 +1963,7 @@ class DestinyActivityDefinition(ManifestModel, HashObject):
         activity_type_hash: The hash identifier for the Activity Type of this Activity. You may use it to look up the DestinyActivityTypeDefinition for human readable info, but be forewarned: Playlists and many PVP Map Activities will map to generic Activity Types. You'll have to use your knowledge of the Activity Mode being played to get more specific information about what the user is playing.
         challenges: An activity can have many Challenges, of which any subset of them may be active for play at any given period of time. This gives the information about the challenges and data that we use to understand when they're active and what rewards they provide. Sadly, at the moment there's no central definition for challenges: much like "Skulls" were in Destiny 1, these are defined on individual activities and there can be many duplicates/near duplicates across the Destiny 2 ecosystem. I have it in mind to centralize these in a future revision of the API, but we are out of time.
         destination_hash: The hash identifier for the Destination on which this Activity is played. Use it to look up the DestinyDestinationDefinition for human readable info about the destination. A Destination can be thought of as a more specific location than a "Place". For instance, if the "Place" is Earth, the "Destination" would be a specific city or region on Earth.
+        difficulty_tier_collection_hash: _No description given by bungie._
         direct_activity_mode_hash: If this activity had an activity mode directly defined on it, this will be the hash of that mode.
         direct_activity_mode_type: If the activity had an activity mode directly defined on it, this will be the enum value of that mode.
         display_properties: The title, subtitle, and icon for the activity. We do a little post-processing on this to try and account for Activities where the designers have left this data too minimal to determine what activity is actually being played.
@@ -1911,14 +1986,18 @@ class DestinyActivityDefinition(ManifestModel, HashObject):
         release_time: If the activity will not be visible until a specific and known time, this will be the seconds since the Epoch when it will become visible.
         requirements: _No description given by bungie._
         rewards: The expected possible rewards for the activity. These rewards may or may not be accessible for an individual player based on their character state, the account state, and even the game's state overall. But it is a useful reference for possible rewards you can earn in the activity. These match up to rewards displayed when you hover over the Activity in the in-game Director, and often refer to Placeholder or "Dummy" items: items that tell you what you can earn in vague terms rather than what you'll specifically be earning (partly because the game doesn't even know what you'll earn specifically until you roll for it at the end)
+        selectable_skull_collection_hashes: _No description given by bungie._
         selection_screen_display_properties: The title, subtitle, and icon for the activity as determined by Selection Screen data, if there is any for this activity. There won't be data in this field if the activity is never shown in a selection/options screen.
         tier: The difficulty tier of the activity.
+        trait_hashes: _No description given by bungie._
         manifest_activity_type_hash: Manifest information for `activity_type_hash`
         manifest_destination_hash: Manifest information for `destination_hash`
+        manifest_difficulty_tier_collection_hash: Manifest information for `difficulty_tier_collection_hash`
         manifest_direct_activity_mode_hash: Manifest information for `direct_activity_mode_hash`
         manifest_place_hash: Manifest information for `place_hash`
     """
 
+    activity_family_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     activity_graph_list: list["DestinyActivityGraphListEntryDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityGraphListEntryDefinition]"""}
     )
@@ -1935,6 +2014,7 @@ class DestinyActivityDefinition(ManifestModel, HashObject):
         metadata={"type": """list[DestinyActivityChallengeDefinition]"""}
     )
     destination_hash: int = custom_field()
+    difficulty_tier_collection_hash: int = custom_field()
     direct_activity_mode_hash: int = custom_field()
     direct_activity_mode_type: int = custom_field()
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
@@ -1968,10 +2048,15 @@ class DestinyActivityDefinition(ManifestModel, HashObject):
     rewards: list["DestinyActivityRewardDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityRewardDefinition]"""}
     )
+    selectable_skull_collection_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     selection_screen_display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
     tier: int = custom_field()
+    trait_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     manifest_activity_type_hash: Optional["DestinyActivityTypeDefinition"] = custom_field(default=None)
     manifest_destination_hash: Optional["DestinyDestinationDefinition"] = custom_field(default=None)
+    manifest_difficulty_tier_collection_hash: Optional[dict] = custom_field(
+        metadata={"type": """Optional[dict]"""}, default=None
+    )
     manifest_direct_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = custom_field(default=None)
     manifest_place_hash: Optional["DestinyPlaceDefinition"] = custom_field(default=None)
 
@@ -2132,68 +2217,6 @@ class DestinyObjectivePerkEntryDefinition(BaseModel):
         converter=enum_converter("DestinyObjectiveGrantStyle")
     )
     manifest_perk_hash: Optional["DestinySandboxPerkDefinition"] = custom_field(default=None)
-
-
-@custom_define()
-class DestinySandboxPerkDefinition(ManifestModel, HashObject):
-    """
-    Perks are modifiers to a character or item that can be applied situationally. - Perks determine a weapon's damage type. - Perks put the Mods in Modifiers (they are literally the entity that bestows the Sandbox benefit for whatever fluff text about the modifier in the Socket, Plug or Talent Node) - Perks are applied for unique alterations of state in Objectives Anyways, I'm sure you can see why perks are so interesting. What Perks often don't have is human readable information, so we attempt to reverse engineer that by pulling that data from places that uniquely refer to these perks: namely, Talent Nodes and Plugs. That only gives us a subset of perks that are human readable, but those perks are the ones people generally care about anyways. The others are left as a mystery, their true purpose mostly unknown and undocumented.
-
-    Tip: Manifest Information
-        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
-        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
-
-        To fill the manifest dependent attributes, either:
-
-        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
-        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
-
-    Attributes:
-        damage_type: If this perk grants a damage type to a weapon, the damage type will be defined here. Unless you have a compelling reason to use this enum value, use the damageTypeHash instead to look up the actual DestinyDamageTypeDefinition.
-        damage_type_hash: The hash identifier for looking up the DestinyDamageTypeDefinition, if this perk has a damage type. This is preferred over using the damageType enumeration value, which has been left purely because it is occasionally convenient.
-        display_properties: These display properties are by no means guaranteed to be populated. Usually when it is, it's only because we back-filled them with the displayProperties of some Talent Node or Plug item that happened to be uniquely providing that perk.
-        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
-        index: The index of the entity as it was found in the investment tables.
-        is_displayable: If true, you can actually show the perk in the UI. Otherwise, it doesn't have useful player-facing information.
-        perk_identifier: The string identifier for the perk.
-        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
-        manifest_damage_type_hash: Manifest information for `damage_type_hash`
-    """
-
-    damage_type: Union["DamageType", int] = custom_field(converter=enum_converter("DamageType"))
-    damage_type_hash: int = custom_field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    index: int = custom_field()
-    is_displayable: bool = custom_field()
-    perk_identifier: str = custom_field()
-    redacted: bool = custom_field()
-    manifest_damage_type_hash: Optional["DestinyDamageTypeDefinition"] = custom_field(default=None)
-
-
-@custom_define()
-class DestinyDamageTypeDefinition(ManifestModel, HashObject):
-    """
-    All damage types that are possible in the game are defined here, along with localized info and icons as needed.
-
-    None
-    Attributes:
-        color: A color associated with the damage type. The displayProperties icon is tinted with a color close to this.
-        display_properties: The description of the damage type, icon etc...
-        enum_value: We have an enumeration for damage types for quick reference. This is the current definition's damage type enum value.
-        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
-        index: The index of the entity as it was found in the investment tables.
-        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
-        show_icon: If TRUE, the game shows this damage type's icon. Otherwise, it doesn't. Whether you show it or not is up to you.
-        transparent_icon_path: A variant of the icon that is transparent and colorless.
-    """
-
-    color: "DestinyColor" = custom_field()
-    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    enum_value: Union["DamageType", int] = custom_field(converter=enum_converter("DamageType"))
-    index: int = custom_field()
-    redacted: bool = custom_field()
-    show_icon: bool = custom_field()
-    transparent_icon_path: str = custom_field()
 
 
 @custom_define()

@@ -14,6 +14,7 @@ if TYPE_CHECKING:
         DestinyEnergyTypeDefinition,
         DestinyInventoryItemDefinition,
         DestinyMaterialRequirementSetDefinition,
+        DestinySandboxPerkDefinition,
         PlugAvailabilityMode,
         PlugUiStyles,
     )
@@ -52,6 +53,53 @@ class DestinyItemTierTypeInfusionBlock(BaseModel):
 
     base_quality_transfer_ratio: float = custom_field()
     minimum_quality_increment: int = custom_field()
+
+
+@custom_define()
+class DestinyEquipableItemSetDefinition(ManifestModel, HashObject):
+    """
+    Perks that are active only when you have a certain number of set items equipped.
+
+    None
+    Attributes:
+        display_properties: Display Properties, including name and icon, for this item set
+        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
+        index: The index of the entity as it was found in the investment tables.
+        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+        set_items: The items that confer these perks.
+        set_perks: The perks conferred by this set of armor pieces.
+    """
+
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    index: int = custom_field()
+    redacted: bool = custom_field()
+    set_items: list[int] = custom_field(metadata={"type": """list[int]"""})
+    set_perks: list[dict] = custom_field(metadata={"type": """list[dict]"""})
+
+
+@custom_define()
+class DestinyItemSetPerkDefinition(BaseModel):
+    """
+    _No description given by bungie._
+
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
+    Attributes:
+        required_set_count: The number of set pieces required to activate the perk.
+        sandbox_perk_hash: The perk this set confers.
+        manifest_sandbox_perk_hash: Manifest information for `sandbox_perk_hash`
+    """
+
+    required_set_count: int = custom_field()
+    sandbox_perk_hash: int = custom_field()
+    manifest_sandbox_perk_hash: Optional["DestinySandboxPerkDefinition"] = custom_field(default=None)
 
 
 @custom_define()
@@ -243,3 +291,21 @@ class DestinyEnergyCostEntry(BaseModel):
     energy_type: Union["DestinyEnergyType", int] = custom_field(converter=enum_converter("DestinyEnergyType"))
     energy_type_hash: int = custom_field()
     manifest_energy_type_hash: Optional["DestinyEnergyTypeDefinition"] = custom_field(default=None)
+
+
+@custom_define()
+class DestinyInventoryItemConstantsDefinition(ManifestModel, HashObject):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        gear_tier_overlay_image_paths: Gear tier overlay images
+        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
+        index: The index of the entity as it was found in the investment tables.
+        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+    """
+
+    gear_tier_overlay_image_paths: list[str] = custom_field(metadata={"type": """list[str]"""})
+    index: int = custom_field()
+    redacted: bool = custom_field()

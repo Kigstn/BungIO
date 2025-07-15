@@ -31,6 +31,8 @@
             - DestinyEquippingBlockDefinition
             - DestinyEquipmentSlotDefinition
             - DestinyArtDyeReference
+            - DestinySandboxPerkDefinition
+            - DestinyDamageTypeDefinition
             - DestinyItemTranslationBlockDefinition
             - DestinyGearArtArrangementReference
             - DestinyClassDefinition
@@ -62,8 +64,6 @@
             - DestinyActivityChallengeDefinition
             - DestinyObjectiveDefinition
             - DestinyObjectivePerkEntryDefinition
-            - DestinySandboxPerkDefinition
-            - DestinyDamageTypeDefinition
             - DestinyObjectiveStatEntryDefinition
             - DestinyItemInvestmentStatDefinition
             - DestinyLocationDefinition

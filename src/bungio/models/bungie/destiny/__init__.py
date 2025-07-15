@@ -10,15 +10,15 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, Ma
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyActivityModifierDefinition
-    from bungio.models import DestinyActivityDefinition
-    from bungio.models import DestinyUnlockDefinition
-    from bungio.models import DestinyMaterialRequirement
-    from bungio.models import DestinyChallengeStatus
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import PlatformErrorCodes
-    from bungio.models import DestinyStatDefinition
     from bungio.models import DestinyProgressionDefinition
+    from bungio.models import DestinyChallengeStatus
+    from bungio.models import DestinyUnlockDefinition
+    from bungio.models import DestinyStatDefinition
+    from bungio.models import DestinyActivityDefinition
+    from bungio.models import PlatformErrorCodes
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyMaterialRequirement
+    from bungio.models import DestinyActivityModifierDefinition
 
 
 @custom_define()
@@ -411,6 +411,29 @@ class DestinyAmmunitionType(BaseEnum):
     """_No description given by bungie._ """
 
 
+class DamageType(BaseEnum):
+    """
+    _No description given by bungie._
+    """
+
+    NONE = 0
+    """_No description given by bungie._ """
+    KINETIC = 1
+    """_No description given by bungie._ """
+    ARC = 2
+    """_No description given by bungie._ """
+    THERMAL = 3
+    """_No description given by bungie._ """
+    VOID = 4
+    """_No description given by bungie._ """
+    RAID = 5
+    """_No description given by bungie._ """
+    STASIS = 6
+    """_No description given by bungie._ """
+    STRAND = 7
+    """_No description given by bungie._ """
+
+
 @custom_define()
 class DyeReference(BaseModel):
     """
@@ -647,29 +670,6 @@ class DestinyObjectiveGrantStyle(BaseEnum):
     """_No description given by bungie._ """
 
 
-class DamageType(BaseEnum):
-    """
-    _No description given by bungie._
-    """
-
-    NONE = 0
-    """_No description given by bungie._ """
-    KINETIC = 1
-    """_No description given by bungie._ """
-    ARC = 2
-    """_No description given by bungie._ """
-    THERMAL = 3
-    """_No description given by bungie._ """
-    VOID = 4
-    """_No description given by bungie._ """
-    RAID = 5
-    """_No description given by bungie._ """
-    STASIS = 6
-    """_No description given by bungie._ """
-    STRAND = 7
-    """_No description given by bungie._ """
-
-
 class DestinyObjectiveUiStyle(BaseEnum):
     """
     If the objective has a known UI label, this enumeration will represent it.
@@ -688,6 +688,18 @@ class DestinyObjectiveUiStyle(BaseEnum):
     CRAFTING_MEMENTOS = 5
     """_No description given by bungie._ """
     CRAFTING_MEMENTO_TITLE = 6
+    """_No description given by bungie._ """
+    DISCOVERABLE_MYSTERY0 = 7
+    """_No description given by bungie._ """
+    DISCOVERABLE_MYSTERY1 = 8
+    """_No description given by bungie._ """
+    DISCOVERABLE_MYSTERY2 = 9
+    """_No description given by bungie._ """
+    DISCOVERABLE_MYSTERY3 = 10
+    """_No description given by bungie._ """
+    DISCOVERABLE_MYSTERY4 = 11
+    """_No description given by bungie._ """
+    DISCOVERABLE_EXOTIC = 12
     """_No description given by bungie._ """
 
 
@@ -813,6 +825,105 @@ class DestinyItemSubType(BaseEnum):
     DUMMY_REPEATABLE_BOUNTY = 32
     """_No description given by bungie._ """
     GLAIVE = 33
+    """_No description given by bungie._ """
+
+
+class DestinyActivityDifficultyId(BaseEnum):
+    """
+    _No description given by bungie._
+    """
+
+    TRIVIAL = 0
+    """_No description given by bungie._ """
+    EASY = 1
+    """_No description given by bungie._ """
+    NORMAL = 2
+    """_No description given by bungie._ """
+    CHALLENGING = 3
+    """_No description given by bungie._ """
+    HARD = 4
+    """_No description given by bungie._ """
+    BRAVE = 5
+    """_No description given by bungie._ """
+    ALMOST_IMPOSSIBLE = 6
+    """_No description given by bungie._ """
+    IMPOSSIBLE = 7
+    """_No description given by bungie._ """
+    COUNT = 8
+    """_No description given by bungie._ """
+
+
+class DestinyActivitySkullDynamicUse(BaseEnum):
+    """
+    _No description given by bungie._
+    """
+
+    UNKNOWN = 0
+    """_No description given by bungie._ """
+    ALLOWED = 1
+    """_No description given by bungie._ """
+    DISALLOWED = 2
+    """_No description given by bungie._ """
+    COUNT = 3
+    """_No description given by bungie._ """
+
+
+class DestinyActivityModifierDisplayCategory(BaseEnum):
+    """
+    _No description given by bungie._
+    """
+
+    NONE = 0
+    """_No description given by bungie._ """
+    MODE_RULES = 1
+    """_No description given by bungie._ """
+    SELF_BUILDCRAFT = 2
+    """_No description given by bungie._ """
+    ENEMY_ADJUSTMENT = 3
+    """_No description given by bungie._ """
+    ENEMY_BUILDCRAFT = 4
+    """_No description given by bungie._ """
+    SEASONAL = 5
+    """_No description given by bungie._ """
+    FUN = 6
+    """_No description given by bungie._ """
+    COUNT = 7
+    """_No description given by bungie._ """
+
+
+class DestinyActivityModifierConnotation(BaseEnum):
+    """
+    _No description given by bungie._
+    """
+
+    NEUTRAL = 0
+    """_No description given by bungie._ """
+    POSITIVE = 1
+    """_No description given by bungie._ """
+    NEGATIVE = 2
+    """_No description given by bungie._ """
+    AFFIX = 3
+    """_No description given by bungie._ """
+    INFORMATIONAL = 4
+    """_No description given by bungie._ """
+    REWARD = 5
+    """_No description given by bungie._ """
+    EVENT = 6
+    """_No description given by bungie._ """
+    COUNT = 7
+    """_No description given by bungie._ """
+
+
+class DestinyActivityDifficultyTierType(BaseEnum):
+    """
+    _No description given by bungie._
+    """
+
+    DEFAULT = 0
+    """_No description given by bungie._ """
+    TRAINING = 1
+    """_No description given by bungie._ """
+    COUNT = 2
     """_No description given by bungie._ """
 
 
@@ -963,6 +1074,10 @@ class DestinyRecordToastStyle(BaseEnum):
     PATHFINDER_OBJECTIVE_COMPLETE_STRIKES = 13
     """_No description given by bungie._ """
     PATHFINDER_OBJECTIVE_COMPLETE_GAMBIT = 14
+    """_No description given by bungie._ """
+    SEASON_WEEKLY_COMPLETE = 15
+    """_No description given by bungie._ """
+    SEASON_DAILY_COMPLETE = 16
     """_No description given by bungie._ """
 
 
@@ -1226,6 +1341,10 @@ class DestinyGameVersions(BaseFlagEnum):
     LIGHTFALL = 512
     """_No description given by bungie._ """
     THE_FINAL_SHAPE = 1024
+    """_No description given by bungie._ """
+    EDGE_OF_FATE = 28535
+    """_No description given by bungie._ """
+    RENEGADES = 28536
     """_No description given by bungie._ """
 
 
@@ -1781,6 +1900,36 @@ class DestinyEquipItemResult(BaseModel):
     item_instance_id: int = custom_field(metadata={"int64": True})
 
 
+class DestinyActivityTreeType(BaseEnum):
+    """
+    _No description given by bungie._
+    """
+
+    FIRETEAM_FINDER = 0
+    """_No description given by bungie._ """
+    CURATOR = 1
+    """_No description given by bungie._ """
+    EVENT_HOME = 2
+    """_No description given by bungie._ """
+    SEASON_HOME = 3
+    """_No description given by bungie._ """
+    COUNT = 4
+    """_No description given by bungie._ """
+
+
+class DestinyActivityTreeChildSortMode(BaseEnum):
+    """
+    _No description given by bungie._
+    """
+
+    INVESTMENT = 0
+    """_No description given by bungie._ """
+    FOCUS_FIRST = 1
+    """_No description given by bungie._ """
+    BONUS_AND_FOCUS_FIRST = 2
+    """_No description given by bungie._ """
+
+
 class FireteamFinderCodeOptionType(BaseEnum):
     """
     _No description given by bungie._
@@ -1899,6 +2048,8 @@ class FireteamFinderOptionValueProviderType(BaseEnum):
     FIRETEAM_FINDER_LABELS = 3
     """_No description given by bungie._ """
     FIRETEAM_FINDER_ACTIVITY_GRAPH = 4
+    """_No description given by bungie._ """
+    FIRETEAM_FINDER_U_I_ACTIVITY_TREE = 5
     """_No description given by bungie._ """
 
 

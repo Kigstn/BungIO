@@ -10,15 +10,15 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, Ma
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyHistoricalStatsPeriodGroup
-    from bungio.models import DestinyActivityModeType
-    from bungio.models import UserInfoCard
-    from bungio.models import DestinyActivityDefinition
     from bungio.models import BungieMembershipType
-    from bungio.models import DestinyGenderDefinition
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import DestinyClassDefinition
+    from bungio.models import UserInfoCard
+    from bungio.models import DestinyActivityModeType
     from bungio.models import DestinyRaceDefinition
+    from bungio.models import DestinyActivityDefinition
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyGenderDefinition
+    from bungio.models import DestinyClassDefinition
+    from bungio.models import DestinyHistoricalStatsPeriodGroup
 
 
 @custom_define()
@@ -29,19 +29,23 @@ class DestinyPostGameCarnageReportData(BaseModel):
     None
     Attributes:
         activity_details: Details about the activity.
+        activity_difficulty_tier: Difficulty tier index value for the activity.
         activity_was_started_from_beginning: True if the activity was started from the beginning, if that information is available and the activity was played post Witch Queen release.
         entries: Collection of players and their data for this activity.
         period: Date and time for the activity.
+        selected_skull_hashes: Collection of player-selected skull hashes active for the activity.
         starting_phase_index: If this activity has "phases", this is the phase at which the activity was started. This value is only valid for activities before the Beyond Light expansion shipped. Subsequent activities will not have a valid value here.
         teams: Collection of stats for the player in this activity.
     """
 
     activity_details: "DestinyHistoricalStatsActivity" = custom_field()
+    activity_difficulty_tier: int = custom_field()
     activity_was_started_from_beginning: bool = custom_field()
     entries: list["DestinyPostGameCarnageReportEntry"] = custom_field(
         metadata={"type": """list[DestinyPostGameCarnageReportEntry]"""}
     )
     period: datetime = custom_field()
+    selected_skull_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     starting_phase_index: int = custom_field()
     teams: list["DestinyPostGameCarnageReportTeamEntry"] = custom_field(
         metadata={"type": """list[DestinyPostGameCarnageReportTeamEntry]"""}

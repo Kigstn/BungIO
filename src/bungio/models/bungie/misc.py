@@ -91,6 +91,8 @@ class BungieMembershipType(BaseEnum):
     """_No description given by bungie._ """
     TIGER_DEMON = 10
     """_No description given by bungie._ """
+    GOLIATH_GAME = 20
+    """_No description given by bungie._ """
     BUNGIE_NEXT = 254
     """_No description given by bungie._ """
     ALL = -1

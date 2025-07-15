@@ -8,9 +8,11 @@ from bungio.models.base import BaseModel, custom_define, custom_field
 
 if TYPE_CHECKING:
     from bungio.models import (
+        DestinyEventCardDefinition,
         DestinyFireteamFinderConstantsDefinition,
         DestinyGuardianRankConstantsDefinition,
         DestinyLoadoutConstantsDefinition,
+        DestinyPlugSetDefinition,
         DestinyPresentationNodeDefinition,
         DestinySeasonDefinition,
         DestinyVendorDefinition,
@@ -131,6 +133,7 @@ class Destiny2CoreSettings(BaseModel):
         ammo_type_heavy_icon: _No description given by bungie._
         ammo_type_primary_icon: _No description given by bungie._
         ammo_type_special_icon: _No description given by bungie._
+        armor_archetype_plug_set_hash: _No description given by bungie._
         badges_root_node: _No description given by bungie._
         collection_root_node: _No description given by bungie._
         crafting_root_node_hash: _No description given by bungie._
@@ -139,12 +142,14 @@ class Destiny2CoreSettings(BaseModel):
         current_seasonal_artifact_hash: _No description given by bungie._
         enabled_fireteam_finder_activity_graph_hashes: _No description given by bungie._
         exotic_catalysts_root_node_hash: _No description given by bungie._
+        featured_items_list_hash: _No description given by bungie._
         fireteam_finder_constants_hash: _No description given by bungie._
         future_season_hashes: _No description given by bungie._
         guardian_rank_constants_hash: _No description given by bungie._
         guardian_ranks_root_node_hash: _No description given by bungie._
         insert_plug_free_blocked_socket_type_hashes: _No description given by bungie._
         insert_plug_free_protected_plug_item_hashes: _No description given by bungie._
+        inventory_item_constants_hash: _No description given by bungie._
         legacy_seals_root_node_hash: _No description given by bungie._
         legacy_triumphs_root_node_hash: _No description given by bungie._
         loadout_constants_hash: _No description given by bungie._
@@ -155,18 +160,22 @@ class Destiny2CoreSettings(BaseModel):
         past_season_hashes: _No description given by bungie._
         records_root_node: _No description given by bungie._
         seasonal_challenges_presentation_node_hash: _No description given by bungie._
+        seasonal_hub_event_card_hash: _No description given by bungie._
         undiscovered_collectible_image: _No description given by bungie._
         manifest_active_seals_root_node_hash: Manifest information for `active_seals_root_node_hash`
         manifest_active_triumphs_root_node_hash: Manifest information for `active_triumphs_root_node_hash`
+        manifest_armor_archetype_plug_set_hash: Manifest information for `armor_archetype_plug_set_hash`
         manifest_badges_root_node: Manifest information for `badges_root_node`
         manifest_collection_root_node: Manifest information for `collection_root_node`
         manifest_crafting_root_node_hash: Manifest information for `crafting_root_node_hash`
         manifest_current_season_hash: Manifest information for `current_season_hash`
         manifest_current_seasonal_artifact_hash: Manifest information for `current_seasonal_artifact_hash`
         manifest_exotic_catalysts_root_node_hash: Manifest information for `exotic_catalysts_root_node_hash`
+        manifest_featured_items_list_hash: Manifest information for `featured_items_list_hash`
         manifest_fireteam_finder_constants_hash: Manifest information for `fireteam_finder_constants_hash`
         manifest_guardian_rank_constants_hash: Manifest information for `guardian_rank_constants_hash`
         manifest_guardian_ranks_root_node_hash: Manifest information for `guardian_ranks_root_node_hash`
+        manifest_inventory_item_constants_hash: Manifest information for `inventory_item_constants_hash`
         manifest_legacy_seals_root_node_hash: Manifest information for `legacy_seals_root_node_hash`
         manifest_legacy_triumphs_root_node_hash: Manifest information for `legacy_triumphs_root_node_hash`
         manifest_loadout_constants_hash: Manifest information for `loadout_constants_hash`
@@ -176,6 +185,7 @@ class Destiny2CoreSettings(BaseModel):
         manifest_metrics_root_node: Manifest information for `metrics_root_node`
         manifest_records_root_node: Manifest information for `records_root_node`
         manifest_seasonal_challenges_presentation_node_hash: Manifest information for `seasonal_challenges_presentation_node_hash`
+        manifest_seasonal_hub_event_card_hash: Manifest information for `seasonal_hub_event_card_hash`
     """
 
     active_seals_root_node_hash: int = custom_field()
@@ -183,6 +193,7 @@ class Destiny2CoreSettings(BaseModel):
     ammo_type_heavy_icon: str = custom_field()
     ammo_type_primary_icon: str = custom_field()
     ammo_type_special_icon: str = custom_field()
+    armor_archetype_plug_set_hash: int = custom_field()
     badges_root_node: int = custom_field()
     collection_root_node: int = custom_field()
     crafting_root_node_hash: int = custom_field()
@@ -191,12 +202,14 @@ class Destiny2CoreSettings(BaseModel):
     current_seasonal_artifact_hash: int = custom_field()
     enabled_fireteam_finder_activity_graph_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     exotic_catalysts_root_node_hash: int = custom_field()
+    featured_items_list_hash: int = custom_field()
     fireteam_finder_constants_hash: int = custom_field()
     future_season_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     guardian_rank_constants_hash: int = custom_field()
     guardian_ranks_root_node_hash: int = custom_field()
     insert_plug_free_blocked_socket_type_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     insert_plug_free_protected_plug_item_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    inventory_item_constants_hash: int = custom_field()
     legacy_seals_root_node_hash: int = custom_field()
     legacy_triumphs_root_node_hash: int = custom_field()
     loadout_constants_hash: int = custom_field()
@@ -207,15 +220,20 @@ class Destiny2CoreSettings(BaseModel):
     past_season_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     records_root_node: int = custom_field()
     seasonal_challenges_presentation_node_hash: int = custom_field()
+    seasonal_hub_event_card_hash: int = custom_field()
     undiscovered_collectible_image: str = custom_field()
     manifest_active_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_active_triumphs_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
+    manifest_armor_archetype_plug_set_hash: Optional["DestinyPlugSetDefinition"] = custom_field(default=None)
     manifest_badges_root_node: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_collection_root_node: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_crafting_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_current_season_hash: Optional["DestinySeasonDefinition"] = custom_field(default=None)
     manifest_current_seasonal_artifact_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
     manifest_exotic_catalysts_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
+    manifest_featured_items_list_hash: Optional[dict] = custom_field(
+        metadata={"type": """Optional[dict]"""}, default=None
+    )
     manifest_fireteam_finder_constants_hash: Optional["DestinyFireteamFinderConstantsDefinition"] = custom_field(
         default=None
     )
@@ -223,6 +241,9 @@ class Destiny2CoreSettings(BaseModel):
         default=None
     )
     manifest_guardian_ranks_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
+    manifest_inventory_item_constants_hash: Optional[dict] = custom_field(
+        metadata={"type": """Optional[dict]"""}, default=None
+    )
     manifest_legacy_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_legacy_triumphs_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_loadout_constants_hash: Optional["DestinyLoadoutConstantsDefinition"] = custom_field(default=None)
@@ -234,3 +255,4 @@ class Destiny2CoreSettings(BaseModel):
     manifest_seasonal_challenges_presentation_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(
         default=None
     )
+    manifest_seasonal_hub_event_card_hash: Optional["DestinyEventCardDefinition"] = custom_field(default=None)
