@@ -11,6 +11,7 @@ if TYPE_CHECKING:
         DestinyEventCardDefinition,
         DestinyFireteamFinderConstantsDefinition,
         DestinyGuardianRankConstantsDefinition,
+        DestinyItemFilterDefinition,
         DestinyLoadoutConstantsDefinition,
         DestinyPlugSetDefinition,
         DestinyPresentationNodeDefinition,
@@ -231,9 +232,7 @@ class Destiny2CoreSettings(BaseModel):
     manifest_current_season_hash: Optional["DestinySeasonDefinition"] = custom_field(default=None)
     manifest_current_seasonal_artifact_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
     manifest_exotic_catalysts_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
-    manifest_featured_items_list_hash: Optional[dict] = custom_field(
-        metadata={"type": """Optional[dict]"""}, default=None
-    )
+    manifest_featured_items_list_hash: Optional["DestinyItemFilterDefinition"] = custom_field(default=None)
     manifest_fireteam_finder_constants_hash: Optional["DestinyFireteamFinderConstantsDefinition"] = custom_field(
         default=None
     )

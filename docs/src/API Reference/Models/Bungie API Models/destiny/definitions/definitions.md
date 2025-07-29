@@ -132,6 +132,8 @@
             - DestinyProgressionRewardItemQuantity
             - DestinyProgressionSocketPlugOverride
             - DestinyRaceDefinition
+            - DestinyActivityRewardMapping
+            - DestinyActivityRewardItem
             - DestinyUnlockDefinition
             - DestinyMedalTierDefinition
             - DestinyEntitySearchResult

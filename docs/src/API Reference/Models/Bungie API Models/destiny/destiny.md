@@ -77,6 +77,7 @@
             - DestinyRace
             - DestinyActivity
             - DestinyActivityDifficultyTier
+            - DestinyActivityRewardDisplayMode
             - EquipFailureReason
             - DestinyTalentNode
             - DestinyTalentNodeState
@@ -174,6 +175,7 @@
             - DestinyRace
             - DestinyActivity
             - DestinyActivityDifficultyTier
+            - DestinyActivityRewardDisplayMode
             - EquipFailureReason
             - DestinyTalentNode
             - DestinyTalentNodeState

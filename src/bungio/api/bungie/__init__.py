@@ -7,7 +7,6 @@ from bungio.api.bungie.tokens import TokensRouteInterface
 from bungio.api.bungie.community_content import CommunityContentRouteInterface
 from bungio.api.bungie.trending import TrendingRouteInterface
 from bungio.api.bungie.fireteam import FireteamRouteInterface
-from bungio.api.bungie.fireteam_finder import FireteamFinderRouteInterface
 from bungio.api.bungie.social import SocialRouteInterface
 from bungio.api.bungie.get_available_locales import GetAvailableLocalesRouteInterface
 from bungio.api.bungie.settings import SettingsRouteInterface
@@ -25,7 +24,6 @@ class AllRouteInterfaces(
     CommunityContentRouteInterface,
     TrendingRouteInterface,
     FireteamRouteInterface,
-    FireteamFinderRouteInterface,
     SocialRouteInterface,
     GetAvailableLocalesRouteInterface,
     SettingsRouteInterface,

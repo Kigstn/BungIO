@@ -11,14 +11,14 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, Ma
 
 if TYPE_CHECKING:
     from bungio.models import DestinyProgressionDefinition
-    from bungio.models import DestinyChallengeStatus
-    from bungio.models import DestinyUnlockDefinition
-    from bungio.models import DestinyStatDefinition
-    from bungio.models import DestinyActivityDefinition
     from bungio.models import PlatformErrorCodes
-    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyUnlockDefinition
     from bungio.models import DestinyMaterialRequirement
     from bungio.models import DestinyActivityModifierDefinition
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyChallengeStatus
+    from bungio.models import DestinyActivityDefinition
+    from bungio.models import DestinyStatDefinition
 
 
 @custom_define()
@@ -1342,9 +1342,9 @@ class DestinyGameVersions(BaseFlagEnum):
     """_No description given by bungie._ """
     THE_FINAL_SHAPE = 1024
     """_No description given by bungie._ """
-    EDGE_OF_FATE = 28535
+    EDGE_OF_FATE = 2048
     """_No description given by bungie._ """
-    RENEGADES = 28536
+    RENEGADES = 4096
     """_No description given by bungie._ """
 
 
@@ -1576,7 +1576,7 @@ class DestinyActivity(BaseModel):
 
     Attributes:
         activity_hash: The hash identifier of the Activity. Use this to look up the DestinyActivityDefinition of the activity.
-        boolean_activity_options: The set of activity options for this activity, keyed by an identifier that's unique for this activity (not guaranteed to be unique between or across all activities, though should be unique for every *variant* of a given *conceptual* activity: for instance, the original D2 Raid has many variant DestinyActivityDefinitions. While other activities could potentially have the same option hashes, for any given D2 base Raid variant the hash will be unique). As a concrete example of this data, the hashes you get for Raids will correspond to the currently active "Challenge Mode". We don't have any human readable information for these, but saavy 3rd party app users could manually associate the key (a hash identifier for the "option" that is enabled/disabled) and the value (whether it's enabled or disabled presently) On our side, we don't necessarily even know what these are used for (the game designers know, but we don't), and we have no human readable data for them. In order to use them, you will have to do some experimentation.
+        boolean_activity_options: The set of activity options for this activity, keyed by an identifier that's unique for this activity (not guaranteed to be unique between or across all activities, though should be unique for every *variant* of a given *conceptual* activity: for instance, the original D2 Raid has many variant DestinyActivityDefinitions. While other activities could potentially have the same option hashes, for any given D2 base Raid variant the hash will be unique). As a concrete example of this data, the hashes you get for Raids will correspond to the currently active "Challenge Mode". We don't have any human readable information for these, but savvy 3rd party app users could manually associate the key (a hash identifier for the "option" that is enabled/disabled) and the value (whether it's enabled or disabled presently) On our side, we don't necessarily even know what these are used for (the game designers know, but we don't), and we have no human readable data for them. In order to use them, you will have to do some experimentation.
         can_join: If true, the user is allowed to join with another Fireteam in this activity.
         can_lead: If true, the user is allowed to lead a Fireteam into this activity.
         challenges: _No description given by bungie._
@@ -1586,8 +1586,9 @@ class DestinyActivity(BaseModel):
         is_new: If true, then the activity should have a "new" indicator in the Director UI.
         is_visible: If true, the user should be able to see this activity.
         loadout_requirement_index: If returned, this is the index into the DestinyActivityDefinition's "loadouts" property, indicating the currently active loadout requirements.
-        modifier_hashes: If the activity has modifiers, this will be the list of modifiers that all variants have in common. Perform lookups against DestinyActivityModifierDefinition which defines the modifier being applied to get at the modifier data. Note that, in the DestiyActivityDefinition, you will see many more modifiers than this being referred to: those are all *possible* modifiers for the activity, not the active ones. Use only the active ones to match what's really live.
+        modifier_hashes: If the activity has modifiers, this will be the list of modifiers that all variants have in common. Perform lookups against DestinyActivityModifierDefinition which defines the modifier being applied to get at the modifier data. Note that, in the DestinyActivityDefinition, you will see many more modifiers than this being referred to: those are all *possible* modifiers for the activity, not the active ones. Use only the active ones to match what's really live.
         recommended_light: The recommended light level for the activity, if applicable.
+        visible_rewards: A filtered list of reward mappings with only the currently visible reward items.
         manifest_activity_hash: Manifest information for `activity_hash`
     """
 
@@ -1606,6 +1607,7 @@ class DestinyActivity(BaseModel):
     loadout_requirement_index: int = custom_field()
     modifier_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     recommended_light: int = custom_field()
+    visible_rewards: list[dict] = custom_field(metadata={"type": """list[dict]"""})
     manifest_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
 
 
@@ -1629,6 +1631,19 @@ class DestinyActivityDifficultyTier(BaseEnum):
     ALMOST_IMPOSSIBLE = 6
     """_No description given by bungie._ """
     IMPOSSIBLE = 7
+    """_No description given by bungie._ """
+
+
+class DestinyActivityRewardDisplayMode(BaseEnum):
+    """
+    _No description given by bungie._
+    """
+
+    AGGREGATE = 0
+    """_No description given by bungie._ """
+    PICK_FIRST = 1
+    """_No description given by bungie._ """
+    COUNT = 2
     """_No description given by bungie._ """
 
 

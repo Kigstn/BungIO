@@ -8,7 +8,6 @@ from bungio.http.routes.destiny2 import Destiny2RouteHttpRequests
 from bungio.http.routes.community_content import CommunityContentRouteHttpRequests
 from bungio.http.routes.trending import TrendingRouteHttpRequests
 from bungio.http.routes.fireteam import FireteamRouteHttpRequests
-from bungio.http.routes.fireteam_finder import FireteamFinderRouteHttpRequests
 from bungio.http.routes.social import SocialRouteHttpRequests
 from bungio.http.routes.get_available_locales import GetAvailableLocalesRouteHttpRequests
 from bungio.http.routes.settings import SettingsRouteHttpRequests
@@ -27,7 +26,6 @@ class AllRouteHttpRequests(
     CommunityContentRouteHttpRequests,
     TrendingRouteHttpRequests,
     FireteamRouteHttpRequests,
-    FireteamFinderRouteHttpRequests,
     SocialRouteHttpRequests,
     GetAvailableLocalesRouteHttpRequests,
     SettingsRouteHttpRequests,

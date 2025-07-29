@@ -51,6 +51,34 @@ class DestinyActivityInteractableReference(BaseModel):
 
 
 @custom_define()
+class DestinyFireteamFinderConstantsDefinition(ManifestModel, HashObject):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        all_fireteam_finder_activity_hashes: _No description given by bungie._
+        display_properties: _No description given by bungie._
+        fireteam_finder_activity_graph_root_category_hashes: _No description given by bungie._
+        guardian_oath_display_properties: _No description given by bungie._
+        guardian_oath_tenets: _No description given by bungie._
+        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
+        index: The index of the entity as it was found in the investment tables.
+        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+    """
+
+    all_fireteam_finder_activity_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    fireteam_finder_activity_graph_root_category_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    guardian_oath_display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    guardian_oath_tenets: list["DestinyDisplayPropertiesDefinition"] = custom_field(
+        metadata={"type": """list[DestinyDisplayPropertiesDefinition]"""}
+    )
+    index: int = custom_field()
+    redacted: bool = custom_field()
+
+
+@custom_define()
 class DestinyFireteamFinderActivityGraphDefinition(ManifestModel, HashObject):
     """
     _No description given by bungie._
@@ -384,33 +412,5 @@ class DestinyFireteamFinderLabelGroupDefinition(ManifestModel, HashObject):
 
     descending_sort_priority: int = custom_field()
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    index: int = custom_field()
-    redacted: bool = custom_field()
-
-
-@custom_define()
-class DestinyFireteamFinderConstantsDefinition(ManifestModel, HashObject):
-    """
-    _No description given by bungie._
-
-    None
-    Attributes:
-        all_fireteam_finder_activity_hashes: _No description given by bungie._
-        display_properties: _No description given by bungie._
-        fireteam_finder_activity_graph_root_category_hashes: _No description given by bungie._
-        guardian_oath_display_properties: _No description given by bungie._
-        guardian_oath_tenets: _No description given by bungie._
-        hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
-        index: The index of the entity as it was found in the investment tables.
-        redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
-    """
-
-    all_fireteam_finder_activity_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
-    display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    fireteam_finder_activity_graph_root_category_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
-    guardian_oath_display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    guardian_oath_tenets: list["DestinyDisplayPropertiesDefinition"] = custom_field(
-        metadata={"type": """list[DestinyDisplayPropertiesDefinition]"""}
-    )
     index: int = custom_field()
     redacted: bool = custom_field()

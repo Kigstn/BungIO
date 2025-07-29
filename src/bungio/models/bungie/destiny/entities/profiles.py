@@ -57,6 +57,7 @@ class DestinyProfileComponent(BaseModel):
         lifetime_highest_guardian_rank: The 'lifetime highest' Guardian Rank value, which starts at rank 1. This rank value should never go down.
         renewed_guardian_rank: The seasonal 'renewed' Guardian Rank value. This rank value resets at the start of each new season to the highest-earned non-advanced rank.
         season_hashes: A list of seasons that this profile owns. Unlike versionsOwned, these stay with the profile across Platforms, and thus will be valid.  It turns out that Stadia Pro subscriptions will give access to seasons but only while playing on Stadia and with an active subscription. So some users (users who have Stadia Pro but choose to play on some other platform) won't see these as available: it will be whatever seasons are available for the platform on which they last played.
+        season_pass_hashes: A list of season passes aka reward passes that this profile owns. Unlike versionsOwned, these stay with the profile across Platforms, and thus will be valid.
         user_info: If you need to render the Profile (their platform name, icon, etc...) somewhere, this property contains that information.
         versions_owned: If you want to know what expansions they own, this will contain that data.  IMPORTANT: This field may not return the data you're interested in for Cross-Saved users. It returns the last ownership data we saw for this account - which is to say, what they've purchased on the platform on which they last played, which now could be a different platform.  If you don't care about per-platform ownership and only care about whatever platform it seems they are playing on most recently, then this should be "good enough." Otherwise, this should be considered deprecated. We do not have a good alternative to provide at this time with platform specific ownership data for DLC.
         manifest_active_event_card_hash: Manifest information for `active_event_card_hash`
@@ -76,6 +77,7 @@ class DestinyProfileComponent(BaseModel):
     lifetime_highest_guardian_rank: int = custom_field()
     renewed_guardian_rank: int = custom_field()
     season_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    season_pass_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     user_info: "UserInfoCard" = custom_field()
     versions_owned: Union["DestinyGameVersions", int] = custom_field(converter=enum_converter("DestinyGameVersions"))
     manifest_active_event_card_hash: Optional["DestinyEventCardDefinition"] = custom_field(default=None)
