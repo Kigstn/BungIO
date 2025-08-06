@@ -11,6 +11,7 @@ if TYPE_CHECKING:
         DestinyEventCardDefinition,
         DestinyFireteamFinderConstantsDefinition,
         DestinyGuardianRankConstantsDefinition,
+        DestinyInventoryItemConstantsDefinition,
         DestinyItemFilterDefinition,
         DestinyLoadoutConstantsDefinition,
         DestinyPlugSetDefinition,
@@ -240,8 +241,8 @@ class Destiny2CoreSettings(BaseModel):
         default=None
     )
     manifest_guardian_ranks_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
-    manifest_inventory_item_constants_hash: Optional[dict] = custom_field(
-        metadata={"type": """Optional[dict]"""}, default=None
+    manifest_inventory_item_constants_hash: Optional["DestinyInventoryItemConstantsDefinition"] = custom_field(
+        default=None
     )
     manifest_legacy_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_legacy_triumphs_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)

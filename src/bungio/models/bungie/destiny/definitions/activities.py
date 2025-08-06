@@ -10,6 +10,11 @@ from bungio.utils import enum_converter
 if TYPE_CHECKING:
     from bungio.models import (
         DestinyActivityDefinition,
+        DestinyActivityDifficultyId,
+        DestinyActivityDifficultyTierType,
+        DestinyActivityModifierConnotation,
+        DestinyActivityModifierDisplayCategory,
+        DestinyActivitySkullDynamicUse,
         DestinyDisplayPropertiesDefinition,
         DestinyTraitDefinition,
         DestinyUnlockExpressionDefinition,
@@ -89,9 +94,7 @@ class DestinyActivitySkullSubcategoryDefinition(ManifestModel, HashObject):
     index: int = custom_field()
     parent_skull_category_hash: int = custom_field()
     redacted: bool = custom_field()
-    manifest_parent_skull_category_hash: Optional[dict] = custom_field(
-        metadata={"type": """Optional[dict]"""}, default=None
-    )
+    manifest_parent_skull_category_hash: Optional["DestinyActivitySkullCategoryDefinition"] = custom_field(default=None)
 
 
 @custom_define()
@@ -107,7 +110,9 @@ class DestinyActivityDifficultyTierCollectionDefinition(ManifestModel, HashObjec
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
     """
 
-    difficulty_tiers: list[dict] = custom_field(metadata={"type": """list[dict]"""})
+    difficulty_tiers: list["DestinyActivityDifficultyTierDefinition"] = custom_field(
+        metadata={"type": """list[DestinyActivityDifficultyTierDefinition]"""}
+    )
     index: int = custom_field()
     redacted: bool = custom_field()
 
@@ -145,17 +150,23 @@ class DestinyActivityDifficultyTierDefinition(BaseModel):
 
     activity_level: int = custom_field()
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    fixed_activity_skulls: list[dict] = custom_field(metadata={"type": """list[dict]"""})
+    fixed_activity_skulls: list["DestinyActivitySkull"] = custom_field(
+        metadata={"type": """list[DestinyActivitySkull]"""}
+    )
     maximum_fireteam_leader_power: int = custom_field()
     minimum_fireteam_leader_power: int = custom_field()
     optional_required_trait: int = custom_field()
     recommended_activity_level_offset: int = custom_field()
     score_time_limit_multiplier: int = custom_field()
     selectable_skull_collection_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
-    skull_subcategory_overrides: list[dict] = custom_field(metadata={"type": """list[dict]"""})
+    skull_subcategory_overrides: list["DestinyActivityDifficultyTierSubcategoryOverride"] = custom_field(
+        metadata={"type": """list[DestinyActivityDifficultyTierSubcategoryOverride]"""}
+    )
     tier_enabled_unlock_expression: "DestinyUnlockExpressionDefinition" = custom_field()
     tier_rank: int = custom_field()
-    tier_type: Union[dict, int] = custom_field(converter=enum_converter("dict"))
+    tier_type: Union["DestinyActivityDifficultyTierType", int] = custom_field(
+        converter=enum_converter("DestinyActivityDifficultyTierType")
+    )
     manifest_optional_required_trait: Optional["DestinyTraitDefinition"] = custom_field(default=None)
 
 
@@ -191,21 +202,29 @@ class DestinyActivitySkull(BaseModel, HashObject):
         manifest_skull_exclusion_group_hash: Manifest information for `skull_exclusion_group_hash`
     """
 
-    activity_modifier_connotation: Union[dict, int] = custom_field(converter=enum_converter("dict"))
-    activity_modifier_display_category: Union[dict, int] = custom_field(converter=enum_converter("dict"))
+    activity_modifier_connotation: Union["DestinyActivityModifierConnotation", int] = custom_field(
+        converter=enum_converter("DestinyActivityModifierConnotation")
+    )
+    activity_modifier_display_category: Union["DestinyActivityModifierDisplayCategory", int] = custom_field(
+        converter=enum_converter("DestinyActivityModifierDisplayCategory")
+    )
     display_description_override_for_nav_mode: str = custom_field()
     display_in_activity_selection: bool = custom_field()
     display_in_nav_mode: bool = custom_field()
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    dynamic_use: Union[dict, int] = custom_field(converter=enum_converter("dict"))
+    dynamic_use: Union["DestinyActivitySkullDynamicUse", int] = custom_field(
+        converter=enum_converter("DestinyActivitySkullDynamicUse")
+    )
     has_ui: bool = custom_field()
     modifier_multiplier_contribution: float = custom_field()
     modifier_power_contribution: int = custom_field()
     skull_exclusion_group_hash: int = custom_field()
     skull_identifier_hash: int = custom_field()
-    skull_options: list[dict] = custom_field(metadata={"type": """list[dict]"""})
-    manifest_skull_exclusion_group_hash: Optional[dict] = custom_field(
-        metadata={"type": """Optional[dict]"""}, default=None
+    skull_options: list["DestinyActivitySkullOption"] = custom_field(
+        metadata={"type": """list[DestinyActivitySkullOption]"""}
+    )
+    manifest_skull_exclusion_group_hash: Optional["DestinyActivitySelectableSkullExclusionGroupDefinition"] = (
+        custom_field(default=None)
     )
 
 
@@ -227,7 +246,9 @@ class DestinyActivitySkullOption(BaseModel):
     bool_value: bool = custom_field()
     float_value: float = custom_field()
     integer_value: int = custom_field()
-    min_display_difficulty_id: Union[dict, int] = custom_field(converter=enum_converter("dict"))
+    min_display_difficulty_id: Union["DestinyActivityDifficultyId", int] = custom_field(
+        converter=enum_converter("DestinyActivityDifficultyId")
+    )
     option_hash: int = custom_field()
     string_value: str = custom_field()
 
@@ -284,8 +305,10 @@ class DestinyActivitySelectableSkullCollectionDefinition(ManifestModel, HashObje
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
     index: int = custom_field()
     redacted: bool = custom_field()
-    selectable_activity_skulls: list[dict] = custom_field(metadata={"type": """list[dict]"""})
-    selection_type: dict = custom_field(metadata={"type": """dict"""})
+    selectable_activity_skulls: list["DestinyActivitySelectableSkull"] = custom_field(
+        metadata={"type": """list[DestinyActivitySelectableSkull]"""}
+    )
+    selection_type: "DestinyActivitySelectableSkullCollectionSelectionType" = custom_field()
     skull_subcategory_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
 
 
@@ -330,13 +353,13 @@ class DestinyActivitySelectableSkull(BaseModel):
         manifest_required_trait_hash: Manifest information for `required_trait_hash`
     """
 
-    activity_skull: dict = custom_field(metadata={"type": """dict"""})
+    activity_skull: "DestinyActivitySkull" = custom_field()
     is_empty_skull: bool = custom_field()
     loadout_restriction_hash: int = custom_field()
     required_trait_existence: bool = custom_field()
     required_trait_hash: int = custom_field()
-    manifest_loadout_restriction_hash: Optional[dict] = custom_field(
-        metadata={"type": """Optional[dict]"""}, default=None
+    manifest_loadout_restriction_hash: Optional["DestinyActivityLoadoutRestrictionDefinition"] = custom_field(
+        default=None
     )
     manifest_required_trait_hash: Optional["DestinyTraitDefinition"] = custom_field(default=None)
 

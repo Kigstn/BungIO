@@ -17,12 +17,12 @@ class DestinyItemFilterDefinition(ManifestModel, HashObject):
 
     None
     Attributes:
+        allowed_items: The items in this set
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
-        set_items: The items in this set
     """
 
+    allowed_items: list[int] = custom_field(metadata={"type": """list[int]"""})
     index: int = custom_field()
     redacted: bool = custom_field()
-    set_items: list[int] = custom_field(metadata={"type": """list[int]"""})

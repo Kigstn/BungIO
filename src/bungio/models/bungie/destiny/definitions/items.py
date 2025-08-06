@@ -74,7 +74,9 @@ class DestinyEquipableItemSetDefinition(ManifestModel, HashObject):
     index: int = custom_field()
     redacted: bool = custom_field()
     set_items: list[int] = custom_field(metadata={"type": """list[int]"""})
-    set_perks: list[dict] = custom_field(metadata={"type": """list[dict]"""})
+    set_perks: list["DestinyItemSetPerkDefinition"] = custom_field(
+        metadata={"type": """list[DestinyItemSetPerkDefinition]"""}
+    )
 
 
 @custom_define()

@@ -10,72 +10,76 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, Ma
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyActivityGraphDefinition
-    from bungio.models import EquippingItemBlockAttributes
-    from bungio.models import DestinyStatCategory
-    from bungio.models import DestinyPowerCapDefinition
-    from bungio.models import DestinyIconSequenceDefinition
-    from bungio.models import DestinyVendorReplyType
-    from bungio.models import DestinyDerivedItemCategoryDefinition
-    from bungio.models import DestinyColor
-    from bungio.models import DestinyDisplayPropertiesDefinition
-    from bungio.models import SearchResultOfDestinyEntitySearchResultItem
-    from bungio.models import DestinyVendorProgressionType
-    from bungio.models import TierType
-    from bungio.models import DestinyProgressionRewardItemAcquisitionBehavior
-    from bungio.models import DestinyActivityModeCategory
-    from bungio.models import DestinyGatingScope
-    from bungio.models import DestinyLoreDefinition
-    from bungio.models import DestinySeasonDefinition
-    from bungio.models import ItemPerkVisibility
-    from bungio.models import ItemLocation
-    from bungio.models import DestinyItemQuantity
-    from bungio.models import DestinyActivityModeType
-    from bungio.models import DestinyAnimationReference
-    from bungio.models import BucketScope
-    from bungio.models import DestinyItemSubType
-    from bungio.models import DestinyVendorLocationDefinition
-    from bungio.models import DyeReference
-    from bungio.models import DestinyTraitDefinition
-    from bungio.models import DestinyObjectiveGrantStyle
-    from bungio.models import DestinyProgressionStepDisplayEffect
-    from bungio.models import DestinyRace
-    from bungio.models import DestinyItemType
-    from bungio.models import DestinyClass
+    from bungio.models import DestinyActivitySelectableSkullCollectionDefinition
+    from bungio.models import DestinyVendorInteractionRewardSelection
+    from bungio.models import DestinyActivityFamilyDefinition
+    from bungio.models import DestinyArtifactDefinition
+    from bungio.models import SocketPlugSources
+    from bungio.models import DestinyAmmunitionType
     from bungio.models import DestinySocketCategoryDefinition
+    from bungio.models import DestinyActivityModifierDefinition
+    from bungio.models import DestinyItemSubType
+    from bungio.models import TierType
+    from bungio.models import DestinyStatCategory
+    from bungio.models import DestinyColor
+    from bungio.models import DestinyVendorProgressionType
+    from bungio.models import SearchResultOfDestinyEntitySearchResultItem
+    from bungio.models import DestinyRace
+    from bungio.models import DestinyCollectibleDefinition
+    from bungio.models import DestinyLoreDefinition
+    from bungio.models import EquippingItemBlockAttributes
+    from bungio.models import DestinyProgressionScope
+    from bungio.models import SpecialItemType
+    from bungio.models import DestinyActivityDifficultyTierCollectionDefinition
+    from bungio.models import DestinyEnvironmentLocationMapping
+    from bungio.models import DestinyObjectiveGrantStyle
+    from bungio.models import DestinyActivityNavPointType
+    from bungio.models import DestinyPowerCapDefinition
+    from bungio.models import DestinyPlugSetDefinition
+    from bungio.models import ItemLocation
+    from bungio.models import DestinyVendorLocationDefinition
+    from bungio.models import DestinyDisplayPropertiesDefinition
     from bungio.models import DestinyItemSortType
     from bungio.models import DestinyProgressionLevelRequirementDefinition
-    from bungio.models import DestinyEnvironmentLocationMapping
-    from bungio.models import DestinyCollectibleDefinition
-    from bungio.models import DestinyItemPlugDefinition
-    from bungio.models import DestinyVendorInteractionRewardSelection
-    from bungio.models import DestinyStatAggregationType
-    from bungio.models import DestinyProgressionScope
-    from bungio.models import VendorInteractionType
-    from bungio.models import InterpolationPoint
-    from bungio.models import BucketCategory
-    from bungio.models import VendorDisplayCategorySortOrder
+    from bungio.models import DestinySeasonDefinition
     from bungio.models import HyperlinkReference
-    from bungio.models import DestinyGender
-    from bungio.models import DestinyActivityNavPointType
-    from bungio.models import DestinyVendorItemRefundPolicy
-    from bungio.models import DestinyUnlockValueUIStyle
-    from bungio.models import BungieMembershipType
-    from bungio.models import DestinyPlugSetDefinition
-    from bungio.models import SocketPlugSources
-    from bungio.models import DestinyBreakerTypeDefinition
-    from bungio.models import DestinyAmmunitionType
-    from bungio.models import DamageType
-    from bungio.models import DestinySocketTypeDefinition
-    from bungio.models import SpecialItemType
-    from bungio.models import DestinyItemTierTypeDefinition
-    from bungio.models import DestinyArtifactDefinition
-    from bungio.models import DestinyActivityModifierDefinition
-    from bungio.models import DestinyItemSourceDefinition
-    from bungio.models import DestinyObjectiveUiStyle
-    from bungio.models import DateRange
-    from bungio.models import DestinyBreakerType
     from bungio.models import DestinyPresentationNodeDefinition
+    from bungio.models import DestinyItemType
+    from bungio.models import DestinyBreakerType
+    from bungio.models import DateRange
+    from bungio.models import DestinyItemQuantity
+    from bungio.models import DamageType
+    from bungio.models import DestinyClass
+    from bungio.models import DestinyProgressionRewardItemAcquisitionBehavior
+    from bungio.models import DestinyVendorItemRefundPolicy
+    from bungio.models import DestinyStatAggregationType
+    from bungio.models import DestinySocketTypeDefinition
+    from bungio.models import InterpolationPoint
+    from bungio.models import DestinyAnimationReference
+    from bungio.models import VendorDisplayCategorySortOrder
+    from bungio.models import DestinyUnlockValueUIStyle
+    from bungio.models import DestinyGatingScope
+    from bungio.models import DestinyIconSequenceDefinition
+    from bungio.models import DestinyActivityModeCategory
+    from bungio.models import DestinyActivityModeType
+    from bungio.models import BucketCategory
+    from bungio.models import DestinyBreakerTypeDefinition
+    from bungio.models import DestinyEquipableItemSetDefinition
+    from bungio.models import DestinyTraitDefinition
+    from bungio.models import DestinyItemTierTypeDefinition
+    from bungio.models import DestinyDerivedItemCategoryDefinition
+    from bungio.models import DestinyObjectiveUiStyle
+    from bungio.models import DestinyVendorReplyType
+    from bungio.models import ItemPerkVisibility
+    from bungio.models import DestinyItemSourceDefinition
+    from bungio.models import DyeReference
+    from bungio.models import BungieMembershipType
+    from bungio.models import BucketScope
+    from bungio.models import VendorInteractionType
+    from bungio.models import DestinyActivityGraphDefinition
+    from bungio.models import DestinyItemPlugDefinition
+    from bungio.models import DestinyProgressionStepDisplayEffect
+    from bungio.models import DestinyGender
 
 
 @custom_define()
@@ -263,7 +267,9 @@ class DestinyInventoryItemDefinition(ManifestModel, HashObject):
         index: The index of the entity as it was found in the investment tables.
         inventory: If this item can exist in an inventory, this block will be non-null. In practice, every item that currently exists has one of these blocks. But note that it is not necessarily guaranteed.
         investment_stats: If the item has stats, this block will be defined. It has the "raw" investment stats for the item. These investment stats don't take into account the ways that the items can spawn, nor do they take into account any Stat Group transformations. I have retained them for debugging purposes, but I do not know how useful people will find them.
+        is_adept: Whether or not this item is adept, which has increased stats and/or perks.
         is_featured_item: Whether or not this item is currently featured in the game, giving it a special watermark
+        is_holofoil: Whether or not this item is holofoil, which has special icon treatment and in-game appearance.
         is_wrapper: If true, this is a dummy vendor-wrapped item template. Items purchased from Eververse will be "wrapped" by one of these items so that we can safely provide refund capabilities before the item is "unwrapped".
         item_category_hashes: BNet attempts to make a more formal definition of item "Categories", as defined by DestinyItemCategoryDefinition. This is a list of all Categories that we were able to algorithmically determine that this item is a member of. (for instance, that it's a "Weapon", that it's an "Auto Rifle", etc...) The algorithm for these is, unfortunately, volatile. If you believe you see a miscategorized item, please let us know on the Bungie API forums.
         item_sub_type: A value indicating the "sub-type" of the item. For instance, where an item might have an itemType value "Weapon", this will be something more specific like "Auto Rifle". itemCategoryHashes are the preferred way of identifying types, we have retained this enum for its convenience.
@@ -340,7 +346,9 @@ class DestinyInventoryItemDefinition(ManifestModel, HashObject):
     investment_stats: list["DestinyItemInvestmentStatDefinition"] = custom_field(
         metadata={"type": """list[DestinyItemInvestmentStatDefinition]"""}
     )
+    is_adept: bool = custom_field()
     is_featured_item: bool = custom_field()
+    is_holofoil: bool = custom_field()
     is_wrapper: bool = custom_field()
     item_category_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     item_sub_type: Union["DestinyItemSubType", int] = custom_field(converter=enum_converter("DestinyItemSubType"))
@@ -964,9 +972,7 @@ class DestinyEquippingBlockDefinition(BaseModel):
     gearset_item_hash: int = custom_field()
     unique_label: str = custom_field()
     unique_label_hash: int = custom_field()
-    manifest_equipable_item_set_hash: Optional[dict] = custom_field(
-        metadata={"type": """Optional[dict]"""}, default=None
-    )
+    manifest_equipable_item_set_hash: Optional["DestinyEquipableItemSetDefinition"] = custom_field(default=None)
     manifest_equipment_slot_type_hash: Optional["DestinyEquipmentSlotDefinition"] = custom_field(default=None)
     manifest_gearset_item_hash: Optional["DestinyInventoryItemDefinition"] = custom_field(default=None)
 
@@ -2054,8 +2060,8 @@ class DestinyActivityDefinition(ManifestModel, HashObject):
     trait_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     manifest_activity_type_hash: Optional["DestinyActivityTypeDefinition"] = custom_field(default=None)
     manifest_destination_hash: Optional["DestinyDestinationDefinition"] = custom_field(default=None)
-    manifest_difficulty_tier_collection_hash: Optional[dict] = custom_field(
-        metadata={"type": """Optional[dict]"""}, default=None
+    manifest_difficulty_tier_collection_hash: Optional["DestinyActivityDifficultyTierCollectionDefinition"] = (
+        custom_field(default=None)
     )
     manifest_direct_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = custom_field(default=None)
     manifest_place_hash: Optional["DestinyPlaceDefinition"] = custom_field(default=None)

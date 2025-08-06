@@ -11,6 +11,8 @@ if TYPE_CHECKING:
     from bungio.models import (
         DestinyActivityGraphDefinition,
         DestinyActivityInteractableDefinition,
+        DestinyActivityTreeChildSortMode,
+        DestinyActivityTreeType,
         DestinyColor,
         DestinyDisplayPropertiesDefinition,
         FireteamFinderCodeOptionType,
@@ -116,11 +118,15 @@ class DestinyFireteamFinderActivityGraphDefinition(ManifestModel, HashObject):
         manifest_specific_activity_set_hash: Manifest information for `specific_activity_set_hash`
     """
 
-    activity_tree_child_sort_mode: Union[dict, int] = custom_field(converter=enum_converter("dict"))
+    activity_tree_child_sort_mode: Union["DestinyActivityTreeChildSortMode", int] = custom_field(
+        converter=enum_converter("DestinyActivityTreeChildSortMode")
+    )
     children: list[int] = custom_field(metadata={"type": """list[int]"""})
     color: "DestinyColor" = custom_field()
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    enabled_on_tree_types_list_enum: list[Union[dict, int]] = custom_field(converter=enum_converter("dict"))
+    enabled_on_tree_types_list_enum: list[Union["DestinyActivityTreeType", int]] = custom_field(
+        converter=enum_converter("DestinyActivityTreeType")
+    )
     index: int = custom_field()
     is_player_elected_difficulty_node: bool = custom_field()
     parent_hash: int = custom_field()

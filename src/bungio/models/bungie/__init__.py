@@ -356,6 +356,8 @@ from bungio.models.bungie.destiny.definitions import DestinyItemCategoryDefiniti
 from bungio.models.bungie.destiny.definitions import DestinyProgressionRewardItemQuantity
 from bungio.models.bungie.destiny.definitions import DestinyProgressionSocketPlugOverride
 from bungio.models.bungie.destiny.definitions import DestinyRaceDefinition
+from bungio.models.bungie.destiny.definitions import DestinyActivityRewardMapping
+from bungio.models.bungie.destiny.definitions import DestinyActivityRewardItem
 from bungio.models.bungie.destiny.definitions import DestinyUnlockDefinition
 from bungio.models.bungie.destiny.definitions import DestinyMedalTierDefinition
 from bungio.models.bungie.destiny.definitions import DestinyEntitySearchResult
@@ -745,6 +747,7 @@ from bungio.models.bungie.destiny import DestinyJoinClosedReasons
 from bungio.models.bungie.destiny import DestinyRace
 from bungio.models.bungie.destiny import DestinyActivity
 from bungio.models.bungie.destiny import DestinyActivityDifficultyTier
+from bungio.models.bungie.destiny import DestinyActivityRewardDisplayMode
 from bungio.models.bungie.destiny import EquipFailureReason
 from bungio.models.bungie.destiny import DestinyTalentNode
 from bungio.models.bungie.destiny import DestinyTalentNodeState

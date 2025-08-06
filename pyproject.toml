@@ -1,6 +1,6 @@
 [project]
 name = "bungio"
-version = "1.5.1"
+version = "1.5.2"
 description = "A destiny 2 / bungie api wrapper"
 keywords = ["asyncio", "destiny", "destiny 2", "bungie", "api"]
 authors = [{ name = "Daniel J" }]

@@ -10,15 +10,15 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, Ma
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyClassDefinition
-    from bungio.models import BungieMembershipType
-    from bungio.models import DestinyHistoricalStatsPeriodGroup
-    from bungio.models import DestinyActivityModeType
-    from bungio.models import DestinyRaceDefinition
     from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import UserInfoCard
-    from bungio.models import DestinyActivityDefinition
+    from bungio.models import DestinyRaceDefinition
     from bungio.models import DestinyGenderDefinition
+    from bungio.models import DestinyHistoricalStatsPeriodGroup
+    from bungio.models import DestinyActivityDefinition
+    from bungio.models import BungieMembershipType
+    from bungio.models import DestinyClassDefinition
+    from bungio.models import DestinyActivityModeType
+    from bungio.models import UserInfoCard
 
 
 @custom_define()

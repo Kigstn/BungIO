@@ -67,7 +67,9 @@ class DestinySeasonDefinition(ManifestModel, HashObject):
     seal_presentation_node_hash: int = custom_field()
     season_number: int = custom_field()
     season_pass_hash: int = custom_field()
-    season_pass_list: list[dict] = custom_field(metadata={"type": """list[dict]"""})
+    season_pass_list: list["DestinySeasonPassReference"] = custom_field(
+        metadata={"type": """list[DestinySeasonPassReference]"""}
+    )
     season_pass_progression_hash: int = custom_field()
     seasonal_challenges_presentation_node_hash: int = custom_field()
     start_date: datetime = custom_field()
@@ -137,7 +139,7 @@ class DestinySeasonPassDefinition(ManifestModel, HashObject):
 
     color: "DestinyColor" = custom_field()
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
-    images: dict = custom_field(metadata={"type": """dict"""})
+    images: "DestinySeasonPassImages" = custom_field()
     index: int = custom_field()
     link_redirect_path: str = custom_field()
     prestige_progression_hash: int = custom_field()
