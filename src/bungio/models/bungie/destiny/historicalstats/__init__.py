@@ -10,15 +10,15 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, Ma
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import DestinyRaceDefinition
     from bungio.models import DestinyGenderDefinition
-    from bungio.models import DestinyHistoricalStatsPeriodGroup
-    from bungio.models import DestinyActivityDefinition
-    from bungio.models import BungieMembershipType
-    from bungio.models import DestinyClassDefinition
-    from bungio.models import DestinyActivityModeType
     from bungio.models import UserInfoCard
+    from bungio.models import DestinyActivityDefinition
+    from bungio.models import DestinyHistoricalStatsPeriodGroup
+    from bungio.models import DestinyClassDefinition
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import BungieMembershipType
+    from bungio.models import DestinyActivityModeType
+    from bungio.models import DestinyRaceDefinition
 
 
 @custom_define()
@@ -208,10 +208,14 @@ class DestinyPostGameCarnageReportExtendedData(BaseModel):
 
     None
     Attributes:
+        scoreboard_values: Collection of stats from the player scoreboard in this activity.
         values: Collection of stats for the player in this activity.
         weapons: List of weapons and their perspective values.
     """
 
+    scoreboard_values: dict[str, "DestinyHistoricalStatsValue"] = custom_field(
+        metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
+    )
     values: dict[str, "DestinyHistoricalStatsValue"] = custom_field(
         metadata={"type": """dict[str, DestinyHistoricalStatsValue]"""}
     )

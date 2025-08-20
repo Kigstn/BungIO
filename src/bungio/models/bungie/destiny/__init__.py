@@ -10,15 +10,16 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, Ma
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import DestinyProgressionDefinition
-    from bungio.models import DestinyActivityDefinition
     from bungio.models import DestinyActivityModifierDefinition
-    from bungio.models import PlatformErrorCodes
+    from bungio.models import DestinyActivityDefinition
     from bungio.models import DestinyUnlockDefinition
+    from bungio.models import DestinyActivityRewardMapping
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyMaterialRequirement
+    from bungio.models import DestinyProgressionDefinition
     from bungio.models import DestinyChallengeStatus
     from bungio.models import DestinyStatDefinition
-    from bungio.models import DestinyMaterialRequirement
+    from bungio.models import PlatformErrorCodes
 
 
 @custom_define()
@@ -1607,7 +1608,9 @@ class DestinyActivity(BaseModel):
     loadout_requirement_index: int = custom_field()
     modifier_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     recommended_light: int = custom_field()
-    visible_rewards: list[dict] = custom_field(metadata={"type": """list[dict]"""})
+    visible_rewards: list["DestinyActivityRewardMapping"] = custom_field(
+        metadata={"type": """list[DestinyActivityRewardMapping]"""}
+    )
     manifest_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
 
 

@@ -1,6 +1,7 @@
 from bungio.models.bungie.destiny.definitions.common import DestinyDisplayPropertiesDefinition
 from bungio.models.bungie.destiny.definitions.common import DestinyIconSequenceDefinition
 from bungio.models.bungie.destiny.definitions.common import DestinyPositionDefinition
+from bungio.models.bungie.destiny.definitions.inventory import DestinyItemFilterDefinition
 from bungio.models.bungie.destiny.definitions.sockets import DestinySocketTypeDefinition
 from bungio.models.bungie.destiny.definitions.sockets import DestinyInsertPlugActionDefinition
 from bungio.models.bungie.destiny.definitions.sockets import DestinyPlugWhitelistEntryDefinition
@@ -218,7 +219,6 @@ from bungio.models.bungie.destiny.requests.actions import DestinyInsertPlugsFree
 from bungio.models.bungie.destiny.reporting.requests import DestinyReportOffensePgcrRequest
 from bungio.models.bungie.destiny.definitions.reporting import DestinyReportReasonCategoryDefinition
 from bungio.models.bungie.destiny.definitions.reporting import DestinyReportReasonDefinition
-from bungio.models.bungie.destiny.definitions.inventory import DestinyItemFilterDefinition
 from bungio.models.bungie.user.models import GetCredentialTypesForAccountResponse
 from bungio.models.bungie.content.models import ContentTypeDescription
 from bungio.models.bungie.content.models import ContentTypeProperty

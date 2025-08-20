@@ -302,12 +302,32 @@ class DestinyInventoryItemConstantsDefinition(ManifestModel, HashObject):
 
     None
     Attributes:
+        crafted_background_path: Reverse drop shadow for crafted icon identifier
+        crafted_overlay_path: Crafted weapon overlay path
+        enhanced_item_overlay_path: Enhanced item overlay
+        featured_item_flag_path: Teal flag for featured item watermarks
         gear_tier_overlay_image_paths: Gear tier overlay images
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
+        holofoil900_animated_background_overlay_path: Layer between item and color background to denote holofoil status, introduced in v900, animated
+        holofoil900_background_overlay_path: Layer between item and color background to denote holofoil status, introduced in v900
+        holofoil_background_overlay_path: Layer between item and color background to denote holofoil status, introduced in v736
         index: The index of the entity as it was found in the investment tables.
+        masterwork_overlay_path: Gold masterwork glow
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
+        universal_ornament_background_overlay_path: Layer between item and color background to denote universal ornament status
+        watermark_drop_shadow_path: Watermark drop shadow
     """
 
+    crafted_background_path: str = custom_field()
+    crafted_overlay_path: str = custom_field()
+    enhanced_item_overlay_path: str = custom_field()
+    featured_item_flag_path: str = custom_field()
     gear_tier_overlay_image_paths: list[str] = custom_field(metadata={"type": """list[str]"""})
+    holofoil900_animated_background_overlay_path: str = custom_field()
+    holofoil900_background_overlay_path: str = custom_field()
+    holofoil_background_overlay_path: str = custom_field()
     index: int = custom_field()
+    masterwork_overlay_path: str = custom_field()
     redacted: bool = custom_field()
+    universal_ornament_background_overlay_path: str = custom_field()
+    watermark_drop_shadow_path: str = custom_field()

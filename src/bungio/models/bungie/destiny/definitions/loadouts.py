@@ -7,9 +7,7 @@ from typing import TYPE_CHECKING
 from bungio.models.base import HashObject, ManifestModel, custom_define, custom_field
 
 if TYPE_CHECKING:
-    from bungio.models import (
-        DestinyDisplayPropertiesDefinition,
-    )
+    from bungio.models import DestinyDisplayPropertiesDefinition
 
 
 @custom_define()

@@ -11,75 +11,76 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, Ma
 
 if TYPE_CHECKING:
     from bungio.models import DestinyActivitySelectableSkullCollectionDefinition
-    from bungio.models import DestinyVendorInteractionRewardSelection
-    from bungio.models import DestinyActivityFamilyDefinition
-    from bungio.models import DestinyArtifactDefinition
-    from bungio.models import SocketPlugSources
-    from bungio.models import DestinyAmmunitionType
-    from bungio.models import DestinySocketCategoryDefinition
-    from bungio.models import DestinyActivityModifierDefinition
-    from bungio.models import DestinyItemSubType
-    from bungio.models import TierType
-    from bungio.models import DestinyStatCategory
-    from bungio.models import DestinyColor
-    from bungio.models import DestinyVendorProgressionType
-    from bungio.models import SearchResultOfDestinyEntitySearchResultItem
-    from bungio.models import DestinyRace
-    from bungio.models import DestinyCollectibleDefinition
-    from bungio.models import DestinyLoreDefinition
-    from bungio.models import EquippingItemBlockAttributes
-    from bungio.models import DestinyProgressionScope
-    from bungio.models import SpecialItemType
-    from bungio.models import DestinyActivityDifficultyTierCollectionDefinition
-    from bungio.models import DestinyEnvironmentLocationMapping
-    from bungio.models import DestinyObjectiveGrantStyle
+    from bungio.models import DestinyGatingScope
+    from bungio.models import DestinyItemType
+    from bungio.models import DestinyAnimationReference
     from bungio.models import DestinyActivityNavPointType
-    from bungio.models import DestinyPowerCapDefinition
-    from bungio.models import DestinyPlugSetDefinition
-    from bungio.models import ItemLocation
+    from bungio.models import VendorDisplayCategorySortOrder
+    from bungio.models import DestinyItemTierTypeDefinition
+    from bungio.models import DestinyCollectibleDefinition
+    from bungio.models import DestinyVendorReplyType
+    from bungio.models import DestinyClass
+    from bungio.models import SpecialItemType
+    from bungio.models import DestinyItemSubType
+    from bungio.models import DestinyRace
+    from bungio.models import DestinyEnvironmentLocationMapping
+    from bungio.models import DestinyAmmunitionType
+    from bungio.models import DestinyTraitDefinition
     from bungio.models import DestinyVendorLocationDefinition
-    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyDerivedItemCategoryDefinition
+    from bungio.models import DestinyActivityGraphDefinition
+    from bungio.models import DestinyBreakerTypeDefinition
+    from bungio.models import DyeReference
+    from bungio.models import DestinyEquipableItemSetDefinition
     from bungio.models import DestinyItemSortType
+    from bungio.models import DestinyStatCategory
+    from bungio.models import DestinyPresentationNodeDefinition
+    from bungio.models import BucketCategory
+    from bungio.models import DestinyItemSourceDefinition
     from bungio.models import DestinyProgressionLevelRequirementDefinition
+    from bungio.models import DestinyGender
+    from bungio.models import InterpolationPoint
+    from bungio.models import DestinyObjectiveUiStyle
+    from bungio.models import ItemLocation
+    from bungio.models import DestinyProgressionStepDisplayEffect
+    from bungio.models import DestinyArtifactDefinition
+    from bungio.models import DestinyVendorProgressionType
+    from bungio.models import DestinyUnlockValueUIStyle
+    from bungio.models import VendorInteractionType
+    from bungio.models import EquippingItemBlockAttributes
+    from bungio.models import SearchResultOfDestinyEntitySearchResultItem
+    from bungio.models import DestinyIconSequenceDefinition
+    from bungio.models import DestinyItemQuantity
+    from bungio.models import DestinySocketCategoryDefinition
+    from bungio.models import BungieMembershipType
+    from bungio.models import DateRange
+    from bungio.models import DestinyActivityModeCategory
+    from bungio.models import DestinyBreakerType
+    from bungio.models import DestinyColor
+    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyLoreDefinition
+    from bungio.models import SocketPlugSources
+    from bungio.models import DestinyVendorInteractionRewardSelection
+    from bungio.models import DestinyStatAggregationType
+    from bungio.models import DestinyActivityModifierDefinition
+    from bungio.models import ItemPerkVisibility
+    from bungio.models import DestinyActivityRewardDisplayMode
     from bungio.models import DestinySeasonDefinition
     from bungio.models import HyperlinkReference
-    from bungio.models import DestinyPresentationNodeDefinition
-    from bungio.models import DestinyItemType
-    from bungio.models import DestinyBreakerType
-    from bungio.models import DateRange
-    from bungio.models import DestinyItemQuantity
-    from bungio.models import DamageType
-    from bungio.models import DestinyClass
-    from bungio.models import DestinyProgressionRewardItemAcquisitionBehavior
-    from bungio.models import DestinyVendorItemRefundPolicy
-    from bungio.models import DestinyStatAggregationType
-    from bungio.models import DestinySocketTypeDefinition
-    from bungio.models import InterpolationPoint
-    from bungio.models import DestinyAnimationReference
-    from bungio.models import VendorDisplayCategorySortOrder
-    from bungio.models import DestinyUnlockValueUIStyle
-    from bungio.models import DestinyGatingScope
-    from bungio.models import DestinyIconSequenceDefinition
-    from bungio.models import DestinyActivityModeCategory
-    from bungio.models import DestinyActivityModeType
-    from bungio.models import BucketCategory
-    from bungio.models import DestinyBreakerTypeDefinition
-    from bungio.models import DestinyEquipableItemSetDefinition
-    from bungio.models import DestinyTraitDefinition
-    from bungio.models import DestinyItemTierTypeDefinition
-    from bungio.models import DestinyDerivedItemCategoryDefinition
-    from bungio.models import DestinyObjectiveUiStyle
-    from bungio.models import DestinyVendorReplyType
-    from bungio.models import ItemPerkVisibility
-    from bungio.models import DestinyItemSourceDefinition
-    from bungio.models import DyeReference
-    from bungio.models import BungieMembershipType
-    from bungio.models import BucketScope
-    from bungio.models import VendorInteractionType
-    from bungio.models import DestinyActivityGraphDefinition
     from bungio.models import DestinyItemPlugDefinition
-    from bungio.models import DestinyProgressionStepDisplayEffect
-    from bungio.models import DestinyGender
+    from bungio.models import DestinyProgressionRewardItemAcquisitionBehavior
+    from bungio.models import TierType
+    from bungio.models import BucketScope
+    from bungio.models import DestinyActivityFamilyDefinition
+    from bungio.models import DestinySocketTypeDefinition
+    from bungio.models import DestinyPlugSetDefinition
+    from bungio.models import DestinyPowerCapDefinition
+    from bungio.models import DestinyActivityDifficultyTierCollectionDefinition
+    from bungio.models import DestinyVendorItemRefundPolicy
+    from bungio.models import DestinyProgressionScope
+    from bungio.models import DamageType
+    from bungio.models import DestinyActivityModeType
+    from bungio.models import DestinyObjectiveGrantStyle
 
 
 @custom_define()
@@ -179,15 +180,25 @@ class DestinyProgressionDisplayPropertiesDefinition(BaseModel):
     """
     _No description given by bungie._
 
-    None
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
     Attributes:
         description: _No description given by bungie._
         display_units_name: When progressions show your "experience" gained, that bar has units (i.e. "Experience", "Bad Dudes Snuffed Out", whatever). This is the localized string for that unit of measurement.
         has_icon: _No description given by bungie._
         high_res_icon: If this item has a high-res icon (at least for now, many things won't), then the path to that icon will be here.
         icon: Note that "icon" is sometimes misleading, and should be interpreted in the context of the entity. For instance, in Destiny 1 the DestinyRecordBookDefinition's icon was a big picture of a book. But usually, it will be a small square image that you can use as... well, an icon. They are currently represented as 96px x 96px images.
+        icon_hash: _No description given by bungie._
         icon_sequences: _No description given by bungie._
         name: _No description given by bungie._
+        manifest_icon_hash: Manifest information for `icon_hash`
     """
 
     description: str = custom_field()
@@ -195,10 +206,12 @@ class DestinyProgressionDisplayPropertiesDefinition(BaseModel):
     has_icon: bool = custom_field()
     high_res_icon: str = custom_field()
     icon: str = custom_field()
+    icon_hash: int = custom_field()
     icon_sequences: list["DestinyIconSequenceDefinition"] = custom_field(
         metadata={"type": """list[DestinyIconSequenceDefinition]"""}
     )
     name: str = custom_field()
+    manifest_icon_hash: Optional[dict] = custom_field(metadata={"type": """Optional[dict]"""}, default=None)
 
 
 @custom_define()
@@ -1331,12 +1344,21 @@ class DestinyVendorDisplayPropertiesDefinition(BaseModel):
     """
     _No description given by bungie._
 
-    None
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
     Attributes:
         description: _No description given by bungie._
         has_icon: _No description given by bungie._
         high_res_icon: If this item has a high-res icon (at least for now, many things won't), then the path to that icon will be here.
         icon: Note that "icon" is sometimes misleading, and should be interpreted in the context of the entity. For instance, in Destiny 1 the DestinyRecordBookDefinition's icon was a big picture of a book. But usually, it will be a small square image that you can use as... well, an icon. They are currently represented as 96px x 96px images.
+        icon_hash: _No description given by bungie._
         icon_sequences: _No description given by bungie._
         large_icon: I regret calling this a "large icon". It's more like a medium-sized image with a picture of the vendor's mug on it, trying their best to look cool. Not what one would call an icon.
         large_transparent_icon: This is apparently the "Watermark". I am not certain offhand where this is actually used in the Game UI, but some people may find it useful.
@@ -1346,12 +1368,14 @@ class DestinyVendorDisplayPropertiesDefinition(BaseModel):
         requirements_display: Vendors, in addition to expected display property data, may also show some "common requirements" as statically defined definition data. This might be when a vendor accepts a single type of currency, or when the currency is unique to the vendor and the designers wanted to show that currency when you interact with the vendor.
         small_transparent_icon: This is the icon used in parts of the game UI such as the vendor's waypoint.
         subtitle: _No description given by bungie._
+        manifest_icon_hash: Manifest information for `icon_hash`
     """
 
     description: str = custom_field()
     has_icon: bool = custom_field()
     high_res_icon: str = custom_field()
     icon: str = custom_field()
+    icon_hash: int = custom_field()
     icon_sequences: list["DestinyIconSequenceDefinition"] = custom_field(
         metadata={"type": """list[DestinyIconSequenceDefinition]"""}
     )
@@ -1365,6 +1389,7 @@ class DestinyVendorDisplayPropertiesDefinition(BaseModel):
     )
     small_transparent_icon: str = custom_field()
     subtitle: str = custom_field()
+    manifest_icon_hash: Optional[dict] = custom_field(metadata={"type": """Optional[dict]"""}, default=None)
 
 
 @custom_define()
@@ -4017,8 +4042,12 @@ class DestinyActivityRewardMapping(BaseModel):
         reward_items: _No description given by bungie._
     """
 
-    display_behavior: Union[dict, int] = custom_field(converter=enum_converter("dict"))
-    reward_items: list[dict] = custom_field(metadata={"type": """list[dict]"""})
+    display_behavior: Union["DestinyActivityRewardDisplayMode", int] = custom_field(
+        converter=enum_converter("DestinyActivityRewardDisplayMode")
+    )
+    reward_items: list["DestinyActivityRewardItem"] = custom_field(
+        metadata={"type": """list[DestinyActivityRewardItem]"""}
+    )
 
 
 @custom_define()
