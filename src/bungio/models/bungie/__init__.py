@@ -1,6 +1,7 @@
 from bungio.models.bungie.destiny.definitions.common import DestinyDisplayPropertiesDefinition
 from bungio.models.bungie.destiny.definitions.common import DestinyIconSequenceDefinition
 from bungio.models.bungie.destiny.definitions.common import DestinyPositionDefinition
+from bungio.models.bungie.destiny.definitions.inventory import DestinyIconDefinition
 from bungio.models.bungie.destiny.definitions.inventory import DestinyItemFilterDefinition
 from bungio.models.bungie.destiny.definitions.sockets import DestinySocketTypeDefinition
 from bungio.models.bungie.destiny.definitions.sockets import DestinyInsertPlugActionDefinition
