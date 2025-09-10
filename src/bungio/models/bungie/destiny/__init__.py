@@ -10,16 +10,16 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, Ma
 
 
 if TYPE_CHECKING:
+    from bungio.models import PlatformErrorCodes
+    from bungio.models import DestinyStatDefinition
+    from bungio.models import DestinyChallengeStatus
+    from bungio.models import DestinyActivityDefinition
+    from bungio.models import DestinyProgressionDefinition
+    from bungio.models import DestinyUnlockDefinition
     from bungio.models import DestinyActivityRewardMapping
     from bungio.models import DestinyActivityModifierDefinition
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import DestinyProgressionDefinition
-    from bungio.models import DestinyStatDefinition
     from bungio.models import DestinyMaterialRequirement
-    from bungio.models import DestinyChallengeStatus
-    from bungio.models import PlatformErrorCodes
-    from bungio.models import DestinyUnlockDefinition
-    from bungio.models import DestinyActivityDefinition
+    from bungio.models import DestinyInventoryItemDefinition
 
 
 @custom_define()
@@ -1801,7 +1801,7 @@ class VendorItemStatus(BaseFlagEnum):
     SELLING_INHIBITED = 2048
     """_No description given by bungie._ """
     ALREADY_OWNED = 4096
-    """_No description given by bungie._ """
+    """DEPRECATED - Owned items use the NoUnlock state and a failure string indicating the proper display state. """
     DISPLAY_ONLY = 8192
     """_No description given by bungie._ """
 
@@ -1887,6 +1887,8 @@ class DestinyVendorItemState(BaseFlagEnum):
     INELIGIBLE = 8388608
     """_No description given by bungie._ """
     ARTIFACT_PERK_BOOSTED = 16777216
+    """_No description given by bungie._ """
+    SEASONAL_ARCHIVE_FREE = 33554432
     """_No description given by bungie._ """
 
 

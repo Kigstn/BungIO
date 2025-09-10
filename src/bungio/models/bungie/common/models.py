@@ -17,6 +17,7 @@ if TYPE_CHECKING:
         DestinyPlugSetDefinition,
         DestinyPresentationNodeDefinition,
         DestinySeasonDefinition,
+        DestinySeasonPassDefinition,
         DestinyVendorDefinition,
         EmailSettings,
     )
@@ -141,12 +142,14 @@ class Destiny2CoreSettings(BaseModel):
         crafting_root_node_hash: _No description given by bungie._
         current_rank_progression_hashes: _No description given by bungie._
         current_season_hash: _No description given by bungie._
+        current_season_pass_hash: _No description given by bungie._
         current_seasonal_artifact_hash: _No description given by bungie._
         enabled_fireteam_finder_activity_graph_hashes: _No description given by bungie._
         exotic_catalysts_root_node_hash: _No description given by bungie._
         featured_items_list_hash: _No description given by bungie._
         fireteam_finder_constants_hash: _No description given by bungie._
         future_season_hashes: _No description given by bungie._
+        global_constants_hash: _No description given by bungie._
         guardian_rank_constants_hash: _No description given by bungie._
         guardian_ranks_root_node_hash: _No description given by bungie._
         insert_plug_free_blocked_socket_type_hashes: _No description given by bungie._
@@ -171,10 +174,12 @@ class Destiny2CoreSettings(BaseModel):
         manifest_collection_root_node: Manifest information for `collection_root_node`
         manifest_crafting_root_node_hash: Manifest information for `crafting_root_node_hash`
         manifest_current_season_hash: Manifest information for `current_season_hash`
+        manifest_current_season_pass_hash: Manifest information for `current_season_pass_hash`
         manifest_current_seasonal_artifact_hash: Manifest information for `current_seasonal_artifact_hash`
         manifest_exotic_catalysts_root_node_hash: Manifest information for `exotic_catalysts_root_node_hash`
         manifest_featured_items_list_hash: Manifest information for `featured_items_list_hash`
         manifest_fireteam_finder_constants_hash: Manifest information for `fireteam_finder_constants_hash`
+        manifest_global_constants_hash: Manifest information for `global_constants_hash`
         manifest_guardian_rank_constants_hash: Manifest information for `guardian_rank_constants_hash`
         manifest_guardian_ranks_root_node_hash: Manifest information for `guardian_ranks_root_node_hash`
         manifest_inventory_item_constants_hash: Manifest information for `inventory_item_constants_hash`
@@ -201,12 +206,14 @@ class Destiny2CoreSettings(BaseModel):
     crafting_root_node_hash: int = custom_field()
     current_rank_progression_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     current_season_hash: int = custom_field()
+    current_season_pass_hash: int = custom_field()
     current_seasonal_artifact_hash: int = custom_field()
     enabled_fireteam_finder_activity_graph_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     exotic_catalysts_root_node_hash: int = custom_field()
     featured_items_list_hash: int = custom_field()
     fireteam_finder_constants_hash: int = custom_field()
     future_season_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    global_constants_hash: int = custom_field()
     guardian_rank_constants_hash: int = custom_field()
     guardian_ranks_root_node_hash: int = custom_field()
     insert_plug_free_blocked_socket_type_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
@@ -231,12 +238,14 @@ class Destiny2CoreSettings(BaseModel):
     manifest_collection_root_node: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_crafting_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_current_season_hash: Optional["DestinySeasonDefinition"] = custom_field(default=None)
+    manifest_current_season_pass_hash: Optional["DestinySeasonPassDefinition"] = custom_field(default=None)
     manifest_current_seasonal_artifact_hash: Optional["DestinyVendorDefinition"] = custom_field(default=None)
     manifest_exotic_catalysts_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)
     manifest_featured_items_list_hash: Optional["DestinyItemFilterDefinition"] = custom_field(default=None)
     manifest_fireteam_finder_constants_hash: Optional["DestinyFireteamFinderConstantsDefinition"] = custom_field(
         default=None
     )
+    manifest_global_constants_hash: Optional[dict] = custom_field(metadata={"type": """Optional[dict]"""}, default=None)
     manifest_guardian_rank_constants_hash: Optional["DestinyGuardianRankConstantsDefinition"] = custom_field(
         default=None
     )

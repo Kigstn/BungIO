@@ -9,6 +9,7 @@ from bungio.models.base import BaseModel, HashObject, ManifestModel, custom_defi
 if TYPE_CHECKING:
     from bungio.models import (
         DestinyEventCardDefinition,
+        DestinyIconDefinition,
         DestinyItemFilterDefinition,
         DestinyPlugSetDefinition,
         DestinyPresentationNodeDefinition,
@@ -49,7 +50,7 @@ class DestinyDisplayPropertiesDefinition(BaseModel):
         metadata={"type": """list[DestinyIconSequenceDefinition]"""}
     )
     name: str = custom_field()
-    manifest_icon_hash: Optional[dict] = custom_field(metadata={"type": """Optional[dict]"""}, default=None)
+    manifest_icon_hash: Optional["DestinyIconDefinition"] = custom_field(default=None)
 
 
 @custom_define()

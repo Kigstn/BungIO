@@ -14,6 +14,7 @@ if TYPE_CHECKING:
         DestinyGameVersions,
         DestinyGuardianRankDefinition,
         DestinySeasonDefinition,
+        DestinySeasonPassDefinition,
         DestinyVendorReceipt,
         UserInfoCard,
     )
@@ -51,6 +52,7 @@ class DestinyProfileComponent(BaseModel):
         character_ids: A list of the character IDs, for further querying on your part.
         current_guardian_rank: The 'current' Guardian Rank value, which starts at rank 1. This rank value will drop at the start of a new season to your 'renewed' rank from the previous season.
         current_season_hash: If populated, this is a reference to the season that is currently active.
+        current_season_pass_hash: If populated, this is a reference to the season pass that is currently active.
         current_season_reward_power_cap: If populated, this is the reward power cap for the current season.
         date_last_played: The last time the user played with any character on this Profile.
         event_card_hashes_owned: A list of hashes for event cards that a profile owns. Unlike most values in versionsOwned, these stay with the profile across all platforms.
@@ -63,6 +65,7 @@ class DestinyProfileComponent(BaseModel):
         manifest_active_event_card_hash: Manifest information for `active_event_card_hash`
         manifest_current_guardian_rank: Manifest information for `current_guardian_rank`
         manifest_current_season_hash: Manifest information for `current_season_hash`
+        manifest_current_season_pass_hash: Manifest information for `current_season_pass_hash`
         manifest_lifetime_highest_guardian_rank: Manifest information for `lifetime_highest_guardian_rank`
         manifest_renewed_guardian_rank: Manifest information for `renewed_guardian_rank`
     """
@@ -71,6 +74,7 @@ class DestinyProfileComponent(BaseModel):
     character_ids: list[int] = custom_field(metadata={"type": """list[int]"""})
     current_guardian_rank: int = custom_field()
     current_season_hash: int = custom_field()
+    current_season_pass_hash: int = custom_field()
     current_season_reward_power_cap: int = custom_field()
     date_last_played: datetime = custom_field()
     event_card_hashes_owned: list[int] = custom_field(metadata={"type": """list[int]"""})
@@ -83,5 +87,6 @@ class DestinyProfileComponent(BaseModel):
     manifest_active_event_card_hash: Optional["DestinyEventCardDefinition"] = custom_field(default=None)
     manifest_current_guardian_rank: Optional["DestinyGuardianRankDefinition"] = custom_field(default=None)
     manifest_current_season_hash: Optional["DestinySeasonDefinition"] = custom_field(default=None)
+    manifest_current_season_pass_hash: Optional["DestinySeasonPassDefinition"] = custom_field(default=None)
     manifest_lifetime_highest_guardian_rank: Optional["DestinyGuardianRankDefinition"] = custom_field(default=None)
     manifest_renewed_guardian_rank: Optional["DestinyGuardianRankDefinition"] = custom_field(default=None)

@@ -71,6 +71,7 @@
             - DestinyActivityUnlockStringDefinition
             - DestinyActivityRequirementsBlock
             - DestinyActivityRequirementLabel
+            - DestinyActivitySelectableSkullCollections
             - DestinyActivityPlaylistItemDefinition
             - DestinyActivityModeDefinition
             - DestinyActivityMatchmakingBlockDefinition

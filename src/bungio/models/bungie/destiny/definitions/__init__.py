@@ -10,77 +10,78 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, Ma
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyTraitDefinition
-    from bungio.models import DestinyActivityModeType
-    from bungio.models import DestinyItemTierTypeDefinition
-    from bungio.models import DestinyProgressionStepDisplayEffect
-    from bungio.models import DestinyProgressionRewardItemAcquisitionBehavior
-    from bungio.models import DestinyVendorItemRefundPolicy
-    from bungio.models import DestinyLoreDefinition
-    from bungio.models import DestinyBreakerTypeDefinition
-    from bungio.models import DestinyUnlockValueUIStyle
-    from bungio.models import DyeReference
-    from bungio.models import HyperlinkReference
-    from bungio.models import DestinySocketCategoryDefinition
-    from bungio.models import DestinyDisplayPropertiesDefinition
-    from bungio.models import DestinyVendorLocationDefinition
-    from bungio.models import DestinyStatAggregationType
-    from bungio.models import DestinyItemPlugDefinition
-    from bungio.models import DestinyItemSubType
-    from bungio.models import DestinyObjectiveGrantStyle
-    from bungio.models import DestinySeasonDefinition
-    from bungio.models import DestinyActivityRewardDisplayMode
-    from bungio.models import DestinyStatCategory
-    from bungio.models import SpecialItemType
-    from bungio.models import ItemLocation
-    from bungio.models import EquippingItemBlockAttributes
-    from bungio.models import DestinyActivityModifierDefinition
-    from bungio.models import DestinyPresentationNodeDefinition
-    from bungio.models import DestinyAmmunitionType
-    from bungio.models import DestinyVendorInteractionRewardSelection
     from bungio.models import DestinyEquipableItemSetDefinition
     from bungio.models import ItemPerkVisibility
-    from bungio.models import BucketCategory
-    from bungio.models import DestinyGatingScope
-    from bungio.models import BucketScope
-    from bungio.models import DestinyBreakerType
-    from bungio.models import DestinyRace
-    from bungio.models import DestinyItemSortType
-    from bungio.models import TierType
-    from bungio.models import DestinyIconSequenceDefinition
-    from bungio.models import SocketPlugSources
-    from bungio.models import DestinyVendorReplyType
-    from bungio.models import DestinyAnimationReference
-    from bungio.models import DestinyVendorProgressionType
-    from bungio.models import VendorDisplayCategorySortOrder
-    from bungio.models import DestinyGender
-    from bungio.models import DestinyActivitySelectableSkullCollectionDefinition
-    from bungio.models import DateRange
-    from bungio.models import DestinyColor
-    from bungio.models import DestinyActivityNavPointType
-    from bungio.models import DestinyProgressionLevelRequirementDefinition
-    from bungio.models import DestinyPlugSetDefinition
-    from bungio.models import DamageType
-    from bungio.models import BungieMembershipType
-    from bungio.models import DestinyEnvironmentLocationMapping
-    from bungio.models import DestinyObjectiveUiStyle
-    from bungio.models import DestinyActivityDifficultyTierCollectionDefinition
-    from bungio.models import InterpolationPoint
-    from bungio.models import DestinyActivityModeCategory
-    from bungio.models import SearchResultOfDestinyEntitySearchResultItem
-    from bungio.models import DestinyPowerCapDefinition
-    from bungio.models import DestinySocketTypeDefinition
-    from bungio.models import DestinyCollectibleDefinition
-    from bungio.models import DestinyItemSourceDefinition
-    from bungio.models import DestinyClass
-    from bungio.models import DestinyActivityFamilyDefinition
-    from bungio.models import DestinyItemType
-    from bungio.models import DestinyActivityGraphDefinition
-    from bungio.models import DestinyArtifactDefinition
-    from bungio.models import DestinyItemQuantity
     from bungio.models import VendorInteractionType
+    from bungio.models import DestinyAmmunitionType
+    from bungio.models import BucketCategory
+    from bungio.models import DestinyRace
+    from bungio.models import BucketScope
+    from bungio.models import DestinyUnlockValueUIStyle
+    from bungio.models import DestinyPowerCapDefinition
+    from bungio.models import DestinySocketCategoryDefinition
+    from bungio.models import DestinyArtifactDefinition
+    from bungio.models import DestinyActivityModeType
+    from bungio.models import DestinySeasonDefinition
+    from bungio.models import DestinyActivitySelectableSkullCollectionDefinition
+    from bungio.models import DestinyAnimationReference
+    from bungio.models import DestinyActivityNavPointType
+    from bungio.models import SpecialItemType
+    from bungio.models import DestinyItemSubType
+    from bungio.models import DestinyBreakerTypeDefinition
+    from bungio.models import DestinyItemQuantity
+    from bungio.models import DestinyProgressionStepDisplayEffect
+    from bungio.models import SocketPlugSources
+    from bungio.models import DamageType
+    from bungio.models import DestinyObjectiveUiStyle
+    from bungio.models import DestinyActivityRewardDisplayMode
+    from bungio.models import DestinyPresentationNodeDefinition
+    from bungio.models import VendorDisplayCategorySortOrder
+    from bungio.models import BungieMembershipType
+    from bungio.models import DestinyItemPlugDefinition
+    from bungio.models import DestinyProgressionLevelRequirementDefinition
+    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyTraitDefinition
+    from bungio.models import DestinyVendorInteractionRewardSelection
+    from bungio.models import DestinyGender
+    from bungio.models import DestinyIconDefinition
+    from bungio.models import DestinyVendorLocationDefinition
+    from bungio.models import DestinyColor
+    from bungio.models import ItemLocation
+    from bungio.models import HyperlinkReference
+    from bungio.models import DateRange
+    from bungio.models import DestinyActivityGraphDefinition
     from bungio.models import DestinyProgressionScope
+    from bungio.models import DestinyBreakerType
+    from bungio.models import DestinyActivityFamilyDefinition
+    from bungio.models import DestinyProgressionRewardItemAcquisitionBehavior
+    from bungio.models import DestinyStatAggregationType
+    from bungio.models import DestinyActivityModeCategory
+    from bungio.models import DestinyItemSortType
+    from bungio.models import DestinyActivityModifierDefinition
+    from bungio.models import SearchResultOfDestinyEntitySearchResultItem
     from bungio.models import DestinyDerivedItemCategoryDefinition
+    from bungio.models import TierType
+    from bungio.models import DyeReference
+    from bungio.models import InterpolationPoint
+    from bungio.models import DestinySocketTypeDefinition
+    from bungio.models import DestinyPlugSetDefinition
+    from bungio.models import DestinyLoreDefinition
+    from bungio.models import DestinyItemTierTypeDefinition
+    from bungio.models import EquippingItemBlockAttributes
+    from bungio.models import DestinyClass
+    from bungio.models import DestinyIconSequenceDefinition
+    from bungio.models import DestinyActivityDifficultyTierCollectionDefinition
+    from bungio.models import DestinyGatingScope
+    from bungio.models import DestinyCollectibleDefinition
+    from bungio.models import DestinyItemType
+    from bungio.models import DestinyVendorProgressionType
+    from bungio.models import DestinyStatCategory
+    from bungio.models import DestinyObjectiveGrantStyle
+    from bungio.models import DestinyVendorReplyType
+    from bungio.models import DestinyItemSourceDefinition
+    from bungio.models import DestinyEnvironmentLocationMapping
+    from bungio.models import DestinyVendorItemRefundPolicy
 
 
 @custom_define()
@@ -211,7 +212,7 @@ class DestinyProgressionDisplayPropertiesDefinition(BaseModel):
         metadata={"type": """list[DestinyIconSequenceDefinition]"""}
     )
     name: str = custom_field()
-    manifest_icon_hash: Optional[dict] = custom_field(metadata={"type": """Optional[dict]"""}, default=None)
+    manifest_icon_hash: Optional["DestinyIconDefinition"] = custom_field(default=None)
 
 
 @custom_define()
@@ -1389,7 +1390,7 @@ class DestinyVendorDisplayPropertiesDefinition(BaseModel):
     )
     small_transparent_icon: str = custom_field()
     subtitle: str = custom_field()
-    manifest_icon_hash: Optional[dict] = custom_field(metadata={"type": """Optional[dict]"""}, default=None)
+    manifest_icon_hash: Optional["DestinyIconDefinition"] = custom_field(default=None)
 
 
 @custom_define()
@@ -2018,6 +2019,7 @@ class DestinyActivityDefinition(ManifestModel, HashObject):
         requirements: _No description given by bungie._
         rewards: The expected possible rewards for the activity. These rewards may or may not be accessible for an individual player based on their character state, the account state, and even the game's state overall. But it is a useful reference for possible rewards you can earn in the activity. These match up to rewards displayed when you hover over the Activity in the in-game Director, and often refer to Placeholder or "Dummy" items: items that tell you what you can earn in vague terms rather than what you'll specifically be earning (partly because the game doesn't even know what you'll earn specifically until you roll for it at the end)
         selectable_skull_collection_hashes: _No description given by bungie._
+        selectable_skull_collections: _No description given by bungie._
         selection_screen_display_properties: The title, subtitle, and icon for the activity as determined by Selection Screen data, if there is any for this activity. There won't be data in this field if the activity is never shown in a selection/options screen.
         tier: The difficulty tier of the activity.
         trait_hashes: _No description given by bungie._
@@ -2080,6 +2082,7 @@ class DestinyActivityDefinition(ManifestModel, HashObject):
         metadata={"type": """list[DestinyActivityRewardDefinition]"""}
     )
     selectable_skull_collection_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
+    selectable_skull_collections: list[dict] = custom_field(metadata={"type": """list[dict]"""})
     selection_screen_display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
     tier: int = custom_field()
     trait_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
@@ -2422,6 +2425,23 @@ class DestinyActivityRequirementLabel(BaseModel):
     """
 
     display_string: str = custom_field()
+
+
+@custom_define()
+class DestinyActivitySelectableSkullCollections(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        maximum_tier_rank: _No description given by bungie._
+        minimum_tier_rank: _No description given by bungie._
+        selectable_skull_collection_hash: _No description given by bungie._
+    """
+
+    maximum_tier_rank: int = custom_field()
+    minimum_tier_rank: int = custom_field()
+    selectable_skull_collection_hash: int = custom_field()
 
 
 @custom_define()
