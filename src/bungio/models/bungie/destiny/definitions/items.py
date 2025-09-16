@@ -312,9 +312,14 @@ class DestinyInventoryItemConstantsDefinition(ManifestModel, HashObject):
         holofoil900_background_overlay_path: Layer between item and color background to denote holofoil status, introduced in v900
         holofoil_background_overlay_path: Layer between item and color background to denote holofoil status, introduced in v736
         index: The index of the entity as it was found in the investment tables.
-        masterwork_overlay_path: Gold masterwork glow
+        masterwork_bordered_overlay_path: Gold masterwork glow for non-Exotic Items, with a gold border
+        masterwork_exotic_bordered_overlay_path: Gold masterwork glow for Exotic items, with a gold border
+        masterwork_exotic_overlay_path: Gold masterwork glow for Exotic items
+        masterwork_overlay_path: Gold masterwork glow for non-Exotic items
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
         universal_ornament_background_overlay_path: Layer between item and color background to denote universal ornament status
+        universal_ornament_exotic_background_overlay_path: Layer between an exotic item and its color background to denote universal ornament status
+        universal_ornament_legendary_background_overlay_path: Layer between a legendary item and its color background to denote universal ornament status
         watermark_drop_shadow_path: Watermark drop shadow
     """
 
@@ -327,7 +332,12 @@ class DestinyInventoryItemConstantsDefinition(ManifestModel, HashObject):
     holofoil900_background_overlay_path: str = custom_field()
     holofoil_background_overlay_path: str = custom_field()
     index: int = custom_field()
+    masterwork_bordered_overlay_path: str = custom_field()
+    masterwork_exotic_bordered_overlay_path: str = custom_field()
+    masterwork_exotic_overlay_path: str = custom_field()
     masterwork_overlay_path: str = custom_field()
     redacted: bool = custom_field()
     universal_ornament_background_overlay_path: str = custom_field()
+    universal_ornament_exotic_background_overlay_path: str = custom_field()
+    universal_ornament_legendary_background_overlay_path: str = custom_field()
     watermark_drop_shadow_path: str = custom_field()

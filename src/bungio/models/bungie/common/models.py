@@ -10,6 +10,7 @@ if TYPE_CHECKING:
     from bungio.models import (
         DestinyEventCardDefinition,
         DestinyFireteamFinderConstantsDefinition,
+        DestinyGlobalConstantsDefinition,
         DestinyGuardianRankConstantsDefinition,
         DestinyInventoryItemConstantsDefinition,
         DestinyItemFilterDefinition,
@@ -245,7 +246,7 @@ class Destiny2CoreSettings(BaseModel):
     manifest_fireteam_finder_constants_hash: Optional["DestinyFireteamFinderConstantsDefinition"] = custom_field(
         default=None
     )
-    manifest_global_constants_hash: Optional[dict] = custom_field(metadata={"type": """Optional[dict]"""}, default=None)
+    manifest_global_constants_hash: Optional["DestinyGlobalConstantsDefinition"] = custom_field(default=None)
     manifest_guardian_rank_constants_hash: Optional["DestinyGuardianRankConstantsDefinition"] = custom_field(
         default=None
     )

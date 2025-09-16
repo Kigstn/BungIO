@@ -300,6 +300,7 @@ from bungio.models.bungie.destiny.definitions import DestinyLocationReleaseDefin
 from bungio.models.bungie.destiny.definitions import DestinyActivityUnlockStringDefinition
 from bungio.models.bungie.destiny.definitions import DestinyActivityRequirementsBlock
 from bungio.models.bungie.destiny.definitions import DestinyActivityRequirementLabel
+from bungio.models.bungie.destiny.definitions import DestinyActivitySelectableSkullCollections
 from bungio.models.bungie.destiny.definitions import DestinyActivityPlaylistItemDefinition
 from bungio.models.bungie.destiny.definitions import DestinyActivityModeDefinition
 from bungio.models.bungie.destiny.definitions import DestinyActivityMatchmakingBlockDefinition
