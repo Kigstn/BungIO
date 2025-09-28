@@ -3,14 +3,16 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
 from bungio.models.base import BaseModel, custom_define, custom_field
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
     from bungio.models import (
         DestinyActivityDefinition,
         DestinyActivityModeDefinition,
+        DestinyActivityModeType,
         DestinyChallengeStatus,
         DestinyInventoryItemDefinition,
         DestinyMilestoneDefinition,
@@ -120,7 +122,9 @@ class DestinyMilestoneActivity(BaseModel):
 
     activity_hash: int = custom_field()
     activity_mode_hash: int = custom_field()
-    activity_mode_type: int = custom_field()
+    activity_mode_type: Union["DestinyActivityModeType", int] = custom_field(
+        converter=enum_converter("DestinyActivityModeType")
+    )
     modifier_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     variants: list["DestinyMilestoneActivityVariant"] = custom_field(
         metadata={"type": """list[DestinyMilestoneActivityVariant]"""}
@@ -154,7 +158,9 @@ class DestinyMilestoneActivityVariant(BaseModel):
 
     activity_hash: int = custom_field()
     activity_mode_hash: int = custom_field()
-    activity_mode_type: int = custom_field()
+    activity_mode_type: Union["DestinyActivityModeType", int] = custom_field(
+        converter=enum_converter("DestinyActivityModeType")
+    )
     completion_status: "DestinyMilestoneActivityCompletionStatus" = custom_field()
     manifest_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
     manifest_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = custom_field(default=None)
@@ -422,7 +428,9 @@ class DestinyPublicMilestoneActivity(BaseModel):
 
     activity_hash: int = custom_field()
     activity_mode_hash: int = custom_field()
-    activity_mode_type: int = custom_field()
+    activity_mode_type: Union["DestinyActivityModeType", int] = custom_field(
+        converter=enum_converter("DestinyActivityModeType")
+    )
     modifier_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     variants: list["DestinyPublicMilestoneActivityVariant"] = custom_field(
         metadata={"type": """list[DestinyPublicMilestoneActivityVariant]"""}
@@ -455,7 +463,9 @@ class DestinyPublicMilestoneActivityVariant(BaseModel):
 
     activity_hash: int = custom_field()
     activity_mode_hash: int = custom_field()
-    activity_mode_type: int = custom_field()
+    activity_mode_type: Union["DestinyActivityModeType", int] = custom_field(
+        converter=enum_converter("DestinyActivityModeType")
+    )
     manifest_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
     manifest_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = custom_field(default=None)
 

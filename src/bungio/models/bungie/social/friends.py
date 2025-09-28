@@ -168,6 +168,8 @@ class PlatformFriend(BaseModel, DestinyUserMixin):
     bungie_global_display_name_code: int = custom_field()
     bungie_net_membership_id: int = custom_field(metadata={"int64": True})
     destiny_membership_id: int = custom_field(metadata={"int64": True})
-    destiny_membership_type: int = custom_field()
+    destiny_membership_type: Union["BungieMembershipType", int] = custom_field(
+        converter=enum_converter("BungieMembershipType")
+    )
     friend_platform: Union["PlatformFriendType", int] = custom_field(converter=enum_converter("PlatformFriendType"))
     platform_display_name: str = custom_field()

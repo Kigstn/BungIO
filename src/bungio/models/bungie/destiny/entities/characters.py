@@ -200,7 +200,9 @@ class DestinyCharacterActivitiesComponent(BaseModel):
     current_activity_hash: int = custom_field()
     current_activity_mode_hash: int = custom_field()
     current_activity_mode_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
-    current_activity_mode_type: int = custom_field()
+    current_activity_mode_type: Union["DestinyActivityModeType", int] = custom_field(
+        converter=enum_converter("DestinyActivityModeType")
+    )
     current_activity_mode_types: list[Union["DestinyActivityModeType", int]] = custom_field(
         converter=enum_converter("DestinyActivityModeType")
     )

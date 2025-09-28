@@ -11,6 +11,7 @@ from bungio.utils import enum_converter
 if TYPE_CHECKING:
     from bungio.models import (
         DamageType,
+        DestinyBreakerType,
         DestinyBreakerTypeDefinition,
         DestinyDamageTypeDefinition,
         DestinyEnergyType,
@@ -156,7 +157,7 @@ class DestinyItemInstanceComponent(BaseModel):
         manifest_damage_type_hash: Manifest information for `damage_type_hash`
     """
 
-    breaker_type: int = custom_field()
+    breaker_type: Union["DestinyBreakerType", int] = custom_field(converter=enum_converter("DestinyBreakerType"))
     breaker_type_hash: int = custom_field()
     can_equip: bool = custom_field()
     cannot_equip_reason: Union["EquipFailureReason", int] = custom_field(converter=enum_converter("EquipFailureReason"))

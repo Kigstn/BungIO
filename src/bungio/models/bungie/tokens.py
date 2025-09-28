@@ -3,13 +3,20 @@
 # Instead, change functions / models by subclassing them in the `./overwrites/` folder. They will be used instead.
 
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 from bungio.models.base import BaseModel, custom_define, custom_field
 from bungio.models.mixins import DestinyUserMixin
+from bungio.utils import enum_converter
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyCollectibleDefinition, DestinyInventoryItemDefinition, DestinyRecordDefinition
+    from bungio.models import (
+        BungieMembershipType,
+        DestinyCollectibleDefinition,
+        DestinyInventoryItemDefinition,
+        DestinyRecordDefinition,
+        DropStateEnum,
+    )
 
 
 @custom_define()
@@ -78,7 +85,7 @@ class PartnerOfferHistoryResponse(BaseModel, DestinyUserMixin):
     localized_description: str = custom_field()
     localized_name: str = custom_field()
     membership_id: int = custom_field(metadata={"int64": True})
-    membership_type: int = custom_field()
+    membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
     partner_offer_key: str = custom_field()
     quantity_applied: int = custom_field()
 
@@ -115,7 +122,7 @@ class TwitchDropHistoryResponse(BaseModel):
         title: _No description given by bungie._
     """
 
-    claim_state: int = custom_field()
+    claim_state: Union["DropStateEnum", int] = custom_field(converter=enum_converter("DropStateEnum"))
     created_at: datetime = custom_field()
     description: str = custom_field()
     title: str = custom_field()

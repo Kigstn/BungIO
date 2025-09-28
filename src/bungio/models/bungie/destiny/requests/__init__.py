@@ -10,8 +10,8 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, Ma
 
 
 if TYPE_CHECKING:
-    from bungio.models import BungieMembershipType
     from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import BungieMembershipType
 
 
 @custom_define()

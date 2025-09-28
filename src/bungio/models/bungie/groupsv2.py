@@ -564,7 +564,9 @@ class OverwrittenGroupQuery(BaseModel):
 
     creation_date: Union["GroupDateRange", int] = custom_field(converter=enum_converter("GroupDateRange"))
     current_page: int = custom_field()
-    group_member_count_filter: int = custom_field()
+    group_member_count_filter: Union["GroupMemberCountFilter", int] = custom_field(
+        converter=enum_converter("GroupMemberCountFilter")
+    )
     group_type: Union["GroupType", int] = custom_field(converter=enum_converter("GroupType"))
     items_per_page: int = custom_field()
     locale_filter: str = custom_field()
@@ -669,14 +671,14 @@ class GroupEditAction(BaseModel):
     allow_chat: bool = custom_field()
     avatar_image_index: int = custom_field()
     callsign: str = custom_field()
-    chat_security: int = custom_field()
-    default_publicity: int = custom_field()
+    chat_security: Union["ChatSecuritySetting", int] = custom_field(converter=enum_converter("ChatSecuritySetting"))
+    default_publicity: Union["GroupPostPublicity", int] = custom_field(converter=enum_converter("GroupPostPublicity"))
     enable_invitation_messaging_for_admins: bool = custom_field()
-    homepage: int = custom_field()
+    homepage: Union["GroupHomepage", int] = custom_field(converter=enum_converter("GroupHomepage"))
     is_public: bool = custom_field()
     is_public_topic_admin_only: bool = custom_field()
     locale: str = custom_field()
-    membership_option: int = custom_field()
+    membership_option: Union["MembershipOption", int] = custom_field(converter=enum_converter("MembershipOption"))
     motto: str = custom_field()
     name: str = custom_field()
     tags: str = custom_field()
@@ -697,9 +699,11 @@ class GroupOptionsEditAction(BaseModel):
         update_culture_permission_override: Minimum Member Level allowed to update group culture Always Allowed: Founder, Acting Founder True means admins have this power, false means they don't Default is false for clans, true for groups.
     """
 
-    host_guided_game_permission_override: int = custom_field()
+    host_guided_game_permission_override: Union["HostGuidedGamesPermissionLevel", int] = custom_field(
+        converter=enum_converter("HostGuidedGamesPermissionLevel")
+    )
     invite_permission_override: bool = custom_field()
-    join_level: int = custom_field()
+    join_level: Union["RuntimeGroupMemberType", int] = custom_field(converter=enum_converter("RuntimeGroupMemberType"))
     update_banner_permission_override: bool = custom_field()
     update_culture_permission_override: bool = custom_field()
 
@@ -733,7 +737,7 @@ class GroupOptionalConversationEditRequest(BaseModel):
 
     chat_enabled: bool = custom_field()
     chat_name: str = custom_field()
-    chat_security: int = custom_field()
+    chat_security: Union["ChatSecuritySetting", int] = custom_field(converter=enum_converter("ChatSecuritySetting"))
 
 
 @custom_define()

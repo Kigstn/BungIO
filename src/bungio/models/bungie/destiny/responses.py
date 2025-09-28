@@ -13,6 +13,7 @@ if TYPE_CHECKING:
     from bungio.models import (
         BungieMembershipType,
         DestinyBaseItemComponentSetOfuint32,
+        DestinyGameVersions,
         DestinyItemComponent,
         DestinyItemComponentSetOfint64,
         DestinyItemComponentSetOfuint32,
@@ -141,7 +142,9 @@ class DestinyProfileUserInfoCard(BaseModel, DestinyUserMixin):
     membership_type: Union["BungieMembershipType", int] = custom_field(converter=enum_converter("BungieMembershipType"))
     platform_silver: "DestinyPlatformSilverComponent" = custom_field()
     supplemental_display_name: str = custom_field()
-    unpaired_game_versions: int = custom_field()
+    unpaired_game_versions: Union["DestinyGameVersions", int] = custom_field(
+        converter=enum_converter("DestinyGameVersions")
+    )
 
 
 @custom_define()

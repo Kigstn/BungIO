@@ -226,7 +226,9 @@ class DestinyHistoricalStatsDefinition(ManifestModel):
     group: Union["DestinyStatsGroupType", int] = custom_field(converter=enum_converter("DestinyStatsGroupType"))
     icon_image: str = custom_field()
     medal_tier_hash: int = custom_field()
-    merge_method: int = custom_field()
+    merge_method: Union["DestinyStatsMergeMethod", int] = custom_field(
+        converter=enum_converter("DestinyStatsMergeMethod")
+    )
     modes: list[Union["DestinyActivityModeType", int]] = custom_field(
         converter=enum_converter("DestinyActivityModeType")
     )
