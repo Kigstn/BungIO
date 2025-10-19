@@ -17,7 +17,6 @@ if TYPE_CHECKING:
         DestinyActivitySkullDynamicUse,
         DestinyDisplayPropertiesDefinition,
         DestinyTraitDefinition,
-        DestinyUnlockExpressionDefinition,
     )
 
 
@@ -142,7 +141,6 @@ class DestinyActivityDifficultyTierDefinition(BaseModel):
         score_time_limit_multiplier: _No description given by bungie._
         selectable_skull_collection_hashes: _No description given by bungie._
         skull_subcategory_overrides: _No description given by bungie._
-        tier_enabled_unlock_expression: _No description given by bungie._
         tier_rank: _No description given by bungie._
         tier_type: _No description given by bungie._
         manifest_optional_required_trait: Manifest information for `optional_required_trait`
@@ -162,7 +160,6 @@ class DestinyActivityDifficultyTierDefinition(BaseModel):
     skull_subcategory_overrides: list["DestinyActivityDifficultyTierSubcategoryOverride"] = custom_field(
         metadata={"type": """list[DestinyActivityDifficultyTierSubcategoryOverride]"""}
     )
-    tier_enabled_unlock_expression: "DestinyUnlockExpressionDefinition" = custom_field()
     tier_rank: int = custom_field()
     tier_type: Union["DestinyActivityDifficultyTierType", int] = custom_field(
         converter=enum_converter("DestinyActivityDifficultyTierType")

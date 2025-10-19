@@ -79,9 +79,10 @@
             - DestinyActivityLoadoutRequirementSet
             - DestinyActivityLoadoutRequirement
             - DestinyActivityInsertionPointDefinition
+            - DestinyActivityCuratorBlockDefinition
+            - DestinyActivityDurationEstimate
             - DestinyPlaceDefinition
             - DestinyActivityTypeDefinition
-            - DestinyUnlockExpressionDefinition
             - DestinyDestinationBubbleSettingDefinition
             - DestinyBubbleDefinition
             - DestinyVendorGroupReference

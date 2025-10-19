@@ -186,7 +186,9 @@ class DestinyCharacterActivitiesComponent(BaseModel):
         current_activity_mode_types: All Activity Modes that apply to the current activity being played, in enum form.
         current_playlist_activity_hash: If the user is in a playlist, this is the hash identifier for the playlist that they chose.
         date_activity_started: The last date that the user started playing an activity.
+        difficulty_tier_collections: The activity difficulty tier states for this character.
         last_completed_story_hash: This will have the activity hash of the last completed story/campaign mission, in case you care about that.
+        selectable_skull_collections: The selectable activity skulls states for this character.
         manifest_current_activity_hash: Manifest information for `current_activity_hash`
         manifest_current_activity_mode_hash: Manifest information for `current_activity_mode_hash`
         manifest_current_playlist_activity_hash: Manifest information for `current_playlist_activity_hash`
@@ -208,7 +210,9 @@ class DestinyCharacterActivitiesComponent(BaseModel):
     )
     current_playlist_activity_hash: int = custom_field()
     date_activity_started: datetime = custom_field()
+    difficulty_tier_collections: dict[int, dict] = custom_field(metadata={"type": """dict[int, dict]"""})
     last_completed_story_hash: int = custom_field()
+    selectable_skull_collections: dict[int, dict] = custom_field(metadata={"type": """dict[int, dict]"""})
     manifest_current_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)
     manifest_current_activity_mode_hash: Optional["DestinyActivityModeDefinition"] = custom_field(default=None)
     manifest_current_playlist_activity_hash: Optional["DestinyActivityDefinition"] = custom_field(default=None)

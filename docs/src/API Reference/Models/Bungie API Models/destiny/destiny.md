@@ -78,6 +78,10 @@
             - DestinyActivity
             - DestinyActivityDifficultyTier
             - DestinyActivityRewardDisplayMode
+            - DestinyActivityDifficultyTierCollectionComponent
+            - DestinyActivityDifficultyTierComponent
+            - DestinyActivitySkullComponent
+            - DestinyActivitySelectableSkullCollectionComponent
             - EquipFailureReason
             - DestinyTalentNode
             - DestinyTalentNodeState
@@ -176,6 +180,10 @@
             - DestinyActivity
             - DestinyActivityDifficultyTier
             - DestinyActivityRewardDisplayMode
+            - DestinyActivityDifficultyTierCollectionComponent
+            - DestinyActivityDifficultyTierComponent
+            - DestinyActivitySkullComponent
+            - DestinyActivitySelectableSkullCollectionComponent
             - EquipFailureReason
             - DestinyTalentNode
             - DestinyTalentNodeState

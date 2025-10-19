@@ -310,7 +310,6 @@ from bungio.models.bungie.destiny.definitions import DestinyActivityLoadoutRequi
 from bungio.models.bungie.destiny.definitions import DestinyActivityInsertionPointDefinition
 from bungio.models.bungie.destiny.definitions import DestinyPlaceDefinition
 from bungio.models.bungie.destiny.definitions import DestinyActivityTypeDefinition
-from bungio.models.bungie.destiny.definitions import DestinyUnlockExpressionDefinition
 from bungio.models.bungie.destiny.definitions import DestinyDestinationBubbleSettingDefinition
 from bungio.models.bungie.destiny.definitions import DestinyBubbleDefinition
 from bungio.models.bungie.destiny.definitions import DestinyVendorGroupReference

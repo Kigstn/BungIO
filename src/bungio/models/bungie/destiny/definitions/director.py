@@ -15,7 +15,6 @@ if TYPE_CHECKING:
         DestinyGraphNodeState,
         DestinyObjectiveDefinition,
         DestinyPositionDefinition,
-        DestinyUnlockExpressionDefinition,
     )
 
 
@@ -221,7 +220,6 @@ class DestinyLinkedGraphDefinition(BaseModel):
         linked_graphs: _No description given by bungie._
         name: _No description given by bungie._
         overview: _No description given by bungie._
-        unlock_expression: _No description given by bungie._
     """
 
     description: str = custom_field()
@@ -231,7 +229,6 @@ class DestinyLinkedGraphDefinition(BaseModel):
     )
     name: str = custom_field()
     overview: str = custom_field()
-    unlock_expression: "DestinyUnlockExpressionDefinition" = custom_field()
 
 
 @custom_define()

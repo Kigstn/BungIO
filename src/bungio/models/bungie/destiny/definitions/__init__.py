@@ -10,78 +10,78 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, Ma
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyIconSequenceDefinition
-    from bungio.models import HyperlinkReference
-    from bungio.models import DestinyVendorProgressionType
-    from bungio.models import DateRange
-    from bungio.models import DyeReference
-    from bungio.models import DestinyArtifactDefinition
-    from bungio.models import EquippingItemBlockAttributes
-    from bungio.models import DestinyPowerCapDefinition
-    from bungio.models import DestinyGatingScope
-    from bungio.models import DestinyVendorLocationDefinition
-    from bungio.models import DestinyItemSortType
-    from bungio.models import DestinyIconDefinition
-    from bungio.models import DestinyTraitDefinition
-    from bungio.models import SearchResultOfDestinyEntitySearchResultItem
-    from bungio.models import DestinyItemQuantity
-    from bungio.models import DestinySocketTypeDefinition
-    from bungio.models import DestinyObjectiveGrantStyle
-    from bungio.models import ItemPerkVisibility
-    from bungio.models import DestinyProgressionStepDisplayEffect
-    from bungio.models import DestinyPlugSetDefinition
-    from bungio.models import DestinyProgressionRewardItemAcquisitionBehavior
-    from bungio.models import DestinyBreakerTypeDefinition
-    from bungio.models import DamageType
-    from bungio.models import DestinyDisplayPropertiesDefinition
     from bungio.models import DestinyStatAggregationType
-    from bungio.models import DestinyItemType
-    from bungio.models import BucketCategory
-    from bungio.models import DestinyEquipableItemSetDefinition
-    from bungio.models import DestinyUnlockValueUIStyle
-    from bungio.models import DestinyDerivedItemCategoryDefinition
-    from bungio.models import DestinyGender
-    from bungio.models import BucketScope
     from bungio.models import DestinyClass
-    from bungio.models import BungieMembershipType
-    from bungio.models import DestinyAnimationReference
-    from bungio.models import ItemLocation
-    from bungio.models import DestinyColor
-    from bungio.models import DestinyVendorItemRefundPolicy
-    from bungio.models import DestinySeasonDefinition
-    from bungio.models import DestinyAmmunitionType
-    from bungio.models import DestinyActivityRewardDisplayMode
-    from bungio.models import DestinyProgressionLevelRequirementDefinition
-    from bungio.models import DestinyBreakerType
-    from bungio.models import DestinyStatCategory
-    from bungio.models import DestinyCollectibleDefinition
-    from bungio.models import DestinyVendorReplyType
-    from bungio.models import DestinyVendorInteractionRewardSelection
-    from bungio.models import DestinyActivityFamilyDefinition
-    from bungio.models import DestinyPresentationNodeDefinition
-    from bungio.models import DestinyEnvironmentLocationMapping
-    from bungio.models import DestinyItemSubType
-    from bungio.models import VendorDisplayCategorySortOrder
-    from bungio.models import SpecialItemType
-    from bungio.models import DestinyLoreDefinition
-    from bungio.models import DestinyActivityGraphDefinition
-    from bungio.models import DestinyActivityModeCategory
-    from bungio.models import DestinyActivityModifierDefinition
-    from bungio.models import DestinyItemPlugDefinition
-    from bungio.models import DestinyItemTierTypeDefinition
-    from bungio.models import DestinyItemSourceDefinition
-    from bungio.models import DestinyProgressionScope
-    from bungio.models import InterpolationPoint
-    from bungio.models import SocketPlugSources
-    from bungio.models import DestinyObjectiveUiStyle
+    from bungio.models import DestinyTraitDefinition
+    from bungio.models import DestinyPowerCapDefinition
     from bungio.models import DestinyActivitySelectableSkullCollectionDefinition
-    from bungio.models import DestinyActivityModeType
+    from bungio.models import InterpolationPoint
+    from bungio.models import DestinyEquipableItemSetDefinition
     from bungio.models import DestinyActivityNavPointType
+    from bungio.models import EquippingItemBlockAttributes
     from bungio.models import DestinyActivityDifficultyTierCollectionDefinition
     from bungio.models import VendorInteractionType
-    from bungio.models import DestinyRace
     from bungio.models import DestinySocketCategoryDefinition
+    from bungio.models import DestinyItemSourceDefinition
+    from bungio.models import DestinyPresentationNodeDefinition
+    from bungio.models import BucketScope
+    from bungio.models import DestinyItemSubType
+    from bungio.models import SearchResultOfDestinyEntitySearchResultItem
+    from bungio.models import DestinySeasonDefinition
+    from bungio.models import DestinyActivityGraphDefinition
+    from bungio.models import DestinyItemTierTypeDefinition
+    from bungio.models import DestinyLoreDefinition
+    from bungio.models import DestinyAmmunitionType
+    from bungio.models import DestinyRace
+    from bungio.models import DestinyCollectibleDefinition
+    from bungio.models import DestinyGatingScope
+    from bungio.models import DestinyProgressionLevelRequirementDefinition
+    from bungio.models import DestinyStatCategory
+    from bungio.models import DestinyVendorLocationDefinition
+    from bungio.models import DestinyVendorReplyType
+    from bungio.models import DestinyObjectiveUiStyle
+    from bungio.models import HyperlinkReference
+    from bungio.models import DestinyUnlockValueUIStyle
+    from bungio.models import DestinyActivityModifierDefinition
+    from bungio.models import DestinyDerivedItemCategoryDefinition
+    from bungio.models import VendorDisplayCategorySortOrder
+    from bungio.models import DestinyBreakerTypeDefinition
+    from bungio.models import DestinyEnvironmentLocationMapping
+    from bungio.models import DestinyProgressionStepDisplayEffect
+    from bungio.models import DateRange
+    from bungio.models import DestinyGender
+    from bungio.models import BungieMembershipType
+    from bungio.models import DyeReference
+    from bungio.models import DestinyActivityRewardDisplayMode
+    from bungio.models import DestinyItemQuantity
+    from bungio.models import DestinyIconSequenceDefinition
+    from bungio.models import DestinyVendorItemRefundPolicy
+    from bungio.models import DestinyActivityModeCategory
+    from bungio.models import DestinyItemSortType
+    from bungio.models import SocketPlugSources
+    from bungio.models import SpecialItemType
+    from bungio.models import DestinyVendorInteractionRewardSelection
+    from bungio.models import ItemLocation
+    from bungio.models import DestinyActivityFamilyDefinition
+    from bungio.models import BucketCategory
+    from bungio.models import DestinyArtifactDefinition
+    from bungio.models import ItemPerkVisibility
+    from bungio.models import DestinyVendorProgressionType
+    from bungio.models import DestinyDisplayPropertiesDefinition
+    from bungio.models import DestinyIconDefinition
+    from bungio.models import DestinyPlugSetDefinition
+    from bungio.models import DamageType
+    from bungio.models import DestinyObjectiveGrantStyle
+    from bungio.models import DestinySocketTypeDefinition
+    from bungio.models import DestinyItemType
+    from bungio.models import DestinyProgressionRewardItemAcquisitionBehavior
+    from bungio.models import DestinyActivityModeType
+    from bungio.models import DestinyAnimationReference
+    from bungio.models import DestinyBreakerType
     from bungio.models import TierType
+    from bungio.models import DestinyItemPlugDefinition
+    from bungio.models import DestinyProgressionScope
+    from bungio.models import DestinyColor
 
 
 @custom_define()
@@ -1994,11 +1994,13 @@ class DestinyActivityDefinition(ManifestModel, HashObject):
         activity_mode_types: The activity modes - if any - in enum form. Because we can't seem to escape the enums.
         activity_type_hash: The hash identifier for the Activity Type of this Activity. You may use it to look up the DestinyActivityTypeDefinition for human readable info, but be forewarned: Playlists and many PVP Map Activities will map to generic Activity Types. You'll have to use your knowledge of the Activity Mode being played to get more specific information about what the user is playing.
         challenges: An activity can have many Challenges, of which any subset of them may be active for play at any given period of time. This gives the information about the challenges and data that we use to understand when they're active and what rewards they provide. Sadly, at the moment there's no central definition for challenges: much like "Skulls" were in Destiny 1, these are defined on individual activities and there can be many duplicates/near duplicates across the Destiny 2 ecosystem. I have it in mind to centralize these in a future revision of the API, but we are out of time.
+        curator_block_definition: Additional data used for display in the in-game Portal screen
         destination_hash: The hash identifier for the Destination on which this Activity is played. Use it to look up the DestinyDestinationDefinition for human readable info about the destination. A Destination can be thought of as a more specific location than a "Place". For instance, if the "Place" is Earth, the "Destination" would be a specific city or region on Earth.
         difficulty_tier_collection_hash: _No description given by bungie._
         direct_activity_mode_hash: If this activity had an activity mode directly defined on it, this will be the hash of that mode.
         direct_activity_mode_type: If the activity had an activity mode directly defined on it, this will be the enum value of that mode.
         display_properties: The title, subtitle, and icon for the activity. We do a little post-processing on this to try and account for Activities where the designers have left this data too minimal to determine what activity is actually being played.
+        duration_estimate: Optional estimated duration, shown on the Portal tiles
         guided_game: This block of data, if it exists, provides information about the guided game experience and restrictions for this activity. If it doesn't exist, the game is not able to be played as a guided game.
         hash: The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
         index: The index of the entity as it was found in the investment tables.
@@ -2046,6 +2048,7 @@ class DestinyActivityDefinition(ManifestModel, HashObject):
     challenges: list["DestinyActivityChallengeDefinition"] = custom_field(
         metadata={"type": """list[DestinyActivityChallengeDefinition]"""}
     )
+    curator_block_definition: dict = custom_field(metadata={"type": """dict"""})
     destination_hash: int = custom_field()
     difficulty_tier_collection_hash: int = custom_field()
     direct_activity_mode_hash: int = custom_field()
@@ -2053,6 +2056,7 @@ class DestinyActivityDefinition(ManifestModel, HashObject):
         converter=enum_converter("DestinyActivityModeType")
     )
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
+    duration_estimate: dict = custom_field(metadata={"type": """dict"""})
     guided_game: "DestinyActivityGuidedBlockDefinition" = custom_field()
     index: int = custom_field()
     insertion_points: list["DestinyActivityInsertionPointDefinition"] = custom_field(
@@ -2623,6 +2627,38 @@ class DestinyActivityInsertionPointDefinition(BaseModel):
 
 
 @custom_define()
+class DestinyActivityCuratorBlockDefinition(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        quickplay_sort_priority: Sort order
+        quickplay_sort_to_front: Whether this activity should be sorted to the front of the Portal category
+    """
+
+    quickplay_sort_priority: int = custom_field()
+    quickplay_sort_to_front: bool = custom_field()
+
+
+@custom_define()
+class DestinyActivityDurationEstimate(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        duration_estimate_text: The text string showing the estimated time to complete this activity
+        duration_pips_filled_count: The number of filled pips shown on the Portal tile
+        duration_pips_total_count: The total number of pips shown on the Portal tile
+    """
+
+    duration_estimate_text: str = custom_field()
+    duration_pips_filled_count: int = custom_field()
+    duration_pips_total_count: int = custom_field()
+
+
+@custom_define()
 class DestinyPlaceDefinition(ManifestModel, HashObject):
     """
     Okay, so Activities (DestinyActivityDefinition) take place in Destinations (DestinyDestinationDefinition). Destinations are part of larger locations known as Places (you're reading its documentation right now). Places are more on the planetary scale, like "Earth" and "Your Mom."
@@ -2656,19 +2692,6 @@ class DestinyActivityTypeDefinition(ManifestModel, HashObject):
     display_properties: "DestinyDisplayPropertiesDefinition" = custom_field()
     index: int = custom_field()
     redacted: bool = custom_field()
-
-
-@custom_define()
-class DestinyUnlockExpressionDefinition(BaseModel):
-    """
-    Where the sausage gets made. Unlock Expressions are the foundation of the game's gating mechanics and investment-related restrictions. They can test Unlock Flags and Unlock Values for certain states, using a sufficient amount of logical operators such that unlock expressions are effectively Turing complete. Use UnlockExpressionParser to evaluate expressions using an IUnlockContext parsed from Babel.
-
-    None
-    Attributes:
-        scope: A shortcut for determining the most restrictive gating that this expression performs. See the DestinyGatingScope enum's documentation for more details.
-    """
-
-    scope: Union["DestinyGatingScope", int] = custom_field(converter=enum_converter("DestinyGatingScope"))
 
 
 @custom_define()

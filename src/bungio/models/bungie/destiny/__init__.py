@@ -10,16 +10,18 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, Ma
 
 
 if TYPE_CHECKING:
-    from bungio.models import DestinyActivityRewardMapping
-    from bungio.models import DestinyInventoryItemDefinition
-    from bungio.models import DestinyProgressionDefinition
-    from bungio.models import DestinyActivityDefinition
-    from bungio.models import DestinyChallengeStatus
-    from bungio.models import DestinyUnlockDefinition
-    from bungio.models import DestinyStatDefinition
-    from bungio.models import DestinyMaterialRequirement
-    from bungio.models import PlatformErrorCodes
     from bungio.models import DestinyActivityModifierDefinition
+    from bungio.models import DestinyActivityRewardMapping
+    from bungio.models import DestinyActivitySelectableSkullCollectionDefinition
+    from bungio.models import DestinyUnlockDefinition
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyMaterialRequirement
+    from bungio.models import DestinyChallengeStatus
+    from bungio.models import DestinyActivityDifficultyTierCollectionDefinition
+    from bungio.models import DestinyActivityDefinition
+    from bungio.models import DestinyProgressionDefinition
+    from bungio.models import DestinyStatDefinition
+    from bungio.models import PlatformErrorCodes
 
 
 @custom_define()
@@ -196,6 +198,8 @@ class ItemState(BaseFlagEnum):
     """If this bit is set, the item has been 'crafted' by the player. You may want to represent this visually with a "crafted" icon overlay. """
     HIGHLIGHTED_OBJECTIVE = 16
     """If this bit is set, the item has a 'highlighted' objective. You may want to represent this with an orange-red icon border color. """
+    ENHANCED = 32
+    """If this bit is set, the item has been 'enhanced' by the player. """
 
 
 class DestinyProgressionScope(BaseEnum):
@@ -1584,6 +1588,7 @@ class DestinyActivity(BaseModel):
         difficulty_tier: A DestinyActivityDifficultyTier enum value indicating the difficulty of the activity.
         display_level: The difficulty level of the activity, if applicable.
         is_completed: If true, we both have the ability to know that the user has completed this activity and they have completed it. Unfortunately, we can't necessarily know this for all activities. As such, this should probably only be used if you already know in advance which specific activities you wish to check.
+        is_focused_activity: Whether or not this activity is currently in the "featured" carousel of the Portal
         is_new: If true, then the activity should have a "new" indicator in the Director UI.
         is_visible: If true, the user should be able to see this activity.
         loadout_requirement_index: If returned, this is the index into the DestinyActivityDefinition's "loadouts" property, indicating the currently active loadout requirements.
@@ -1603,6 +1608,7 @@ class DestinyActivity(BaseModel):
     )
     display_level: int = custom_field()
     is_completed: bool = custom_field()
+    is_focused_activity: bool = custom_field()
     is_new: bool = custom_field()
     is_visible: bool = custom_field()
     loadout_requirement_index: int = custom_field()
@@ -1648,6 +1654,91 @@ class DestinyActivityRewardDisplayMode(BaseEnum):
     """_No description given by bungie._ """
     COUNT = 2
     """_No description given by bungie._ """
+
+
+@custom_define()
+class DestinyActivityDifficultyTierCollectionComponent(BaseModel):
+    """
+    _No description given by bungie._
+
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
+    Attributes:
+        difficulty_tier_collection_hash: _No description given by bungie._
+        difficulty_tiers: _No description given by bungie._
+        manifest_difficulty_tier_collection_hash: Manifest information for `difficulty_tier_collection_hash`
+    """
+
+    difficulty_tier_collection_hash: int = custom_field()
+    difficulty_tiers: list[dict] = custom_field(metadata={"type": """list[dict]"""})
+    manifest_difficulty_tier_collection_hash: Optional["DestinyActivityDifficultyTierCollectionDefinition"] = (
+        custom_field(default=None)
+    )
+
+
+@custom_define()
+class DestinyActivityDifficultyTierComponent(BaseModel):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        difficulty_tier_index: _No description given by bungie._
+        fixed_activity_skulls: _No description given by bungie._
+    """
+
+    difficulty_tier_index: int = custom_field()
+    fixed_activity_skulls: list[dict] = custom_field(metadata={"type": """list[dict]"""})
+
+
+@custom_define()
+class DestinyActivitySkullComponent(BaseModel, HashObject):
+    """
+    _No description given by bungie._
+
+    None
+    Attributes:
+        hash: _No description given by bungie._
+        is_enabled: _No description given by bungie._
+        skull_identifier_hash: _No description given by bungie._
+    """
+
+    is_enabled: bool = custom_field()
+    skull_identifier_hash: int = custom_field()
+
+
+@custom_define()
+class DestinyActivitySelectableSkullCollectionComponent(BaseModel):
+    """
+    _No description given by bungie._
+
+    Tip: Manifest Information
+        This model has some attributes which can be filled with additional information found in the manifest (`manifest_...`).
+        Without additional work, these attributes will be `None`, since they require additional requests and database lookups.
+
+        To fill the manifest dependent attributes, either:
+
+        - Run `await ThisClass.fetch_manifest_information()`, see [here](/API Reference/Models/base)
+        - Set `Client.always_return_manifest_information` to `True`, see [here](/API Reference/client)
+
+    Attributes:
+        selectable_skull_collection_hash: _No description given by bungie._
+        selectable_skulls: _No description given by bungie._
+        manifest_selectable_skull_collection_hash: Manifest information for `selectable_skull_collection_hash`
+    """
+
+    selectable_skull_collection_hash: int = custom_field()
+    selectable_skulls: list[dict] = custom_field(metadata={"type": """list[dict]"""})
+    manifest_selectable_skull_collection_hash: Optional["DestinyActivitySelectableSkullCollectionDefinition"] = (
+        custom_field(default=None)
+    )
 
 
 class EquipFailureReason(BaseFlagEnum):
