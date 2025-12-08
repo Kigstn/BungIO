@@ -10,18 +10,18 @@ from bungio.models.base import BaseModel, BaseEnum, BaseFlagEnum, HashObject, Ma
 
 
 if TYPE_CHECKING:
+    from bungio.models import DestinyActivityDefinition
+    from bungio.models import PlatformErrorCodes
     from bungio.models import DestinyActivityModifierDefinition
-    from bungio.models import DestinyActivityRewardMapping
-    from bungio.models import DestinyActivitySelectableSkullCollectionDefinition
-    from bungio.models import DestinyUnlockDefinition
-    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyProgressionDefinition
     from bungio.models import DestinyMaterialRequirement
     from bungio.models import DestinyChallengeStatus
+    from bungio.models import DestinyInventoryItemDefinition
+    from bungio.models import DestinyActivityRewardMapping
     from bungio.models import DestinyActivityDifficultyTierCollectionDefinition
-    from bungio.models import DestinyActivityDefinition
-    from bungio.models import DestinyProgressionDefinition
     from bungio.models import DestinyStatDefinition
-    from bungio.models import PlatformErrorCodes
+    from bungio.models import DestinyUnlockDefinition
+    from bungio.models import DestinyActivitySelectableSkullCollectionDefinition
 
 
 @custom_define()
@@ -1587,10 +1587,12 @@ class DestinyActivity(BaseModel):
         challenges: _No description given by bungie._
         difficulty_tier: A DestinyActivityDifficultyTier enum value indicating the difficulty of the activity.
         display_level: The difficulty level of the activity, if applicable.
+        fireteam_requirement_failure_indices: Indexes of failure if this activity is inaccessible as a fireteam member
         is_completed: If true, we both have the ability to know that the user has completed this activity and they have completed it. Unfortunately, we can't necessarily know this for all activities. As such, this should probably only be used if you already know in advance which specific activities you wish to check.
         is_focused_activity: Whether or not this activity is currently in the "featured" carousel of the Portal
         is_new: If true, then the activity should have a "new" indicator in the Director UI.
         is_visible: If true, the user should be able to see this activity.
+        leader_requirement_failure_indices: Indexes of failure if this activity is inaccessible as a fireteam leader
         loadout_requirement_index: If returned, this is the index into the DestinyActivityDefinition's "loadouts" property, indicating the currently active loadout requirements.
         modifier_hashes: If the activity has modifiers, this will be the list of modifiers that all variants have in common. Perform lookups against DestinyActivityModifierDefinition which defines the modifier being applied to get at the modifier data. Note that, in the DestinyActivityDefinition, you will see many more modifiers than this being referred to: those are all *possible* modifiers for the activity, not the active ones. Use only the active ones to match what's really live.
         recommended_light: The recommended light level for the activity, if applicable.
@@ -1607,10 +1609,12 @@ class DestinyActivity(BaseModel):
         converter=enum_converter("DestinyActivityDifficultyTier")
     )
     display_level: int = custom_field()
+    fireteam_requirement_failure_indices: list[int] = custom_field(metadata={"type": """list[int]"""})
     is_completed: bool = custom_field()
     is_focused_activity: bool = custom_field()
     is_new: bool = custom_field()
     is_visible: bool = custom_field()
+    leader_requirement_failure_indices: list[int] = custom_field(metadata={"type": """list[int]"""})
     loadout_requirement_index: int = custom_field()
     modifier_hashes: list[int] = custom_field(metadata={"type": """list[int]"""})
     recommended_light: int = custom_field()

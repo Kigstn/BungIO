@@ -308,6 +308,8 @@ from bungio.models.bungie.destiny.definitions import DestinyActivityGuidedBlockD
 from bungio.models.bungie.destiny.definitions import DestinyActivityLoadoutRequirementSet
 from bungio.models.bungie.destiny.definitions import DestinyActivityLoadoutRequirement
 from bungio.models.bungie.destiny.definitions import DestinyActivityInsertionPointDefinition
+from bungio.models.bungie.destiny.definitions import DestinyActivityCuratorBlockDefinition
+from bungio.models.bungie.destiny.definitions import DestinyActivityDurationEstimate
 from bungio.models.bungie.destiny.definitions import DestinyPlaceDefinition
 from bungio.models.bungie.destiny.definitions import DestinyActivityTypeDefinition
 from bungio.models.bungie.destiny.definitions import DestinyDestinationBubbleSettingDefinition
@@ -753,6 +755,10 @@ from bungio.models.bungie.destiny import DestinyRace
 from bungio.models.bungie.destiny import DestinyActivity
 from bungio.models.bungie.destiny import DestinyActivityDifficultyTier
 from bungio.models.bungie.destiny import DestinyActivityRewardDisplayMode
+from bungio.models.bungie.destiny import DestinyActivityDifficultyTierCollectionComponent
+from bungio.models.bungie.destiny import DestinyActivityDifficultyTierComponent
+from bungio.models.bungie.destiny import DestinyActivitySkullComponent
+from bungio.models.bungie.destiny import DestinyActivitySelectableSkullCollectionComponent
 from bungio.models.bungie.destiny import EquipFailureReason
 from bungio.models.bungie.destiny import DestinyTalentNode
 from bungio.models.bungie.destiny import DestinyTalentNodeState

@@ -1811,3 +1811,19 @@ class PlatformErrorCodes(BaseEnum):
     """_No description given by bungie._ """
     ERROR_EGS_JWT_MALFORMED_PAYLOAD = 4009
     """_No description given by bungie._ """
+    MARATHON_INTERNAL_ERROR = 5000
+    """_No description given by bungie._ """
+    MARATHON_BABEL_CONNECTION_TIMEOUT = 5001
+    """_No description given by bungie._ """
+    MARATHON_SERVICE_FAILURE = 5002
+    """_No description given by bungie._ """
+    MARATHON_INVALID_REQUEST = 5003
+    """_No description given by bungie._ """
+    MARATHON_UNEXPECTED_ERROR = 5004
+    """_No description given by bungie._ """
+    MARATHON_ACCOUNT_NOT_FOUND = 5005
+    """_No description given by bungie._ """
+    MARATHON_THROTTLED_BY_GAME_SERVER = 5006
+    """_No description given by bungie._ """
+    MARATHON_ERROR_DESERIALIZATION_FAILURE = 5007
+    """_No description given by bungie._ """

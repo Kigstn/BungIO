@@ -125,6 +125,7 @@ class DestinyCharacterProgressionComponent(BaseModel):
         progressions: A Dictionary of all known progressions for the Character, keyed by the Progression's hash. Not all progressions have user-facing data, but those who do will have that data contained in the DestinyProgressionDefinition.
         quests: If the user has any active quests, the quests' statuses will be returned here.  Note that quests have been largely supplanted by Milestones, but that doesn't mean that they won't make a comeback independent of milestones at some point.  (Fun fact: quests came back as I feared they would, but we never looped back to populate this... I'm going to put that in the backlog.)
         seasonal_artifact: Data related to your progress on the current season's artifact that can vary per character.
+        unclaimed_order_rewards: Unclaimed rewards earned by completing Orders.
         uninstanced_item_objectives: Sometimes, you have items in your inventory that don't have instances, but still have Objective information. This provides you that objective information for uninstanced items.  This dictionary is keyed by the item's hash: which you can use to look up the name and description for the overall task(s) implied by the objective. The value is the list of objectives for this item, and their statuses.
         uninstanced_item_perks: Sometimes, you have items in your inventory that don't have instances, but still have perks (for example: Trials passage cards). This gives you the perk information for uninstanced items. This dictionary is keyed by item hash, which you can use to look up the corresponding item definition. The value is the list of perks states for the item.
     """
@@ -137,6 +138,7 @@ class DestinyCharacterProgressionComponent(BaseModel):
     progressions: dict[int, "DestinyProgression"] = custom_field(metadata={"type": """dict[int, DestinyProgression]"""})
     quests: list["DestinyQuestStatus"] = custom_field(metadata={"type": """list[DestinyQuestStatus]"""})
     seasonal_artifact: "DestinyArtifactCharacterScoped" = custom_field()
+    unclaimed_order_rewards: dict[int, int] = custom_field(metadata={"type": """dict[int, int]"""})
     uninstanced_item_objectives: dict[int, list["DestinyObjectiveProgress"]] = custom_field(
         metadata={"type": """dict[int, list[DestinyObjectiveProgress]]"""}
     )

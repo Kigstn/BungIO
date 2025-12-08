@@ -116,7 +116,10 @@ class DestinyGlobalConstantsDefinition(ManifestModel, HashObject):
         lore_root_node_hash: _No description given by bungie._
         medals_root_node_hash: _No description given by bungie._
         metrics_root_node_hash: _No description given by bungie._
+        order_rewards_unlock_value_hashes_to_reward_item_hashes: _No description given by bungie._
         pathfinder_constants: Assorted constants for Pathfinder objectives
+        portal_activity_graph_root_nodes_with_icons: _No description given by bungie._
+        quest_item_trait_to_featured_quest_image_path: _No description given by bungie._
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
         seasonal_hub_event_card_hash: _No description given by bungie._
         manifest_active_seals_root_node_hash: Manifest information for `active_seals_root_node_hash`
@@ -153,7 +156,14 @@ class DestinyGlobalConstantsDefinition(ManifestModel, HashObject):
     lore_root_node_hash: int = custom_field()
     medals_root_node_hash: int = custom_field()
     metrics_root_node_hash: int = custom_field()
+    order_rewards_unlock_value_hashes_to_reward_item_hashes: dict[int, int] = custom_field(
+        metadata={"type": """dict[int, int]"""}
+    )
     pathfinder_constants: "DestinyPathfinderConstantsDefinition" = custom_field()
+    portal_activity_graph_root_nodes_with_icons: dict[int, str] = custom_field(metadata={"type": """dict[int, str]"""})
+    quest_item_trait_to_featured_quest_image_path: dict[int, str] = custom_field(
+        metadata={"type": """dict[int, str]"""}
+    )
     redacted: bool = custom_field()
     seasonal_hub_event_card_hash: int = custom_field()
     manifest_active_seals_root_node_hash: Optional["DestinyPresentationNodeDefinition"] = custom_field(default=None)

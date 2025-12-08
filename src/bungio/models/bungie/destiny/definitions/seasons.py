@@ -242,6 +242,7 @@ class DestinyEventCardDefinition(ManifestModel, HashObject):
         link_redirect_path: _No description given by bungie._
         redacted: If this is true, then there is an entity with this identifier/type combination, but BNet is not yet allowed to show it. Sorry!
         reward_progression_hash: _No description given by bungie._
+        reward_progression_hash_list: _No description given by bungie._
         seal_presentation_node_hash: _No description given by bungie._
         ticket_currency_item_hash: _No description given by bungie._
         ticket_vendor_category_hash: _No description given by bungie._
@@ -265,6 +266,7 @@ class DestinyEventCardDefinition(ManifestModel, HashObject):
     link_redirect_path: str = custom_field()
     redacted: bool = custom_field()
     reward_progression_hash: int = custom_field()
+    reward_progression_hash_list: list[int] = custom_field(metadata={"type": """list[int]"""})
     seal_presentation_node_hash: int = custom_field()
     ticket_currency_item_hash: int = custom_field()
     ticket_vendor_category_hash: int = custom_field()

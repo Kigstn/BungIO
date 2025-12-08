@@ -186,6 +186,8 @@ class DestinyActivityModeType(BaseEnum):
     """_No description given by bungie._ """
     RELIC = 92
     """_No description given by bungie._ """
+    LAWLESS_FRONTIER = 93
+    """_No description given by bungie._ """
 
 
 @custom_define()
